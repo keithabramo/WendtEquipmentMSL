@@ -14,7 +14,7 @@ namespace WendtEquipmentTracking.App.Models
         {
             None,
             Success,
-            Error
+            Error 
         }
 
         [DisplayName("File")]
