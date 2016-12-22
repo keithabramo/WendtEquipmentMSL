@@ -21,7 +21,7 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement
             File.WriteAllBytes(tempParcelFile, importFile);
 
             var excel = new ExcelQueryFactory(tempParcelFile);
-            excel.DatabaseEngine = DatabaseEngine.Ace;
+            //excel.DatabaseEngine = DatabaseEngine.Ace;
 
             return excel.GetWorksheetNames();
         }

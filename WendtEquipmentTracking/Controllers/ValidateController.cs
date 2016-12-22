@@ -11,10 +11,10 @@ namespace WendtEquipmentTracking.App.Controllers
         {
             var extension = Path.GetExtension(file);
 
-            if (!extension.Equals(".xlsx"))
-            {
-                return Json("Only xlsx files are allowed.", JsonRequestBehavior.AllowGet);
-            }
+            //if (!extension.Equals(".xlsx"))
+            //{
+            //    return Json("Only xlsx files are allowed.", JsonRequestBehavior.AllowGet);
+            //}
 
             return Json(true, JsonRequestBehavior.AllowGet);
         }
