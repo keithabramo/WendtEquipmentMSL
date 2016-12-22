@@ -5,6 +5,6 @@ namespace WendtEquipmentTracking.BusinessLogic.Api
 {
     public interface IImportService
     {
-        IEnumerable<string> Import(ImportBO userBO);
+        IEnumerable<string> GetSheets(ImportBO userBO);
     }
 }

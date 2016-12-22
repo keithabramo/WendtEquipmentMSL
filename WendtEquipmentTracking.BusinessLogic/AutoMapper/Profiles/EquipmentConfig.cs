@@ -4,8 +4,10 @@ using WendtEquipmentTracking.DataAccess.SQL;
 
 namespace WendtEquipmentTracking.BusinessLogic.AutoMapper.Profiles
 {
-    public class EquipmentConfig : Profile {
-        protected override void Configure() {
+    public class EquipmentConfig : Profile
+    {
+        public EquipmentConfig()
+        {
 
             base.CreateMap<Equipment, EquipmentBO>();
             base.CreateMap<EquipmentBO, Equipment>()
@@ -13,7 +15,7 @@ namespace WendtEquipmentTracking.BusinessLogic.AutoMapper.Profiles
                 .ForMember(dest => dest.CreatedDate, opt => opt.Ignore())
                 .ForMember(dest => dest.ModifiedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.ModifiedDate, opt => opt.Ignore());
-            
+
         }
     }
 }

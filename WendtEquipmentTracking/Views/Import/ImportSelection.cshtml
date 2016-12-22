@@ -1,0 +1,59 @@
+﻿
+@model ImportModel
+
+@{
+    ViewBag.Title = "Import Selection";
+}
+
+<h2>Import Equipment</h2>
+
+
+@using (Html.BeginForm("ImportSelection", "Equipment", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @if (Model.Status == ImportModel.ImportStatus.Success)
+        {
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="alert alert-success col-md-offset-2" role="alert">Done! Your file was Imported Successfully.</div>
+                </div>
+            </div>
+        }
+
+        @if (Model.Status == ImportModel.ImportStatus.Error)
+        {
+            <div class="alert alert-danger">
+                <a href="#" class="close" data-dismiss="alert">×</a>
+                @Html.Raw(HttpUtility.HtmlDecode(Html.ValidationSummary(true, "").ToHtmlString()))
+            </div>
+        }
+
+
+        <div class="row">
+            <div class="col-md-6">
+                @for (int i = 0; i < Model.Sheets.Count(); i++)
+                {
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBoxFor(model => model.Sheets[i].Checked)
+                            @Html.DisplayFor(model => model.Sheets[i].Name)
+                        </label>
+                    </div>
+                }
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Continue" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/form")
+}

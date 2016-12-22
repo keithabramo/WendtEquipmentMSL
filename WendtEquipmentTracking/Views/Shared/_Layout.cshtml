@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en-us">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,13 +17,22 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand vertical-bar-right" href="@Url.Action("Index", "Home")">
-                    <span><img src="~/Images/logo.jpg" /></span>
+                    <span><img src="~/Images/logo.jpg" alt="logo"/></span>
                     Equipment Tracking
                 </a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Master Ship List", "Index", "Home")</li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Actions <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Import Equipment Records", "Index", "Import", null, null)</li>
+                            <li><a href="#">Update Ready to Ship</a></li>
+                            <li><a href="#">Create Bill of Landing</a></li>
+                            <li><a href="#">Order Hardware Kit</a></li>
+                        </ul>
+                    </li>
                     <li>@Html.ActionLink("Manage Projects", "Index", "Project")</li>
 
                 </ul>

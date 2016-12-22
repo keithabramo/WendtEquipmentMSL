@@ -3,13 +3,12 @@ using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using WendtEquipmentTracking.App.Models;
-using WendtEquipmentTracking.BusinessLogic.Api;
-using WendtEquipmentTracking.BusinessLogic;
-using WendtEquipmentTracking.BusinessLogic.BO;
 using WendtEquipmentTracking.App.Common;
+using WendtEquipmentTracking.App.Models;
+using WendtEquipmentTracking.BusinessLogic;
+using WendtEquipmentTracking.BusinessLogic.Api;
+using WendtEquipmentTracking.BusinessLogic.BO;
 
 namespace WendtEquipmentTracking.App.Controllers
 {
@@ -42,7 +41,7 @@ namespace WendtEquipmentTracking.App.Controllers
             //Get Data
             var projectBO = projectService.GetById(projectId);
 
-            if(projectBO == null)
+            if (projectBO == null)
             {
                 CookieHelper.Delete("ProjectId");
                 return RedirectToAction("Index", "Home");
@@ -51,7 +50,7 @@ namespace WendtEquipmentTracking.App.Controllers
             var equipmentModels = Mapper.Map<IEnumerable<EquipmentModel>>(projectBO.Equipments);
 
             //Filter and sort data
-            
+
             equipmentModels = equipmentModels.OrderBy(r => r.EquipmentId);
 
             int pageNumber = (page ?? 1);

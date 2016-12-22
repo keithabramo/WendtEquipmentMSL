@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using WendtEquipmentTracking.Common;
+using System.ComponentModel;
 
 namespace WendtEquipmentTracking.App.Models
 {
     public class ProjectModel
     {
         public int ProjectId { get; set; }
+
+        [DisplayName("Project Number")]
         public string ProjectNumber { get; set; }
         public string CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }

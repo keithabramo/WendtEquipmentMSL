@@ -161,6 +161,8 @@
     <Compile Include="Common\CookiesHelper.cs" />
     <Compile Include="Common\HtmlHelperExtensions.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ValidateController.cs" />
+    <Compile Include="Controllers\ImportController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\EquipmentController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
@@ -170,6 +172,7 @@
     <Compile Include="Models\BillOfLandingModel.cs" />
     <Compile Include="Models\EquipmentModel.cs" />
     <Compile Include="Models\HardwareKitModel.cs" />
+    <Compile Include="Models\ImportSheetModel.cs" />
     <Compile Include="Models\ImportModel.cs" />
     <Compile Include="Models\ProjectNavModel.cs" />
     <Compile Include="Models\ProjectModel.cs" />
@@ -234,9 +237,8 @@
     <Content Include="Views\Project\Edit.cshtml" />
     <Content Include="Views\Project\Index.cshtml" />
     <Content Include="Views\Shared\ProjectNavPartial.cshtml" />
-    <Content Include="Views\Shared\ProjectListPartial.cshtml" />
-    <Content Include="Views\Equipment\ImportPartial.cshtml" />
-    <Content Include="Views\Equipment\ImportResultsPartial.cshtml" />
+    <Content Include="Views\Import\Index.cshtml" />
+    <Content Include="Views\Import\ImportSelection.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

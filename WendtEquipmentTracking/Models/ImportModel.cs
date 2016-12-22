@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using WendtEquipmentTracking.Common;
 
 namespace WendtEquipmentTracking.App.Models
 {
@@ -14,7 +11,7 @@ namespace WendtEquipmentTracking.App.Models
         {
             None,
             Success,
-            Error 
+            Error
         }
 
         [DisplayName("File")]
@@ -24,7 +21,8 @@ namespace WendtEquipmentTracking.App.Models
         [DisplayName("Status")]
         public ImportStatus Status { get; set; }
 
-        public IEnumerable<string> Sheets { get; set; }
-        public IEnumerable<ProjectModel> Projects { get; set; }
+        public List<ImportSheetModel> Sheets { get; set; }
+
+        public List<ProjectModel> Projects { get; set; }
     }
 }

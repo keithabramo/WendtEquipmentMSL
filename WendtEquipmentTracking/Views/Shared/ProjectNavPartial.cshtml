@@ -5,7 +5,7 @@
 <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@Html.DisplayFor(model => model.CurrentProject.ProjectNumber) <span class="caret"></span></a>
     <ul class="dropdown-menu">
-        <li>@Html.ActionLink("Edit Project", "Edit", new { id = Model.CurrentProject.ProjectId })</li>
+        <li>@Html.ActionLink("Configure Project", "Edit", new { id = Model.CurrentProject.ProjectId })</li>
         <li role="separator" class="divider"></li>
         <li class="dropdown-header">Choose another project</li>
         <li>
