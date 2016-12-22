@@ -1,0 +1,37 @@
+﻿@model ProjectNavModel
+
+@if (Model != null)
+{
+<li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@Html.DisplayFor(model => model.CurrentProject.ProjectNumber) <span class="caret"></span></a>
+    <ul class="dropdown-menu">
+        <li>@Html.ActionLink("Edit", "Edit", new { id = Model.CurrentProject.ProjectId })</li>
+        <li role="separator" class="divider"></li>
+
+        <li class="dropdown">
+
+            @using (Html.BeginForm("ChangeProject", "Project"))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-group col-md-4">
+                    <div class="input-group">
+                        @Html.DropDownList("ProjectId", new SelectList(Model.Projects, "ProjectId", "ProjectNumber"), "Choose a different project...", new { @class = "form-control" })
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" type="submit">Go!</button>
+                        </span>
+                    </div>
+                </div>
+            }
+
+            @*<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Choose a different project... <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                @foreach (var project in Model.Projects)
+                {
+                    <li>@Html.ActionLink(project.ProjectNumber, "ChangeProject", new { id = project.ProjectId })</li>
+                }
+            </ul>*@
+        </li>
+    </ul>
+</li>
+}

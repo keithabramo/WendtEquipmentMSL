@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand vertical-bar-right" href="@Url.Action("Index", "Home")">
+                    <span><img src="~/Images/logo.jpg" /></span>
+                    Equipment Tracking
+                </a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Master Ship List", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Manage Projects", "Index", "Project")</li>
+
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    @Html.Action("ProjectNavPartial", "Project")
+                    <li>
+                        <strong class="navbar-text">@Html.CurrentUsername()</strong>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-11 center-block">
+                @RenderBody()
+            </div>
+        </div>
+        <footer class="footer">
+            <hr />
+            <nav class="navbar ">
+                <div class="container-fluid">
+                    <p class="navbar-text">&copy; @DateTime.Now.Year - Wendt Corporation.</p>
+                </div>
+            </nav>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/main")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

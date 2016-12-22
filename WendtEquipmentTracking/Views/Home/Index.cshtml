@@ -1,0 +1,23 @@
+﻿@model IEnumerable<ProjectModel>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+    
+<p class="lead">Hello @Html.CurrentUsername()! Lets get started by selecting the project you would like to work on.</p>
+
+
+@using (Html.BeginForm("ChangeProject", "Project"))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group col-md-4">
+        <div class="input-group">
+            @Html.DropDownList("ProjectId", new SelectList(Model, "ProjectId", "ProjectNumber"), "Select Project...", new { @class = "form-control" })
+            <span class="input-group-btn">
+                <button class="btn btn-primary" type="submit">Go!</button>
+            </span>
+        </div>
+    </div>
+}

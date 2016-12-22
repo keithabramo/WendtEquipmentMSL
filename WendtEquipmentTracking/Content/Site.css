@@ -1,0 +1,134 @@
+﻿html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+}
+
+.footer {
+    left: 0;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+}
+
+    .footer hr {
+        margin: 0 7px;
+    }
+
+    .footer .navbar {
+        margin-bottom: 0;
+    }
+
+.banner {
+    background-color: rgba(50, 57, 60, 1);
+}
+
+    .banner object {
+        padding: .5em;
+        max-height: 100px;
+    }
+
+.navbar {
+    border-radius: 0;
+}
+
+.navbar-brand {
+    white-space: nowrap;
+    padding: 5px;
+}
+
+.navbar-brand.vertical-bar-right {
+    border-color: #fff;
+    margin-right: 0px;
+    padding-right: 15px;
+}
+
+.navbar-brand img {
+    height: 100%;
+}
+
+.navbar-inverse {
+    background-color: rgba(9, 79, 164, 0.8);
+    border-color: rgba(9, 79, 164, 0.8);
+}
+
+
+.navbar-inverse .navbar-nav > li > a, .navbar-inverse .navbar-nav > li > strong, .navbar-inverse .navbar-brand {
+    color: #ffffff;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus {
+    background-color: #eeba52;
+}
+
+.center-block {
+    float: none;
+}
+
+.vertical-bar-left {
+    padding-left: 10px;
+    margin-left: 10px;
+    border-left: 1px solid #ddd;
+}
+
+.vertical-bar-right {
+    padding-right: 10px;
+    margin-right: 10px;
+    border-right: 1px solid #ddd;
+}
+
+dl.dl-horizontal dt {
+    width: 260px;
+}
+
+dl.dl-horizontal dd {
+    margin-left: 280px;
+}
+
+.form-inline .radio-inline {
+    margin-top: -3px;
+}
+
+.form-inline .total-records {
+    margin-top: 5px;
+}
+
+.pagination-container .pagination {
+    margin: 0;
+}
+
+.label-as-badge {
+    border-radius: .7em;
+    font-size: 12px;
+    padding: 5px;
+}
+
+.modal-body {
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+/* Master LIST */
+
+.master-ship-list {
+    font-size: 12px;
+}
+
+    .master-ship-list th {
+        cursor: pointer;
+    }
+
+    .master-ship-list.text-center th {
+        vertical-align: top;
+        text-align: center;
+    }
+
+    .master-ship-list .links {
+        white-space: nowrap;
+    }
