@@ -13,16 +13,6 @@ namespace WendtEquipmentTracking.App
                     "WendtEquipmentTracking.App",
                     "WendtEquipmentTracking.BusinessLogic"
             }));
-
-            //Mapper.Initialize(x => register());
-        }
-
-        private static void register()
-        {
-
-
-            AutoMapperAppConfig.RegisterMappings();
-            AutoMapperBOConfig.RegisterMappings();
         }
     }
 }

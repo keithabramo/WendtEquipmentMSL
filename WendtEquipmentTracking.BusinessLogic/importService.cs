@@ -1,9 +1,10 @@
-﻿using System;
+﻿using AutoMapper;
 using System.Collections.Generic;
 using WendtEquipmentTracking.BusinessLogic.Api;
 using WendtEquipmentTracking.BusinessLogic.BO;
 using WendtEquipmentTracking.DataAccess.FileManagement;
 using WendtEquipmentTracking.DataAccess.FileManagement.Api;
+using WendtEquipmentTracking.DataAccess.FileManagement.Domain;
 
 namespace WendtEquipmentTracking.BusinessLogic
 {
@@ -16,16 +17,24 @@ namespace WendtEquipmentTracking.BusinessLogic
             importEngine = new ImportEngine();
         }
 
-        public IEnumerable<string> GetSheets(ImportBO importBO)
+        public ImportBO GetSheets(byte[] file)
         {
-            var sheets = importEngine.GetSheets(importBO.File);
+            var import = importEngine.GetSheets(file);
 
-            return sheets;
+            var importBO = Mapper.Map<ImportBO>(import);
+
+            return importBO;
         }
 
-        public IEnumerable<string> Import(ImportBO userBO)
+        public IEnumerable<EquipmentBO> GetEquipmentImport(ImportBO importBO)
         {
-            throw new NotImplementedException();
+            var import = Mapper.Map<Import>(importBO);
+
+            var equipmentRows = importEngine.GetEquipment(import);
+
+            var equipmentBOs = Mapper.Map<IEnumerable<EquipmentBO>>(equipmentRows);
+
+            return equipmentBOs;
         }
     }
 }

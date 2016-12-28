@@ -1,7 +1,12 @@
-﻿namespace WendtEquipmentTracking.BusinessLogic.BO
+﻿using System.Collections.Generic;
+
+namespace WendtEquipmentTracking.BusinessLogic.BO
 {
     public class ImportBO
     {
-        public byte[] File { get; set; }
+        public string FileName { get; set; }
+
+        public IEnumerable<string> Sheets { get; set; }
+
     }
 }

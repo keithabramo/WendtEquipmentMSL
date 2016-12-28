@@ -1,7 +1,10 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web.Mvc;
+using WendtEquipmentTracking.App.Common;
 using WendtEquipmentTracking.App.Models;
 using WendtEquipmentTracking.BusinessLogic;
 using WendtEquipmentTracking.BusinessLogic.Api;
@@ -12,10 +15,12 @@ namespace WendtEquipmentTracking.App.Controllers
     public class ImportController : BaseController
     {
         private IImportService importService;
+        private IEquipmentService equipmentService;
 
         public ImportController()
         {
             importService = new ImportService();
+            equipmentService = new EquipmentService();
         }
 
         // GET: Index
@@ -37,23 +42,24 @@ namespace WendtEquipmentTracking.App.Controllers
 
                     if (model.File != null)
                     {
-                        var importBO = new ImportBO();
-
+                        byte[] file = null;
                         using (var memoryStream = new MemoryStream())
                         {
                             model.File.InputStream.CopyTo(memoryStream);
-                            importBO.File = memoryStream.ToArray();
+                            file = memoryStream.ToArray();
                         }
 
-                        var sheets = importService.GetSheets(importBO);
+                        var importBO = importService.GetSheets(file);
 
-                        model.Sheets = sheets.Select(s => new ImportSheetModel
+                        model.Sheets = importBO.Sheets.Select(s => new ImportSheetModel
                         {
                             Checked = true,
                             Name = s
                         }).ToList();
 
-                        return View("ImportSelection", model);
+                        model.FileName = importBO.FileName;
+
+                        return View("SelectSheets", model);
                     }
                     else
                     {
@@ -69,6 +75,77 @@ namespace WendtEquipmentTracking.App.Controllers
                 model.Status = ImportModel.ImportStatus.Error;
                 ModelState.AddModelError("File", e.Message);
                 return View(model);
+            }
+        }
+
+        // POST: SelectSheets
+        [HttpPost]
+        public ActionResult SelectSheets(ImportModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+
+                    var importBO = new ImportBO
+                    {
+                        Sheets = model.Sheets.Where(s => s.Checked).Select(s => s.Name),
+                        FileName = model.FileName
+                    };
+
+                    var equipmentBOs = importService.GetEquipmentImport(importBO).ToList();
+
+                    var equipmentModels = Mapper.Map<IList<EquipmentImportModel>>(equipmentBOs);
+
+
+                    return PartialView("ImportEquipmentPartial", equipmentModels);
+                }
+
+                return PartialView("ImportEquipmentPartial");
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("", e.Message);
+                return PartialView("ImportEquipmentPartial");
+            }
+        }
+
+        // POST: ImportEquipment
+        [HttpPost]
+        public ActionResult ImportEquipment(IEnumerable<EquipmentImportModel> model)
+        {
+
+            var resultModel = new ImportModel();
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var projectIdCookie = CookieHelper.Get("ProjectId");
+
+                    if (!string.IsNullOrEmpty(projectIdCookie))
+                    {
+                        var projectId = Convert.ToInt32(projectIdCookie);
+                        model.ToList().ForEach(c => c.ProjectId = projectId);
+
+                        var equipmentBOs = Mapper.Map<IEnumerable<EquipmentBO>>(model.Where(m => m.Checked).ToList());
+                        equipmentService.SaveAll(equipmentBOs);
+
+                        resultModel.Status = ImportModel.ImportStatus.Success;
+                        return View("SelectSheets", resultModel);
+                    }
+                }
+
+                resultModel.Status = ImportModel.ImportStatus.Error;
+
+                return View("SelectSheets", resultModel);
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("", e.Message);
+
+                resultModel.Status = ImportModel.ImportStatus.Error;
+
+                return View("SelectSheets", resultModel);
             }
         }
     }

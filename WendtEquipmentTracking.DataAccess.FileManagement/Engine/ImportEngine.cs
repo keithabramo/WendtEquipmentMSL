@@ -1,29 +1,45 @@
-﻿using LinqToExcel;
-using LinqToExcel.Domain;
-using System;
+﻿using Excel.Helper;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using WendtEquipmentTracking.DataAccess.FileManagement.Api;
 using WendtEquipmentTracking.DataAccess.FileManagement.Domain;
+using WendtEquipmentTracking.DataAccess.FileManagement.Helper;
 
 namespace WendtEquipmentTracking.DataAccess.FileManagement
 {
     public class ImportEngine : IImportEngine
     {
-        public IEnumerable<EquipmentRow> GetEquipment(byte[] importFile)
+        public IEnumerable<ImportRow> GetEquipment(Import import)
         {
-            throw new NotImplementedException();
+
+            var excelHelper = new ExcelDataReaderHelper(import.FileName);
+
+            var importData = new List<ImportRow>();
+            foreach (var sheet in import.Sheets)
+            {
+                var importSheet = ImportHelper.GetImportRecordsForSheet(sheet, excelHelper);
+                importData.AddRange(importSheet);
+            }
+
+            return importData;
         }
 
-        public IEnumerable<string> GetSheets(byte[] importFile)
+        public Import GetSheets(byte[] importFile)
         {
-            var tempParcelFile = Path.GetTempFileName();
-            File.WriteAllBytes(tempParcelFile, importFile);
+            var tempFile = Path.GetTempFileName();
+            File.WriteAllBytes(tempFile, importFile);
 
-            var excel = new ExcelQueryFactory(tempParcelFile);
-            //excel.DatabaseEngine = DatabaseEngine.Ace;
+            var helper = new ExcelDataReaderHelper(tempFile);
 
-            return excel.GetWorksheetNames();
+
+            var import = new Import
+            {
+                Sheets = helper.WorksheetNames.ToList(),
+                FileName = tempFile
+            };
+
+            return import;
         }
     }
 }

@@ -74,7 +74,7 @@ namespace WendtEquipmentTracking.App.Models
         public DateTime? DateShipped { get; set; }
 
 
-        [DisplayName("")]
+        [DisplayName("Shipped From")]
         public string ShippedFrom { get; set; }
 
 

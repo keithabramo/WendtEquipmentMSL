@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Import Equipment</h2>
+<h2>Import Equipment<br /><small>Select the excel document containing the records you would like to import.</small></h2>
 
 
 @using (Html.BeginForm("Index", "Import", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -13,23 +13,6 @@
 
     <div class="form-horizontal">
         <hr />
-        @if (Model.Status == ImportModel.ImportStatus.Success)
-        {
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="alert alert-success col-md-offset-2" role="alert">Done! Your file was Imported Successfully.</div>
-                </div>
-            </div>
-        }
-
-        @if (Model.Status == ImportModel.ImportStatus.Error)
-        {
-            <div class="alert alert-danger">
-                <a href="#" class="close" data-dismiss="alert">×</a>
-                @Html.Raw(HttpUtility.HtmlDecode(Html.ValidationSummary(true, "").ToHtmlString()))
-            </div>
-        }
-
 
         <div class="row">
             <div class="col-md-6">

@@ -21,7 +21,5 @@ namespace WendtEquipmentTracking.BusinessLogic.BO
         public string ShipToPhoneFax { get; set; }
         public string ShipToContact1 { get; set; }
         public string ShipToContact2 { get; set; }
-
-        public EquipmentBO Equipment { get; set; }
     }
 }

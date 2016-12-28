@@ -51,7 +51,7 @@
     <Compile Include="Api\IProjectService.cs" />
     <Compile Include="Api\IImportService.cs" />
     <Compile Include="Api\IEquipmentService.cs" />
-    <Compile Include="AutoMapper\AutoMapperBOConfig.cs" />
+    <Compile Include="AutoMapper\Profiles\ImportConfig.cs" />
     <Compile Include="AutoMapper\Profiles\ProjectConfig.cs" />
     <Compile Include="AutoMapper\Profiles\EquipmentConfig.cs" />
     <Compile Include="BO\BillOfLandingBO.cs" />

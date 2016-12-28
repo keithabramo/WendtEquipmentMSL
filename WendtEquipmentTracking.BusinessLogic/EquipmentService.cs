@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using WendtEquipmentTracking.BusinessLogic.Api;
 using WendtEquipmentTracking.BusinessLogic.BO;
-using WendtEquipmentTracking.Common;
 using WendtEquipmentTracking.DataAccess.SQL;
 using WendtEquipmentTracking.DataAccess.SQL.Api;
 using WendtEquipmentTracking.DataAccess.SQL.Engine;
@@ -27,6 +26,13 @@ namespace WendtEquipmentTracking.BusinessLogic
             equipmentEngine.AddNewEquipment(equipment);
         }
 
+        public void SaveAll(IEnumerable<EquipmentBO> equipmentBOs)
+        {
+            var equipments = Mapper.Map<IEnumerable<Equipment>>(equipmentBOs);
+
+            equipmentEngine.AddAllNewEquipment(equipments);
+        }
+
         public IEnumerable<EquipmentBO> GetAll()
         {
             var equipments = equipmentEngine.ListAll().ToList();
@@ -35,7 +41,7 @@ namespace WendtEquipmentTracking.BusinessLogic
 
             return equipmentBOs;
         }
-        
+
         public EquipmentBO GetById(int id)
         {
             var equipment = equipmentEngine.Get(EquipmentSpecs.Id(id));
@@ -44,7 +50,7 @@ namespace WendtEquipmentTracking.BusinessLogic
 
             return equipmentBO;
         }
-        
+
         public void Update(EquipmentBO equipmentBO)
         {
             var oldEquipment = equipmentEngine.Get(EquipmentSpecs.Id(equipmentBO.EquipmentId));
@@ -58,7 +64,7 @@ namespace WendtEquipmentTracking.BusinessLogic
         {
             var equipment = equipmentEngine.Get(EquipmentSpecs.Id(id));
 
-            if(equipment != null)
+            if (equipment != null)
             {
                 equipmentEngine.DeleteEquipment(equipment);
             }

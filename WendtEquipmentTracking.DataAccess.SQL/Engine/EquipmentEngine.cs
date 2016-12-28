@@ -11,11 +11,13 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
     {
         private IRepository<Equipment> repository = null;
 
-        public EquipmentEngine() {
+        public EquipmentEngine()
+        {
             this.repository = new Repository<Equipment>();
         }
 
-        public EquipmentEngine(WendtEquipmentTrackingEntities dbContext) {
+        public EquipmentEngine(WendtEquipmentTrackingEntities dbContext)
+        {
             this.repository = new Repository<Equipment>(dbContext);
         }
 
@@ -24,21 +26,25 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             this.repository = repository;
         }
 
-        public IEnumerable<Equipment> ListAll() {
+        public IEnumerable<Equipment> ListAll()
+        {
             return this.repository.GetAll()
                 .Include(x => x.BillOfLandings);
         }
 
-        public Equipment Get(Specification<Equipment> specification) {
+        public Equipment Get(Specification<Equipment> specification)
+        {
             return this.repository.Single(specification);
         }
 
-        public IEnumerable<Equipment> List(Specification<Equipment> specification) {
+        public IEnumerable<Equipment> List(Specification<Equipment> specification)
+        {
             return this.repository.Find(specification)
                 .Include(x => x.BillOfLandings);
         }
 
-        public void AddNewEquipment(Equipment equipment) {
+        public void AddNewEquipment(Equipment equipment)
+        {
             var now = DateTime.Now;
 
             equipment.CreatedDate = now;
@@ -46,7 +52,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             equipment.ModifiedDate = now;
             equipment.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
 
-            foreach(var billOfLanding in equipment.BillOfLandings)
+            foreach (var billOfLanding in equipment.BillOfLandings)
             {
                 billOfLanding.CreatedDate = equipment.CreatedDate;
                 billOfLanding.CreatedBy = equipment.CreatedBy;
@@ -58,7 +64,32 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             this.repository.Save();
         }
 
-        public void UpdateEquipment(Equipment equipment) {
+        public void AddAllNewEquipment(IEnumerable<Equipment> equipments)
+        {
+            var now = DateTime.Now;
+
+            foreach (var equipment in equipments)
+            {
+                equipment.CreatedDate = now;
+                equipment.CreatedBy = ActiveDirectoryHelper.CurrentUserUsername();
+                equipment.ModifiedDate = now;
+                equipment.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
+
+                foreach (var billOfLanding in equipment.BillOfLandings)
+                {
+                    billOfLanding.CreatedDate = equipment.CreatedDate;
+                    billOfLanding.CreatedBy = equipment.CreatedBy;
+                    billOfLanding.ModifiedDate = equipment.ModifiedDate;
+                    billOfLanding.ModifiedBy = equipment.ModifiedBy;
+                }
+            }
+
+            this.repository.InsertAll(equipments);
+            this.repository.Save();
+        }
+
+        public void UpdateEquipment(Equipment equipment)
+        {
             var now = DateTime.Now;
 
             equipment.ModifiedDate = now;
@@ -79,12 +110,14 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             this.repository.Save();
         }
 
-        public void DeleteEquipment(Equipment equipment) {
+        public void DeleteEquipment(Equipment equipment)
+        {
             this.repository.Delete(equipment);
             this.repository.Save();
         }
 
-        public void SetDBContext(WendtEquipmentTrackingEntities dbContext) {
+        public void SetDBContext(WendtEquipmentTrackingEntities dbContext)
+        {
             this.repository = new Repository<Equipment>(dbContext);
         }
     }

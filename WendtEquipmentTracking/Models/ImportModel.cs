@@ -18,11 +18,13 @@ namespace WendtEquipmentTracking.App.Models
         [Remote("ValidImportFile", "Validate")]
         public HttpPostedFileBase File { get; set; }
 
+        public string FileName { get; set; }
+
         [DisplayName("Status")]
         public ImportStatus Status { get; set; }
 
         public List<ImportSheetModel> Sheets { get; set; }
 
-        public List<ProjectModel> Projects { get; set; }
+        public List<EquipmentImportModel> Equipments { get; set; }
     }
 }

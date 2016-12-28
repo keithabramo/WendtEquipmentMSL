@@ -122,6 +122,7 @@ dl.dl-horizontal dd {
 
     .master-ship-list th {
         cursor: pointer;
+        white-space: nowrap;
     }
 
     .master-ship-list.text-center th {

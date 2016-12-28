@@ -152,7 +152,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="AutoMapper\AutoMapperAppConfig.cs" />
     <Compile Include="AutoMapper\Converters\DateTimeToNullableDateTimeConverter.cs" />
     <Compile Include="AutoMapper\Converters\DateTimeToStringConverter.cs" />
     <Compile Include="AutoMapper\Converters\NullableDateTimeToStringConverter.cs" />
@@ -170,6 +169,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\BillOfLandingModel.cs" />
+    <Compile Include="Models\EquipmentImportModel.cs" />
     <Compile Include="Models\EquipmentModel.cs" />
     <Compile Include="Models\HardwareKitModel.cs" />
     <Compile Include="Models\ImportSheetModel.cs" />
@@ -207,6 +207,8 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.inputmask.js" />
     <Content Include="Scripts\jquery.inputmask.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -238,7 +240,8 @@
     <Content Include="Views\Project\Index.cshtml" />
     <Content Include="Views\Shared\ProjectNavPartial.cshtml" />
     <Content Include="Views\Import\Index.cshtml" />
-    <Content Include="Views\Import\ImportSelection.cshtml" />
+    <Content Include="Views\Import\SelectSheets.cshtml" />
+    <Content Include="Views\Import\ImportEquipmentPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
