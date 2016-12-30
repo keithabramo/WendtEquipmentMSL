@@ -46,11 +46,17 @@ namespace WendtEquipmentTracking.App.Models
         public double? UnitWeight { get; set; }
 
 
+
+
+
+
         [DisplayName("Total Weight")]
+        [ReadOnly(true)]
         public double? TotalWeight { get; set; }
 
 
         [DisplayName("Total Weight Shipped")]
+        [ReadOnly(true)]
         public double? TotalWeightShipped { get; set; }
 
 
@@ -59,30 +65,27 @@ namespace WendtEquipmentTracking.App.Models
 
 
         [DisplayName("Shipped Quantity")]
+        [ReadOnly(true)]
         public double? ShippedQuantity { get; set; }
 
 
         [DisplayName("Left To Ship")]
+        [ReadOnly(true)]
         public double? LeftToShip { get; set; }
 
 
         [DisplayName("Fully Shipped")]
+        [ReadOnly(true)]
         public bool? FullyShipped { get; set; }
 
 
-        [DisplayName("Date Shipped")]
-        public DateTime? DateShipped { get; set; }
-
-
-        [DisplayName("Shipped From")]
-        public string ShippedFrom { get; set; }
-
-
         [DisplayName("Customs Value")]
+        [ReadOnly(true)]
         public double? CustomsValue { get; set; }
 
 
         [DisplayName("Sale Price")]
+        [ReadOnly(true)]
         public double? SalePrice { get; set; }
 
 

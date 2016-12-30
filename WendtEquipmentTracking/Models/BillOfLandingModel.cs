@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 
 namespace WendtEquipmentTracking.App.Models
 {
@@ -12,6 +13,15 @@ namespace WendtEquipmentTracking.App.Models
 
         [DisplayName("BOL #")]
         public string BillOfLandingNumber { get; set; }
+
+        [DisplayName("Quantity")]
+        public double? Quantity { get; set; }
+
+        [DisplayName("Date Shipped")]
+        public DateTime? DateShipped { get; set; }
+
+        [DisplayName("Shipped From")]
+        public string ShippedFrom { get; set; }
 
         [DisplayName("Ship To Company")]
         public string ShipToCompany { get; set; }

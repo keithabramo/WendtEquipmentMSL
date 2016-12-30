@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using WendtEquipmentTracking.Common;
 
 namespace WendtEquipmentTracking.BusinessLogic.BO
 {
@@ -15,6 +12,9 @@ namespace WendtEquipmentTracking.BusinessLogic.BO
         public string ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public string BillOfLandingNumber { get; set; }
+        public double? Quantity { get; set; }
+        public DateTime? DateShipped { get; set; }
+        public string ShippedFrom { get; set; }
         public string ShipToCompany { get; set; }
         public string ShipToAddress { get; set; }
         public string ShipToCSZ { get; set; }

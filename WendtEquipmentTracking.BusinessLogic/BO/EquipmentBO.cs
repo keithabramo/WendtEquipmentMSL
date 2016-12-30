@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using WendtEquipmentTracking.Common;
 
 namespace WendtEquipmentTracking.BusinessLogic.BO
 {
@@ -28,8 +26,6 @@ namespace WendtEquipmentTracking.BusinessLogic.BO
         public double? ShippedQuantity { get; set; }
         public double? LeftToShip { get; set; }
         public bool? FullyShipped { get; set; }
-        public DateTime? DateShipped { get; set; }
-        public string ShippedFrom { get; set; }
         public double? CustomsValue { get; set; }
         public double? SalePrice { get; set; }
         public string HTSCode { get; set; }

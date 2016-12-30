@@ -160,6 +160,7 @@
     <Compile Include="Common\CookiesHelper.cs" />
     <Compile Include="Common\HtmlHelperExtensions.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\BillOfLandingController.cs" />
     <Compile Include="Controllers\ValidateController.cs" />
     <Compile Include="Controllers\ImportController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -242,6 +243,11 @@
     <Content Include="Views\Import\Index.cshtml" />
     <Content Include="Views\Import\SelectSheets.cshtml" />
     <Content Include="Views\Import\ImportEquipmentPartial.cshtml" />
+    <Content Include="Views\Equipment\Create.cshtml" />
+    <Content Include="Views\BillOfLanding\Index.cshtml" />
+    <Content Include="Views\BillOfLanding\Create.cshtml" />
+    <Content Include="Views\BillOfLanding\Edit.cshtml" />
+    <Content Include="Views\BillOfLanding\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -77,10 +77,10 @@ namespace WendtEquipmentTracking.App.Controllers
 
         //
         // GET: /Equipment/Create
-
+        [ChildActionOnly]
         public ActionResult Create()
         {
-            return View();
+            return PartialView();
         }
 
         //
@@ -93,18 +93,26 @@ namespace WendtEquipmentTracking.App.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var equipmentBO = Mapper.Map<EquipmentBO>(model);
+                    var projectIdCookie = CookieHelper.Get("ProjectId");
 
-                    equipmentService.Save(equipmentBO);
+                    if (!string.IsNullOrEmpty(projectIdCookie))
+                    {
+                        var projectId = Convert.ToInt32(projectIdCookie);
+                        model.ProjectId = projectId;
 
-                    return RedirectToAction("Index");
+                        var equipmentBO = Mapper.Map<EquipmentBO>(model);
+
+                        equipmentService.Save(equipmentBO);
+
+                        return RedirectToAction("Index");
+                    }
                 }
 
-                return View(model);
+                return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return RedirectToAction("Index");
             }
         }
 
