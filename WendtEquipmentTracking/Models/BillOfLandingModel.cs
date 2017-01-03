@@ -1,9 +1,10 @@
 ﻿using System;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace WendtEquipmentTracking.App.Models
 {
-    public class BillOfLandingModel
+    public class BillOfLandingModel : BaseModel
     {
         public int BillOfLandingId { get; set; }
         public int EquipmentId { get; set; }
@@ -11,12 +12,16 @@ namespace WendtEquipmentTracking.App.Models
         [DisplayName("Revision")]
         public int Revision { get; set; }
 
+        [DisplayName("Is Current Revision")]
+        public bool IsCurrentRevision { get; set; }
+
         [DisplayName("BOL #")]
         public string BillOfLandingNumber { get; set; }
 
         [DisplayName("Quantity")]
         public double? Quantity { get; set; }
 
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         [DisplayName("Date Shipped")]
         public DateTime? DateShipped { get; set; }
 

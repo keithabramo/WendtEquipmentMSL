@@ -1,89 +1,178 @@
-﻿using System;
+﻿using AutoMapper;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using WendtEquipmentTracking.App.Models;
+using WendtEquipmentTracking.BusinessLogic;
+using WendtEquipmentTracking.BusinessLogic.Api;
+using WendtEquipmentTracking.BusinessLogic.BO;
 
 namespace WendtEquipmentTracking.App.Controllers
 {
     public class BillOfLandingController : Controller
     {
-        // GET: BillOfLanding
-        public ActionResult Index()
+        private IBillOfLandingService billOfLandingService;
+        private IEquipmentService equipmentService;
+
+        public BillOfLandingController()
         {
-            return View();
+            billOfLandingService = new BillOfLandingService();
+            equipmentService = new EquipmentService();
         }
 
-        // GET: BillOfLanding/Details/5
-        public ActionResult Details(int id)
+        //
+        // GET: /BillOfLanding/
+
+        public ActionResult Index(int equipmentId)
         {
-            return View();
+            //Get Data
+            var equipmentBO = equipmentService.GetById(equipmentId);
+
+            var equipmentModel = Mapper.Map<EquipmentModel>(equipmentBO);
+
+
+            return PartialView(equipmentModel);
         }
 
-        // GET: BillOfLanding/Create
-        public ActionResult Create()
+        //
+        // GET: /BillOfLanding/Details/5
+
+        public ActionResult Details(string billOfLandingNumber)
         {
-            return View();
+            var billOfLandings = billOfLandingService.GetByBillOfLandingNumber(billOfLandingNumber);
+
+            if (billOfLandings == null)
+            {
+                return HttpNotFound();
+            }
+
+            var model = Mapper.Map<IEnumerable<BillOfLandingModel>>(billOfLandings);
+
+            return PartialView(model);
         }
 
-        // POST: BillOfLanding/Create
+        //
+        // GET: /BillOfLanding/Create
+
+        public ActionResult Create(int equipmentId)
+        {
+            return PartialView(new BillOfLandingModel { EquipmentId = equipmentId });
+        }
+
+        //
+        // POST: /BillOfLanding/Create
+
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(BillOfLandingModel model)
         {
             try
             {
-                // TODO: Add insert logic here
+                if (ModelState.IsValid)
+                {
+                    var billOfLandingBO = Mapper.Map<BillOfLandingBO>(model);
 
-                return RedirectToAction("Index");
+                    billOfLandingService.Save(billOfLandingBO);
+
+                    return RedirectToAction("Index", new { EquipmentId = model.EquipmentId });
+                }
+
+                return PartialView(model);
             }
             catch
             {
-                return View();
+                return PartialView(model);
             }
         }
 
-        // GET: BillOfLanding/Edit/5
+        //
+        // GET: /BillOfLanding/Edit/5
+
         public ActionResult Edit(int id)
         {
-            return View();
+            var billOfLanding = billOfLandingService.GetById(id);
+            if (billOfLanding == null)
+            {
+                return HttpNotFound();
+            }
+
+            var billOfLandingModel = Mapper.Map<BillOfLandingModel>(billOfLanding);
+
+            return PartialView(billOfLandingModel);
         }
 
-        // POST: BillOfLanding/Edit/5
+        //
+        // POST: /BillOfLanding/Edit/5
+
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, BillOfLandingModel model)
         {
             try
             {
-                // TODO: Add update logic here
+                if (ModelState.IsValid)
+                {
+                    var billOfLanding = billOfLandingService.GetById(id);
 
-                return RedirectToAction("Index");
+                    Mapper.Map<BillOfLandingModel, BillOfLandingBO>(model, billOfLanding);
+
+                    billOfLandingService.Update(billOfLanding);
+
+                    return RedirectToAction("Index", new { EquipmentId = model.EquipmentId });
+                }
+
+                return PartialView(model);
             }
             catch
             {
-                return View();
+                return PartialView(model);
             }
         }
+
 
         // GET: BillOfLanding/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var billOfLanding = billOfLandingService.GetById(id);
+
+            if (billOfLanding == null)
+            {
+                return HttpNotFound();
+            }
+
+            var model = Mapper.Map<BillOfLandingModel>(billOfLanding);
+
+            return PartialView(model);
         }
 
         // POST: BillOfLanding/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id, BillOfLandingModel model)
         {
             try
             {
-                // TODO: Add delete logic here
+                var billOfLanding = billOfLandingService.GetById(id);
 
-                return RedirectToAction("Index");
+                if (billOfLanding == null)
+                {
+                    return HttpNotFound();
+                }
+
+                billOfLandingService.Delete(id);
+
+                return RedirectToAction("Index", new { EquipmentId = model.EquipmentId });
             }
             catch
             {
-                return View();
+                var billOfLanding = billOfLandingService.GetById(id);
+
+                if (billOfLanding == null)
+                {
+                    return HttpNotFound();
+                }
+
+                model = Mapper.Map<BillOfLandingModel>(billOfLanding);
+
+                return PartialView(model);
             }
         }
+
     }
 }

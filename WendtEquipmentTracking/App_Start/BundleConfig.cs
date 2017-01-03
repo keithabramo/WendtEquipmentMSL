@@ -1,5 +1,4 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
 namespace WendtEquipmentTracking.App
 {
@@ -16,11 +15,15 @@ namespace WendtEquipmentTracking.App
             bundles.Add(new ScriptBundle("~/bundles/form").Include(
                         "~/Scripts/jquery.validate*",
                         "~/Scripts/jquery.unobtrusive*",
-                        "~/Scripts/jquery.inputmask.js"));
+                        "~/Scripts/jquery.inputmask.js",
+                        "~/Scripts/waitingDialog.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
-            
+
+            bundles.Add(new ScriptBundle("~/bundles/billOfLanding").Include(
+                       "~/Scripts/BillOfLanding.js"));
+
 
 
             bundles.Add(new StyleBundle("~/Content/css")

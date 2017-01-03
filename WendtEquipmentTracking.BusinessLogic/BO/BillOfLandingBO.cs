@@ -7,6 +7,7 @@ namespace WendtEquipmentTracking.BusinessLogic.BO
         public int BillOfLandingId { get; set; }
         public int EquipmentId { get; set; }
         public int Revision { get; set; }
+        public bool IsCurrentRevision { get; set; }
         public string CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
         public string ModifiedBy { get; set; }

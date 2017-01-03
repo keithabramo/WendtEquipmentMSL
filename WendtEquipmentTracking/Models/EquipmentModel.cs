@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace WendtEquipmentTracking.App.Models
 {
-    public class EquipmentModel
+    public class EquipmentModel : BaseModel
     {
         public int EquipmentId { get; set; }
         public int ProjectId { get; set; }
@@ -18,6 +19,7 @@ namespace WendtEquipmentTracking.App.Models
         public string Priority { get; set; }
 
 
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         [DisplayName("Release Date")]
         public DateTime? ReleaseDate { get; set; }
 
@@ -116,10 +118,11 @@ namespace WendtEquipmentTracking.App.Models
         public string BillOfLandingNumberToStorage { get; set; }
 
 
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         [DisplayName("Date Shipped To Storage")]
         public DateTime? DateShippedToStorage { get; set; }
 
-        public IEnumerable<BillOfLandingModel> BillOfLandings { get; set; }
+        public IList<BillOfLandingModel> BillOfLandings { get; set; }
         public ProjectModel Project { get; set; }
     }
 }

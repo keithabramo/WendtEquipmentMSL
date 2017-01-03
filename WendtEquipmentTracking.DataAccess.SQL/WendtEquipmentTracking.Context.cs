@@ -25,9 +25,9 @@ namespace WendtEquipmentTracking.DataAccess.SQL
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<HardwareKit> HardwareKits { get; set; }
         public virtual DbSet<Project> Projects { get; set; }
-        public virtual DbSet<BillOfLanding> BillOfLandings { get; set; }
         public virtual DbSet<Equipment> Equipments { get; set; }
+        public virtual DbSet<BillOfLanding> BillOfLandings { get; set; }
+        public virtual DbSet<HardwareKit> HardwareKits { get; set; }
     }
 }

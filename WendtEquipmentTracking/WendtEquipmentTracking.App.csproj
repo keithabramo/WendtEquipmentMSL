@@ -155,10 +155,12 @@
     <Compile Include="AutoMapper\Converters\DateTimeToNullableDateTimeConverter.cs" />
     <Compile Include="AutoMapper\Converters\DateTimeToStringConverter.cs" />
     <Compile Include="AutoMapper\Converters\NullableDateTimeToStringConverter.cs" />
+    <Compile Include="AutoMapper\Profiles\BillOfLandingConfig.cs" />
     <Compile Include="AutoMapper\Profiles\ProjectConfig.cs" />
     <Compile Include="AutoMapper\Profiles\EquipmentConfig.cs" />
     <Compile Include="Common\CookiesHelper.cs" />
     <Compile Include="Common\HtmlHelperExtensions.cs" />
+    <Compile Include="Common\SuccessStatus.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BillOfLandingController.cs" />
     <Compile Include="Controllers\ValidateController.cs" />
@@ -173,6 +175,7 @@
     <Compile Include="Models\EquipmentImportModel.cs" />
     <Compile Include="Models\EquipmentModel.cs" />
     <Compile Include="Models\HardwareKitModel.cs" />
+    <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\ImportSheetModel.cs" />
     <Compile Include="Models\ImportModel.cs" />
     <Compile Include="Models\ProjectNavModel.cs" />
@@ -199,6 +202,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Images\logo.jpg" />
+    <Content Include="Scripts\BillOfLanding.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
@@ -219,6 +223,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\waitingDialog.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

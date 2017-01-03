@@ -52,8 +52,8 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         public string BillOfLandingNumberToStorage { get; set; }
         public Nullable<System.DateTime> DateShippedToStorage { get; set; }
     
+        public virtual Project Project { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BillOfLanding> BillOfLandings { get; set; }
-        public virtual Project Project { get; set; }
     }
 }

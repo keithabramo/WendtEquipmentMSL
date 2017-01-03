@@ -9,6 +9,7 @@
 <table class="master-ship-list table table-condensed table-hover table-bordered">
     <thead>
         <tr>
+            <th></th>
             <th>
                 @Html.DisplayNameFor(model => model.EquipmentName)
             </th>
@@ -91,6 +92,7 @@
         @foreach (var item in Model)
         {
             <tr>
+                <td data-toggle="collapse" data-target="#accordion@(item.EquipmentId)" class="expand"><span class="glyphicon glyphicon-plus text-primary"></span></td>
                 <td>
                     @Html.DisplayFor(modelItem => item.EquipmentName)
                 </td>
@@ -172,8 +174,23 @@
                     @Html.ActionLink("Delete", "Delete", new { id = item.EquipmentId })
                 </td>
             </tr>
+            <tr class="collapse info" id="accordion@(item.EquipmentId)" class="collapse">
+                <td colspan="27" id="BOL@(item.EquipmentId)">
+                    @Html.Partial("~/Views/BillOfLanding/Index.cshtml", item)
+                </td>
+            </tr>
         }
 
         @Html.Action("Create")
     </tbody>
 </table>
+
+
+<div id="BOLDialogs">
+
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/form")
+    @Scripts.Render("~/bundles/billOfLanding")
+}

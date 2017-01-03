@@ -1,46 +1,43 @@
-﻿@model IEnumerable<BillOfLandingModel>
+﻿@model EquipmentModel
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table table-condensed table-bordered">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.BillOfLandingNumber)
+                @Html.DisplayNameFor(model => model.BillOfLandings[0].BillOfLandingNumber)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Quantity)
+                @Html.DisplayNameFor(model => model.BillOfLandings[0].Quantity)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DateShipped)
+                @Html.DisplayNameFor(model => model.BillOfLandings[0].DateShipped)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ShippedFrom)
+                @Html.DisplayNameFor(model => model.BillOfLandings[0].ShippedFrom)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ShipToCompany)
+                @Html.DisplayNameFor(model => model.BillOfLandings[0].ShipToCompany)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ShipToAddress)
+                @Html.DisplayNameFor(model => model.BillOfLandings[0].ShipToAddress)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ShipToCSZ)
+                @Html.DisplayNameFor(model => model.BillOfLandings[0].ShipToCSZ)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ShipToPhoneFax)
+                @Html.DisplayNameFor(model => model.BillOfLandings[0].ShipToPhoneFax)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ShipToContact1)
+                @Html.DisplayNameFor(model => model.BillOfLandings[0].ShipToContact1)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ShipToContact2)
+                @Html.DisplayNameFor(model => model.BillOfLandings[0].ShipToContact2)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.BillOfLandings.Where(b => b.IsCurrentRevision))
         {
             <tr>
                 <td>
@@ -74,15 +71,15 @@
                     @Html.DisplayFor(modelItem => item.ShipToContact2)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    @Ajax.ActionLink("Edit", "Edit", "BillOfLanding", new { Id = item.BillOfLandingId }, new AjaxOptions { UpdateTargetId = "BOLDialogs", InsertionMode = InsertionMode.Replace, OnSuccess = "OnAjaxFinish" }, new { @class = "edit-bol" }) |
+                    @Ajax.ActionLink("View Revisions", "Details", "BillOfLanding", new { billOfLandingNumber = item.BillOfLandingNumber }, new AjaxOptions { UpdateTargetId = "BOLDialogs", InsertionMode = InsertionMode.Replace, OnSuccess = "OnAjaxFinish" }, new { @class = "view-bol" }) |
+                    @Ajax.ActionLink("Delete", "Delete", "BillOfLanding", new { Id = item.BillOfLandingId }, new AjaxOptions { UpdateTargetId = "BOLDialogs", InsertionMode = InsertionMode.Replace, OnSuccess = "OnAjaxFinish" }, new { @class = "delete-bol" })
                 </td>
             </tr>
         }
         <tr>
-            <td>
-                @Html.ActionLink("Create New", "Create")
+            <td colspan="11">
+                @Ajax.ActionLink("Add new BOL", "Create", "BillOfLanding", new { EquipmentId = Model.EquipmentId }, new AjaxOptions { UpdateTargetId = "BOLDialogs", InsertionMode = InsertionMode.Replace, OnSuccess = "OnAjaxFinish" }, new { @class = "create-bol btn btn-sm btn-primary" })
             </td>
         </tr>
     </tbody>

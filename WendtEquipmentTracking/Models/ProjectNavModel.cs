@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using WendtEquipmentTracking.Common;
+﻿using System.Collections.Generic;
 
 namespace WendtEquipmentTracking.App.Models
 {
-    public class ProjectNavModel
+    public class ProjectNavModel : BaseModel
     {
         public ProjectModel CurrentProject { get; set; }
         public IEnumerable<ProjectModel> Projects { get; set; }

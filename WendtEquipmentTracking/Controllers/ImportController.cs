@@ -67,12 +67,12 @@ namespace WendtEquipmentTracking.App.Controllers
                     }
                 }
 
-                model.Status = ImportModel.ImportStatus.Error;
+                model.Status = SuccessStatus.Error;
                 return View(model);
             }
             catch (Exception e)
             {
-                model.Status = ImportModel.ImportStatus.Error;
+                model.Status = SuccessStatus.Error;
                 ModelState.AddModelError("File", e.Message);
                 return View(model);
             }
@@ -130,12 +130,12 @@ namespace WendtEquipmentTracking.App.Controllers
                         var equipmentBOs = Mapper.Map<IEnumerable<EquipmentBO>>(model.Where(m => m.Checked).ToList());
                         equipmentService.SaveAll(equipmentBOs);
 
-                        resultModel.Status = ImportModel.ImportStatus.Success;
+                        resultModel.Status = SuccessStatus.Success;
                         return View("SelectSheets", resultModel);
                     }
                 }
 
-                resultModel.Status = ImportModel.ImportStatus.Error;
+                resultModel.Status = SuccessStatus.Error;
 
                 return View("SelectSheets", resultModel);
             }
@@ -143,7 +143,7 @@ namespace WendtEquipmentTracking.App.Controllers
             {
                 ModelState.AddModelError("", e.Message);
 
-                resultModel.Status = ImportModel.ImportStatus.Error;
+                resultModel.Status = SuccessStatus.Error;
 
                 return View("SelectSheets", resultModel);
             }
