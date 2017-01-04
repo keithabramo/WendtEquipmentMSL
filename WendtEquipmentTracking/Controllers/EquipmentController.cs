@@ -59,21 +59,65 @@ namespace WendtEquipmentTracking.App.Controllers
         }
 
         //
-        // GET: /Equipment/Details/5
-
-        public ActionResult Details(int id)
+        // GET: /Equipment/ReadyToShip
+        [ChildActionOnly]
+        public ActionResult ReadyToShip()
         {
-            var equipment = equipmentService.GetById(id);
+            var projectIdCookie = CookieHelper.Get("ProjectId");
 
-            if (equipment == null)
+            if (string.IsNullOrEmpty(projectIdCookie))
             {
-                return HttpNotFound();
+                return RedirectToAction("Index", "Home");
             }
 
-            var model = Mapper.Map<EquipmentModel>(equipment);
+            var projectId = Convert.ToInt32(projectIdCookie);
 
-            return View(model);
+            //Get Data
+            var projectBO = projectService.GetById(projectId);
+
+            if (projectBO == null)
+            {
+                CookieHelper.Delete("ProjectId");
+                return RedirectToAction("Index", "Home");
+            }
+
+            var equipmentBOs = projectBO.Equipments.Where(e => e.ReadyToShip != null && e.ReadyToShip > 0);
+
+            var equipmentModels = Mapper.Map<IEnumerable<EquipmentModel>>(equipmentBOs);
+
+            //Filter and sort data
+
+            equipmentModels = equipmentModels.OrderBy(r => r.EquipmentId);
+
+            var billOfLandingEquipments = equipmentModels.Select(e => new BillOfLandingEquipmentModel
+            {
+                Equipment = e
+            }).ToList();
+
+            var model = new BillOfLandingModel
+            {
+                BillOfLandingEquipments = billOfLandingEquipments
+            };
+
+            return PartialView(model);
         }
+
+        //
+        // GET: /Equipment/Details/5
+
+        //public ActionResult Details(int id)
+        //{
+        //    var equipment = equipmentService.GetById(id);
+
+        //    if (equipment == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+
+        //    var model = Mapper.Map<EquipmentModel>(equipment);
+
+        //    return View(model);
+        //}
 
         //
         // GET: /Equipment/Create

@@ -57,6 +57,7 @@
     <Compile Include="AutoMapper\Profiles\ProjectConfig.cs" />
     <Compile Include="AutoMapper\Profiles\EquipmentConfig.cs" />
     <Compile Include="BO\BillOfLandingBO.cs" />
+    <Compile Include="BO\BillOfLandingEquipmentBO.cs" />
     <Compile Include="BO\HardwareKitBO.cs" />
     <Compile Include="BO\ProjectBO.cs" />
     <Compile Include="BO\ImportBO.cs" />

@@ -5,7 +5,9 @@
 {
     @Html.AntiForgeryToken()
     <tr class="warning">
-        <td></td>
+        <td>
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </td>
         <td>
             @Html.EditorFor(modelItem => modelItem.EquipmentName, new { htmlAttributes = new { @class = "form-control" } })
         </td>
@@ -33,9 +35,7 @@
         <td>
             @Html.EditorFor(modelItem => modelItem.UnitWeight, new { htmlAttributes = new { @class = "form-control" } })
         </td>
-        <td>
-            <input type="submit" value="Create" class="btn btn-primary" />
-        </td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>

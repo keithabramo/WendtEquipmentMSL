@@ -57,6 +57,9 @@
     <Compile Include="BillOfLanding.cs">
       <DependentUpon>WendtEquipmentTracking.tt</DependentUpon>
     </Compile>
+    <Compile Include="BillOfLandingEquipment.cs">
+      <DependentUpon>WendtEquipmentTracking.tt</DependentUpon>
+    </Compile>
     <Compile Include="Engine\BillOfLandingEngine.cs" />
     <Compile Include="Engine\ProjectEngine.cs" />
     <Compile Include="Engine\EquipmentEngine.cs" />

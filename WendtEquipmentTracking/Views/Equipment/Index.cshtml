@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Master Ship List</h2>
+@Html.Partial("ActionNavPartial", ActionNav.MSL)
 
 <table class="master-ship-list table table-condensed table-hover table-bordered">
     <thead>
@@ -92,7 +92,13 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td data-toggle="collapse" data-target="#accordion@(item.EquipmentId)" class="expand"><span class="glyphicon glyphicon-plus text-primary"></span></td>
+                @if (item.BillOfLandingEquipments.Count() > 0)
+                {
+                    <td data-toggle="collapse" data-target="#accordion@(item.EquipmentId)" class="expand"><span class="glyphicon glyphicon-plus text-primary"></span></td>
+                } else
+                {
+                    <td></td>
+                }
                 <td>
                     @Html.DisplayFor(modelItem => item.EquipmentName)
                 </td>
@@ -170,15 +176,18 @@
                 </td>
                 <td class="text-nowrap">
                     @Html.ActionLink("Edit", "Edit", new { id = item.EquipmentId }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.EquipmentId }) |
                     @Html.ActionLink("Delete", "Delete", new { id = item.EquipmentId })
                 </td>
             </tr>
-            <tr class="collapse info" id="accordion@(item.EquipmentId)" class="collapse">
-                <td colspan="27" id="BOL@(item.EquipmentId)">
-                    @Html.Partial("~/Views/BillOfLanding/Index.cshtml", item)
-                </td>
-            </tr>
+            if (item.BillOfLandingEquipments.Count() > 0)
+            {
+                <tr class="collapse info" id="accordion@(item.EquipmentId)" class="collapse">
+                    <td colspan="12" id="BOL@(item.EquipmentId)">
+                        @Html.Partial("BillOfLandingsPartial", item.BillOfLandingEquipments)
+                    </td>
+                    <td colspan="15"></td>
+                </tr>
+            }
         }
 
         @Html.Action("Create")

@@ -12,7 +12,5 @@ namespace WendtEquipmentTracking.App.Models
 
         [DisplayName("Revision")]
         public int Revision { get; set; }
-
-        public ProjectModel Project { get; set; }
     }
 }

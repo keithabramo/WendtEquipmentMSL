@@ -7,7 +7,7 @@ namespace WendtEquipmentTracking.BusinessLogic.AutoMapper.Profiles
     public class ProjectConfig : Profile {
         public ProjectConfig() {
 
-            base.CreateMap<Project, ProjectBO>();
+            base.CreateMap<Project, ProjectBO>().MaxDepth(2);
             base.CreateMap<ProjectBO, Project>()
                 .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedDate, opt => opt.Ignore())

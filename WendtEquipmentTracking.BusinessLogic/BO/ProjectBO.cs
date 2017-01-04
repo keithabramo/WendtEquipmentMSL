@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using WendtEquipmentTracking.Common;
 
 namespace WendtEquipmentTracking.BusinessLogic.BO
 {
@@ -15,6 +13,7 @@ namespace WendtEquipmentTracking.BusinessLogic.BO
         public DateTime? ModifiedDate { get; set; }
 
         public IEnumerable<EquipmentBO> Equipments { get; set; }
+        public IEnumerable<BillOfLandingBO> BillOfLandings { get; set; }
         public IEnumerable<HardwareKitBO> HardwareKits { get; set; }
     }
 }

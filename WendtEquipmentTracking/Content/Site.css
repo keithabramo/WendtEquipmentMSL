@@ -13,13 +13,10 @@ body {
     position: absolute;
     bottom: 0;
     width: 100%;
+    border-top: 1px solid #ddd;
     /* Set the fixed height of the footer here */
     height: 60px;
 }
-
-    .footer hr {
-        margin: 0 7px;
-    }
 
     .footer .navbar {
         margin-bottom: 0;
@@ -56,6 +53,7 @@ body {
 .navbar-inverse {
     background-color: rgba(9, 79, 164, 0.8);
     border-color: rgba(9, 79, 164, 0.8);
+    border-bottom: 3px solid #eeba53;
 }
 
 
@@ -69,6 +67,53 @@ body {
 
 .center-block {
     float: none;
+}
+
+/* btn-secondary */
+.btn-secondary { 
+  color: #FFFFFF; 
+  background-color: #EEBA52; 
+  border-color: #DDA942; 
+} 
+ 
+.btn-secondary:hover, 
+.btn-secondary:focus, 
+.btn-secondary:active, 
+.btn-secondary.active, 
+.open .dropdown-toggle.btn-secondary { 
+  color: #FFFFFF; 
+  background-color: #dda942; 
+  border-color: #DDA942; 
+} 
+ 
+.btn-secondary:active, 
+.btn-secondary.active, 
+.open .dropdown-toggle.btn-secondary { 
+  background-image: none; 
+} 
+ 
+.btn-secondary.disabled, 
+.btn-secondary[disabled], 
+fieldset[disabled] .btn-secondary, 
+.btn-secondary.disabled:hover, 
+.btn-secondary[disabled]:hover, 
+fieldset[disabled] .btn-secondary:hover, 
+.btn-secondary.disabled:focus, 
+.btn-secondary[disabled]:focus, 
+fieldset[disabled] .btn-secondary:focus, 
+.btn-secondary.disabled:active, 
+.btn-secondary[disabled]:active, 
+fieldset[disabled] .btn-secondary:active, 
+.btn-secondary.disabled.active, 
+.btn-secondary[disabled].active, 
+fieldset[disabled] .btn-secondary.active { 
+  background-color: #EEBA52; 
+  border-color: #DDA942; 
+} 
+ 
+.btn-secondary .badge { 
+  color: #EEBA52; 
+  background-color: #FFFFFF; 
 }
 
 .vertical-bar-left {

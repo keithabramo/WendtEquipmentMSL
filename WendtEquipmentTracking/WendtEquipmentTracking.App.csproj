@@ -160,6 +160,7 @@
     <Compile Include="AutoMapper\Profiles\EquipmentConfig.cs" />
     <Compile Include="Common\CookiesHelper.cs" />
     <Compile Include="Common\HtmlHelperExtensions.cs" />
+    <Compile Include="Common\ActionNav.cs" />
     <Compile Include="Common\SuccessStatus.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BillOfLandingController.cs" />
@@ -171,6 +172,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BillOfLandingEquipmentModel.cs" />
     <Compile Include="Models\BillOfLandingModel.cs" />
     <Compile Include="Models\EquipmentImportModel.cs" />
     <Compile Include="Models\EquipmentModel.cs" />
@@ -249,10 +251,13 @@
     <Content Include="Views\Import\SelectSheets.cshtml" />
     <Content Include="Views\Import\ImportEquipmentPartial.cshtml" />
     <Content Include="Views\Equipment\Create.cshtml" />
+    <Content Include="Views\Equipment\BillOfLandingsPartial.cshtml" />
     <Content Include="Views\BillOfLanding\Index.cshtml" />
-    <Content Include="Views\BillOfLanding\Create.cshtml" />
-    <Content Include="Views\BillOfLanding\Edit.cshtml" />
     <Content Include="Views\BillOfLanding\Details.cshtml" />
+    <Content Include="Views\BillOfLanding\EquipmentsPartial.cshtml" />
+    <Content Include="Views\BillOfLanding\Create.cshtml" />
+    <Content Include="Views\Equipment\ReadyToShip.cshtml" />
+    <Content Include="Views\Shared\ActionNavPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -16,6 +16,8 @@ namespace WendtEquipmentTracking.BusinessLogic.AutoMapper.Profiles
                 .ForMember(dest => dest.ModifiedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.ModifiedDate, opt => opt.Ignore());
 
+            base.CreateMap<BillOfLandingEquipmentBO, BillOfLandingEquipment>();
+            base.CreateMap<BillOfLandingEquipment, BillOfLandingEquipmentBO>().MaxDepth(1);
         }
     }
 }

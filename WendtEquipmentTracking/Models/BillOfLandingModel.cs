@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -7,7 +8,7 @@ namespace WendtEquipmentTracking.App.Models
     public class BillOfLandingModel : BaseModel
     {
         public int BillOfLandingId { get; set; }
-        public int EquipmentId { get; set; }
+        public int ProjectId { get; set; }
 
         [DisplayName("Revision")]
         public int Revision { get; set; }
@@ -17,9 +18,6 @@ namespace WendtEquipmentTracking.App.Models
 
         [DisplayName("BOL #")]
         public string BillOfLandingNumber { get; set; }
-
-        [DisplayName("Quantity")]
-        public double? Quantity { get; set; }
 
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         [DisplayName("Date Shipped")]
@@ -46,6 +44,6 @@ namespace WendtEquipmentTracking.App.Models
         [DisplayName("Ship To Contact 2")]
         public string ShipToContact2 { get; set; }
 
-        public EquipmentModel Equipment { get; set; }
+        public IList<BillOfLandingEquipmentModel> BillOfLandingEquipments { get; set; }
     }
 }

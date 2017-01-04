@@ -29,7 +29,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
         public IEnumerable<Equipment> ListAll()
         {
             return this.repository.GetAll()
-                .Include(x => x.BillOfLandings);
+                .Include(x => x.BillOfLandingEquipments);
         }
 
         public Equipment Get(Specification<Equipment> specification)
@@ -40,7 +40,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
         public IEnumerable<Equipment> List(Specification<Equipment> specification)
         {
             return this.repository.Find(specification)
-                .Include(x => x.BillOfLandings);
+                .Include(x => x.BillOfLandingEquipments);
         }
 
         public void AddNewEquipment(Equipment equipment)
@@ -51,15 +51,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             equipment.CreatedBy = ActiveDirectoryHelper.CurrentUserUsername();
             equipment.ModifiedDate = now;
             equipment.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
-
-            foreach (var billOfLanding in equipment.BillOfLandings)
-            {
-                billOfLanding.CreatedDate = equipment.CreatedDate;
-                billOfLanding.CreatedBy = equipment.CreatedBy;
-                billOfLanding.ModifiedDate = equipment.ModifiedDate;
-                billOfLanding.ModifiedBy = equipment.ModifiedBy;
-            }
-
+            
             this.repository.Insert(equipment);
             this.repository.Save();
         }
@@ -74,14 +66,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
                 equipment.CreatedBy = ActiveDirectoryHelper.CurrentUserUsername();
                 equipment.ModifiedDate = now;
                 equipment.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
-
-                foreach (var billOfLanding in equipment.BillOfLandings)
-                {
-                    billOfLanding.CreatedDate = equipment.CreatedDate;
-                    billOfLanding.CreatedBy = equipment.CreatedBy;
-                    billOfLanding.ModifiedDate = equipment.ModifiedDate;
-                    billOfLanding.ModifiedBy = equipment.ModifiedBy;
-                }
+                
             }
 
             this.repository.InsertAll(equipments);
@@ -94,17 +79,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
             equipment.ModifiedDate = now;
             equipment.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
-
-            foreach (var billOfLanding in equipment.BillOfLandings)
-            {
-                if (billOfLanding.BillOfLandingId == 0)
-                {
-                    billOfLanding.CreatedDate = equipment.CreatedDate;
-                    billOfLanding.CreatedBy = equipment.CreatedBy;
-                }
-                billOfLanding.ModifiedDate = equipment.ModifiedDate;
-                billOfLanding.ModifiedBy = equipment.ModifiedBy;
-            }
+            
 
             this.repository.Update(equipment);
             this.repository.Save();

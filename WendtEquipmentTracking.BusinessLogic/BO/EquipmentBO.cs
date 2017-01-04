@@ -37,6 +37,6 @@ namespace WendtEquipmentTracking.BusinessLogic.BO
         public string BillOfLandingNumberToStorage { get; set; }
         public DateTime? DateShippedToStorage { get; set; }
 
-        public IEnumerable<BillOfLandingBO> BillOfLandings { get; set; }
+        public IEnumerable<BillOfLandingEquipmentBO> BillOfLandingEquipments { get; set; }
     }
 }

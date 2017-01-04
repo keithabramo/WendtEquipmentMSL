@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
+using WendtEquipmentTracking.App.Common;
 using WendtEquipmentTracking.App.Models;
 using WendtEquipmentTracking.BusinessLogic;
 using WendtEquipmentTracking.BusinessLogic.Api;
@@ -11,26 +14,43 @@ namespace WendtEquipmentTracking.App.Controllers
     public class BillOfLandingController : Controller
     {
         private IBillOfLandingService billOfLandingService;
-        private IEquipmentService equipmentService;
+        private IProjectService projectService;
 
         public BillOfLandingController()
         {
             billOfLandingService = new BillOfLandingService();
-            equipmentService = new EquipmentService();
+            projectService = new ProjectService();
         }
 
         //
         // GET: /BillOfLanding/
 
-        public ActionResult Index(int equipmentId)
+        public ActionResult Index()
         {
-            //Get Data
-            var equipmentBO = equipmentService.GetById(equipmentId);
+            var projectIdCookie = CookieHelper.Get("ProjectId");
 
-            var equipmentModel = Mapper.Map<EquipmentModel>(equipmentBO);
+            if (string.IsNullOrEmpty(projectIdCookie))
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
+            var projectId = Convert.ToInt32(projectIdCookie);
 
-            return PartialView(equipmentModel);
+            var projectBO = projectService.GetById(projectId);
+
+            if (projectBO == null)
+            {
+                CookieHelper.Delete("ProjectId");
+                return RedirectToAction("Index", "Home");
+            }
+
+            var billOfLAndingModels = Mapper.Map<IEnumerable<BillOfLandingModel>>(projectBO.BillOfLandings);
+
+            //Filter and sort data
+
+            billOfLAndingModels = billOfLAndingModels.OrderBy(r => r.DateShipped);
+
+            return View(billOfLAndingModels);
         }
 
         //
@@ -47,15 +67,15 @@ namespace WendtEquipmentTracking.App.Controllers
 
             var model = Mapper.Map<IEnumerable<BillOfLandingModel>>(billOfLandings);
 
-            return PartialView(model);
+            return View(model);
         }
 
         //
         // GET: /BillOfLanding/Create
 
-        public ActionResult Create(int equipmentId)
+        public ActionResult Create()
         {
-            return PartialView(new BillOfLandingModel { EquipmentId = equipmentId });
+            return View();
         }
 
         //
@@ -72,14 +92,14 @@ namespace WendtEquipmentTracking.App.Controllers
 
                     billOfLandingService.Save(billOfLandingBO);
 
-                    return RedirectToAction("Index", new { EquipmentId = model.EquipmentId });
+                    return RedirectToAction("Index");
                 }
 
-                return PartialView(model);
+                return View(model);
             }
             catch
             {
-                return PartialView(model);
+                return View(model);
             }
         }
 
@@ -96,7 +116,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
             var billOfLandingModel = Mapper.Map<BillOfLandingModel>(billOfLanding);
 
-            return PartialView(billOfLandingModel);
+            return View(billOfLandingModel);
         }
 
         //
@@ -115,14 +135,14 @@ namespace WendtEquipmentTracking.App.Controllers
 
                     billOfLandingService.Update(billOfLanding);
 
-                    return RedirectToAction("Index", new { EquipmentId = model.EquipmentId });
+                    return RedirectToAction("Index");
                 }
 
-                return PartialView(model);
+                return View(model);
             }
             catch
             {
-                return PartialView(model);
+                return View(model);
             }
         }
 
@@ -139,7 +159,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
             var model = Mapper.Map<BillOfLandingModel>(billOfLanding);
 
-            return PartialView(model);
+            return View(model);
         }
 
         // POST: BillOfLanding/Delete/5
@@ -157,7 +177,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
                 billOfLandingService.Delete(id);
 
-                return RedirectToAction("Index", new { EquipmentId = model.EquipmentId });
+                return RedirectToAction("Index");
             }
             catch
             {
@@ -170,7 +190,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
                 model = Mapper.Map<BillOfLandingModel>(billOfLanding);
 
-                return PartialView(model);
+                return View(model);
             }
         }
 

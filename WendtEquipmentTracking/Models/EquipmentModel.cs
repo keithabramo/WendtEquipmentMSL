@@ -122,7 +122,6 @@ namespace WendtEquipmentTracking.App.Models
         [DisplayName("Date Shipped To Storage")]
         public DateTime? DateShippedToStorage { get; set; }
 
-        public IList<BillOfLandingModel> BillOfLandings { get; set; }
-        public ProjectModel Project { get; set; }
+        public IList<BillOfLandingEquipmentModel> BillOfLandingEquipments { get; set; }
     }
 }
