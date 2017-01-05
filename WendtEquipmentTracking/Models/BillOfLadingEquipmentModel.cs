@@ -7,8 +7,6 @@
         public int EquipmentId { get; set; }
         public double Quantity { get; set; }
 
-        public bool Checked { get; set; }
-
         public BillOfLadingModel BillOfLading { get; set; }
         public EquipmentModel Equipment { get; set; }
     }

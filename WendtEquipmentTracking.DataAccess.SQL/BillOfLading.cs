@@ -37,6 +37,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         public string ShipToPhoneFax { get; set; }
         public string ShipToContact1 { get; set; }
         public string ShipToContact2 { get; set; }
+        public bool ToStorage { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BillOfLadingEquipment> BillOfLadingEquipments { get; set; }

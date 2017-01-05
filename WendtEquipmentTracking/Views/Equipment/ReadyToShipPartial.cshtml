@@ -5,7 +5,6 @@
 <table class="table table-condensed table-hover table-bordered">
     <thead>
         <tr>
-            <th></th>
             <th>
                 @Html.DisplayNameFor(model => model.BillOfLadingEquipments[0].Quantity)
             </th>
@@ -33,9 +32,8 @@
             <tr>
                 <td>
                     @Html.HiddenFor(modelItem => modelItem.BillOfLadingEquipments[i].EquipmentId)
-                    @Html.CheckBoxFor(modelItem => modelItem.BillOfLadingEquipments[i].Checked)
-                </td>
-                <td>
+
+
                     @Html.EditorFor(modelItem => modelItem.BillOfLadingEquipments[i].Quantity, new { htmlAttributes = new { @class = "form-control" } })
                 </td>
                 <td>

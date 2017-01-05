@@ -142,7 +142,18 @@
                     @Html.DisplayFor(modelItem => item.LeftToShip)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.FullyShipped)
+                    @if(item.FullyShipped.HasValue && item.FullyShipped.Value == true)
+                    {
+                        @:Yes
+                    }
+                    else if (item.FullyShipped.HasValue && item.FullyShipped.Value == false)
+                    {
+                        @:No
+                    }
+                    else
+                    {
+                        @:NA
+                    }
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.CustomsValue)

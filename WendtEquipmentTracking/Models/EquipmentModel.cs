@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace WendtEquipmentTracking.App.Models
 {
@@ -14,6 +15,8 @@ namespace WendtEquipmentTracking.App.Models
         [DisplayName("Equipment")]
         public string EquipmentName { get; set; }
 
+        [DisplayName("Is Hardware?")]
+        public bool IsHardware { get; set; }
 
         [DisplayName("Priority")]
         public string Priority { get; set; }
@@ -119,5 +122,75 @@ namespace WendtEquipmentTracking.App.Models
         public DateTime? DateShippedToStorage { get; set; }
 
         public IList<BillOfLadingEquipmentModel> BillOfLadingEquipments { get; set; }
+
+        public EquipmentIndicatorsModel EquipmentIndicators { get; set; }
+
+        public string ProjectNumber { get; set; }
+
+        public void SetEquipmentIndicators()
+        {
+            EquipmentIndicators = new EquipmentIndicatorsModel();
+
+            //unit weight
+            if (UnitWeight == null || UnitWeight <= 0)
+            {
+                EquipmentIndicators.UnitWeightColor = EquipmentIndicatorsModel.Colors.Red;
+            }
+
+            //ready to ship does not have a clean way to check for red
+            if (ReadyToShip > 0)
+            {
+                if (BillOfLadingEquipments.Any(be => be.BillOfLading.ToStorage && be.BillOfLading.IsCurrentRevision))
+                {
+                    EquipmentIndicators.ReadyToShipColor = EquipmentIndicatorsModel.Colors.Green;
+                }
+                else
+                {
+                    EquipmentIndicators.ReadyToShipColor = EquipmentIndicatorsModel.Colors.Yellow;
+                }
+            }
+
+            //ship qty
+            if (ShippedQuantity > Quantity)
+            {
+                EquipmentIndicators.ShippedQtyColor = EquipmentIndicatorsModel.Colors.Red;
+            }
+
+            //left to ship
+            if (ShippedQuantity > Quantity)
+            {
+                EquipmentIndicators.LeftToShipColor = EquipmentIndicatorsModel.Colors.Red;
+            }
+
+            //fully shipped
+            if (ShippedQuantity > Quantity)
+            {
+                EquipmentIndicators.FullyShippedColor = EquipmentIndicatorsModel.Colors.Fuchsia;
+            }
+            else if (FullyShipped.HasValue && FullyShipped.Value == false)
+            {
+                EquipmentIndicators.FullyShippedColor = EquipmentIndicatorsModel.Colors.Pink;
+            }
+            else if (!FullyShipped.HasValue || FullyShipped.Value == true)
+            {
+                EquipmentIndicators.FullyShippedColor = EquipmentIndicatorsModel.Colors.Purple;
+            }
+
+            //customs value, needs weights calculations
+
+            //sales price, needs weights calculations
+
+            //country of origin
+            if (string.IsNullOrEmpty(CountryOfOrigin) && !string.IsNullOrEmpty(HTSCode))
+            {
+                EquipmentIndicators.CountyOfOriginColor = EquipmentIndicatorsModel.Colors.Red;
+            }
+
+            //sales order
+            if (!WorkOrderNumber.Contains(ProjectNumber))
+            {
+                EquipmentIndicators.SalesOrderNumberColor = EquipmentIndicatorsModel.Colors.Red;
+            }
+        }
     }
 }

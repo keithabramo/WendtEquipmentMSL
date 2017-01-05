@@ -44,6 +44,9 @@ namespace WendtEquipmentTracking.App.Models
         [DisplayName("Ship To Contact 2")]
         public string ShipToContact2 { get; set; }
 
+        [DisplayName("To Storage")]
+        public bool ToStorage { get; set; }
+
         public IList<BillOfLadingEquipmentModel> BillOfLadingEquipments { get; set; }
     }
 }

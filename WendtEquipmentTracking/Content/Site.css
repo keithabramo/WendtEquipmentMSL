@@ -172,14 +172,12 @@ dl.dl-horizontal dd {
 
 .table-styled {
     font-size: 10px;
+    text-align: center;
 }
 
     .table-styled th {
         cursor: pointer;
         white-space: nowrap;
-    }
-
-    .table-styled .text-center th {
         vertical-align: top;
         text-align: center;
     }

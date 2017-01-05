@@ -16,6 +16,9 @@
                     @Html.DisplayNameFor(model => model.Revision)
                 </th>
                 <th>
+                    @Html.DisplayNameFor(model => model.BillOfLadingNumber)
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.DateShipped)
                 </th>
                 <th>
@@ -55,7 +58,9 @@
                         {
                             Html.DisplayFor(modelItem => item.Revision);
                         }
-
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BillOfLadingNumber)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.DateShipped)

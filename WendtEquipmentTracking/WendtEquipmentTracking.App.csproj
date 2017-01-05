@@ -175,6 +175,7 @@
     <Compile Include="Models\BillOfLadingEquipmentModel.cs" />
     <Compile Include="Models\BillOfLadingModel.cs" />
     <Compile Include="Models\EquipmentImportModel.cs" />
+    <Compile Include="Models\EquipmentIndicatorsModel.cs" />
     <Compile Include="Models\EquipmentModel.cs" />
     <Compile Include="Models\HardwareKitModel.cs" />
     <Compile Include="Models\BaseModel.cs" />

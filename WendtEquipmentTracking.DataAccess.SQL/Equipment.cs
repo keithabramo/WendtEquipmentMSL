@@ -51,6 +51,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         public Nullable<double> QtyToStorage { get; set; }
         public string BillOfLandingNumberToStorage { get; set; }
         public Nullable<System.DateTime> DateShippedToStorage { get; set; }
+        public bool IsHardware { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BillOfLadingEquipment> BillOfLadingEquipments { get; set; }
