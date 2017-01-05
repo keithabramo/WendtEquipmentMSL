@@ -85,6 +85,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         public void SetDBContext(WendtEquipmentTrackingEntities dbContext)
         {
+            this.repository.Dispose();
             this.repository = new Repository<BillOfLading>(dbContext);
         }
     }

@@ -11,11 +11,13 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
     {
         private IRepository<Project> repository = null;
 
-        public ProjectEngine() {
+        public ProjectEngine()
+        {
             this.repository = new Repository<Project>();
         }
 
-        public ProjectEngine(WendtEquipmentTrackingEntities dbContext) {
+        public ProjectEngine(WendtEquipmentTrackingEntities dbContext)
+        {
             this.repository = new Repository<Project>(dbContext);
         }
 
@@ -24,23 +26,27 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             this.repository = repository;
         }
 
-        public IEnumerable<Project> ListAll() {
+        public IEnumerable<Project> ListAll()
+        {
             return this.repository.GetAll()
                 .Include(x => x.Equipments)
                 .Include(x => x.HardwareKits);
         }
 
-        public Project Get(Specification<Project> specification) {
+        public Project Get(Specification<Project> specification)
+        {
             return this.repository.Single(specification);
         }
 
-        public IEnumerable<Project> List(Specification<Project> specification) {
+        public IEnumerable<Project> List(Specification<Project> specification)
+        {
             return this.repository.Find(specification)
                 .Include(x => x.Equipments)
                 .Include(x => x.HardwareKits);
         }
 
-        public void AddNewProject(Project project) {
+        public void AddNewProject(Project project)
+        {
             var now = DateTime.Now;
 
             project.CreatedDate = now;
@@ -48,7 +54,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             project.ModifiedDate = now;
             project.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
 
-            foreach(var equipment in project.Equipments)
+            foreach (var equipment in project.Equipments)
             {
                 equipment.CreatedDate = project.CreatedDate;
                 equipment.CreatedBy = project.CreatedBy;
@@ -68,7 +74,8 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             this.repository.Save();
         }
 
-        public void UpdateProject(Project project) {
+        public void UpdateProject(Project project)
+        {
             var now = DateTime.Now;
 
             project.ModifiedDate = now;
@@ -100,12 +107,15 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             this.repository.Save();
         }
 
-        public void DeleteProject(Project project) {
+        public void DeleteProject(Project project)
+        {
             this.repository.Delete(project);
             this.repository.Save();
         }
 
-        public void SetDBContext(WendtEquipmentTrackingEntities dbContext) {
+        public void SetDBContext(WendtEquipmentTrackingEntities dbContext)
+        {
+            this.repository.Dispose();
             this.repository = new Repository<Project>(dbContext);
         }
     }

@@ -49,7 +49,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         public string AutoShipFile { get; set; }
         public string SalesOrderNumber { get; set; }
         public Nullable<double> QtyToStorage { get; set; }
-        public string BillOfLadingNumberToStorage { get; set; }
+        public string BillOfLandingNumberToStorage { get; set; }
         public Nullable<System.DateTime> DateShippedToStorage { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

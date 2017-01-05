@@ -256,8 +256,9 @@
     <Content Include="Views\BillOfLading\Details.cshtml" />
     <Content Include="Views\BillOfLading\EquipmentsPartial.cshtml" />
     <Content Include="Views\BillOfLading\Create.cshtml" />
-    <Content Include="Views\Equipment\ReadyToShip.cshtml" />
+    <Content Include="Views\Equipment\ReadyToShipPartial.cshtml" />
     <Content Include="Views\Shared\ActionNavPartial.cshtml" />
+    <Content Include="Views\Equipment\Released.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

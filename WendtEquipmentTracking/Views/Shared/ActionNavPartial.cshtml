@@ -3,7 +3,7 @@
 <div class="btn-group" role="group" aria-label="actions">
     @Html.ActionLink("Master Shipping List", "Index", "Home", null, new { @class = "btn " + (Model == ActionNav.MSL ? "btn-secondary" : "btn-primary") })
     @Html.ActionLink("Import", "Index", "Import", null, new { @class = "btn " + (Model == ActionNav.Import ? "btn-secondary" : "btn-primary") })
-    @Html.ActionLink("Update Ready To Ship", "Index", "ReadyToShip", null, new { @class = "btn " + (Model == ActionNav.UpdateReadyToShip ? "btn-secondary" : "btn-primary") })
+    @Html.ActionLink("Update Ready To Ship", "Released", "Equipment", null, new { @class = "btn " + (Model == ActionNav.UpdateReadyToShip ? "btn-secondary" : "btn-primary") })
     @Html.ActionLink("Create BOL", "Create", "BillOfLading", null, new { @class = "btn " + (Model == ActionNav.CreateBOL ? "btn-secondary" : "btn-primary") })
     @Html.ActionLink("Order Hardware Kit", "Index", "HardwareKit", null, new { @class = "btn " + (Model == ActionNav.OrderHardwareKit ? "btn-secondary" : "btn-primary") })
 </div>

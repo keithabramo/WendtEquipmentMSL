@@ -91,7 +91,8 @@ namespace WendtEquipmentTracking.App.Controllers
 
             var billOfLadingEquipments = equipmentModels.Select(e => new BillOfLadingEquipmentModel
             {
-                Equipment = e
+                Equipment = e,
+                EquipmentId = e.EquipmentId
             }).ToList();
 
             var model = new BillOfLadingModel
@@ -99,7 +100,72 @@ namespace WendtEquipmentTracking.App.Controllers
                 BillOfLadingEquipments = billOfLadingEquipments
             };
 
-            return PartialView(model);
+            return PartialView("ReadyToShipPartial", model);
+        }
+
+        //
+        // GET: /Equipment/ReadyToShip
+        public ActionResult Released()
+        {
+            var projectIdCookie = CookieHelper.Get("ProjectId");
+
+            if (string.IsNullOrEmpty(projectIdCookie))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var projectId = Convert.ToInt32(projectIdCookie);
+
+            //Get Data
+            var projectBO = projectService.GetById(projectId);
+
+            if (projectBO == null)
+            {
+                CookieHelper.Delete("ProjectId");
+                return RedirectToAction("Index", "Home");
+            }
+
+            var equipmentBOs = projectBO.Equipments.Where(e => e.ReleaseDate != null && e.LeftToShip > 0);
+
+            var equipmentModels = Mapper.Map<IEnumerable<EquipmentModel>>(equipmentBOs);
+
+            //Filter and sort data
+
+            equipmentModels = equipmentModels.OrderBy(r => r.EquipmentId);
+
+            return View(equipmentModels.ToList());
+        }
+
+        // POST: Equipment/Released
+        [HttpPost]
+        public ActionResult Released(IEnumerable<EquipmentModel> model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var projectIdCookie = CookieHelper.Get("ProjectId");
+
+                    if (!string.IsNullOrEmpty(projectIdCookie))
+                    {
+                        var projectId = Convert.ToInt32(projectIdCookie);
+                        model.ToList().ForEach(c => c.ProjectId = projectId);
+
+                        var equipmentBOs = Mapper.Map<IEnumerable<EquipmentBO>>(model);
+                        equipmentService.UpdateReadyToShip(equipmentBOs);
+
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
+
+                return View(model);
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("", e.Message);
+
+                return View(model);
+            }
         }
 
         //

@@ -1,21 +1,26 @@
-﻿using System.Linq;
-using WendtEquipmentTracking.BusinessLogic.Api;
+﻿using System.Collections.Generic;
+using System.Linq;
 using WendtEquipmentTracking.BusinessLogic.BO;
 
 namespace WendtEquipmentTracking.BusinessLogic.Utils
 {
     public class EquipmentLogic
     {
-        private IEquipmentService equipmentService;
 
-        public EquipmentLogic()
-        {
-            equipmentService = new EquipmentService();
-        }
-
-        public void TotalWeightAdjustment(EquipmentBO equipmentBO)
+        public void EquipmentNew(EquipmentBO equipmentBO)
         {
             equipmentBO.TotalWeight = equipmentBO.Quantity.HasValue && equipmentBO.UnitWeight.HasValue ? equipmentBO.Quantity.Value * equipmentBO.UnitWeight.Value : 0;
+            equipmentBO.LeftToShip = equipmentBO.Quantity;
+        }
+
+        public void EquipmentUpdated(EquipmentBO equipmentBO)
+        {
+            equipmentBO.TotalWeight = equipmentBO.Quantity.HasValue && equipmentBO.UnitWeight.HasValue ? equipmentBO.Quantity.Value * equipmentBO.UnitWeight.Value : 0;
+
+            var shippedQuantity = equipmentBO.BillOfLadingEquipments.Where(be => be.BillOfLading.IsCurrentRevision).Sum(be => be.Quantity);
+            var leftToShip = equipmentBO.ReadyToShip - shippedQuantity;
+
+            equipmentBO.LeftToShip = leftToShip;
         }
 
         public void ReadyToShipAdjustment(EquipmentBO equipmentBO)
@@ -23,9 +28,8 @@ namespace WendtEquipmentTracking.BusinessLogic.Utils
             equipmentBO.LeftToShip = equipmentBO.ReadyToShip - equipmentBO.ShippedQuantity;
         }
 
-        public void BOLAdjustment(int billOfLadingId)
+        public void BOLAdjustment(IEnumerable<EquipmentBO> equipmentBOs)
         {
-            var equipmentBOs = equipmentService.GetByBillOfLadingId(billOfLadingId);
 
             foreach (var equipmentBO in equipmentBOs)
             {
@@ -38,8 +42,6 @@ namespace WendtEquipmentTracking.BusinessLogic.Utils
                 equipmentBO.TotalWeightShipped = totalWeightShipped;
                 equipmentBO.LeftToShip = leftToShip;
                 equipmentBO.FullyShipped = fullyShipped;
-
-                equipmentService.Update(equipmentBO);
             }
         }
 

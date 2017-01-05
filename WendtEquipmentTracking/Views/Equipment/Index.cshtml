@@ -91,7 +91,7 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
+            <tr class="text-nowrap">
                 @if (item.BillOfLadingEquipments.Count() > 0)
                 {
                     <td data-toggle="collapse" data-target="#accordion@(item.EquipmentId)" class="expand text-center"><span class="glyphicon glyphicon-plus text-primary"></span></td>
@@ -120,7 +120,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.ShippingTagNumber)
                 </td>
-                <td>
+                <td class="long-column">
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>

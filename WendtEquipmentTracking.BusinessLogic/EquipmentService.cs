@@ -24,7 +24,7 @@ namespace WendtEquipmentTracking.BusinessLogic
 
         public void Save(EquipmentBO equipmentBO)
         {
-            equipmentLogic.TotalWeightAdjustment(equipmentBO);
+            equipmentLogic.EquipmentNew(equipmentBO);
 
             var equipment = Mapper.Map<Equipment>(equipmentBO);
 
@@ -33,11 +33,20 @@ namespace WendtEquipmentTracking.BusinessLogic
 
         public void SaveAll(IEnumerable<EquipmentBO> equipmentBOs)
         {
-            equipmentBOs.ToList().ForEach(e => equipmentLogic.TotalWeightAdjustment(e));
+            equipmentBOs.ToList().ForEach(e => equipmentLogic.EquipmentNew(e));
 
             var equipments = Mapper.Map<IEnumerable<Equipment>>(equipmentBOs);
 
             equipmentEngine.AddAllNewEquipment(equipments);
+        }
+
+        public void UpdateReadyToShip(IEnumerable<EquipmentBO> equipmentBOs)
+        {
+            var oldEquipments = equipmentEngine.List(EquipmentSpecs.Ids(equipmentBOs.Select(e => e.EquipmentId)));
+
+            oldEquipments.ToList().ForEach(e => e.ReadyToShip = equipmentBOs.SingleOrDefault().ReadyToShip);
+
+            equipmentEngine.UpdateAllEquipment(oldEquipments.ToList());
         }
 
         public IEnumerable<EquipmentBO> GetAll()
@@ -69,13 +78,26 @@ namespace WendtEquipmentTracking.BusinessLogic
 
         public void Update(EquipmentBO equipmentBO)
         {
-            equipmentLogic.TotalWeightAdjustment(equipmentBO);
 
             var oldEquipment = equipmentEngine.Get(EquipmentSpecs.Id(equipmentBO.EquipmentId));
 
             Mapper.Map<EquipmentBO, Equipment>(equipmentBO, oldEquipment);
 
             equipmentEngine.UpdateEquipment(oldEquipment);
+        }
+
+        public void UpdateAll(IEnumerable<EquipmentBO> equipmentBOs)
+        {
+            equipmentEngine.SetDBContext(new WendtEquipmentTrackingEntities());
+
+            var oldEquipments = equipmentEngine.List(EquipmentSpecs.Ids(equipmentBOs.Select(e => e.EquipmentId))).ToList();
+
+            foreach (var oldEquipment in oldEquipments)
+            {
+                Mapper.Map<EquipmentBO, Equipment>(equipmentBOs.SingleOrDefault(e => e.EquipmentId == oldEquipment.EquipmentId), oldEquipment);
+            }
+
+            equipmentEngine.UpdateAllEquipment(oldEquipments.ToList());
         }
 
         public void Delete(int id)

@@ -38,8 +38,8 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         public string ShipToContact1 { get; set; }
         public string ShipToContact2 { get; set; }
     
-        public virtual Project Project { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BillOfLadingEquipment> BillOfLadingEquipments { get; set; }
+        public virtual Project Project { get; set; }
     }
 }

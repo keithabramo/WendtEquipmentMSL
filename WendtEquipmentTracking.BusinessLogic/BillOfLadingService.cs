@@ -14,12 +14,14 @@ namespace WendtEquipmentTracking.BusinessLogic
     public class BillOfLadingService : IBillOfLadingService
     {
         private IBillOfLadingEngine billOfLadingEngine;
+        private IEquipmentService equipmentService;
         private EquipmentLogic equipmentLogic;
 
 
         public BillOfLadingService()
         {
             billOfLadingEngine = new BillOfLadingEngine();
+            equipmentService = new EquipmentService();
             equipmentLogic = new EquipmentLogic();
         }
 
@@ -29,7 +31,9 @@ namespace WendtEquipmentTracking.BusinessLogic
 
             billOfLadingEngine.AddNewBillOfLading(billOfLading);
 
-            equipmentLogic.BOLAdjustment(billOfLading.BillOfLadingId);
+            var equipmentBOs = equipmentService.GetByBillOfLadingId(billOfLading.BillOfLadingId);
+            equipmentLogic.BOLAdjustment(equipmentBOs);
+            equipmentService.UpdateAll(equipmentBOs);
         }
 
         public IEnumerable<BillOfLadingBO> GetAll()
@@ -65,7 +69,9 @@ namespace WendtEquipmentTracking.BusinessLogic
 
             billOfLadingEngine.UpdateBillOfLading(billOfLading);
 
-            equipmentLogic.BOLAdjustment(billOfLading.BillOfLadingId);
+            var equipmentBOs = equipmentService.GetByBillOfLadingId(billOfLading.BillOfLadingId);
+            equipmentLogic.BOLAdjustment(equipmentBOs);
+            equipmentBOs.ToList().ForEach(e => equipmentService.Update(e));
         }
 
         public void Delete(int id)

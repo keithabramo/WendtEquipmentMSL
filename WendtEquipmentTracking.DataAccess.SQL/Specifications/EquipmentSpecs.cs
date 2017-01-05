@@ -1,4 +1,5 @@
-﻿using WendtEquipmentTracking.DataAccess.SQL.Specifications.Equipments;
+﻿using System.Collections.Generic;
+using WendtEquipmentTracking.DataAccess.SQL.Specifications.Equipments;
 
 namespace WendtEquipmentTracking.DataAccess.SQL.Specifications
 {
@@ -8,6 +9,11 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Specifications
         public static Specification<Equipment> Id(int id)
         {
             return new IdSpecification(id);
+        }
+
+        public static Specification<Equipment> Ids(IEnumerable<int> ids)
+        {
+            return new IdsSpecification(ids);
         }
 
         public static Specification<Equipment> BillOfLadingId(int billOfLadingId)

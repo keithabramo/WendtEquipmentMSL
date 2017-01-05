@@ -16,6 +16,8 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Api
 
         void UpdateEquipment(Equipment equipment);
 
+        void UpdateAllEquipment(IList<Equipment> equipments);
+
         void DeleteEquipment(Equipment equipment);
 
         void SetDBContext(WendtEquipmentTrackingEntities dbContext);

@@ -51,7 +51,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             equipment.CreatedBy = ActiveDirectoryHelper.CurrentUserUsername();
             equipment.ModifiedDate = now;
             equipment.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
-            
+
             this.repository.Insert(equipment);
             this.repository.Save();
         }
@@ -66,7 +66,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
                 equipment.CreatedBy = ActiveDirectoryHelper.CurrentUserUsername();
                 equipment.ModifiedDate = now;
                 equipment.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
-                
+
             }
 
             this.repository.InsertAll(equipments);
@@ -79,9 +79,23 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
             equipment.ModifiedDate = now;
             equipment.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
-            
+
 
             this.repository.Update(equipment);
+            this.repository.Save();
+        }
+
+        public void UpdateAllEquipment(IList<Equipment> equipments)
+        {
+            var now = DateTime.Now;
+
+            foreach (var equipment in equipments)
+            {
+                equipment.ModifiedDate = now;
+                equipment.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
+                this.repository.Update(equipment);
+            }
+
             this.repository.Save();
         }
 
@@ -93,6 +107,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         public void SetDBContext(WendtEquipmentTrackingEntities dbContext)
         {
+            this.repository.Dispose();
             this.repository = new Repository<Equipment>(dbContext);
         }
     }

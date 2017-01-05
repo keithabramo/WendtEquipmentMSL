@@ -6,7 +6,7 @@
     @Html.AntiForgeryToken()
     <tr class="warning">
         <td>
-            <input type="submit" value="Create" class="btn btn-primary" />
+            <input type="submit" value="Create" class="btn btn-sm btn-primary" />
         </td>
         <td>
             @Html.EditorFor(modelItem => modelItem.EquipmentName, new { htmlAttributes = new { @class = "form-control" } })

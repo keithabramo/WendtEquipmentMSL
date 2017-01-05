@@ -88,11 +88,19 @@ namespace WendtEquipmentTracking.App.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var billOfLadingBO = Mapper.Map<BillOfLadingBO>(model);
+                    var projectIdCookie = CookieHelper.Get("ProjectId");
 
-                    billOfLadingService.Save(billOfLadingBO);
+                    if (!string.IsNullOrEmpty(projectIdCookie))
+                    {
+                        var projectId = Convert.ToInt32(projectIdCookie);
+                        model.ProjectId = projectId;
 
-                    return RedirectToAction("Index");
+                        var billOfLadingBO = Mapper.Map<BillOfLadingBO>(model);
+
+                        billOfLadingService.Save(billOfLadingBO);
+
+                        return RedirectToAction("Index");
+                    }
                 }
 
                 return View(model);

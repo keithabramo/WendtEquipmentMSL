@@ -82,6 +82,7 @@
     <Compile Include="Specifications\BillOfLading\IdSpecification.cs" />
     <Compile Include="Specifications\BillOfLadingSpecs.cs" />
     <Compile Include="Specifications\Equipments\BillOfLadingId.cs" />
+    <Compile Include="Specifications\Equipments\IdsSpecification.cs" />
     <Compile Include="Specifications\ProjectSpecs.cs" />
     <Compile Include="Specifications\Projects\IdSpecification.cs" />
     <Compile Include="Specifications\ExpressionCombining\AndSpecification.cs" />
