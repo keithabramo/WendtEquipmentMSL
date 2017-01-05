@@ -51,16 +51,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Api\IBillOfLandningEngine.cs" />
+    <Compile Include="Api\IBillOfLadingEngine.cs" />
     <Compile Include="Api\IProjectEngine.cs" />
     <Compile Include="Api\IEquipmentEngine.cs" />
-    <Compile Include="BillOfLanding.cs">
+    <Compile Include="BillOfLading.cs">
       <DependentUpon>WendtEquipmentTracking.tt</DependentUpon>
     </Compile>
-    <Compile Include="BillOfLandingEquipment.cs">
+    <Compile Include="BillOfLadingEquipment.cs">
       <DependentUpon>WendtEquipmentTracking.tt</DependentUpon>
     </Compile>
-    <Compile Include="Engine\BillOfLandingEngine.cs" />
+    <Compile Include="Engine\BillOfLadingEngine.cs" />
     <Compile Include="Engine\ProjectEngine.cs" />
     <Compile Include="Engine\EquipmentEngine.cs" />
     <Compile Include="Equipment.cs">
@@ -77,10 +77,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository.cs" />
     <Compile Include="Specification.cs" />
-    <Compile Include="Specifications\BillOfLanding\BillOfLandingNumberSpecification.cs" />
-    <Compile Include="Specifications\BillOfLanding\CurrentRevisionSpecification.cs" />
-    <Compile Include="Specifications\BillOfLanding\IdSpecification.cs" />
-    <Compile Include="Specifications\BillOfLandingSpecs.cs" />
+    <Compile Include="Specifications\BillOfLading\BillOfLadingNumberSpecification.cs" />
+    <Compile Include="Specifications\BillOfLading\CurrentRevisionSpecification.cs" />
+    <Compile Include="Specifications\BillOfLading\IdSpecification.cs" />
+    <Compile Include="Specifications\BillOfLadingSpecs.cs" />
+    <Compile Include="Specifications\Equipments\BillOfLadingId.cs" />
     <Compile Include="Specifications\ProjectSpecs.cs" />
     <Compile Include="Specifications\Projects\IdSpecification.cs" />
     <Compile Include="Specifications\ExpressionCombining\AndSpecification.cs" />

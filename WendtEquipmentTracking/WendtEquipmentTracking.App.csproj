@@ -155,7 +155,7 @@
     <Compile Include="AutoMapper\Converters\DateTimeToNullableDateTimeConverter.cs" />
     <Compile Include="AutoMapper\Converters\DateTimeToStringConverter.cs" />
     <Compile Include="AutoMapper\Converters\NullableDateTimeToStringConverter.cs" />
-    <Compile Include="AutoMapper\Profiles\BillOfLandingConfig.cs" />
+    <Compile Include="AutoMapper\Profiles\BillOfLadingConfig.cs" />
     <Compile Include="AutoMapper\Profiles\ProjectConfig.cs" />
     <Compile Include="AutoMapper\Profiles\EquipmentConfig.cs" />
     <Compile Include="Common\CookiesHelper.cs" />
@@ -163,7 +163,7 @@
     <Compile Include="Common\ActionNav.cs" />
     <Compile Include="Common\SuccessStatus.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\BillOfLandingController.cs" />
+    <Compile Include="Controllers\BillOfLadingController.cs" />
     <Compile Include="Controllers\ValidateController.cs" />
     <Compile Include="Controllers\ImportController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -172,8 +172,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\BillOfLandingEquipmentModel.cs" />
-    <Compile Include="Models\BillOfLandingModel.cs" />
+    <Compile Include="Models\BillOfLadingEquipmentModel.cs" />
+    <Compile Include="Models\BillOfLadingModel.cs" />
     <Compile Include="Models\EquipmentImportModel.cs" />
     <Compile Include="Models\EquipmentModel.cs" />
     <Compile Include="Models\HardwareKitModel.cs" />
@@ -204,7 +204,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Images\logo.jpg" />
-    <Content Include="Scripts\BillOfLanding.js" />
+    <Content Include="Scripts\BillOfLading.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
@@ -251,11 +251,11 @@
     <Content Include="Views\Import\SelectSheets.cshtml" />
     <Content Include="Views\Import\ImportEquipmentPartial.cshtml" />
     <Content Include="Views\Equipment\Create.cshtml" />
-    <Content Include="Views\Equipment\BillOfLandingsPartial.cshtml" />
-    <Content Include="Views\BillOfLanding\Index.cshtml" />
-    <Content Include="Views\BillOfLanding\Details.cshtml" />
-    <Content Include="Views\BillOfLanding\EquipmentsPartial.cshtml" />
-    <Content Include="Views\BillOfLanding\Create.cshtml" />
+    <Content Include="Views\Equipment\BillOfLadingsPartial.cshtml" />
+    <Content Include="Views\BillOfLading\Index.cshtml" />
+    <Content Include="Views\BillOfLading\Details.cshtml" />
+    <Content Include="Views\BillOfLading\EquipmentsPartial.cshtml" />
+    <Content Include="Views\BillOfLading\Create.cshtml" />
     <Content Include="Views\Equipment\ReadyToShip.cshtml" />
     <Content Include="Views\Shared\ActionNavPartial.cshtml" />
   </ItemGroup>

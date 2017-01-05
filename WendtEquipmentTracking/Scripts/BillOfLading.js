@@ -1,6 +1,6 @@
 ﻿$(function () {
 
-    var BillOfLanding = function () {
+    var BillOfLading = function () {
 
         this.initStyles = function () {
             
@@ -51,7 +51,7 @@
         this.initEvents();
     }
 
-    new BillOfLanding();
+    new BillOfLading();
 
 });
 

@@ -1,18 +1,18 @@
-﻿@model IEnumerable<BillOfLandingModel>
+﻿@model IEnumerable<BillOfLadingModel>
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Bill of Landings</h2>
+<h2>Bill of Ladings</h2>
 
 <p>
     @Html.ActionLink("Create New BOL", "Create")
 </p>
-<table class="table table-condensed table-bordered">
+<table class="table table-condensed table-bordered table-styled">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.BillOfLandingNumber)
+            @Html.DisplayNameFor(model => model.BillOfLadingNumber)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.DateShipped)
@@ -44,7 +44,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.BillOfLandingNumber)
+            @Html.DisplayFor(modelItem => item.BillOfLadingNumber)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.DateShipped)
@@ -71,9 +71,9 @@
             @Html.DisplayFor(modelItem => item.ShipToContact2)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.BillOfLandingId }) |
-            @Html.ActionLink("Details", "Details", new { id = item.BillOfLandingId }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.BillOfLandingId })
+            @Html.ActionLink("Edit", "Edit", new { id = item.BillOfLadingId }) |
+            @Html.ActionLink("Details", "Details", new { id = item.BillOfLadingId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.BillOfLadingId })
         </td>
     </tr>
 }

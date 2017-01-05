@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using WendtEquipmentTracking.BusinessLogic.Api;
 using WendtEquipmentTracking.BusinessLogic.BO;
+using WendtEquipmentTracking.BusinessLogic.Utils;
 using WendtEquipmentTracking.DataAccess.SQL;
 using WendtEquipmentTracking.DataAccess.SQL.Api;
 using WendtEquipmentTracking.DataAccess.SQL.Engine;
@@ -13,14 +14,18 @@ namespace WendtEquipmentTracking.BusinessLogic
     public class EquipmentService : IEquipmentService
     {
         private IEquipmentEngine equipmentEngine;
+        private EquipmentLogic equipmentLogic;
 
         public EquipmentService()
         {
             equipmentEngine = new EquipmentEngine();
+            equipmentLogic = new EquipmentLogic();
         }
 
         public void Save(EquipmentBO equipmentBO)
         {
+            equipmentLogic.TotalWeightAdjustment(equipmentBO);
+
             var equipment = Mapper.Map<Equipment>(equipmentBO);
 
             equipmentEngine.AddNewEquipment(equipment);
@@ -28,6 +33,8 @@ namespace WendtEquipmentTracking.BusinessLogic
 
         public void SaveAll(IEnumerable<EquipmentBO> equipmentBOs)
         {
+            equipmentBOs.ToList().ForEach(e => equipmentLogic.TotalWeightAdjustment(e));
+
             var equipments = Mapper.Map<IEnumerable<Equipment>>(equipmentBOs);
 
             equipmentEngine.AddAllNewEquipment(equipments);
@@ -51,8 +58,19 @@ namespace WendtEquipmentTracking.BusinessLogic
             return equipmentBO;
         }
 
+        public IEnumerable<EquipmentBO> GetByBillOfLadingId(int billOfLadingId)
+        {
+            var equipments = equipmentEngine.List(EquipmentSpecs.BillOfLadingId(billOfLadingId));
+
+            var equipmentBOs = Mapper.Map<IEnumerable<EquipmentBO>>(equipments);
+
+            return equipmentBOs;
+        }
+
         public void Update(EquipmentBO equipmentBO)
         {
+            equipmentLogic.TotalWeightAdjustment(equipmentBO);
+
             var oldEquipment = equipmentEngine.Get(EquipmentSpecs.Id(equipmentBO.EquipmentId));
 
             Mapper.Map<EquipmentBO, Equipment>(equipmentBO, oldEquipment);

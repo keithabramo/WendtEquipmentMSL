@@ -11,7 +11,7 @@ namespace WendtEquipmentTracking.App.Models
         public string ProjectNumber { get; set; }
 
         public IEnumerable<EquipmentModel> Equipments { get; set; }
-        public IEnumerable<BillOfLandingModel> BillOfLandings { get; set; }
+        public IEnumerable<BillOfLadingModel> BillOfLadings { get; set; }
         public IEnumerable<HardwareKitModel> HardwareKits { get; set; }
     }
 }

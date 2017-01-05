@@ -6,7 +6,7 @@
 
 @Html.Partial("ActionNavPartial", ActionNav.MSL)
 
-<table class="master-ship-list table table-condensed table-hover table-bordered">
+<table class="table table-condensed table-hover table-bordered table-styled">
     <thead>
         <tr>
             <th></th>
@@ -80,7 +80,7 @@
                 @Html.DisplayNameFor(model => model.QtyToStorage)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BillOfLandingNumberToStorage)
+                @Html.DisplayNameFor(model => model.BillOfLadingNumberToStorage)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.DateShippedToStorage)
@@ -92,9 +92,9 @@
         @foreach (var item in Model)
         {
             <tr>
-                @if (item.BillOfLandingEquipments.Count() > 0)
+                @if (item.BillOfLadingEquipments.Count() > 0)
                 {
-                    <td data-toggle="collapse" data-target="#accordion@(item.EquipmentId)" class="expand"><span class="glyphicon glyphicon-plus text-primary"></span></td>
+                    <td data-toggle="collapse" data-target="#accordion@(item.EquipmentId)" class="expand text-center"><span class="glyphicon glyphicon-plus text-primary"></span></td>
                 } else
                 {
                     <td></td>
@@ -169,7 +169,7 @@
                     @Html.DisplayFor(modelItem => item.QtyToStorage)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.BillOfLandingNumberToStorage)
+                    @Html.DisplayFor(modelItem => item.BillOfLadingNumberToStorage)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.DateShippedToStorage)
@@ -179,11 +179,11 @@
                     @Html.ActionLink("Delete", "Delete", new { id = item.EquipmentId })
                 </td>
             </tr>
-            if (item.BillOfLandingEquipments.Count() > 0)
+            if (item.BillOfLadingEquipments.Count() > 0)
             {
                 <tr class="collapse info" id="accordion@(item.EquipmentId)" class="collapse">
                     <td colspan="12" id="BOL@(item.EquipmentId)">
-                        @Html.Partial("BillOfLandingsPartial", item.BillOfLandingEquipments)
+                        @Html.Partial("BillOfLadingsPartial", item.BillOfLadingEquipments)
                     </td>
                     <td colspan="15"></td>
                 </tr>
@@ -201,5 +201,5 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/form")
-    @Scripts.Render("~/bundles/billOfLanding")
+    @Scripts.Render("~/bundles/billOfLading")
 }

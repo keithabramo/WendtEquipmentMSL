@@ -1,13 +1,13 @@
 ﻿namespace WendtEquipmentTracking.BusinessLogic.BO
 {
-    public class BillOfLandingEquipmentBO
+    public class BillOfLadingEquipmentBO
     {
-        public int BillOfLandingEquipmentId { get; set; }
-        public int BillOfLandingId { get; set; }
+        public int BillOfLadingEquipmentId { get; set; }
+        public int BillOfLadingId { get; set; }
         public int EquipmentId { get; set; }
         public double Quantity { get; set; }
 
-        public BillOfLandingBO BillOfLanding { get; set; }
+        public BillOfLadingBO BillOfLading { get; set; }
         public EquipmentBO Equipment { get; set; }
     }
 }

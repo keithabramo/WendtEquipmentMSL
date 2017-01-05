@@ -13,7 +13,7 @@ namespace WendtEquipmentTracking.BusinessLogic.BO
         public DateTime? ModifiedDate { get; set; }
 
         public IEnumerable<EquipmentBO> Equipments { get; set; }
-        public IEnumerable<BillOfLandingBO> BillOfLandings { get; set; }
+        public IEnumerable<BillOfLadingBO> BillOfLadings { get; set; }
         public IEnumerable<HardwareKitBO> HardwareKits { get; set; }
     }
 }

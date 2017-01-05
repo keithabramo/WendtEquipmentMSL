@@ -13,6 +13,7 @@ namespace WendtEquipmentTracking.BusinessLogic.Api
         void Delete(int id);
 
         IEnumerable<EquipmentBO> GetAll();
+        IEnumerable<EquipmentBO> GetByBillOfLadingId(int billOfLadingId);
 
         EquipmentBO GetById(int id);
 

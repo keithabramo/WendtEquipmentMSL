@@ -21,8 +21,8 @@ namespace WendtEquipmentTracking.App
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
-            bundles.Add(new ScriptBundle("~/bundles/billOfLanding").Include(
-                       "~/Scripts/BillOfLanding.js"));
+            bundles.Add(new ScriptBundle("~/bundles/billOfLading").Include(
+                       "~/Scripts/BillOfLading.js"));
 
 
 

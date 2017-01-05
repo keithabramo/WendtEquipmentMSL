@@ -1,37 +1,37 @@
-﻿@model IEnumerable<BillOfLandingEquipmentModel>
+﻿@model IEnumerable<BillOfLadingEquipmentModel>
 
 <table class="table table-condensed table-bordered">
     <thead>
         <tr>
             <th></th>
             <th>
-                @Html.DisplayNameFor(model => model.BillOfLanding.BillOfLandingNumber)
+                @Html.DisplayNameFor(model => model.BillOfLading.BillOfLadingNumber)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Quantity)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BillOfLanding.DateShipped)
+                @Html.DisplayNameFor(model => model.BillOfLading.DateShipped)
             </th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Where(b => b.BillOfLanding.IsCurrentRevision))
+        @foreach (var item in Model.Where(b => b.BillOfLading.IsCurrentRevision))
         {
             <tr>
-                <td>
-                    <a href="@Url.Action("Details", "BillOfLanding", new { billOfLandingNumber = item.BillOfLanding.BillOfLandingNumber })" class="text-center">
+                <td class="text-center">
+                    <a href="@Url.Action("Details", "BillOfLading", new { billOfLadingNumber = item.BillOfLading.BillOfLadingNumber })">
                         <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
                     </a>
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.BillOfLanding.BillOfLandingNumber)
+                    @Html.DisplayFor(modelItem => item.BillOfLading.BillOfLadingNumber)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Quantity)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.BillOfLanding.DateShipped)
+                    @Html.DisplayFor(modelItem => item.BillOfLading.DateShipped)
                 </td>
                 
             </tr>

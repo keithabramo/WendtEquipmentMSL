@@ -29,7 +29,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
         public IEnumerable<Equipment> ListAll()
         {
             return this.repository.GetAll()
-                .Include(x => x.BillOfLandingEquipments);
+                .Include(x => x.BillOfLadingEquipments);
         }
 
         public Equipment Get(Specification<Equipment> specification)
@@ -40,7 +40,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
         public IEnumerable<Equipment> List(Specification<Equipment> specification)
         {
             return this.repository.Find(specification)
-                .Include(x => x.BillOfLandingEquipments);
+                .Include(x => x.BillOfLadingEquipments);
         }
 
         public void AddNewEquipment(Equipment equipment)

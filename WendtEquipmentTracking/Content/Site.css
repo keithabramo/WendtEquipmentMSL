@@ -164,30 +164,30 @@ dl.dl-horizontal dd {
     overflow-y: auto;
 }
 
-/* Master LIST */
+/* all tables */
 
-.master-ship-list {
-    font-size: 12px;
+.table-styled {
+    font-size: 10px;
 }
 
-    .master-ship-list th {
+    .table-styled th {
         cursor: pointer;
         white-space: nowrap;
     }
 
-    .master-ship-list.text-center th {
+    .table-styled .text-center th {
         vertical-align: top;
         text-align: center;
     }
 
-    .master-ship-list .links {
+    .table-styled .links {
         white-space: nowrap;
     }
 
-    .master-ship-list table {
+    .table-styled table {
         margin-bottom: 0;
     }
 
-    .master-ship-list .expand {
+    .table-styled .expand {
         cursor: pointer;
     }

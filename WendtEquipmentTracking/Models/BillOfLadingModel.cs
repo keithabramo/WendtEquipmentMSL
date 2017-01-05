@@ -5,9 +5,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WendtEquipmentTracking.App.Models
 {
-    public class BillOfLandingModel : BaseModel
+    public class BillOfLadingModel : BaseModel
     {
-        public int BillOfLandingId { get; set; }
+        public int BillOfLadingId { get; set; }
         public int ProjectId { get; set; }
 
         [DisplayName("Revision")]
@@ -17,7 +17,7 @@ namespace WendtEquipmentTracking.App.Models
         public bool IsCurrentRevision { get; set; }
 
         [DisplayName("BOL #")]
-        public string BillOfLandingNumber { get; set; }
+        public string BillOfLadingNumber { get; set; }
 
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         [DisplayName("Date Shipped")]
@@ -44,6 +44,6 @@ namespace WendtEquipmentTracking.App.Models
         [DisplayName("Ship To Contact 2")]
         public string ShipToContact2 { get; set; }
 
-        public IList<BillOfLandingEquipmentModel> BillOfLandingEquipments { get; set; }
+        public IList<BillOfLadingEquipmentModel> BillOfLadingEquipments { get; set; }
     }
 }

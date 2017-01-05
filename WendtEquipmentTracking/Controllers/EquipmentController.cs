@@ -89,14 +89,14 @@ namespace WendtEquipmentTracking.App.Controllers
 
             equipmentModels = equipmentModels.OrderBy(r => r.EquipmentId);
 
-            var billOfLandingEquipments = equipmentModels.Select(e => new BillOfLandingEquipmentModel
+            var billOfLadingEquipments = equipmentModels.Select(e => new BillOfLadingEquipmentModel
             {
                 Equipment = e
             }).ToList();
 
-            var model = new BillOfLandingModel
+            var model = new BillOfLadingModel
             {
-                BillOfLandingEquipments = billOfLandingEquipments
+                BillOfLadingEquipments = billOfLadingEquipments
             };
 
             return PartialView(model);

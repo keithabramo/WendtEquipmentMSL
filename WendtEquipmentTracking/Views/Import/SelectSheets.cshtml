@@ -5,7 +5,10 @@
     ViewBag.Title = "Import Selection";
 }
 
-<h2>Import Equipment<br /><small>Select the excel worksheets you would like to import</small></h2>
+
+@Html.Partial("ActionNavPartial", ActionNav.Import)
+
+<h2><small>Select the excel worksheets you would like to import</small></h2>
 
 
 @using (Ajax.BeginForm("SelectSheets", new AjaxOptions { UpdateTargetId = "EquipmentRows", InsertionMode = InsertionMode.Replace}))

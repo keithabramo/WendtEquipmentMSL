@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BillOfLandingModel>
+﻿@model IEnumerable<BillOfLadingModel>
 
 @{
     ViewBag.Title = "Details";
@@ -45,7 +45,7 @@
             @foreach (var item in Model)
             {
                 <tr @(item.IsCurrentRevision ? "class='info'" : "")>
-                    <td data-toggle="collapse" data-target="#accordion@(item.BillOfLandingId)" class="expand text-center"><span class="glyphicon glyphicon-plus text-primary"></span></td>
+                    <td data-toggle="collapse" data-target="#accordion@(item.BillOfLadingId)" class="expand text-center"><span class="glyphicon glyphicon-plus text-primary"></span></td>
                     <td>
                         @if (item.IsCurrentRevision)
                         {
@@ -82,9 +82,9 @@
                         @Html.DisplayFor(modelItem => item.ShipToContact2)
                     </td>
                 </tr>
-                <tr class="collapse info" id="accordion@(item.BillOfLandingId)">
-                    <td colspan="10" id="Equipment@(item.BillOfLandingId)">
-                        @Html.Partial("EquipmentsPartial", item.BillOfLandingEquipments)
+                <tr class="collapse info" id="accordion@(item.BillOfLadingId)">
+                    <td colspan="10" id="Equipment@(item.BillOfLadingId)">
+                        @Html.Partial("EquipmentsPartial", item.BillOfLadingEquipments)
                     </td>
                 </tr>
             }

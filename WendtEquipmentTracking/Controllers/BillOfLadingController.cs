@@ -11,19 +11,19 @@ using WendtEquipmentTracking.BusinessLogic.BO;
 
 namespace WendtEquipmentTracking.App.Controllers
 {
-    public class BillOfLandingController : Controller
+    public class BillOfLadingController : Controller
     {
-        private IBillOfLandingService billOfLandingService;
+        private IBillOfLadingService billOfLadingService;
         private IProjectService projectService;
 
-        public BillOfLandingController()
+        public BillOfLadingController()
         {
-            billOfLandingService = new BillOfLandingService();
+            billOfLadingService = new BillOfLadingService();
             projectService = new ProjectService();
         }
 
         //
-        // GET: /BillOfLanding/
+        // GET: /BillOfLading/
 
         public ActionResult Index()
         {
@@ -44,7 +44,7 @@ namespace WendtEquipmentTracking.App.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            var billOfLAndingModels = Mapper.Map<IEnumerable<BillOfLandingModel>>(projectBO.BillOfLandings);
+            var billOfLAndingModels = Mapper.Map<IEnumerable<BillOfLadingModel>>(projectBO.BillOfLadings);
 
             //Filter and sort data
 
@@ -54,24 +54,24 @@ namespace WendtEquipmentTracking.App.Controllers
         }
 
         //
-        // GET: /BillOfLanding/Details/5
+        // GET: /BillOfLading/Details/5
 
-        public ActionResult Details(string billOfLandingNumber)
+        public ActionResult Details(string billOfLadingNumber)
         {
-            var billOfLandings = billOfLandingService.GetByBillOfLandingNumber(billOfLandingNumber);
+            var billOfLadings = billOfLadingService.GetByBillOfLadingNumber(billOfLadingNumber);
 
-            if (billOfLandings == null)
+            if (billOfLadings == null)
             {
                 return HttpNotFound();
             }
 
-            var model = Mapper.Map<IEnumerable<BillOfLandingModel>>(billOfLandings);
+            var model = Mapper.Map<IEnumerable<BillOfLadingModel>>(billOfLadings);
 
             return View(model);
         }
 
         //
-        // GET: /BillOfLanding/Create
+        // GET: /BillOfLading/Create
 
         public ActionResult Create()
         {
@@ -79,18 +79,18 @@ namespace WendtEquipmentTracking.App.Controllers
         }
 
         //
-        // POST: /BillOfLanding/Create
+        // POST: /BillOfLading/Create
 
         [HttpPost]
-        public ActionResult Create(BillOfLandingModel model)
+        public ActionResult Create(BillOfLadingModel model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var billOfLandingBO = Mapper.Map<BillOfLandingBO>(model);
+                    var billOfLadingBO = Mapper.Map<BillOfLadingBO>(model);
 
-                    billOfLandingService.Save(billOfLandingBO);
+                    billOfLadingService.Save(billOfLadingBO);
 
                     return RedirectToAction("Index");
                 }
@@ -104,36 +104,36 @@ namespace WendtEquipmentTracking.App.Controllers
         }
 
         //
-        // GET: /BillOfLanding/Edit/5
+        // GET: /BillOfLading/Edit/5
 
         public ActionResult Edit(int id)
         {
-            var billOfLanding = billOfLandingService.GetById(id);
-            if (billOfLanding == null)
+            var billOfLading = billOfLadingService.GetById(id);
+            if (billOfLading == null)
             {
                 return HttpNotFound();
             }
 
-            var billOfLandingModel = Mapper.Map<BillOfLandingModel>(billOfLanding);
+            var billOfLadingModel = Mapper.Map<BillOfLadingModel>(billOfLading);
 
-            return View(billOfLandingModel);
+            return View(billOfLadingModel);
         }
 
         //
-        // POST: /BillOfLanding/Edit/5
+        // POST: /BillOfLading/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(int id, BillOfLandingModel model)
+        public ActionResult Edit(int id, BillOfLadingModel model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var billOfLanding = billOfLandingService.GetById(id);
+                    var billOfLading = billOfLadingService.GetById(id);
 
-                    Mapper.Map<BillOfLandingModel, BillOfLandingBO>(model, billOfLanding);
+                    Mapper.Map<BillOfLadingModel, BillOfLadingBO>(model, billOfLading);
 
-                    billOfLandingService.Update(billOfLanding);
+                    billOfLadingService.Update(billOfLading);
 
                     return RedirectToAction("Index");
                 }
@@ -147,48 +147,48 @@ namespace WendtEquipmentTracking.App.Controllers
         }
 
 
-        // GET: BillOfLanding/Delete/5
+        // GET: BillOfLading/Delete/5
         public ActionResult Delete(int id)
         {
-            var billOfLanding = billOfLandingService.GetById(id);
+            var billOfLading = billOfLadingService.GetById(id);
 
-            if (billOfLanding == null)
+            if (billOfLading == null)
             {
                 return HttpNotFound();
             }
 
-            var model = Mapper.Map<BillOfLandingModel>(billOfLanding);
+            var model = Mapper.Map<BillOfLadingModel>(billOfLading);
 
             return View(model);
         }
 
-        // POST: BillOfLanding/Delete/5
+        // POST: BillOfLading/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, BillOfLandingModel model)
+        public ActionResult Delete(int id, BillOfLadingModel model)
         {
             try
             {
-                var billOfLanding = billOfLandingService.GetById(id);
+                var billOfLading = billOfLadingService.GetById(id);
 
-                if (billOfLanding == null)
+                if (billOfLading == null)
                 {
                     return HttpNotFound();
                 }
 
-                billOfLandingService.Delete(id);
+                billOfLadingService.Delete(id);
 
                 return RedirectToAction("Index");
             }
             catch
             {
-                var billOfLanding = billOfLandingService.GetById(id);
+                var billOfLading = billOfLadingService.GetById(id);
 
-                if (billOfLanding == null)
+                if (billOfLading == null)
                 {
                     return HttpNotFound();
                 }
 
-                model = Mapper.Map<BillOfLandingModel>(billOfLanding);
+                model = Mapper.Map<BillOfLadingModel>(billOfLading);
 
                 return View(model);
             }

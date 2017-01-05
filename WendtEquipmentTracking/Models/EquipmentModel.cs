@@ -11,7 +11,7 @@ namespace WendtEquipmentTracking.App.Models
         public int ProjectId { get; set; }
 
 
-        [DisplayName("Equipment Name")]
+        [DisplayName("Equipment")]
         public string EquipmentName { get; set; }
 
 
@@ -28,11 +28,11 @@ namespace WendtEquipmentTracking.App.Models
         public string DrawingNumber { get; set; }
 
 
-        [DisplayName("Work Order Number")]
+        [DisplayName("Work Order No.")]
         public string WorkOrderNumber { get; set; }
 
 
-        [DisplayName("Quantity")]
+        [DisplayName("Qty")]
         public double? Quantity { get; set; }
 
 
@@ -46,10 +46,6 @@ namespace WendtEquipmentTracking.App.Models
 
         [DisplayName("Unit Weight")]
         public double? UnitWeight { get; set; }
-
-
-
-
 
 
         [DisplayName("Total Weight")]
@@ -66,7 +62,7 @@ namespace WendtEquipmentTracking.App.Models
         public double? ReadyToShip { get; set; }
 
 
-        [DisplayName("Shipped Quantity")]
+        [DisplayName("Shipped Qty")]
         [ReadOnly(true)]
         public double? ShippedQuantity { get; set; }
 
@@ -114,14 +110,14 @@ namespace WendtEquipmentTracking.App.Models
         public double? QtyToStorage { get; set; }
 
 
-        [DisplayName("BOL Number To Storage")]
-        public string BillOfLandingNumberToStorage { get; set; }
+        [DisplayName("BOL # To Storage")]
+        public string BillOfLadingNumberToStorage { get; set; }
 
 
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         [DisplayName("Date Shipped To Storage")]
         public DateTime? DateShippedToStorage { get; set; }
 
-        public IList<BillOfLandingEquipmentModel> BillOfLandingEquipments { get; set; }
+        public IList<BillOfLadingEquipmentModel> BillOfLadingEquipments { get; set; }
     }
 }

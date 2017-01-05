@@ -12,15 +12,15 @@ namespace WendtEquipmentTracking.DataAccess.SQL
     using System;
     using System.Collections.Generic;
     
-    public partial class BillOfLanding
+    public partial class BillOfLading
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public BillOfLanding()
+        public BillOfLading()
         {
-            this.BillOfLandingEquipments = new HashSet<BillOfLandingEquipment>();
+            this.BillOfLadingEquipments = new HashSet<BillOfLadingEquipment>();
         }
     
-        public int BillOfLandingId { get; set; }
+        public int BillOfLadingId { get; set; }
         public int ProjectId { get; set; }
         public int Revision { get; set; }
         public bool IsCurrentRevision { get; set; }
@@ -28,7 +28,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         public System.DateTime CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
-        public string BillOfLandingNumber { get; set; }
+        public string BillOfLadingNumber { get; set; }
         public Nullable<System.DateTime> DateShipped { get; set; }
         public string ShippedFrom { get; set; }
         public string ShipToCompany { get; set; }
@@ -40,6 +40,6 @@ namespace WendtEquipmentTracking.DataAccess.SQL
     
         public virtual Project Project { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BillOfLandingEquipment> BillOfLandingEquipments { get; set; }
+        public virtual ICollection<BillOfLadingEquipment> BillOfLadingEquipments { get; set; }
     }
 }
