@@ -1,4 +1,6 @@
-﻿namespace WendtEquipmentTracking.BusinessLogic.BO
+﻿using System.Collections.Generic;
+
+namespace WendtEquipmentTracking.BusinessLogic.BO
 {
     public class HardwareKitBO
     {
@@ -6,5 +8,6 @@
         public int ProjectId { get; set; }
         public int Revision { get; set; }
         public bool IsCurrentRevision { get; set; }
+        public IEnumerable<EquipmentBO> Equipments { get; set; }
     }
 }

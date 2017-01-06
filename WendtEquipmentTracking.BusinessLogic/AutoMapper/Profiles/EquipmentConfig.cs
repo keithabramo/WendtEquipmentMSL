@@ -13,7 +13,6 @@ namespace WendtEquipmentTracking.BusinessLogic.AutoMapper.Profiles
             base.CreateMap<Equipment, EquipmentBO>();
             base.CreateMap<EquipmentBO, Equipment>()
                 .ForMember(dest => dest.BillOfLadingEquipments, opt => opt.Ignore())
-                .ForMember(dest => dest.ProjectId, opt => opt.Ignore())
                 .ForMember(dest => dest.Project, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedDate, opt => opt.Ignore())

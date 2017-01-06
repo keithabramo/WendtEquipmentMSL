@@ -48,6 +48,7 @@ namespace WendtEquipmentTracking.App.Controllers
             }
 
             var equipmentModels = Mapper.Map<IEnumerable<EquipmentModel>>(projectBO.Equipments);
+            equipmentModels.ToList().ForEach(e => { e.ProjectNumber = projectBO.ProjectNumber; e.SetEquipmentIndicators(); });
 
             //Filter and sort data
 
@@ -84,6 +85,7 @@ namespace WendtEquipmentTracking.App.Controllers
             var equipmentBOs = projectBO.Equipments.Where(e => e.ReadyToShip != null && e.ReadyToShip > 0);
 
             var equipmentModels = Mapper.Map<IEnumerable<EquipmentModel>>(equipmentBOs);
+            equipmentModels.ToList().ForEach(e => { e.ProjectNumber = projectBO.ProjectNumber; e.SetEquipmentIndicators(); });
 
             //Filter and sort data
 
@@ -128,6 +130,7 @@ namespace WendtEquipmentTracking.App.Controllers
             var equipmentBOs = projectBO.Equipments.Where(e => e.ReleaseDate != null && e.LeftToShip > 0);
 
             var equipmentModels = Mapper.Map<IEnumerable<EquipmentModel>>(equipmentBOs);
+            equipmentModels.ToList().ForEach(e => { e.ProjectNumber = projectBO.ProjectNumber; e.SetEquipmentIndicators(); });
 
             //Filter and sort data
 
@@ -190,7 +193,7 @@ namespace WendtEquipmentTracking.App.Controllers
         [ChildActionOnly]
         public ActionResult Create()
         {
-            return PartialView();
+            return PartialView(new EquipmentModel());
         }
 
         //

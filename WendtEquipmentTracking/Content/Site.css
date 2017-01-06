@@ -203,3 +203,22 @@ dl.dl-horizontal dd {
         min-width: 75px;
         padding: 6px;
     }
+
+    .table-styled td.Red {
+        background-color: red;
+    }
+    .table-styled td.Yellow {
+        background-color: yellow;
+    }
+    .table-styled td.Green {
+        background-color: green;
+    }
+    .table-styled td.Purple {
+        background-color: purple;
+    }
+    .table-styled td.Pink {
+        background-color: pink;
+    }
+    .table-styled td.Fuchsia {
+        background-color: fuchsia;
+    }

@@ -18,6 +18,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         public BillOfLading()
         {
             this.BillOfLadingEquipments = new HashSet<BillOfLadingEquipment>();
+            this.HardwareKits = new HashSet<HardwareKit>();
         }
     
         public int BillOfLadingId { get; set; }
@@ -31,16 +32,12 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         public string BillOfLadingNumber { get; set; }
         public Nullable<System.DateTime> DateShipped { get; set; }
         public string ShippedFrom { get; set; }
-        public string ShipToCompany { get; set; }
-        public string ShipToAddress { get; set; }
-        public string ShipToCSZ { get; set; }
-        public string ShipToPhoneFax { get; set; }
-        public string ShipToContact1 { get; set; }
-        public string ShipToContact2 { get; set; }
         public bool ToStorage { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BillOfLadingEquipment> BillOfLadingEquipments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<HardwareKit> HardwareKits { get; set; }
         public virtual Project Project { get; set; }
     }
 }

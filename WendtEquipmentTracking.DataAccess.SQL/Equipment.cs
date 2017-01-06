@@ -52,9 +52,11 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         public string BillOfLandingNumberToStorage { get; set; }
         public Nullable<System.DateTime> DateShippedToStorage { get; set; }
         public bool IsHardware { get; set; }
+        public Nullable<int> HardwareKitId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BillOfLadingEquipment> BillOfLadingEquipments { get; set; }
+        public virtual HardwareKit HardwareKit { get; set; }
         public virtual Project Project { get; set; }
     }
 }

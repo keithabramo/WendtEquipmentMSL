@@ -16,14 +16,9 @@ namespace WendtEquipmentTracking.BusinessLogic.BO
         public string BillOfLadingNumber { get; set; }
         public DateTime? DateShipped { get; set; }
         public string ShippedFrom { get; set; }
-        public string ShipToCompany { get; set; }
-        public string ShipToAddress { get; set; }
-        public string ShipToCSZ { get; set; }
-        public string ShipToPhoneFax { get; set; }
-        public string ShipToContact1 { get; set; }
-        public string ShipToContact2 { get; set; }
         public bool ToStorage { get; set; }
 
         public IEnumerable<BillOfLadingEquipmentBO> BillOfLadingEquipments { get; set; }
+        public IEnumerable<HardwareKitBO> HardwareKits { get; set; }
     }
 }

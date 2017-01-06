@@ -123,7 +123,7 @@
                 <td class="long-column">
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
-                <td>
+                <td class="@item.EquipmentIndicators.UnitWeightColor.ToString()">
                     @Html.DisplayFor(modelItem => item.UnitWeight)
                 </td>
                 <td>
@@ -132,16 +132,16 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.TotalWeightShipped)
                 </td>
-                <td>
+                <td class="@item.EquipmentIndicators.ReadyToShipColor.ToString()">
                     @Html.DisplayFor(modelItem => item.ReadyToShip)
                 </td>
-                <td>
+                <td class="@item.EquipmentIndicators.ShippedQtyColor.ToString()">
                     @Html.DisplayFor(modelItem => item.ShippedQuantity)
                 </td>
-                <td>
+                <td class="@item.EquipmentIndicators.LeftToShipColor.ToString()">
                     @Html.DisplayFor(modelItem => item.LeftToShip)
                 </td>
-                <td>
+                <td class="@item.EquipmentIndicators.FullyShippedColor.ToString()">
                     @if(item.FullyShipped.HasValue && item.FullyShipped.Value == true)
                     {
                         @:Yes
@@ -155,16 +155,16 @@
                         @:NA
                     }
                 </td>
-                <td>
+                <td class="@item.EquipmentIndicators.CustomsValueColor.ToString()">
                     @Html.DisplayFor(modelItem => item.CustomsValue)
                 </td>
-                <td>
+                <td class="@item.EquipmentIndicators.SalePriceColor.ToString()">
                     @Html.DisplayFor(modelItem => item.SalePrice)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.HTSCode)
                 </td>
-                <td>
+                <td class="@item.EquipmentIndicators.CountyOfOriginColor.ToString()">
                     @Html.DisplayFor(modelItem => item.CountryOfOrigin)
                 </td>
                 <td>
@@ -173,7 +173,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.AutoShipFile)
                 </td>
-                <td>
+                <td class="@item.EquipmentIndicators.SalesOrderNumberColor.ToString()">
                     @Html.DisplayFor(modelItem => item.SalesOrderNumber)
                 </td>
                 <td>
@@ -212,5 +212,5 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/form")
-    @Scripts.Render("~/bundles/billOfLading")
+    @Scripts.Render("~/bundles/masterShipList")
 }

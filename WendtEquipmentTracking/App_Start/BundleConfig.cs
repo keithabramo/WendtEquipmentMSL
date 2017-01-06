@@ -16,17 +16,19 @@ namespace WendtEquipmentTracking.App
                         "~/Scripts/jquery.validate*",
                         "~/Scripts/jquery.unobtrusive*",
                         "~/Scripts/jquery.inputmask.js",
-                        "~/Scripts/waitingDialog.js"));
+                        "~/Scripts/waitingDialog.js",
+                        "~/Scripts/form.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
-            bundles.Add(new ScriptBundle("~/bundles/billOfLading").Include(
-                       "~/Scripts/BillOfLading.js"));
+            bundles.Add(new ScriptBundle("~/bundles/masterShipList").Include(
+                       "~/Scripts/masterShipList.js"));
 
 
 
             bundles.Add(new StyleBundle("~/Content/css")
+                .IncludeDirectory("~/Content/themes/base", "*.css")
                 .Include(
                     "~/Content/bootstrap.css",
                     "~/Content/Site.css"

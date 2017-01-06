@@ -18,7 +18,7 @@ namespace WendtEquipmentTracking.BusinessLogic.Utils
             equipmentBO.TotalWeight = equipmentBO.Quantity.HasValue && equipmentBO.UnitWeight.HasValue ? equipmentBO.Quantity.Value * equipmentBO.UnitWeight.Value : 0;
 
             var shippedQuantity = equipmentBO.BillOfLadingEquipments.Where(be => be.BillOfLading.IsCurrentRevision).Sum(be => be.Quantity);
-            var leftToShip = equipmentBO.ReadyToShip - shippedQuantity;
+            var leftToShip = equipmentBO.Quantity - shippedQuantity;
 
             equipmentBO.LeftToShip = leftToShip;
         }
@@ -35,7 +35,7 @@ namespace WendtEquipmentTracking.BusinessLogic.Utils
             {
                 var shippedQuantity = equipmentBO.BillOfLadingEquipments.Where(be => be.BillOfLading.IsCurrentRevision).Sum(be => be.Quantity);
                 var totalWeightShipped = equipmentBO.UnitWeight * shippedQuantity;
-                var leftToShip = equipmentBO.ReadyToShip - shippedQuantity;
+                var leftToShip = equipmentBO.Quantity - shippedQuantity;
                 var fullyShipped = shippedQuantity >= equipmentBO.Quantity;
 
                 equipmentBO.ShippedQuantity = shippedQuantity;

@@ -28,6 +28,18 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         public System.DateTime CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
+        public string ShipToCompany { get; set; }
+        public string ShipToAddress { get; set; }
+        public string ShipToCSZ { get; set; }
+        public string ShipToContact1 { get; set; }
+        public string ShipToContact1PhoneFax { get; set; }
+        public string ShipToContact1Email { get; set; }
+        public string ShipToContact2 { get; set; }
+        public string ShipToContact2PhoneFax { get; set; }
+        public string ShipToContact2Email { get; set; }
+        public string ShipToBroker { get; set; }
+        public string ShipToBrokerPhoneFax { get; set; }
+        public string ShipToBrokerEmail { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BillOfLading> BillOfLadings { get; set; }
