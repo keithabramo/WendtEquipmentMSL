@@ -1,0 +1,33 @@
+﻿@model IEnumerable<HardwareKitModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Bill of Ladings</h2>
+
+<p>
+    @Html.ActionLink("Create New BOL", "Create")
+</p>
+<table class="table table-condensed table-bordered table-styled">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.HardwareKitNumber)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.HardwareKitNumber)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.HardwareKitId }) |
+            @Html.ActionLink("Details", "Details", new { id = item.HardwareKitId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.HardwareKitId })
+        </td>
+    </tr>
+}
+
+</table>

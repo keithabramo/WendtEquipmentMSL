@@ -4,9 +4,12 @@
 @using (Html.BeginForm("Create", "Equipment"))
 {
     @Html.AntiForgeryToken()
-    <tr class="warning">
+    <tr class="warning create">
         <td>
             <input type="submit" value="Create" class="btn btn-sm btn-primary" />
+        </td>
+        <td>
+            @Html.CheckBoxFor(modelItem => modelItem.IsHardware)
         </td>
         <td>
             @Html.EditorFor(modelItem => modelItem.EquipmentName, new { htmlAttributes = new { @class = "form-control" } })
@@ -43,15 +46,21 @@
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>
+            @Html.EditorFor(modelItem => modelItem.HTSCode, new { htmlAttributes = new { @class = "form-control" } })
+        </td>
+        <td>
+            @Html.EditorFor(modelItem => modelItem.CountryOfOrigin, new { htmlAttributes = new { @class = "form-control" } })
+        </td>
+        <td>
+            @Html.EditorFor(modelItem => modelItem.Notes, new { htmlAttributes = new { @class = "form-control" } })
+        </td>
+        <td>
+            @Html.EditorFor(modelItem => modelItem.AutoShipFile, new { htmlAttributes = new { @class = "form-control" } })
+        </td>
+        <td>
+            @Html.EditorFor(modelItem => modelItem.SalesOrderNumber, new { htmlAttributes = new { @class = "form-control" } })
+        </td>
         <td></td>
     </tr>
 }

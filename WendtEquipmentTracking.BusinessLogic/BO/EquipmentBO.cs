@@ -7,6 +7,7 @@ namespace WendtEquipmentTracking.BusinessLogic.BO
     {
         public int EquipmentId { get; set; }
         public int ProjectId { get; set; }
+        public int? HardwareKitId { get; set; }
         public string EquipmentName { get; set; }
         public bool IsHardware { get; set; }
         public string Priority { get; set; }
@@ -34,9 +35,6 @@ namespace WendtEquipmentTracking.BusinessLogic.BO
         public string Notes { get; set; }
         public string AutoShipFile { get; set; }
         public string SalesOrderNumber { get; set; }
-        public double? QtyToStorage { get; set; }
-        public string BillOfLadingNumberToStorage { get; set; }
-        public DateTime? DateShippedToStorage { get; set; }
 
         public IEnumerable<BillOfLadingEquipmentBO> BillOfLadingEquipments { get; set; }
     }

@@ -182,6 +182,10 @@ dl.dl-horizontal dd {
         text-align: center;
     }
 
+    .table-styled tr td{
+        vertical-align: middle !important;
+    }
+
     .table-styled .links {
         white-space: nowrap;
     }
@@ -192,6 +196,7 @@ dl.dl-horizontal dd {
 
     .table-styled .expand {
         cursor: pointer;
+        font-size: 12px
     }
 
     .table-styled .long-column {

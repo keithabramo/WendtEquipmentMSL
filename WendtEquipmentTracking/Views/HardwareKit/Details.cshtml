@@ -1,0 +1,56 @@
+﻿@model IEnumerable<HardwareKitModel>
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>BOL<br /><small>Details</small></h2>
+
+<div>
+    <hr />
+    <table class="table table-condensed table-bordered">
+        <thead>
+            <tr>
+                <th></th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Revision)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HardwareKitNumber)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr @(item.IsCurrentRevision ? "class='info'" : "")>
+                    <td data-toggle="collapse" data-target="#accordion@(item.HardwareKitId)" class="expand text-center"><span class="glyphicon glyphicon-plus text-primary"></span></td>
+                    <td>
+                        @if (item.IsCurrentRevision)
+                        {
+                            @("Current")
+                        }
+                        else
+                        {
+                            Html.DisplayFor(modelItem => item.Revision);
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HardwareKitNumber)
+                    </td>
+                </tr>
+                <tr class="collapse info" id="accordion@(item.HardwareKitId)">
+                    <td colspan="10" id="Equipment@(item.HardwareKitId)">
+                        @Html.Partial("EquipmentsPartial", item.Equipments)
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

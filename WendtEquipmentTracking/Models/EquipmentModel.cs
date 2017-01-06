@@ -10,6 +10,7 @@ namespace WendtEquipmentTracking.App.Models
     {
         public int EquipmentId { get; set; }
         public int ProjectId { get; set; }
+        public int? HardwareKitId { get; set; }
 
 
         [DisplayName("Equipment")]
@@ -107,19 +108,6 @@ namespace WendtEquipmentTracking.App.Models
 
         [DisplayName("Sales Order Number")]
         public string SalesOrderNumber { get; set; }
-
-
-        [DisplayName("Qty To Storage")]
-        public double? QtyToStorage { get; set; }
-
-
-        [DisplayName("BOL # To Storage")]
-        public string BillOfLadingNumberToStorage { get; set; }
-
-
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
-        [DisplayName("Date Shipped To Storage")]
-        public DateTime? DateShippedToStorage { get; set; }
 
         public IList<BillOfLadingEquipmentModel> BillOfLadingEquipments { get; set; }
 

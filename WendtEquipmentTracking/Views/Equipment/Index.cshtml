@@ -11,6 +11,9 @@
         <tr>
             <th></th>
             <th>
+                @Html.DisplayNameFor(model => model.IsHardware)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.EquipmentName)
             </th>
             <th>
@@ -76,139 +79,18 @@
             <th>
                 @Html.DisplayNameFor(model => model.SalesOrderNumber)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.QtyToStorage)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BillOfLadingNumberToStorage)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateShippedToStorage)
-            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr class="text-nowrap">
-                @if (item.BillOfLadingEquipments.Count() > 0)
-                {
-                    <td data-toggle="collapse" data-target="#accordion@(item.EquipmentId)" class="expand text-center"><span class="glyphicon glyphicon-plus text-primary"></span></td>
-                } else
-                {
-                    <td></td>
-                }
-                <td>
-                    @Html.DisplayFor(modelItem => item.EquipmentName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Priority)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ReleaseDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DrawingNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.WorkOrderNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Quantity)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ShippingTagNumber)
-                </td>
-                <td class="long-column">
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td class="@item.EquipmentIndicators.UnitWeightColor.ToString()">
-                    @Html.DisplayFor(modelItem => item.UnitWeight)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TotalWeight)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TotalWeightShipped)
-                </td>
-                <td class="@item.EquipmentIndicators.ReadyToShipColor.ToString()">
-                    @Html.DisplayFor(modelItem => item.ReadyToShip)
-                </td>
-                <td class="@item.EquipmentIndicators.ShippedQtyColor.ToString()">
-                    @Html.DisplayFor(modelItem => item.ShippedQuantity)
-                </td>
-                <td class="@item.EquipmentIndicators.LeftToShipColor.ToString()">
-                    @Html.DisplayFor(modelItem => item.LeftToShip)
-                </td>
-                <td class="@item.EquipmentIndicators.FullyShippedColor.ToString()">
-                    @if(item.FullyShipped.HasValue && item.FullyShipped.Value == true)
-                    {
-                        @:Yes
-                    }
-                    else if (item.FullyShipped.HasValue && item.FullyShipped.Value == false)
-                    {
-                        @:No
-                    }
-                    else
-                    {
-                        @:NA
-                    }
-                </td>
-                <td class="@item.EquipmentIndicators.CustomsValueColor.ToString()">
-                    @Html.DisplayFor(modelItem => item.CustomsValue)
-                </td>
-                <td class="@item.EquipmentIndicators.SalePriceColor.ToString()">
-                    @Html.DisplayFor(modelItem => item.SalePrice)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.HTSCode)
-                </td>
-                <td class="@item.EquipmentIndicators.CountyOfOriginColor.ToString()">
-                    @Html.DisplayFor(modelItem => item.CountryOfOrigin)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Notes)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AutoShipFile)
-                </td>
-                <td class="@item.EquipmentIndicators.SalesOrderNumberColor.ToString()">
-                    @Html.DisplayFor(modelItem => item.SalesOrderNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.QtyToStorage)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.BillOfLadingNumberToStorage)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateShippedToStorage)
-                </td>
-                <td class="text-nowrap">
-                    @Html.ActionLink("Edit", "Edit", new { id = item.EquipmentId }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.EquipmentId })
-                </td>
-            </tr>
-            if (item.BillOfLadingEquipments.Count() > 0)
-            {
-                <tr class="collapse info" id="accordion@(item.EquipmentId)" class="collapse">
-                    <td colspan="12" id="BOL@(item.EquipmentId)">
-                        @Html.Partial("BillOfLadingsPartial", item.BillOfLadingEquipments)
-                    </td>
-                    <td colspan="15"></td>
-                </tr>
-            }
+            @Html.Partial("Edit", item)
         }
 
         @Html.Action("Create")
     </tbody>
 </table>
-
-
-<div id="BOLDialogs">
-
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/form")

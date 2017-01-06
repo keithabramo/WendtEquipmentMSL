@@ -164,6 +164,7 @@
     <Compile Include="Common\ActionNav.cs" />
     <Compile Include="Common\SuccessStatus.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\HardwareKitController.cs" />
     <Compile Include="Controllers\BillOfLadingController.cs" />
     <Compile Include="Controllers\ValidateController.cs" />
     <Compile Include="Controllers\ImportController.cs" />
@@ -175,7 +176,7 @@
     </Compile>
     <Compile Include="Models\BillOfLadingEquipmentModel.cs" />
     <Compile Include="Models\BillOfLadingModel.cs" />
-    <Compile Include="Models\EquipmentImportModel.cs" />
+    <Compile Include="Models\EquipmentSelectionModel.cs" />
     <Compile Include="Models\EquipmentIndicatorsModel.cs" />
     <Compile Include="Models\EquipmentModel.cs" />
     <Compile Include="Models\HardwareKitModel.cs" />
@@ -305,6 +306,12 @@
     <Content Include="Views\Equipment\ReadyToShipPartial.cshtml" />
     <Content Include="Views\Shared\ActionNavPartial.cshtml" />
     <Content Include="Views\Equipment\Released.cshtml" />
+    <Content Include="Views\Equipment\Edit.cshtml" />
+    <Content Include="Views\HardwareKit\Create.cshtml" />
+    <Content Include="Views\HardwareKit\Details.cshtml" />
+    <Content Include="Views\HardwareKit\EquipmentsPartial.cshtml" />
+    <Content Include="Views\HardwareKit\Index.cshtml" />
+    <Content Include="Views\Equipment\HardwarePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

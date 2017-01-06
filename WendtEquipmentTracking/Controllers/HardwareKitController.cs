@@ -11,19 +11,19 @@ using WendtEquipmentTracking.BusinessLogic.BO;
 
 namespace WendtEquipmentTracking.App.Controllers
 {
-    public class BillOfLadingController : Controller
+    public class HardwareKitController : Controller
     {
-        private IBillOfLadingService billOfLadingService;
+        private IHardwareKitService hardwareKitService;
         private IProjectService projectService;
 
-        public BillOfLadingController()
+        public HardwareKitController()
         {
-            billOfLadingService = new BillOfLadingService();
+            hardwareKitService = new HardwareKitService();
             projectService = new ProjectService();
         }
 
         //
-        // GET: /BillOfLading/
+        // GET: /HardwareKit/
 
         public ActionResult Index()
         {
@@ -44,34 +44,34 @@ namespace WendtEquipmentTracking.App.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            var billOfLadingModels = Mapper.Map<IEnumerable<BillOfLadingModel>>(projectBO.BillOfLadings);
+            var hardwareKitModels = Mapper.Map<IEnumerable<HardwareKitModel>>(projectBO.HardwareKits);
 
             //Filter and sort data
 
-            billOfLadingModels = billOfLadingModels.OrderBy(r => r.DateShipped);
+            hardwareKitModels = hardwareKitModels.OrderBy(r => r.HardwareKitNumber);
 
-            return View(billOfLadingModels);
+            return View(hardwareKitModels);
         }
 
         //
-        // GET: /BillOfLading/Details/5
+        // GET: /HardwareKit/Details/5
 
-        public ActionResult Details(string billOfLadingNumber)
+        public ActionResult Details(string hardwareKitNumber)
         {
-            var billOfLadings = billOfLadingService.GetByBillOfLadingNumber(billOfLadingNumber);
+            var hardwareKits = hardwareKitService.GetByHardwareKitNumber(hardwareKitNumber);
 
-            if (billOfLadings == null)
+            if (hardwareKits == null)
             {
                 return HttpNotFound();
             }
 
-            var model = Mapper.Map<IEnumerable<BillOfLadingModel>>(billOfLadings);
+            var model = Mapper.Map<IEnumerable<HardwareKitModel>>(hardwareKits);
 
             return View(model);
         }
 
         //
-        // GET: /BillOfLading/Create
+        // GET: /HardwareKit/Create
 
         public ActionResult Create()
         {
@@ -79,10 +79,10 @@ namespace WendtEquipmentTracking.App.Controllers
         }
 
         //
-        // POST: /BillOfLading/Create
+        // POST: /HardwareKit/Create
 
         [HttpPost]
-        public ActionResult Create(BillOfLadingModel model)
+        public ActionResult Create(HardwareKitModel model)
         {
             try
             {
@@ -95,9 +95,9 @@ namespace WendtEquipmentTracking.App.Controllers
                         var projectId = Convert.ToInt32(projectIdCookie);
                         model.ProjectId = projectId;
 
-                        var billOfLadingBO = Mapper.Map<BillOfLadingBO>(model);
+                        var hardwareKitBO = Mapper.Map<HardwareKitBO>(model);
 
-                        billOfLadingService.Save(billOfLadingBO);
+                        hardwareKitService.Save(hardwareKitBO);
 
                         return RedirectToAction("Index");
                     }
@@ -112,36 +112,36 @@ namespace WendtEquipmentTracking.App.Controllers
         }
 
         //
-        // GET: /BillOfLading/Edit/5
+        // GET: /HardwareKit/Edit/5
 
         public ActionResult Edit(int id)
         {
-            var billOfLading = billOfLadingService.GetById(id);
-            if (billOfLading == null)
+            var hardwareKit = hardwareKitService.GetById(id);
+            if (hardwareKit == null)
             {
                 return HttpNotFound();
             }
 
-            var billOfLadingModel = Mapper.Map<BillOfLadingModel>(billOfLading);
+            var hardwareKitModel = Mapper.Map<HardwareKitModel>(hardwareKit);
 
-            return View(billOfLadingModel);
+            return View(hardwareKitModel);
         }
 
         //
-        // POST: /BillOfLading/Edit/5
+        // POST: /HardwareKit/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(int id, BillOfLadingModel model)
+        public ActionResult Edit(int id, HardwareKitModel model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var billOfLading = billOfLadingService.GetById(id);
+                    var hardwareKit = hardwareKitService.GetById(id);
 
-                    Mapper.Map<BillOfLadingModel, BillOfLadingBO>(model, billOfLading);
+                    Mapper.Map<HardwareKitModel, HardwareKitBO>(model, hardwareKit);
 
-                    billOfLadingService.Update(billOfLading);
+                    hardwareKitService.Update(hardwareKit);
 
                     return RedirectToAction("Index");
                 }
@@ -155,48 +155,48 @@ namespace WendtEquipmentTracking.App.Controllers
         }
 
 
-        // GET: BillOfLading/Delete/5
+        // GET: HardwareKit/Delete/5
         public ActionResult Delete(int id)
         {
-            var billOfLading = billOfLadingService.GetById(id);
+            var hardwareKit = hardwareKitService.GetById(id);
 
-            if (billOfLading == null)
+            if (hardwareKit == null)
             {
                 return HttpNotFound();
             }
 
-            var model = Mapper.Map<BillOfLadingModel>(billOfLading);
+            var model = Mapper.Map<HardwareKitModel>(hardwareKit);
 
             return View(model);
         }
 
-        // POST: BillOfLading/Delete/5
+        // POST: HardwareKit/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, BillOfLadingModel model)
+        public ActionResult Delete(int id, HardwareKitModel model)
         {
             try
             {
-                var billOfLading = billOfLadingService.GetById(id);
+                var hardwareKit = hardwareKitService.GetById(id);
 
-                if (billOfLading == null)
+                if (hardwareKit == null)
                 {
                     return HttpNotFound();
                 }
 
-                billOfLadingService.Delete(id);
+                hardwareKitService.Delete(id);
 
                 return RedirectToAction("Index");
             }
             catch
             {
-                var billOfLading = billOfLadingService.GetById(id);
+                var hardwareKit = hardwareKitService.GetById(id);
 
-                if (billOfLading == null)
+                if (hardwareKit == null)
                 {
                     return HttpNotFound();
                 }
 
-                model = Mapper.Map<BillOfLadingModel>(billOfLading);
+                model = Mapper.Map<HardwareKitModel>(hardwareKit);
 
                 return View(model);
             }

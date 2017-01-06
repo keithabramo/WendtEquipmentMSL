@@ -63,9 +63,6 @@
           <Property Name="Notes" Type="nvarchar" MaxLength="255" />
           <Property Name="AutoShipFile" Type="nvarchar" MaxLength="50" />
           <Property Name="SalesOrderNumber" Type="nvarchar" MaxLength="255" />
-          <Property Name="QtyToStorage" Type="float" />
-          <Property Name="BillOfLandingNumberToStorage" Type="nvarchar" MaxLength="255" />
-          <Property Name="DateShippedToStorage" Type="datetime" />
           <Property Name="IsHardware" Type="bit" Nullable="false" />
           <Property Name="HardwareKitId" Type="int" />
         </EntityType>
@@ -77,6 +74,7 @@
           <Property Name="ProjectId" Type="int" Nullable="false" />
           <Property Name="Revision" Type="int" Nullable="false" />
           <Property Name="IsCurrentRevision" Type="bit" Nullable="false" />
+          <Property Name="HardwareKitNumber" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="255" />
@@ -232,31 +230,31 @@
         <EntityContainer Name="WendtEquipmentTrackingEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="BillOfLadings" EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.BillOfLading" />
           <EntitySet Name="BillOfLadingEquipments" EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.BillOfLadingEquipment" />
-          <EntitySet Name="Equipments" EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.Equipment" />
-          <EntitySet Name="HardwareKits" EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.HardwareKit" />
           <AssociationSet Name="FK_BillOfLadingEquipment_BillOfLading" Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_BillOfLadingEquipment_BillOfLading">
             <End Role="BillOfLading" EntitySet="BillOfLadings" />
             <End Role="BillOfLadingEquipment" EntitySet="BillOfLadingEquipments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_HardwareKit_BillOfLading" Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_HardwareKit_BillOfLading">
-            <End Role="BillOfLading" EntitySet="BillOfLadings" />
-            <End Role="HardwareKit" EntitySet="HardwareKits" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BillOfLadingEquipment_Equipment" Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_BillOfLadingEquipment_Equipment">
-            <End Role="Equipment" EntitySet="Equipments" />
-            <End Role="BillOfLadingEquipment" EntitySet="BillOfLadingEquipments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Equipment_HardwareKit" Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_Equipment_HardwareKit">
-            <End Role="HardwareKit" EntitySet="HardwareKits" />
-            <End Role="Equipment" EntitySet="Equipments" />
           </AssociationSet>
           <EntitySet Name="Projects" EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.Project" />
           <AssociationSet Name="FK_BillOfLanding_Project" Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_BillOfLanding_Project">
             <End Role="Project" EntitySet="Projects" />
             <End Role="BillOfLading" EntitySet="BillOfLadings" />
           </AssociationSet>
+          <EntitySet Name="Equipments" EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.Equipment" />
+          <AssociationSet Name="FK_BillOfLadingEquipment_Equipment" Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_BillOfLadingEquipment_Equipment">
+            <End Role="Equipment" EntitySet="Equipments" />
+            <End Role="BillOfLadingEquipment" EntitySet="BillOfLadingEquipments" />
+          </AssociationSet>
           <AssociationSet Name="FK_Equipment_Project" Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_Equipment_Project">
             <End Role="Project" EntitySet="Projects" />
+            <End Role="Equipment" EntitySet="Equipments" />
+          </AssociationSet>
+          <EntitySet Name="HardwareKits" EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.HardwareKit" />
+          <AssociationSet Name="FK_HardwareKit_BillOfLading" Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_HardwareKit_BillOfLading">
+            <End Role="BillOfLading" EntitySet="BillOfLadings" />
+            <End Role="HardwareKit" EntitySet="HardwareKits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Equipment_HardwareKit" Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_Equipment_HardwareKit">
+            <End Role="HardwareKit" EntitySet="HardwareKits" />
             <End Role="Equipment" EntitySet="Equipments" />
           </AssociationSet>
           <AssociationSet Name="FK_HardwareKit_Project" Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_HardwareKit_Project">
@@ -281,8 +279,8 @@
           <Property Name="ShippedFrom" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="ToStorage" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="BillOfLadingEquipments" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_BillOfLadingEquipment_BillOfLading" FromRole="BillOfLading" ToRole="BillOfLadingEquipment" />
-          <NavigationProperty Name="HardwareKits" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_HardwareKit_BillOfLading" FromRole="BillOfLading" ToRole="HardwareKit" />
           <NavigationProperty Name="Project" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_BillOfLanding_Project" FromRole="BillOfLading" ToRole="Project" />
+          <NavigationProperty Name="HardwareKits" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_HardwareKit_BillOfLading" FromRole="BillOfLading" ToRole="HardwareKit" />
         </EntityType>
         <EntityType Name="BillOfLadingEquipment">
           <Key>
@@ -295,64 +293,6 @@
           <NavigationProperty Name="BillOfLading" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_BillOfLadingEquipment_BillOfLading" FromRole="BillOfLadingEquipment" ToRole="BillOfLading" />
           <NavigationProperty Name="Equipment" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_BillOfLadingEquipment_Equipment" FromRole="BillOfLadingEquipment" ToRole="Equipment" />
         </EntityType>
-        <EntityType Name="Equipment">
-          <Key>
-            <PropertyRef Name="EquipmentId" />
-          </Key>
-          <Property Name="EquipmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProjectId" Type="Int32" Nullable="false" />
-          <Property Name="EquipmentName" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Priority" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="ReleaseDate" Type="DateTime" Precision="3" />
-          <Property Name="DrawingNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="WorkOrderNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Quantity" Type="Double" />
-          <Property Name="ShippingTagNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="UnitWeight" Type="Double" />
-          <Property Name="TotalWeight" Type="Double" />
-          <Property Name="TotalWeightShipped" Type="Double" />
-          <Property Name="ReadyToShip" Type="Double" />
-          <Property Name="ShippedQuantity" Type="Double" />
-          <Property Name="LeftToShip" Type="Double" />
-          <Property Name="FullyShipped" Type="Boolean" />
-          <Property Name="CustomsValue" Type="Double" />
-          <Property Name="SalePrice" Type="Double" />
-          <Property Name="HTSCode" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="CountryOfOrigin" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Notes" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="AutoShipFile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="SalesOrderNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="QtyToStorage" Type="Double" />
-          <Property Name="BillOfLandingNumberToStorage" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="DateShippedToStorage" Type="DateTime" Precision="3" />
-          <Property Name="IsHardware" Type="Boolean" Nullable="false" />
-          <Property Name="HardwareKitId" Type="Int32" />
-          <NavigationProperty Name="BillOfLadingEquipments" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_BillOfLadingEquipment_Equipment" FromRole="Equipment" ToRole="BillOfLadingEquipment" />
-          <NavigationProperty Name="HardwareKit" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_Equipment_HardwareKit" FromRole="Equipment" ToRole="HardwareKit" />
-          <NavigationProperty Name="Project" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_Equipment_Project" FromRole="Equipment" ToRole="Project" />
-        </EntityType>
-        <EntityType Name="HardwareKit">
-          <Key>
-            <PropertyRef Name="HardwareKitId" />
-          </Key>
-          <Property Name="HardwareKitId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProjectId" Type="Int32" Nullable="false" />
-          <Property Name="Revision" Type="Int32" Nullable="false" />
-          <Property Name="IsCurrentRevision" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="BillOfLadingId" Type="Int32" />
-          <NavigationProperty Name="BillOfLading" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_HardwareKit_BillOfLading" FromRole="HardwareKit" ToRole="BillOfLading" />
-          <NavigationProperty Name="Equipments" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_Equipment_HardwareKit" FromRole="HardwareKit" ToRole="Equipment" />
-          <NavigationProperty Name="Project" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_HardwareKit_Project" FromRole="HardwareKit" ToRole="Project" />
-        </EntityType>
         <Association Name="FK_BillOfLadingEquipment_BillOfLading">
           <End Type="WendtEquipmentTracking.DataAccess.SQL.Model.BillOfLading" Role="BillOfLading" Multiplicity="1" />
           <End Type="WendtEquipmentTracking.DataAccess.SQL.Model.BillOfLadingEquipment" Role="BillOfLadingEquipment" Multiplicity="*" />
@@ -362,42 +302,6 @@
             </Principal>
             <Dependent Role="BillOfLadingEquipment">
               <PropertyRef Name="BillOfLadingId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_HardwareKit_BillOfLading">
-          <End Type="WendtEquipmentTracking.DataAccess.SQL.Model.BillOfLading" Role="BillOfLading" Multiplicity="0..1" />
-          <End Type="WendtEquipmentTracking.DataAccess.SQL.Model.HardwareKit" Role="HardwareKit" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="BillOfLading">
-              <PropertyRef Name="BillOfLadingId" />
-            </Principal>
-            <Dependent Role="HardwareKit">
-              <PropertyRef Name="BillOfLadingId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_BillOfLadingEquipment_Equipment">
-          <End Type="WendtEquipmentTracking.DataAccess.SQL.Model.Equipment" Role="Equipment" Multiplicity="1" />
-          <End Type="WendtEquipmentTracking.DataAccess.SQL.Model.BillOfLadingEquipment" Role="BillOfLadingEquipment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Equipment">
-              <PropertyRef Name="EquipmentId" />
-            </Principal>
-            <Dependent Role="BillOfLadingEquipment">
-              <PropertyRef Name="EquipmentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Equipment_HardwareKit">
-          <End Type="WendtEquipmentTracking.DataAccess.SQL.Model.HardwareKit" Role="HardwareKit" Multiplicity="0..1" />
-          <End Type="WendtEquipmentTracking.DataAccess.SQL.Model.Equipment" Role="Equipment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="HardwareKit">
-              <PropertyRef Name="HardwareKitId" />
-            </Principal>
-            <Dependent Role="Equipment">
-              <PropertyRef Name="HardwareKitId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -439,6 +343,56 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Equipment">
+          <Key>
+            <PropertyRef Name="EquipmentId" />
+          </Key>
+          <Property Name="EquipmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProjectId" Type="Int32" Nullable="false" />
+          <Property Name="EquipmentName" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Priority" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="ReleaseDate" Type="DateTime" Precision="3" />
+          <Property Name="DrawingNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="WorkOrderNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Quantity" Type="Double" />
+          <Property Name="ShippingTagNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UnitWeight" Type="Double" />
+          <Property Name="TotalWeight" Type="Double" />
+          <Property Name="TotalWeightShipped" Type="Double" />
+          <Property Name="ReadyToShip" Type="Double" />
+          <Property Name="ShippedQuantity" Type="Double" />
+          <Property Name="LeftToShip" Type="Double" />
+          <Property Name="FullyShipped" Type="Boolean" />
+          <Property Name="CustomsValue" Type="Double" />
+          <Property Name="SalePrice" Type="Double" />
+          <Property Name="HTSCode" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CountryOfOrigin" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Notes" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="AutoShipFile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SalesOrderNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IsHardware" Type="Boolean" Nullable="false" />
+          <Property Name="HardwareKitId" Type="Int32" />
+          <NavigationProperty Name="BillOfLadingEquipments" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_BillOfLadingEquipment_Equipment" FromRole="Equipment" ToRole="BillOfLadingEquipment" />
+          <NavigationProperty Name="Project" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_Equipment_Project" FromRole="Equipment" ToRole="Project" />
+          <NavigationProperty Name="HardwareKit" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_Equipment_HardwareKit" FromRole="Equipment" ToRole="HardwareKit" />
+        </EntityType>
+        <Association Name="FK_BillOfLadingEquipment_Equipment">
+          <End Type="WendtEquipmentTracking.DataAccess.SQL.Model.Equipment" Role="Equipment" Multiplicity="1" />
+          <End Type="WendtEquipmentTracking.DataAccess.SQL.Model.BillOfLadingEquipment" Role="BillOfLadingEquipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipment">
+              <PropertyRef Name="EquipmentId" />
+            </Principal>
+            <Dependent Role="BillOfLadingEquipment">
+              <PropertyRef Name="EquipmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Equipment_Project">
           <End Type="WendtEquipmentTracking.DataAccess.SQL.Model.Project" Role="Project" Multiplicity="1" />
           <End Type="WendtEquipmentTracking.DataAccess.SQL.Model.Equipment" Role="Equipment" Multiplicity="*" />
@@ -448,6 +402,48 @@
             </Principal>
             <Dependent Role="Equipment">
               <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="HardwareKit">
+          <Key>
+            <PropertyRef Name="HardwareKitId" />
+          </Key>
+          <Property Name="HardwareKitId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProjectId" Type="Int32" Nullable="false" />
+          <Property Name="Revision" Type="Int32" Nullable="false" />
+          <Property Name="IsCurrentRevision" Type="Boolean" Nullable="false" />
+          <Property Name="HardwareKitNumber" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="BillOfLadingId" Type="Int32" />
+          <NavigationProperty Name="BillOfLading" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_HardwareKit_BillOfLading" FromRole="HardwareKit" ToRole="BillOfLading" />
+          <NavigationProperty Name="Equipments" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_Equipment_HardwareKit" FromRole="HardwareKit" ToRole="Equipment" />
+          <NavigationProperty Name="Project" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_HardwareKit_Project" FromRole="HardwareKit" ToRole="Project" />
+        </EntityType>
+        <Association Name="FK_HardwareKit_BillOfLading">
+          <End Type="WendtEquipmentTracking.DataAccess.SQL.Model.BillOfLading" Role="BillOfLading" Multiplicity="0..1" />
+          <End Type="WendtEquipmentTracking.DataAccess.SQL.Model.HardwareKit" Role="HardwareKit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BillOfLading">
+              <PropertyRef Name="BillOfLadingId" />
+            </Principal>
+            <Dependent Role="HardwareKit">
+              <PropertyRef Name="BillOfLadingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Equipment_HardwareKit">
+          <End Type="WendtEquipmentTracking.DataAccess.SQL.Model.HardwareKit" Role="HardwareKit" Multiplicity="0..1" />
+          <End Type="WendtEquipmentTracking.DataAccess.SQL.Model.Equipment" Role="Equipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HardwareKit">
+              <PropertyRef Name="HardwareKitId" />
+            </Principal>
+            <Dependent Role="Equipment">
+              <PropertyRef Name="HardwareKitId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -497,14 +493,35 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Projects">
+            <EntityTypeMapping TypeName="WendtEquipmentTracking.DataAccess.SQL.Model.Project">
+              <MappingFragment StoreEntitySet="Project">
+                <ScalarProperty Name="ShipToBrokerEmail" ColumnName="ShipToBrokerEmail" />
+                <ScalarProperty Name="ShipToBrokerPhoneFax" ColumnName="ShipToBrokerPhoneFax" />
+                <ScalarProperty Name="ShipToBroker" ColumnName="ShipToBroker" />
+                <ScalarProperty Name="ShipToContact2Email" ColumnName="ShipToContact2Email" />
+                <ScalarProperty Name="ShipToContact2PhoneFax" ColumnName="ShipToContact2PhoneFax" />
+                <ScalarProperty Name="ShipToContact2" ColumnName="ShipToContact2" />
+                <ScalarProperty Name="ShipToContact1Email" ColumnName="ShipToContact1Email" />
+                <ScalarProperty Name="ShipToContact1PhoneFax" ColumnName="ShipToContact1PhoneFax" />
+                <ScalarProperty Name="ShipToContact1" ColumnName="ShipToContact1" />
+                <ScalarProperty Name="ShipToCSZ" ColumnName="ShipToCSZ" />
+                <ScalarProperty Name="ShipToAddress" ColumnName="ShipToAddress" />
+                <ScalarProperty Name="ShipToCompany" ColumnName="ShipToCompany" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ProjectNumber" ColumnName="ProjectNumber" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Equipments">
             <EntityTypeMapping TypeName="WendtEquipmentTracking.DataAccess.SQL.Model.Equipment">
               <MappingFragment StoreEntitySet="Equipment">
                 <ScalarProperty Name="HardwareKitId" ColumnName="HardwareKitId" />
                 <ScalarProperty Name="IsHardware" ColumnName="IsHardware" />
-                <ScalarProperty Name="DateShippedToStorage" ColumnName="DateShippedToStorage" />
-                <ScalarProperty Name="BillOfLandingNumberToStorage" ColumnName="BillOfLandingNumberToStorage" />
-                <ScalarProperty Name="QtyToStorage" ColumnName="QtyToStorage" />
                 <ScalarProperty Name="SalesOrderNumber" ColumnName="SalesOrderNumber" />
                 <ScalarProperty Name="AutoShipFile" ColumnName="AutoShipFile" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
@@ -544,34 +561,11 @@
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="HardwareKitNumber" ColumnName="HardwareKitNumber" />
                 <ScalarProperty Name="IsCurrentRevision" ColumnName="IsCurrentRevision" />
                 <ScalarProperty Name="Revision" ColumnName="Revision" />
                 <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
                 <ScalarProperty Name="HardwareKitId" ColumnName="HardwareKitId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Projects">
-            <EntityTypeMapping TypeName="WendtEquipmentTracking.DataAccess.SQL.Model.Project">
-              <MappingFragment StoreEntitySet="Project">
-                <ScalarProperty Name="ShipToBrokerEmail" ColumnName="ShipToBrokerEmail" />
-                <ScalarProperty Name="ShipToBrokerPhoneFax" ColumnName="ShipToBrokerPhoneFax" />
-                <ScalarProperty Name="ShipToBroker" ColumnName="ShipToBroker" />
-                <ScalarProperty Name="ShipToContact2Email" ColumnName="ShipToContact2Email" />
-                <ScalarProperty Name="ShipToContact2PhoneFax" ColumnName="ShipToContact2PhoneFax" />
-                <ScalarProperty Name="ShipToContact2" ColumnName="ShipToContact2" />
-                <ScalarProperty Name="ShipToContact1Email" ColumnName="ShipToContact1Email" />
-                <ScalarProperty Name="ShipToContact1PhoneFax" ColumnName="ShipToContact1PhoneFax" />
-                <ScalarProperty Name="ShipToContact1" ColumnName="ShipToContact1" />
-                <ScalarProperty Name="ShipToCSZ" ColumnName="ShipToCSZ" />
-                <ScalarProperty Name="ShipToAddress" ColumnName="ShipToAddress" />
-                <ScalarProperty Name="ShipToCompany" ColumnName="ShipToCompany" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="ProjectNumber" ColumnName="ProjectNumber" />
-                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

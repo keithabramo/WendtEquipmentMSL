@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace WendtEquipmentTracking.App.Models
 {
@@ -12,5 +13,10 @@ namespace WendtEquipmentTracking.App.Models
 
         [DisplayName("Revision")]
         public int Revision { get; set; }
+
+        [DisplayName("Hardware Kit Number")]
+        public string HardwareKitNumber { get; set; }
+
+        public IList<EquipmentModel> Equipments { get; set; }
     }
 }

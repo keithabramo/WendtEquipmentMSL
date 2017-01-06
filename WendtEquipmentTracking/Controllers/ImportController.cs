@@ -95,7 +95,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
                     var equipmentBOs = importService.GetEquipmentImport(importBO).ToList();
 
-                    var equipmentModels = Mapper.Map<IList<EquipmentImportModel>>(equipmentBOs);
+                    var equipmentModels = Mapper.Map<IList<EquipmentSelectionModel>>(equipmentBOs);
 
 
                     return PartialView("ImportEquipmentPartial", equipmentModels);
@@ -112,7 +112,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
         // POST: ImportEquipment
         [HttpPost]
-        public ActionResult ImportEquipment(IEnumerable<EquipmentImportModel> model)
+        public ActionResult ImportEquipment(IEnumerable<EquipmentSelectionModel> model)
         {
 
             var resultModel = new ImportModel();

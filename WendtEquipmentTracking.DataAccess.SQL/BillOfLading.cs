@@ -36,8 +36,8 @@ namespace WendtEquipmentTracking.DataAccess.SQL
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BillOfLadingEquipment> BillOfLadingEquipments { get; set; }
+        public virtual Project Project { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HardwareKit> HardwareKits { get; set; }
-        public virtual Project Project { get; set; }
     }
 }

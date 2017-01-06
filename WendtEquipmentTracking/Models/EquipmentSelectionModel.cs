@@ -1,6 +1,6 @@
 ﻿namespace WendtEquipmentTracking.App.Models
 {
-    public class EquipmentImportModel : EquipmentModel
+    public class EquipmentSelectionModel : EquipmentModel
     {
         public bool Checked { get; set; }
     }

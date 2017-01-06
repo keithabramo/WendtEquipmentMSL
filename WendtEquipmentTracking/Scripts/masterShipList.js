@@ -2,6 +2,8 @@
 
     var MasterShipList = function () {
 
+        this.editsMade = false;
+
         this.initStyles = function () {
         }
 
@@ -15,6 +17,23 @@
                     $icon.removeClass("glyphicon-plus").addClass("glyphicon-minus");
                 } else {
                     $icon.removeClass("glyphicon-minus").addClass("glyphicon-plus");
+                }
+            });
+
+            $('.table').on('change', "tr:not(.create) input, tr:not(.create) select", function () {
+                $this.editsMade = true;
+            });
+
+            $('.table').on('blur', "tr:not(.create)", function () {
+                var $form = $(this).prevAll("form").eq(0);
+                
+                if ($this.editsMade) {
+                    $this.editsMade = false;
+
+                    if ($form.length) {
+
+                        $form.submit();
+                    }
                 }
             });
 

@@ -26,24 +26,6 @@ namespace WendtEquipmentTracking.App.Models
         [DisplayName("Shipped From")]
         public string ShippedFrom { get; set; }
 
-        [DisplayName("Ship To Company")]
-        public string ShipToCompany { get; set; }
-
-        [DisplayName("Ship To Address")]
-        public string ShipToAddress { get; set; }
-
-        [DisplayName("Ship To CSZ")]
-        public string ShipToCSZ { get; set; }
-
-        [DisplayName("Ship To Phone\\Fax")]
-        public string ShipToPhoneFax { get; set; }
-
-        [DisplayName("Ship To Contact 1")]
-        public string ShipToContact1 { get; set; }
-
-        [DisplayName("Ship To Contact 2")]
-        public string ShipToContact2 { get; set; }
-
         [DisplayName("To Storage")]
         public bool ToStorage { get; set; }
 

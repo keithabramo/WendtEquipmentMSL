@@ -81,15 +81,6 @@
                         <th>
                             @Html.DisplayNameFor(model => model[0].SalesOrderNumber)
                         </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model[0].QtyToStorage)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model[0].BillOfLadingNumberToStorage)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model[0].DateShippedToStorage)
-                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -170,15 +161,6 @@
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => modelItem[i].SalesOrderNumber)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => modelItem[i].QtyToStorage)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => modelItem[i].BillOfLadingNumberToStorage)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => modelItem[i].DateShippedToStorage)
                             </td>
                         </tr>
                         if (Model[i].BillOfLadingEquipments.Count() > 0)

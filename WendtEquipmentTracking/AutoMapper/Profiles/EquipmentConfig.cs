@@ -20,8 +20,8 @@ namespace WendtEquipmentTracking.App.AutoMapper.Profiles
                 .ForMember(dest => dest.ModifiedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.ModifiedDate, opt => opt.Ignore());
 
-            base.CreateMap<EquipmentBO, EquipmentImportModel>();
-            base.CreateMap<EquipmentImportModel, EquipmentBO>();
+            base.CreateMap<EquipmentBO, EquipmentSelectionModel>();
+            base.CreateMap<EquipmentSelectionModel, EquipmentBO>();
         }
     }
 }

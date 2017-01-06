@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\IHardwareKitEngine.cs" />
     <Compile Include="Api\IBillOfLadingEngine.cs" />
     <Compile Include="Api\IProjectEngine.cs" />
     <Compile Include="Api\IEquipmentEngine.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="BillOfLadingEquipment.cs">
       <DependentUpon>WendtEquipmentTracking.tt</DependentUpon>
     </Compile>
+    <Compile Include="Engine\HardwareKitEngine.cs" />
     <Compile Include="Engine\BillOfLadingEngine.cs" />
     <Compile Include="Engine\ProjectEngine.cs" />
     <Compile Include="Engine\EquipmentEngine.cs" />
@@ -77,6 +79,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository.cs" />
     <Compile Include="Specification.cs" />
+    <Compile Include="Specifications\HardwareKitSpecs.cs" />
+    <Compile Include="Specifications\HardwareKit\HardwareKitNumberSpecification.cs" />
+    <Compile Include="Specifications\HardwareKit\CurrentRevisionSpecification.cs" />
+    <Compile Include="Specifications\HardwareKit\IdSpecification.cs" />
     <Compile Include="Specifications\BillOfLading\BillOfLadingNumberSpecification.cs" />
     <Compile Include="Specifications\BillOfLading\CurrentRevisionSpecification.cs" />
     <Compile Include="Specifications\BillOfLading\IdSpecification.cs" />

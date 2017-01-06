@@ -8,15 +8,15 @@
         <AssociationConnector Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_BillOfLading_Project" />
         <EntityTypeShape EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.BillOfLading" Width="1.5" PointX="3" PointY="4.875" />
         <EntityTypeShape EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.BillOfLadingEquipment" Width="1.5" PointX="8.25" PointY="5.75" />
-        <EntityTypeShape EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.Equipment" Width="1.5" PointX="10.5" PointY="2.875" />
-        <EntityTypeShape EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.HardwareKit" Width="1.5" PointX="5.25" PointY="5.125" />
         <AssociationConnector Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_BillOfLadingEquipment_BillOfLading" />
-        <AssociationConnector Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_HardwareKit_BillOfLading" />
-        <AssociationConnector Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_BillOfLadingEquipment_Equipment" />
-        <AssociationConnector Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_Equipment_HardwareKit" />
         <EntityTypeShape EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.Project" Width="1.5" PointX="0.75" PointY="4.375" />
         <AssociationConnector Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_BillOfLanding_Project" />
+        <EntityTypeShape EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.Equipment" Width="1.5" PointX="10.5" PointY="3.25" />
+        <AssociationConnector Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_BillOfLadingEquipment_Equipment" />
         <AssociationConnector Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_Equipment_Project" />
+        <EntityTypeShape EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.HardwareKit" Width="1.5" PointX="5.25" PointY="5.125" />
+        <AssociationConnector Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_HardwareKit_BillOfLading" />
+        <AssociationConnector Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_Equipment_HardwareKit" />
         <AssociationConnector Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_HardwareKit_Project" />
         </Diagram>
     </edmx:Diagrams>

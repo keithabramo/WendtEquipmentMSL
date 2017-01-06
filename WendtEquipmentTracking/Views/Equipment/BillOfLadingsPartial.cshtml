@@ -13,6 +13,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.BillOfLading.DateShipped)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BillOfLading.ShippedFrom)
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -33,7 +36,9 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.BillOfLading.DateShipped)
                 </td>
-                
+                <td>
+                    @Html.DisplayFor(modelItem => item.BillOfLading.ShippedFrom)
+                </td>
             </tr>
         }
     </tbody>

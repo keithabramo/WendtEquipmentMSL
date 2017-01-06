@@ -26,7 +26,6 @@ namespace WendtEquipmentTracking.App.Controllers
 
         //
         // GET: /Equipment/
-
         public ActionResult Index(int? page)
         {
             var projectIdCookie = CookieHelper.Get("ProjectId");
@@ -82,7 +81,7 @@ namespace WendtEquipmentTracking.App.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            var equipmentBOs = projectBO.Equipments.Where(e => e.ReadyToShip != null && e.ReadyToShip > 0);
+            var equipmentBOs = projectBO.Equipments.Where(e => e.ReadyToShip != null && e.ReadyToShip > 0 && !e.IsHardware);
 
             var equipmentModels = Mapper.Map<IEnumerable<EquipmentModel>>(equipmentBOs);
             equipmentModels.ToList().ForEach(e => { e.ProjectNumber = projectBO.ProjectNumber; e.SetEquipmentIndicators(); });
@@ -127,7 +126,7 @@ namespace WendtEquipmentTracking.App.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            var equipmentBOs = projectBO.Equipments.Where(e => e.ReleaseDate != null && e.LeftToShip > 0);
+            var equipmentBOs = projectBO.Equipments.Where(e => e.ReleaseDate != null && e.LeftToShip > 0 && !e.IsHardware);
 
             var equipmentModels = Mapper.Map<IEnumerable<EquipmentModel>>(equipmentBOs);
             equipmentModels.ToList().ForEach(e => { e.ProjectNumber = projectBO.ProjectNumber; e.SetEquipmentIndicators(); });
@@ -172,23 +171,6 @@ namespace WendtEquipmentTracking.App.Controllers
         }
 
         //
-        // GET: /Equipment/Details/5
-
-        //public ActionResult Details(int id)
-        //{
-        //    var equipment = equipmentService.GetById(id);
-
-        //    if (equipment == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-
-        //    var model = Mapper.Map<EquipmentModel>(equipment);
-
-        //    return View(model);
-        //}
-
-        //
         // GET: /Equipment/Create
         [ChildActionOnly]
         public ActionResult Create()
@@ -229,21 +211,6 @@ namespace WendtEquipmentTracking.App.Controllers
             }
         }
 
-        //
-        // GET: /Equipment/Edit/5
-
-        public ActionResult Edit(int id)
-        {
-            var equipment = equipmentService.GetById(id);
-            if (equipment == null)
-            {
-                return HttpNotFound();
-            }
-
-            var equipmentModel = Mapper.Map<EquipmentModel>(equipment);
-
-            return View(equipmentModel);
-        }
 
         //
         // POST: /Equipment/Edit/5
@@ -255,18 +222,25 @@ namespace WendtEquipmentTracking.App.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var equipment = equipmentService.GetById(id);
+                    var projectIdCookie = CookieHelper.Get("ProjectId");
 
-                    Mapper.Map<EquipmentModel, EquipmentBO>(model, equipment);
+                    if (!string.IsNullOrEmpty(projectIdCookie))
+                    {
+                        var projectId = Convert.ToInt32(projectIdCookie);
+                        model.ProjectId = projectId;
+                        var equipment = equipmentService.GetById(id);
 
-                    equipmentService.Update(equipment);
+                        Mapper.Map<EquipmentModel, EquipmentBO>(model, equipment);
 
-                    return RedirectToAction("Index");
+                        equipmentService.Update(equipment);
+
+                        return RedirectToAction("Index");
+                    }
                 }
 
                 return View(model);
             }
-            catch
+            catch (Exception e)
             {
                 return View(model);
             }
