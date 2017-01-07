@@ -1,6 +1,6 @@
 ﻿namespace WendtEquipmentTracking.DataAccess.FileManagement.Domain
 {
-    public class ImportRow
+    public class EquipmentRow
     {
         public string Equipment { get; set; }
         public string Priority { get; set; }

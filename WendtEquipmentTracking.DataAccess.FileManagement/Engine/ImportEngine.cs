@@ -10,19 +10,31 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement
 {
     public class ImportEngine : IImportEngine
     {
-        public IEnumerable<ImportRow> GetEquipment(Import import)
+        public IEnumerable<EquipmentRow> GetEquipment(Import import)
         {
 
             var excelHelper = new ExcelDataReaderHelper(import.FileName);
 
-            var importData = new List<ImportRow>();
+            var importData = new List<EquipmentRow>();
             foreach (var sheet in import.Sheets)
             {
-                var importSheet = ImportHelper.GetImportRecordsForSheet(sheet, excelHelper);
-                importData.AddRange(importSheet);
+                var sheetData = ImportHelper.GetEquipmentFromSheet(sheet, excelHelper);
+                importData.AddRange(sheetData);
             }
 
             return importData;
+        }
+
+        public IEnumerable<WorkOrderPriceRow> GetWorkOrderPrices(byte[] importFile)
+        {
+            var tempFile = Path.GetTempFileName();
+            File.WriteAllBytes(tempFile, importFile);
+
+            var excelHelper = new ExcelDataReaderHelper(tempFile);
+
+            var workOrderPriceRecords = ImportHelper.GetWorkOrderPrices(excelHelper);
+
+            return workOrderPriceRecords;
         }
 
         public Import GetSheets(byte[] importFile)
@@ -30,16 +42,17 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement
             var tempFile = Path.GetTempFileName();
             File.WriteAllBytes(tempFile, importFile);
 
-            var helper = new ExcelDataReaderHelper(tempFile);
-
+            var excelHelper = new ExcelDataReaderHelper(tempFile);
 
             var import = new Import
             {
-                Sheets = helper.WorksheetNames.ToList(),
+                Sheets = excelHelper.WorksheetNames.ToList(),
                 FileName = tempFile
             };
 
             return import;
         }
+
+
     }
 }

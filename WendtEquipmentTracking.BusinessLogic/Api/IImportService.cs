@@ -8,5 +8,7 @@ namespace WendtEquipmentTracking.BusinessLogic.Api
         ImportBO GetSheets(byte[] file);
 
         IEnumerable<EquipmentBO> GetEquipmentImport(ImportBO importBO);
+
+        IEnumerable<WorkOrderPriceBO> GetWorkOrderPriceImport(byte[] file);
     }
 }

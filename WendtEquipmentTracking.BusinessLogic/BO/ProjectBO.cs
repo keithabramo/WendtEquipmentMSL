@@ -29,5 +29,6 @@ namespace WendtEquipmentTracking.BusinessLogic.BO
         public IEnumerable<EquipmentBO> Equipments { get; set; }
         public IEnumerable<BillOfLadingBO> BillOfLadings { get; set; }
         public IEnumerable<HardwareKitBO> HardwareKits { get; set; }
+        public IEnumerable<WorkOrderPriceBO> WorkOrderPrices { get; set; }
     }
 }

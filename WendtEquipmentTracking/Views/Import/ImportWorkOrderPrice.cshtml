@@ -1,0 +1,63 @@
+﻿@model IList<WorkOrderPriceSelectionModel>
+
+@{
+    ViewBag.Title = "Import Selection";
+}
+
+
+@if (Model.Count() > 0)
+{
+
+    <p>Review the records below. When you are ready, click "Import Equipment" to import.</p>
+
+    using (Html.BeginForm("ImportEquipment", "Import"))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            <table class="table table-striped table-condensed table-styled">
+                <thead>
+                    <tr>
+                        <th>
+                            <input type="checkbox" checked="checked" /> Select All
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model[0].WorkOrderNumber)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model[0].Price)
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Count(); i++)
+                    {
+                        <tr>
+                            <td>
+                                @Html.CheckBoxFor(modelItem => modelItem[i].Checked, htmlAttributes: new { @checked = true })
+                            </td>
+                            <td>
+                                @Html.EditorFor(modelItem => modelItem[i].WorkOrderNumber, new { htmlAttributes = new { @class = "form-control" } })
+                            </td>
+                            <td>
+                                @Html.EditorFor(modelItem => modelItem[i].Price, new { htmlAttributes = new { @class = "form-control" } })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Import Work Order Prices" class="btn btn-primary" />
+        </div>
+    }
+}
+else
+{
+    <p>Sorry, no rows were found for import.</p>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/form")
+}

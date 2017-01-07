@@ -15,7 +15,5 @@ namespace WendtEquipmentTracking.App.Models
         public string FileName { get; set; }
 
         public List<ImportSheetModel> Sheets { get; set; }
-
-        public List<EquipmentSelectionModel> Equipments { get; set; }
     }
 }

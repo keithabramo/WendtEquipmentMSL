@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Api\IHardwareKitService.cs" />
     <Compile Include="Api\IBillOfLadingService.cs" />
+    <Compile Include="Api\IWorkOrderPriceService.cs" />
     <Compile Include="Api\IProjectService.cs" />
     <Compile Include="Api\IImportService.cs" />
     <Compile Include="Api\IEquipmentService.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="AutoMapper\Profiles\BillOfLadingConfig.cs" />
     <Compile Include="AutoMapper\Profiles\ProjectConfig.cs" />
     <Compile Include="AutoMapper\Profiles\EquipmentConfig.cs" />
+    <Compile Include="BO\WorkOrderPriceBO.cs" />
     <Compile Include="HardwareKitService.cs" />
     <Compile Include="BO\BillOfLadingBO.cs" />
     <Compile Include="BO\BillOfLadingEquipmentBO.cs" />
@@ -76,6 +78,7 @@
     <Compile Include="BO\EquipmentBO.cs" />
     <Compile Include="ImportService.cs" />
     <Compile Include="BillOfLadingService.cs" />
+    <Compile Include="WorkOrderPriceService.cs" />
     <Compile Include="ProjectService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EquipmentService.cs" />

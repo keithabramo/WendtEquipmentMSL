@@ -16,6 +16,7 @@ namespace WendtEquipmentTracking.App.Controllers
     {
         private IImportService importService;
         private IEquipmentService equipmentService;
+        private IWorkOrderPriceService workOrderPriceService;
 
         public ImportController()
         {
@@ -23,17 +24,17 @@ namespace WendtEquipmentTracking.App.Controllers
             equipmentService = new EquipmentService();
         }
 
-        // GET: Index
-        public ActionResult Index()
+        // GET: Equipment
+        public ActionResult Equipment()
         {
             var model = new ImportModel();
 
             return View(model);
         }
 
-        // POST: Import
+        // POST: Equipment
         [HttpPost]
-        public ActionResult Index(ImportModel model)
+        public ActionResult Equipment(ImportModel model)
         {
             try
             {
@@ -78,9 +79,9 @@ namespace WendtEquipmentTracking.App.Controllers
             }
         }
 
-        // POST: SelectSheets
+        // POST: SelectEquipmentSheets
         [HttpPost]
-        public ActionResult SelectSheets(ImportModel model)
+        public ActionResult SelectEquipmentSheets(ImportModel model)
         {
             try
             {
@@ -110,9 +111,9 @@ namespace WendtEquipmentTracking.App.Controllers
             }
         }
 
-        // POST: ImportEquipment
+        // POST: SaveEquipment
         [HttpPost]
-        public ActionResult ImportEquipment(IEnumerable<EquipmentSelectionModel> model)
+        public ActionResult SaveEquipment(IEnumerable<EquipmentSelectionModel> model)
         {
 
             var resultModel = new ImportModel();
@@ -148,5 +149,101 @@ namespace WendtEquipmentTracking.App.Controllers
                 return View("SelectSheets", resultModel);
             }
         }
+
+
+
+
+
+
+
+        // GET: WorkOrderPrice
+        public ActionResult WorkOrderPrice()
+        {
+            var model = new ImportModel();
+
+            return View(model);
+        }
+
+        // POST: WorkOrderPrice
+        [HttpPost]
+        public ActionResult WorkOrderPrice(ImportModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+
+                    if (model.File != null)
+                    {
+                        byte[] file = null;
+                        using (var memoryStream = new MemoryStream())
+                        {
+                            model.File.InputStream.CopyTo(memoryStream);
+                            file = memoryStream.ToArray();
+                        }
+
+                        var workOrderPriceBOs = importService.GetWorkOrderPriceImport(file);
+
+                        var workOrderPriceModels = Mapper.Map<IList<WorkOrderPriceSelectionModel>>(workOrderPriceBOs);
+
+
+                        return View("ImportWorkOrderPrice", workOrderPriceModels);
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("File", "You must specify a file.");
+                    }
+                }
+
+                model.Status = SuccessStatus.Error;
+                return View(model);
+            }
+            catch (Exception e)
+            {
+                model.Status = SuccessStatus.Error;
+                ModelState.AddModelError("File", e.Message);
+                return View(model);
+            }
+        }
+
+        // POST: SaveWorkOrderPrices
+        [HttpPost]
+        public ActionResult SaveWorkOrderPrice(IEnumerable<WorkOrderPriceSelectionModel> model)
+        {
+
+            var resultModel = new ImportModel();
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var projectIdCookie = CookieHelper.Get("ProjectId");
+
+                    if (!string.IsNullOrEmpty(projectIdCookie))
+                    {
+                        var projectId = Convert.ToInt32(projectIdCookie);
+                        model.ToList().ForEach(c => c.ProjectId = projectId);
+
+                        var workOrderPriceBOs = Mapper.Map<IEnumerable<WorkOrderPriceBO>>(model.Where(m => m.Checked).ToList());
+                        workOrderPriceService.SaveAll(workOrderPriceBOs);
+
+                        resultModel.Status = SuccessStatus.Success;
+                        return View("ImportWorkOrderPrice", resultModel);
+                    }
+                }
+
+                resultModel.Status = SuccessStatus.Error;
+
+                return View("SelectSheets", resultModel);
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("", e.Message);
+
+                resultModel.Status = SuccessStatus.Error;
+
+                return View("SelectSheets", resultModel);
+            }
+        }
+
     }
 }

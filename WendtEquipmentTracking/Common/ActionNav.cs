@@ -3,7 +3,7 @@
     public enum ActionNav
     {
         MSL,
-        Import,
+        ImportEquipment,
         CreateBOL,
         UpdateReadyToShip,
         OrderHardwareKit

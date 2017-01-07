@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using WendtEquipmentTracking.Common;
 using WendtEquipmentTracking.DataAccess.SQL.Api;
 using WendtEquipmentTracking.DataAccess.SQL.Specifications;
@@ -28,7 +29,8 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         public IEnumerable<HardwareKit> ListAll()
         {
-            return this.repository.GetAll();
+            return this.repository.GetAll()
+                .Include(x => x.Equipments);
         }
 
         public HardwareKit Get(Specification<HardwareKit> specification)
@@ -38,7 +40,8 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         public IEnumerable<HardwareKit> List(Specification<HardwareKit> specification)
         {
-            return this.repository.Find(specification);
+            return this.repository.Find(specification)
+                .Include(x => x.Equipments);
         }
 
         public void AddNewHardwareKit(HardwareKit hardwareKit)

@@ -7,7 +7,9 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Api
     {
         Import GetSheets(byte[] importFile);
 
-        IEnumerable<ImportRow> GetEquipment(Import import);
+        IEnumerable<EquipmentRow> GetEquipment(Import import);
+
+        IEnumerable<WorkOrderPriceRow> GetWorkOrderPrices(byte[] importFile);
 
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using WendtEquipmentTracking.Common;
 using WendtEquipmentTracking.DataAccess.SQL.Api;
 using WendtEquipmentTracking.DataAccess.SQL.Specifications;
@@ -28,7 +29,9 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         public IEnumerable<BillOfLading> ListAll()
         {
-            return this.repository.GetAll();
+            return this.repository.GetAll()
+                .Include(x => x.BillOfLadingEquipments)
+                .Include(x => x.HardwareKits);
         }
 
         public BillOfLading Get(Specification<BillOfLading> specification)
@@ -38,7 +41,9 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         public IEnumerable<BillOfLading> List(Specification<BillOfLading> specification)
         {
-            return this.repository.Find(specification);
+            return this.repository.Find(specification)
+                .Include(x => x.BillOfLadingEquipments)
+                .Include(x => x.HardwareKits);
         }
 
         public void AddNewBillOfLading(BillOfLading billOfLading)

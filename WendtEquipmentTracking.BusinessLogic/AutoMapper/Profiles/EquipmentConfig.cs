@@ -19,7 +19,7 @@ namespace WendtEquipmentTracking.BusinessLogic.AutoMapper.Profiles
                 .ForMember(dest => dest.ModifiedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.ModifiedDate, opt => opt.Ignore());
 
-            base.CreateMap<ImportRow, EquipmentBO>()
+            base.CreateMap<EquipmentRow, EquipmentBO>()
                 .ForMember(
                     dest => dest.Description,
                     opt => opt.MapFrom(src => src.Description)

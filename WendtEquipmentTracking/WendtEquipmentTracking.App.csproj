@@ -164,6 +164,7 @@
     <Compile Include="Common\ActionNav.cs" />
     <Compile Include="Common\SuccessStatus.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\WorkOrderPriceController.cs" />
     <Compile Include="Controllers\HardwareKitController.cs" />
     <Compile Include="Controllers\BillOfLadingController.cs" />
     <Compile Include="Controllers\ValidateController.cs" />
@@ -176,6 +177,7 @@
     </Compile>
     <Compile Include="Models\BillOfLadingEquipmentModel.cs" />
     <Compile Include="Models\BillOfLadingModel.cs" />
+    <Compile Include="Models\WorkOrderPriceSelectionModel.cs" />
     <Compile Include="Models\EquipmentSelectionModel.cs" />
     <Compile Include="Models\EquipmentIndicatorsModel.cs" />
     <Compile Include="Models\EquipmentModel.cs" />
@@ -185,6 +187,7 @@
     <Compile Include="Models\ImportModel.cs" />
     <Compile Include="Models\ProjectNavModel.cs" />
     <Compile Include="Models\ProjectModel.cs" />
+    <Compile Include="Models\WorkOrderPriceModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -288,14 +291,12 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Equipment\Index.cshtml" />
     <Content Include="Views\Project\Create.cshtml" />
-    <Content Include="Views\Project\Delete.cshtml" />
-    <Content Include="Views\Project\Details.cshtml" />
-    <Content Include="Views\Project\DetailsPartial.cshtml" />
     <Content Include="Views\Project\Edit.cshtml" />
     <Content Include="Views\Project\Index.cshtml" />
     <Content Include="Views\Shared\ProjectNavPartial.cshtml" />
-    <Content Include="Views\Import\Index.cshtml" />
-    <Content Include="Views\Import\SelectSheets.cshtml" />
+    <Content Include="Views\Import\WorkOrderPrice.cshtml" />
+    <None Include="Views\Import\Equipment.cshtml" />
+    <Content Include="Views\Import\SelectEquipmentSheets.cshtml" />
     <Content Include="Views\Import\ImportEquipmentPartial.cshtml" />
     <Content Include="Views\Equipment\Create.cshtml" />
     <Content Include="Views\Equipment\BillOfLadingsPartial.cshtml" />
@@ -312,10 +313,13 @@
     <Content Include="Views\HardwareKit\EquipmentsPartial.cshtml" />
     <Content Include="Views\HardwareKit\Index.cshtml" />
     <Content Include="Views\Equipment\HardwarePartial.cshtml" />
+    <Content Include="Views\Import\ImportWorkOrderPrice.cshtml" />
+    <Content Include="Views\WorkOrderPrice\Create.cshtml" />
+    <Content Include="Views\WorkOrderPrice\Edit.cshtml" />
+    <Content Include="Views\WorkOrderPrice\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

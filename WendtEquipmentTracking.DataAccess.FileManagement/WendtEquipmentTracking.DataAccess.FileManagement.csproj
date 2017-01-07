@@ -61,7 +61,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\IImportEngine.cs" />
-    <Compile Include="Domain\ImportRow.cs" />
+    <Compile Include="Domain\WorkOrderPriceRow.cs" />
+    <Compile Include="Domain\EquipmentRow.cs" />
     <Compile Include="Domain\Import.cs" />
     <Compile Include="Engine\ImportEngine.cs" />
     <Compile Include="Helper\ImportHelper.cs" />

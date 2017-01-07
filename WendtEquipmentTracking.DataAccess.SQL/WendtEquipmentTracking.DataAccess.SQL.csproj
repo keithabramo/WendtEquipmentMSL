@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\IWorkOrderPriceEngine.cs" />
     <Compile Include="Api\IHardwareKitEngine.cs" />
     <Compile Include="Api\IBillOfLadingEngine.cs" />
     <Compile Include="Api\IProjectEngine.cs" />
@@ -63,6 +64,7 @@
     </Compile>
     <Compile Include="Engine\HardwareKitEngine.cs" />
     <Compile Include="Engine\BillOfLadingEngine.cs" />
+    <Compile Include="Engine\WorkOrderPriceEngine.cs" />
     <Compile Include="Engine\ProjectEngine.cs" />
     <Compile Include="Engine\EquipmentEngine.cs" />
     <Compile Include="Equipment.cs">
@@ -89,6 +91,7 @@
     <Compile Include="Specifications\BillOfLadingSpecs.cs" />
     <Compile Include="Specifications\Equipments\BillOfLadingId.cs" />
     <Compile Include="Specifications\Equipments\IdsSpecification.cs" />
+    <Compile Include="Specifications\WorkOrderPrice\IdSpecification.cs" />
     <Compile Include="Specifications\ProjectSpecs.cs" />
     <Compile Include="Specifications\Projects\IdSpecification.cs" />
     <Compile Include="Specifications\ExpressionCombining\AndSpecification.cs" />
@@ -112,6 +115,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>WendtEquipmentTracking.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="WorkOrderPrice.cs">
+      <DependentUpon>WendtEquipmentTracking.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

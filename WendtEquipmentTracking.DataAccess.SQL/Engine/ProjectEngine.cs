@@ -30,7 +30,9 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
         {
             return this.repository.GetAll()
                 .Include(x => x.Equipments)
-                .Include(x => x.HardwareKits);
+                .Include(x => x.HardwareKits)
+                .Include(x => x.BillOfLadings)
+                .Include(x => x.WorkOrderPrices);
         }
 
         public Project Get(Specification<Project> specification)
@@ -42,7 +44,9 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
         {
             return this.repository.Find(specification)
                 .Include(x => x.Equipments)
-                .Include(x => x.HardwareKits);
+                .Include(x => x.HardwareKits)
+                .Include(x => x.BillOfLadings)
+                .Include(x => x.WorkOrderPrices);
         }
 
         public void AddNewProject(Project project)
@@ -54,22 +58,6 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             project.ModifiedDate = now;
             project.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
 
-            foreach (var equipment in project.Equipments)
-            {
-                equipment.CreatedDate = project.CreatedDate;
-                equipment.CreatedBy = project.CreatedBy;
-                equipment.ModifiedDate = project.ModifiedDate;
-                equipment.ModifiedBy = project.ModifiedBy;
-            }
-
-            foreach (var hardwareKit in project.HardwareKits)
-            {
-                hardwareKit.CreatedDate = project.CreatedDate;
-                hardwareKit.CreatedBy = project.CreatedBy;
-                hardwareKit.ModifiedDate = project.ModifiedDate;
-                hardwareKit.ModifiedBy = project.ModifiedBy;
-            }
-
             this.repository.Insert(project);
             this.repository.Save();
         }
@@ -80,28 +68,6 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
             project.ModifiedDate = now;
             project.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
-
-            foreach (var equipment in project.Equipments)
-            {
-                if (equipment.EquipmentId == 0)
-                {
-                    equipment.CreatedDate = project.CreatedDate;
-                    equipment.CreatedBy = project.CreatedBy;
-                }
-                equipment.ModifiedDate = project.ModifiedDate;
-                equipment.ModifiedBy = project.ModifiedBy;
-            }
-
-            foreach (var hardwareKit in project.HardwareKits)
-            {
-                if (hardwareKit.HardwareKitId == 0)
-                {
-                    hardwareKit.CreatedDate = project.CreatedDate;
-                    hardwareKit.CreatedBy = project.CreatedBy;
-                }
-                hardwareKit.ModifiedDate = project.ModifiedDate;
-                hardwareKit.ModifiedBy = project.ModifiedBy;
-            }
 
             this.repository.Update(project);
             this.repository.Save();

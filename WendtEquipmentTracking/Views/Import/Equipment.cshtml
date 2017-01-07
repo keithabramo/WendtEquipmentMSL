@@ -4,9 +4,9 @@
     ViewBag.Title = "Index";
 }
 
-@Html.Partial("ActionNavPartial", ActionNav.Import)
+@Html.Partial("ActionNavPartial", ActionNav.ImportEquipment)
 
-<h2><small>Select the excel document containing the records you would like to import.</small></h2>
+<h2><small>Select the excel document containing the equipment you would like to import.</small></h2>
 
 
 @using (Html.BeginForm("Index", "Import", FormMethod.Post, new { enctype = "multipart/form-data" }))
