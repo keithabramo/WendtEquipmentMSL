@@ -210,20 +210,20 @@ dl.dl-horizontal dd {
     }
 
     .table-styled td.Red {
-        background-color: red;
+        background-color: rgb(255, 0, 102);
     }
     .table-styled td.Yellow {
-        background-color: yellow;
+        background-color: rgb(255, 255, 0);
     }
     .table-styled td.Green {
-        background-color: green;
+        background-color: rgb(146, 208, 80);
     }
     .table-styled td.Purple {
-        background-color: purple;
+        background-color: rgb(204, 192, 218);
     }
     .table-styled td.Pink {
-        background-color: pink;
+        background-color: rgb(255, 199, 206);
     }
     .table-styled td.Fuchsia {
-        background-color: fuchsia;
+        background-color: rgb(255, 51, 204);
     }

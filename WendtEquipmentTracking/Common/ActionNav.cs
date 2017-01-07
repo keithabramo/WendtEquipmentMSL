@@ -6,6 +6,6 @@
         ImportEquipment,
         CreateBOL,
         UpdateReadyToShip,
-        OrderHardwareKit
+        CreateHardwareKit
     }
 }

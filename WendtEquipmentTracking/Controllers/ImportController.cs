@@ -182,7 +182,7 @@ namespace WendtEquipmentTracking.App.Controllers
                             file = memoryStream.ToArray();
                         }
 
-                        var workOrderPriceBOs = importService.GetWorkOrderPriceImport(file);
+                        var workOrderPriceBOs = importService.GetWorkOrderPricesImport(file);
 
                         var workOrderPriceModels = Mapper.Map<IList<WorkOrderPriceSelectionModel>>(workOrderPriceBOs);
 

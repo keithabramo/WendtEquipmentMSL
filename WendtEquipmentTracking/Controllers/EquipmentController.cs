@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,16 +16,18 @@ namespace WendtEquipmentTracking.App.Controllers
         private const int PAGE_SIZE = 30;
         private IEquipmentService equipmentService;
         private IProjectService projectService;
+        private IWorkOrderPriceService workOrderPriceService;
 
         public EquipmentController()
         {
             equipmentService = new EquipmentService();
             projectService = new ProjectService();
+            workOrderPriceService = new WorkOrderPriceService();
         }
 
         //
         // GET: /Equipment/
-        public ActionResult Index(int? page)
+        public ActionResult Index()
         {
             var projectIdCookie = CookieHelper.Get("ProjectId");
 
@@ -47,15 +48,18 @@ namespace WendtEquipmentTracking.App.Controllers
             }
 
             var equipmentModels = Mapper.Map<IEnumerable<EquipmentModel>>(projectBO.Equipments);
-            equipmentModels.ToList().ForEach(e => { e.ProjectNumber = projectBO.ProjectNumber; e.SetEquipmentIndicators(); });
+            equipmentModels.ToList().ForEach(e =>
+            {
+                e.ProjectNumber = projectBO.ProjectNumber;
+                e.SetIndicators();
+                e.BillOfLadingEquipments.ToList().ForEach(b => b.BillOfLading.SetBillOfLadingIndicators());
+            });
 
             //Filter and sort data
 
             equipmentModels = equipmentModels.OrderBy(r => r.EquipmentId);
 
-            int pageNumber = (page ?? 1);
-
-            return View(equipmentModels.ToPagedList(pageNumber, PAGE_SIZE));
+            return View(equipmentModels);
         }
 
         //
@@ -84,7 +88,12 @@ namespace WendtEquipmentTracking.App.Controllers
             var equipmentBOs = projectBO.Equipments.Where(e => e.ReadyToShip != null && e.ReadyToShip > 0 && !e.IsHardware);
 
             var equipmentModels = Mapper.Map<IEnumerable<EquipmentModel>>(equipmentBOs);
-            equipmentModels.ToList().ForEach(e => { e.ProjectNumber = projectBO.ProjectNumber; e.SetEquipmentIndicators(); });
+            equipmentModels.ToList().ForEach(e =>
+            {
+                e.ProjectNumber = projectBO.ProjectNumber;
+                e.SetIndicators();
+                e.BillOfLadingEquipments.ToList().ForEach(b => b.BillOfLading.SetBillOfLadingIndicators());
+            });
 
             //Filter and sort data
 
@@ -129,7 +138,12 @@ namespace WendtEquipmentTracking.App.Controllers
             var equipmentBOs = projectBO.Equipments.Where(e => e.ReleaseDate != null && e.LeftToShip > 0 && !e.IsHardware);
 
             var equipmentModels = Mapper.Map<IEnumerable<EquipmentModel>>(equipmentBOs);
-            equipmentModels.ToList().ForEach(e => { e.ProjectNumber = projectBO.ProjectNumber; e.SetEquipmentIndicators(); });
+            equipmentModels.ToList().ForEach(e =>
+            {
+                e.ProjectNumber = projectBO.ProjectNumber;
+                e.SetIndicators();
+                e.BillOfLadingEquipments.ToList().ForEach(b => b.BillOfLading.SetBillOfLadingIndicators());
+            });
 
             //Filter and sort data
 

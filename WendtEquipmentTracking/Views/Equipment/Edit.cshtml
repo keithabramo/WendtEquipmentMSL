@@ -23,7 +23,7 @@
             @Html.DropDownListFor(modelItem => modelItem.Priority, new SelectList(Priorities.GetPriorities()), new { @class = "form-control" })
         </td>
         <td>
-            @Html.EditorFor(modelItem => modelItem.ReleaseDate, new { htmlAttributes = new { @class = "form-control datePicker" } })
+            @Html.EditorFor(modelItem => modelItem.ReleaseDate, new { htmlAttributes = new { @class = "form-control datePicker", id = "releaseDate" + Model.EquipmentId } })
         </td>
         <td>
             @Html.EditorFor(modelItem => modelItem.DrawingNumber, new { htmlAttributes = new { @class = "form-control" } })
@@ -40,7 +40,7 @@
         <td class="long-column">
             @Html.EditorFor(modelItem => modelItem.Description, new { htmlAttributes = new { @class = "form-control" } })
         </td>
-        <td class="@Model.EquipmentIndicators.UnitWeightColor.ToString()">
+        <td class="@Model.Indicators.UnitWeightColor.ToString()">
             @Html.EditorFor(modelItem => modelItem.UnitWeight, new { htmlAttributes = new { @class = "form-control" } })
         </td>
         <td>
@@ -49,16 +49,16 @@
         <td>
             @Html.DisplayFor(modelItem => modelItem.TotalWeightShipped)
         </td>
-        <td class="@Model.EquipmentIndicators.ReadyToShipColor.ToString()">
+        <td class="@Model.Indicators.ReadyToShipColor.ToString()">
             @Html.DisplayFor(modelItem => modelItem.ReadyToShip)
         </td>
-        <td class="@Model.EquipmentIndicators.ShippedQtyColor.ToString()">
+        <td class="@Model.Indicators.ShippedQtyColor.ToString()">
             @Html.DisplayFor(modelItem => modelItem.ShippedQuantity)
         </td>
-        <td class="@Model.EquipmentIndicators.LeftToShipColor.ToString()">
+        <td class="@Model.Indicators.LeftToShipColor.ToString()">
             @Html.DisplayFor(modelItem => modelItem.LeftToShip)
         </td>
-        <td class="@Model.EquipmentIndicators.FullyShippedColor.ToString()">
+        <td class="@Model.Indicators.FullyShippedColor.ToString()">
             @if (Model.FullyShipped.HasValue && Model.FullyShipped.Value == true)
             {
                 @:Yes
@@ -72,16 +72,16 @@
                 @:NA
             }
         </td>
-        <td class="@Model.EquipmentIndicators.CustomsValueColor.ToString()">
+        <td class="@Model.Indicators.CustomsValueColor.ToString()">
            @Html.DisplayFor(modelItem => modelItem.CustomsValue)
         </td>
-        <td class="@Model.EquipmentIndicators.SalePriceColor.ToString()">
+        <td class="@Model.Indicators.SalePriceColor.ToString()">
             @Html.DisplayFor(modelItem => modelItem.SalePrice)
         </td>
         <td>
             @Html.EditorFor(modelItem => modelItem.HTSCode, new { htmlAttributes = new { @class = "form-control" } })
         </td>
-        <td class="@Model.EquipmentIndicators.CountyOfOriginColor.ToString()">
+        <td class="@Model.Indicators.CountyOfOriginColor.ToString()">
             @Html.EditorFor(modelItem => modelItem.CountryOfOrigin, new { htmlAttributes = new { @class = "form-control" } })
         </td>
         <td>
@@ -90,7 +90,7 @@
         <td>
             @Html.EditorFor(modelItem => modelItem.AutoShipFile, new { htmlAttributes = new { @class = "form-control" } })
         </td>
-        <td class="@Model.EquipmentIndicators.SalesOrderNumberColor.ToString()">
+        <td class="@Model.Indicators.SalesOrderNumberColor.ToString()">
             @Html.EditorFor(modelItem => modelItem.SalesOrderNumber, new { htmlAttributes = new { @class = "form-control" } })
         </td>
         <td class="text-nowrap">

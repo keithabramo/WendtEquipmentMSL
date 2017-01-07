@@ -20,7 +20,7 @@
                 }
             });
 
-            $('.table').on('change', "tr:not(.create) input, tr:not(.create) select", function () {
+            $('.table').on('change', "> tbody > tr:not(.create, .collapse) input, > tbody > tr:not(.create, .collapse) select", function () {
                 $this.editsMade = true;
             });
 

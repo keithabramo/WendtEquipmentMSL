@@ -30,5 +30,30 @@ namespace WendtEquipmentTracking.App.Models
         public bool ToStorage { get; set; }
 
         public IList<BillOfLadingEquipmentModel> BillOfLadingEquipments { get; set; }
+
+        public IndicatorsModel Indicators { get; set; }
+
+        public void SetBillOfLadingIndicators()
+        {
+            Indicators = new IndicatorsModel();
+
+            //Bill Of Lading Number
+            if (string.IsNullOrEmpty(BillOfLadingNumber))
+            {
+                Indicators.BillOfLadingNumberColor = IndicatorsModel.Colors.Red;
+            }
+
+            //Bill Of Lading Number
+            if (DateShipped == null)
+            {
+                Indicators.DateShippedNumberColor = IndicatorsModel.Colors.Red;
+            }
+
+            //Bill Of Lading Number
+            if (string.IsNullOrEmpty(ShippedFrom))
+            {
+                Indicators.ShippedFromColor = IndicatorsModel.Colors.Red;
+            }
+        }
     }
 }

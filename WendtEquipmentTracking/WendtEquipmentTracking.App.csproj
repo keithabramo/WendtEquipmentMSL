@@ -179,7 +179,7 @@
     <Compile Include="Models\BillOfLadingModel.cs" />
     <Compile Include="Models\WorkOrderPriceSelectionModel.cs" />
     <Compile Include="Models\EquipmentSelectionModel.cs" />
-    <Compile Include="Models\EquipmentIndicatorsModel.cs" />
+    <Compile Include="Models\IndicatorsModel.cs" />
     <Compile Include="Models\EquipmentModel.cs" />
     <Compile Include="Models\HardwareKitModel.cs" />
     <Compile Include="Models\BaseModel.cs" />

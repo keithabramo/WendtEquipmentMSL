@@ -37,7 +37,7 @@ namespace WendtEquipmentTracking.BusinessLogic
             return equipmentBOs;
         }
 
-        public IEnumerable<WorkOrderPriceBO> GetWorkOrderPrices(byte[] file)
+        public IEnumerable<WorkOrderPriceBO> GetWorkOrderPricesImport(byte[] file)
         {
             var workOrderPriceRows = importEngine.GetWorkOrderPrices(file);
 

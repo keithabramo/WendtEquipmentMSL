@@ -1,6 +1,6 @@
 ﻿namespace WendtEquipmentTracking.App.Models
 {
-    public class EquipmentIndicatorsModel : BaseModel
+    public class IndicatorsModel : BaseModel
     {
         public enum Colors
         {
@@ -22,5 +22,8 @@
         public Colors SalePriceColor { get; set; }
         public Colors CountyOfOriginColor { get; set; }
         public Colors SalesOrderNumberColor { get; set; }
+        public Colors BillOfLadingNumberColor { get; set; }
+        public Colors DateShippedNumberColor { get; set; }
+        public Colors ShippedFromColor { get; set; }
     }
 }

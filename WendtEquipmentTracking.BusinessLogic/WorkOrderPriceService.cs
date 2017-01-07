@@ -4,6 +4,9 @@ using System.Linq;
 using WendtEquipmentTracking.BusinessLogic.Api;
 using WendtEquipmentTracking.BusinessLogic.BO;
 using WendtEquipmentTracking.DataAccess.SQL;
+using WendtEquipmentTracking.DataAccess.SQL.Api;
+using WendtEquipmentTracking.DataAccess.SQL.Engine;
+using WendtEquipmentTracking.DataAccess.SQL.Specifications;
 
 namespace WendtEquipmentTracking.BusinessLogic
 {

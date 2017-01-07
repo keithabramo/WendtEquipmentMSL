@@ -111,18 +111,18 @@ namespace WendtEquipmentTracking.App.Models
 
         public IList<BillOfLadingEquipmentModel> BillOfLadingEquipments { get; set; }
 
-        public EquipmentIndicatorsModel EquipmentIndicators { get; set; }
+        public IndicatorsModel Indicators { get; set; }
 
         public string ProjectNumber { get; set; }
 
-        public void SetEquipmentIndicators()
+        public void SetIndicators()
         {
-            EquipmentIndicators = new EquipmentIndicatorsModel();
+            Indicators = new IndicatorsModel();
 
             //unit weight
             if (UnitWeight == null || UnitWeight <= 0)
             {
-                EquipmentIndicators.UnitWeightColor = EquipmentIndicatorsModel.Colors.Red;
+                Indicators.UnitWeightColor = IndicatorsModel.Colors.Red;
             }
 
             //ready to ship does not have a clean way to check for red
@@ -130,54 +130,62 @@ namespace WendtEquipmentTracking.App.Models
             {
                 if (BillOfLadingEquipments.Any(be => be.BillOfLading.ToStorage && be.BillOfLading.IsCurrentRevision))
                 {
-                    EquipmentIndicators.ReadyToShipColor = EquipmentIndicatorsModel.Colors.Green;
+                    Indicators.ReadyToShipColor = IndicatorsModel.Colors.Green;
                 }
                 else
                 {
-                    EquipmentIndicators.ReadyToShipColor = EquipmentIndicatorsModel.Colors.Yellow;
+                    Indicators.ReadyToShipColor = IndicatorsModel.Colors.Yellow;
                 }
             }
 
             //ship qty
             if (ShippedQuantity > Quantity)
             {
-                EquipmentIndicators.ShippedQtyColor = EquipmentIndicatorsModel.Colors.Red;
+                Indicators.ShippedQtyColor = IndicatorsModel.Colors.Red;
             }
 
             //left to ship
             if (ShippedQuantity > Quantity)
             {
-                EquipmentIndicators.LeftToShipColor = EquipmentIndicatorsModel.Colors.Red;
+                Indicators.LeftToShipColor = IndicatorsModel.Colors.Red;
             }
 
             //fully shipped
             if (ShippedQuantity > Quantity)
             {
-                EquipmentIndicators.FullyShippedColor = EquipmentIndicatorsModel.Colors.Fuchsia;
+                Indicators.FullyShippedColor = IndicatorsModel.Colors.Fuchsia;
             }
             else if (FullyShipped.HasValue && FullyShipped.Value == false)
             {
-                EquipmentIndicators.FullyShippedColor = EquipmentIndicatorsModel.Colors.Pink;
+                Indicators.FullyShippedColor = IndicatorsModel.Colors.Pink;
             }
             else if (!FullyShipped.HasValue || FullyShipped.Value == true)
             {
-                EquipmentIndicators.FullyShippedColor = EquipmentIndicatorsModel.Colors.Purple;
+                Indicators.FullyShippedColor = IndicatorsModel.Colors.Purple;
             }
 
-            //customs value, needs weights calculations
+            //customs value
+            if (!CustomsValue.HasValue || CustomsValue.Value <= 0)
+            {
+                Indicators.CustomsValueColor = IndicatorsModel.Colors.Red;
+            }
 
-            //sales price, needs weights calculations
+            //sales price
+            if (!SalePrice.HasValue || SalePrice.Value <= 0)
+            {
+                Indicators.SalePriceColor = IndicatorsModel.Colors.Red;
+            }
 
             //country of origin
             if (string.IsNullOrEmpty(CountryOfOrigin) && !string.IsNullOrEmpty(HTSCode))
             {
-                EquipmentIndicators.CountyOfOriginColor = EquipmentIndicatorsModel.Colors.Red;
+                Indicators.CountyOfOriginColor = IndicatorsModel.Colors.Red;
             }
 
             //sales order
             if (!WorkOrderNumber.Contains(ProjectNumber))
             {
-                EquipmentIndicators.SalesOrderNumberColor = EquipmentIndicatorsModel.Colors.Red;
+                Indicators.SalesOrderNumberColor = IndicatorsModel.Colors.Red;
             }
         }
     }
