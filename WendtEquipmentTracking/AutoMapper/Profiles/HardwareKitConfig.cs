@@ -11,6 +11,9 @@ namespace WendtEquipmentTracking.App.AutoMapper.Profiles
 
             base.CreateMap<HardwareKitBO, HardwareKitModel>();
             base.CreateMap<HardwareKitModel, HardwareKitBO>();
+
+            base.CreateMap<HardwareKitEquipmentBO, HardwareKitEquipmentModel>().MaxDepth(1);
+            base.CreateMap<HardwareKitEquipmentModel, HardwareKitEquipmentBO>().MaxDepth(1);
         }
     }
 }

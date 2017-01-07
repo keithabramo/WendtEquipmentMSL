@@ -68,6 +68,7 @@
     <Compile Include="AutoMapper\Profiles\BillOfLadingConfig.cs" />
     <Compile Include="AutoMapper\Profiles\ProjectConfig.cs" />
     <Compile Include="AutoMapper\Profiles\EquipmentConfig.cs" />
+    <Compile Include="BO\HardwareKitEquipmentBO.cs" />
     <Compile Include="BO\WorkOrderPriceBO.cs" />
     <Compile Include="HardwareKitService.cs" />
     <Compile Include="BO\BillOfLadingBO.cs" />

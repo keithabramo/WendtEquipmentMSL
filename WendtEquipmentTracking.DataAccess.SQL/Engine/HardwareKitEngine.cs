@@ -30,7 +30,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
         public IEnumerable<HardwareKit> ListAll()
         {
             return this.repository.GetAll()
-                .Include(x => x.Equipments);
+                .Include(x => x.HardwareKitEquipments);
         }
 
         public HardwareKit Get(Specification<HardwareKit> specification)
@@ -41,7 +41,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
         public IEnumerable<HardwareKit> List(Specification<HardwareKit> specification)
         {
             return this.repository.Find(specification)
-                .Include(x => x.Equipments);
+                .Include(x => x.HardwareKitEquipments);
         }
 
         public void AddNewHardwareKit(HardwareKit hardwareKit)

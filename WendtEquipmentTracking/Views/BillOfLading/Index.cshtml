@@ -7,39 +7,47 @@
 <h2>Bill of Ladings</h2>
 
 <p>
-    @Html.ActionLink("Create New BOL", "Create")
+    @Html.ActionLink("Create New BOL", "Create", null, new { @class = "btn btn-sm btn-primary" })
 </p>
-<table class="table table-condensed table-bordered table-styled">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.BillOfLadingNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DateShipped)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ShippedFrom)
-        </th>
-        <th></th>
-    </tr>
+@if (Model.Count() > 0)
+{
+    <table class="table table-condensed table-hover table-bordered table-styled">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BillOfLadingNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateShipped)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ShippedFrom)
+            </th>
+            <th></th>
+        </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.BillOfLadingNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateShipped)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ShippedFrom)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.BillOfLadingId }) |
-            @Html.ActionLink("Details", "Details", new { id = item.BillOfLadingId }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.BillOfLadingId })
-        </td>
-    </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BillOfLadingNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateShipped)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShippedFrom)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.BillOfLadingId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.BillOfLadingId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.BillOfLadingId })
+                </td>
+            </tr>
+        }
+
+    </table>
 }
-
-</table>
+else
+{
+    <p class="text-center">No Bill of Ladings Found.</p>
+}

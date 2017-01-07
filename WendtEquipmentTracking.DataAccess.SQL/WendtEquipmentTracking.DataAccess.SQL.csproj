@@ -73,6 +73,9 @@
     <Compile Include="HardwareKit.cs">
       <DependentUpon>WendtEquipmentTracking.tt</DependentUpon>
     </Compile>
+    <Compile Include="HardwareKitEquipment.cs">
+      <DependentUpon>WendtEquipmentTracking.tt</DependentUpon>
+    </Compile>
     <Compile Include="IRepository.cs" />
     <Compile Include="ISpecification.cs" />
     <Compile Include="Project.cs">
@@ -81,6 +84,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository.cs" />
     <Compile Include="Specification.cs" />
+    <Compile Include="Specifications\Equipments\HardwareKitId.cs" />
     <Compile Include="Specifications\HardwareKitSpecs.cs" />
     <Compile Include="Specifications\HardwareKit\HardwareKitNumberSpecification.cs" />
     <Compile Include="Specifications\HardwareKit\CurrentRevisionSpecification.cs" />

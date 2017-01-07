@@ -17,6 +17,9 @@ namespace WendtHardwareKitTracking.BusinessLogic.AutoMapper.Profiles
                 .ForMember(dest => dest.ModifiedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.ModifiedDate, opt => opt.Ignore());
 
+            base.CreateMap<HardwareKitEquipmentBO, HardwareKitEquipment>().MaxDepth(1);
+            base.CreateMap<HardwareKitEquipment, HardwareKitEquipmentBO>().MaxDepth(1);
+
 
         }
     }

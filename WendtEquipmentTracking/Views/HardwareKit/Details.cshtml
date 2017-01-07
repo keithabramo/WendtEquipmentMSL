@@ -18,6 +18,9 @@
                 <th>
                     @Html.DisplayNameFor(model => model.HardwareKitNumber)
                 </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ExtraQuantityPercentage)
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -38,10 +41,13 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.HardwareKitNumber)
                     </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ExtraQuantityPercentage)
+                    </td>
                 </tr>
                 <tr class="collapse info" id="accordion@(item.HardwareKitId)">
                     <td colspan="10" id="Equipment@(item.HardwareKitId)">
-                        @Html.Partial("EquipmentsPartial", item.Equipments)
+                        @Html.Partial("EquipmentsPartial", item.HardwareKitEquipments)
                     </td>
                 </tr>
             }
@@ -51,6 +57,6 @@
 
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.SingleOrDefault(h => h.IsCurrentRevision).HardwareKitId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

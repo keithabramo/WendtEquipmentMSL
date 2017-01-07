@@ -9,6 +9,8 @@ namespace WendtEquipmentTracking.BusinessLogic.BO
         public int Revision { get; set; }
         public bool IsCurrentRevision { get; set; }
         public string HardwareKitNumber { get; set; }
-        public IEnumerable<EquipmentBO> Equipments { get; set; }
+        public double ExtraQuantityPercentage { get; set; }
+
+        public IEnumerable<HardwareKitEquipmentBO> HardwareKitEquipments { get; set; }
     }
 }

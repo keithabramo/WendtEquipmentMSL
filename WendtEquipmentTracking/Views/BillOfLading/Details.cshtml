@@ -24,24 +24,6 @@
                 <th>
                     @Html.DisplayNameFor(model => model.ShippedFrom)
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ShipToCompany)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ShipToAddress)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ShipToCSZ)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ShipToPhoneFax)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ShipToContact1)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ShipToContact2)
-                </th>
             </tr>
         </thead>
         <tbody>
@@ -68,24 +50,6 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.ShippedFrom)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ShipToCompany)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ShipToAddress)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ShipToCSZ)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ShipToPhoneFax)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ShipToContact1)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ShipToContact2)
-                    </td>
                 </tr>
                 <tr class="collapse info" id="accordion@(item.BillOfLadingId)">
                     <td colspan="10" id="Equipment@(item.BillOfLadingId)">
@@ -99,6 +63,6 @@
 
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.SingleOrDefault(b => b.IsCurrentRevision).BillOfLadingId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

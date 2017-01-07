@@ -17,7 +17,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public HardwareKit()
         {
-            this.Equipments = new HashSet<Equipment>();
+            this.HardwareKitEquipments = new HashSet<HardwareKitEquipment>();
         }
     
         public int HardwareKitId { get; set; }
@@ -25,6 +25,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         public int Revision { get; set; }
         public bool IsCurrentRevision { get; set; }
         public string HardwareKitNumber { get; set; }
+        public double ExtraQuantityPercentage { get; set; }
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
@@ -32,8 +33,8 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         public Nullable<int> BillOfLadingId { get; set; }
     
         public virtual BillOfLading BillOfLading { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Equipment> Equipments { get; set; }
         public virtual Project Project { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<HardwareKitEquipment> HardwareKitEquipments { get; set; }
     }
 }

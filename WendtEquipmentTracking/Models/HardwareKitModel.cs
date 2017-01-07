@@ -17,6 +17,9 @@ namespace WendtEquipmentTracking.App.Models
         [DisplayName("Hardware Kit Number")]
         public string HardwareKitNumber { get; set; }
 
-        public IList<EquipmentModel> Equipments { get; set; }
+        [DisplayName("Extra Quantity %")]
+        public double ExtraQuantityPercentage { get; set; }
+
+        public IList<HardwareKitEquipmentModel> HardwareKitEquipments { get; set; }
     }
 }

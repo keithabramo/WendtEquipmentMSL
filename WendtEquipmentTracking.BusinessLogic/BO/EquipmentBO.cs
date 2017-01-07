@@ -37,5 +37,6 @@ namespace WendtEquipmentTracking.BusinessLogic.BO
         public string SalesOrderNumber { get; set; }
 
         public IEnumerable<BillOfLadingEquipmentBO> BillOfLadingEquipments { get; set; }
+        public IEnumerable<HardwareKitEquipmentBO> HardwareKitEquipments { get; set; }
     }
 }
