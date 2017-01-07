@@ -202,5 +202,56 @@ namespace WendtEquipmentTracking.App.Controllers
             }
         }
 
+
+        //
+        // GET: /BillOfLading/EquipmentToAddToBOL
+        [ChildActionOnly]
+        public ActionResult EquipmentToAddToBOL()
+        {
+            var projectIdCookie = CookieHelper.Get("ProjectId");
+
+            if (string.IsNullOrEmpty(projectIdCookie))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var projectId = Convert.ToInt32(projectIdCookie);
+
+            //Get Data
+            var projectBO = projectService.GetById(projectId);
+
+            if (projectBO == null)
+            {
+                CookieHelper.Delete("ProjectId");
+                return RedirectToAction("Index", "Home");
+            }
+
+            var equipmentBOs = projectBO.Equipments.Where(e => e.ReadyToShip != null && e.ReadyToShip > 0 && !e.IsHardware);
+
+            var equipmentModels = Mapper.Map<IEnumerable<EquipmentModel>>(equipmentBOs);
+            equipmentModels.ToList().ForEach(e =>
+            {
+                e.ProjectNumber = projectBO.ProjectNumber;
+                e.SetIndicators();
+                e.BillOfLadingEquipments.ToList().ForEach(b => b.BillOfLading.SetBillOfLadingIndicators());
+            });
+
+            //Filter and sort data
+
+            equipmentModels = equipmentModels.OrderBy(r => r.EquipmentId);
+
+            var billOfLadingEquipments = equipmentModels.Select(e => new BillOfLadingEquipmentModel
+            {
+                Equipment = e,
+                EquipmentId = e.EquipmentId
+            }).ToList();
+
+            var model = new BillOfLadingModel
+            {
+                BillOfLadingEquipments = billOfLadingEquipments
+            };
+
+            return PartialView(model);
+        }
     }
 }

@@ -1,0 +1,56 @@
+﻿@model IEnumerable<BillOfLadingEquipmentModel>
+
+<h4>Equipment</h4>
+
+<table class="table table-condensed table-hover table-bordered table-styled">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Equipment.EquipmentName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Equipment.ReadyToShip)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Equipment.LeftToShip)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Equipment.ShippedQuantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Equipment.Quantity)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.HiddenFor(modelItem => item.EquipmentId)
+
+
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Equipment.EquipmentName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Equipment.ReadyToShip)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Equipment.LeftToShip)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Equipment.ShippedQuantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Equipment.Quantity)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

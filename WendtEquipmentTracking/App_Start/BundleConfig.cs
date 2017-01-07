@@ -19,6 +19,9 @@ namespace WendtEquipmentTracking.App
                         "~/Scripts/waitingDialog.js",
                         "~/Scripts/form.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/table").Include(
+                       "~/Scripts/table.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 

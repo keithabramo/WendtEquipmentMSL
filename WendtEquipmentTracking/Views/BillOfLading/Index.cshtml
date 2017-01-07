@@ -39,7 +39,7 @@
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.BillOfLadingId }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.BillOfLadingId }) |
+                    @Html.ActionLink("Details", "Details", new { billOfLadingNumber = item.BillOfLadingNumber }) |
                     @Html.ActionLink("Delete", "Delete", new { id = item.BillOfLadingId })
                 </td>
             </tr>
@@ -50,4 +50,9 @@
 else
 {
     <p class="text-center">No Bill of Ladings Found.</p>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/table")
 }

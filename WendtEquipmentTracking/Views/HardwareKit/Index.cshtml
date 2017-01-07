@@ -16,6 +16,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.HardwareKitNumber)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExtraQuantityPercentage)
+            </th>
             <th></th>
         </tr>
 
@@ -26,8 +29,11 @@
                     @Html.DisplayFor(modelItem => item.HardwareKitNumber)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.ExtraQuantityPercentage)
+                </td>
+                <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.HardwareKitId }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.HardwareKitId }) |
+                    @Html.ActionLink("Details", "Details", new { hardwareKitNumber = item.HardwareKitNumber }) |
                     @Html.ActionLink("Delete", "Delete", new { id = item.HardwareKitId })
                 </td>
             </tr>
@@ -38,4 +44,9 @@
 else
 {
     <p class="text-center">No Hardware Kits Found.</p>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/table")
 }

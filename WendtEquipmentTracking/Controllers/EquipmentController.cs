@@ -62,110 +62,13 @@ namespace WendtEquipmentTracking.App.Controllers
             return View(equipmentModels);
         }
 
+
+
+
+
         //
         // GET: /Equipment/ReadyToShip
-        [ChildActionOnly]
         public ActionResult ReadyToShip()
-        {
-            var projectIdCookie = CookieHelper.Get("ProjectId");
-
-            if (string.IsNullOrEmpty(projectIdCookie))
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            var projectId = Convert.ToInt32(projectIdCookie);
-
-            //Get Data
-            var projectBO = projectService.GetById(projectId);
-
-            if (projectBO == null)
-            {
-                CookieHelper.Delete("ProjectId");
-                return RedirectToAction("Index", "Home");
-            }
-
-            var equipmentBOs = projectBO.Equipments.Where(e => e.ReadyToShip != null && e.ReadyToShip > 0 && !e.IsHardware);
-
-            var equipmentModels = Mapper.Map<IEnumerable<EquipmentModel>>(equipmentBOs);
-            equipmentModels.ToList().ForEach(e =>
-            {
-                e.ProjectNumber = projectBO.ProjectNumber;
-                e.SetIndicators();
-                e.BillOfLadingEquipments.ToList().ForEach(b => b.BillOfLading.SetBillOfLadingIndicators());
-            });
-
-            //Filter and sort data
-
-            equipmentModels = equipmentModels.OrderBy(r => r.EquipmentId);
-
-            var billOfLadingEquipments = equipmentModels.Select(e => new BillOfLadingEquipmentModel
-            {
-                Equipment = e,
-                EquipmentId = e.EquipmentId
-            }).ToList();
-
-            var model = new BillOfLadingModel
-            {
-                BillOfLadingEquipments = billOfLadingEquipments
-            };
-
-            return PartialView("ReadyToShipPartial", model);
-        }
-
-        //
-        // GET: /Equipment/Hardware
-        [ChildActionOnly]
-        public ActionResult Hardware()
-        {
-            var projectIdCookie = CookieHelper.Get("ProjectId");
-
-            if (string.IsNullOrEmpty(projectIdCookie))
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            var projectId = Convert.ToInt32(projectIdCookie);
-
-            //Get Data
-            var projectBO = projectService.GetById(projectId);
-
-            if (projectBO == null)
-            {
-                CookieHelper.Delete("ProjectId");
-                return RedirectToAction("Index", "Home");
-            }
-
-            var equipmentBOs = projectBO.Equipments.Where(e => e.IsHardware && (e.HardwareKitEquipments == null || e.HardwareKitEquipments.Count() == 0));
-
-            var equipmentModels = Mapper.Map<IEnumerable<EquipmentModel>>(equipmentBOs);
-            equipmentModels.ToList().ForEach(e =>
-            {
-                e.ProjectNumber = projectBO.ProjectNumber;
-                e.SetIndicators();
-            });
-
-            //Filter and sort data
-
-            equipmentModels = equipmentModels.OrderBy(r => r.EquipmentId);
-
-            var hardwareKitEquipments = equipmentModels.Select(e => new HardwareKitEquipmentModel
-            {
-                Equipment = e,
-                EquipmentId = e.EquipmentId
-            }).ToList();
-
-            var model = new HardwareKitModel
-            {
-                HardwareKitEquipments = hardwareKitEquipments
-            };
-
-            return PartialView("HardwarePartial", model);
-        }
-
-        //
-        // GET: /Equipment/ReadyToShip
-        public ActionResult Released()
         {
             var projectIdCookie = CookieHelper.Get("ProjectId");
 
@@ -202,9 +105,9 @@ namespace WendtEquipmentTracking.App.Controllers
             return View(equipmentModels.ToList());
         }
 
-        // POST: Equipment/Released
+        // POST: Equipment/ReadyToShip
         [HttpPost]
-        public ActionResult Released(IEnumerable<EquipmentModel> model)
+        public ActionResult ReadyToShip(IEnumerable<EquipmentModel> model)
         {
             try
             {

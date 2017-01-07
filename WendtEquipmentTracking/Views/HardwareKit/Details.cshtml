@@ -4,11 +4,11 @@
     ViewBag.Title = "Details";
 }
 
-<h2>BOL<br /><small>Details</small></h2>
+<h2>Hardware Kit<br /><small>Details</small></h2>
 
 <div>
     <hr />
-    <table class="table table-condensed table-bordered">
+    <table class="table table-condensed table-hover table-bordered table-styled">
         <thead>
             <tr>
                 <th></th>
@@ -47,7 +47,7 @@
                 </tr>
                 <tr class="collapse info" id="accordion@(item.HardwareKitId)">
                     <td colspan="10" id="Equipment@(item.HardwareKitId)">
-                        @Html.Partial("EquipmentsPartial", item.HardwareKitEquipments)
+                        @Html.Partial("HardwareAssociatedToHardwareKit", item.HardwareKitEquipments)
                     </td>
                 </tr>
             }
@@ -60,3 +60,8 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.SingleOrDefault(h => h.IsCurrentRevision).HardwareKitId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/table")
+}

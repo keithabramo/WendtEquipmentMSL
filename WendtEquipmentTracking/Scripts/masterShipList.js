@@ -10,16 +10,6 @@
         this.initEvents = function () {
             var $this = this;
 
-            $('.table').on('click', ".expand", function () {
-                var $icon = $(this).find(".glyphicon");
-
-                if ($icon.hasClass("glyphicon-plus")) {
-                    $icon.removeClass("glyphicon-plus").addClass("glyphicon-minus");
-                } else {
-                    $icon.removeClass("glyphicon-minus").addClass("glyphicon-plus");
-                }
-            });
-
             $('.table').on('change', "> tbody > tr:not(.create, .collapse) input, > tbody > tr:not(.create, .collapse) select", function () {
                 $this.editsMade = true;
             });
@@ -36,9 +26,7 @@
                     }
                 }
             });
-
         }
-
 
         this.initStyles();
         this.initEvents();
