@@ -5,11 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using WendtEquipmentTracking.App.Models;
-using WendtEquipmentTracking.BusinessLogic.Api;
-using WendtEquipmentTracking.BusinessLogic;
-using WendtEquipmentTracking.BusinessLogic.BO;
+using System.Web.UI;
 using WendtEquipmentTracking.App.Common;
+using WendtEquipmentTracking.App.Models;
+using WendtEquipmentTracking.BusinessLogic;
+using WendtEquipmentTracking.BusinessLogic.Api;
+using WendtEquipmentTracking.BusinessLogic.BO;
 
 namespace WendtEquipmentTracking.App.Controllers
 {
@@ -82,6 +83,9 @@ namespace WendtEquipmentTracking.App.Controllers
 
                     projectService.Save(projectBO);
 
+                    //clear the cache for the project list at the top right of the page
+                    clearProjectNavCache();
+
                     return RedirectToAction("Index");
                 }
 
@@ -125,6 +129,9 @@ namespace WendtEquipmentTracking.App.Controllers
 
                     projectService.Update(project);
 
+                    //clear the cache for the project list at the top right of the page
+                    clearProjectNavCache();
+
                     return RedirectToAction("Index");
                 }
 
@@ -167,6 +174,9 @@ namespace WendtEquipmentTracking.App.Controllers
 
                 projectService.Delete(id);
 
+                //clear the cache for the project list at the top right of the page
+                clearProjectNavCache();
+
                 return RedirectToAction("Index");
             }
             catch
@@ -185,6 +195,7 @@ namespace WendtEquipmentTracking.App.Controllers
         }
 
         [ChildActionOnly]
+        [OutputCache(Duration = 3600)]
         public ActionResult ProjectNavPartial()
         {
             var currentProjectId = CookieHelper.Get("ProjectId");
@@ -211,6 +222,12 @@ namespace WendtEquipmentTracking.App.Controllers
             CookieHelper.Set("ProjectId", ProjectId.ToString());
 
             return RedirectToAction("Index", "Equipment");
+        }
+
+        private void clearProjectNavCache()
+        {
+            var urlToRemove = Url.Action("ProjectNavPartial");
+            HttpResponse.RemoveOutputCacheItem(urlToRemove);
         }
     }
 }

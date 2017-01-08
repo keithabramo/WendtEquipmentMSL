@@ -2,9 +2,13 @@
 
 <div class="btn-group" role="group" aria-label="actions">
     @Html.ActionLink("Master Shipping List", "Index", "Home", null, new { @class = "btn " + (Model == ActionNav.MSL ? "btn-secondary" : "btn-primary") })
-    @Html.ActionLink("Import Equipment", "Equipment", "Import", null, new { @class = "btn " + (Model == ActionNav.ImportEquipment ? "btn-secondary" : "btn-primary") })
-    @Html.ActionLink("Update Ready To Ship", "Released", "Equipment", null, new { @class = "btn " + (Model == ActionNav.UpdateReadyToShip ? "btn-secondary" : "btn-primary") })
-    @Html.ActionLink("Create BOL", "Create", "BillOfLading", null, new { @class = "btn " + (Model == ActionNav.CreateBOL ? "btn-secondary" : "btn-primary") })
-    @Html.ActionLink("Create Hardware Kit", "Create", "HardwareKit", null, new { @class = "btn " + (Model == ActionNav.CreateHardwareKit ? "btn-secondary" : "btn-primary") })
+    
+    @if (Html.UserIsInRole(UserRoles.ReadWrite))
+    {
+        @Html.ActionLink("Import Equipment", "Equipment", "Import", null, new { @class = "btn " + (Model == ActionNav.ImportEquipment ? "btn-secondary" : "btn-primary") })
+        @Html.ActionLink("Update Ready To Ship", "ReadyToShip", "Equipment", null, new { @class = "btn " + (Model == ActionNav.UpdateReadyToShip ? "btn-secondary" : "btn-primary") })
+        @Html.ActionLink("Create BOL", "Create", "BillOfLading", null, new { @class = "btn " + (Model == ActionNav.CreateBOL ? "btn-secondary" : "btn-primary") })
+        @Html.ActionLink("Create Hardware Kit", "Create", "HardwareKit", null, new { @class = "btn " + (Model == ActionNav.CreateHardwareKit ? "btn-secondary" : "btn-primary") })
+    }
 </div>
 <br/><br/>

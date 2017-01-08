@@ -79,16 +79,28 @@
             <th>
                 @Html.DisplayNameFor(model => model.SalesOrderNumber)
             </th>
-            <th></th>
+            @if (Html.UserIsInRole(UserRoles.ReadWrite))
+            {
+                <th></th>
+            }
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @if (Html.UserIsInRole(UserRoles.ReadWrite))
         {
-            @Html.Partial("Edit", item)
+            foreach (var item in Model)
+            {
+                @Html.Partial("Edit", item)
+            }
+            @Html.Action("Create")
         }
-
-        @Html.Action("Create")
+        else
+        {
+            foreach (var item in Model)
+            {
+                @Html.Partial("Details", item)
+            }
+        }
     </tbody>
 </table>
 

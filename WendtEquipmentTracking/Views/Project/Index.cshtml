@@ -9,9 +9,12 @@
 
 <h2>Projects</h2>
 
-<p>
-    @Html.ActionLink("Create New Project", "Create", null, new { @class = "btn btn-sm btn-primary" })
-</p>
+@if (Html.UserIsInRole(UserRoles.ReadWrite))
+{
+    <p>
+        @Html.ActionLink("Create New Project", "Create", null, new { @class = "btn btn-sm btn-primary" })
+    </p>
+}
 @if (Model.Count() > 0)
 {
     <table class="table table-condensed table-hover table-bordered table-styled">
@@ -31,7 +34,10 @@
             <th>
                 @Html.DisplayNameFor(model => model.ShipToBroker)
             </th>
-            <th></th>
+            @if (Html.UserIsInRole(UserRoles.ReadWrite))
+            {
+                <th></th>
+            }
         </tr>
 
         @foreach (var item in Model)
@@ -69,10 +75,13 @@
                         @:Email: @Html.DisplayFor(modelItem => item.ShipToBroker)
                     }
                 </td>
-                <td class="text-center">
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ProjectId }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ProjectId })
-                </td>
+                @if (Html.UserIsInRole(UserRoles.ReadWrite))
+                {
+                    <td class="text-center">
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ProjectId }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ProjectId })
+                    </td>
+                }
             </tr>
         }
 

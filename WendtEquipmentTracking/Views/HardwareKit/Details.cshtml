@@ -57,7 +57,10 @@
 
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.SingleOrDefault(h => h.IsCurrentRevision).HardwareKitId }) |
+    @if (Html.UserIsInRole(UserRoles.ReadWrite))
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.SingleOrDefault(h => h.IsCurrentRevision).HardwareKitId }) |
+    }
     @Html.ActionLink("Back to List", "Index")
 </p>
 

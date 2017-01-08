@@ -28,9 +28,11 @@ namespace WendtEquipmentTracking.Common
         {
             string displayName = username;
 
-            if (!string.IsNullOrWhiteSpace(username)) {
+            if (!string.IsNullOrWhiteSpace(username))
+            {
 
-                try {
+                try
+                {
                     var principalContext = new PrincipalContext(ContextType.Domain, DOMAIN_NAME);
 
                     UserPrincipal userPrincipal = UserPrincipal.FindByIdentity(
@@ -42,7 +44,9 @@ namespace WendtEquipmentTracking.Common
                     var user = mapToUser(userPrincipal);
                     displayName = user.DisplayName;
 
-                } catch {
+                }
+                catch
+                {
                 }
             }
 
@@ -71,8 +75,11 @@ namespace WendtEquipmentTracking.Common
                 {
                 }
             }
+            user.Role = UserRoles.ReadWrite;
             return user;
         }
+
+
 
         public static IEnumerable<ActiveDirectoryUser> ActiveDirectoryUsers(string searchString)
         {
@@ -163,9 +170,10 @@ namespace WendtEquipmentTracking.Common
                 FirstName = userPrincipal.GivenName,
                 MiddleName = userPrincipal.MiddleName,
                 LastName = userPrincipal.Surname,
-                Email = userPrincipal.EmailAddress
+                Email = userPrincipal.EmailAddress,
+                Role = userPrincipal.GetAuthorizationGroups().Any(ag => ag.Name == "ReadWrite") ? UserRoles.ReadWrite : UserRoles.ReadOnly
             };
-            
+
             return user;
         }
     }

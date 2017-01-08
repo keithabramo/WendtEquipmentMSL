@@ -297,6 +297,7 @@
     <Content Include="Views\Project\Index.cshtml" />
     <Content Include="Views\Shared\ProjectNavPartial.cshtml" />
     <Content Include="Views\Import\WorkOrderPrice.cshtml" />
+    <Content Include="Views\Equipment\Details.cshtml" />
     <None Include="Views\Import\Equipment.cshtml" />
     <Content Include="Views\Import\SelectEquipmentSheets.cshtml" />
     <Content Include="Views\Import\ImportEquipmentPartial.cshtml" />
