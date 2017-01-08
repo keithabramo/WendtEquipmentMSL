@@ -96,36 +96,47 @@
                                 <td></td>
                             }
                             <td>
+                                @Html.HiddenFor(modelItem => modelItem[i].EquipmentName)
                                 @Html.DisplayFor(modelItem => modelItem[i].EquipmentName)
                             </td>
                             <td>
+                                @Html.HiddenFor(modelItem => modelItem[i].Priority)
                                 @Html.DisplayFor(modelItem => modelItem[i].Priority)
                             </td>
                             <td>
+                                @Html.HiddenFor(modelItem => modelItem[i].ReleaseDate)
                                 @Html.DisplayFor(modelItem => modelItem[i].ReleaseDate)
                             </td>
                             <td>
+                                @Html.HiddenFor(modelItem => modelItem[i].DrawingNumber)
                                 @Html.DisplayFor(modelItem => modelItem[i].DrawingNumber)
                             </td>
                             <td>
+                                @Html.HiddenFor(modelItem => modelItem[i].WorkOrderNumber)
                                 @Html.DisplayFor(modelItem => modelItem[i].WorkOrderNumber)
                             </td>
                             <td>
+                                @Html.HiddenFor(modelItem => modelItem[i].Quantity)
                                 @Html.DisplayFor(modelItem => modelItem[i].Quantity)
                             </td>
                             <td>
+                                @Html.HiddenFor(modelItem => modelItem[i].ShippingTagNumber)
                                 @Html.DisplayFor(modelItem => modelItem[i].ShippingTagNumber)
                             </td>
                             <td>
+                                @Html.HiddenFor(modelItem => modelItem[i].Description)
                                 @Html.DisplayFor(modelItem => modelItem[i].Description)
                             </td>
                             <td>
+                                @Html.HiddenFor(modelItem => modelItem[i].UnitWeight)
                                 @Html.DisplayFor(modelItem => modelItem[i].UnitWeight)
                             </td>
                             <td>
+                                @Html.HiddenFor(modelItem => modelItem[i].TotalWeight)
                                 @Html.DisplayFor(modelItem => modelItem[i].TotalWeight)
                             </td>
                             <td>
+                                @Html.HiddenFor(modelItem => modelItem[i].TotalWeightShipped)
                                 @Html.DisplayFor(modelItem => modelItem[i].TotalWeightShipped)
                             </td>
                             <td>
@@ -133,33 +144,43 @@
                                 @Html.EditorFor(modelItem => modelItem[i].ReadyToShip, new { htmlAttributes = new { @class = "form-control" } })
                             </td>
                             <td>
+                                @Html.HiddenFor(modelItem => modelItem[i].ShippedQuantity)
                                 @Html.DisplayFor(modelItem => modelItem[i].ShippedQuantity)
                             </td>
                             <td>
+                                @Html.HiddenFor(modelItem => modelItem[i].LeftToShip)
                                 @Html.DisplayFor(modelItem => modelItem[i].LeftToShip)
                             </td>
                             <td>
+                                @Html.HiddenFor(modelItem => modelItem[i].FullyShipped)
                                 @Html.DisplayFor(modelItem => modelItem[i].FullyShipped)
                             </td>
                             <td>
+                                @Html.HiddenFor(modelItem => modelItem[i].CustomsValue)
                                 @Html.DisplayFor(modelItem => modelItem[i].CustomsValue)
                             </td>
                             <td>
+                                @Html.HiddenFor(modelItem => modelItem[i].SalePrice)
                                 @Html.DisplayFor(modelItem => modelItem[i].SalePrice)
                             </td>
                             <td>
+                                @Html.HiddenFor(modelItem => modelItem[i].HTSCode)
                                 @Html.DisplayFor(modelItem => modelItem[i].HTSCode)
                             </td>
                             <td>
+                                @Html.HiddenFor(modelItem => modelItem[i].CountryOfOrigin)
                                 @Html.DisplayFor(modelItem => modelItem[i].CountryOfOrigin)
                             </td>
                             <td>
+                                @Html.HiddenFor(modelItem => modelItem[i].Notes)
                                 @Html.DisplayFor(modelItem => modelItem[i].Notes)
                             </td>
                             <td>
+                                @Html.HiddenFor(modelItem => modelItem[i].AutoShipFile)
                                 @Html.DisplayFor(modelItem => modelItem[i].AutoShipFile)
                             </td>
                             <td>
+                                @Html.HiddenFor(modelItem => modelItem[i].SalesOrderNumber)
                                 @Html.DisplayFor(modelItem => modelItem[i].SalesOrderNumber)
                             </td>
                         </tr>

@@ -253,5 +253,57 @@ namespace WendtEquipmentTracking.App.Controllers
 
             return PartialView(model);
         }
+
+        //
+        // GET: /BillOfLading/EquipmentToEditForBOL
+        [ChildActionOnly]
+        public ActionResult EquipmentToEditForBOL(BillOfLadingModel model)
+        {
+            var projectIdCookie = CookieHelper.Get("ProjectId");
+
+            if (string.IsNullOrEmpty(projectIdCookie))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var projectId = Convert.ToInt32(projectIdCookie);
+
+            //Get Data
+            var projectBO = projectService.GetById(projectId);
+
+            if (projectBO == null)
+            {
+                CookieHelper.Delete("ProjectId");
+                return RedirectToAction("Index", "Home");
+            }
+
+            var equipmentBOs = projectBO.Equipments.Where(e => e.ReadyToShip != null && e.ReadyToShip > 0 && !e.IsHardware);
+
+            var equipmentModels = Mapper.Map<IEnumerable<EquipmentModel>>(equipmentBOs);
+            equipmentModels.ToList().ForEach(e =>
+            {
+                e.ProjectNumber = projectBO.ProjectNumber;
+                e.SetIndicators();
+                e.BillOfLadingEquipments.ToList().ForEach(b => b.BillOfLading.SetBillOfLadingIndicators());
+            });
+
+
+            var billOfLadingEquipments = new List<BillOfLadingEquipmentModel>();
+
+            billOfLadingEquipments = equipmentModels.Select(e => new BillOfLadingEquipmentModel
+            {
+                Equipment = e,
+                EquipmentId = e.EquipmentId,
+                Quantity = model.BillOfLadingEquipments.FirstOrDefault(be => be.EquipmentId == e.EquipmentId).Quantity
+            }).ToList();
+
+            var modelBOLEquipments = model.BillOfLadingEquipments.Where(be => equipmentModels == null || !equipmentModels.Any(fullbe => fullbe.EquipmentId == be.EquipmentId));
+
+            billOfLadingEquipments.AddRange(modelBOLEquipments);
+
+            model.BillOfLadingEquipments = billOfLadingEquipments;
+
+            return PartialView("EquipmentToAddToBOL", model);
+        }
     }
 }

@@ -44,21 +44,27 @@
             @Html.EditorFor(modelItem => modelItem.UnitWeight, new { htmlAttributes = new { @class = "form-control" } })
         </td>
         <td>
+            @Html.HiddenFor(modelItem => modelItem.TotalWeight)
             @Html.DisplayFor(modelItem => modelItem.TotalWeight)
         </td>
         <td>
+            @Html.HiddenFor(modelItem => modelItem.TotalWeightShipped)
             @Html.DisplayFor(modelItem => modelItem.TotalWeightShipped)
         </td>
         <td class="@Model.Indicators.ReadyToShipColor.ToString()">
+            @Html.HiddenFor(modelItem => modelItem.ReadyToShip)
             @Html.DisplayFor(modelItem => modelItem.ReadyToShip)
         </td>
         <td class="@Model.Indicators.ShippedQtyColor.ToString()">
+            @Html.HiddenFor(modelItem => modelItem.ShippedQuantity)
             @Html.DisplayFor(modelItem => modelItem.ShippedQuantity)
         </td>
         <td class="@Model.Indicators.LeftToShipColor.ToString()">
+            @Html.HiddenFor(modelItem => modelItem.LeftToShip)
             @Html.DisplayFor(modelItem => modelItem.LeftToShip)
         </td>
         <td class="@Model.Indicators.FullyShippedColor.ToString()">
+            @Html.HiddenFor(modelItem => modelItem.FullyShipped)
             @if (Model.FullyShipped.HasValue && Model.FullyShipped.Value == true)
             {
                 @:Yes
@@ -73,9 +79,11 @@
             }
         </td>
         <td class="@Model.Indicators.CustomsValueColor.ToString()">
+            @Html.HiddenFor(modelItem => modelItem.CustomsValue)
            @Html.DisplayFor(modelItem => modelItem.CustomsValue)
         </td>
         <td class="@Model.Indicators.SalePriceColor.ToString()">
+            @Html.HiddenFor(modelItem => modelItem.SalePrice)
             @Html.DisplayFor(modelItem => modelItem.SalePrice)
         </td>
         <td>

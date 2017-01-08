@@ -32,8 +32,29 @@ namespace WendtEquipmentTracking.BusinessLogic
             billOfLadingEngine.AddNewBillOfLading(billOfLading);
 
             var equipmentBOs = equipmentService.GetByBillOfLadingId(billOfLading.BillOfLadingId);
-            equipmentLogic.BOLAdjustment(equipmentBOs);
+            equipmentLogic.BOLAdded(equipmentBOs);
             equipmentService.UpdateAll(equipmentBOs);
+        }
+
+        public void Update(BillOfLadingBO billOfLadingBO)
+        {
+            var billOfLading = Mapper.Map<BillOfLading>(billOfLadingBO);
+
+            billOfLadingEngine.UpdateBillOfLading(billOfLading);
+
+            var equipmentBOs = equipmentService.GetByBillOfLadingId(billOfLading.BillOfLadingId);
+            equipmentLogic.BOLUpdated(equipmentBOs);
+            equipmentService.UpdateAll(equipmentBOs);
+        }
+
+        public void Delete(int id)
+        {
+            var billOfLading = billOfLadingEngine.Get(BillOfLadingSpecs.Id(id));
+
+            if (billOfLading != null)
+            {
+                billOfLadingEngine.DeleteBillOfLading(billOfLading);
+            }
         }
 
         public IEnumerable<BillOfLadingBO> GetAll()
@@ -63,25 +84,6 @@ namespace WendtEquipmentTracking.BusinessLogic
             return billOfLadingBOs;
         }
 
-        public void Update(BillOfLadingBO billOfLadingBO)
-        {
-            var billOfLading = Mapper.Map<BillOfLading>(billOfLadingBO);
 
-            billOfLadingEngine.UpdateBillOfLading(billOfLading);
-
-            var equipmentBOs = equipmentService.GetByBillOfLadingId(billOfLading.BillOfLadingId);
-            equipmentLogic.BOLAdjustment(equipmentBOs);
-            equipmentBOs.ToList().ForEach(e => equipmentService.Update(e));
-        }
-
-        public void Delete(int id)
-        {
-            var billOfLading = billOfLadingEngine.Get(BillOfLadingSpecs.Id(id));
-
-            if (billOfLading != null)
-            {
-                billOfLadingEngine.DeleteBillOfLading(billOfLading);
-            }
-        }
     }
 }

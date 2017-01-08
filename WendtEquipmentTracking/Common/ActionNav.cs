@@ -2,6 +2,7 @@
 {
     public enum ActionNav
     {
+        Nothing,
         MSL,
         ImportEquipment,
         CreateBOL,

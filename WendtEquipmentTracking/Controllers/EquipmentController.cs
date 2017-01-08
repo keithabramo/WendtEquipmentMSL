@@ -62,10 +62,6 @@ namespace WendtEquipmentTracking.App.Controllers
             return View(equipmentModels);
         }
 
-
-
-
-
         //
         // GET: /Equipment/ReadyToShip
         public ActionResult ReadyToShip()
