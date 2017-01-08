@@ -44,11 +44,11 @@ namespace WendtEquipmentTracking.App.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            var billOfLadingModels = Mapper.Map<IEnumerable<BillOfLadingModel>>(projectBO.BillOfLadings);
+            var billOfLadingModels = Mapper.Map<IEnumerable<BillOfLadingModel>>(projectBO.BillOfLadings.Where(b => b.IsCurrentRevision));
 
             //Filter and sort data
 
-            billOfLadingModels = billOfLadingModels.OrderBy(r => r.DateShipped);
+            billOfLadingModels = billOfLadingModels.OrderBy(r => r.DateShipped).ToList();
 
             return View(billOfLadingModels);
         }
@@ -66,6 +66,8 @@ namespace WendtEquipmentTracking.App.Controllers
             }
 
             var model = Mapper.Map<IEnumerable<BillOfLadingModel>>(billOfLadings);
+
+            model = model.OrderByDescending(b => b.Revision).ToList();
 
             return View(model);
         }
@@ -137,13 +139,21 @@ namespace WendtEquipmentTracking.App.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var billOfLading = billOfLadingService.GetById(id);
+                    var projectIdCookie = CookieHelper.Get("ProjectId");
 
-                    Mapper.Map<BillOfLadingModel, BillOfLadingBO>(model, billOfLading);
+                    if (!string.IsNullOrEmpty(projectIdCookie))
+                    {
+                        var projectId = Convert.ToInt32(projectIdCookie);
+                        model.ProjectId = projectId;
 
-                    billOfLadingService.Update(billOfLading);
+                        var billOfLading = billOfLadingService.GetById(id);
 
-                    return RedirectToAction("Index");
+                        Mapper.Map<BillOfLadingModel, BillOfLadingBO>(model, billOfLading);
+
+                        billOfLadingService.Update(billOfLading);
+
+                        return RedirectToAction("Index");
+                    }
                 }
 
                 return View(model);
@@ -152,22 +162,6 @@ namespace WendtEquipmentTracking.App.Controllers
             {
                 return View(model);
             }
-        }
-
-
-        // GET: BillOfLading/Delete/5
-        public ActionResult Delete(int id)
-        {
-            var billOfLading = billOfLadingService.GetById(id);
-
-            if (billOfLading == null)
-            {
-                return HttpNotFound();
-            }
-
-            var model = Mapper.Map<BillOfLadingModel>(billOfLading);
-
-            return View(model);
         }
 
         // POST: BillOfLading/Delete/5

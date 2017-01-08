@@ -209,22 +209,6 @@ namespace WendtEquipmentTracking.App.Controllers
             }
         }
 
-
-        // GET: Equipment/Delete/5
-        public ActionResult Delete(int id)
-        {
-            var equipment = equipmentService.GetById(id);
-
-            if (equipment == null)
-            {
-                return HttpNotFound();
-            }
-
-            var model = Mapper.Map<EquipmentModel>(equipment);
-
-            return View(model);
-        }
-
         // POST: Equipment/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, EquipmentModel model)

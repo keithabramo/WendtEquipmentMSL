@@ -4,7 +4,7 @@
     ViewBag.Title = "Details";
 }
 
-<h2>BOL<br /><small>Details</small></h2>
+<h2>BOL: @Html.DisplayFor(modelItem => modelItem.FirstOrDefault().BillOfLadingNumber)<br /><small>Details</small></h2>
 
 <div>
     <hr />
@@ -14,9 +14,6 @@
                 <th></th>
                 <th>
                     @Html.DisplayNameFor(model => model.Revision)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.BillOfLadingNumber)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.DateShipped)
@@ -38,11 +35,8 @@
                         }
                         else
                         {
-                            Html.DisplayFor(modelItem => item.Revision);
+                            @Html.DisplayFor(modelItem => item.Revision);
                         }
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.BillOfLadingNumber)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.DateShipped)

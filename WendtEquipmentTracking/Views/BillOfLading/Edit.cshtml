@@ -11,19 +11,14 @@
     @Html.AntiForgeryToken()
 
     <div class="form">
-        <h4>Edit BOL</h4>
+        <h4>BOL: @Html.DisplayFor(model => model.BillOfLadingNumber) <br /> <small>Edit</small></h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.BillOfLadingId)
+        @Html.HiddenFor(model => model.BillOfLadingNumber)
+
 
         <div class="row">
-            <div class="col-sm-4">
-                <div class="form-group">
-                    @Html.HiddenFor(model => model.BillOfLadingId)
-                    @Html.LabelFor(model => model.BillOfLadingNumber)
-                    @Html.EditorFor(model => model.BillOfLadingNumber, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.BillOfLadingNumber, "", new { @class = "text-danger" })
-                </div>
-            </div>
             <div class="col-sm-4">
                 <div class="form-group">
                     @Html.LabelFor(model => model.DateShipped)
@@ -64,7 +59,7 @@
 
         <div class="form-group">
             <div class="col-md-12">
-                <input type="submit" value="Create" class="btn btn-primary" /> | @Html.ActionLink("Cancel", "Index", "Home")
+                <input type="submit" value="Save" class="btn btn-primary" /> | @Html.ActionLink("Cancel", "Index", "Home")
             </div>
         </div>
     </div>

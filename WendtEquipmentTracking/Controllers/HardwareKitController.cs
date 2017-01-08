@@ -44,11 +44,11 @@ namespace WendtEquipmentTracking.App.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            var hardwareKitModels = Mapper.Map<IEnumerable<HardwareKitModel>>(projectBO.HardwareKits);
+            var hardwareKitModels = Mapper.Map<IEnumerable<HardwareKitModel>>(projectBO.HardwareKits.Where(h => h.IsCurrentRevision));
 
             //Filter and sort data
 
-            hardwareKitModels = hardwareKitModels.OrderBy(r => r.HardwareKitNumber);
+            hardwareKitModels = hardwareKitModels.OrderBy(r => r.HardwareKitNumber).ToList();
 
             return View(hardwareKitModels);
         }
@@ -66,6 +66,7 @@ namespace WendtEquipmentTracking.App.Controllers
             }
 
             var model = Mapper.Map<IEnumerable<HardwareKitModel>>(hardwareKits);
+            model = model.OrderByDescending(h => h.Revision).ToList();
 
             return View(model);
         }
@@ -137,13 +138,21 @@ namespace WendtEquipmentTracking.App.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var hardwareKit = hardwareKitService.GetById(id);
+                    var projectIdCookie = CookieHelper.Get("ProjectId");
 
-                    Mapper.Map<HardwareKitModel, HardwareKitBO>(model, hardwareKit);
+                    if (!string.IsNullOrEmpty(projectIdCookie))
+                    {
+                        var projectId = Convert.ToInt32(projectIdCookie);
+                        model.ProjectId = projectId;
 
-                    hardwareKitService.Update(hardwareKit);
+                        var hardwareKit = hardwareKitService.GetById(id);
 
-                    return RedirectToAction("Index");
+                        Mapper.Map<HardwareKitModel, HardwareKitBO>(model, hardwareKit);
+
+                        hardwareKitService.Update(hardwareKit);
+
+                        return RedirectToAction("Index");
+                    }
                 }
 
                 return View(model);
@@ -152,22 +161,6 @@ namespace WendtEquipmentTracking.App.Controllers
             {
                 return View(model);
             }
-        }
-
-
-        // GET: HardwareKit/Delete/5
-        public ActionResult Delete(int id)
-        {
-            var hardwareKit = hardwareKitService.GetById(id);
-
-            if (hardwareKit == null)
-            {
-                return HttpNotFound();
-            }
-
-            var model = Mapper.Map<HardwareKitModel>(hardwareKit);
-
-            return View(model);
         }
 
         // POST: HardwareKit/Delete/5
@@ -250,6 +243,57 @@ namespace WendtEquipmentTracking.App.Controllers
             };
 
             return PartialView(model);
+        }
+
+        //
+        // GET: /HardwareKit/EquipmentToEditForHardwareKit
+        [ChildActionOnly]
+        public ActionResult HardwareToEditForHardwareKit(HardwareKitModel model)
+        {
+            var projectIdCookie = CookieHelper.Get("ProjectId");
+
+            if (string.IsNullOrEmpty(projectIdCookie))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var projectId = Convert.ToInt32(projectIdCookie);
+
+            //Get Data
+            var projectBO = projectService.GetById(projectId);
+
+            if (projectBO == null)
+            {
+                CookieHelper.Delete("ProjectId");
+                return RedirectToAction("Index", "Home");
+            }
+
+            var equipmentBOs = projectBO.Equipments.Where(e => e.IsHardware && (e.HardwareKitEquipments == null || e.HardwareKitEquipments.Count() == 0));
+
+            var equipmentModels = Mapper.Map<IEnumerable<EquipmentModel>>(equipmentBOs);
+            equipmentModels.ToList().ForEach(e =>
+            {
+                e.ProjectNumber = projectBO.ProjectNumber;
+                e.SetIndicators();
+            });
+
+
+            var hardwareKitEquipments = new List<HardwareKitEquipmentModel>();
+
+            hardwareKitEquipments = equipmentModels.Select(e => new HardwareKitEquipmentModel
+            {
+                Equipment = e,
+                EquipmentId = e.EquipmentId,
+                Quantity = model.HardwareKitEquipments.FirstOrDefault(be => be.EquipmentId == e.EquipmentId).Quantity
+            }).ToList();
+
+            var modelHardwareKitEquipments = model.HardwareKitEquipments.Where(be => equipmentModels == null || !equipmentModels.Any(fullbe => fullbe.EquipmentId == be.EquipmentId));
+
+            hardwareKitEquipments.AddRange(modelHardwareKitEquipments);
+
+            model.HardwareKitEquipments = hardwareKitEquipments;
+
+            return PartialView("HardwareToAddToHardwareKit", model);
         }
 
     }

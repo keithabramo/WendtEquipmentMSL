@@ -1,0 +1,53 @@
+﻿@model HardwareKitModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+@Html.Partial("ActionNavPartial", ActionNav.Nothing)
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form">
+        <h4>Hardware Kit: @Html.DisplayFor(model => model.HardwareKitNumber) <br /> <small>Edit</small></h4>
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.HiddenFor(model => model.HardwareKitId)
+        @Html.HiddenFor(model => model.HardwareKitNumber)
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ExtraQuantityPercentage)
+                    @Html.EditorFor(model => model.ExtraQuantityPercentage, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ExtraQuantityPercentage, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Action("HardwareToEditForHardwareKit", Model)
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-12">
+                <input type="submit" value="Save" class="btn btn-primary" /> | @Html.ActionLink("Cancel", "Index", "Home")
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/form")
+    @Scripts.Render("~/bundles/table")
+}

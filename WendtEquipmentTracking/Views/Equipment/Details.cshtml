@@ -10,7 +10,12 @@
         <td></td>
     }
     <td>
-        @Html.DisplayFor(modelItem => modelItem.IsHardware)
+        @Html.DisplayFor(modelItem => modelItem.IsHardware) 
+        @if (Model.HardwwareKitEquipments != null && Model.HardwwareKitEquipments.Count() > 0)
+        {
+            <br/>
+            @("Associated To Hardware Kit " + Model.HardwwareKitEquipment.HardwareKit.HardwareKitNumber)
+        }
     </td>
     <td>
         @Html.DisplayFor(modelItem => modelItem.EquipmentName)

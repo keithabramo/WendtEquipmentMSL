@@ -123,11 +123,11 @@
                                 @Html.HiddenFor(modelItem => modelItem[i].ShippingTagNumber)
                                 @Html.DisplayFor(modelItem => modelItem[i].ShippingTagNumber)
                             </td>
-                            <td>
+                            <td class="long-column">
                                 @Html.HiddenFor(modelItem => modelItem[i].Description)
                                 @Html.DisplayFor(modelItem => modelItem[i].Description)
                             </td>
-                            <td>
+                            <td class="@Model[i].Indicators.UnitWeightColor.ToString()">
                                 @Html.HiddenFor(modelItem => modelItem[i].UnitWeight)
                                 @Html.DisplayFor(modelItem => modelItem[i].UnitWeight)
                             </td>
@@ -139,27 +139,38 @@
                                 @Html.HiddenFor(modelItem => modelItem[i].TotalWeightShipped)
                                 @Html.DisplayFor(modelItem => modelItem[i].TotalWeightShipped)
                             </td>
-                            <td>
+                            <td class="@Model[i].Indicators.ReadyToShipColor.ToString()">
                                 @Html.HiddenFor(modelItem => modelItem[i].EquipmentId)
                                 @Html.EditorFor(modelItem => modelItem[i].ReadyToShip, new { htmlAttributes = new { @class = "form-control" } })
                             </td>
-                            <td>
+                            <td class="@Model[i].Indicators.ShippedQtyColor.ToString()">
                                 @Html.HiddenFor(modelItem => modelItem[i].ShippedQuantity)
                                 @Html.DisplayFor(modelItem => modelItem[i].ShippedQuantity)
                             </td>
-                            <td>
+                            <td class="@Model[i].Indicators.LeftToShipColor.ToString()">
                                 @Html.HiddenFor(modelItem => modelItem[i].LeftToShip)
                                 @Html.DisplayFor(modelItem => modelItem[i].LeftToShip)
                             </td>
-                            <td>
+                            <td class="@Model[i].Indicators.FullyShippedColor.ToString()">
                                 @Html.HiddenFor(modelItem => modelItem[i].FullyShipped)
-                                @Html.DisplayFor(modelItem => modelItem[i].FullyShipped)
+                                @if (Model[i].FullyShipped.HasValue && Model[i].FullyShipped.Value == true)
+                                {
+                                    @:Yes
+                                }
+                                else if (Model[i].FullyShipped.HasValue && Model[i].FullyShipped.Value == false)
+                                {
+                                    @:No
+                                }
+                                else
+                                {
+                                    @:NA
+                                }
                             </td>
-                            <td>
+                            <td class="@Model[i].Indicators.CustomsValueColor.ToString()">
                                 @Html.HiddenFor(modelItem => modelItem[i].CustomsValue)
                                 @Html.DisplayFor(modelItem => modelItem[i].CustomsValue)
                             </td>
-                            <td>
+                            <td class="@Model[i].Indicators.SalePriceColor.ToString()">
                                 @Html.HiddenFor(modelItem => modelItem[i].SalePrice)
                                 @Html.DisplayFor(modelItem => modelItem[i].SalePrice)
                             </td>
@@ -167,7 +178,7 @@
                                 @Html.HiddenFor(modelItem => modelItem[i].HTSCode)
                                 @Html.DisplayFor(modelItem => modelItem[i].HTSCode)
                             </td>
-                            <td>
+                            <td class="@Model[i].Indicators.CountyOfOriginColor.ToString()">
                                 @Html.HiddenFor(modelItem => modelItem[i].CountryOfOrigin)
                                 @Html.DisplayFor(modelItem => modelItem[i].CountryOfOrigin)
                             </td>
@@ -179,16 +190,16 @@
                                 @Html.HiddenFor(modelItem => modelItem[i].AutoShipFile)
                                 @Html.DisplayFor(modelItem => modelItem[i].AutoShipFile)
                             </td>
-                            <td>
+                            <td class="@Model[i].Indicators.SalesOrderNumberColor.ToString()">
                                 @Html.HiddenFor(modelItem => modelItem[i].SalesOrderNumber)
                                 @Html.DisplayFor(modelItem => modelItem[i].SalesOrderNumber)
                             </td>
                         </tr>
                         if (Model[i].BillOfLadingEquipments.Count() > 0)
                         {
-                            <tr class="collapse info" id="accordion@(Model[i].EquipmentId)" class="collapse">
+                            <tr class="collapse info" id="accordion@(Model[i].EquipmentId)">
                                 <td colspan="12" id="BOL@(Model[i].EquipmentId)">
-                                    @Html.Partial("BillOfLadingsPartial", Model[i].BillOfLadingEquipments)
+                                    @Html.Partial("BOLsAssociatedToEquipment", Model[i].BillOfLadingEquipments)
                                 </td>
                                 <td colspan="15"></td>
                             </tr>

@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.UI;
 using WendtEquipmentTracking.App.Common;
 using WendtEquipmentTracking.App.Models;
 using WendtEquipmentTracking.BusinessLogic;
@@ -141,22 +140,6 @@ namespace WendtEquipmentTracking.App.Controllers
             {
                 return View(model);
             }
-        }
-
-
-        // GET: Project/Delete/5
-        public ActionResult Delete(int id)
-        {
-            var project = projectService.GetById(id);
-
-            if (project == null)
-            {
-                return HttpNotFound();
-            }
-
-            var model = Mapper.Map<ProjectModel>(project);
-
-            return View(model);
         }
 
         // POST: Project/Delete/5

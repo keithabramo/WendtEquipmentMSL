@@ -299,6 +299,7 @@
     <Content Include="Views\Import\WorkOrderPrice.cshtml" />
     <Content Include="Views\Equipment\Details.cshtml" />
     <Content Include="Views\BillOfLading\Edit.cshtml" />
+    <Content Include="Views\HardwareKit\Edit.cshtml" />
     <None Include="Views\Import\Equipment.cshtml" />
     <Content Include="Views\Import\SelectEquipmentSheets.cshtml" />
     <Content Include="Views\Import\ImportEquipmentPartial.cshtml" />

@@ -10,7 +10,6 @@ namespace WendtEquipmentTracking.App.Models
     {
         public int EquipmentId { get; set; }
         public int ProjectId { get; set; }
-        public int? HardwareKitId { get; set; }
 
 
         [DisplayName("Equipment")]
@@ -110,6 +109,16 @@ namespace WendtEquipmentTracking.App.Models
         public string SalesOrderNumber { get; set; }
 
         public IList<BillOfLadingEquipmentModel> BillOfLadingEquipments { get; set; }
+
+        public IList<HardwareKitEquipmentModel> HardwwareKitEquipments { get; set; }
+
+        public HardwareKitEquipmentModel HardwwareKitEquipment
+        {
+            get
+            {
+                return HardwwareKitEquipments.Where(h => h.HardwareKit.IsCurrentRevision).FirstOrDefault();
+            }
+        }
 
         public IndicatorsModel Indicators { get; set; }
 

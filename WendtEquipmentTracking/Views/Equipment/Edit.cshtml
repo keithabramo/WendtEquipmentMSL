@@ -13,7 +13,17 @@
             <td></td>
         }
         <td>
-            @Html.CheckBoxFor(modelItem => modelItem.IsHardware)
+            @if (Model.HardwwareKitEquipments != null && Model.HardwwareKitEquipments.Count() > 0)
+            {
+                @Html.DisplayFor(modelItem => modelItem.IsHardware) <br />
+                @("Associated To Hardware Kit " + Model.HardwwareKitEquipment.HardwareKit.HardwareKitNumber)
+
+            }
+            else
+            {
+                @Html.CheckBoxFor(modelItem => modelItem.IsHardware)
+            }
+
         </td>
         <td>
             @Html.HiddenFor(modelItem => modelItem.EquipmentId)

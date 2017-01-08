@@ -4,7 +4,7 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Hardware Kit<br /><small>Details</small></h2>
+<h2>Hardware Kit: @Html.DisplayFor(model => model.FirstOrDefault().HardwareKitNumber)<br /><small>Details</small></h2>
 
 <div>
     <hr />
@@ -14,9 +14,6 @@
                 <th></th>
                 <th>
                     @Html.DisplayNameFor(model => model.Revision)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.HardwareKitNumber)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.ExtraQuantityPercentage)
@@ -35,11 +32,8 @@
                         }
                         else
                         {
-                            Html.DisplayFor(modelItem => item.Revision);
+                            @Html.DisplayFor(modelItem => item.Revision);
                         }
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.HardwareKitNumber)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.ExtraQuantityPercentage)
