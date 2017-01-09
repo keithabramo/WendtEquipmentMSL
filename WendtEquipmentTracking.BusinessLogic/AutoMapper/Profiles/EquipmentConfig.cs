@@ -20,43 +20,7 @@ namespace WendtEquipmentTracking.BusinessLogic.AutoMapper.Profiles
                 .ForMember(dest => dest.ModifiedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.ModifiedDate, opt => opt.Ignore());
 
-            base.CreateMap<EquipmentRow, EquipmentBO>()
-                .ForMember(
-                    dest => dest.Description,
-                    opt => opt.MapFrom(src => src.Description)
-                )
-                .ForMember(
-                    dest => dest.DrawingNumber,
-                    opt => opt.MapFrom(src => src.DrawingNumber)
-                )
-                .ForMember(
-                    dest => dest.EquipmentName,
-                    opt => opt.MapFrom(src => src.Equipment)
-                )
-                .ForMember(
-                    dest => dest.Priority,
-                    opt => opt.MapFrom(src => src.Priority)
-                )
-                .ForMember(
-                    dest => dest.Quantity,
-                    opt => opt.MapFrom(src => src.Quantity)
-                )
-                .ForMember(
-                    dest => dest.ReleaseDate,
-                    opt => opt.MapFrom(src => src.ReleaseDate)
-                )
-                .ForMember(
-                    dest => dest.ShippingTagNumber,
-                    opt => opt.MapFrom(src => src.ShippingTagNumber)
-                )
-                .ForMember(
-                    dest => dest.UnitWeight,
-                    opt => opt.MapFrom(src => src.UnitWeight)
-                )
-                .ForMember(
-                    dest => dest.WorkOrderNumber,
-                    opt => opt.MapFrom(src => src.WorkOrderNumber)
-                );
+            base.CreateMap<EquipmentRow, EquipmentBO>();
 
         }
     }

@@ -4,7 +4,9 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Hardware Kits</h2>
+@Html.Partial("ActionNavPartial", ActionNav.Nothing)
+
+<h4>Hardware Kits</h4>
 
 @if (Html.UserIsInRole(UserRoles.ReadWrite))
 {
@@ -14,40 +16,42 @@
 }
 @if (Model.Count() > 0)
 {
-    <table class="table table-condensed table-hover table-bordered table-styled">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.HardwareKitNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ExtraQuantityPercentage)
-            </th>
-            @if (Html.UserIsInRole(UserRoles.ReadWrite))
-            {
-                <th></th>
-            }
-        </tr>
-
-        @foreach (var item in Model)
-        {
+    <table class="table table-condensed table-hover table-bordered table-styled my-datatable">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.HardwareKitNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ExtraQuantityPercentage)
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.HardwareKitNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ExtraQuantityPercentage)
+                </th>
                 @if (Html.UserIsInRole(UserRoles.ReadWrite))
                 {
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.HardwareKitId }) |
-                        @Html.ActionLink("Details", "Details", new { hardwareKitNumber = item.HardwareKitNumber }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.HardwareKitId })
-                    </td>
+                    <th></th>
                 }
             </tr>
-        }
-
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HardwareKitNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ExtraQuantityPercentage)
+                    </td>
+                    @if (Html.UserIsInRole(UserRoles.ReadWrite))
+                    {
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.HardwareKitId }) |
+                            @Html.ActionLink("Details", "Details", new { hardwareKitNumber = item.HardwareKitNumber }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.HardwareKitId })
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
     </table>
 }
 else

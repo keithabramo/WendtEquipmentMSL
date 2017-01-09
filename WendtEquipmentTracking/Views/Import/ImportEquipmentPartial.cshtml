@@ -5,7 +5,7 @@
 
     <p>Review the records below. When you are ready, click "Import Equipment" to import.</p>
 
-    using (Html.BeginForm("ImportEquipment", "Import"))
+    using (Html.BeginForm("SaveEquipment", "Import"))
     {
         @Html.AntiForgeryToken()
         
@@ -53,7 +53,7 @@
                    {
                        <tr>
                            <td>
-                               @Html.CheckBoxFor(modelItem => modelItem[i].Checked, htmlAttributes: new { @checked = true })
+                               @Html.CheckBoxFor(modelItem => modelItem[i].Checked, htmlAttributes: new { @checked = "Checked" })
                            </td>
                            <td>
                                @Html.CheckBoxFor(modelItem => modelItem[i].IsHardware)

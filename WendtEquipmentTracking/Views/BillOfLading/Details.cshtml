@@ -4,11 +4,13 @@
     ViewBag.Title = "Details";
 }
 
-<h2>BOL: @Html.DisplayFor(modelItem => modelItem.FirstOrDefault().BillOfLadingNumber)<br /><small>Details</small></h2>
+@Html.Partial("ActionNavPartial", ActionNav.Nothing)
+
+<h4>BOL: @Html.DisplayFor(modelItem => modelItem.FirstOrDefault().BillOfLadingNumber)<br /><small>Details</small></h4>
 
 <div>
     <hr />
-    <table class="table table-condensed table-hover table-bordered table-styled">
+    <table class="table table-condensed table-hover table-bordered table-styled my-datatable">
         <thead>
             <tr>
                 <th></th>
@@ -27,7 +29,7 @@
             @foreach (var item in Model)
             {
                 <tr @(item.IsCurrentRevision ? "class='info'" : "")>
-                    <td data-toggle="collapse" data-target="#accordion@(item.BillOfLadingId)" class="expand text-center"><span class="glyphicon glyphicon-plus text-primary"></span></td>
+                    <td data-toggle="collapse" data-id="@(item.BillOfLadingId)" class="expand text-center"><span class="glyphicon glyphicon-plus text-primary"></span></td>
                     <td>
                         @if (item.IsCurrentRevision)
                         {
@@ -45,16 +47,24 @@
                         @Html.DisplayFor(modelItem => item.ShippedFrom)
                     </td>
                 </tr>
-                <tr class="collapse info" id="accordion@(item.BillOfLadingId)">
-                    <td colspan="10" id="Equipment@(item.BillOfLadingId)">
-                        @Html.Partial("EquipmentAssociatedToBOL", item.BillOfLadingEquipments)
-                    </td>
-                </tr>
             }
         </tbody>
 
     </table>
 
+
+    <div class="hidden">
+        @foreach (var item in Model)
+        {
+            if (item.BillOfLadingEquipments.Count() > 0)
+            {
+                <div id="@(item.BillOfLadingId)">
+                    @Html.Partial("EquipmentAssociatedToBOL", item.BillOfLadingEquipments)
+                </div>
+            }
+        }
+
+    </div>
 </div>
 <p>
     @if (Html.UserIsInRole(UserRoles.ReadWrite))

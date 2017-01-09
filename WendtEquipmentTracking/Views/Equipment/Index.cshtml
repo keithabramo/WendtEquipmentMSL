@@ -6,7 +6,9 @@
 
 @Html.Partial("ActionNavPartial", ActionNav.MSL)
 
-<table class="table table-condensed table-hover table-bordered table-styled">
+<h4>Master Ship List</h4>
+
+<table class="table table-condensed table-hover table-bordered table-styled my-datatable">
     <thead>
         <tr>
             <th></th>
@@ -92,7 +94,6 @@
             {
                 @Html.Partial("Edit", item)
             }
-            @Html.Action("Create")
         }
         else
         {
@@ -102,7 +103,26 @@
             }
         }
     </tbody>
+    @if (Html.UserIsInRole(UserRoles.ReadWrite))
+    {
+        <tfoot>
+            @Html.Action("Create")
+        </tfoot>
+    }
 </table>
+
+<div class="hidden">
+    @foreach (var item in Model)
+    {
+        if (item.BillOfLadingEquipments.Count() > 0)
+        {
+            <div id="@(item.EquipmentId)">
+                @Html.Partial("BOLsAssociatedToEquipment", item.BillOfLadingEquipments)
+            </div>
+        }
+    }
+    
+</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/form")

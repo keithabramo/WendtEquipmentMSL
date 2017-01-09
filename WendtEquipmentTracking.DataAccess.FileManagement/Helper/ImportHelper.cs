@@ -1,4 +1,5 @@
 ﻿using Excel.Helper;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -47,7 +48,7 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Helper
             object[][] values = excelHelper.GetRangeCells(sheetName, dataLocation.ColumnStart, dataLocation.RowStart, dataLocation.NumberOfColumns);
             var records = values.Where(r => r[0] != null).Select(rowValues => new EquipmentRow
             {
-                Equipment = rowValues[0].ToString(),
+                EquipmentName = rowValues[0].ToString(),
                 Priority = rowValues[1].ToString(),
                 ReleaseDate = rowValues[2].ToString(),
                 DrawingNumber = rowValues[3].ToString(),
@@ -69,19 +70,19 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Helper
             var records = values.Where(r => r[0] != null).Select(rowValues => new WorkOrderPriceRow
             {
                 WorkOrderNumber = rowValues[0].ToString(),
-                SalesPrice = rowValues[1].ToString()
-            }).ToList();
+                Price = Convert.ToDouble(rowValues[1].ToString().Replace("$", "").Replace(",", ""))
+        }).ToList();
 
             return records;
         }
 
-        private class ExcelDataLocation
-        {
-            public int ColumnStart { get; set; }
-            public int RowStart { get; set; }
-            public int NumberOfColumns { get; set; }
-        }
+    private class ExcelDataLocation
+    {
+        public int ColumnStart { get; set; }
+        public int RowStart { get; set; }
+        public int NumberOfColumns { get; set; }
     }
+}
 
 
 }

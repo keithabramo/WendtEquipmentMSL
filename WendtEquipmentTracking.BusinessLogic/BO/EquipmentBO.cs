@@ -7,7 +7,6 @@ namespace WendtEquipmentTracking.BusinessLogic.BO
     {
         public int EquipmentId { get; set; }
         public int ProjectId { get; set; }
-        public int? HardwareKitId { get; set; }
         public string EquipmentName { get; set; }
         public bool IsHardware { get; set; }
         public string Priority { get; set; }

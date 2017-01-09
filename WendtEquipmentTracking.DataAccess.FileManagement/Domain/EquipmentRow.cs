@@ -2,7 +2,7 @@
 {
     public class EquipmentRow
     {
-        public string Equipment { get; set; }
+        public string EquipmentName { get; set; }
         public string Priority { get; set; }
         public string ReleaseDate { get; set; }
         public string DrawingNumber { get; set; }

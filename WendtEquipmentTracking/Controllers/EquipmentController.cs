@@ -47,12 +47,15 @@ namespace WendtEquipmentTracking.App.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
+            var workOrderPriceBOs = projectBO.WorkOrderPrices;
+
             var equipmentModels = Mapper.Map<IEnumerable<EquipmentModel>>(projectBO.Equipments);
             equipmentModels.ToList().ForEach(e =>
             {
                 e.ProjectNumber = projectBO.ProjectNumber;
                 e.SetIndicators();
                 e.BillOfLadingEquipments.ToList().ForEach(b => b.BillOfLading.SetBillOfLadingIndicators());
+                e.WorkOrders = workOrderPriceBOs.Select(w => w.WorkOrderNumber);
             });
 
             //Filter and sort data
@@ -138,7 +141,28 @@ namespace WendtEquipmentTracking.App.Controllers
         [ChildActionOnly]
         public ActionResult Create()
         {
-            return PartialView(new EquipmentModel());
+            IEnumerable<string> workOrders = new List<string>();
+
+            var projectIdCookie = CookieHelper.Get("ProjectId");
+
+            if (!string.IsNullOrEmpty(projectIdCookie))
+            {
+                var projectId = Convert.ToInt32(projectIdCookie);
+
+                //Get Data
+                var projectBO = projectService.GetById(projectId);
+
+                if (projectBO != null)
+                {
+                    var workOrderPriceBOs = projectBO.WorkOrderPrices;
+                    workOrders = workOrderPriceBOs.Select(w => w.WorkOrderNumber);
+                }
+            }
+
+            return PartialView(new EquipmentModel
+            {
+                WorkOrders = workOrders
+            });
         }
 
         //

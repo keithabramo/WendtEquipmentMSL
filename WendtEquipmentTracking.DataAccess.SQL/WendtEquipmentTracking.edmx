@@ -119,7 +119,7 @@
           </Key>
           <Property Name="WorkOrderPriceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProjectId" Type="int" Nullable="false" />
-          <Property Name="WorkOrderNumber" Type="int" Nullable="false" />
+          <Property Name="WorkOrderNumber" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="Price" Type="float" Nullable="false" />
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
@@ -289,7 +289,6 @@
           <EntitySet Name="Equipments" EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.Equipment" />
           <EntitySet Name="HardwareKitEquipments" EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.HardwareKitEquipment" />
           <EntitySet Name="Projects" EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.Project" />
-          <EntitySet Name="WorkOrderPrices" EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.WorkOrderPrice" />
           <AssociationSet Name="FK_BillOfLadingEquipment_BillOfLading" Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_BillOfLadingEquipment_BillOfLading">
             <End Role="BillOfLading" EntitySet="BillOfLadings" />
             <End Role="BillOfLadingEquipment" EntitySet="BillOfLadingEquipments" />
@@ -310,10 +309,6 @@
             <End Role="Equipment" EntitySet="Equipments" />
             <End Role="HardwareKitEquipment" EntitySet="HardwareKitEquipments" />
           </AssociationSet>
-          <AssociationSet Name="FK_WorkOrderPrice_Project" Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_WorkOrderPrice_Project">
-            <End Role="Project" EntitySet="Projects" />
-            <End Role="WorkOrderPrice" EntitySet="WorkOrderPrices" />
-          </AssociationSet>
           <EntitySet Name="HardwareKits" EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.HardwareKit" />
           <AssociationSet Name="FK_HardwareKit_BillOfLading" Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_HardwareKit_BillOfLading">
             <End Role="BillOfLading" EntitySet="BillOfLadings" />
@@ -326,6 +321,11 @@
           <AssociationSet Name="FK_HardwareKitEquipment_HardwareKit" Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_HardwareKitEquipment_HardwareKit">
             <End Role="HardwareKit" EntitySet="HardwareKits" />
             <End Role="HardwareKitEquipment" EntitySet="HardwareKitEquipments" />
+          </AssociationSet>
+          <EntitySet Name="WorkOrderPrices" EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.WorkOrderPrice" />
+          <AssociationSet Name="FK_WorkOrderPrice_Project" Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_WorkOrderPrice_Project">
+            <End Role="Project" EntitySet="Projects" />
+            <End Role="WorkOrderPrice" EntitySet="WorkOrderPrices" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="BillOfLading">
@@ -431,22 +431,8 @@
           <Property Name="ShipToBrokerEmail" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="BillOfLadings" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_BillOfLanding_Project" FromRole="Project" ToRole="BillOfLading" />
           <NavigationProperty Name="Equipments" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_Equipment_Project" FromRole="Project" ToRole="Equipment" />
-          <NavigationProperty Name="WorkOrderPrices" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_WorkOrderPrice_Project" FromRole="Project" ToRole="WorkOrderPrice" />
           <NavigationProperty Name="HardwareKits" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_HardwareKit_Project" FromRole="Project" ToRole="HardwareKit" />
-        </EntityType>
-        <EntityType Name="WorkOrderPrice">
-          <Key>
-            <PropertyRef Name="WorkOrderPriceId" />
-          </Key>
-          <Property Name="WorkOrderPriceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProjectId" Type="Int32" Nullable="false" />
-          <Property Name="WorkOrderNumber" Type="Int32" Nullable="false" />
-          <Property Name="Price" Type="Double" Nullable="false" />
-          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Project" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_WorkOrderPrice_Project" FromRole="WorkOrderPrice" ToRole="Project" />
+          <NavigationProperty Name="WorkOrderPrices" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_WorkOrderPrice_Project" FromRole="Project" ToRole="WorkOrderPrice" />
         </EntityType>
         <Association Name="FK_BillOfLadingEquipment_BillOfLading">
           <End Type="WendtEquipmentTracking.DataAccess.SQL.Model.BillOfLading" Role="BillOfLading" Multiplicity="1" />
@@ -508,18 +494,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_WorkOrderPrice_Project">
-          <End Type="WendtEquipmentTracking.DataAccess.SQL.Model.Project" Role="Project" Multiplicity="1" />
-          <End Type="WendtEquipmentTracking.DataAccess.SQL.Model.WorkOrderPrice" Role="WorkOrderPrice" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Project">
-              <PropertyRef Name="ProjectId" />
-            </Principal>
-            <Dependent Role="WorkOrderPrice">
-              <PropertyRef Name="ProjectId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="HardwareKit">
           <Key>
             <PropertyRef Name="HardwareKitId" />
@@ -572,6 +546,32 @@
             </Principal>
             <Dependent Role="HardwareKitEquipment">
               <PropertyRef Name="HardwareKitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="WorkOrderPrice">
+          <Key>
+            <PropertyRef Name="WorkOrderPriceId" />
+          </Key>
+          <Property Name="WorkOrderPriceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProjectId" Type="Int32" Nullable="false" />
+          <Property Name="WorkOrderNumber" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Double" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Project" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_WorkOrderPrice_Project" FromRole="WorkOrderPrice" ToRole="Project" />
+        </EntityType>
+        <Association Name="FK_WorkOrderPrice_Project">
+          <End Type="WendtEquipmentTracking.DataAccess.SQL.Model.Project" Role="Project" Multiplicity="1" />
+          <End Type="WendtEquipmentTracking.DataAccess.SQL.Model.WorkOrderPrice" Role="WorkOrderPrice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="ProjectId" />
+            </Principal>
+            <Dependent Role="WorkOrderPrice">
+              <PropertyRef Name="ProjectId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -678,20 +678,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="WorkOrderPrices">
-            <EntityTypeMapping TypeName="WendtEquipmentTracking.DataAccess.SQL.Model.WorkOrderPrice">
-              <MappingFragment StoreEntitySet="WorkOrderPrice">
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="WorkOrderNumber" ColumnName="WorkOrderNumber" />
-                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
-                <ScalarProperty Name="WorkOrderPriceId" ColumnName="WorkOrderPriceId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="HardwareKits">
             <EntityTypeMapping TypeName="WendtEquipmentTracking.DataAccess.SQL.Model.HardwareKit">
               <MappingFragment StoreEntitySet="HardwareKit">
@@ -706,6 +692,20 @@
                 <ScalarProperty Name="Revision" ColumnName="Revision" />
                 <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
                 <ScalarProperty Name="HardwareKitId" ColumnName="HardwareKitId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkOrderPrices">
+            <EntityTypeMapping TypeName="WendtEquipmentTracking.DataAccess.SQL.Model.WorkOrderPrice">
+              <MappingFragment StoreEntitySet="WorkOrderPrice">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="WorkOrderNumber" ColumnName="WorkOrderNumber" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="WorkOrderPriceId" ColumnName="WorkOrderPriceId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -10,11 +10,11 @@
         this.initEvents = function () {
             var $this = this;
 
-            $('.table').on('change', "> tbody > tr:not(.create, .collapse) input, > tbody > tr:not(.create, .collapse) select", function () {
+            $('.table').on('change', "> tbody > tr input, > tbody > tr select", function () {
                 $this.editsMade = true;
             });
 
-            $('.table').on('blur', "tr:not(.create)", function () {
+            $('.table tbody').on('blur', "tr", function () {
                 var $form = $(this).prevAll("form").eq(0);
                 
                 if ($this.editsMade) {

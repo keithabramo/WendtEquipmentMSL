@@ -110,13 +110,15 @@ namespace WendtEquipmentTracking.App.Models
 
         public IList<BillOfLadingEquipmentModel> BillOfLadingEquipments { get; set; }
 
-        public IList<HardwareKitEquipmentModel> HardwwareKitEquipments { get; set; }
+        public IList<HardwareKitEquipmentModel> HardwareKitEquipments { get; set; }
+
+        public IEnumerable<string> WorkOrders { get; set; }
 
         public HardwareKitEquipmentModel HardwwareKitEquipment
         {
             get
             {
-                return HardwwareKitEquipments.Where(h => h.HardwareKit.IsCurrentRevision).FirstOrDefault();
+                return HardwareKitEquipments.Where(h => h.HardwareKit.IsCurrentRevision).FirstOrDefault();
             }
         }
 

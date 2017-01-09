@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +14,6 @@ namespace WendtEquipmentTracking.App.Controllers
 {
     public class ProjectController : BaseController
     {
-        private const int PAGE_SIZE = 30;
         private IProjectService projectService;
 
         public ProjectController()
@@ -26,7 +24,7 @@ namespace WendtEquipmentTracking.App.Controllers
         //
         // GET: /Project/
 
-        public ViewResult Index(int? page)
+        public ViewResult Index()
         {
             //Get Data
             var projectBOs = projectService.GetAll().ToList();
@@ -34,13 +32,9 @@ namespace WendtEquipmentTracking.App.Controllers
             var projectModels = Mapper.Map<IEnumerable<ProjectModel>>(projectBOs);
 
             //Filter and sort data
-
-
             projectModels = projectModels.OrderBy(r => r.ProjectNumber);
 
-            int pageNumber = (page ?? 1);
-
-            return View(projectModels.ToPagedList(pageNumber, PAGE_SIZE));
+            return View(projectModels.ToList());
         }
 
         //

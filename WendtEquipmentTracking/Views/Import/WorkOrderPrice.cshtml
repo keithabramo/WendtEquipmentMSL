@@ -4,10 +4,12 @@
     ViewBag.Title = "Index";
 }
 
-<h2><small>Select the excel document containing the work order prices you would like to import.</small></h2>
+@Html.Partial("ActionNavPartial", ActionNav.ImportWorkOrderPrice)
+
+<h4>Import Work Order Prices <br /><small>Select the excel document containing the work order prices you would like to import.</small></h4>
 
 
-@using (Html.BeginForm("Index", "Import", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("WorkOrderPrice", "Import", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 

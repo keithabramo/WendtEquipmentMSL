@@ -7,6 +7,7 @@
         ImportEquipment,
         CreateBOL,
         UpdateReadyToShip,
-        CreateHardwareKit
+        CreateHardwareKit,
+        ImportWorkOrderPrice
     }
 }

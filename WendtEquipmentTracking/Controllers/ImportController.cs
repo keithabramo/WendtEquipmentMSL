@@ -22,6 +22,7 @@ namespace WendtEquipmentTracking.App.Controllers
         {
             importService = new ImportService();
             equipmentService = new EquipmentService();
+            workOrderPriceService = new WorkOrderPriceService();
         }
 
         // GET: Equipment
@@ -60,7 +61,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
                         model.FileName = importBO.FileName;
 
-                        return View("SelectSheets", model);
+                        return View("SelectEquipmentSheets", model);
                     }
                     else
                     {
@@ -132,13 +133,13 @@ namespace WendtEquipmentTracking.App.Controllers
                         equipmentService.SaveAll(equipmentBOs);
 
                         resultModel.Status = SuccessStatus.Success;
-                        return View("SelectSheets", resultModel);
+                        return View("SelectEquipmentSheets", resultModel);
                     }
                 }
 
                 resultModel.Status = SuccessStatus.Error;
 
-                return View("SelectSheets", resultModel);
+                return View("SelectEquipmentSheets", resultModel);
             }
             catch (Exception e)
             {
@@ -146,7 +147,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
                 resultModel.Status = SuccessStatus.Error;
 
-                return View("SelectSheets", resultModel);
+                return View("SelectEquipmentSheets", resultModel);
             }
         }
 
@@ -210,8 +211,6 @@ namespace WendtEquipmentTracking.App.Controllers
         [HttpPost]
         public ActionResult SaveWorkOrderPrice(IEnumerable<WorkOrderPriceSelectionModel> model)
         {
-
-            var resultModel = new ImportModel();
             try
             {
                 if (ModelState.IsValid)
@@ -225,23 +224,18 @@ namespace WendtEquipmentTracking.App.Controllers
 
                         var workOrderPriceBOs = Mapper.Map<IEnumerable<WorkOrderPriceBO>>(model.Where(m => m.Checked).ToList());
                         workOrderPriceService.SaveAll(workOrderPriceBOs);
-
-                        resultModel.Status = SuccessStatus.Success;
-                        return View("ImportWorkOrderPrice", resultModel);
+                        
+                        return RedirectToAction("Index", "WorkOrderPrice");
                     }
                 }
 
-                resultModel.Status = SuccessStatus.Error;
-
-                return View("SelectSheets", resultModel);
+                return View("ImportWorkOrderPrice", model);
             }
             catch (Exception e)
             {
                 ModelState.AddModelError("", e.Message);
-
-                resultModel.Status = SuccessStatus.Error;
-
-                return View("SelectSheets", resultModel);
+                
+                return View("ImportWorkOrderPrice", model);
             }
         }
 

@@ -3,7 +3,7 @@
 <tr class="text-nowrap">
     @if (Model.BillOfLadingEquipments != null && Model.BillOfLadingEquipments.Count() > 0)
     {
-        <td data-toggle="collapse" data-target="#accordion@(Model.EquipmentId)" class="expand text-center"><span class="glyphicon glyphicon-plus text-primary"></span></td>
+        <td data-toggle="collapse" data-id="@Model.EquipmentId" class="expand text-center"><span class="glyphicon glyphicon-plus text-primary"></span></td>
     }
     else
     {
@@ -11,7 +11,7 @@
     }
     <td>
         @Html.DisplayFor(modelItem => modelItem.IsHardware) 
-        @if (Model.HardwwareKitEquipments != null && Model.HardwwareKitEquipments.Count() > 0)
+        @if (Model.HardwareKitEquipments != null && Model.HardwareKitEquipments.Count() > 0)
         {
             <br/>
             @("Associated To Hardware Kit " + Model.HardwwareKitEquipment.HardwareKit.HardwareKitNumber)
@@ -95,14 +95,4 @@
         @Html.DisplayFor(modelItem => modelItem.SalesOrderNumber)
     </td>
 </tr>
-
-@if (Model.BillOfLadingEquipments.Count() > 0)
-{
-    <tr class="collapse info" id="accordion@(Model.EquipmentId)">
-        <td colspan="12" id="BOL@(Model.EquipmentId)">
-            @Html.Partial("BOLsAssociatedToEquipment", Model.BillOfLadingEquipments)
-        </td>
-        <td colspan="15"></td>
-    </tr>
-}
 

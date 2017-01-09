@@ -4,11 +4,13 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Hardware Kit: @Html.DisplayFor(model => model.FirstOrDefault().HardwareKitNumber)<br /><small>Details</small></h2>
+@Html.Partial("ActionNavPartial", ActionNav.Nothing)
+
+<h4>Hardware Kit: @Html.DisplayFor(model => model.FirstOrDefault().HardwareKitNumber)<br /><small>Details</small></h4>
 
 <div>
     <hr />
-    <table class="table table-condensed table-hover table-bordered table-styled">
+    <table class="table table-condensed table-hover table-bordered table-styled my-datatable">
         <thead>
             <tr>
                 <th></th>
@@ -24,7 +26,7 @@
             @foreach (var item in Model)
             {
                 <tr @(item.IsCurrentRevision ? "class='info'" : "")>
-                    <td data-toggle="collapse" data-target="#accordion@(item.HardwareKitId)" class="expand text-center"><span class="glyphicon glyphicon-plus text-primary"></span></td>
+                    <td data-toggle="collapse" data-id="@(item.HardwareKitId)" class="expand text-center"><span class="glyphicon glyphicon-plus text-primary"></span></td>
                     <td>
                         @if (item.IsCurrentRevision)
                         {
@@ -39,15 +41,23 @@
                         @Html.DisplayFor(modelItem => item.ExtraQuantityPercentage)
                     </td>
                 </tr>
-                <tr class="collapse info" id="accordion@(item.HardwareKitId)">
-                    <td colspan="10" id="Equipment@(item.HardwareKitId)">
-                        @Html.Partial("HardwareAssociatedToHardwareKit", item.HardwareKitEquipments)
-                    </td>
-                </tr>
             }
         </tbody>
 
     </table>
+
+    <div class="hidden">
+        @foreach (var item in Model)
+        {
+            if (item.HardwareKitEquipments.Count() > 0)
+            {
+                <div id="@(item.HardwareKitId)">
+                    @Html.Partial("HardwareAssociatedToHardwareKit", item.HardwareKitEquipments)
+                </div>
+            }
+        }
+
+    </div>
 
 </div>
 <p>

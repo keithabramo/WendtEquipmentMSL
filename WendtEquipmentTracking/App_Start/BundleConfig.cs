@@ -20,7 +20,8 @@ namespace WendtEquipmentTracking.App
                         "~/Scripts/form.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/table").Include(
-                       "~/Scripts/table.js"));
+                        "~/Scripts/datatables.js",
+                        "~/Scripts/table.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
@@ -34,6 +35,7 @@ namespace WendtEquipmentTracking.App
                 .IncludeDirectory("~/Content/themes/base", "*.css")
                 .Include(
                     "~/Content/bootstrap.css",
+                    "~/Content/datatables.css",
                     "~/Content/Site.css"
                 ));
         }

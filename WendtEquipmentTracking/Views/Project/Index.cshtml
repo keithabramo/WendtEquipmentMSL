@@ -1,13 +1,12 @@
 ﻿@model IEnumerable<ProjectModel>
-@using PagedList.Mvc;
-<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "Index";
-    var pagedList = (PagedList.IPagedList)Model;
 }
 
-<h2>Projects</h2>
+@Html.Partial("ActionNavPartial", ActionNav.Nothing)
+
+<h4>Projects</h4>
 
 @if (Html.UserIsInRole(UserRoles.ReadWrite))
 {
@@ -17,80 +16,84 @@
 }
 @if (Model.Count() > 0)
 {
-    <table class="table table-condensed table-hover table-bordered table-styled">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ProjectNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ShipToCompany)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ShipToContact1)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ShipToContact2)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ShipToBroker)
-            </th>
-            @if (Html.UserIsInRole(UserRoles.ReadWrite))
-            {
-                <th></th>
-            }
-        </tr>
-
-        @foreach (var item in Model)
-        {
+    <table class="table table-condensed table-hover table-bordered table-styled my-datatable">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ProjectNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ShipToCompany) <br />
-                    @Html.DisplayFor(modelItem => item.ShipToAddress) <br />
-                    @Html.DisplayFor(modelItem => item.ShipToCSZ)
-                </td>
-                <td>
-                    @if (!string.IsNullOrEmpty(item.ShipToContact1))
-                    {
-                        @Html.DisplayFor(modelItem => item.ShipToContact1) <br />
-                        @:Phone: @Html.DisplayFor(modelItem => item.ShipToContact1) <br />
-                        @:Email: @Html.DisplayFor(modelItem => item.ShipToContact1)
-                    }
-                </td>
-                <td>
-                    @if (!string.IsNullOrEmpty(item.ShipToContact2))
-                    {
-                        @Html.DisplayFor(modelItem => item.ShipToContact2) <br />
-                        @:Phone: @Html.DisplayFor(modelItem => item.ShipToContact2) <br />
-                        @:Email: @Html.DisplayFor(modelItem => item.ShipToContact2)
-                    }
-                </td>
-                <td>
-                    @if (!string.IsNullOrEmpty(item.ShipToBroker))
-                    {
-                        @Html.DisplayFor(modelItem => item.ShipToBroker) <br />
-                        @:Phone: @Html.DisplayFor(modelItem => item.ShipToBroker) <br />
-                        @:Email: @Html.DisplayFor(modelItem => item.ShipToBroker)
-                    }
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProjectNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ShipToCompany)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ShipToContact1)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ShipToContact2)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ShipToBroker)
+                </th>
                 @if (Html.UserIsInRole(UserRoles.ReadWrite))
-                {
-                    <td class="text-center">
-                        @Html.ActionLink("Edit", "Edit", new { id = item.ProjectId }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.ProjectId })
-                    </td>
-                }
+            {
+                    <th></th>
+            }
             </tr>
-        }
-
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProjectNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ShipToCompany) <br />
+                        @Html.DisplayFor(modelItem => item.ShipToAddress) <br />
+                        @Html.DisplayFor(modelItem => item.ShipToCSZ)
+                    </td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.ShipToContact1))
+                    {
+                    @Html.DisplayFor(modelItem => item.ShipToContact1) <br />
+                    @:Phone: @Html.DisplayFor(modelItem => item.ShipToContact1) <br />
+                    @:Email: @Html.DisplayFor(modelItem => item.ShipToContact1)
+                    }
+                    </td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.ShipToContact2))
+                    {
+                    @Html.DisplayFor(modelItem => item.ShipToContact2) <br />
+                    @:Phone: @Html.DisplayFor(modelItem => item.ShipToContact2) <br />
+                    @:Email: @Html.DisplayFor(modelItem => item.ShipToContact2)
+                    }
+                    </td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.ShipToBroker))
+                    {
+                    @Html.DisplayFor(modelItem => item.ShipToBroker) <br />
+                    @:Phone: @Html.DisplayFor(modelItem => item.ShipToBroker) <br />
+                    @:Email: @Html.DisplayFor(modelItem => item.ShipToBroker)
+                    }
+                    </td>
+                    @if (Html.UserIsInRole(UserRoles.ReadWrite))
+                {
+                <td class="text-center">
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ProjectId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ProjectId })
+                </td>
+                }
+                </tr>
+            }
+        </tbody>
     </table>
-
-    @Html.PagedListPager(pagedList, page => Url.Action("Index", new { page }))
-    <p class="text-center">Page @(pagedList.PageCount < pagedList.PageNumber ? 0 : pagedList.PageNumber) of @pagedList.PageCount</p>
 }
 else
 {
     <p class="text-center">No Projects Found.</p>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/table")
 }

@@ -4,11 +4,9 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>WorkOrderPrice <br /><small>Edit</small></h2>
-@Html.HiddenFor(model => model.WorkOrderPriceId, new { htmlAttributes = new { @class = "form-control" } })
+@Html.Partial("ActionNavPartial", ActionNav.Nothing)
 
-
-
+<h4>WorkOrderPrice <br /><small>Edit</small></h4>
 
 @using (Html.BeginForm())
 {
@@ -20,6 +18,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.WorkOrderNumber)
+            @Html.HiddenFor(model => model.WorkOrderPriceId, new { htmlAttributes = new { @class = "form-control" } })
             @Html.EditorFor(model => model.WorkOrderNumber, new { htmlAttributes = new { @class = "form-control autocomplete" } })
             @Html.ValidationMessageFor(model => model.WorkOrderNumber, "", new { @class = "text-danger" })
         </div>

@@ -3,7 +3,7 @@
     public class WorkOrderPriceRow
     {
         public string WorkOrderNumber { get; set; }
-        public string SalesPrice { get; set; }
+        public double Price { get; set; }
 
     }
 }

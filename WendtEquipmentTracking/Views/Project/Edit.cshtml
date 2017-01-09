@@ -4,7 +4,9 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Project <br /><small>Edit</small></h2>
+@Html.Partial("ActionNavPartial", ActionNav.Nothing)
+
+<h4>Project <br /><small>Edit</small></h4>
 
 @using (Html.BeginForm())
 {

@@ -6,12 +6,14 @@
 
 @Html.Partial("ActionNavPartial", ActionNav.UpdateReadyToShip)
 
+<h4>Update Ready To Ship</h4>
+
 @using (Html.BeginForm())
 {
 
     <div class="form-group">
         <div class="col-md-12">
-            <table class="table table-condensed table-hover table-bordered table-styled">
+            <table class="table table-condensed table-hover table-bordered table-styled my-datatable">
                 <thead>
                     <tr>
                         <th></th>
@@ -139,7 +141,7 @@
                                 @Html.HiddenFor(modelItem => modelItem[i].TotalWeightShipped)
                                 @Html.DisplayFor(modelItem => modelItem[i].TotalWeightShipped)
                             </td>
-                            <td class="@Model[i].Indicators.ReadyToShipColor.ToString()">
+                            <td data-search="@Html.DisplayFor(modelItem => modelItem[i].ReadyToShip)" class="@Model[i].Indicators.ReadyToShipColor.ToString()">
                                 @Html.HiddenFor(modelItem => modelItem[i].EquipmentId)
                                 @Html.EditorFor(modelItem => modelItem[i].ReadyToShip, new { htmlAttributes = new { @class = "form-control" } })
                             </td>
@@ -195,15 +197,6 @@
                                 @Html.DisplayFor(modelItem => modelItem[i].SalesOrderNumber)
                             </td>
                         </tr>
-                        if (Model[i].BillOfLadingEquipments.Count() > 0)
-                        {
-                            <tr class="collapse info" id="accordion@(Model[i].EquipmentId)">
-                                <td colspan="12" id="BOL@(Model[i].EquipmentId)">
-                                    @Html.Partial("BOLsAssociatedToEquipment", Model[i].BillOfLadingEquipments)
-                                </td>
-                                <td colspan="15"></td>
-                            </tr>
-                        }
                     }
                 </tbody>
             </table>
@@ -218,6 +211,18 @@
 
 }
 
+<div class="hidden">
+    @foreach (var item in Model)
+    {
+        if (item.BillOfLadingEquipments.Count() > 0)
+        {
+            <div id="@(item.EquipmentId)">
+                @Html.Partial("BOLsAssociatedToEquipment", item.BillOfLadingEquipments)
+            </div>
+        }
+    }
+
+</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/form")
