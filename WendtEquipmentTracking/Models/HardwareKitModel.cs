@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace WendtEquipmentTracking.App.Models
 {
@@ -15,9 +16,11 @@ namespace WendtEquipmentTracking.App.Models
         public int Revision { get; set; }
 
         [DisplayName("Hardware Kit Number")]
+        [Required]
         public string HardwareKitNumber { get; set; }
 
         [DisplayName("Extra Quantity %")]
+        [Required]
         public double ExtraQuantityPercentage { get; set; }
 
         public IList<HardwareKitEquipmentModel> HardwareKitEquipments { get; set; }

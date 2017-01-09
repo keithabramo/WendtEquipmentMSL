@@ -10,33 +10,43 @@
         </td>
         <td>
             @Html.CheckBoxFor(modelItem => modelItem.IsHardware)
+            @Html.ValidationMessageFor(modelItem => modelItem.IsHardware, "", new { @class = "text-danger" })
         </td>
         <td>
             @Html.EditorFor(modelItem => modelItem.EquipmentName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(modelItem => modelItem.EquipmentName, "", new { @class = "text-danger" })
         </td>
         <td>
             @Html.DropDownListFor(modelItem => modelItem.Priority, new SelectList(Priorities.GetPriorities()), new { @class = "form-control" })
+            @Html.ValidationMessageFor(modelItem => modelItem.Priority, "", new { @class = "text-danger" })
         </td>
         <td>
             @Html.EditorFor(modelItem => modelItem.ReleaseDate, new { htmlAttributes = new { @class = "form-control datePicker", id = "releaseDate" + Model.EquipmentId } })
+            @Html.ValidationMessageFor(modelItem => modelItem.ReleaseDate, "", new { @class = "text-danger" })
         </td>
         <td>
             @Html.EditorFor(modelItem => modelItem.DrawingNumber, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(modelItem => modelItem.DrawingNumber, "", new { @class = "text-danger" })
         </td>
         <td>
             @Html.DropDownListFor(modelItem => modelItem.WorkOrderNumber, new SelectList(Model.WorkOrders), new { @class = "form-control" })
+            @Html.ValidationMessageFor(modelItem => modelItem.WorkOrderNumber, "", new { @class = "text-danger" })
         </td>
         <td>
             @Html.EditorFor(modelItem => modelItem.Quantity, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(modelItem => modelItem.Quantity, "", new { @class = "text-danger" })
         </td>
         <td>
             @Html.EditorFor(modelItem => modelItem.ShippingTagNumber, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(modelItem => modelItem.ShippingTagNumber, "", new { @class = "text-danger" })
         </td>
         <td>
             @Html.EditorFor(modelItem => modelItem.Description, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(modelItem => modelItem.Description, "", new { @class = "text-danger" })
         </td>
         <td>
             @Html.EditorFor(modelItem => modelItem.UnitWeight, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(modelItem => modelItem.UnitWeight, "", new { @class = "text-danger" })
         </td>
         <td></td>
         <td></td>
@@ -48,18 +58,23 @@
         <td></td>
         <td>
             @Html.EditorFor(modelItem => modelItem.HTSCode, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(modelItem => modelItem.HTSCode, "", new { @class = "text-danger" })
         </td>
         <td>
             @Html.EditorFor(modelItem => modelItem.CountryOfOrigin, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(modelItem => modelItem.CountryOfOrigin, "", new { @class = "text-danger" })
         </td>
         <td>
             @Html.EditorFor(modelItem => modelItem.Notes, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(modelItem => modelItem.Notes, "", new { @class = "text-danger" })
         </td>
         <td>
             @Html.EditorFor(modelItem => modelItem.AutoShipFile, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(modelItem => modelItem.AutoShipFile, "", new { @class = "text-danger" })
         </td>
         <td>
             @Html.EditorFor(modelItem => modelItem.SalesOrderNumber, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(modelItem => modelItem.SalesOrderNumber, "", new { @class = "text-danger" })
         </td>
         <td></td>
     </tr>

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace WendtEquipmentTracking.App.Models
 {
@@ -9,6 +10,7 @@ namespace WendtEquipmentTracking.App.Models
         public int EquipmentId { get; set; }
 
         [DisplayName("Total Quantity")]
+        [Required]
         public double Quantity { get; set; }
 
         public HardwareKitModel HardwareKit { get; set; }

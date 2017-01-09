@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace WendtEquipmentTracking.App.Models
 {
@@ -8,6 +9,7 @@ namespace WendtEquipmentTracking.App.Models
         public int ProjectId { get; set; }
 
         [DisplayName("Project Number")]
+        [Required]
         public string ProjectNumber { get; set; }
 
         [DisplayName("Ship To Company")]

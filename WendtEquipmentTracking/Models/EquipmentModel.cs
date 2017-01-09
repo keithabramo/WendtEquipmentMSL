@@ -13,41 +13,50 @@ namespace WendtEquipmentTracking.App.Models
 
 
         [DisplayName("Equipment")]
+        [Required]
         public string EquipmentName { get; set; }
 
         [DisplayName("Is Hardware?")]
         public bool IsHardware { get; set; }
 
         [DisplayName("Priority")]
+        [Required]
         public string Priority { get; set; }
 
 
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         [DisplayName("Release Date")]
+        [Required]
         public DateTime? ReleaseDate { get; set; }
 
 
         [DisplayName("Drawing #")]
+        [Required]
         public string DrawingNumber { get; set; }
 
 
         [DisplayName("Work Order No.")]
+        [Required]
         public string WorkOrderNumber { get; set; }
 
 
         [DisplayName("Qty")]
+        [Required]
         public double? Quantity { get; set; }
 
 
         [DisplayName("Shipping Tag #")]
+        [Required]
         public string ShippingTagNumber { get; set; }
 
 
         [DisplayName("Description")]
+        [Required]
         public string Description { get; set; }
 
 
         [DisplayName("Unit Weight")]
+        [Required]
         public double? UnitWeight { get; set; }
 
 

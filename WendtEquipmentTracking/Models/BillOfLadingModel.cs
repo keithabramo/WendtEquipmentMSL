@@ -17,13 +17,16 @@ namespace WendtEquipmentTracking.App.Models
         public bool IsCurrentRevision { get; set; }
 
         [DisplayName("BOL #")]
+        [Required]
         public string BillOfLadingNumber { get; set; }
 
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         [DisplayName("Date Shipped")]
+        [Required]
         public DateTime? DateShipped { get; set; }
 
         [DisplayName("Shipped From")]
+        [Required]
         public string ShippedFrom { get; set; }
 
         [DisplayName("To Storage")]
