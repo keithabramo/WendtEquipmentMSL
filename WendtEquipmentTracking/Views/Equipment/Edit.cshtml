@@ -1,150 +1,147 @@
 ﻿@model EquipmentModel
 
-@using (Ajax.BeginForm("Edit", new { id = Model.EquipmentId }, new AjaxOptions { }))
-{
-    @Html.AntiForgeryToken()
-    <tr class="text-nowrap">
-        @if (Model.BillOfLadingEquipments != null && Model.BillOfLadingEquipments.Count() > 0)
+<tr class="text-nowrap">
+    @if (Model.BillOfLadingEquipments != null && Model.BillOfLadingEquipments.Count() > 0)
+    {
+        <td data-toggle="collapse" data-id="@Model.EquipmentId" class="expand text-center"><span class="glyphicon glyphicon-plus text-primary"></span></td>
+    }
+    else
+    {
+        <td></td>
+    }
+    <td>
+        @if (Model.HardwareKitEquipments != null && Model.HardwareKitEquipments.Count() > 0)
+            {
+            @Html.HiddenFor(modelItem => modelItem.IsHardware)
+
+            @Html.DisplayFor(modelItem => modelItem.IsHardware) <br />
+                @("Associated To Hardware Kit " + Model.HardwwareKitEquipment.HardwareKit.HardwareKitNumber)
+
+        }
+        else if (Model.BillOfLadingEquipments != null && Model.BillOfLadingEquipments.Count() > 0)
         {
-            <td data-toggle="collapse" data-id="@Model.EquipmentId" class="expand text-center"><span class="glyphicon glyphicon-plus text-primary"></span></td>
+            @Html.HiddenFor(modelItem => modelItem.IsHardware)
+            @Html.DisplayFor(modelItem => modelItem.IsHardware)
         }
         else
         {
-            <td></td>
+            @Html.CheckBoxFor(modelItem => modelItem.IsHardware)
         }
-        <td>
-            @if (Model.HardwareKitEquipments != null && Model.HardwareKitEquipments.Count() > 0)
-            {
-                @Html.HiddenFor(modelItem => modelItem.IsHardware)
 
-                @Html.DisplayFor(modelItem => modelItem.IsHardware) <br />
-                @("Associated To Hardware Kit " + Model.HardwwareKitEquipment.HardwareKit.HardwareKitNumber)
+    </td>
+    <td data-search="@Html.DisplayFor(modelItem => modelItem.EquipmentName)" data-sort="@Html.DisplayFor(modelItem => modelItem.EquipmentName)">
+        @Html.HiddenFor(modelItem => modelItem.EquipmentId)
 
-            }
-            else if (Model.BillOfLadingEquipments != null && Model.BillOfLadingEquipments.Count() > 0)
+        @if (Model.IsHardware)
             {
-                @Html.HiddenFor(modelItem => modelItem.IsHardware)
-                @Html.DisplayFor(modelItem => modelItem.IsHardware)
-            }
-            else
-            {
-                @Html.CheckBoxFor(modelItem => modelItem.IsHardware)
-            }
-
-        </td>
-        <td data-search="@Html.DisplayFor(modelItem => modelItem.EquipmentName)" data-sort="@Html.DisplayFor(modelItem => modelItem.EquipmentName)">
-            @Html.HiddenFor(modelItem => modelItem.EquipmentId)
-
-            @if (Model.IsHardware)
-            {
-                @Html.EditorFor(modelItem => modelItem.EquipmentName, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
-            }
-            else
-            {
-                @Html.EditorFor(modelItem => modelItem.EquipmentName, new { htmlAttributes = new { @class = "form-control" } })
-            }
-            @Html.ValidationMessageFor(modelItem => modelItem.EquipmentName, "", new { @class = "text-danger" })
+            @Html.EditorFor(modelItem => modelItem.EquipmentName, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+        }
+        else
+        {
+            @Html.EditorFor(modelItem => modelItem.EquipmentName, new { htmlAttributes = new { @class = "form-control" } })
+        }
+        @Html.ValidationMessageFor(modelItem => modelItem.EquipmentName, "", new { @class = "text-danger" })
 
 
-        </td>
-        <td data-search="@Html.DisplayFor(modelItem => modelItem.Priority)" data-sort="@Html.DisplayFor(modelItem => modelItem.Priority)">
-            @Html.DropDownListFor(modelItem => modelItem.Priority, new SelectList(Priorities.GetPriorities()), new { @class = "form-control" })
-            @Html.ValidationMessageFor(modelItem => modelItem.Priority, "", new { @class = "text-danger" })
-        </td>
-        <td data-search="@Html.DisplayFor(modelItem => modelItem.ReleaseDate)" data-sort="@Html.DisplayFor(modelItem => modelItem.ReleaseDate)">
-            @Html.EditorFor(modelItem => modelItem.ReleaseDate, new { htmlAttributes = new { @class = "form-control datePicker", id = "releaseDate" + Model.EquipmentId } })
-            @Html.ValidationMessageFor(modelItem => modelItem.ReleaseDate, "", new { @class = "text-danger" })
-        </td>
-        <td data-search="@Html.DisplayFor(modelItem => modelItem.DrawingNumber)" data-sort="@Html.DisplayFor(modelItem => modelItem.DrawingNumber)">
-            @Html.EditorFor(modelItem => modelItem.DrawingNumber, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(modelItem => modelItem.DrawingNumber, "", new { @class = "text-danger" })
-        </td>
-        <td data-search="@Html.DisplayFor(modelItem => modelItem.WorkOrderNumber)" data-sort="@Html.DisplayFor(modelItem => modelItem.WorkOrderNumber)">
-            @Html.DropDownListFor(modelItem => modelItem.WorkOrderNumber, new SelectList(Model.WorkOrders), new { @class = "form-control" })
-            @Html.ValidationMessageFor(modelItem => modelItem.WorkOrderNumber, "", new { @class = "text-danger" })
-        </td>
-        <td data-search="@Html.DisplayFor(modelItem => modelItem.Quantity)" data-sort="@Html.DisplayFor(modelItem => modelItem.Quantity)">
-            @Html.EditorFor(modelItem => modelItem.Quantity, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(modelItem => modelItem.Quantity, "", new { @class = "text-danger" })
-        </td>
-        <td data-search="@Html.DisplayFor(modelItem => modelItem.ShippingTagNumber)" data-sort="@Html.DisplayFor(modelItem => modelItem.ShippingTagNumber)">
-            @Html.EditorFor(modelItem => modelItem.ShippingTagNumber, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(modelItem => modelItem.ShippingTagNumber, "", new { @class = "text-danger" })
-        </td>
-        <td data-search="@Html.DisplayFor(modelItem => modelItem.Description)" data-sort="@Html.DisplayFor(modelItem => modelItem.Description)" class="long-column">
-            @Html.EditorFor(modelItem => modelItem.Description, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(modelItem => modelItem.Description, "", new { @class = "text-danger" })
-        </td>
-        <td data-search="@Html.DisplayFor(modelItem => modelItem.UnitWeight)" data-sort="@Html.DisplayFor(modelItem => modelItem.UnitWeight)" class="@Model.Indicators.UnitWeightColor.ToString()">
-            @Html.EditorFor(modelItem => modelItem.UnitWeight, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(modelItem => modelItem.UnitWeight, "", new { @class = "text-danger" })
-        </td>
-        <td>
-            @Html.HiddenFor(modelItem => modelItem.TotalWeight)
-            @Html.DisplayFor(modelItem => modelItem.TotalWeight)
-        </td>
-        <td>
-            @Html.HiddenFor(modelItem => modelItem.TotalWeightShipped)
-            @Html.DisplayFor(modelItem => modelItem.TotalWeightShipped)
-        </td>
-        <td class="@Model.Indicators.ReadyToShipColor.ToString()">
-            @Html.HiddenFor(modelItem => modelItem.ReadyToShip)
-            @Html.DisplayFor(modelItem => modelItem.ReadyToShip)
-        </td>
-        <td class="@Model.Indicators.ShippedQtyColor.ToString()">
-            @Html.HiddenFor(modelItem => modelItem.ShippedQuantity)
-            @Html.DisplayFor(modelItem => modelItem.ShippedQuantity)
-        </td>
-        <td class="@Model.Indicators.LeftToShipColor.ToString()">
-            @Html.HiddenFor(modelItem => modelItem.LeftToShip)
-            @Html.DisplayFor(modelItem => modelItem.LeftToShip)
-        </td>
-        <td class="@Model.Indicators.FullyShippedColor.ToString()">
-            @Html.HiddenFor(modelItem => modelItem.FullyShipped)
-            @if (Model.FullyShipped.HasValue && Model.FullyShipped.Value == true)
+    </td>
+    <td data-search="@Html.DisplayFor(modelItem => modelItem.Priority)" data-sort="@Html.DisplayFor(modelItem => modelItem.Priority)">
+        @Html.DropDownListFor(modelItem => modelItem.Priority, new SelectList(Priorities.GetPriorities()), new { @class = "form-control" })
+        @Html.ValidationMessageFor(modelItem => modelItem.Priority, "", new { @class = "text-danger" })
+    </td>
+    <td data-search="@Html.DisplayFor(modelItem => modelItem.ReleaseDate)" data-sort="@Html.DisplayFor(modelItem => modelItem.ReleaseDate)">
+        @Html.EditorFor(modelItem => modelItem.ReleaseDate, new { htmlAttributes = new { @class = "form-control datePicker", id = "releaseDate" + Model.EquipmentId } })
+        @Html.ValidationMessageFor(modelItem => modelItem.ReleaseDate, "", new { @class = "text-danger" })
+    </td>
+    <td data-search="@Html.DisplayFor(modelItem => modelItem.DrawingNumber)" data-sort="@Html.DisplayFor(modelItem => modelItem.DrawingNumber)">
+        @Html.EditorFor(modelItem => modelItem.DrawingNumber, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(modelItem => modelItem.DrawingNumber, "", new { @class = "text-danger" })
+    </td>
+    <td data-search="@Html.DisplayFor(modelItem => modelItem.WorkOrderNumber)" data-sort="@Html.DisplayFor(modelItem => modelItem.WorkOrderNumber)">
+        @Html.DropDownListFor(modelItem => modelItem.WorkOrderNumber, new SelectList(Model.WorkOrders), new { @class = "form-control" })
+        @Html.ValidationMessageFor(modelItem => modelItem.WorkOrderNumber, "", new { @class = "text-danger" })
+    </td>
+    <td data-search="@Html.DisplayFor(modelItem => modelItem.Quantity)" data-sort="@Html.DisplayFor(modelItem => modelItem.Quantity)">
+        @Html.EditorFor(modelItem => modelItem.Quantity, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(modelItem => modelItem.Quantity, "", new { @class = "text-danger" })
+    </td>
+    <td data-search="@Html.DisplayFor(modelItem => modelItem.ShippingTagNumber)" data-sort="@Html.DisplayFor(modelItem => modelItem.ShippingTagNumber)">
+        @Html.EditorFor(modelItem => modelItem.ShippingTagNumber, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(modelItem => modelItem.ShippingTagNumber, "", new { @class = "text-danger" })
+    </td>
+    <td data-search="@Html.DisplayFor(modelItem => modelItem.Description)" data-sort="@Html.DisplayFor(modelItem => modelItem.Description)" class="long-column">
+        @Html.EditorFor(modelItem => modelItem.Description, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(modelItem => modelItem.Description, "", new { @class = "text-danger" })
+    </td>
+    <td data-search="@Html.DisplayFor(modelItem => modelItem.UnitWeight)" data-sort="@Html.DisplayFor(modelItem => modelItem.UnitWeight)" class="@Model.Indicators.UnitWeightColor.ToString()">
+        @Html.EditorFor(modelItem => modelItem.UnitWeight, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(modelItem => modelItem.UnitWeight, "", new { @class = "text-danger" })
+    </td>
+    <td>
+        @Html.HiddenFor(modelItem => modelItem.TotalWeight)
+        @Html.DisplayFor(modelItem => modelItem.TotalWeight)
+    </td>
+    <td>
+        @Html.HiddenFor(modelItem => modelItem.TotalWeightShipped)
+        @Html.DisplayFor(modelItem => modelItem.TotalWeightShipped)
+    </td>
+    <td class="@Model.Indicators.ReadyToShipColor.ToString()">
+        @Html.HiddenFor(modelItem => modelItem.ReadyToShip)
+        @Html.DisplayFor(modelItem => modelItem.ReadyToShip)
+    </td>
+    <td class="@Model.Indicators.ShippedQtyColor.ToString()">
+        @Html.HiddenFor(modelItem => modelItem.ShippedQuantity)
+        @Html.DisplayFor(modelItem => modelItem.ShippedQuantity)
+    </td>
+    <td class="@Model.Indicators.LeftToShipColor.ToString()">
+        @Html.HiddenFor(modelItem => modelItem.LeftToShip)
+        @Html.DisplayFor(modelItem => modelItem.LeftToShip)
+    </td>
+    <td class="@Model.Indicators.FullyShippedColor.ToString()">
+        @Html.HiddenFor(modelItem => modelItem.FullyShipped)
+        @if (Model.FullyShipped.HasValue && Model.FullyShipped.Value == true)
             {
-                @:Yes
+            @:Yes
             }
             else if (Model.FullyShipped.HasValue && Model.FullyShipped.Value == false)
             {
-                @:No
+            @:No
             }
             else
             {
-                @:NA
+            @:NA
             }
-        </td>
-        <td class="@Model.Indicators.CustomsValueColor.ToString()">
-            @Html.HiddenFor(modelItem => modelItem.CustomsValue)
-            @Html.DisplayFor(modelItem => modelItem.CustomsValue)
-        </td>
-        <td class="@Model.Indicators.SalePriceColor.ToString()">
-            @Html.HiddenFor(modelItem => modelItem.SalePrice)
-            @Html.DisplayFor(modelItem => modelItem.SalePrice)
-        </td>
-        <td data-search="@Html.DisplayFor(modelItem => modelItem.HTSCode)" data-sort="@Html.DisplayFor(modelItem => modelItem.HTSCode)">
-            @Html.EditorFor(modelItem => modelItem.HTSCode, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(modelItem => modelItem.HTSCode, "", new { @class = "text-danger" })
-        </td>
-        <td data-search="@Html.DisplayFor(modelItem => modelItem.CountryOfOrigin)" data-sort="@Html.DisplayFor(modelItem => modelItem.CountryOfOrigin)" class="@Model.Indicators.CountyOfOriginColor.ToString()">
-            @Html.EditorFor(modelItem => modelItem.CountryOfOrigin, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(modelItem => modelItem.CountryOfOrigin, "", new { @class = "text-danger" })
-        </td>
-        <td data-search="@Html.DisplayFor(modelItem => modelItem.Notes)" data-sort="@Html.DisplayFor(modelItem => modelItem.Notes)">
-            @Html.EditorFor(modelItem => modelItem.Notes, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(modelItem => modelItem.Notes, "", new { @class = "text-danger" })
-        </td>
-        <td data-search="@Html.DisplayFor(modelItem => modelItem.AutoShipFile)" data-sort="@Html.DisplayFor(modelItem => modelItem.AutoShipFile)">
-            @Html.EditorFor(modelItem => modelItem.AutoShipFile, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(modelItem => modelItem.AutoShipFile, "", new { @class = "text-danger" })
-        </td>
-        <td data-search="@Html.DisplayFor(modelItem => modelItem.SalesOrderNumber)" data-sort="@Html.DisplayFor(modelItem => modelItem.SalesOrderNumber)" class="@Model.Indicators.SalesOrderNumberColor.ToString()">
-            @Html.EditorFor(modelItem => modelItem.SalesOrderNumber, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(modelItem => modelItem.SalesOrderNumber, "", new { @class = "text-danger" })
-        </td>
-        <td class="text-nowrap">
-            @Ajax.ActionLink("Delete", "Delete", new { id = Model.EquipmentId }, new AjaxOptions { Confirm = "Are you sure you want to delete this equipment record?", OnSuccess = "DeleteSuccess", HttpMethod = "POST" })
-        </td>
-    </tr>
-}
+    </td>
+    <td class="@Model.Indicators.CustomsValueColor.ToString()">
+        @Html.HiddenFor(modelItem => modelItem.CustomsValue)
+        @Html.DisplayFor(modelItem => modelItem.CustomsValue)
+    </td>
+    <td class="@Model.Indicators.SalePriceColor.ToString()">
+        @Html.HiddenFor(modelItem => modelItem.SalePrice)
+        @Html.DisplayFor(modelItem => modelItem.SalePrice)
+    </td>
+    <td data-search="@Html.DisplayFor(modelItem => modelItem.HTSCode)" data-sort="@Html.DisplayFor(modelItem => modelItem.HTSCode)">
+        @Html.EditorFor(modelItem => modelItem.HTSCode, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(modelItem => modelItem.HTSCode, "", new { @class = "text-danger" })
+    </td>
+    <td data-search="@Html.DisplayFor(modelItem => modelItem.CountryOfOrigin)" data-sort="@Html.DisplayFor(modelItem => modelItem.CountryOfOrigin)" class="@Model.Indicators.CountyOfOriginColor.ToString()">
+        @Html.EditorFor(modelItem => modelItem.CountryOfOrigin, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(modelItem => modelItem.CountryOfOrigin, "", new { @class = "text-danger" })
+    </td>
+    <td data-search="@Html.DisplayFor(modelItem => modelItem.Notes)" data-sort="@Html.DisplayFor(modelItem => modelItem.Notes)">
+        @Html.EditorFor(modelItem => modelItem.Notes, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(modelItem => modelItem.Notes, "", new { @class = "text-danger" })
+    </td>
+    <td data-search="@Html.DisplayFor(modelItem => modelItem.AutoShipFile)" data-sort="@Html.DisplayFor(modelItem => modelItem.AutoShipFile)">
+        @Html.HiddenFor(modelItem => modelItem.AutoShipFile)
+        @Html.DisplayFor(modelItem => modelItem.AutoShipFile)
+    </td>
+    <td data-search="@Html.DisplayFor(modelItem => modelItem.SalesOrderNumber)" data-sort="@Html.DisplayFor(modelItem => modelItem.SalesOrderNumber)" class="@Model.Indicators.SalesOrderNumberColor.ToString()">
+        @Html.HiddenFor(modelItem => modelItem.SalesOrderNumber)
+        @Html.DisplayFor(modelItem => modelItem.SalesOrderNumber)
+    </td>
+    <td class="text-nowrap">
+        @Ajax.ActionLink("Delete", "Delete", new { id = Model.EquipmentId }, new AjaxOptions { Confirm = "Are you sure you want to delete this equipment record?", OnSuccess = "DeleteSuccess", HttpMethod = "POST" })
+    </td>
+</tr>
+
 

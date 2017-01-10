@@ -205,6 +205,7 @@ namespace WendtEquipmentTracking.App.Controllers
         [HttpPost]
         public ActionResult Edit(int id, EquipmentModel model)
         {
+            IEnumerable<string> workOrders = new List<string>();
             try
             {
                 if (ModelState.IsValid)
@@ -221,15 +222,32 @@ namespace WendtEquipmentTracking.App.Controllers
 
                         equipmentService.Update(equipment);
 
-                        return RedirectToAction("Index");
+                        var updatedEquipmentBO = equipmentService.GetById(id);
+                        var updatedEquipmentModel = Mapper.Map<EquipmentModel>(updatedEquipmentBO);
+
+                        //Get Data
+                        var projectBO = projectService.GetById(projectId);
+
+                        if (projectBO != null)
+                        {
+                            var workOrderPriceBOs = projectBO.WorkOrderPrices;
+                            workOrders = workOrderPriceBOs.Select(w => w.WorkOrderNumber);
+                        }
+
+                        updatedEquipmentModel.ProjectNumber = projectBO.ProjectNumber;
+                        updatedEquipmentModel.SetIndicators();
+                        updatedEquipmentModel.WorkOrders = workOrders;
+                        return PartialView(updatedEquipmentModel);
                     }
                 }
 
-                return View(model);
+                model.WorkOrders = workOrders;
+                return PartialView(model);
             }
             catch (Exception e)
             {
-                return View(model);
+                model.WorkOrders = workOrders;
+                return PartialView(model);
             }
         }
 

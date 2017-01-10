@@ -3,7 +3,8 @@
     var MasterShipList = function () {
 
         this.editsMade = false;
-        this.editURL = $("#editFormMock form").attr("action");
+        this.$editRow;
+        this.editURL = "/Equipment/Edit";
 
         this.initStyles = function () {
         }
@@ -18,28 +19,29 @@
             $('.table tbody').on('blur', "tr", function () {
 
                 if ($this.editsMade) {
-                    var $mockForm = $("#editFormMock form");
 
-                    $mockForm.attr("action", $this.editURL + "/" + $(this).find("input[name='EquipmentId']").val())
+                    $this.editsMade = false;
 
-                    $(this).find("input[name], select[name]").each(function (i, e) {
-                        var $element = $(e);
+                    var $row = $(this);
+                    var url = $this.editURL + "/" + $row.find("input[name='EquipmentId']").val();
+                    var $form = $("<form/>");
+                    
+                    $row.find("input[name], select[name]").each(function (i, e) {
+                        var $element = $(e).clone();
 
-                        $mockForm.find("[name='" + $element.attr("name") + "']").val($element.val());
+                        $form.append($element);
                     });
 
-                    $mockForm.submit();
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: $form.serialize(),
+                        success: function (data) {
+
+                            $row.replaceWith(data);
+                        }
+                    });
                 }
-                //var $form = $(this).prevAll("form").eq(0);
-                
-                
-                //    $this.editsMade = false;
-
-                //    if ($form.length) {
-
-                //        $form.submit();
-                //    }
-                //}
             });
         }
 

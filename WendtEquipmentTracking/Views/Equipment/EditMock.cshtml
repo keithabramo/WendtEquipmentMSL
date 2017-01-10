@@ -2,7 +2,7 @@
 
 <div id="editFormMock">
 
-    @using (Ajax.BeginForm("Edit", new AjaxOptions { }))
+    @using (Html.BeginForm("Edit", "Equipment"))
     {
         @Html.AntiForgeryToken()
 
