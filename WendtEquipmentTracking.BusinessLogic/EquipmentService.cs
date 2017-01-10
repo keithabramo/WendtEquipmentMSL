@@ -19,11 +19,11 @@ namespace WendtEquipmentTracking.BusinessLogic
             equipmentEngine = new EquipmentEngine();
         }
 
-        public void Save(EquipmentBO equipmentBO)
+        public int Save(EquipmentBO equipmentBO)
         {
             var equipment = Mapper.Map<Equipment>(equipmentBO);
 
-            equipmentEngine.AddNewEquipment(equipment);
+            return equipmentEngine.AddNewEquipment(equipment);
         }
 
         public void SaveAll(IEnumerable<EquipmentBO> equipmentBOs)

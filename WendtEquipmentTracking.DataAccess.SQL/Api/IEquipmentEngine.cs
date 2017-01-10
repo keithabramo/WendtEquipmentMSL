@@ -10,7 +10,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Api
 
         IEnumerable<Equipment> List(Specification<Equipment> specification);
 
-        void AddNewEquipment(Equipment equipment);
+        int AddNewEquipment(Equipment equipment);
 
         void AddAllNewEquipment(IEnumerable<Equipment> equipments);
 

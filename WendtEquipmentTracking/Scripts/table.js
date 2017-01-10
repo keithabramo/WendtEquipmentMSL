@@ -4,6 +4,10 @@
 
         this.dataTable;
 
+        this.DataTable = function () {
+            return this.dataTable;
+        };
+
         this.initStyles = function () {
             var $searchHeader = $(".table.my-datatable thead tr").clone();
 
@@ -72,7 +76,7 @@
         this.initEvents();
     }
 
-    new Table();
+    table = new Table();
 
 });
 

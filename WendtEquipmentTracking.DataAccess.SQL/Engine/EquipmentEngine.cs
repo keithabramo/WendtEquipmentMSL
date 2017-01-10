@@ -47,7 +47,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
                 .Include(x => x.HardwareKitEquipments);
         }
 
-        public void AddNewEquipment(Equipment equipment)
+        public int AddNewEquipment(Equipment equipment)
         {
             var now = DateTime.Now;
 
@@ -58,6 +58,8 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
             this.repository.Insert(equipment);
             this.repository.Save();
+
+            return equipment.EquipmentId;
         }
 
         public void AddAllNewEquipment(IEnumerable<Equipment> equipments)

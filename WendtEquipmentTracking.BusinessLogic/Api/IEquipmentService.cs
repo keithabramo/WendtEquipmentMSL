@@ -5,7 +5,7 @@ namespace WendtEquipmentTracking.BusinessLogic.Api
 {
     public interface IEquipmentService
     {
-        void Save(EquipmentBO equipmentBO);
+        int Save(EquipmentBO equipmentBO);
         void SaveAll(IEnumerable<EquipmentBO> equipmentBO);
 
         void Update(EquipmentBO equipmentBO);
