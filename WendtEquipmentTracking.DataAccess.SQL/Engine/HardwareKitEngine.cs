@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using WendtEquipmentTracking.Common;
 using WendtEquipmentTracking.DataAccess.SQL.Api;
 using WendtEquipmentTracking.DataAccess.SQL.Specifications;
@@ -29,18 +30,18 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         public IEnumerable<HardwareKit> ListAll()
         {
-            return this.repository.GetAll()
+            return this.repository.Find(!HardwareKitSpecs.IsDeleted())
                 .Include(x => x.HardwareKitEquipments);
         }
 
         public HardwareKit Get(Specification<HardwareKit> specification)
         {
-            return this.repository.Single(specification);
+            return this.repository.Single(!HardwareKitSpecs.IsDeleted() && specification);
         }
 
         public IEnumerable<HardwareKit> List(Specification<HardwareKit> specification)
         {
-            return this.repository.Find(specification)
+            return this.repository.Find(!HardwareKitSpecs.IsDeleted() && specification)
                 .Include(x => x.HardwareKitEquipments);
         }
 
@@ -82,7 +83,10 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         public void DeleteHardwareKit(HardwareKit hardwareKit)
         {
-            this.repository.Delete(hardwareKit);
+            hardwareKit.IsDeleted = true;
+            hardwareKit.HardwareKitEquipments.ToList().ForEach(ble => ble.IsDeleted = true);
+
+            this.repository.Update(hardwareKit);
             this.repository.Save();
         }
 

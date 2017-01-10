@@ -9,7 +9,9 @@ namespace WendtEquipmentTracking.App.Models
         [Required]
         public string WorkOrderNumber { get; set; }
         [Required]
-        public double Price { get; set; }
+        public double SalePrice { get; set; }
+        [Required]
+        public double CostPrice { get; set; }
 
         public ProjectModel Project { get; set; }
     }

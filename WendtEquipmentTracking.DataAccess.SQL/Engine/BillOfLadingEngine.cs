@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using WendtEquipmentTracking.Common;
 using WendtEquipmentTracking.DataAccess.SQL.Api;
 using WendtEquipmentTracking.DataAccess.SQL.Specifications;
@@ -29,19 +30,19 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         public IEnumerable<BillOfLading> ListAll()
         {
-            return this.repository.GetAll()
+            return this.repository.Find(!BillOfLadingSpecs.IsDeleted())
                 .Include(x => x.BillOfLadingEquipments)
                 .Include(x => x.HardwareKits);
         }
 
         public BillOfLading Get(Specification<BillOfLading> specification)
         {
-            return this.repository.Single(specification);
+            return this.repository.Single(!BillOfLadingSpecs.IsDeleted() && specification);
         }
 
         public IEnumerable<BillOfLading> List(Specification<BillOfLading> specification)
         {
-            return this.repository.Find(specification)
+            return this.repository.Find(!BillOfLadingSpecs.IsDeleted() && specification)
                 .Include(x => x.BillOfLadingEquipments)
                 .Include(x => x.HardwareKits);
         }
@@ -84,7 +85,10 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         public void DeleteBillOfLading(BillOfLading billOfLading)
         {
-            this.repository.Delete(billOfLading);
+            billOfLading.IsDeleted = true;
+            billOfLading.BillOfLadingEquipments.ToList().ForEach(ble => ble.IsDeleted = true);
+
+            this.repository.Update(billOfLading);
             this.repository.Save();
         }
 

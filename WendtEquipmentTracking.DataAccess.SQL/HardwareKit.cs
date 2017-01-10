@@ -31,6 +31,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<int> BillOfLadingId { get; set; }
+        public bool IsDeleted { get; set; }
     
         public virtual BillOfLading BillOfLading { get; set; }
         public virtual Project Project { get; set; }

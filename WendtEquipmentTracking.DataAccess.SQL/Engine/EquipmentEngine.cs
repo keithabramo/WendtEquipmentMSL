@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using WendtEquipmentTracking.Common;
 using WendtEquipmentTracking.DataAccess.SQL.Api;
+using WendtEquipmentTracking.DataAccess.SQL.Specifications;
 
 namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 {
@@ -28,19 +30,19 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         public IEnumerable<Equipment> ListAll()
         {
-            return this.repository.GetAll()
+            return this.repository.Find(!EquipmentSpecs.IsDeleted())
                 .Include(x => x.BillOfLadingEquipments)
                 .Include(x => x.HardwareKitEquipments);
         }
 
         public Equipment Get(Specification<Equipment> specification)
         {
-            return this.repository.Single(specification);
+            return this.repository.Single(!EquipmentSpecs.IsDeleted() && specification);
         }
 
         public IEnumerable<Equipment> List(Specification<Equipment> specification)
         {
-            return this.repository.Find(specification)
+            return this.repository.Find(!EquipmentSpecs.IsDeleted() && specification)
                 .Include(x => x.BillOfLadingEquipments)
                 .Include(x => x.HardwareKitEquipments);
         }
@@ -103,7 +105,11 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         public void DeleteEquipment(Equipment equipment)
         {
-            this.repository.Delete(equipment);
+            equipment.IsDeleted = true;
+            equipment.BillOfLadingEquipments.ToList().ForEach(ble => ble.IsDeleted = true);
+            equipment.HardwareKitEquipments.ToList().ForEach(ble => ble.IsDeleted = true);
+
+            this.repository.Update(equipment);
             this.repository.Save();
         }
 

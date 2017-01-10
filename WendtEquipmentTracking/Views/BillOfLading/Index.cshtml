@@ -52,7 +52,7 @@
                         <td>
                             @Html.ActionLink("Edit", "Edit", new { id = item.BillOfLadingId }) |
                             @Html.ActionLink("Details", "Details", new { billOfLadingNumber = item.BillOfLadingNumber }) |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.BillOfLadingId })
+                            @Ajax.ActionLink("Delete", "Delete", new { id = item.BillOfLadingId }, new AjaxOptions { Confirm = "Are you sure you want to delete this bill of lading record?", OnSuccess = "DeleteSuccess", HttpMethod = "POST" })
                         </td>
                     }
                 </tr>

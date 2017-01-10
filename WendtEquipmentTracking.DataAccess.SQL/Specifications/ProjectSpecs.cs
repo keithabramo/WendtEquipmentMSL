@@ -3,9 +3,16 @@
 namespace WendtEquipmentTracking.DataAccess.SQL.Specifications
 {
 
-    public static class ProjectSpecs {
-        public static Specification<Project> Id(int id) {
+    public static class ProjectSpecs
+    {
+        public static Specification<Project> Id(int id)
+        {
             return new IdSpecification(id);
+        }
+
+        public static Specification<Project> IsDeleted()
+        {
+            return new IsDeletedSpecification();
         }
     }
 }

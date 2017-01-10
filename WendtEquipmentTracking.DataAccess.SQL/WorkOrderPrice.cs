@@ -17,11 +17,14 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         public int WorkOrderPriceId { get; set; }
         public int ProjectId { get; set; }
         public string WorkOrderNumber { get; set; }
-        public double Price { get; set; }
+        public double SalePrice { get; set; }
+        public double CostPrice { get; set; }
+        public double TotalWeight { get; set; }
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
+        public bool IsDeleted { get; set; }
     
         public virtual Project Project { get; set; }
     }

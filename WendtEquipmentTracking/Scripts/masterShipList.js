@@ -3,6 +3,7 @@
     var MasterShipList = function () {
 
         this.editsMade = false;
+        this.editURL = $("#editFormMock form").attr("action");
 
         this.initStyles = function () {
         }
@@ -15,16 +16,30 @@
             });
 
             $('.table tbody').on('blur', "tr", function () {
-                var $form = $(this).prevAll("form").eq(0);
-                
+
                 if ($this.editsMade) {
-                    $this.editsMade = false;
+                    var $mockForm = $("#editFormMock form");
 
-                    if ($form.length) {
+                    $mockForm.attr("action", $this.editURL + "/" + $(this).find("input[name='EquipmentId']").val())
 
-                        $form.submit();
-                    }
+                    $(this).find("input[name], select[name]").each(function (i, e) {
+                        var $element = $(e);
+
+                        $mockForm.find("[name='" + $element.attr("name") + "']").val($element.val());
+                    });
+
+                    $mockForm.submit();
                 }
+                //var $form = $(this).prevAll("form").eq(0);
+                
+                
+                //    $this.editsMade = false;
+
+                //    if ($form.length) {
+
+                //        $form.submit();
+                //    }
+                //}
             });
         }
 

@@ -70,19 +70,20 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Helper
             var records = values.Where(r => r[0] != null).Select(rowValues => new WorkOrderPriceRow
             {
                 WorkOrderNumber = rowValues[0].ToString(),
-                Price = Convert.ToDouble(rowValues[1].ToString().Replace("$", "").Replace(",", ""))
-        }).ToList();
+                CostPrice = Convert.ToDouble(rowValues[1].ToString().Replace("$", "").Replace(",", "")),
+                SalePrice = Convert.ToDouble(rowValues[2].ToString().Replace("$", "").Replace(",", ""))
+            }).ToList();
 
             return records;
         }
 
-    private class ExcelDataLocation
-    {
-        public int ColumnStart { get; set; }
-        public int RowStart { get; set; }
-        public int NumberOfColumns { get; set; }
+        private class ExcelDataLocation
+        {
+            public int ColumnStart { get; set; }
+            public int RowStart { get; set; }
+            public int NumberOfColumns { get; set; }
+        }
     }
-}
 
 
 }

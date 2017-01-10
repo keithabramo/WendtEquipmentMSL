@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using WendtEquipmentTracking.BusinessLogic.Api;
 using WendtEquipmentTracking.BusinessLogic.BO;
-using WendtEquipmentTracking.BusinessLogic.Utils;
 using WendtEquipmentTracking.DataAccess.SQL;
 using WendtEquipmentTracking.DataAccess.SQL.Api;
 using WendtEquipmentTracking.DataAccess.SQL.Engine;
@@ -15,14 +14,12 @@ namespace WendtEquipmentTracking.BusinessLogic
     {
         private IHardwareKitEngine hardwareKitEngine;
         private IEquipmentService equipmentService;
-        private EquipmentLogic equipmentLogic;
 
 
         public HardwareKitService()
         {
             hardwareKitEngine = new HardwareKitEngine();
             equipmentService = new EquipmentService();
-            equipmentLogic = new EquipmentLogic();
         }
 
         public void Save(HardwareKitBO hardwareKitBO)

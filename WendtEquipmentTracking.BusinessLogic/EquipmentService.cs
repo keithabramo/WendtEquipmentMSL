@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using WendtEquipmentTracking.BusinessLogic.Api;
 using WendtEquipmentTracking.BusinessLogic.BO;
-using WendtEquipmentTracking.BusinessLogic.Utils;
 using WendtEquipmentTracking.DataAccess.SQL;
 using WendtEquipmentTracking.DataAccess.SQL.Api;
 using WendtEquipmentTracking.DataAccess.SQL.Engine;
@@ -14,18 +13,14 @@ namespace WendtEquipmentTracking.BusinessLogic
     public class EquipmentService : IEquipmentService
     {
         private IEquipmentEngine equipmentEngine;
-        private EquipmentLogic equipmentLogic;
 
         public EquipmentService()
         {
             equipmentEngine = new EquipmentEngine();
-            equipmentLogic = new EquipmentLogic();
         }
 
         public void Save(EquipmentBO equipmentBO)
         {
-            equipmentLogic.EquipmentNew(equipmentBO);
-
             var equipment = Mapper.Map<Equipment>(equipmentBO);
 
             equipmentEngine.AddNewEquipment(equipment);
@@ -33,8 +28,6 @@ namespace WendtEquipmentTracking.BusinessLogic
 
         public void SaveAll(IEnumerable<EquipmentBO> equipmentBOs)
         {
-            equipmentBOs.ToList().ForEach(e => equipmentLogic.EquipmentNew(e));
-
             var equipments = Mapper.Map<IEnumerable<Equipment>>(equipmentBOs);
 
             equipmentEngine.AddAllNewEquipment(equipments);
@@ -53,8 +46,6 @@ namespace WendtEquipmentTracking.BusinessLogic
                 var alteredEquipmentBO = alteredEquipmentBOs.SingleOrDefault(ae => ae.EquipmentId == equipmentBO.EquipmentId);
                 equipmentBO.ReadyToShip = alteredEquipmentBO.ReadyToShip;
 
-                equipmentLogic.ReadyToShipUpdated(equipmentBO);
-
                 var oldEquipment = oldEquipments.SingleOrDefault(ae => ae.EquipmentId == equipmentBO.EquipmentId);
 
                 Mapper.Map<EquipmentBO, Equipment>(equipmentBO, oldEquipment);
@@ -70,8 +61,6 @@ namespace WendtEquipmentTracking.BusinessLogic
 
             //update BOs with adjustments
             var equipmentBO = Mapper.Map<EquipmentBO>(oldEquipment);
-
-            equipmentLogic.EquipmentUpdated(equipmentBO);
 
             Mapper.Map<EquipmentBO, Equipment>(equipmentBO, oldEquipment);
 

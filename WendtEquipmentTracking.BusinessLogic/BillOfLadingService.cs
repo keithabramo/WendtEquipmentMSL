@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using WendtEquipmentTracking.BusinessLogic.Api;
 using WendtEquipmentTracking.BusinessLogic.BO;
-using WendtEquipmentTracking.BusinessLogic.Utils;
 using WendtEquipmentTracking.DataAccess.SQL;
 using WendtEquipmentTracking.DataAccess.SQL.Api;
 using WendtEquipmentTracking.DataAccess.SQL.Engine;
@@ -15,14 +14,12 @@ namespace WendtEquipmentTracking.BusinessLogic
     {
         private IBillOfLadingEngine billOfLadingEngine;
         private IEquipmentService equipmentService;
-        private EquipmentLogic equipmentLogic;
 
 
         public BillOfLadingService()
         {
             billOfLadingEngine = new BillOfLadingEngine();
             equipmentService = new EquipmentService();
-            equipmentLogic = new EquipmentLogic();
         }
 
         public void Save(BillOfLadingBO billOfLadingBO)
@@ -30,10 +27,6 @@ namespace WendtEquipmentTracking.BusinessLogic
             var billOfLading = Mapper.Map<BillOfLading>(billOfLadingBO);
 
             billOfLadingEngine.AddNewBillOfLading(billOfLading);
-
-            var equipmentBOs = equipmentService.GetByBillOfLadingId(billOfLading.BillOfLadingId);
-            equipmentLogic.BOLAdded(equipmentBOs);
-            equipmentService.UpdateAll(equipmentBOs);
         }
 
         public void Update(BillOfLadingBO billOfLadingBO)
@@ -41,10 +34,6 @@ namespace WendtEquipmentTracking.BusinessLogic
             var billOfLading = Mapper.Map<BillOfLading>(billOfLadingBO);
 
             billOfLadingEngine.UpdateBillOfLading(billOfLading);
-
-            var equipmentBOs = equipmentService.GetByBillOfLadingId(billOfLading.BillOfLadingId);
-            equipmentLogic.BOLUpdated(equipmentBOs);
-            equipmentService.UpdateAll(equipmentBOs);
         }
 
         public void Delete(int id)

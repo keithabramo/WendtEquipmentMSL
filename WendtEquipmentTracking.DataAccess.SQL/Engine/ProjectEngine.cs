@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using WendtEquipmentTracking.Common;
 using WendtEquipmentTracking.DataAccess.SQL.Api;
+using WendtEquipmentTracking.DataAccess.SQL.Specifications;
 
 namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 {
@@ -28,7 +30,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         public IEnumerable<Project> ListAll()
         {
-            return this.repository.GetAll()
+            return this.repository.Find(!ProjectSpecs.IsDeleted())
                 .Include(x => x.Equipments)
                 .Include(x => x.HardwareKits)
                 .Include(x => x.BillOfLadings)
@@ -37,12 +39,12 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         public Project Get(Specification<Project> specification)
         {
-            return this.repository.Single(specification);
+            return this.repository.Single(!ProjectSpecs.IsDeleted() && specification);
         }
 
         public IEnumerable<Project> List(Specification<Project> specification)
         {
-            return this.repository.Find(specification)
+            return this.repository.Find(!ProjectSpecs.IsDeleted() && specification)
                 .Include(x => x.Equipments)
                 .Include(x => x.HardwareKits)
                 .Include(x => x.BillOfLadings)
@@ -75,7 +77,13 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         public void DeleteProject(Project project)
         {
-            this.repository.Delete(project);
+            project.IsDeleted = true;
+            project.BillOfLadings.ToList().ForEach(ble => ble.IsDeleted = true);
+            project.Equipments.ToList().ForEach(ble => ble.IsDeleted = true);
+            project.HardwareKits.ToList().ForEach(ble => ble.IsDeleted = true);
+            project.WorkOrderPrices.ToList().ForEach(ble => ble.IsDeleted = true);
+
+            this.repository.Update(project);
             this.repository.Save();
         }
 

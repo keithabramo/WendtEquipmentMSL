@@ -33,6 +33,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         public Nullable<System.DateTime> DateShipped { get; set; }
         public string ShippedFrom { get; set; }
         public bool ToStorage { get; set; }
+        public bool IsDeleted { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BillOfLadingEquipment> BillOfLadingEquipments { get; set; }

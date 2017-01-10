@@ -9,5 +9,10 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Specifications
         {
             return new IdSpecification(id);
         }
+
+        public static Specification<WorkOrderPrice> IsDeleted()
+        {
+            return new IsDeletedSpecification();
+        }
     }
 }

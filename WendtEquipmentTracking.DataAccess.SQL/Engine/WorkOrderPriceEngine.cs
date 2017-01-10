@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using WendtEquipmentTracking.Common;
 using WendtEquipmentTracking.DataAccess.SQL.Api;
+using WendtEquipmentTracking.DataAccess.SQL.Specifications;
 
 namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 {
@@ -27,17 +28,17 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         public IEnumerable<WorkOrderPrice> ListAll()
         {
-            return this.repository.GetAll();
+            return this.repository.Find(!WorkOrderPriceSpecs.IsDeleted());
         }
 
         public WorkOrderPrice Get(Specification<WorkOrderPrice> specification)
         {
-            return this.repository.Single(specification);
+            return this.repository.Single(!WorkOrderPriceSpecs.IsDeleted() && specification);
         }
 
         public IEnumerable<WorkOrderPrice> List(Specification<WorkOrderPrice> specification)
         {
-            return this.repository.Find(specification);
+            return this.repository.Find(!WorkOrderPriceSpecs.IsDeleted() && specification);
         }
 
         public void AddNewWorkOrderPrice(WorkOrderPrice workOrderPrice)
@@ -83,7 +84,9 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         public void DeleteWorkOrderPrice(WorkOrderPrice workOrderPrice)
         {
-            this.repository.Delete(workOrderPrice);
+            workOrderPrice.IsDeleted = true;
+
+            this.repository.Update(workOrderPrice);
             this.repository.Save();
         }
 

@@ -15,17 +15,20 @@
         <td>
             @if (Model.HardwareKitEquipments != null && Model.HardwareKitEquipments.Count() > 0)
             {
-            @Html.DisplayFor(modelItem => modelItem.IsHardware) <br />
-            @("Associated To Hardware Kit " + Model.HardwwareKitEquipment.HardwareKit.HardwareKitNumber)
+                @Html.HiddenFor(modelItem => modelItem.IsHardware)
+
+                @Html.DisplayFor(modelItem => modelItem.IsHardware) <br />
+                @("Associated To Hardware Kit " + Model.HardwwareKitEquipment.HardwareKit.HardwareKitNumber)
 
             }
             else if (Model.BillOfLadingEquipments != null && Model.BillOfLadingEquipments.Count() > 0)
             {
-            @Html.DisplayFor(modelItem => modelItem.IsHardware)
+                @Html.HiddenFor(modelItem => modelItem.IsHardware)
+                @Html.DisplayFor(modelItem => modelItem.IsHardware)
             }
             else
             {
-            @Html.CheckBoxFor(modelItem => modelItem.IsHardware)
+                @Html.CheckBoxFor(modelItem => modelItem.IsHardware)
             }
 
         </td>

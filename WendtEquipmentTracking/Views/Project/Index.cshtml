@@ -80,7 +80,7 @@
                 {
                 <td class="text-center">
                     @Html.ActionLink("Edit", "Edit", new { id = item.ProjectId }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ProjectId })
+                    @Ajax.ActionLink("Delete", "Delete", new { id = item.ProjectId }, new AjaxOptions { Confirm = "Are you sure you want to delete this project record?", OnSuccess = "DeleteSuccess", HttpMethod = "POST" })
                 </td>
                 }
                 </tr>

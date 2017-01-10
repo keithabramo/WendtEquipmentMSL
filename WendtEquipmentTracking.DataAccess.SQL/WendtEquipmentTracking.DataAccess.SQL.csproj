@@ -29,6 +29,15 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Staging|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Staging\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
@@ -84,19 +93,23 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository.cs" />
     <Compile Include="Specification.cs" />
+    <Compile Include="Specifications\BillOfLading\IsDeleted.cs" />
     <Compile Include="Specifications\Equipments\HardwareKitId.cs" />
+    <Compile Include="Specifications\Equipments\IsDeleted.cs" />
     <Compile Include="Specifications\HardwareKitSpecs.cs" />
-    <Compile Include="Specifications\HardwareKit\HardwareKitNumberSpecification.cs" />
-    <Compile Include="Specifications\HardwareKit\CurrentRevisionSpecification.cs" />
-    <Compile Include="Specifications\HardwareKit\IdSpecification.cs" />
+    <Compile Include="Specifications\HardwareKits\HardwareKitNumberSpecification.cs" />
+    <Compile Include="Specifications\HardwareKits\CurrentRevisionSpecification.cs" />
+    <Compile Include="Specifications\HardwareKits\IdSpecification.cs" />
     <Compile Include="Specifications\BillOfLading\BillOfLadingNumberSpecification.cs" />
     <Compile Include="Specifications\BillOfLading\CurrentRevisionSpecification.cs" />
     <Compile Include="Specifications\BillOfLading\IdSpecification.cs" />
     <Compile Include="Specifications\BillOfLadingSpecs.cs" />
     <Compile Include="Specifications\Equipments\BillOfLadingId.cs" />
     <Compile Include="Specifications\Equipments\IdsSpecification.cs" />
+    <Compile Include="Specifications\HardwareKits\IsDeleted.cs" />
+    <Compile Include="Specifications\Projects\IsDeleted.cs" />
     <Compile Include="Specifications\WorkOrderPriceSpecs.cs" />
-    <Compile Include="Specifications\WorkOrderPrice\IdSpecification.cs" />
+    <Compile Include="Specifications\WorkOrderPrices\IdSpecification.cs" />
     <Compile Include="Specifications\ProjectSpecs.cs" />
     <Compile Include="Specifications\Projects\IdSpecification.cs" />
     <Compile Include="Specifications\ExpressionCombining\AndSpecification.cs" />
@@ -106,6 +119,7 @@
     <Compile Include="Specifications\ExpressionCombining\Utility.cs" />
     <Compile Include="Specifications\EquipmentSpecs.cs" />
     <Compile Include="Specifications\Equipments\IdSpecification.cs" />
+    <Compile Include="Specifications\WorkOrderPrices\IsDeleted.cs" />
     <Compile Include="WendtEquipmentTracking.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

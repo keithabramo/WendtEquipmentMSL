@@ -19,5 +19,10 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Specifications
         {
             return new CurrentRevisionSpecification();
         }
+
+        public static Specification<BillOfLading> IsDeleted()
+        {
+            return new IsDeletedSpecification();
+        }
     }
 }

@@ -77,6 +77,5 @@
 });
 
 function DeleteSuccess() {
-    $(this).closest("tr").next(".collapse").remove();
     $(this).closest("tr").remove();
 };
