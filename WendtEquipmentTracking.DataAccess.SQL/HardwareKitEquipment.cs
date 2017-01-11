@@ -17,7 +17,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         public int HardwareKitEquipmentId { get; set; }
         public int HardwareKitId { get; set; }
         public int EquipmentId { get; set; }
-        public double Quantity { get; set; }
+        public double QuantityToShip { get; set; }
         public bool IsDeleted { get; set; }
     
         public virtual Equipment Equipment { get; set; }

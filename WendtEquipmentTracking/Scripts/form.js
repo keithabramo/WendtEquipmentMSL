@@ -5,6 +5,11 @@
         this.initStyles = function () {
             
             $(".datePicker").datepicker();
+
+            $(".autocomplete").autocomplete({
+                source: "/api/WorkOrderPriceApi/Search",
+                minLength: 2
+            });
         }
 
         this.initEvents = function () {

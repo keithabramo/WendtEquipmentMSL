@@ -15,11 +15,15 @@ namespace WendtEquipmentTracking.App.Controllers
     {
         private IHardwareKitService hardwareKitService;
         private IProjectService projectService;
+        private IEquipmentService equipmentService;
+
+        private const float DEFAULT_PERCENT = 10;
 
         public HardwareKitController()
         {
             hardwareKitService = new HardwareKitService();
             projectService = new ProjectService();
+            equipmentService = new EquipmentService();
         }
 
         //
@@ -46,6 +50,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
             var hardwareKitModels = Mapper.Map<IEnumerable<HardwareKitModel>>(projectBO.HardwareKits.Where(h => h.IsCurrentRevision));
 
+
             //Filter and sort data
 
             hardwareKitModels = hardwareKitModels.OrderBy(r => r.HardwareKitNumber).ToList();
@@ -58,14 +63,33 @@ namespace WendtEquipmentTracking.App.Controllers
 
         public ActionResult Details(string hardwareKitNumber)
         {
-            var hardwareKits = hardwareKitService.GetByHardwareKitNumber(hardwareKitNumber);
+            var hardwareKitBOs = hardwareKitService.GetByHardwareKitNumber(hardwareKitNumber);
 
-            if (hardwareKits == null)
+            if (hardwareKitBOs == null)
             {
                 return HttpNotFound();
             }
 
-            var model = Mapper.Map<IEnumerable<HardwareKitModel>>(hardwareKits);
+            var model = new List<HardwareKitModel>();
+
+            foreach (var hardwareKitBO in hardwareKitBOs)
+            {
+                var hardwareGroupModels = hardwareKitBO.HardwareKitEquipments
+                .GroupBy(e => new { e.Equipment.ShippingTagNumber, e.Equipment.Description }, (key, g) => new HardwareKitGroupModel
+                {
+                    ShippingTagNumber = key.ShippingTagNumber,
+                    Description = key.Description,
+                    Quantity = g.Sum(e => e.Equipment.Quantity.HasValue ? e.Equipment.Quantity.Value : 0),
+                    QuantityToShip = (int)Math.Ceiling(g.Sum(e => e.Quantity))
+                }).ToList();
+
+                var hardwareKitModel = Mapper.Map<HardwareKitModel>(hardwareKitBO);
+                hardwareKitModel.HardwareGroups = hardwareGroupModels;
+
+                model.Add(hardwareKitModel);
+            }
+
+
             model = model.OrderByDescending(h => h.Revision).ToList();
 
             return View(model);
@@ -76,7 +100,9 @@ namespace WendtEquipmentTracking.App.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            var percent = 10;
+
+            return View(new HardwareKitModel { ExtraQuantityPercentage = percent });
         }
 
         //
@@ -96,7 +122,21 @@ namespace WendtEquipmentTracking.App.Controllers
                         var projectId = Convert.ToInt32(projectIdCookie);
                         model.ProjectId = projectId;
 
+                        var hardwareKitEquipmentsBOs = new List<HardwareKitEquipmentBO>();
+                        foreach (var hardwareGroup in model.HardwareGroups)
+                        {
+                            var hardwareInWorkOrderBOs = equipmentService.GetHardwareByShippingTagNumber(projectId, hardwareGroup.ShippingTagNumber);
+                            hardwareKitEquipmentsBOs.AddRange(hardwareInWorkOrderBOs.Select(h => new HardwareKitEquipmentBO
+                            {
+                                EquipmentId = h.EquipmentId,
+                                HardwareKitId = model.HardwareKitId,
+                                Quantity = h.Quantity.HasValue ? h.Quantity.Value + (h.Quantity.Value * (model.ExtraQuantityPercentage / 100)) : 0
+                            }));
+                        }
+
                         var hardwareKitBO = Mapper.Map<HardwareKitBO>(model);
+
+                        hardwareKitBO.HardwareKitEquipments = hardwareKitEquipmentsBOs;
 
                         hardwareKitService.Save(hardwareKitBO);
 
@@ -117,13 +157,23 @@ namespace WendtEquipmentTracking.App.Controllers
 
         public ActionResult Edit(int id)
         {
-            var hardwareKit = hardwareKitService.GetById(id);
-            if (hardwareKit == null)
+            var hardwareKitBO = hardwareKitService.GetById(id);
+            if (hardwareKitBO == null)
             {
                 return HttpNotFound();
             }
 
-            var hardwareKitModel = Mapper.Map<HardwareKitModel>(hardwareKit);
+            var hardwareGroupModels = hardwareKitBO.HardwareKitEquipments
+                .GroupBy(e => new { e.Equipment.ShippingTagNumber, e.Equipment.Description }, (key, g) => new HardwareKitGroupModel
+                {
+                    ShippingTagNumber = key.ShippingTagNumber,
+                    Description = key.Description,
+                    Quantity = g.Sum(e => e.Equipment.Quantity.HasValue ? e.Equipment.Quantity.Value : 0),
+                    QuantityToShip = (int)Math.Ceiling(g.Sum(e => e.Quantity))
+                }).ToList();
+
+            var hardwareKitModel = Mapper.Map<HardwareKitModel>(hardwareKitBO);
+            hardwareKitModel.HardwareGroups = hardwareGroupModels;
 
             return View(hardwareKitModel);
         }
@@ -145,11 +195,26 @@ namespace WendtEquipmentTracking.App.Controllers
                         var projectId = Convert.ToInt32(projectIdCookie);
                         model.ProjectId = projectId;
 
-                        var hardwareKit = hardwareKitService.GetById(id);
+                        var hardwareKitBO = hardwareKitService.GetById(id);
 
-                        Mapper.Map<HardwareKitModel, HardwareKitBO>(model, hardwareKit);
+                        var hardwareKitEquipmentsBOs = new List<HardwareKitEquipmentBO>();
+                        foreach (var hardwareGroup in model.HardwareGroups)
+                        {
+                            var hardwareInWorkOrderBOs = equipmentService.GetHardwareByShippingTagNumber(projectId, hardwareGroup.ShippingTagNumber);
+                            hardwareKitEquipmentsBOs.AddRange(hardwareInWorkOrderBOs.Select(h => new HardwareKitEquipmentBO
+                            {
+                                EquipmentId = h.EquipmentId,
+                                HardwareKitId = model.HardwareKitId,
+                                Quantity = h.Quantity.HasValue ? h.Quantity.Value + (h.Quantity.Value * (model.ExtraQuantityPercentage / 100)) : 0
+                            }));
+                        }
 
-                        hardwareKitService.Update(hardwareKit);
+
+                        Mapper.Map<HardwareKitModel, HardwareKitBO>(model, hardwareKitBO);
+
+                        hardwareKitBO.HardwareKitEquipments = hardwareKitEquipmentsBOs;
+
+                        hardwareKitService.Update(hardwareKitBO);
 
                         return RedirectToAction("Index");
                     }
@@ -220,26 +285,19 @@ namespace WendtEquipmentTracking.App.Controllers
 
             var equipmentBOs = projectBO.Equipments.Where(e => e.IsHardware && (e.HardwareKitEquipments == null || e.HardwareKitEquipments.Count() == 0));
 
-            var equipmentModels = Mapper.Map<IEnumerable<EquipmentModel>>(equipmentBOs);
-            equipmentModels.ToList().ForEach(e =>
-            {
-                e.ProjectNumber = projectBO.ProjectNumber;
-                e.SetIndicators();
-            });
+            var hardwareGroups = equipmentBOs
+                .GroupBy(e => new { e.ShippingTagNumber, e.Description }, (key, g) => new HardwareKitGroupModel
+                {
+                    ShippingTagNumber = key.ShippingTagNumber,
+                    Description = key.Description,
+                    Quantity = g.Sum(e => e.Quantity.HasValue ? e.Quantity.Value : 0)
+                }).ToList();
 
-            //Filter and sort data
-
-            equipmentModels = equipmentModels.OrderBy(r => r.EquipmentId);
-
-            var hardwareKitEquipments = equipmentModels.Select(e => new HardwareKitEquipmentModel
-            {
-                Equipment = e,
-                EquipmentId = e.EquipmentId
-            }).ToList();
+            hardwareGroups.ForEach(hg => hg.QuantityToShip = (int)Math.Ceiling(hg.Quantity + (hg.Quantity * (DEFAULT_PERCENT / 100))));
 
             var model = new HardwareKitModel
             {
-                HardwareKitEquipments = hardwareKitEquipments
+                HardwareGroups = hardwareGroups
             };
 
             return PartialView(model);
@@ -270,28 +328,17 @@ namespace WendtEquipmentTracking.App.Controllers
 
             var equipmentBOs = projectBO.Equipments.Where(e => e.IsHardware && (e.HardwareKitEquipments == null || e.HardwareKitEquipments.Count() == 0));
 
-            var equipmentModels = Mapper.Map<IEnumerable<EquipmentModel>>(equipmentBOs);
-            equipmentModels.ToList().ForEach(e =>
-            {
-                e.ProjectNumber = projectBO.ProjectNumber;
-                e.SetIndicators();
-            });
+            var hardwareGroups = equipmentBOs.Where(hg => !model.HardwareGroups.Any(mhg => mhg.ShippingTagNumber == hg.ShippingTagNumber))
+                .GroupBy(e => new { e.ShippingTagNumber, e.Description }, (key, g) => new HardwareKitGroupModel
+                {
+                    ShippingTagNumber = key.ShippingTagNumber,
+                    Description = key.Description,
+                    Quantity = g.Sum(e => e.Quantity.HasValue ? e.Quantity.Value : 0)
+                }).ToList();
 
 
-            var hardwareKitEquipments = new List<HardwareKitEquipmentModel>();
 
-            hardwareKitEquipments = equipmentModels.Select(e => new HardwareKitEquipmentModel
-            {
-                Equipment = e,
-                EquipmentId = e.EquipmentId,
-                Quantity = model.HardwareKitEquipments.FirstOrDefault(be => be.EquipmentId == e.EquipmentId).Quantity
-            }).ToList();
-
-            var modelHardwareKitEquipments = model.HardwareKitEquipments.Where(be => equipmentModels == null || !equipmentModels.Any(fullbe => fullbe.EquipmentId == be.EquipmentId));
-
-            hardwareKitEquipments.AddRange(modelHardwareKitEquipments);
-
-            model.HardwareKitEquipments = hardwareKitEquipments;
+            model.HardwareGroups.ToList().AddRange(hardwareGroups);
 
             return PartialView("HardwareToAddToHardwareKit", model);
         }

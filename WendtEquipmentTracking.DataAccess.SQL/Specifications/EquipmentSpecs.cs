@@ -25,5 +25,25 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Specifications
         {
             return new IsDeletedSpecification();
         }
+
+        public static Specification<Equipment> IsHardware()
+        {
+            return new IsHardwareSpecification();
+        }
+
+        public static Specification<Equipment> IsAttachedToHardwareKit()
+        {
+            return new IsAttachedToHardwareKitSpecification();
+        }
+
+        public static Specification<Equipment> ShippingTagNumber(string workOrderNumber)
+        {
+            return new ShippingTagNumberSpecification(workOrderNumber);
+        }
+
+        public static Specification<Equipment> ProjectId(int projectId)
+        {
+            return new ProjectIdSpecification(projectId);
+        }
     }
 }

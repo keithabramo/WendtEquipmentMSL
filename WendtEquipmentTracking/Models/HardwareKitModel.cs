@@ -23,6 +23,8 @@ namespace WendtEquipmentTracking.App.Models
         [Required]
         public double ExtraQuantityPercentage { get; set; }
 
-        public IList<HardwareKitEquipmentModel> HardwareKitEquipments { get; set; }
+        public BillOfLadingModel BillOfLading { get; set; }
+
+        public IList<HardwareKitGroupModel> HardwareGroups { get; set; }
     }
 }

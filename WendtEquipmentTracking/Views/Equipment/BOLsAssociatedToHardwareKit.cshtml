@@ -1,0 +1,46 @@
+﻿@model IEnumerable<BillOfLadingModel>
+
+<table class="table table-condensed table-hover table-bordered table-styled">
+    <thead>
+        <tr>
+            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.BillOfLading.BillOfLadingNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BillOfLading.DateShipped)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BillOfLading.ShippedFrom)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Where(b => b.BillOfLading.IsCurrentRevision))
+        {
+            <tr>
+                <td class="text-center">
+                    <a href="@Url.Action("Details", "BillOfLading", new { billOfLadingNumber = item.BillOfLading.BillOfLadingNumber })">
+                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                    </a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BillOfLading.BillOfLadingNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BillOfLading.DateShipped)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BillOfLading.ShippedFrom)
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>

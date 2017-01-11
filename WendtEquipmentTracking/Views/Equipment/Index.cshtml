@@ -92,14 +92,29 @@
         {
             foreach (var item in Model)
             {
-                @Html.Partial("Edit", item)
+                if (item.IsHardwareKit)
+                {
+                    @Html.Partial("HardwareKit", item)
+                }
+                else
+                {
+                    @Html.Partial("Edit", item)
+                }
+
             }
         }
         else
         {
             foreach (var item in Model)
             {
-                @Html.Partial("Details", item)
+                if (item.IsHardwareKit)
+                {
+                    @Html.Partial("HardwareKit", item)
+                }
+                else
+                {
+                    @Html.Partial("Details", item)
+                }
             }
         }
     </tbody>
@@ -115,19 +130,29 @@
 
 <div class="hidden">
 
-   @* @Html.Partial("EditMock", new EquipmentModel())*@
-
 
     @foreach (var item in Model)
     {
-        if (item.BillOfLadingEquipments.Count() > 0)
+        if (@item.IsHardwareKit)
         {
-            <div id="@(item.EquipmentId)">
-                @Html.Partial("BOLsAssociatedToEquipment", item.BillOfLadingEquipments)
-            </div>
+            if (item.BillOfLading != null)
+            {
+                <div id="@("HardwareKit" + item.EquipmentId)">
+                    @Html.Partial("BOLsAssociatedToHardwareKit", item.BillOfLading)
+                </div>
+            }
+        }
+        else
+        {
+            if (item.BillOfLadingEquipments.Count() > 0)
+            {
+                <div id="@("Equipment" + item.EquipmentId)">
+                    @Html.Partial("BOLsAssociatedToEquipment", item.BillOfLadingEquipments)
+                </div>
+            }
         }
     }
-    
+
 </div>
 
 @section Scripts {

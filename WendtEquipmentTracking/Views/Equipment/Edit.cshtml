@@ -3,7 +3,7 @@
 <tr class="text-nowrap">
     @if (Model.BillOfLadingEquipments != null && Model.BillOfLadingEquipments.Count() > 0)
     {
-        <td data-toggle="collapse" data-id="@Model.EquipmentId" class="expand text-center"><span class="glyphicon glyphicon-plus text-primary"></span></td>
+        <td data-toggle="collapse" data-id="@("Equipment" + Model.EquipmentId)" class="expand text-center"><span class="glyphicon glyphicon-plus text-primary"></span></td>
     }
     else
     {
@@ -57,7 +57,7 @@
         @Html.ValidationMessageFor(modelItem => modelItem.DrawingNumber, "", new { @class = "text-danger" })
     </td>
     <td data-search="@Html.DisplayFor(modelItem => modelItem.WorkOrderNumber)" data-sort="@Html.DisplayFor(modelItem => modelItem.WorkOrderNumber)">
-        @Html.DropDownListFor(modelItem => modelItem.WorkOrderNumber, new SelectList(Model.WorkOrders), new { @class = "form-control" })
+        @Html.EditorFor(modelItem => modelItem.WorkOrderNumber, new { htmlAttributes = new { @class = "form-control autocomplete" } })
         @Html.ValidationMessageFor(modelItem => modelItem.WorkOrderNumber, "", new { @class = "text-danger" })
     </td>
     <td data-search="@Html.DisplayFor(modelItem => modelItem.Quantity)" data-sort="@Html.DisplayFor(modelItem => modelItem.Quantity)">

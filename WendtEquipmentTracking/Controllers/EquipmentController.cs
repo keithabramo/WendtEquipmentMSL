@@ -13,16 +13,13 @@ namespace WendtEquipmentTracking.App.Controllers
 {
     public class EquipmentController : BaseController
     {
-        private const int PAGE_SIZE = 30;
         private IEquipmentService equipmentService;
         private IProjectService projectService;
-        private IWorkOrderPriceService workOrderPriceService;
 
         public EquipmentController()
         {
             equipmentService = new EquipmentService();
             projectService = new ProjectService();
-            workOrderPriceService = new WorkOrderPriceService();
         }
 
         //
@@ -47,20 +44,21 @@ namespace WendtEquipmentTracking.App.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            var workOrderPriceBOs = projectBO.WorkOrderPrices;
-
-            var equipmentModels = Mapper.Map<IEnumerable<EquipmentModel>>(projectBO.Equipments);
+            var equipmentModels = Mapper.Map<List<EquipmentModel>>(projectBO.Equipments);
             equipmentModels.ToList().ForEach(e =>
             {
                 e.ProjectNumber = projectBO.ProjectNumber;
                 e.SetIndicators();
                 e.BillOfLadingEquipments.ToList().ForEach(b => b.BillOfLading.SetBillOfLadingIndicators());
-                e.WorkOrders = workOrderPriceBOs.Select(w => w.WorkOrderNumber);
             });
 
-            //Filter and sort data
+            var hardwareKitModels = Mapper.Map<IEnumerable<EquipmentModel>>(projectBO.HardwareKits);
 
-            equipmentModels = equipmentModels.OrderBy(r => r.EquipmentId);
+            equipmentModels.AddRange(hardwareKitModels);
+
+            
+
+            equipmentModels = equipmentModels.OrderBy(r => r.EquipmentName).ToList();
 
             return View(equipmentModels);
         }
@@ -141,28 +139,7 @@ namespace WendtEquipmentTracking.App.Controllers
         [ChildActionOnly]
         public ActionResult Create()
         {
-            IEnumerable<string> workOrders = new List<string>();
-
-            var projectIdCookie = CookieHelper.Get("ProjectId");
-
-            if (!string.IsNullOrEmpty(projectIdCookie))
-            {
-                var projectId = Convert.ToInt32(projectIdCookie);
-
-                //Get Data
-                var projectBO = projectService.GetById(projectId);
-
-                if (projectBO != null)
-                {
-                    var workOrderPriceBOs = projectBO.WorkOrderPrices;
-                    workOrders = workOrderPriceBOs.Select(w => w.WorkOrderNumber);
-                }
-            }
-
-            return PartialView(new EquipmentModel
-            {
-                WorkOrders = workOrders
-            });
+            return PartialView(new EquipmentModel());
         }
 
         //
@@ -171,7 +148,6 @@ namespace WendtEquipmentTracking.App.Controllers
         [HttpPost]
         public ActionResult Create(EquipmentModel model)
         {
-            IEnumerable<string> workOrders = new List<string>();
             try
             {
                 if (ModelState.IsValid)
@@ -194,25 +170,16 @@ namespace WendtEquipmentTracking.App.Controllers
                         //Get Data
                         var projectBO = projectService.GetById(projectId);
 
-                        if (projectBO != null)
-                        {
-                            var workOrderPriceBOs = projectBO.WorkOrderPrices;
-                            workOrders = workOrderPriceBOs.Select(w => w.WorkOrderNumber);
-                        }
 
                         newEquipmentModel.ProjectNumber = projectBO.ProjectNumber;
                         newEquipmentModel.SetIndicators();
-                        newEquipmentModel.WorkOrders = workOrders;
                         return PartialView("Edit", newEquipmentModel);
                     }
                 }
-
-                model.WorkOrders = workOrders;
                 return PartialView(model);
             }
             catch
             {
-                model.WorkOrders = workOrders;
                 return PartialView(model);
             }
         }
@@ -224,7 +191,6 @@ namespace WendtEquipmentTracking.App.Controllers
         [HttpPost]
         public ActionResult Edit(int id, EquipmentModel model)
         {
-            IEnumerable<string> workOrders = new List<string>();
             try
             {
                 if (ModelState.IsValid)
@@ -247,25 +213,16 @@ namespace WendtEquipmentTracking.App.Controllers
                         //Get Data
                         var projectBO = projectService.GetById(projectId);
 
-                        if (projectBO != null)
-                        {
-                            var workOrderPriceBOs = projectBO.WorkOrderPrices;
-                            workOrders = workOrderPriceBOs.Select(w => w.WorkOrderNumber);
-                        }
-
                         updatedEquipmentModel.ProjectNumber = projectBO.ProjectNumber;
                         updatedEquipmentModel.SetIndicators();
-                        updatedEquipmentModel.WorkOrders = workOrders;
                         return PartialView(updatedEquipmentModel);
                     }
                 }
 
-                model.WorkOrders = workOrders;
                 return PartialView(model);
             }
             catch (Exception e)
             {
-                model.WorkOrders = workOrders;
                 return PartialView(model);
             }
         }

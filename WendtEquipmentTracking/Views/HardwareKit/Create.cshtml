@@ -14,29 +14,34 @@
         <h4>Create a new Hardware Kit</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.HardwareKitNumber)
+                    @Html.EditorFor(model => model.HardwareKitNumber, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.HardwareKitNumber, "", new { @class = "text-danger" })
+                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.HardwareKitNumber)
-            @Html.EditorFor(model => model.HardwareKitNumber, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.HardwareKitNumber, "", new { @class = "text-danger" })
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ExtraQuantityPercentage)
-            @Html.EditorFor(model => model.ExtraQuantityPercentage, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.ExtraQuantityPercentage, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ExtraQuantityPercentage)
+                    @Html.EditorFor(model => model.ExtraQuantityPercentage, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ExtraQuantityPercentage, "", new { @class = "text-danger" })
+                </div>
+            </div>
         </div>
 
         <hr />
 
-        <div class="form-group">
+        <div class="row">
             <div class="col-md-6">
-                @Html.Action("HardwareToAddToHardwareKit")
+                <div class="form-group">
+                    @Html.Action("HardwareToAddToHardwareKit")
+                </div>
             </div>
         </div>
 
-        <div class="form-group">
-            <div class="col-md-12">
+        <div class="row">
+            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" /> | @Html.ActionLink("Cancel", "Index", "Home")
             </div>
         </div>

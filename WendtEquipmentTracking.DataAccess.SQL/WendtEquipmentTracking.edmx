@@ -92,7 +92,7 @@
           <Property Name="HardwareKitEquipmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="HardwareKitId" Type="int" Nullable="false" />
           <Property Name="EquipmentId" Type="int" Nullable="false" />
-          <Property Name="Quantity" Type="float" Nullable="false" />
+          <Property Name="QuantityToShip" Type="float" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Project">
@@ -435,7 +435,7 @@
           <Property Name="HardwareKitEquipmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="HardwareKitId" Type="Int32" Nullable="false" />
           <Property Name="EquipmentId" Type="Int32" Nullable="false" />
-          <Property Name="Quantity" Type="Double" Nullable="false" />
+          <Property Name="QuantityToShip" Type="Double" Nullable="false" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Equipment" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_HardwareKitEquipment_Equipment" FromRole="HardwareKitEquipment" ToRole="Equipment" />
           <NavigationProperty Name="HardwareKit" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_HardwareKitEquipment_HardwareKit" FromRole="HardwareKitEquipment" ToRole="HardwareKit" />
@@ -687,7 +687,7 @@
             <EntityTypeMapping TypeName="WendtEquipmentTracking.DataAccess.SQL.Model.HardwareKitEquipment">
               <MappingFragment StoreEntitySet="HardwareKitEquipment">
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="QuantityToShip" ColumnName="QuantityToShip" />
                 <ScalarProperty Name="EquipmentId" ColumnName="EquipmentId" />
                 <ScalarProperty Name="HardwareKitId" ColumnName="HardwareKitId" />
                 <ScalarProperty Name="HardwareKitEquipmentId" ColumnName="HardwareKitEquipmentId" />

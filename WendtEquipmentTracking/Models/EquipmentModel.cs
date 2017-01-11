@@ -11,6 +11,8 @@ namespace WendtEquipmentTracking.App.Models
         public int EquipmentId { get; set; }
         public int ProjectId { get; set; }
 
+        public bool IsHardwareKit { get; set; }
+
 
         [DisplayName("Equipment")]
         [Required]
@@ -117,11 +119,13 @@ namespace WendtEquipmentTracking.App.Models
         [DisplayName("Sales Order Number")]
         public string SalesOrderNumber { get; set; }
 
+        //Only For HardwareKits
+        public BillOfLadingModel BillOfLading { get; set; }
+
         public IList<BillOfLadingEquipmentModel> BillOfLadingEquipments { get; set; }
 
         public IList<HardwareKitEquipmentModel> HardwareKitEquipments { get; set; }
 
-        public IEnumerable<string> WorkOrders { get; set; }
 
         public HardwareKitEquipmentModel HardwwareKitEquipment
         {
@@ -203,7 +207,7 @@ namespace WendtEquipmentTracking.App.Models
             }
 
             //sales order
-            if (!WorkOrderNumber.Contains(ProjectNumber))
+            if (string.IsNullOrEmpty(WorkOrderNumber) || !WorkOrderNumber.Contains(ProjectNumber))
             {
                 Indicators.SalesOrderNumberColor = IndicatorsModel.Colors.Red;
             }

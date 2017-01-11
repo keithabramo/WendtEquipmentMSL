@@ -157,6 +157,7 @@
     <Compile Include="Common\ActionNav.cs" />
     <Compile Include="Common\SuccessStatus.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\WorkOrderPriceApiController.cs" />
     <Compile Include="Controllers\WorkOrderPriceController.cs" />
     <Compile Include="Controllers\HardwareKitController.cs" />
     <Compile Include="Controllers\BillOfLadingController.cs" />
@@ -168,6 +169,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\HardwareKitGroupModel.cs" />
     <Compile Include="Models\HardwareKitEquipmentModel.cs" />
     <Compile Include="Models\BillOfLadingEquipmentModel.cs" />
     <Compile Include="Models\BillOfLadingModel.cs" />
@@ -299,7 +301,8 @@
     <Content Include="Views\Equipment\Details.cshtml" />
     <Content Include="Views\BillOfLading\Edit.cshtml" />
     <Content Include="Views\HardwareKit\Edit.cshtml" />
-    <Content Include="Views\Equipment\EditMock.cshtml" />
+    <Content Include="Views\Equipment\HardwareKit.cshtml" />
+    <Content Include="Views\Equipment\BOLsAssociatedToHardwareKit.cshtml" />
     <None Include="Views\Import\Equipment.cshtml" />
     <Content Include="Views\Import\SelectEquipmentSheets.cshtml" />
     <Content Include="Views\Import\ImportEquipmentPartial.cshtml" />

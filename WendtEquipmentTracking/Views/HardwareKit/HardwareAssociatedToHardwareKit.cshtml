@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HardwareKitEquipmentModel>
+﻿@model IEnumerable<HardwareKitGroupModel>
 
 <h4>Hardware</h4>
 
@@ -6,16 +6,16 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Equipment.EquipmentName)
+                @Html.DisplayNameFor(model => model.ShippingTagNumber)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Equipment.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Equipment.Quantity)
+                @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.QuantityToShip)
             </th>
         </tr>
     </thead>
@@ -24,16 +24,16 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Equipment.EquipmentName)
+                    @Html.DisplayFor(modelItem => item.ShippingTagNumber)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Equipment.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Equipment.Quantity)
+                    @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QuantityToShip)
                 </td>
             </tr>
         }

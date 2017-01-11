@@ -3,7 +3,7 @@
 <tr class="text-nowrap">
     @if (Model.BillOfLadingEquipments != null && Model.BillOfLadingEquipments.Count() > 0)
     {
-        <td data-toggle="collapse" data-id="@("Equipment" + Model.EquipmentId)" class="expand text-center"><span class="glyphicon glyphicon-plus text-primary"></span></td>
+        <td data-toggle="collapse" data-id="@("HardwareKit" + Model.EquipmentId)" class="expand text-center"><span class="glyphicon glyphicon-plus text-primary"></span></td>
     }
     else
     {
@@ -11,14 +11,9 @@
     }
     <td>
         @Html.DisplayFor(modelItem => modelItem.IsHardware) 
-        @if (Model.HardwareKitEquipments != null && Model.HardwareKitEquipments.Count() > 0)
-        {
-            <br/>
-            @("Associated To Hardware Kit " + Model.HardwwareKitEquipment.HardwareKit.HardwareKitNumber)
-        }
     </td>
     <td>
-        @Html.DisplayFor(modelItem => modelItem.EquipmentName)
+        Hardware Kit: @Html.DisplayFor(modelItem => modelItem.EquipmentName)
     </td>
     <td>
         @Html.DisplayFor(modelItem => modelItem.Priority)
@@ -39,9 +34,9 @@
         @Html.DisplayFor(modelItem => modelItem.ShippingTagNumber)
     </td>
     <td class="long-column">
-        @Html.DisplayFor(modelItem => modelItem.Description)
+        Misc
     </td>
-    <td class="@Model.Indicators.UnitWeightColor.ToString()">
+    <td>
         @Html.DisplayFor(modelItem => modelItem.UnitWeight)
     </td>
     <td>
@@ -50,16 +45,16 @@
     <td>
         @Html.DisplayFor(modelItem => modelItem.TotalWeightShipped)
     </td>
-    <td class="@Model.Indicators.ReadyToShipColor.ToString()">
+    <td>
         @Html.DisplayFor(modelItem => modelItem.ReadyToShip)
     </td>
-    <td class="@Model.Indicators.ShippedQtyColor.ToString()">
+    <td>
         @Html.DisplayFor(modelItem => modelItem.ShippedQuantity)
     </td>
-    <td class="@Model.Indicators.LeftToShipColor.ToString()">
+    <td>
         @Html.DisplayFor(modelItem => modelItem.LeftToShip)
     </td>
-    <td class="@Model.Indicators.FullyShippedColor.ToString()">
+    <td>
         @if (Model.FullyShipped.HasValue && Model.FullyShipped.Value == true)
         {
             @:Yes
@@ -73,16 +68,16 @@
             @:NA
         }
     </td>
-    <td class="@Model.Indicators.CustomsValueColor.ToString()">
+    <td>
         @Html.DisplayFor(modelItem => modelItem.CustomsValue)
     </td>
-    <td class="@Model.Indicators.SalePriceColor.ToString()">
+    <td>
         @Html.DisplayFor(modelItem => modelItem.SalePrice)
     </td>
     <td>
         @Html.DisplayFor(modelItem => modelItem.HTSCode)
     </td>
-    <td class="@Model.Indicators.CountyOfOriginColor.ToString()">
+    <td>
         @Html.DisplayFor(modelItem => modelItem.CountryOfOrigin)
     </td>
     <td>
@@ -91,7 +86,7 @@
     <td>
         @Html.DisplayFor(modelItem => modelItem.AutoShipFile)
     </td>
-    <td class="@Model.Indicators.SalesOrderNumberColor.ToString()">
+    <td>
         @Html.DisplayFor(modelItem => modelItem.SalesOrderNumber)
     </td>
 </tr>

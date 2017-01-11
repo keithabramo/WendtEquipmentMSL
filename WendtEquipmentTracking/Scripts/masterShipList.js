@@ -7,6 +7,7 @@
         this.editURL = "/Equipment/Edit";
 
         this.initStyles = function () {
+
         }
 
         this.initEvents = function () {
