@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using WendtEquipmentTracking.App.Common;
+using WendtEquipmentTracking.BusinessLogic;
 using WendtEquipmentTracking.BusinessLogic.Api;
 
 namespace WendtEquipmentTracking.App.Controllers
@@ -12,6 +13,11 @@ namespace WendtEquipmentTracking.App.Controllers
         private IWorkOrderPriceService workOrderPriceService;
         private IProjectService projectService;
 
+        public WorkOrderPriceApiController()
+        {
+            workOrderPriceService = new WorkOrderPriceService();
+            projectService = new ProjectService();
+        }
 
         //
         // GET: api/UserApi/Search

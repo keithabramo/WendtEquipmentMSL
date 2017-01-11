@@ -7,8 +7,7 @@
             $(".datePicker").datepicker();
 
             $(".autocomplete").autocomplete({
-                source: "/api/WorkOrderPriceApi/Search",
-                minLength: 2
+                source: "/api/WorkOrderPriceApi/Search"
             });
         }
 

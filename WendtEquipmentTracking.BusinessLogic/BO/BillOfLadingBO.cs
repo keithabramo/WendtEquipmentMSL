@@ -19,6 +19,5 @@ namespace WendtEquipmentTracking.BusinessLogic.BO
         public bool ToStorage { get; set; }
 
         public IEnumerable<BillOfLadingEquipmentBO> BillOfLadingEquipments { get; set; }
-        public IEnumerable<HardwareKitBO> HardwareKits { get; set; }
     }
 }

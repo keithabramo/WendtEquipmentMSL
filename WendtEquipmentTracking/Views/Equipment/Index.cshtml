@@ -92,7 +92,7 @@
         {
             foreach (var item in Model)
             {
-                if (item.IsHardwareKit)
+                if (item.HardwareKit != null)
                 {
                     @Html.Partial("HardwareKit", item)
                 }
@@ -107,7 +107,7 @@
         {
             foreach (var item in Model)
             {
-                if (item.IsHardwareKit)
+                if (item.HardwareKit != null)
                 {
                     @Html.Partial("HardwareKit", item)
                 }
@@ -133,23 +133,11 @@
 
     @foreach (var item in Model)
     {
-        if (@item.IsHardwareKit)
+        if (item.BillOfLadingEquipments.Count() > 0)
         {
-            if (item.BillOfLading != null)
-            {
-                <div id="@("HardwareKit" + item.EquipmentId)">
-                    @Html.Partial("BOLsAssociatedToHardwareKit", item.BillOfLading)
-                </div>
-            }
-        }
-        else
-        {
-            if (item.BillOfLadingEquipments.Count() > 0)
-            {
-                <div id="@("Equipment" + item.EquipmentId)">
-                    @Html.Partial("BOLsAssociatedToEquipment", item.BillOfLadingEquipments)
-                </div>
-            }
+            <div id="@(item.EquipmentId)">
+                @Html.Partial("BOLsAssociatedToEquipment", item.BillOfLadingEquipments)
+            </div>
         }
     }
 

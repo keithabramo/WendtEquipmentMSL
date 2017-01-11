@@ -21,7 +21,7 @@
             <div class="col-sm-4">
                 <div class="form-group">
                     @Html.LabelFor(model => model.ProjectNumber)
-                        @Html.EditorFor(model => model.ProjectNumber, new { htmlAttributes = new { @class = "form-control autocomplete" } })
+                        @Html.EditorFor(model => model.ProjectNumber, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.ProjectNumber, "", new { @class = "text-danger" })
                 </div>
             </div>

@@ -13,13 +13,13 @@ namespace WendtEquipmentTracking.BusinessLogic
     public class HardwareKitService : IHardwareKitService
     {
         private IHardwareKitEngine hardwareKitEngine;
-        private IEquipmentService equipmentService;
+        private IEquipmentEngine equipmentEngine;
 
 
         public HardwareKitService()
         {
             hardwareKitEngine = new HardwareKitEngine();
-            equipmentService = new EquipmentService();
+            equipmentEngine = new EquipmentEngine();
         }
 
         public void Save(HardwareKitBO hardwareKitBO)
@@ -27,6 +27,10 @@ namespace WendtEquipmentTracking.BusinessLogic
             var hardwareKit = Mapper.Map<HardwareKit>(hardwareKitBO);
 
             hardwareKitEngine.AddNewHardwareKit(hardwareKit);
+
+            var equipment = Mapper.Map<Equipment>(hardwareKitBO);
+
+            equipmentEngine.AddNewEquipment(equipment);
         }
 
         public IEnumerable<HardwareKitBO> GetAll()

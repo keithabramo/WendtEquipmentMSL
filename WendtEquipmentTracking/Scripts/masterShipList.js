@@ -17,6 +17,17 @@
                 $this.editsMade = true;
             });
 
+            $('.table').on('change', "input[name='IsHardware']", function () {
+                var isHardware = $(this).is(":checked");
+                var $equipmentNameInput =  $(this).closest("tr").find("input[name='EquipmentName']");
+
+                if (isHardware) {
+                    $equipmentNameInput.val("Hardware").attr("disabled", "disabled");
+                } else {
+                    $equipmentNameInput.removeAttr("disabled");
+                }
+            });
+
             $('.table tbody').on('blur', "tr", function () {
 
                 if ($this.editsMade) {
@@ -68,7 +79,7 @@
                     success: function (data) {
                         table.DataTable().row.add($(data)[0]).draw();
 
-                        $row.find("input, select").val("");
+                        $row.find("input, select").not("[type='button']").val("");
                     }
                 });
             });

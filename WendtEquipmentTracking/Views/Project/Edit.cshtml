@@ -22,7 +22,7 @@
                     @Html.LabelFor(model => model.ProjectNumber)
                         @Html.HiddenFor(model => model.ProjectId, new { htmlAttributes = new { @class = "form-control" } })
 
-                        @Html.EditorFor(model => model.ProjectNumber, new { htmlAttributes = new { @class = "form-control autocomplete" } })
+                        @Html.EditorFor(model => model.ProjectNumber, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.ProjectNumber, "", new { @class = "text-danger" })
                 </div>
             </div>

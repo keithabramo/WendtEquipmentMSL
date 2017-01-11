@@ -27,8 +27,6 @@ namespace WendtEquipmentTracking.App.AutoMapper.Profiles
             base.CreateMap<EquipmentSelectionModel, EquipmentBO>();
 
             base.CreateMap<HardwareKitBO, EquipmentModel>()
-                .ForMember(dest => dest.IsHardwareKit, opt => opt.UseValue(true))
-                .ForMember(dest => dest.EquipmentId, opt => opt.MapFrom(src => src.HardwareKitId))
                 .ForMember(dest => dest.EquipmentName, opt => opt.MapFrom(src => src.HardwareKitNumber))
                 .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.HardwareKitEquipments.Sum(hke => hke.Quantity)));
 

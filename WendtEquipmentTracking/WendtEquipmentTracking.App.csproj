@@ -301,7 +301,6 @@
     <Content Include="Views\Equipment\Details.cshtml" />
     <Content Include="Views\BillOfLading\Edit.cshtml" />
     <Content Include="Views\HardwareKit\Edit.cshtml" />
-    <Content Include="Views\Equipment\HardwareKit.cshtml" />
     <Content Include="Views\Equipment\BOLsAssociatedToHardwareKit.cshtml" />
     <None Include="Views\Import\Equipment.cshtml" />
     <Content Include="Views\Import\SelectEquipmentSheets.cshtml" />

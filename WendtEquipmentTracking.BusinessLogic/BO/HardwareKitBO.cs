@@ -11,8 +11,6 @@ namespace WendtEquipmentTracking.BusinessLogic.BO
         public string HardwareKitNumber { get; set; }
         public double ExtraQuantityPercentage { get; set; }
 
-        public BillOfLadingBO BillOfLading { get; set; }
-
         public IEnumerable<HardwareKitEquipmentBO> HardwareKitEquipments { get; set; }
     }
 }

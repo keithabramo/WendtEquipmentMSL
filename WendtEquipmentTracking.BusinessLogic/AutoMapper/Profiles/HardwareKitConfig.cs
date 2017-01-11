@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System.Linq;
 using WendtEquipmentTracking.BusinessLogic.BO;
 using WendtEquipmentTracking.DataAccess.SQL;
 
@@ -20,6 +21,9 @@ namespace WendtHardwareKitTracking.BusinessLogic.AutoMapper.Profiles
             base.CreateMap<HardwareKitEquipmentBO, HardwareKitEquipment>().MaxDepth(1);
             base.CreateMap<HardwareKitEquipment, HardwareKitEquipmentBO>().MaxDepth(1);
 
+            base.CreateMap<HardwareKitBO, Equipment>()
+                .ForMember(dest => dest.EquipmentName, opt => opt.MapFrom(src => src.HardwareKitNumber))
+                .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.HardwareKitEquipments.Sum(hke => hke.Quantity)));
 
         }
     }
