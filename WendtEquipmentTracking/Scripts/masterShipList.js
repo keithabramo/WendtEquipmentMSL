@@ -87,6 +87,8 @@
                                     }, 1000);
                                 }, 2000);
                             }
+
+                            form.initStyles();
                         }
                     });
                 }
@@ -97,7 +99,7 @@
             $('.table tfoot').on('click', ".createSubmit", function () {
 
 
-                var $row = $(this).closest("tfoot");
+                var $row = $(this).closest("tfoot tr");
                 var url = $this.createURL;
                 var $form = $("<form/>");
 
@@ -112,9 +114,39 @@
                     url: url,
                     data: $form.serialize(),
                     success: function (data) {
-                        table.DataTable().row.add($(data)[0]).draw();
+                         
+                        if (!$(data).hasClass("danger")) {
+                            var rowNode = table.DataTable().row.add($(data)[0]).draw();
+                            var $newRow = $(rowNode);
+                            
+                            $newRow.animate({
+                                backgroundColor: "#dff0d8"
+                            }, 1000);
 
-                        $row.find("input, select").not("[type='button']").val("");
+                            setTimeout(function () {
+                                $newRow.animate({
+                                    backgroundColor: "#ffffff"
+                                }, 1000);
+                            }, 2000);
+
+                            $row.removeClass("danger").addClass("warning");
+                            $row.find("input, select").not("[type='button']").val("");
+                            //Removes validation from input-fields
+                            $row.find('.input-validation-error')
+                                .addClass('input-validation-valid')
+                                .removeClass('input-validation-error');
+                            //Removes validation message after input-fields
+                            $row.find('.field-validation-error')
+                                .addClass('field-validation-valid')
+                                .removeClass('field-validation-error')
+                                .removeClass('text-danger')
+                                .text("");
+
+                        } else {
+                            $row.replaceWith($(data));
+                        }
+
+                        form.initStyles();
                     }
                 });
             });

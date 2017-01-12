@@ -103,13 +103,16 @@ namespace WendtEquipmentTracking.App.Controllers
 
                         newEquipmentModel.ProjectNumber = projectBO.ProjectNumber;
                         newEquipmentModel.SetIndicators();
+                        newEquipmentModel.Status = SuccessStatus.Success;
                         return PartialView("Edit", newEquipmentModel);
                     }
                 }
+                model.Status = SuccessStatus.Error;
                 return PartialView(model);
             }
             catch
             {
+                model.Status = SuccessStatus.Error;
                 return PartialView(model);
             }
         }

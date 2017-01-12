@@ -1,7 +1,6 @@
 ﻿@model EquipmentModel
 
-
-<tr class="warning">
+<tr class="@(Model.Status == SuccessStatus.Error ? "danger" : "warning")">
     <td>
         <input type="button" value="Create" class="btn btn-sm btn-primary createSubmit" />
     </td>

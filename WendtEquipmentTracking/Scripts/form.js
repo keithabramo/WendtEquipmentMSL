@@ -28,6 +28,6 @@
         this.initEvents();
     }
 
-    new Form();
+    form = new Form();
 
 });
