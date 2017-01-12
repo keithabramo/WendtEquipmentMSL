@@ -26,6 +26,9 @@
                     return false;
                 }
             );
+
+
+            $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="readyToShipFilter" /> Equipment Released</label>');
         }
 
         this.initEvents = function () {
@@ -116,7 +119,7 @@
                     success: function (data) {
                          
                         if (!$(data).hasClass("danger")) {
-                            var rowNode = table.DataTable().row.add($(data)[0]).draw();
+                            var rowNode = table.DataTable().row.add($(data)[0]).draw().node();
                             var $newRow = $(rowNode);
                             
                             $newRow.animate({
@@ -129,8 +132,17 @@
                                 }, 1000);
                             }, 2000);
 
+                            //reset create row
                             $row.removeClass("danger").addClass("warning");
-                            $row.find("input, select").not("[type='button']").val("");
+
+                            $row.find("input").not("[type='checkbox'], [type='button']").val("");
+                            $row.find("input[type='checkbox']").removeAttr("data-val-required");
+                            if ($row.find("input[type='checkbox']").is(":checked")) {
+                                $row.find("input[type='checkbox']").click();
+                            }
+                            $row.find("select").prop('selectedIndex', 0);
+
+
                             //Removes validation from input-fields
                             $row.find('.input-validation-error')
                                 .addClass('input-validation-valid')

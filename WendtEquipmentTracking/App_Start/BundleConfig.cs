@@ -29,6 +29,12 @@ namespace WendtEquipmentTracking.App
             bundles.Add(new ScriptBundle("~/bundles/masterShipList").Include(
                        "~/Scripts/masterShipList.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/hardwareKit").Include(
+                       "~/Scripts/hardwareKit.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/import").Include(
+                       "~/Scripts/import.js"));
+
 
 
             bundles.Add(new StyleBundle("~/Content/css")

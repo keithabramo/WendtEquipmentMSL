@@ -10,7 +10,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Api
 
         IEnumerable<HardwareKit> List(Specification<HardwareKit> specification);
 
-        void AddNewHardwareKit(HardwareKit hardwareKit);
+        int AddNewHardwareKit(HardwareKit hardwareKit);
 
         void UpdateHardwareKit(HardwareKit hardwareKit);
 

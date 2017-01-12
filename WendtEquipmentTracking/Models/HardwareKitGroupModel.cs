@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Foolproof;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace WendtEquipmentTracking.App.Models
@@ -7,21 +8,20 @@ namespace WendtEquipmentTracking.App.Models
     {
         public int HardwareKitId { get; set; }
 
+        public bool Checked { get; set; }
+
         [DisplayName("Shipping Tag Number")]
-        [ReadOnly(true)]
         public string ShippingTagNumber { get; set; }
 
         [DisplayName("Description")]
-        [ReadOnly(true)]
         public string Description { get; set; }
 
         [DisplayName("Quantity")]
-        [ReadOnly(true)]
         public double Quantity { get; set; }
 
 
         [DisplayName("Quantity To Ship")]
-        [Required]
+        [RequiredIfTrue("Checked")]
         public int QuantityToShip { get; set; }
     }
 }

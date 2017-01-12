@@ -123,7 +123,7 @@ namespace WendtEquipmentTracking.App.Controllers
                         model.ProjectId = projectId;
 
                         var hardwareKitEquipmentsBOs = new List<HardwareKitEquipmentBO>();
-                        foreach (var hardwareGroup in model.HardwareGroups)
+                        foreach (var hardwareGroup in model.HardwareGroups.Where(m => m.Checked).ToList())
                         {
                             var hardwareInWorkOrderBOs = equipmentService.GetHardwareByShippingTagNumber(projectId, hardwareGroup.ShippingTagNumber);
                             hardwareKitEquipmentsBOs.AddRange(hardwareInWorkOrderBOs.Select(h => new HardwareKitEquipmentBO
@@ -169,7 +169,8 @@ namespace WendtEquipmentTracking.App.Controllers
                     ShippingTagNumber = key.ShippingTagNumber,
                     Description = key.Description,
                     Quantity = g.Sum(e => e.Equipment.Quantity.HasValue ? e.Equipment.Quantity.Value : 0),
-                    QuantityToShip = (int)Math.Ceiling(g.Sum(e => e.Quantity))
+                    QuantityToShip = (int)Math.Ceiling(g.Sum(e => e.Quantity)),
+                    Checked = true
                 }).ToList();
 
             var hardwareKitModel = Mapper.Map<HardwareKitModel>(hardwareKitBO);
@@ -198,7 +199,7 @@ namespace WendtEquipmentTracking.App.Controllers
                         var hardwareKitBO = hardwareKitService.GetById(id);
 
                         var hardwareKitEquipmentsBOs = new List<HardwareKitEquipmentBO>();
-                        foreach (var hardwareGroup in model.HardwareGroups)
+                        foreach (var hardwareGroup in model.HardwareGroups.Where(m => m.Checked).ToList())
                         {
                             var hardwareInWorkOrderBOs = equipmentService.GetHardwareByShippingTagNumber(projectId, hardwareGroup.ShippingTagNumber);
                             hardwareKitEquipmentsBOs.AddRange(hardwareInWorkOrderBOs.Select(h => new HardwareKitEquipmentBO
@@ -290,7 +291,8 @@ namespace WendtEquipmentTracking.App.Controllers
                 {
                     ShippingTagNumber = key.ShippingTagNumber,
                     Description = key.Description,
-                    Quantity = g.Sum(e => e.Quantity.HasValue ? e.Quantity.Value : 0)
+                    Quantity = g.Sum(e => e.Quantity.HasValue ? e.Quantity.Value : 0),
+                    Checked = true
                 }).ToList();
 
             hardwareGroups.ForEach(hg => hg.QuantityToShip = (int)Math.Ceiling(hg.Quantity + (hg.Quantity * (DEFAULT_PERCENT / 100))));
@@ -333,7 +335,8 @@ namespace WendtEquipmentTracking.App.Controllers
                 {
                     ShippingTagNumber = key.ShippingTagNumber,
                     Description = key.Description,
-                    Quantity = g.Sum(e => e.Quantity.HasValue ? e.Quantity.Value : 0)
+                    Quantity = g.Sum(e => e.Quantity.HasValue ? e.Quantity.Value : 0),
+                    Checked = true
                 }).ToList();
 
 

@@ -23,7 +23,13 @@ namespace WendtEquipmentTracking.BusinessLogic
         {
             var equipment = Mapper.Map<Equipment>(equipmentBO);
 
-            return equipmentEngine.AddNewEquipment(equipment);
+            var equipmentId = equipmentEngine.AddNewEquipment(equipment);
+
+            //this will dispose and reinstantiate a new context so we get the latest updates
+            //needed for ajax call of create equipment not getting the newest data from trigger update
+            equipmentEngine.SetDBContext(new WendtEquipmentTrackingEntities());
+
+            return equipmentId;
         }
 
         public void SaveAll(IEnumerable<EquipmentBO> equipmentBOs)
@@ -66,6 +72,10 @@ namespace WendtEquipmentTracking.BusinessLogic
 
 
             equipmentEngine.UpdateEquipment(oldEquipment);
+
+            //this will dispose and reinstantiate a new context so we get the latest updates
+            //needed for ajax call of edit equipment not getting the newest data from trigger update
+            equipmentEngine.SetDBContext(new WendtEquipmentTrackingEntities());
         }
 
         public void UpdateAll(IEnumerable<EquipmentBO> equipmentBOs)

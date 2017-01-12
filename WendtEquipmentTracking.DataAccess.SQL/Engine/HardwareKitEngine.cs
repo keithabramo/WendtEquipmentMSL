@@ -45,7 +45,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
                 .Include(x => x.HardwareKitEquipments);
         }
 
-        public void AddNewHardwareKit(HardwareKit hardwareKit)
+        public int AddNewHardwareKit(HardwareKit hardwareKit)
         {
             var now = DateTime.Now;
 
@@ -59,6 +59,8 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
             this.repository.Insert(hardwareKit);
             this.repository.Save();
+
+            return hardwareKit.HardwareKitId;
         }
 
         public void UpdateHardwareKit(HardwareKit hardwareKit)
@@ -85,6 +87,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
         {
             hardwareKit.IsDeleted = true;
             hardwareKit.HardwareKitEquipments.ToList().ForEach(ble => ble.IsDeleted = true);
+            hardwareKit.Equipments.ToList().ForEach(ble => ble.IsDeleted = true);
 
             this.repository.Update(hardwareKit);
             this.repository.Save();

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using WendtEquipmentTracking.BusinessLogic.Api;
@@ -26,9 +27,15 @@ namespace WendtEquipmentTracking.BusinessLogic
         {
             var hardwareKit = Mapper.Map<HardwareKit>(hardwareKitBO);
 
-            hardwareKitEngine.AddNewHardwareKit(hardwareKit);
+            var hardwareKitId = hardwareKitEngine.AddNewHardwareKit(hardwareKit);
 
-            var equipment = Mapper.Map<Equipment>(hardwareKitBO);
+            var equipment = new Equipment();
+            equipment.HardwareKitId = hardwareKitId;
+            equipment.EquipmentName = "Hardware Kit " + hardwareKitBO.HardwareKitNumber;
+            equipment.Description = "Misc";
+            equipment.ProjectId = hardwareKitBO.ProjectId;
+            equipment.Quantity = hardwareKitBO.HardwareKitEquipments.Sum(hke => hke.Quantity);
+            equipment.ReleaseDate = DateTime.Now;
 
             equipmentEngine.AddNewEquipment(equipment);
         }

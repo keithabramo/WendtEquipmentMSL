@@ -20,7 +20,7 @@
         @Html.HiddenFor(model => model.HardwareKitNumber)
 
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <div class="form-group">
                     @Html.LabelFor(model => model.ExtraQuantityPercentage)
                     @Html.EditorFor(model => model.ExtraQuantityPercentage, new { htmlAttributes = new { @class = "form-control" } })
@@ -49,5 +49,5 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/form")
-    @Scripts.Render("~/bundles/table")
+    @Scripts.Render("~/bundles/hardwareKit")
 }

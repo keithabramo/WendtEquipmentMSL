@@ -6,6 +6,9 @@
     <thead>
         <tr>
             <th>
+                <input class="selectAll" type="checkbox" checked="checked" /> Select All
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.HardwareGroups[0].ShippingTagNumber)
             </th>
             <th>
@@ -23,6 +26,9 @@
         @for (int i = 0; i < Model.HardwareGroups.Count(); i++)
         {
             <tr>
+                <td>
+                    @Html.CheckBoxFor(modelItem => modelItem.HardwareGroups[i].Checked, htmlAttributes: new { @checked = "Checked" })
+                </td>
                 <td>
                     @Html.HiddenFor(modelItem => modelItem.HardwareGroups[i].ShippingTagNumber)
                     @Html.DisplayFor(modelItem => modelItem.HardwareGroups[i].ShippingTagNumber)

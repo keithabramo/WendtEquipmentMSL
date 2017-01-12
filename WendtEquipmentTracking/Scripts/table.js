@@ -29,8 +29,6 @@ $(function () {
                      "<'row'<'col-sm-12 text-center'p>>"
             });
 
-            $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="readyToShipFilter" /> Equipment Released</label>');
-
             waitingDialog.hide();
         }
 

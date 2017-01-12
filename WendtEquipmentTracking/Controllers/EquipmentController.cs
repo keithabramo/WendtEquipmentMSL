@@ -51,13 +51,7 @@ namespace WendtEquipmentTracking.App.Controllers
                 e.SetIndicators();
                 e.BillOfLadingEquipments.ToList().ForEach(b => b.BillOfLading.SetBillOfLadingIndicators());
             });
-
-            var hardwareKitModels = Mapper.Map<IEnumerable<EquipmentModel>>(projectBO.HardwareKits);
-
-            equipmentModels.AddRange(hardwareKitModels);
-
-
-
+            
             equipmentModels = equipmentModels.OrderBy(r => r.EquipmentName).ToList();
 
             return View(equipmentModels);
