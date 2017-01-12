@@ -16,10 +16,10 @@ namespace WendtEquipmentTracking.App
                         "~/Scripts/jquery.validate*",
                         "~/Scripts/jquery.unobtrusive*",
                         "~/Scripts/jquery.inputmask.js",
-                        "~/Scripts/waitingDialog.js",
                         "~/Scripts/form.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/table").Include(
+                        "~/Scripts/waitingDialog.js",
                         "~/Scripts/datatables.js",
                         "~/Scripts/table.js"));
 

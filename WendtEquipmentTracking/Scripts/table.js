@@ -1,4 +1,6 @@
-﻿$(function () {
+﻿waitingDialog.show();
+
+$(function () {
 
     var Table = function () {
 
@@ -21,11 +23,15 @@
 
             $(".table.my-datatable thead").prepend($searchHeader);
 
-
             this.dataTable = $(".table.my-datatable").DataTable({
-                bPaginate: false,
-                bInfo: false
+                dom: "<'row'<'col-sm-4 text-left custom'f><'col-sm-4 text-center'i><'col-sm-4 text-right'l>>" +
+                     "<'row'<'col-sm-12'tr>>" +
+                     "<'row'<'col-sm-12 text-center'p>>"
             });
+
+            $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="readyToShipFilter" /> Equipment Released</label>');
+
+            waitingDialog.hide();
         }
 
         this.initEvents = function () {

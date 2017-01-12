@@ -1,6 +1,6 @@
 ﻿@model EquipmentModel
 
-<tr class="text-nowrap">
+<tr class="text-nowrap @(Model.Status == SuccessStatus.Error ? "danger" : "") ">
     @if (Model.BillOfLadingEquipments != null && Model.BillOfLadingEquipments.Count() > 0)
     {
         <td data-toggle="collapse" data-id="@(Model.EquipmentId)" class="expand text-center"><span class="glyphicon glyphicon-plus text-primary"></span></td>
@@ -9,13 +9,13 @@
     {
         <td></td>
     }
-    <td>
+    <td data-search="@(Model.IsHardware)" >
         @if (Model.HardwareKitEquipments != null && Model.HardwareKitEquipments.Count() > 0)
         {
             @Html.HiddenFor(modelItem => modelItem.IsHardware)
 
             @Html.DisplayFor(modelItem => modelItem.IsHardware) <br />
-                @("Associated To Hardware Kit " + Model.HardwwareKitEquipment.HardwareKit.HardwareKitNumber)
+            @("Associated To Hardware Kit " + Model.HardwwareKitEquipment.HardwareKit.HardwareKitNumber)
 
         }
         else if (Model.BillOfLadingEquipments != null && Model.BillOfLadingEquipments.Count() > 0)
@@ -31,10 +31,11 @@
     </td>
     <td data-search="@Html.DisplayFor(modelItem => modelItem.EquipmentName)" data-sort="@Html.DisplayFor(modelItem => modelItem.EquipmentName)">
         @Html.HiddenFor(modelItem => modelItem.EquipmentId)
+        @Html.HiddenFor(modelItem => modelItem.ProjectNumber)
 
         @if (Model.IsHardware)
-            {
-            @Html.EditorFor(modelItem => modelItem.EquipmentName, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+        {
+            @Html.EditorFor(modelItem => modelItem.EquipmentName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
         }
         else
         {
@@ -63,13 +64,13 @@
     <td data-search="@Html.DisplayFor(modelItem => modelItem.Quantity)" data-sort="@Html.DisplayFor(modelItem => modelItem.Quantity)">
         @if (Model.HardwareKit != null)
         {
-            @Html.EditorFor(modelItem => modelItem.Quantity, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+            @Html.EditorFor(modelItem => modelItem.Quantity, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
         }
         else
         {
             @Html.EditorFor(modelItem => modelItem.Quantity, new { htmlAttributes = new { @class = "form-control" } })
         }
-        
+
         @Html.ValidationMessageFor(modelItem => modelItem.Quantity, "", new { @class = "text-danger" })
     </td>
     <td data-search="@Html.DisplayFor(modelItem => modelItem.ShippingTagNumber)" data-sort="@Html.DisplayFor(modelItem => modelItem.ShippingTagNumber)">
@@ -84,17 +85,18 @@
         @Html.EditorFor(modelItem => modelItem.UnitWeight, new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(modelItem => modelItem.UnitWeight, "", new { @class = "text-danger" })
     </td>
-    <td>
+    <td data-search="@Html.DisplayFor(modelItem => modelItem.TotalWeight)">
         @Html.HiddenFor(modelItem => modelItem.TotalWeight)
         @Html.DisplayFor(modelItem => modelItem.TotalWeight)
     </td>
-    <td>
+    <td data-search="@Html.DisplayFor(modelItem => modelItem.TotalWeightShipped)">
         @Html.HiddenFor(modelItem => modelItem.TotalWeightShipped)
         @Html.DisplayFor(modelItem => modelItem.TotalWeightShipped)
     </td>
     <td class="@Model.Indicators.ReadyToShipColor.ToString()">
         @Html.HiddenFor(modelItem => modelItem.ReadyToShip)
-        @Html.DisplayFor(modelItem => modelItem.ReadyToShip)
+        @Html.EditorFor(modelItem => modelItem.ReadyToShip, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(modelItem => modelItem.ReadyToShip, "", new { @class = "text-danger" })
     </td>
     <td class="@Model.Indicators.ShippedQtyColor.ToString()">
         @Html.HiddenFor(modelItem => modelItem.ShippedQuantity)
@@ -150,7 +152,7 @@
     <td class="text-nowrap">
         @if (Model.HardwareKit == null)
         {
-            @Ajax.ActionLink("Delete", "Delete", new { id = Model.EquipmentId }, new AjaxOptions { Confirm = "Are you sure you want to delete this equipment record?", OnSuccess = "DeleteSuccess", HttpMethod = "POST" })
+        @Ajax.ActionLink("Delete", "Delete", new { id = Model.EquipmentId }, new AjaxOptions { Confirm = "Are you sure you want to delete this equipment record?", OnSuccess = "DeleteSuccess", HttpMethod = "POST" })
         }
     </td>
 </tr>

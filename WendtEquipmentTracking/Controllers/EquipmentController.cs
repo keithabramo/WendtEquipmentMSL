@@ -56,83 +56,13 @@ namespace WendtEquipmentTracking.App.Controllers
 
             equipmentModels.AddRange(hardwareKitModels);
 
-            
+
 
             equipmentModels = equipmentModels.OrderBy(r => r.EquipmentName).ToList();
 
             return View(equipmentModels);
         }
 
-        //
-        // GET: /Equipment/ReadyToShip
-        public ActionResult ReadyToShip()
-        {
-            var projectIdCookie = CookieHelper.Get("ProjectId");
-
-            if (string.IsNullOrEmpty(projectIdCookie))
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            var projectId = Convert.ToInt32(projectIdCookie);
-
-            //Get Data
-            var projectBO = projectService.GetById(projectId);
-
-            if (projectBO == null)
-            {
-                CookieHelper.Delete("ProjectId");
-                return RedirectToAction("Index", "Home");
-            }
-
-            var equipmentBOs = projectBO.Equipments.Where(e => e.ReleaseDate != null && e.LeftToShip > 0 && !e.IsHardware);
-
-            var equipmentModels = Mapper.Map<IEnumerable<EquipmentModel>>(equipmentBOs);
-            equipmentModels.ToList().ForEach(e =>
-            {
-                e.ProjectNumber = projectBO.ProjectNumber;
-                e.SetIndicators();
-                e.BillOfLadingEquipments.ToList().ForEach(b => b.BillOfLading.SetBillOfLadingIndicators());
-            });
-
-            //Filter and sort data
-
-            equipmentModels = equipmentModels.OrderBy(r => r.EquipmentId);
-
-            return View(equipmentModels.ToList());
-        }
-
-        // POST: Equipment/ReadyToShip
-        [HttpPost]
-        public ActionResult ReadyToShip(IEnumerable<EquipmentModel> model)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    var projectIdCookie = CookieHelper.Get("ProjectId");
-
-                    if (!string.IsNullOrEmpty(projectIdCookie))
-                    {
-                        var projectId = Convert.ToInt32(projectIdCookie);
-                        model.ToList().ForEach(c => c.ProjectId = projectId);
-
-                        var equipmentBOs = Mapper.Map<IEnumerable<EquipmentBO>>(model);
-                        equipmentService.UpdateReadyToShip(equipmentBOs);
-
-                        return RedirectToAction("Index", "Home");
-                    }
-                }
-
-                return View(model);
-            }
-            catch (Exception e)
-            {
-                ModelState.AddModelError("", e.Message);
-
-                return View(model);
-            }
-        }
 
         //
         // GET: /Equipment/Create
@@ -209,20 +139,22 @@ namespace WendtEquipmentTracking.App.Controllers
 
                         var updatedEquipmentBO = equipmentService.GetById(id);
                         var updatedEquipmentModel = Mapper.Map<EquipmentModel>(updatedEquipmentBO);
-
-                        //Get Data
-                        var projectBO = projectService.GetById(projectId);
-
-                        updatedEquipmentModel.ProjectNumber = projectBO.ProjectNumber;
+                        
+                        updatedEquipmentModel.ProjectNumber = model.ProjectNumber;
                         updatedEquipmentModel.SetIndicators();
+                        updatedEquipmentModel.Status = SuccessStatus.Success;
                         return PartialView(updatedEquipmentModel);
                     }
                 }
 
+                model.SetIndicators();
+                model.Status = SuccessStatus.Error;
                 return PartialView(model);
             }
             catch (Exception e)
             {
+                model.SetIndicators();
+                model.Status = SuccessStatus.Error;
                 return PartialView(model);
             }
         }

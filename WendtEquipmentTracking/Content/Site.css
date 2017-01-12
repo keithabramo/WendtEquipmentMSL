@@ -40,15 +40,15 @@ body {
     padding: 5px;
 }
 
-.navbar-brand.vertical-bar-right {
-    border-color: #fff;
-    margin-right: 0px;
-    padding-right: 15px;
-}
+    .navbar-brand.vertical-bar-right {
+        border-color: #fff;
+        margin-right: 0px;
+        padding-right: 15px;
+    }
 
-.navbar-brand img {
-    height: 100%;
-}
+    .navbar-brand img {
+        height: 100%;
+    }
 
 .navbar-inverse {
     background-color: rgba(9, 79, 164, 0.8);
@@ -57,13 +57,13 @@ body {
 }
 
 
-.navbar-inverse .navbar-nav > li > a, .navbar-inverse .navbar-nav > li > strong, .navbar-inverse .navbar-brand {
-    color: #ffffff;
-}
+    .navbar-inverse .navbar-nav > li > a, .navbar-inverse .navbar-nav > li > strong, .navbar-inverse .navbar-brand {
+        color: #ffffff;
+    }
 
-.navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus {
-    background-color: #eeba52;
-}
+        .navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus {
+            background-color: #eeba52;
+        }
 
 .center-block {
     float: none;
@@ -74,51 +74,51 @@ body {
 }
 
 /* btn-secondary */
-.btn-secondary { 
-  color: #FFFFFF; 
-  background-color: #EEBA52; 
-  border-color: #DDA942; 
-} 
- 
-.btn-secondary:hover, 
-.btn-secondary:focus, 
-.btn-secondary:active, 
-.btn-secondary.active, 
-.open .dropdown-toggle.btn-secondary { 
-  color: #FFFFFF; 
-  background-color: #dda942; 
-  border-color: #DDA942; 
-} 
- 
-.btn-secondary:active, 
-.btn-secondary.active, 
-.open .dropdown-toggle.btn-secondary { 
-  background-image: none; 
-} 
- 
-.btn-secondary.disabled, 
-.btn-secondary[disabled], 
-fieldset[disabled] .btn-secondary, 
-.btn-secondary.disabled:hover, 
-.btn-secondary[disabled]:hover, 
-fieldset[disabled] .btn-secondary:hover, 
-.btn-secondary.disabled:focus, 
-.btn-secondary[disabled]:focus, 
-fieldset[disabled] .btn-secondary:focus, 
-.btn-secondary.disabled:active, 
-.btn-secondary[disabled]:active, 
-fieldset[disabled] .btn-secondary:active, 
-.btn-secondary.disabled.active, 
-.btn-secondary[disabled].active, 
-fieldset[disabled] .btn-secondary.active { 
-  background-color: #EEBA52; 
-  border-color: #DDA942; 
-} 
- 
-.btn-secondary .badge { 
-  color: #EEBA52; 
-  background-color: #FFFFFF; 
+.btn-secondary {
+    color: #FFFFFF;
+    background-color: #EEBA52;
+    border-color: #DDA942;
 }
+
+    .btn-secondary:hover,
+    .btn-secondary:focus,
+    .btn-secondary:active,
+    .btn-secondary.active,
+    .open .dropdown-toggle.btn-secondary {
+        color: #FFFFFF;
+        background-color: #dda942;
+        border-color: #DDA942;
+    }
+
+    .btn-secondary:active,
+    .btn-secondary.active,
+    .open .dropdown-toggle.btn-secondary {
+        background-image: none;
+    }
+
+    .btn-secondary.disabled,
+    .btn-secondary[disabled],
+    fieldset[disabled] .btn-secondary,
+    .btn-secondary.disabled:hover,
+    .btn-secondary[disabled]:hover,
+    fieldset[disabled] .btn-secondary:hover,
+    .btn-secondary.disabled:focus,
+    .btn-secondary[disabled]:focus,
+    fieldset[disabled] .btn-secondary:focus,
+    .btn-secondary.disabled:active,
+    .btn-secondary[disabled]:active,
+    fieldset[disabled] .btn-secondary:active,
+    .btn-secondary.disabled.active,
+    .btn-secondary[disabled].active,
+    fieldset[disabled] .btn-secondary.active {
+        background-color: #EEBA52;
+        border-color: #DDA942;
+    }
+
+    .btn-secondary .badge {
+        color: #EEBA52;
+        background-color: #FFFFFF;
+    }
 
 .vertical-bar-left {
     padding-left: 10px;
@@ -159,8 +159,8 @@ dl.dl-horizontal dd {
 }
 
 .modal-dialog {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 .modal-body {
@@ -169,61 +169,77 @@ dl.dl-horizontal dd {
 }
 
 /* all tables */
-
-.table-styled {
+.my-datatable {
     font-size: 10px;
     text-align: center;
 }
 
-    .table-styled th {
+    .my-datatable th {
         cursor: pointer;
         white-space: nowrap;
         vertical-align: top;
         text-align: center;
     }
 
-    .table-styled tr td{
-        vertical-align: middle !important;
-    }
+        .my-datatable tr td {
+            vertical-align: middle !important;
+        }
 
-    .table-styled .links {
+    .my-datatable .links a {
         white-space: nowrap;
     }
 
-    .table-styled table {
-        margin-bottom: 0;
-    }
-
-    .table-styled .expand {
-        cursor: pointer;
-        font-size: 12px
-    }
-
-    .table-styled .long-column {
-        min-width: 100px;
-    }
-
-    .table-styled .form-control {
+    .my-datatable .form-control {
         font-size: 10px !important;
         min-width: 75px;
+        max-width: 90px;
         padding: 6px;
     }
 
-    .table-styled td.Red {
-        background-color: rgb(255, 0, 102);
+    .my-datatable .expand {
+        cursor: pointer;
+        font-size: 12px;
     }
-    .table-styled td.Yellow {
-        background-color: rgb(255, 255, 0);
+
+    .my-datatable .long-column {
+        min-width: 100px;
     }
-    .table-styled td.Green {
-        background-color: rgb(146, 208, 80);
+
+
+    .my-datatable > thead > tr:first-child > th {
+        padding-right: 5px !important;
     }
-    .table-styled td.Purple {
-        background-color: rgb(204, 192, 218);
-    }
-    .table-styled td.Pink {
-        background-color: rgb(255, 199, 206);
-    }
-    .table-styled td.Fuchsia {
-        background-color: rgb(255, 51, 204);
-    }
+
+.dataTables_filter {
+    text-align: inherit;
+    float: left;
+    margin-right: 10px;
+}
+
+.dataTables_paginate {
+    text-align: inherit;
+}
+
+.table-styled td.Red {
+    background-color: rgb(255, 0, 102);
+}
+
+.table-styled td.Yellow {
+    background-color: rgb(255, 255, 0);
+}
+
+.table-styled td.Green {
+    background-color: rgb(146, 208, 80);
+}
+
+.table-styled td.Purple {
+    background-color: rgb(204, 192, 218);
+}
+
+.table-styled td.Pink {
+    background-color: rgb(255, 199, 206);
+}
+
+.table-styled td.Fuchsia {
+    background-color: rgb(255, 51, 204);
+}

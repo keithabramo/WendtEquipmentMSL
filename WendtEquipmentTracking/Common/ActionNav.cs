@@ -6,7 +6,6 @@
         MSL,
         ImportEquipment,
         CreateBOL,
-        UpdateReadyToShip,
         CreateHardwareKit,
         ImportWorkOrderPrice
     }

@@ -204,7 +204,7 @@ namespace WendtEquipmentTracking.App.Models
             }
 
             //sales order
-            if (string.IsNullOrEmpty(WorkOrderNumber) || !WorkOrderNumber.Contains(ProjectNumber))
+            if (string.IsNullOrEmpty(WorkOrderNumber) || !WorkOrderNumber.Contains(ProjectNumber.Trim()))
             {
                 Indicators.SalesOrderNumberColor = IndicatorsModel.Colors.Red;
             }

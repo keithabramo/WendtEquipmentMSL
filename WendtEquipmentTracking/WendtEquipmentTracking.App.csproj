@@ -313,7 +313,6 @@
     <Content Include="Views\BillOfLading\Create.cshtml" />
     <Content Include="Views\BillOfLading\EquipmentToAddToBOL.cshtml" />
     <Content Include="Views\Shared\ActionNavPartial.cshtml" />
-    <Content Include="Views\Equipment\ReadyToShip.cshtml" />
     <Content Include="Views\Equipment\Edit.cshtml" />
     <Content Include="Views\HardwareKit\Create.cshtml" />
     <Content Include="Views\HardwareKit\Details.cshtml" />
