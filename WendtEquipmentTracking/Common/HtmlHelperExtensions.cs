@@ -1,7 +1,5 @@
-﻿using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using WendtEquipmentTracking.Common;
-using WendtEquipmentTracking.Common.DTO;
 
 namespace WendtEquipmentTracking.App.Common
 {
@@ -21,17 +19,10 @@ namespace WendtEquipmentTracking.App.Common
 
         public static bool UserIsInRole(this HtmlHelper html, UserRoles role)
         {
-            ActiveDirectoryUser user = HttpContext.Current.Cache["currentUser"] as ActiveDirectoryUser;
+            string username = ActiveDirectoryHelper.CurrentUserUsername();
 
-            if (user == null)
-            {
-                string username = ActiveDirectoryHelper.CurrentUserUsername();
-                user = ActiveDirectoryHelper.GetUser(username);
-
-                HttpContext.Current.Cache["currentUser"] = user;
-
-            }
-
+            var user = ActiveDirectoryHelper.GetUser(username);
+            
             return role == user.Role;
         }
     }

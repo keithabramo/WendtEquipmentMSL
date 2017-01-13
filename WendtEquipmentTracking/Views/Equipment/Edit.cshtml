@@ -9,7 +9,7 @@
     {
         <td></td>
     }
-    <td data-search="@(Model.IsHardware)" >
+    <td data-search="@(Model.IsHardware)" data-sort="@(Model.IsHardware)">
         @if (Model.HardwareKitEquipments != null && Model.HardwareKitEquipments.Count() > 0)
         {
             @Html.HiddenFor(modelItem => modelItem.IsHardware)
@@ -93,7 +93,7 @@
         @Html.HiddenFor(modelItem => modelItem.TotalWeightShipped)
         @Html.DisplayFor(modelItem => modelItem.TotalWeightShipped)
     </td>
-    <td class="@Model.Indicators.ReadyToShipColor.ToString()">
+    <td data-search="@Html.DisplayFor(modelItem => modelItem.ReadyToShip)" data-sort="@Html.DisplayFor(modelItem => modelItem.ReadyToShip)" class="@Model.Indicators.ReadyToShipColor.ToString()">
         @Html.EditorFor(modelItem => modelItem.ReadyToShip, new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(modelItem => modelItem.ReadyToShip, "", new { @class = "text-danger" })
     </td>

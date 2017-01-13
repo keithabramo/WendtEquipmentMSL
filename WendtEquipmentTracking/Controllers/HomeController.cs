@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
-using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using WendtEquipmentTracking.App.Common;
 using WendtEquipmentTracking.App.Models;
@@ -25,7 +23,8 @@ namespace WendtEquipmentTracking.App.Controllers
             if (CookieHelper.Exists("ProjectId"))
             {
                 return RedirectToAction("Index", "Equipment");
-            } else
+            }
+            else
             {
                 var projectBOs = projectService.GetAll();
 
@@ -33,6 +32,16 @@ namespace WendtEquipmentTracking.App.Controllers
 
                 return View(model);
             }
+        }
+
+        public ActionResult ClearCache()
+        {
+            foreach (DictionaryEntry entry in System.Web.HttpContext.Current.Cache)
+            {
+                System.Web.HttpContext.Current.Cache.Remove((string)entry.Key);
+            }
+
+            return RedirectToAction("Index");
         }
     }
 }

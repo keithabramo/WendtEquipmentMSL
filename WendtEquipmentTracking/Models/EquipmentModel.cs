@@ -84,10 +84,12 @@ namespace WendtEquipmentTracking.App.Models
 
 
         [DisplayName("Customs Value")]
+        [DataType(DataType.Currency)]
         public double? CustomsValue { get; set; }
 
 
         [DisplayName("Sale Price")]
+        [DataType(DataType.Currency)]
         public double? SalePrice { get; set; }
 
 

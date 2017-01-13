@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
-using System.DirectoryServices.AccountManagement;
+﻿using System.DirectoryServices.AccountManagement;
 using System.Linq;
+using System.Web;
 using WendtEquipmentTracking.Common.DTO;
 
 namespace WendtEquipmentTracking.Common
 {
     public static class ActiveDirectoryHelper
     {
-        private const string DOMAIN_NAME = "DBSERVER";
+        private const string DOMAIN_NAME = "WENDT";
 
         public static string CurrentUserUsername()
         {
@@ -26,153 +26,145 @@ namespace WendtEquipmentTracking.Common
 
         public static string DisplayName(string username)
         {
-            string displayName = username;
+            var user = GetUser(username);
 
-            if (!string.IsNullOrWhiteSpace(username))
-            {
-
-                try
-                {
-                    var principalContext = new PrincipalContext(ContextType.Domain, DOMAIN_NAME);
-
-                    UserPrincipal userPrincipal = UserPrincipal.FindByIdentity(
-                        principalContext,
-                        IdentityType.SamAccountName,
-                        DOMAIN_NAME + "\\" + username);
-
-
-                    var user = mapToUser(userPrincipal);
-                    displayName = user.DisplayName;
-
-                }
-                catch
-                {
-                }
-            }
-
-            return displayName;
+            return user.DisplayName;
         }
 
         public static ActiveDirectoryUser GetUser(string username)
         {
-            var user = new ActiveDirectoryUser();
 
-            if (!string.IsNullOrWhiteSpace(username))
+            ActiveDirectoryUser user = HttpContext.Current.Cache["currentUser" + username] as ActiveDirectoryUser;
+
+            if (user == null)
             {
-                try
+
+                if (!string.IsNullOrWhiteSpace(username))
                 {
-                    var principalContext = new PrincipalContext(ContextType.Domain, DOMAIN_NAME);
+                    try
+                    {
+                        var principalContext = new PrincipalContext(ContextType.Domain, DOMAIN_NAME);
 
-                    UserPrincipal userPrincipal = UserPrincipal.FindByIdentity(
-                        principalContext,
-                        IdentityType.SamAccountName,
-                        DOMAIN_NAME + "\\" + username);
+                        UserPrincipal userPrincipal = UserPrincipal.FindByIdentity(
+                            principalContext,
+                            IdentityType.SamAccountName,
+                            DOMAIN_NAME + "\\" + username);
 
-                    user = mapToUser(userPrincipal);
+                        user = mapToUser(userPrincipal);
 
-                }
-                catch
-                {
+                        HttpContext.Current.Cache["currentUser" + username] = user;
+                    }
+                    catch
+                    {
+                        user = new ActiveDirectoryUser();
+                        HttpContext.Current.Cache["currentUser" + username] = user;
+                    }
                 }
             }
+
             user.Role = UserRoles.ReadWrite;
             return user;
         }
 
 
 
-        public static IEnumerable<ActiveDirectoryUser> ActiveDirectoryUsers(string searchString)
-        {
-            IList<ActiveDirectoryUser> users = new List<ActiveDirectoryUser>();
-            string userName = ActiveDirectoryHelper.CurrentUserUsername();
+        //public static IEnumerable<ActiveDirectoryUser> ActiveDirectoryUsers(string searchString)
+        //{
+        //    IList<ActiveDirectoryUser> users = new List<ActiveDirectoryUser>();
+        //    string userName = ActiveDirectoryHelper.CurrentUserUsername();
 
-            try
-            {
-                var principalContext = new PrincipalContext(ContextType.Domain, DOMAIN_NAME, "DC=corp,DC=ene,DC=com");
+        //    try
+        //    {
+        //        var principalContext = new PrincipalContext(ContextType.Domain, DOMAIN_NAME, "DC=corp,DC=ene,DC=com");
 
-                //Get the current users's principal
-                UserPrincipal userPrincipal = UserPrincipal.FindByIdentity(
-                    principalContext,
-                    IdentityType.SamAccountName,
-                    DOMAIN_NAME + "\\" + userName);
+        //        //Get the current users's principal
+        //        UserPrincipal userPrincipal = UserPrincipal.FindByIdentity(
+        //            principalContext,
+        //            IdentityType.SamAccountName,
+        //            DOMAIN_NAME + "\\" + userName);
 
-                // if user is found
-                if (userPrincipal != null)
-                {
+        //        // if user is found
+        //        if (userPrincipal != null)
+        //        {
 
-                    //Query by example display name and username (aka Name)
-                    UserPrincipal qbeDisplayNamePrincipal = new UserPrincipal(principalContext);
-                    qbeDisplayNamePrincipal.DisplayName = "*" + searchString + "*";
-                    UserPrincipal qbeUsernamePrincipal = new UserPrincipal(principalContext);
-                    qbeUsernamePrincipal.SamAccountName = "*" + searchString + "*";
+        //            //Query by example display name and username (aka Name)
+        //            UserPrincipal qbeDisplayNamePrincipal = new UserPrincipal(principalContext);
+        //            qbeDisplayNamePrincipal.DisplayName = "*" + searchString + "*";
+        //            UserPrincipal qbeUsernamePrincipal = new UserPrincipal(principalContext);
+        //            qbeUsernamePrincipal.SamAccountName = "*" + searchString + "*";
 
-                    //Prepare
-                    PrincipalSearcher displayNameSearcher = new PrincipalSearcher(qbeDisplayNamePrincipal);
-                    PrincipalSearcher usernameSearcher = new PrincipalSearcher(qbeUsernamePrincipal);
+        //            //Prepare
+        //            PrincipalSearcher displayNameSearcher = new PrincipalSearcher(qbeDisplayNamePrincipal);
+        //            PrincipalSearcher usernameSearcher = new PrincipalSearcher(qbeUsernamePrincipal);
 
-                    PrincipalSearchResult<Principal> foundFullNameSearcher = null;
-                    if (searchString.Contains(" "))
-                    {
-                        var searchStrings = searchString.Split(' ');
+        //            PrincipalSearchResult<Principal> foundFullNameSearcher = null;
+        //            if (searchString.Contains(" "))
+        //            {
+        //                var searchStrings = searchString.Split(' ');
 
-                        if (!string.IsNullOrWhiteSpace(searchStrings[0]) || !string.IsNullOrWhiteSpace(searchStrings[1]))
-                        {
-                            UserPrincipal qbeFullNamePrincipal = new UserPrincipal(principalContext);
+        //                if (!string.IsNullOrWhiteSpace(searchStrings[0]) || !string.IsNullOrWhiteSpace(searchStrings[1]))
+        //                {
+        //                    UserPrincipal qbeFullNamePrincipal = new UserPrincipal(principalContext);
 
-                            if (!string.IsNullOrWhiteSpace(searchStrings[0]))
-                            {
-                                qbeFullNamePrincipal.GivenName = "*" + searchStrings[0] + "*";
-                            }
-                            if (!string.IsNullOrWhiteSpace(searchStrings[1]))
-                            {
-                                qbeFullNamePrincipal.Surname = "*" + searchStrings[1] + "*";
-                            }
+        //                    if (!string.IsNullOrWhiteSpace(searchStrings[0]))
+        //                    {
+        //                        qbeFullNamePrincipal.GivenName = "*" + searchStrings[0] + "*";
+        //                    }
+        //                    if (!string.IsNullOrWhiteSpace(searchStrings[1]))
+        //                    {
+        //                        qbeFullNamePrincipal.Surname = "*" + searchStrings[1] + "*";
+        //                    }
 
-                            PrincipalSearcher fullNameSearcher = new PrincipalSearcher(qbeFullNamePrincipal);
+        //                    PrincipalSearcher fullNameSearcher = new PrincipalSearcher(qbeFullNamePrincipal);
 
-                            foundFullNameSearcher = fullNameSearcher.FindAll();
-                        }
-                    }
+        //                    foundFullNameSearcher = fullNameSearcher.FindAll();
+        //                }
+        //            }
 
-                    //Execute
-                    var foundDisplayNameUsers = displayNameSearcher.FindAll();
-                    var foundUsernameUsers = usernameSearcher.FindAll();
+        //            //Execute
+        //            var foundDisplayNameUsers = displayNameSearcher.FindAll();
+        //            var foundUsernameUsers = usernameSearcher.FindAll();
 
-                    //Union
-                    var foundUsers = foundUsernameUsers.Union(foundDisplayNameUsers);
-                    if (foundFullNameSearcher != null)
-                    {
-                        foundUsers = foundUsers.Union(foundFullNameSearcher);
-                    }
+        //            //Union
+        //            var foundUsers = foundUsernameUsers.Union(foundDisplayNameUsers);
+        //            if (foundFullNameSearcher != null)
+        //            {
+        //                foundUsers = foundUsers.Union(foundFullNameSearcher);
+        //            }
 
-                    //Iterate over users found
-                    foreach (UserPrincipal foundUser in foundUsers.ToList())
-                    {
-                        users.Add(mapToUser(foundUser));
-                    }
-                }
-            }
-            catch
-            {
-            }
+        //            //Iterate over users found
+        //            foreach (UserPrincipal foundUser in foundUsers.ToList())
+        //            {
+        //                users.Add(mapToUser(foundUser));
+        //            }
+        //        }
+        //    }
+        //    catch
+        //    {
+        //    }
 
-            return users
-                .GroupBy(u => u.Username)
-                .Select(g => g.First())
-                .ToList();
-        }
+        //    return users
+        //        .GroupBy(u => u.Username)
+        //        .Select(g => g.First())
+        //        .ToList();
+        //}
 
         private static ActiveDirectoryUser mapToUser(UserPrincipal userPrincipal)
         {
-            var user = new ActiveDirectoryUser
+            var user = new ActiveDirectoryUser();
+
+            if (userPrincipal != null)
             {
-                Username = userPrincipal.SamAccountName,
-                FirstName = userPrincipal.GivenName,
-                MiddleName = userPrincipal.MiddleName,
-                LastName = userPrincipal.Surname,
-                Email = userPrincipal.EmailAddress,
-                Role = userPrincipal.GetAuthorizationGroups().Any(ag => ag.Name == "ReadWrite") ? UserRoles.ReadWrite : UserRoles.ReadOnly
-            };
+                user = new ActiveDirectoryUser
+                {
+                    Username = userPrincipal.SamAccountName,
+                    FirstName = userPrincipal.GivenName,
+                    MiddleName = userPrincipal.MiddleName,
+                    LastName = userPrincipal.Surname,
+                    Email = userPrincipal.EmailAddress,
+                    Role = userPrincipal.GetAuthorizationGroups().Any(ag => ag.Name == "ReadWrite") ? UserRoles.ReadWrite : UserRoles.ReadOnly
+                };
+            }
 
             return user;
         }

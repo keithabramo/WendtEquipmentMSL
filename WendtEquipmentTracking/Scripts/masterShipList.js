@@ -82,6 +82,7 @@
                             var $newRow = $(data);
                             $row.replaceWith($newRow);
 
+
                             if (!$newRow.hasClass("danger")) {
                                 $newRow.animate({
                                     backgroundColor: "#dff0d8"
@@ -90,7 +91,9 @@
                                 setTimeout(function () {
                                     $newRow.animate({
                                         backgroundColor: "#ffffff"
-                                    }, 1000);
+                                    }, 1000, function () {
+                                        table.DataTable().draw();
+                                    });
                                 }, 2000);
                             }
 
