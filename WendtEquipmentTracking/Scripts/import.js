@@ -9,7 +9,7 @@
         this.initEvents = function () {
             var $this = this;
 
-            $('.table thead .selectAll').on('change', function () {
+            $(document).on('change', '.table thead .selectAll', function () {
                 var checked = $(this).is(":checked");
 
                 if (checked) {
@@ -17,6 +17,17 @@
                 }
             });
 
+
+            $(document).on('change', ".table input[name$='IsHardware']", function () {
+                var isHardware = $(this).is(":checked");
+                var $equipmentNameInput = $(this).closest("tr").find("input[name$='EquipmentName']");
+
+                if (isHardware) {
+                    $equipmentNameInput.val("HARDWARE").attr("readonly", "readonly");
+                } else {
+                    $equipmentNameInput.removeAttr("readonly");
+                }
+            });
         }
 
         this.initStyles();

@@ -18,7 +18,7 @@
                         var releaseDate = data[4];
                         var leftToShip = data[15];
 
-                        if (isHardware !== "False" && releaseDate && leftToShip && parseInt(leftToShip, 10) > 0) {
+                        if (isHardware === "False" && releaseDate && leftToShip && parseInt(leftToShip, 10) > 0) {
                             return true;
                         }
                     }
@@ -27,6 +27,9 @@
                 }
             );
 
+            table.DataTable()
+                .order([2, 'asc'])
+                .draw();
 
             $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="readyToShipFilter" /> Equipment Released</label>');
         }
@@ -47,7 +50,7 @@
                 var $equipmentNameInput = $(this).closest("tr").find("input[name='EquipmentName']");
 
                 if (isHardware) {
-                    $equipmentNameInput.val("Hardware").attr("readonly", "readonly");
+                    $equipmentNameInput.val("HARDWARE").attr("readonly", "readonly");
                 } else {
                     $equipmentNameInput.removeAttr("readonly");
                 }
@@ -140,8 +143,8 @@
                             if ($row.find("input[type='checkbox']").is(":checked")) {
                                 $row.find("input[type='checkbox']").click();
                             }
+                            $row.find("input[name='IsHardware']").val("false")
                             $row.find("select").prop('selectedIndex', 0);
-
 
                             //Removes validation from input-fields
                             $row.find('.input-validation-error')

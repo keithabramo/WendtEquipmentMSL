@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System.Linq;
 using WendtEquipmentTracking.BusinessLogic.BO;
 using WendtEquipmentTracking.DataAccess.FileManagement.Domain;
 using WendtEquipmentTracking.DataAccess.SQL;
@@ -10,7 +11,10 @@ namespace WendtEquipmentTracking.BusinessLogic.AutoMapper.Profiles
         public EquipmentConfig()
         {
 
-            base.CreateMap<Equipment, EquipmentBO>();
+            base.CreateMap<Equipment, EquipmentBO>()
+                .ForMember(dest => dest.BillOfLadingEquipments, opt => opt.MapFrom(src => src.BillOfLadingEquipments.Where(o => !o.IsDeleted)))
+                .ForMember(dest => dest.HardwareKitEquipments, opt => opt.MapFrom(src => src.HardwareKitEquipments.Where(o => !o.IsDeleted)));
+
             base.CreateMap<EquipmentBO, Equipment>()
                 .ForMember(dest => dest.BillOfLadingEquipments, opt => opt.Ignore())
                 .ForMember(dest => dest.HardwareKitEquipments, opt => opt.Ignore())

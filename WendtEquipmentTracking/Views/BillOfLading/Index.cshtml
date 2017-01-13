@@ -23,6 +23,9 @@
                     @Html.DisplayNameFor(model => model.BillOfLadingNumber)
                 </th>
                 <th>
+                    @Html.DisplayNameFor(model => model.ToStorage)
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.DateShipped)
                 </th>
                 <th>
@@ -40,6 +43,9 @@
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.BillOfLadingNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ToStorage)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.DateShipped)
@@ -67,5 +73,6 @@ else
 
 
 @section Scripts {
+@Scripts.Render("~/bundles/form")
     @Scripts.Render("~/bundles/table")
 }

@@ -33,7 +33,7 @@
         @Html.HiddenFor(modelItem => modelItem.EquipmentId)
         @Html.HiddenFor(modelItem => modelItem.ProjectNumber)
 
-        @if (Model.IsHardware)
+        @if (Model.IsHardware || Model.HardwareKit != null)
         {
             @Html.EditorFor(modelItem => modelItem.EquipmentName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
         }
@@ -94,7 +94,6 @@
         @Html.DisplayFor(modelItem => modelItem.TotalWeightShipped)
     </td>
     <td class="@Model.Indicators.ReadyToShipColor.ToString()">
-        @Html.HiddenFor(modelItem => modelItem.ReadyToShip)
         @Html.EditorFor(modelItem => modelItem.ReadyToShip, new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(modelItem => modelItem.ReadyToShip, "", new { @class = "text-danger" })
     </td>

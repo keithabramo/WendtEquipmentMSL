@@ -1,46 +1,53 @@
 ﻿@model IEnumerable<BillOfLadingEquipmentModel>
-
-<table class="table table-condensed table-hover table-bordered table-styled">
-    <thead>
-        <tr>
-            <th></th>
-            <th>
-                @Html.DisplayNameFor(model => model.BillOfLading.BillOfLadingNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Quantity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BillOfLading.DateShipped)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BillOfLading.ShippedFrom)
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Where(b => b.BillOfLading.IsCurrentRevision))
-        {
+<div class="col-md-6">
+    <table class="table table-condensed table-hover table-bordered table-styled">
+        <thead>
             <tr>
-                <td class="text-center">
-                    <a href="@Url.Action("Details", "BillOfLading", new { billOfLadingNumber = item.BillOfLading.BillOfLadingNumber })">
-                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-                    </a>
-                </td>
-                <td class="@item.BillOfLading.Indicators.BillOfLadingNumberColor.ToString()">
-                    @Html.DisplayFor(modelItem => item.BillOfLading.BillOfLadingNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Quantity)
-                </td>
-                <td class="@item.BillOfLading.Indicators.DateShippedNumberColor.ToString()">
-                    @Html.DisplayFor(modelItem => item.BillOfLading.DateShipped)
-                </td>
-                <td class="@item.BillOfLading.Indicators.ShippedFromColor.ToString()">
-                    @Html.DisplayFor(modelItem => item.BillOfLading.ShippedFrom)
-                </td>
+                <th></th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BillOfLading.BillOfLadingNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BillOfLading.ToStorage)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Quantity)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BillOfLading.DateShipped)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BillOfLading.ShippedFrom)
+                </th>
             </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Where(b => b.BillOfLading.IsCurrentRevision))
+            {
+                <tr class="@(item.BillOfLading.ToStorage ? "info" : "")">
+                    <td class="text-center">
+                        <a href="@Url.Action("Details", "BillOfLading", new { billOfLadingNumber = item.BillOfLading.BillOfLadingNumber })">
+                            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                        </a>
+                    </td>
+                    <td class="@item.BillOfLading.Indicators.BillOfLadingNumberColor.ToString()">
+                        @Html.DisplayFor(modelItem => item.BillOfLading.BillOfLadingNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BillOfLading.ToStorage)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td class="@item.BillOfLading.Indicators.DateShippedNumberColor.ToString()">
+                        @Html.DisplayFor(modelItem => item.BillOfLading.DateShipped)
+                    </td>
+                    <td class="@item.BillOfLading.Indicators.ShippedFromColor.ToString()">
+                        @Html.DisplayFor(modelItem => item.BillOfLading.ShippedFrom)
+                    </td>
+                </tr>
         }
-    </tbody>
+        </tbody>
 
-</table>
+    </table>
+</div>

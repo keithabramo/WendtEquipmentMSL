@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System.Linq;
 using WendtEquipmentTracking.BusinessLogic.BO;
 using WendtEquipmentTracking.DataAccess.SQL;
 
@@ -9,7 +10,8 @@ namespace WendtEquipmentTracking.BusinessLogic.AutoMapper.Profiles
         public BillOfLadingConfig()
         {
 
-            base.CreateMap<BillOfLading, BillOfLadingBO>();
+            base.CreateMap<BillOfLading, BillOfLadingBO>()
+                .ForMember(dest => dest.BillOfLadingEquipments, opt => opt.MapFrom(src => src.BillOfLadingEquipments.Where(o => !o.IsDeleted)));
             base.CreateMap<BillOfLadingBO, BillOfLading>()
                 .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedDate, opt => opt.Ignore())

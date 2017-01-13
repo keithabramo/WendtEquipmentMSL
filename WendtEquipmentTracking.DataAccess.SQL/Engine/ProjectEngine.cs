@@ -34,7 +34,12 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
                 .Include(x => x.Equipments)
                 .Include(x => x.HardwareKits)
                 .Include(x => x.BillOfLadings)
-                .Include(x => x.WorkOrderPrices);
+                .Include(x => x.WorkOrderPrices)
+                .Include(x => x.Equipments.Select(y => y.BillOfLadingEquipments))
+                .Include(x => x.Equipments.Select(y => y.HardwareKitEquipments))
+                .Include(x => x.HardwareKits.Select(y => y.Equipments))
+                .Include(x => x.HardwareKits.Select(y => y.HardwareKitEquipments))
+                .Include(x => x.BillOfLadings.Select(y => y.BillOfLadingEquipments));
         }
 
         public Project Get(Specification<Project> specification)
@@ -48,7 +53,12 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
                 .Include(x => x.Equipments)
                 .Include(x => x.HardwareKits)
                 .Include(x => x.BillOfLadings)
-                .Include(x => x.WorkOrderPrices);
+                .Include(x => x.WorkOrderPrices)
+                .Include(x => x.Equipments.Select(y => y.BillOfLadingEquipments))
+                .Include(x => x.Equipments.Select(y => y.HardwareKitEquipments))
+                .Include(x => x.HardwareKits.Select(y => y.Equipments))
+                .Include(x => x.HardwareKits.Select(y => y.HardwareKitEquipments))
+                .Include(x => x.BillOfLadings.Select(y => y.BillOfLadingEquipments));
         }
 
         public void AddNewProject(Project project)

@@ -14,7 +14,7 @@
                 <thead>
                     <tr>
                         <th>
-                            <input type="checkbox" checked="checked" /> Select All
+                            <input class="selectAll" type="checkbox" checked="checked" /> Select All
                         </th>
                         <th>
                             @Html.DisplayNameFor(model => model[0].IsHardware)
@@ -59,7 +59,14 @@
                                @Html.CheckBoxFor(modelItem => modelItem[i].IsHardware)
                            </td>
                            <td>
-                               @Html.EditorFor(modelItem => modelItem[i].EquipmentName, new { htmlAttributes = new { @class = "form-control" } })
+                               @if (Model[i].IsHardware)
+                               {
+                                   @Html.EditorFor(modelItem => modelItem[i].EquipmentName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                               }
+                               else
+                               {
+                                   @Html.EditorFor(modelItem => modelItem[i].EquipmentName, new { htmlAttributes = new { @class = "form-control" } })
+                               }
                            </td>
                            <td>
                                @Html.DropDownListFor(modelItem => modelItem[i].Priority, new SelectList(Priorities.GetPriorities()), new { @class = "form-control" })

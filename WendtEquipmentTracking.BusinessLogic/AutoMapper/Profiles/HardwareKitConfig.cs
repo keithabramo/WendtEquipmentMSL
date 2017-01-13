@@ -10,7 +10,9 @@ namespace WendtHardwareKitTracking.BusinessLogic.AutoMapper.Profiles
         public HardwareKitConfig()
         {
 
-            base.CreateMap<HardwareKit, HardwareKitBO>();
+            base.CreateMap<HardwareKit, HardwareKitBO>()
+                .ForMember(dest => dest.HardwareKitEquipments, opt => opt.MapFrom(src => src.HardwareKitEquipments.Where(o => !o.IsDeleted)));
+
             base.CreateMap<HardwareKitBO, HardwareKit>()
                 .ForMember(dest => dest.Project, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())

@@ -97,8 +97,12 @@ namespace WendtEquipmentTracking.App.Controllers
 
                     var equipmentBOs = importService.GetEquipmentImport(importBO).ToList();
 
-                    var equipmentModels = Mapper.Map<IList<EquipmentSelectionModel>>(equipmentBOs);
-
+                    var equipmentModels = Mapper.Map<List<EquipmentSelectionModel>>(equipmentBOs);
+                    equipmentModels.ForEach(e =>
+                    {
+                        e.Checked = true;
+                        e.IsHardware = e.EquipmentName.Equals("HARDWARE", StringComparison.InvariantCultureIgnoreCase);
+                    });
 
                     return PartialView("ImportEquipmentPartial", equipmentModels);
                 }
@@ -133,13 +137,13 @@ namespace WendtEquipmentTracking.App.Controllers
                         equipmentService.SaveAll(equipmentBOs);
 
                         resultModel.Status = SuccessStatus.Success;
-                        return View("SelectEquipmentSheets", resultModel);
+                        return RedirectToAction("Index", "Home");
                     }
                 }
 
                 resultModel.Status = SuccessStatus.Error;
 
-                return View("SelectEquipmentSheets", resultModel);
+                return View("Equipment", "Import");
             }
             catch (Exception e)
             {
@@ -147,7 +151,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
                 resultModel.Status = SuccessStatus.Error;
 
-                return View("SelectEquipmentSheets", resultModel);
+                return View("Equipment", "Import");
             }
         }
 
@@ -224,7 +228,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
                         var workOrderPriceBOs = Mapper.Map<IEnumerable<WorkOrderPriceBO>>(model.Where(m => m.Checked).ToList());
                         workOrderPriceService.SaveAll(workOrderPriceBOs);
-                        
+
                         return RedirectToAction("Index", "WorkOrderPrice");
                     }
                 }
@@ -234,7 +238,7 @@ namespace WendtEquipmentTracking.App.Controllers
             catch (Exception e)
             {
                 ModelState.AddModelError("", e.Message);
-                
+
                 return View("ImportWorkOrderPrice", model);
             }
         }
