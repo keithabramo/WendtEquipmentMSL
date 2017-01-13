@@ -1,7 +1,7 @@
 ﻿@model ActionNav
 
 <div class="btn-group" role="group" aria-label="actions">
-    @Html.ActionLink("Master Shipping List", "Index", "Home", null, new { @class = "btn " + (Model == ActionNav.MSL ? "btn-secondary" : "btn-primary") })
+    @Html.ActionLink("Master Ship List", "Index", "Home", null, new { @class = "btn " + (Model == ActionNav.MSL ? "btn-secondary" : "btn-primary") })
     
     @if (Html.UserIsInRole(UserRoles.ReadWrite))
     {
