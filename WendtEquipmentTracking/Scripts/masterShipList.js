@@ -3,8 +3,9 @@
     var MasterShipList = function () {
 
         this.editsMade = false;
-        this.createURL = "/Equipment/Create";
-        this.editURL = "/Equipment/Edit";
+        this.editQueue = [];
+        this.createURL = ROOT_URL + "Equipment/Create";
+        this.editURL = ROOT_URL + "Equipment/Edit";
 
         this.initStyles = function () {
             $.fn.dataTable.ext.search.push(
@@ -37,14 +38,39 @@
         this.initEvents = function () {
             var $this = this;
 
+
+            //loading state for create button
+            $(document).on("click", ".createSubmit", function () {
+                $(this).button("loading");
+            });
+
+            //edits made
             $('.table').on('change', "> tbody > tr input, > tbody > tr select", function () {
                 $this.editsMade = true;
             });
 
+            //checbox ready to ship filter
             $('#readyToShipFilter').on("change", function () {
                 table.DataTable().draw();
             });
 
+            //autofill selection after finished event
+            table.DataTable().on('autoFill', function (e, datatable, cells) {
+
+                $.each(cells, function (i, cell) {
+                    
+                    var rowIndex = cell[0].index.row;
+                    var $row = $(table.DataTable().row(rowIndex).node());
+
+                    $this.editQueue.push($row);
+                    
+                });
+
+                $this.updateRow.call($this, $this.editQueue.pop());
+            });
+
+
+            //checking ishardware to see if we need to disable equipment name
             $('.table').on('change', "input[name='IsHardware']", function () {
                 var isHardware = $(this).is(":checked");
                 var $equipmentNameInput = $(this).closest("tr").find("input[name='EquipmentName']");
@@ -56,6 +82,7 @@
                 }
             });
 
+            //saving an edited row if changes were made
             $('.table tbody').on('blur', "tr", function () {
 
                 if ($this.editsMade) {
@@ -63,48 +90,13 @@
                     $this.editsMade = false;
 
                     var $row = $(this);
-                    var url = $this.editURL + "/" + $row.find("input[name='EquipmentId']").val();
-                    var $form = $("<form/>");
 
-                    $row.find("input[name], select[name]").each(function (i, e) {
+                    $this.updateRow.call($this, $row);
 
-                        //cloning selects does not clone selected value, known jquery bug
-                        var $element = $(e).clone().val(e.value);
-
-                        $form.append($element);
-                    });
-
-                    $.ajax({
-                        type: "POST",
-                        url: url,
-                        data: $form.serialize(),
-                        success: function (data) {
-                            var $newRow = $(data);
-                            $row.replaceWith($newRow);
-
-
-                            if (!$newRow.hasClass("danger")) {
-                                $newRow.animate({
-                                    backgroundColor: "#dff0d8"
-                                }, 1000);
-
-                                setTimeout(function () {
-                                    $newRow.animate({
-                                        backgroundColor: "#ffffff"
-                                    }, 1000, function () {
-                                        table.DataTable().draw();
-                                    });
-                                }, 2000);
-                            }
-
-                            form.initStyles();
-                        }
-                    });
                 }
-
-
             });
 
+            //create row
             $('.table tfoot').on('click', ".createSubmit", function () {
 
 
@@ -139,6 +131,7 @@
                             }, 2000);
 
                             //reset create row
+                            $row.find(".createSubmit").button("reset");
                             $row.removeClass("danger").addClass("warning");
 
                             $row.find("input").not("[type='checkbox'], [type='button']").val("");
@@ -167,6 +160,51 @@
                         form.initStyles();
                     }
                 });
+            });
+        }
+
+        this.updateRow = function ($row) {
+            var $this = this;
+
+            var url = $this.editURL + "/" + $row.find("input[name='EquipmentId']").val();
+            var $form = $("<form/>");
+
+            $row.find("input[name], select[name]").each(function (i, e) {
+
+                //cloning selects does not clone selected value, known jquery bug
+                var $element = $(e).clone().val(e.value);
+
+                $form.append($element);
+            });
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: $form.serialize(),
+                success: function (data) {
+
+                    table.DataTable().row($row).remove().draw();
+                    var rowNode = table.DataTable().row.add($(data)[0]).draw().node();
+                    var $newRow = $(rowNode);
+
+                    if (!$newRow.hasClass("danger")) {
+                        $newRow.animate({
+                            backgroundColor: "#dff0d8"
+                        }, 1000);
+
+                        setTimeout(function () {
+                            $newRow.animate({
+                                backgroundColor: "#ffffff"
+                            }, 1000);
+                        }, 2000);
+                    }
+
+                    form.initStyles();
+
+                    if ($this.editQueue.length) {
+                        $this.updateRow($this.editQueue.pop());
+                    }
+                }
             });
         }
 

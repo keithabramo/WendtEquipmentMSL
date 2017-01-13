@@ -7,7 +7,7 @@ namespace WendtEquipmentTracking.Common
 {
     public static class ActiveDirectoryHelper
     {
-        private const string DOMAIN_NAME = "WENDT";
+        private const string DOMAIN_NAME = "WendtCorp";
 
         public static string CurrentUserUsername()
         {
@@ -66,7 +66,35 @@ namespace WendtEquipmentTracking.Common
             return user;
         }
 
+        public static string GetUserInfo(string username)
+        {
 
+            var principalContext = new PrincipalContext(ContextType.Domain, DOMAIN_NAME);
+
+            UserPrincipal userPrincipal = UserPrincipal.FindByIdentity(
+                principalContext,
+                IdentityType.SamAccountName,
+                DOMAIN_NAME + "\\" + username);
+
+            PrincipalSearchResult<Principal> groups = userPrincipal.GetAuthorizationGroups();
+
+
+            var result = string.Empty;
+            // iterate over all groups
+            foreach (Principal p in groups)
+            {
+                // make sure to add only group principals
+                if (p is GroupPrincipal)
+                {
+                    result += " : " + (((GroupPrincipal)p).Name);
+                }
+            }
+
+
+            return result;
+
+
+        }
 
         //public static IEnumerable<ActiveDirectoryUser> ActiveDirectoryUsers(string searchString)
         //{
@@ -155,6 +183,16 @@ namespace WendtEquipmentTracking.Common
 
             if (userPrincipal != null)
             {
+                var role = UserRoles.None;
+                if(userPrincipal.GetAuthorizationGroups().Any(ag => ag.Name == "MSL_RW"))
+                {
+                    role = UserRoles.ReadWrite;
+                } else if(userPrincipal.GetAuthorizationGroups().Any(ag => ag.Name == "MSL_R"))
+                {
+                    role = UserRoles.ReadOnly;
+                }
+
+
                 user = new ActiveDirectoryUser
                 {
                     Username = userPrincipal.SamAccountName,
@@ -162,7 +200,7 @@ namespace WendtEquipmentTracking.Common
                     MiddleName = userPrincipal.MiddleName,
                     LastName = userPrincipal.Surname,
                     Email = userPrincipal.EmailAddress,
-                    Role = userPrincipal.GetAuthorizationGroups().Any(ag => ag.Name == "ReadWrite") ? UserRoles.ReadWrite : UserRoles.ReadOnly
+                    Role = role
                 };
             }
 

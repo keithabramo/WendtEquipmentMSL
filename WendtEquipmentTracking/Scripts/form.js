@@ -17,7 +17,7 @@
 
 
             $forms.on("submit", function () {
-                $(this).find("button[type='submit']").button("loading");
+                $(this).find("[type='submit']").button("loading");
 
                 return true;
             });

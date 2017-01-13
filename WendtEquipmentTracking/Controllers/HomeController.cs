@@ -6,6 +6,7 @@ using WendtEquipmentTracking.App.Common;
 using WendtEquipmentTracking.App.Models;
 using WendtEquipmentTracking.BusinessLogic;
 using WendtEquipmentTracking.BusinessLogic.Api;
+using WendtEquipmentTracking.Common;
 
 namespace WendtEquipmentTracking.App.Controllers
 {
@@ -42,6 +43,14 @@ namespace WendtEquipmentTracking.App.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+        public ActionResult ADDetails()
+        {
+            var user = ActiveDirectoryHelper.CurrentUserUsername();
+            var info = ActiveDirectoryHelper.GetUserInfo(user);
+
+            return Content(info);
         }
     }
 }

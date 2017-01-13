@@ -23,18 +23,35 @@ $(function () {
 
             $(".table.my-datatable thead").prepend($searchHeader);
 
-            this.dataTable = $(".table.my-datatable").DataTable({
+            var mslSettings = {};
+            if ($(".masterShipList").length) {
+                mslSettings = {
+                    autoFill: {
+                        columns: [2, 3, 4, 5, 6, 7, 8, 9, 10, 13, 19, 20, 21]
+                    }
+                };
+            }
+
+
+            this.dataTable = $(".table.my-datatable").DataTable($.extend({
+                autoFill: {
+                    columns: [ 2, 3, 4, 5, 6, 7, 8, 9, 10, 13, 19, 20, 21 ]
+                },
                 pageLength: 100,
                 dom: "<'row'<'col-sm-4 text-left custom'f><'col-sm-4 text-center'i><'col-sm-4 text-right'l>>" +
                      "<'row'<'col-sm-12'tr>>" +
                      "<'row'<'col-sm-12 text-center'p>>"
-            });
+            }, mslSettings));
+
+            delete $.fn.dataTable.AutoFill.actions.fillHorizontal;
 
             waitingDialog.hide();
         }
 
         this.initEvents = function () {
             var $this = this;
+
+            
 
             $('.table.my-datatable').on('click', ".expand", function () {
                 var id = $(this).attr("data-id");
