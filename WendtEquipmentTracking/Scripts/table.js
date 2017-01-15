@@ -34,9 +34,6 @@ $(function () {
 
 
             this.dataTable = $(".table.my-datatable").DataTable($.extend({
-                autoFill: {
-                    columns: [ 2, 3, 4, 5, 6, 7, 8, 9, 10, 13, 19, 20, 21 ]
-                },
                 pageLength: 100,
                 dom: "<'row'<'col-sm-4 text-left custom'f><'col-sm-4 text-center'i><'col-sm-4 text-right'l>>" +
                      "<'row'<'col-sm-12'tr>>" +

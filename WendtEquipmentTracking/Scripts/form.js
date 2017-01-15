@@ -17,9 +17,10 @@
 
 
             $forms.on("submit", function () {
-                $(this).find("[type='submit']").button("loading");
-
-                return true;
+                if ($(this).valid()) {
+                    $(this).find("[type='submit']").button("loading");
+                    return true;
+                }
             });
         }
 

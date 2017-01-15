@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace WendtEquipmentTracking.App.Models
 {
@@ -10,6 +11,7 @@ namespace WendtEquipmentTracking.App.Models
 
         [DisplayName("Project Number")]
         [Required]
+        [Remote("ValidProjectNumber", "Validate", AdditionalFields = "ProjectId", ErrorMessage = "This project number already exists")]
         public string ProjectNumber { get; set; }
 
         [DisplayName("Ship To Company")]

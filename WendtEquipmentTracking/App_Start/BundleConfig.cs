@@ -35,6 +35,9 @@ namespace WendtEquipmentTracking.App
             bundles.Add(new ScriptBundle("~/bundles/import").Include(
                        "~/Scripts/import.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/workOrderPrice").Include(
+                       "~/Scripts/workOrderPrice.js"));
+
 
 
             bundles.Add(new StyleBundle("~/Content/css")

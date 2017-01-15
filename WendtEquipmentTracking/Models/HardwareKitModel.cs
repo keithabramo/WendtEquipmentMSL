@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace WendtEquipmentTracking.App.Models
 {
@@ -16,6 +17,7 @@ namespace WendtEquipmentTracking.App.Models
         public int Revision { get; set; }
 
         [DisplayName("Hardware Kit Number")]
+        [Remote("ValidHardwareKitNumber", "Validate", AdditionalFields = "HardwareKitId", ErrorMessage = "This hardware kit number already exists")]
         [Required]
         public string HardwareKitNumber { get; set; }
 

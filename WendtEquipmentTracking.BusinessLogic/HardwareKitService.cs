@@ -34,7 +34,7 @@ namespace WendtEquipmentTracking.BusinessLogic
             equipment.EquipmentName = "Hardware Kit " + hardwareKitBO.HardwareKitNumber;
             equipment.Description = "Misc";
             equipment.ProjectId = hardwareKitBO.ProjectId;
-            equipment.Quantity = hardwareKitBO.HardwareKitEquipments.Sum(hke => hke.Quantity);
+            equipment.Quantity = 1; //hardwareKitBO.HardwareKitEquipments.Sum(hke => hke.Quantity);
             equipment.ReleaseDate = DateTime.Now;
 
             equipmentEngine.AddNewEquipment(equipment);

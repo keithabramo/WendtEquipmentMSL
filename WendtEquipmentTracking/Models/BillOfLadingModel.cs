@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace WendtEquipmentTracking.App.Models
 {
@@ -18,6 +19,7 @@ namespace WendtEquipmentTracking.App.Models
 
         [DisplayName("BOL #")]
         [Required]
+        [Remote("ValidBOLNumber", "Validate", AdditionalFields = "BillOfLadingId", ErrorMessage = "This bill of lading number already exists")]
         public string BillOfLadingNumber { get; set; }
 
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]

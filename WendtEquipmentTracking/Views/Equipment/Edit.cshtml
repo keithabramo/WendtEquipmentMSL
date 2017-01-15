@@ -23,6 +23,11 @@
             @Html.HiddenFor(modelItem => modelItem.IsHardware)
             @Html.DisplayFor(modelItem => modelItem.IsHardware)
         }
+        else if (Model.HardwareKit != null)
+        {
+            @Html.HiddenFor(modelItem => modelItem.IsHardware)
+            @Html.DisplayFor(modelItem => modelItem.IsHardware)
+        }
         else
         {
             @Html.CheckBoxFor(modelItem => modelItem.IsHardware)

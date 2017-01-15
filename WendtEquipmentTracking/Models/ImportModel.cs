@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Web;
-using System.Web.Mvc;
 
 namespace WendtEquipmentTracking.App.Models
 {
@@ -9,7 +8,7 @@ namespace WendtEquipmentTracking.App.Models
     {
 
         [DisplayName("File")]
-        [Remote("ValidImportFile", "Validate")]
+        //[Remote("ValidImportFile", "Validate")]
         public HttpPostedFileBase File { get; set; }
 
         public string FileName { get; set; }

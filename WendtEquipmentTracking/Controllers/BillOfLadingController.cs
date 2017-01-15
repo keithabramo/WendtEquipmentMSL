@@ -227,7 +227,6 @@ namespace WendtEquipmentTracking.App.Controllers
             {
                 e.ProjectNumber = projectBO.ProjectNumber;
                 e.SetIndicators();
-                e.BillOfLadingEquipments.ToList().ForEach(b => b.BillOfLading.SetBillOfLadingIndicators());
             });
 
             //Filter and sort data
@@ -274,17 +273,8 @@ namespace WendtEquipmentTracking.App.Controllers
             var equipmentBOs = projectBO.Equipments.Where(e => e.ReadyToShip != null && e.ReadyToShip > 0 && !e.IsHardware);
 
             var equipmentModels = Mapper.Map<IEnumerable<EquipmentModel>>(equipmentBOs);
-            equipmentModels.ToList().ForEach(e =>
-            {
-                e.ProjectNumber = projectBO.ProjectNumber;
-                e.SetIndicators();
-                e.BillOfLadingEquipments.ToList().ForEach(b => b.BillOfLading.SetBillOfLadingIndicators());
-            });
-
-
-            var billOfLadingEquipments = new List<BillOfLadingEquipmentModel>();
-
-            billOfLadingEquipments = equipmentModels.Select(e => new BillOfLadingEquipmentModel
+            
+            var billOfLadingEquipments = equipmentModels.Select(e => new BillOfLadingEquipmentModel
             {
                 Equipment = e,
                 EquipmentId = e.EquipmentId,
@@ -294,6 +284,11 @@ namespace WendtEquipmentTracking.App.Controllers
             var modelBOLEquipments = model.BillOfLadingEquipments.Where(be => equipmentModels == null || !equipmentModels.Any(fullbe => fullbe.EquipmentId == be.EquipmentId));
 
             billOfLadingEquipments.AddRange(modelBOLEquipments);
+            billOfLadingEquipments.ToList().ForEach(e =>
+            {
+                e.Equipment.ProjectNumber = projectBO.ProjectNumber;
+                e.Equipment.SetIndicators();
+            });
 
             model.BillOfLadingEquipments = billOfLadingEquipments;
 

@@ -37,3 +37,10 @@
     new Import();
 
 });
+
+function OnComplete() {
+    $("[type='submit']").button("reset");
+    $.validator.unobtrusive.parse('#EquipmentRows')
+    form.initStyles();
+    form.initEvents();
+}

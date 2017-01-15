@@ -11,7 +11,7 @@
 <h4>Import Equipment <br /><small>Select the excel worksheets you would like to import</small></h4>
 
 
-@using (Ajax.BeginForm("SelectEquipmentSheets", new AjaxOptions { UpdateTargetId = "EquipmentRows", InsertionMode = InsertionMode.Replace}))
+@using (Ajax.BeginForm("SelectEquipmentSheets", new AjaxOptions { UpdateTargetId = "EquipmentRows", InsertionMode = InsertionMode.Replace, OnComplete = "OnComplete"}))
 {
     @Html.AntiForgeryToken()
 

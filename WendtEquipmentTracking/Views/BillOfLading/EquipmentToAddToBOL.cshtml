@@ -2,7 +2,7 @@
 
 <Label>Select Equipment</Label>
 
-<table class="table table-condensed table-hover table-bordered table-styled">
+<table class="table table-condensed table-hover table-bordered table-styled my-datatable">
     <thead>
         <tr>
             <th>
@@ -12,16 +12,67 @@
                 @Html.DisplayNameFor(model => model.BillOfLadingEquipments[0].Equipment.EquipmentName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BillOfLadingEquipments[0].Equipment.ReadyToShip)
+                @Html.DisplayNameFor(model => model.BillOfLadingEquipments[0].Equipment.Priority)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BillOfLadingEquipments[0].Equipment.LeftToShip)
+                @Html.DisplayNameFor(model => model.BillOfLadingEquipments[0].Equipment.ReleaseDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BillOfLadingEquipments[0].Equipment.DrawingNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BillOfLadingEquipments[0].Equipment.WorkOrderNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BillOfLadingEquipments[0].Equipment.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BillOfLadingEquipments[0].Equipment.ShippingTagNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BillOfLadingEquipments[0].Equipment.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BillOfLadingEquipments[0].Equipment.UnitWeight)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BillOfLadingEquipments[0].Equipment.TotalWeight)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BillOfLadingEquipments[0].Equipment.TotalWeightShipped)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BillOfLadingEquipments[0].Equipment.ReadyToShip)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.BillOfLadingEquipments[0].Equipment.ShippedQuantity)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BillOfLadingEquipments[0].Equipment.Quantity)
+                @Html.DisplayNameFor(model => model.BillOfLadingEquipments[0].Equipment.LeftToShip)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BillOfLadingEquipments[0].Equipment.FullyShipped)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BillOfLadingEquipments[0].Equipment.CustomsValue)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BillOfLadingEquipments[0].Equipment.SalePrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BillOfLadingEquipments[0].Equipment.HTSCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BillOfLadingEquipments[0].Equipment.CountryOfOrigin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BillOfLadingEquipments[0].Equipment.Notes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BillOfLadingEquipments[0].Equipment.AutoShipFile)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BillOfLadingEquipments[0].Equipment.SalesOrderNumber)
             </th>
         </tr>
     </thead>
@@ -37,16 +88,78 @@
                     @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.EquipmentName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.ReadyToShip)
+                    @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.Priority)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.LeftToShip)
+                    @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.ReleaseDate)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.ShippedQuantity)
+                    @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.DrawingNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.WorkOrderNumber)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.ShippingTagNumber)
+                </td>
+                <td class="long-column">
+                    @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.Description)
+                </td>
+                <td class="@Model.BillOfLadingEquipments[i].Equipment.Indicators.UnitWeightColor.ToString()">
+                    @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.UnitWeight)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.TotalWeight)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.TotalWeightShipped)
+                </td>
+                <td class="@Model.BillOfLadingEquipments[i].Equipment.Indicators.ReadyToShipColor.ToString()">
+                    @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.ReadyToShip)
+                </td>
+                <td class="@Model.BillOfLadingEquipments[i].Equipment.Indicators.ShippedQtyColor.ToString()">
+                    @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.ShippedQuantity)
+                </td>
+                <td class="@Model.BillOfLadingEquipments[i].Equipment.Indicators.LeftToShipColor.ToString()">
+                    @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.LeftToShip)
+                </td>
+                <td class="@Model.BillOfLadingEquipments[i].Equipment.Indicators.FullyShippedColor.ToString()">
+                    @if (Model.BillOfLadingEquipments[i].Equipment.FullyShipped.HasValue && Model.BillOfLadingEquipments[i].Equipment.FullyShipped.Value == true)
+                    {
+                        @:Yes
+        }
+                    else if (Model.BillOfLadingEquipments[i].Equipment.FullyShipped.HasValue && Model.BillOfLadingEquipments[i].Equipment.FullyShipped.Value == false)
+                    {
+                        @:No
+        }
+                    else
+                    {
+                        @:NA
+        }
+                </td>
+                <td class="@Model.BillOfLadingEquipments[i].Equipment.Indicators.CustomsValueColor.ToString()">
+                    @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.CustomsValue)
+                </td>
+                <td class="@Model.BillOfLadingEquipments[i].Equipment.Indicators.SalePriceColor.ToString()">
+                    @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.SalePrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.HTSCode)
+                </td>
+                <td class="@Model.BillOfLadingEquipments[i].Equipment.Indicators.CountyOfOriginColor.ToString()">
+                    @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.CountryOfOrigin)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.Notes)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.AutoShipFile)
+                </td>
+                <td class="@Model.BillOfLadingEquipments[i].Equipment.Indicators.SalesOrderNumberColor.ToString()">
+                    @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.SalesOrderNumber)
                 </td>
             </tr>
         }

@@ -40,8 +40,7 @@ namespace WendtEquipmentTracking.App.Models
 
 
         [DisplayName("Qty")]
-        [Required]
-        public double? Quantity { get; set; }
+        public double Quantity { get; set; }
 
 
         [DisplayName("Shipping Tag #")]

@@ -141,9 +141,12 @@ namespace WendtEquipmentTracking.App.Controllers
                     }
                 }
 
+                IEnumerable<string> allErrors = ModelState.Values.SelectMany(v => v.Errors.Select(b => b.ErrorMessage));
+                ModelState.AddModelError("", "There were some validation errors when trying to import equipment: \n" + String.Join("<br/>", allErrors) );
+
                 resultModel.Status = SuccessStatus.Error;
 
-                return View("Equipment", "Import");
+                return View("Equipment");
             }
             catch (Exception e)
             {
@@ -151,7 +154,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
                 resultModel.Status = SuccessStatus.Error;
 
-                return View("Equipment", "Import");
+                return View("Equipment");
             }
         }
 
