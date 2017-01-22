@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DevTrends.MvcDonutCaching;
 using System.Collections;
 using System.Collections.Generic;
 using System.Web.Mvc;
@@ -27,6 +28,8 @@ namespace WendtEquipmentTracking.App.Controllers
             }
             else
             {
+                clearProjectNavCache();
+
                 var projectBOs = projectService.GetAll();
 
                 var model = Mapper.Map<IEnumerable<ProjectModel>>(projectBOs);
@@ -52,5 +55,21 @@ namespace WendtEquipmentTracking.App.Controllers
 
             return Content(info);
         }
+
+        public ActionResult ClearProjectNavCache()
+        {
+            clearProjectNavCache();
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        private void clearProjectNavCache()
+        {
+            var cacheManager = new OutputCacheManager();
+
+            //remove a single cached action output (Index action)
+            cacheManager.RemoveItem("Project", "ProjectNavPartial");
+        }
+
     }
 }

@@ -6,7 +6,7 @@
 
 @Html.Partial("ActionNavPartial", ActionNav.Nothing)
 
-<h4>BOL: @Html.DisplayFor(modelItem => modelItem.FirstOrDefault().BillOfLadingNumber)<br /><small>Details</small></h4>
+<h4>BOL: <strong>@Html.DisplayFor(modelItem => modelItem.FirstOrDefault().BillOfLadingNumber)</strong><br /><small>Details</small></h4>
 
 <div>
     <hr />
@@ -22,6 +22,15 @@
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.ShippedFrom)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FreightTerms)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Carrier)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TrailerNumber)
                 </th>
             </tr>
         </thead>
@@ -45,6 +54,15 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.ShippedFrom)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FreightTerms)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Carrier)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TrailerNumber)
                     </td>
                 </tr>
             }

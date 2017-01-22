@@ -2,10 +2,19 @@
 <html lang="en-us">
 <head>
     <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title Master Ship List</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
 </head>
 <body>
     <div class="navbar navbar-inverse">
@@ -30,7 +39,7 @@
                     <li>@Html.ActionLink("Work Order Prices", "Index", "WorkOrderPrice")</li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    @Html.Action("ProjectNavPartial", "Project")
+                    @Html.Action("ProjectNavPartial", "Project", true)
                     <li>
                         <strong class="navbar-text">@Html.CurrentUsername()</strong>
                     </li>

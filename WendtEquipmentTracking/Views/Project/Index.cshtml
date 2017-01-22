@@ -23,6 +23,9 @@
                     @Html.DisplayNameFor(model => model.ProjectNumber)
                 </th>
                 <th>
+                    @Html.DisplayNameFor(model => model.FreightTerms)
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.ShipToCompany)
                 </th>
                 <th>
@@ -35,9 +38,9 @@
                     @Html.DisplayNameFor(model => model.ShipToBroker)
                 </th>
                 @if (Html.UserIsInRole(UserRoles.ReadWrite))
-            {
+                {
                     <th></th>
-            }
+                }
             </tr>
         </thead>
         <tbody>
@@ -48,6 +51,9 @@
                         @Html.DisplayFor(modelItem => item.ProjectNumber)
                     </td>
                     <td>
+                        @Html.DisplayFor(modelItem => item.FreightTerms)
+                    </td>
+                    <td>
                         @Html.DisplayFor(modelItem => item.ShipToCompany) <br />
                         @Html.DisplayFor(modelItem => item.ShipToAddress) <br />
                         @Html.DisplayFor(modelItem => item.ShipToCSZ)
@@ -55,34 +61,34 @@
                     <td>
                         @if (!string.IsNullOrEmpty(item.ShipToContact1))
                     {
-                    @Html.DisplayFor(modelItem => item.ShipToContact1) <br />
-                    @:Phone: @Html.DisplayFor(modelItem => item.ShipToContact1) <br />
-                    @:Email: @Html.DisplayFor(modelItem => item.ShipToContact1)
+                            @Html.DisplayFor(modelItem => item.ShipToContact1) <br />
+                            @:Phone: @Html.DisplayFor(modelItem => item.ShipToContact1) <br />
+                            @:Email: @Html.DisplayFor(modelItem => item.ShipToContact1)
                     }
                     </td>
                     <td>
                         @if (!string.IsNullOrEmpty(item.ShipToContact2))
                     {
-                    @Html.DisplayFor(modelItem => item.ShipToContact2) <br />
-                    @:Phone: @Html.DisplayFor(modelItem => item.ShipToContact2) <br />
-                    @:Email: @Html.DisplayFor(modelItem => item.ShipToContact2)
+                            @Html.DisplayFor(modelItem => item.ShipToContact2) <br />
+                            @:Phone: @Html.DisplayFor(modelItem => item.ShipToContact2) <br />
+                            @:Email: @Html.DisplayFor(modelItem => item.ShipToContact2)
                     }
                     </td>
                     <td>
                         @if (!string.IsNullOrEmpty(item.ShipToBroker))
                     {
-                    @Html.DisplayFor(modelItem => item.ShipToBroker) <br />
-                    @:Phone: @Html.DisplayFor(modelItem => item.ShipToBroker) <br />
-                    @:Email: @Html.DisplayFor(modelItem => item.ShipToBroker)
+                            @Html.DisplayFor(modelItem => item.ShipToBroker) <br />
+                            @:Phone: @Html.DisplayFor(modelItem => item.ShipToBroker) <br />
+                            @:Email: @Html.DisplayFor(modelItem => item.ShipToBroker)
                     }
                     </td>
                     @if (Html.UserIsInRole(UserRoles.ReadWrite))
-                {
-                <td class="text-center">
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ProjectId }) |
-                    @Ajax.ActionLink("Delete", "Delete", new { id = item.ProjectId }, new AjaxOptions { Confirm = "Are you sure you want to delete this project record?", OnSuccess = "DeleteSuccess", HttpMethod = "POST" })
-                </td>
-                }
+                    {
+                        <td class="text-center">
+                            @Html.ActionLink("Edit", "Edit", new { id = item.ProjectId }) |
+                            @Ajax.ActionLink("Delete", "Delete", new { id = item.ProjectId }, new AjaxOptions { Confirm = "Are you sure you want to delete this project record?", OnSuccess = "DeleteSuccess", HttpMethod = "POST" })
+                        </td>
+                    }
                 </tr>
             }
         </tbody>
@@ -95,6 +101,6 @@ else
 
 
 @section Scripts {
-@Scripts.Render("~/bundles/form")
+    @Scripts.Render("~/bundles/form")
     @Scripts.Render("~/bundles/table")
 }

@@ -77,7 +77,30 @@ namespace WendtEquipmentTracking.App.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            var projectIdCookie = CookieHelper.Get("ProjectId");
+
+            if (string.IsNullOrEmpty(projectIdCookie))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var projectId = Convert.ToInt32(projectIdCookie);
+
+            //Get Data
+            var projectBO = projectService.GetById(projectId);
+
+            if (projectBO == null)
+            {
+                CookieHelper.Delete("ProjectId");
+                return RedirectToAction("Index", "Home");
+            }
+
+            var model = new BillOfLadingModel
+            {
+                FreightTerms = projectBO.FreightTerms
+            };
+
+            return View(model);
         }
 
         //
@@ -96,6 +119,7 @@ namespace WendtEquipmentTracking.App.Controllers
                     {
                         var projectId = Convert.ToInt32(projectIdCookie);
                         model.ProjectId = projectId;
+                        model.BillOfLadingEquipments = model.BillOfLadingEquipments.Where(be => be.Quantity > 0).ToList();
 
                         var billOfLadingBO = Mapper.Map<BillOfLadingBO>(model);
 
@@ -145,6 +169,7 @@ namespace WendtEquipmentTracking.App.Controllers
                     {
                         var projectId = Convert.ToInt32(projectIdCookie);
                         model.ProjectId = projectId;
+                        model.BillOfLadingEquipments = model.BillOfLadingEquipments.Where(be => be.Quantity > 0).ToList();
 
                         var billOfLading = billOfLadingService.GetById(id);
 

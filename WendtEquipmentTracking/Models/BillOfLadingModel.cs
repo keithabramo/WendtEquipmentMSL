@@ -31,6 +31,15 @@ namespace WendtEquipmentTracking.App.Models
         [Required]
         public string ShippedFrom { get; set; }
 
+        [DisplayName("Freight Terms")]
+        public string FreightTerms { get; set; }
+
+        [DisplayName("Carrier")]
+        public string Carrier { get; set; }
+
+        [DisplayName("Trailer #")]
+        public string TrailerNumber { get; set; }
+
         [DisplayName("To Storage")]
         public bool ToStorage { get; set; }
 

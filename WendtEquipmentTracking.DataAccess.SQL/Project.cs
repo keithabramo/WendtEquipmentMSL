@@ -29,6 +29,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         public System.DateTime CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
+        public string FreightTerms { get; set; }
         public string ShipToCompany { get; set; }
         public string ShipToAddress { get; set; }
         public string ShipToCSZ { get; set; }

@@ -21,6 +21,9 @@
           <Property Name="DateShipped" Type="datetime" />
           <Property Name="ShippedFrom" Type="nvarchar" MaxLength="1000" />
           <Property Name="ToStorage" Type="bit" Nullable="false" />
+          <Property Name="TrailerNumber" Type="nvarchar" MaxLength="255" />
+          <Property Name="Carrier" Type="nvarchar" MaxLength="255" />
+          <Property Name="FreightTerms" Type="nvarchar" MaxLength="1000" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="BillOfLadingEquipment">
@@ -105,6 +108,7 @@
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="255" />
           <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="FreightTerms" Type="nvarchar" MaxLength="1000" />
           <Property Name="ShipToCompany" Type="nvarchar" MaxLength="1000" />
           <Property Name="ShipToAddress" Type="nvarchar" MaxLength="1000" />
           <Property Name="ShipToCSZ" Type="nvarchar" MaxLength="1000" />
@@ -353,6 +357,9 @@
           <Property Name="DateShipped" Type="DateTime" Precision="3" />
           <Property Name="ShippedFrom" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="ToStorage" Type="Boolean" Nullable="false" />
+          <Property Name="TrailerNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Carrier" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="FreightTerms" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="BillOfLadingEquipments" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_BillOfLadingEquipment_BillOfLading" FromRole="BillOfLading" ToRole="BillOfLadingEquipment" />
           <NavigationProperty Name="Project" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_BillOfLanding_Project" FromRole="BillOfLading" ToRole="Project" />
@@ -450,6 +457,7 @@
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="FreightTerms" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="ShipToCompany" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="ShipToAddress" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="ShipToCSZ" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
@@ -603,6 +611,9 @@
             <EntityTypeMapping TypeName="WendtEquipmentTracking.DataAccess.SQL.Model.BillOfLading">
               <MappingFragment StoreEntitySet="BillOfLading">
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="FreightTerms" ColumnName="FreightTerms" />
+                <ScalarProperty Name="Carrier" ColumnName="Carrier" />
+                <ScalarProperty Name="TrailerNumber" ColumnName="TrailerNumber" />
                 <ScalarProperty Name="ToStorage" ColumnName="ToStorage" />
                 <ScalarProperty Name="ShippedFrom" ColumnName="ShippedFrom" />
                 <ScalarProperty Name="DateShipped" ColumnName="DateShipped" />
@@ -710,6 +721,7 @@
                 <ScalarProperty Name="ShipToCSZ" ColumnName="ShipToCSZ" />
                 <ScalarProperty Name="ShipToAddress" ColumnName="ShipToAddress" />
                 <ScalarProperty Name="ShipToCompany" ColumnName="ShipToCompany" />
+                <ScalarProperty Name="FreightTerms" ColumnName="FreightTerms" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />

@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
+using DevTrends.MvcDonutCaching;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using WendtEquipmentTracking.App.Common;
 using WendtEquipmentTracking.App.Models;
@@ -86,7 +86,7 @@ namespace WendtEquipmentTracking.App.Controllers
             }
             catch
             {
-                return View();
+                return View(model);
             }
         }
 
@@ -171,8 +171,7 @@ namespace WendtEquipmentTracking.App.Controllers
             }
         }
 
-        [ChildActionOnly]
-        [OutputCache(Duration = 3600)]
+        [DonutOutputCache(Duration = 3600)]
         public ActionResult ProjectNavPartial()
         {
             var currentProjectId = CookieHelper.Get("ProjectId");
@@ -198,13 +197,18 @@ namespace WendtEquipmentTracking.App.Controllers
         {
             CookieHelper.Set("ProjectId", ProjectId.ToString());
 
-            return RedirectToAction("Index", "Equipment");
+            //clear the cache for the project list at the top right of the page
+            clearProjectNavCache();
+
+            return RedirectToAction("Index", "Home");
         }
 
         private void clearProjectNavCache()
         {
-            var urlToRemove = Url.Action("ProjectNavPartial");
-            HttpResponse.RemoveOutputCacheItem(urlToRemove);
+            var cacheManager = new OutputCacheManager();
+
+            //remove a single cached action output (Index action)
+            cacheManager.RemoveItem("Project", "ProjectNavPartial");
         }
     }
 }

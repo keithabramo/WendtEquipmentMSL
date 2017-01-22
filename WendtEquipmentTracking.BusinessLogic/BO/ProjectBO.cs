@@ -7,6 +7,7 @@ namespace WendtEquipmentTracking.BusinessLogic.BO
     {
         public int ProjectId { get; set; }
         public string ProjectNumber { get; set; }
+        public string FreightTerms { get; set; }
         public string ShipToCompany { get; set; }
         public string ShipToAddress { get; set; }
         public string ShipToCSZ { get; set; }

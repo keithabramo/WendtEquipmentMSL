@@ -14,6 +14,9 @@ namespace WendtEquipmentTracking.App.Models
         [Remote("ValidProjectNumber", "Validate", AdditionalFields = "ProjectId", ErrorMessage = "This project number already exists")]
         public string ProjectNumber { get; set; }
 
+        [DisplayName("Freight Terms")]
+        public string FreightTerms { get; set; }
+
         [DisplayName("Ship To Company")]
         public string ShipToCompany { get; set; }
 

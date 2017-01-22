@@ -9,7 +9,7 @@ namespace WendtEquipmentTracking.App.Models
         public int BillOfLadingId { get; set; }
         public int EquipmentId { get; set; }
 
-        [DisplayName("Shipped Quantity")]
+        [DisplayName("Quantity Shipped with this BOL")]
         [Required]
         public double Quantity { get; set; }
 

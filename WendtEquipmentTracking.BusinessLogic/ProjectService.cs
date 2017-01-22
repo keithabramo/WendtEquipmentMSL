@@ -49,7 +49,20 @@ namespace WendtEquipmentTracking.BusinessLogic
         {
             var oldProject = projectEngine.Get(ProjectSpecs.Id(projectBO.ProjectId));
 
-            Mapper.Map<ProjectBO, Project>(projectBO, oldProject);
+            oldProject.FreightTerms = projectBO.FreightTerms;
+            oldProject.ProjectNumber = projectBO.ProjectNumber;
+            oldProject.ShipToAddress = projectBO.ShipToAddress;
+            oldProject.ShipToBroker = projectBO.ShipToBroker;
+            oldProject.ShipToBrokerEmail = projectBO.ShipToBrokerEmail;
+            oldProject.ShipToBrokerPhoneFax = projectBO.ShipToBrokerPhoneFax;
+            oldProject.ShipToCompany = projectBO.ShipToCompany;
+            oldProject.ShipToContact1 = projectBO.ShipToContact1;
+            oldProject.ShipToContact1Email = projectBO.ShipToContact1Email;
+            oldProject.ShipToContact1PhoneFax = projectBO.ShipToContact1PhoneFax;
+            oldProject.ShipToContact2 = projectBO.ShipToContact2;
+            oldProject.ShipToContact2Email = projectBO.ShipToContact2Email;
+            oldProject.ShipToContact2PhoneFax = projectBO.ShipToContact2PhoneFax;
+            oldProject.ShipToCSZ = projectBO.ShipToCSZ;
 
             projectEngine.UpdateProject(oldProject);
         }

@@ -34,13 +34,18 @@ $(function () {
 
 
             this.dataTable = $(".table.my-datatable").DataTable($.extend({
-                pageLength: 100,
+                pageLength: 25,
+                fixedHeader: true,
                 dom: "<'row'<'col-sm-4 text-left custom'f><'col-sm-4 text-center'i><'col-sm-4 text-right'l>>" +
                      "<'row'<'col-sm-12'tr>>" +
                      "<'row'<'col-sm-12 text-center'p>>"
             }, mslSettings));
 
             delete $.fn.dataTable.AutoFill.actions.fillHorizontal;
+
+            if ($(".pagination li").length == 2) {
+                $(".pagination").parent().hide();
+            }
 
             waitingDialog.hide();
         }
