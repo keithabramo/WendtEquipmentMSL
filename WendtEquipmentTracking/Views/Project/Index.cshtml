@@ -37,6 +37,9 @@
                 <th>
                     @Html.DisplayNameFor(model => model.ShipToBroker)
                 </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsCustomsProject)
+                </th>
                 @if (Html.UserIsInRole(UserRoles.ReadWrite))
                 {
                     <th></th>
@@ -81,6 +84,9 @@
                             @:Phone: @Html.DisplayFor(modelItem => item.ShipToBroker) <br />
                             @:Email: @Html.DisplayFor(modelItem => item.ShipToBroker)
                     }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsCustomsProject)
                     </td>
                     @if (Html.UserIsInRole(UserRoles.ReadWrite))
                     {

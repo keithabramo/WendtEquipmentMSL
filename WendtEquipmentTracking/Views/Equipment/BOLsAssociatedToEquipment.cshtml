@@ -19,6 +19,12 @@
                 <th>
                     @Html.DisplayNameFor(model => model.BillOfLading.ShippedFrom)
                 </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BillOfLading.HTSCode)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BillOfLading.CountryOfOrigin)
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -30,7 +36,7 @@
                             <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
                         </a>
                     </td>
-                    <td class="@item.BillOfLading.Indicators.BillOfLadingNumberColor.ToString()">
+                    <td>
                         @Html.DisplayFor(modelItem => item.BillOfLading.BillOfLadingNumber)
                     </td>
                     <td>
@@ -39,11 +45,17 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Quantity)
                     </td>
-                    <td class="@item.BillOfLading.Indicators.DateShippedNumberColor.ToString()">
+                    <td>
                         @Html.DisplayFor(modelItem => item.BillOfLading.DateShipped)
                     </td>
-                    <td class="@item.BillOfLading.Indicators.ShippedFromColor.ToString()">
+                    <td>
                         @Html.DisplayFor(modelItem => item.BillOfLading.ShippedFrom)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BillOfLading.HTSCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BillOfLading.CountryOfOrigin)
                     </td>
                 </tr>
         }

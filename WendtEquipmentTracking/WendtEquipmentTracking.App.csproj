@@ -316,7 +316,6 @@
     <Content Include="Views\Project\Index.cshtml" />
     <Content Include="Views\Shared\ProjectNavPartial.cshtml" />
     <Content Include="Views\Import\WorkOrderPrice.cshtml" />
-    <Content Include="Views\Equipment\Details.cshtml" />
     <Content Include="Views\BillOfLading\Edit.cshtml" />
     <Content Include="Views\HardwareKit\Edit.cshtml" />
     <Content Include="Views\Import\Equipment.cshtml" />
@@ -330,7 +329,6 @@
     <Content Include="Views\BillOfLading\Create.cshtml" />
     <Content Include="Views\BillOfLading\EquipmentToAddToBOL.cshtml" />
     <Content Include="Views\Shared\ActionNavPartial.cshtml" />
-    <Content Include="Views\Equipment\Edit.cshtml" />
     <Content Include="Views\HardwareKit\Create.cshtml" />
     <Content Include="Views\HardwareKit\Details.cshtml" />
     <Content Include="Views\HardwareKit\HardwareAssociatedToHardwareKit.cshtml" />
@@ -340,6 +338,7 @@
     <Content Include="Views\WorkOrderPrice\Create.cshtml" />
     <Content Include="Views\WorkOrderPrice\Edit.cshtml" />
     <Content Include="Views\WorkOrderPrice\Index.cshtml" />
+    <Content Include="Views\Equipment\Chunk.cshtml" />
     <None Include="Web.Staging.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using WendtEquipmentTracking.Common;
 using WendtEquipmentTracking.DataAccess.SQL.Api;
@@ -30,16 +29,12 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         public IEnumerable<Project> ListAll()
         {
-            return this.repository.Find(!ProjectSpecs.IsDeleted())
-                .Include(x => x.Equipments)
-                .Include(x => x.HardwareKits)
-                .Include(x => x.BillOfLadings)
-                .Include(x => x.WorkOrderPrices)
-                .Include(x => x.Equipments.Select(y => y.BillOfLadingEquipments))
-                .Include(x => x.Equipments.Select(y => y.HardwareKitEquipments))
-                .Include(x => x.HardwareKits.Select(y => y.Equipments))
-                .Include(x => x.HardwareKits.Select(y => y.HardwareKitEquipments))
-                .Include(x => x.BillOfLadings.Select(y => y.BillOfLadingEquipments));
+            return this.repository.Find(!ProjectSpecs.IsDeleted());
+        }
+
+        public IEnumerable<Project> ListAllLazy()
+        {
+            return this.repository.Find(!ProjectSpecs.IsDeleted());
         }
 
         public Project Get(Specification<Project> specification)
@@ -49,16 +44,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         public IEnumerable<Project> List(Specification<Project> specification)
         {
-            return this.repository.Find(!ProjectSpecs.IsDeleted() && specification)
-                .Include(x => x.Equipments)
-                .Include(x => x.HardwareKits)
-                .Include(x => x.BillOfLadings)
-                .Include(x => x.WorkOrderPrices)
-                .Include(x => x.Equipments.Select(y => y.BillOfLadingEquipments))
-                .Include(x => x.Equipments.Select(y => y.HardwareKitEquipments))
-                .Include(x => x.HardwareKits.Select(y => y.Equipments))
-                .Include(x => x.HardwareKits.Select(y => y.HardwareKitEquipments))
-                .Include(x => x.BillOfLadings.Select(y => y.BillOfLadingEquipments));
+            return this.repository.Find(!ProjectSpecs.IsDeleted() && specification);
         }
 
         public void AddNewProject(Project project)

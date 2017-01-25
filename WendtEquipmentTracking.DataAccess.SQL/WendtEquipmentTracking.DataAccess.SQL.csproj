@@ -139,6 +139,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>WendtEquipmentTracking.edmx</DependentUpon>
     </Compile>
+    <Compile Include="WendtEquipmentTracking.Views.cs" />
     <Compile Include="WorkOrderPrice.cs">
       <DependentUpon>WendtEquipmentTracking.tt</DependentUpon>
     </Compile>

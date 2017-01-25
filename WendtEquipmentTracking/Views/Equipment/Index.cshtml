@@ -67,12 +67,6 @@
                 @Html.DisplayNameFor(model => model.SalePrice)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.HTSCode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CountryOfOrigin)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Notes)
             </th>
             <th>
@@ -83,25 +77,12 @@
             </th>
             @if (Html.UserIsInRole(UserRoles.ReadWrite))
             {
-                <th class="long-column"></th>
+            <th class="long-column"></th>
             }
         </tr>
     </thead>
     <tbody>
-        @if (Html.UserIsInRole(UserRoles.ReadWrite))
-        {
-            foreach (var item in Model)
-            {
-                @Html.Partial("Edit", item)
-            }
-        }
-        else
-        {
-            foreach (var item in Model)
-            {
-                @Html.Partial("Details", item)
-            }
-        }
+        @Html.Partial("Chunk", Model)
     </tbody>
     @if (Html.UserIsInRole(UserRoles.ReadWrite))
     {
@@ -111,19 +92,12 @@
     }
 </table>
 
-
-
 <div class="hidden">
-
-
-    @foreach (var item in Model)
+    @foreach (var item in Model.Where(m => m.BillOfLadingEquipments.Count() > 0).ToList())
     {
-        if (item.BillOfLadingEquipments.Count() > 0)
-        {
-            <div id="@(item.EquipmentId)">
-                @Html.Partial("BOLsAssociatedToEquipment", item.BillOfLadingEquipments)
-            </div>
-        }
+        <div id="@(item.EquipmentId)">
+            @Html.Partial("BOLsAssociatedToEquipment", item.BillOfLadingEquipments)
+        </div>
     }
 
 </div>

@@ -24,6 +24,8 @@
           <Property Name="TrailerNumber" Type="nvarchar" MaxLength="255" />
           <Property Name="Carrier" Type="nvarchar" MaxLength="255" />
           <Property Name="FreightTerms" Type="nvarchar" MaxLength="1000" />
+          <Property Name="HTSCode" Type="nvarchar" MaxLength="255" />
+          <Property Name="CountryOfOrigin" Type="nvarchar" MaxLength="50" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="BillOfLadingEquipment">
@@ -63,8 +65,6 @@
           <Property Name="FullyShipped" Type="bit" />
           <Property Name="CustomsValue" Type="float" />
           <Property Name="SalePrice" Type="float" />
-          <Property Name="HTSCode" Type="nvarchar" MaxLength="255" />
-          <Property Name="CountryOfOrigin" Type="nvarchar" MaxLength="50" />
           <Property Name="Notes" Type="nvarchar" MaxLength="255" />
           <Property Name="AutoShipFile" Type="nvarchar" MaxLength="50" />
           <Property Name="SalesOrderNumber" Type="nvarchar" MaxLength="255" />
@@ -121,6 +121,7 @@
           <Property Name="ShipToBroker" Type="nvarchar" MaxLength="255" />
           <Property Name="ShipToBrokerPhoneFax" Type="nvarchar" MaxLength="50" />
           <Property Name="ShipToBrokerEmail" Type="nvarchar" MaxLength="255" />
+          <Property Name="IsCustomsProject" Type="bit" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="WorkOrderPrice">
@@ -360,6 +361,8 @@
           <Property Name="TrailerNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Carrier" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="FreightTerms" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="HTSCode" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CountryOfOrigin" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="BillOfLadingEquipments" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_BillOfLadingEquipment_BillOfLading" FromRole="BillOfLading" ToRole="BillOfLadingEquipment" />
           <NavigationProperty Name="Project" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_BillOfLanding_Project" FromRole="BillOfLading" ToRole="Project" />
@@ -403,8 +406,6 @@
           <Property Name="FullyShipped" Type="Boolean" />
           <Property Name="CustomsValue" Type="Double" />
           <Property Name="SalePrice" Type="Double" />
-          <Property Name="HTSCode" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="CountryOfOrigin" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Notes" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="AutoShipFile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="SalesOrderNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
@@ -470,6 +471,7 @@
           <Property Name="ShipToBroker" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="ShipToBrokerPhoneFax" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ShipToBrokerEmail" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IsCustomsProject" Type="Boolean" Nullable="false" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="BillOfLadings" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_BillOfLanding_Project" FromRole="Project" ToRole="BillOfLading" />
           <NavigationProperty Name="Equipments" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_Equipment_Project" FromRole="Project" ToRole="Equipment" />
@@ -611,6 +613,8 @@
             <EntityTypeMapping TypeName="WendtEquipmentTracking.DataAccess.SQL.Model.BillOfLading">
               <MappingFragment StoreEntitySet="BillOfLading">
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CountryOfOrigin" ColumnName="CountryOfOrigin" />
+                <ScalarProperty Name="HTSCode" ColumnName="HTSCode" />
                 <ScalarProperty Name="FreightTerms" ColumnName="FreightTerms" />
                 <ScalarProperty Name="Carrier" ColumnName="Carrier" />
                 <ScalarProperty Name="TrailerNumber" ColumnName="TrailerNumber" />
@@ -649,8 +653,6 @@
                 <ScalarProperty Name="SalesOrderNumber" ColumnName="SalesOrderNumber" />
                 <ScalarProperty Name="AutoShipFile" ColumnName="AutoShipFile" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
-                <ScalarProperty Name="CountryOfOrigin" ColumnName="CountryOfOrigin" />
-                <ScalarProperty Name="HTSCode" ColumnName="HTSCode" />
                 <ScalarProperty Name="SalePrice" ColumnName="SalePrice" />
                 <ScalarProperty Name="CustomsValue" ColumnName="CustomsValue" />
                 <ScalarProperty Name="FullyShipped" ColumnName="FullyShipped" />
@@ -709,6 +711,7 @@
             <EntityTypeMapping TypeName="WendtEquipmentTracking.DataAccess.SQL.Model.Project">
               <MappingFragment StoreEntitySet="Project">
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsCustomsProject" ColumnName="IsCustomsProject" />
                 <ScalarProperty Name="ShipToBrokerEmail" ColumnName="ShipToBrokerEmail" />
                 <ScalarProperty Name="ShipToBrokerPhoneFax" ColumnName="ShipToBrokerPhoneFax" />
                 <ScalarProperty Name="ShipToBroker" ColumnName="ShipToBroker" />

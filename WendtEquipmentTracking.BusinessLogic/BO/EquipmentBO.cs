@@ -29,8 +29,6 @@ namespace WendtEquipmentTracking.BusinessLogic.BO
         public bool? FullyShipped { get; set; }
         public double? CustomsValue { get; set; }
         public double? SalePrice { get; set; }
-        public string HTSCode { get; set; }
-        public string CountryOfOrigin { get; set; }
         public string Notes { get; set; }
         public string AutoShipFile { get; set; }
         public string SalesOrderNumber { get; set; }

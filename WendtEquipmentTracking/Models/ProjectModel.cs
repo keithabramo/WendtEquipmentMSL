@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
@@ -53,8 +52,7 @@ namespace WendtEquipmentTracking.App.Models
         [DisplayName("Ship To Broker Email")]
         public string ShipToBrokerEmail { get; set; }
 
-        public IEnumerable<EquipmentModel> Equipments { get; set; }
-        public IEnumerable<BillOfLadingModel> BillOfLadings { get; set; }
-        public IEnumerable<HardwareKitModel> HardwareKits { get; set; }
+        [DisplayName("Is Export Project?")]
+        public bool IsCustomsProject { get; set; }
     }
 }

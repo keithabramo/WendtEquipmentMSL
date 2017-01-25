@@ -39,27 +39,6 @@ namespace WendtEquipmentTracking.BusinessLogic
             equipmentEngine.AddAllNewEquipment(equipments);
         }
 
-        public void UpdateReadyToShip(IEnumerable<EquipmentBO> alteredEquipmentBOs)
-        {
-            //get old equipment
-            var oldEquipments = equipmentEngine.List(EquipmentSpecs.Ids(alteredEquipmentBOs.Select(e => e.EquipmentId)));
-
-            //update BOs with adjustments
-            var equipmentBOs = Mapper.Map<IEnumerable<EquipmentBO>>(oldEquipments);
-
-            foreach (var equipmentBO in equipmentBOs)
-            {
-                var alteredEquipmentBO = alteredEquipmentBOs.SingleOrDefault(ae => ae.EquipmentId == equipmentBO.EquipmentId);
-                equipmentBO.ReadyToShip = alteredEquipmentBO.ReadyToShip;
-
-                var oldEquipment = oldEquipments.SingleOrDefault(ae => ae.EquipmentId == equipmentBO.EquipmentId);
-
-                Mapper.Map<EquipmentBO, Equipment>(equipmentBO, oldEquipment);
-            }
-
-            equipmentEngine.UpdateAllEquipment(oldEquipments.ToList());
-        }
-
         public void Update(EquipmentBO alteredEquipmentBO)
         {
             var oldEquipment = equipmentEngine.Get(EquipmentSpecs.Id(alteredEquipmentBO.EquipmentId));
@@ -106,6 +85,15 @@ namespace WendtEquipmentTracking.BusinessLogic
         public IEnumerable<EquipmentBO> GetAll()
         {
             var equipments = equipmentEngine.ListAll().ToList();
+
+            var equipmentBOs = Mapper.Map<IEnumerable<EquipmentBO>>(equipments);
+
+            return equipmentBOs;
+        }
+
+        public IEnumerable<EquipmentBO> GetSome(int projectId, int skip, int take)
+        {
+            var equipments = equipmentEngine.List(EquipmentSpecs.ProjectId(projectId)).Skip(skip).Take(take).ToList();
 
             var equipmentBOs = Mapper.Map<IEnumerable<EquipmentBO>>(equipments);
 

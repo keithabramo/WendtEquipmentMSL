@@ -174,16 +174,19 @@ namespace WendtEquipmentTracking.App.Controllers
         [DonutOutputCache(Duration = 3600)]
         public ActionResult ProjectNavPartial()
         {
-            var currentProjectId = CookieHelper.Get("ProjectId");
-            if (!string.IsNullOrEmpty(currentProjectId))
+            var currentProjectIdCookie = CookieHelper.Get("ProjectId");
+            if (!string.IsNullOrEmpty(currentProjectIdCookie))
             {
-                var currentProjectBO = projectService.GetById(Convert.ToInt32(currentProjectId));
-                var projectBOs = projectService.GetAll().ToList();
+                var currentProjectId = Convert.ToInt32(currentProjectIdCookie);
+
+                var projectBOs = projectService.GetAllForNavigation().ToList();
+                var projectModels = Mapper.Map<IEnumerable<ProjectModel>>(projectBOs);
+                var currentProjectModel = projectModels.SingleOrDefault(p => p.ProjectId == currentProjectId);
 
                 var model = new ProjectNavModel
                 {
-                    CurrentProject = Mapper.Map<ProjectModel>(currentProjectBO),
-                    Projects = Mapper.Map<IEnumerable<ProjectModel>>(projectBOs)
+                    CurrentProject = currentProjectModel,
+                    Projects = projectModels
                 };
 
                 return PartialView(model);
@@ -196,6 +199,9 @@ namespace WendtEquipmentTracking.App.Controllers
         public ActionResult ChangeProject(int ProjectId)
         {
             CookieHelper.Set("ProjectId", ProjectId.ToString());
+
+            var projectBO = projectService.GetAllForNavigation().SingleOrDefault(p => p.ProjectId == ProjectId);
+            CookieHelper.Set("ProjectNumber", projectBO.ProjectNumber);
 
             //clear the cache for the project list at the top right of the page
             clearProjectNavCache();

@@ -11,12 +11,10 @@ namespace WendtEquipmentTracking.App.Controllers
     public class WorkOrderPriceApiController : ApiController
     {
         private IWorkOrderPriceService workOrderPriceService;
-        private IProjectService projectService;
 
         public WorkOrderPriceApiController()
         {
             workOrderPriceService = new WorkOrderPriceService();
-            projectService = new ProjectService();
         }
 
         //
@@ -36,15 +34,8 @@ namespace WendtEquipmentTracking.App.Controllers
             var projectId = Convert.ToInt32(projectIdCookie);
 
             //Get Data
-            var projectBO = projectService.GetById(projectId);
 
-            if (projectBO == null)
-            {
-                CookieHelper.Delete("ProjectId");
-                return workOrderPrices;
-            }
-
-            var workOrderPriceBOs = projectBO.WorkOrderPrices;
+            var workOrderPriceBOs = workOrderPriceService.GetAll().Where(w => w.ProjectId == projectId);
 
             workOrderPrices = workOrderPriceBOs
                                 .Where(wop => wop.WorkOrderNumber.Contains(term))

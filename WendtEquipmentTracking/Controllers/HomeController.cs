@@ -30,7 +30,7 @@ namespace WendtEquipmentTracking.App.Controllers
             {
                 clearProjectNavCache();
 
-                var projectBOs = projectService.GetAll();
+                var projectBOs = projectService.GetAllForNavigation();
 
                 var model = Mapper.Map<IEnumerable<ProjectModel>>(projectBOs);
 

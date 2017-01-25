@@ -18,7 +18,5 @@ namespace WendtEquipmentTracking.App.Models
         [DisplayName("Cost Price")]
         [Required]
         public double CostPrice { get; set; }
-
-        public ProjectModel Project { get; set; }
     }
 }

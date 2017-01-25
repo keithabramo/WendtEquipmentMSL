@@ -32,7 +32,9 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
         {
             return this.repository.Find(!EquipmentSpecs.IsDeleted())
                 .Include(x => x.BillOfLadingEquipments)
-                .Include(x => x.HardwareKitEquipments);
+                .Include(x => x.BillOfLadingEquipments.Select(ble => ble.BillOfLading))
+                .Include(x => x.HardwareKitEquipments)
+                .Include(x => x.HardwareKitEquipments.Select(ble => ble.HardwareKit));
         }
 
         public Equipment Get(Specification<Equipment> specification)
@@ -44,7 +46,9 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
         {
             return this.repository.Find(!EquipmentSpecs.IsDeleted() && specification)
                 .Include(x => x.BillOfLadingEquipments)
-                .Include(x => x.HardwareKitEquipments);
+                .Include(x => x.BillOfLadingEquipments.Select(ble => ble.BillOfLading))
+                .Include(x => x.HardwareKitEquipments)
+                .Include(x => x.HardwareKitEquipments.Select(ble => ble.HardwareKit));
         }
 
         public int AddNewEquipment(Equipment equipment)

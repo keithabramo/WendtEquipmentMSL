@@ -44,8 +44,6 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         public Nullable<bool> FullyShipped { get; set; }
         public Nullable<double> CustomsValue { get; set; }
         public Nullable<double> SalePrice { get; set; }
-        public string HTSCode { get; set; }
-        public string CountryOfOrigin { get; set; }
         public string Notes { get; set; }
         public string AutoShipFile { get; set; }
         public string SalesOrderNumber { get; set; }

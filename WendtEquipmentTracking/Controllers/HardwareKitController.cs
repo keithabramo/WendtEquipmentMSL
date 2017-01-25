@@ -40,20 +40,9 @@ namespace WendtEquipmentTracking.App.Controllers
 
             var projectId = Convert.ToInt32(projectIdCookie);
 
-            var projectBO = projectService.GetById(projectId);
+            var hardwareKitBOs = hardwareKitService.GetAll().Where(hk => hk.ProjectId == projectId && hk.IsCurrentRevision).ToList();
 
-            if (projectBO == null)
-            {
-                CookieHelper.Delete("ProjectId");
-                return RedirectToAction("Index", "Home");
-            }
-
-            var hardwareKitModels = Mapper.Map<IEnumerable<HardwareKitModel>>(projectBO.HardwareKits.Where(h => h.IsCurrentRevision));
-
-
-            //Filter and sort data
-
-            hardwareKitModels = hardwareKitModels.OrderBy(r => r.HardwareKitNumber).ToList();
+            var hardwareKitModels = Mapper.Map<IEnumerable<HardwareKitModel>>(hardwareKitBOs);
 
             return View(hardwareKitModels);
         }
@@ -276,15 +265,11 @@ namespace WendtEquipmentTracking.App.Controllers
             var projectId = Convert.ToInt32(projectIdCookie);
 
             //Get Data
-            var projectBO = projectService.GetById(projectId);
 
-            if (projectBO == null)
-            {
-                CookieHelper.Delete("ProjectId");
-                return RedirectToAction("Index", "Home");
-            }
 
-            var equipmentBOs = projectBO.Equipments.Where(e => e.IsHardware && (e.HardwareKitEquipments == null || e.HardwareKitEquipments.Count() == 0));
+            var equipmentBOs = equipmentService.GetAll().Where(e => e.ProjectId == projectId
+                                                                    && e.IsHardware
+                                                                    && (e.HardwareKitEquipments == null || e.HardwareKitEquipments.Count() == 0));
 
             var hardwareGroups = equipmentBOs
                 .GroupBy(e => new { e.ShippingTagNumber, e.Description }, (key, g) => new HardwareKitGroupModel
@@ -320,15 +305,9 @@ namespace WendtEquipmentTracking.App.Controllers
             var projectId = Convert.ToInt32(projectIdCookie);
 
             //Get Data
-            var projectBO = projectService.GetById(projectId);
-
-            if (projectBO == null)
-            {
-                CookieHelper.Delete("ProjectId");
-                return RedirectToAction("Index", "Home");
-            }
-
-            var equipmentBOs = projectBO.Equipments.Where(e => e.IsHardware && (e.HardwareKitEquipments == null || e.HardwareKitEquipments.Count() == 0));
+            var equipmentBOs = equipmentService.GetAll().Where(e => e.ProjectId == projectId
+                                                                    && e.IsHardware
+                                                                    && (e.HardwareKitEquipments == null || e.HardwareKitEquipments.Count() == 0));
 
             var hardwareGroups = equipmentBOs.Where(hg => !model.HardwareGroups.Any(mhg => mhg.ShippingTagNumber == hg.ShippingTagNumber))
                 .GroupBy(e => new { e.ShippingTagNumber, e.Description }, (key, g) => new HardwareKitGroupModel

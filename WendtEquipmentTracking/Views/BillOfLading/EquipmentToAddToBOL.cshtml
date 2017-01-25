@@ -60,12 +60,6 @@
                 @Html.DisplayNameFor(model => model.BillOfLadingEquipments[0].Equipment.SalePrice)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BillOfLadingEquipments[0].Equipment.HTSCode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BillOfLadingEquipments[0].Equipment.CountryOfOrigin)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.BillOfLadingEquipments[0].Equipment.Notes)
             </th>
             <th>
@@ -145,12 +139,6 @@
                 </td>
                 <td class="@Model.BillOfLadingEquipments[i].Equipment.Indicators.SalePriceColor.ToString()">
                     @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.SalePrice)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.HTSCode)
-                </td>
-                <td class="@Model.BillOfLadingEquipments[i].Equipment.Indicators.CountyOfOriginColor.ToString()">
-                    @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.CountryOfOrigin)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.Notes)

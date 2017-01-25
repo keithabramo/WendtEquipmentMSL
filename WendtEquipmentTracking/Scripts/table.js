@@ -24,7 +24,8 @@ $(function () {
             $(".table.my-datatable thead").prepend($searchHeader);
 
             var mslSettings = {};
-            if ($(".masterShipList").length) {
+            var isMSL = $(".masterShipList").length;
+            if (isMSL) {
                 mslSettings = {
                     autoFill: {
                         columns: [2, 3, 4, 5, 6, 7, 8, 9, 10, 13, 19, 20, 21]
@@ -32,9 +33,9 @@ $(function () {
                 };
             }
 
-
             this.dataTable = $(".table.my-datatable").DataTable($.extend({
                 pageLength: 25,
+                deferRender: true,
                 fixedHeader: true,
                 dom: "<'row'<'col-sm-4 text-left custom'f><'col-sm-4 text-center'i><'col-sm-4 text-right'l>>" +
                      "<'row'<'col-sm-12'tr>>" +
@@ -47,7 +48,9 @@ $(function () {
                 $(".pagination").parent().hide();
             }
 
-            waitingDialog.hide();
+            if (!isMSL) {
+                waitingDialog.hide();
+            }
         }
 
         this.initEvents = function () {

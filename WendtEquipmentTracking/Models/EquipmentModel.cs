@@ -8,6 +8,11 @@ namespace WendtEquipmentTracking.App.Models
 {
     public class EquipmentModel : BaseModel
     {
+        public EquipmentModel()
+        {
+            Indicators = new IndicatorsModel();
+        }
+
         public int EquipmentId { get; set; }
         public int ProjectId { get; set; }
 
@@ -92,14 +97,6 @@ namespace WendtEquipmentTracking.App.Models
         public double? SalePrice { get; set; }
 
 
-        [DisplayName("HTS Code")]
-        public string HTSCode { get; set; }
-
-
-        [DisplayName("Country Of Origin")]
-        public string CountryOfOrigin { get; set; }
-
-
         [DisplayName("Notes")]
         public string Notes { get; set; }
 
@@ -128,9 +125,7 @@ namespace WendtEquipmentTracking.App.Models
 
         public IndicatorsModel Indicators { get; set; }
 
-        public string ProjectNumber { get; set; }
-
-        public void SetIndicators()
+        public void SetIndicators(string projectNumber, bool isCustomsProject)
         {
             Indicators = new IndicatorsModel();
 
@@ -180,25 +175,19 @@ namespace WendtEquipmentTracking.App.Models
             }
 
             //customs value
-            if (!CustomsValue.HasValue || CustomsValue.Value <= 0)
+            if (isCustomsProject && (!CustomsValue.HasValue || CustomsValue.Value <= 0))
             {
                 Indicators.CustomsValueColor = IndicatorsModel.Colors.Red;
             }
 
             //sales price
-            if (!SalePrice.HasValue || SalePrice.Value <= 0)
+            if (isCustomsProject && (!SalePrice.HasValue || SalePrice.Value <= 0))
             {
                 Indicators.SalePriceColor = IndicatorsModel.Colors.Red;
             }
 
-            //country of origin
-            if (string.IsNullOrEmpty(CountryOfOrigin) && !string.IsNullOrEmpty(HTSCode))
-            {
-                Indicators.CountyOfOriginColor = IndicatorsModel.Colors.Red;
-            }
-
             //sales order
-            if (string.IsNullOrEmpty(WorkOrderNumber) || !WorkOrderNumber.Contains(ProjectNumber.Trim()))
+            if (string.IsNullOrEmpty(WorkOrderNumber) || !WorkOrderNumber.Contains(projectNumber.Trim()))
             {
                 Indicators.SalesOrderNumberColor = IndicatorsModel.Colors.Red;
             }

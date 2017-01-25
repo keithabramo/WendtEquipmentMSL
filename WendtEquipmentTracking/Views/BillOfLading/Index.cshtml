@@ -40,6 +40,12 @@
                 <th>
                     @Html.DisplayNameFor(model => model.TrailerNumber)
                 </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HTSCode)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CountryOfOrigin)
+                </th>
                 @if (Html.UserIsInRole(UserRoles.ReadWrite))
                 {
                     <th></th>
@@ -70,6 +76,12 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.TrailerNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HTSCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CountryOfOrigin)
                     </td>
                     @if (Html.UserIsInRole(UserRoles.ReadWrite))
                     {

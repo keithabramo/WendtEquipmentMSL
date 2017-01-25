@@ -106,6 +106,21 @@
             </div>
         </div>
 
+
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            @Html.EditorFor(model => model.IsCustomsProject)
+                            @Html.DisplayNameFor(model => model.IsCustomsProject)
+
+                            @Html.ValidationMessageFor(model => model.IsCustomsProject, "", new { @class = "text-danger" })
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-sm-4">
                 <div class="form-group">

@@ -19,6 +19,8 @@ namespace WendtEquipmentTracking.BusinessLogic.BO
         public string FreightTerms { get; set; }
         public string Carrier { get; set; }
         public string TrailerNumber { get; set; }
+        public string HTSCode { get; set; }
+        public string CountryOfOrigin { get; set; }
         public bool ToStorage { get; set; }
 
         public IEnumerable<BillOfLadingEquipmentBO> BillOfLadingEquipments { get; set; }

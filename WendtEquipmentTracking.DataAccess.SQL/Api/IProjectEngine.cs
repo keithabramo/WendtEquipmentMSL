@@ -6,6 +6,8 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Api
     {
         IEnumerable<Project> ListAll();
 
+        IEnumerable<Project> ListAllLazy();
+
         Project Get(Specification<Project> specification);
 
         IEnumerable<Project> List(Specification<Project> specification);

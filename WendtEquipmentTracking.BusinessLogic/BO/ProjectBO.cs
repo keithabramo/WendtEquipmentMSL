@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace WendtEquipmentTracking.BusinessLogic.BO
 {
@@ -20,16 +19,12 @@ namespace WendtEquipmentTracking.BusinessLogic.BO
         public string ShipToBroker { get; set; }
         public string ShipToBrokerPhoneFax { get; set; }
         public string ShipToBrokerEmail { get; set; }
+        public bool IsCustomsProject { get; set; }
 
 
         public string CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
-
-        public IEnumerable<EquipmentBO> Equipments { get; set; }
-        public IEnumerable<BillOfLadingBO> BillOfLadings { get; set; }
-        public IEnumerable<HardwareKitBO> HardwareKits { get; set; }
-        public IEnumerable<WorkOrderPriceBO> WorkOrderPrices { get; set; }
     }
 }

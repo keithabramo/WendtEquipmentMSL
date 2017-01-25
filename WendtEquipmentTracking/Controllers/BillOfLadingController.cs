@@ -15,11 +15,13 @@ namespace WendtEquipmentTracking.App.Controllers
     {
         private IBillOfLadingService billOfLadingService;
         private IProjectService projectService;
+        private IEquipmentService equipmentService;
 
         public BillOfLadingController()
         {
             billOfLadingService = new BillOfLadingService();
             projectService = new ProjectService();
+            equipmentService = new EquipmentService();
         }
 
         //
@@ -36,19 +38,9 @@ namespace WendtEquipmentTracking.App.Controllers
 
             var projectId = Convert.ToInt32(projectIdCookie);
 
-            var projectBO = projectService.GetById(projectId);
+            var billOfLadingBOs = billOfLadingService.GetAll().Where(b => b.ProjectId == projectId && b.IsCurrentRevision).ToList();
 
-            if (projectBO == null)
-            {
-                CookieHelper.Delete("ProjectId");
-                return RedirectToAction("Index", "Home");
-            }
-
-            var billOfLadingModels = Mapper.Map<IEnumerable<BillOfLadingModel>>(projectBO.BillOfLadings.Where(b => b.IsCurrentRevision));
-
-            //Filter and sort data
-
-            billOfLadingModels = billOfLadingModels.OrderBy(r => r.DateShipped).ToList();
+            var billOfLadingModels = Mapper.Map<IEnumerable<BillOfLadingModel>>(billOfLadingBOs);
 
             return View(billOfLadingModels);
         }
@@ -236,27 +228,24 @@ namespace WendtEquipmentTracking.App.Controllers
 
             var projectId = Convert.ToInt32(projectIdCookie);
 
-            //Get Data
             var projectBO = projectService.GetById(projectId);
 
-            if (projectBO == null)
-            {
-                CookieHelper.Delete("ProjectId");
-                return RedirectToAction("Index", "Home");
-            }
-
-            var equipmentBOs = projectBO.Equipments.Where(e => e.ReadyToShip != null && e.ReadyToShip > 0 && !e.IsHardware);
+            //Get Data
+            var equipmentBOs = equipmentService.GetAll().Where(e => e.ProjectId == projectId
+                                                                    && e.ReadyToShip != null
+                                                                    && e.ReadyToShip > 0
+                                                                    && !e.IsHardware).ToList();
 
             var equipmentModels = Mapper.Map<IEnumerable<EquipmentModel>>(equipmentBOs);
+
             equipmentModels.ToList().ForEach(e =>
             {
-                e.ProjectNumber = projectBO.ProjectNumber;
-                e.SetIndicators();
+                e.SetIndicators(projectBO.ProjectNumber, projectBO.IsCustomsProject);
             });
 
             //Filter and sort data
 
-            equipmentModels = equipmentModels.OrderBy(r => r.EquipmentId);
+            equipmentModels = equipmentModels.OrderBy(r => r.EquipmentName);
 
             var billOfLadingEquipments = equipmentModels.Select(e => new BillOfLadingEquipmentModel
             {
@@ -285,20 +274,16 @@ namespace WendtEquipmentTracking.App.Controllers
             }
 
             var projectId = Convert.ToInt32(projectIdCookie);
-
-            //Get Data
             var projectBO = projectService.GetById(projectId);
 
-            if (projectBO == null)
-            {
-                CookieHelper.Delete("ProjectId");
-                return RedirectToAction("Index", "Home");
-            }
-
-            var equipmentBOs = projectBO.Equipments.Where(e => e.ReadyToShip != null && e.ReadyToShip > 0 && !e.IsHardware);
+            //Get Data
+            var equipmentBOs = equipmentService.GetAll().Where(e => e.ProjectId == projectId
+                                                                    && e.ReadyToShip != null
+                                                                    && e.ReadyToShip > 0
+                                                                    && !e.IsHardware).ToList();
 
             var equipmentModels = Mapper.Map<IEnumerable<EquipmentModel>>(equipmentBOs);
-            
+
             var billOfLadingEquipments = equipmentModels.Select(e => new BillOfLadingEquipmentModel
             {
                 Equipment = e,
@@ -311,8 +296,7 @@ namespace WendtEquipmentTracking.App.Controllers
             billOfLadingEquipments.AddRange(modelBOLEquipments);
             billOfLadingEquipments.ToList().ForEach(e =>
             {
-                e.Equipment.ProjectNumber = projectBO.ProjectNumber;
-                e.Equipment.SetIndicators();
+                e.Equipment.SetIndicators(projectBO.ProjectNumber, projectBO.IsCustomsProject);
             });
 
             model.BillOfLadingEquipments = billOfLadingEquipments;

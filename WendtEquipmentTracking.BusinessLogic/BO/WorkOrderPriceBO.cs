@@ -7,7 +7,5 @@
         public string WorkOrderNumber { get; set; }
         public double CostPrice { get; set; }
         public double SalePrice { get; set; }
-
-        public ProjectBO Project { get; set; }
     }
 }

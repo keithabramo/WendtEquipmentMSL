@@ -1,11 +1,13 @@
 ﻿$(function () {
 
     var MasterShipList = function () {
+        $.ajaxSetup({ cache: false });
 
         this.editsMade = false;
         this.editQueue = [];
         this.createURL = ROOT_URL + "Equipment/Create";
         this.editURL = ROOT_URL + "Equipment/Edit";
+        this.chunkURL = ROOT_URL + "Equipment/Chunk";
 
         this.initStyles = function () {
             $.fn.dataTable.ext.search.push(
@@ -33,16 +35,13 @@
                 .draw();
 
             $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="readyToShipFilter" /> Equipment Released</label>');
+
+            this.loadChunk(50);
         }
 
         this.initEvents = function () {
             var $this = this;
 
-
-            //loading state for create button
-            $(document).on("click", ".createSubmit", function () {
-                $(this).button("loading");
-            });
 
             //edits made
             $('.table').on('change', "> tbody > tr input, > tbody > tr select", function () {
@@ -98,7 +97,7 @@
 
             //create row
             $('.table tfoot').on('click', ".createSubmit", function () {
-
+                $(this).button("loading");
 
                 var $row = $(this).closest("tfoot tr");
                 var url = $this.createURL;
@@ -166,13 +165,14 @@
         this.updateRow = function ($row) {
             var $this = this;
 
-            var url = $this.editURL + "/" + $row.find("input[name='EquipmentId']").val();
+            var url = $this.editURL + "/" + $row.find("input[name='item.EquipmentId']").val();
             var $form = $("<form/>");
 
             $row.find("input[name], select[name]").each(function (i, e) {
 
                 //cloning selects does not clone selected value, known jquery bug
                 var $element = $(e).clone().val(e.value);
+                $element.attr("name", $element.attr("name").replace("item.", ""));
 
                 $form.append($element);
             });
@@ -203,6 +203,35 @@
 
                     if ($this.editQueue.length) {
                         $this.updateRow($this.editQueue.pop());
+                    }
+                }
+            });
+        }
+
+        this.loadChunk = function (skip) {
+            var $this = this;
+            var url = this.chunkURL;
+            var take = 4000;
+
+            $.ajax({
+                type: "GET",
+                url: url,
+                data: { skip: skip, take: take },
+                dataType: "html",
+                success: function (data) {
+                    var rows = $(data);
+                    if (rows.length) {
+
+                        table.DataTable().rows.add(rows).draw();
+                        
+                        form.initStyles();
+                        
+                        skip += take;
+
+                        $this.loadChunk.call($this, skip);
+
+                    } else {
+                        waitingDialog.hide();
                     }
                 }
             });

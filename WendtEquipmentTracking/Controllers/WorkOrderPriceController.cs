@@ -36,15 +36,9 @@ namespace WendtEquipmentTracking.App.Controllers
 
             var projectId = Convert.ToInt32(projectIdCookie);
 
-            var projectBO = projectService.GetById(projectId);
+            var workOrderBOs = workOrderPriceService.GetAll().Where(w => w.ProjectId == projectId).ToList();
 
-            if (projectBO == null)
-            {
-                CookieHelper.Delete("ProjectId");
-                return RedirectToAction("Index", "Home");
-            }
-
-            var workOrderPriceModels = Mapper.Map<IEnumerable<WorkOrderPriceModel>>(projectBO.WorkOrderPrices);
+            var workOrderPriceModels = Mapper.Map<IEnumerable<WorkOrderPriceModel>>(workOrderBOs);
 
             //Filter and sort data
 

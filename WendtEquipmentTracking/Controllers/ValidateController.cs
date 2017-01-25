@@ -11,11 +11,17 @@ namespace WendtEquipmentTracking.App.Controllers
     public class ValidateController : BaseController
     {
         private IProjectService projectService;
+        private IBillOfLadingService billOfLadingService;
+        private IHardwareKitService hardwareKitService;
+        private IWorkOrderPriceService workOrderPriceService;
 
 
         public ValidateController()
         {
             projectService = new ProjectService();
+            billOfLadingService = new BillOfLadingService();
+            hardwareKitService = new HardwareKitService();
+            workOrderPriceService = new WorkOrderPriceService();
         }
 
         // GET: ValidImportFile
@@ -43,17 +49,58 @@ namespace WendtEquipmentTracking.App.Controllers
 
             var projectId = Convert.ToInt32(projectIdCookie);
 
-            var projectBO = projectService.GetById(projectId);
-
-            if (projectBO == null)
-            {
-                CookieHelper.Delete("ProjectId");
-                return Json(true, JsonRequestBehavior.AllowGet);
-            }
-
-            var exists = projectBO.BillOfLadings.Any(b => b.IsCurrentRevision && b.BillOfLadingId != billOfLadingId && b.BillOfLadingNumber == billOfLadingNumber);
+            var exists = billOfLadingService.GetAll().Any(b => b.ProjectId == projectId
+                                                                          && b.IsCurrentRevision
+                                                                          && b.BillOfLadingId != billOfLadingId
+                                                                          && b.BillOfLadingNumber == billOfLadingNumber);
 
             return Json(!exists, JsonRequestBehavior.AllowGet);
+        }
+
+        // GET: HTSCodeRequired
+        public ActionResult HTSCodeRequired(string htsCode)
+        {
+            var valid = true;
+            if (string.IsNullOrEmpty(htsCode))
+            {
+                var projectIdCookie = CookieHelper.Get("ProjectId");
+
+                if (string.IsNullOrEmpty(projectIdCookie))
+                {
+                    return Json(true, JsonRequestBehavior.AllowGet);
+                }
+
+                var projectId = Convert.ToInt32(projectIdCookie);
+
+                var projectBO = projectService.GetById(projectId);
+
+                valid = !projectBO.IsCustomsProject;
+            }
+
+            return Json(valid, JsonRequestBehavior.AllowGet);
+        }
+
+        // GET: CountryOfOriginRequired
+        public ActionResult CountryOfOriginRequired(string countryOfOrigin)
+        {
+            var valid = true;
+            if (string.IsNullOrEmpty(countryOfOrigin))
+            {
+                var projectIdCookie = CookieHelper.Get("ProjectId");
+
+                if (string.IsNullOrEmpty(projectIdCookie))
+                {
+                    return Json(true, JsonRequestBehavior.AllowGet);
+                }
+
+                var projectId = Convert.ToInt32(projectIdCookie);
+
+                var projectBO = projectService.GetById(projectId);
+
+                valid = !projectBO.IsCustomsProject;
+            }
+
+            return Json(valid, JsonRequestBehavior.AllowGet);
         }
 
         // GET: ValidWorkOrderNumber
@@ -68,15 +115,10 @@ namespace WendtEquipmentTracking.App.Controllers
 
             var projectId = Convert.ToInt32(projectIdCookie);
 
-            var projectBO = projectService.GetById(projectId);
 
-            if (projectBO == null)
-            {
-                CookieHelper.Delete("ProjectId");
-                return Json(true, JsonRequestBehavior.AllowGet);
-            }
-
-            var exists = projectBO.WorkOrderPrices.Any(b => b.WorkOrderPriceId != workOrderPriceId && b.WorkOrderNumber == workOrderNumber);
+            var exists = workOrderPriceService.GetAll().Any(b => b.ProjectId == projectId
+                                                                 && b.WorkOrderPriceId != workOrderPriceId
+                                                                 && b.WorkOrderNumber == workOrderNumber);
 
             return Json(!exists, JsonRequestBehavior.AllowGet);
         }
@@ -93,15 +135,11 @@ namespace WendtEquipmentTracking.App.Controllers
 
             var projectId = Convert.ToInt32(projectIdCookie);
 
-            var projectBO = projectService.GetById(projectId);
 
-            if (projectBO == null)
-            {
-                CookieHelper.Delete("ProjectId");
-                return Json(true, JsonRequestBehavior.AllowGet);
-            }
-
-            var exists = projectBO.HardwareKits.Any(b => b.IsCurrentRevision && b.HardwareKitId != hardwareKitId && b.HardwareKitNumber == hardwareKitNumber);
+            var exists = hardwareKitService.GetAll().Any(b => b.ProjectId == projectId
+                                                              && b.IsCurrentRevision
+                                                              && b.HardwareKitId != hardwareKitId
+                                                              && b.HardwareKitNumber == hardwareKitNumber);
 
             return Json(!exists, JsonRequestBehavior.AllowGet);
         }

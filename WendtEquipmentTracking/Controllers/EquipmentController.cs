@@ -26,6 +26,8 @@ namespace WendtEquipmentTracking.App.Controllers
         // GET: /Equipment/
         public ActionResult Index()
         {
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+
             var projectIdCookie = CookieHelper.Get("ProjectId");
 
             if (string.IsNullOrEmpty(projectIdCookie))
@@ -34,29 +36,55 @@ namespace WendtEquipmentTracking.App.Controllers
             }
 
             var projectId = Convert.ToInt32(projectIdCookie);
-
-            //Get Data
             var projectBO = projectService.GetById(projectId);
 
-            if (projectBO == null)
-            {
-                CookieHelper.Delete("ProjectId");
-                return RedirectToAction("Index", "Home");
-            }
+            //Get Data
+            var equipmentBOs = equipmentService.GetSome(projectId, 0, 50).ToList();
 
-            var equipmentModels = Mapper.Map<List<EquipmentModel>>(projectBO.Equipments);
+            // the code that you want to measure comes here
+            watch.Stop();
+            var elapsedMs = watch.ElapsedMilliseconds;
+
+            var equipmentModels = Mapper.Map<List<EquipmentModel>>(equipmentBOs);
             equipmentModels.ToList().ForEach(e =>
             {
-                e.ProjectNumber = projectBO.ProjectNumber;
-                e.SetIndicators();
-                e.BillOfLadingEquipments.ToList().ForEach(b => b.BillOfLading.SetBillOfLadingIndicators());
+                e.SetIndicators(projectBO.ProjectNumber, projectBO.IsCustomsProject);
             });
-            
-            equipmentModels = equipmentModels.OrderBy(r => r.EquipmentName).ToList();
 
             return View(equipmentModels);
         }
 
+        public ActionResult Chunk(int skip, int take)
+        {
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+
+            var projectIdCookie = CookieHelper.Get("ProjectId");
+
+            if (string.IsNullOrEmpty(projectIdCookie))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var projectId = Convert.ToInt32(projectIdCookie);
+            var projectBO = projectService.GetById(projectId);
+
+            //Get Data
+            var equipmentBOs = equipmentService.GetSome(projectId, skip, take).ToList();
+
+
+
+            var equipmentModels = Mapper.Map<List<EquipmentModel>>(equipmentBOs);
+            equipmentModels.ToList().ForEach(e =>
+            {
+                e.SetIndicators(projectBO.ProjectNumber, projectBO.IsCustomsProject);
+            });
+
+            // the code that you want to measure comes here
+            watch.Stop();
+            var elapsedMs = watch.ElapsedMilliseconds;
+
+            return PartialView(equipmentModels);
+        }
 
         //
         // GET: /Equipment/Create
@@ -81,6 +109,7 @@ namespace WendtEquipmentTracking.App.Controllers
                     if (!string.IsNullOrEmpty(projectIdCookie))
                     {
                         var projectId = Convert.ToInt32(projectIdCookie);
+
                         model.ProjectId = projectId;
 
                         var equipmentBO = Mapper.Map<EquipmentBO>(model);
@@ -91,14 +120,8 @@ namespace WendtEquipmentTracking.App.Controllers
                         var newEquipmentBO = equipmentService.GetById(id);
                         var newEquipmentModel = Mapper.Map<EquipmentModel>(newEquipmentBO);
 
-                        //Get Data
-                        var projectBO = projectService.GetById(projectId);
-
-
-                        newEquipmentModel.ProjectNumber = projectBO.ProjectNumber;
-                        newEquipmentModel.SetIndicators();
                         newEquipmentModel.Status = SuccessStatus.Success;
-                        return PartialView("Edit", newEquipmentModel);
+                        return PartialView("Chunk", new List<EquipmentModel> { newEquipmentModel });
                     }
                 }
                 model.Status = SuccessStatus.Error;
@@ -127,6 +150,8 @@ namespace WendtEquipmentTracking.App.Controllers
                     if (!string.IsNullOrEmpty(projectIdCookie))
                     {
                         var projectId = Convert.ToInt32(projectIdCookie);
+                        var projectBO = projectService.GetById(projectId);
+
                         model.ProjectId = projectId;
                         var equipment = equipmentService.GetById(id);
 
@@ -136,23 +161,20 @@ namespace WendtEquipmentTracking.App.Controllers
 
                         var updatedEquipmentBO = equipmentService.GetById(id);
                         var updatedEquipmentModel = Mapper.Map<EquipmentModel>(updatedEquipmentBO);
-                        
-                        updatedEquipmentModel.ProjectNumber = model.ProjectNumber;
-                        updatedEquipmentModel.SetIndicators();
+
+                        updatedEquipmentModel.SetIndicators(projectBO.ProjectNumber, projectBO.IsCustomsProject);
                         updatedEquipmentModel.Status = SuccessStatus.Success;
-                        return PartialView(updatedEquipmentModel);
+                        return PartialView("Chunk", new List<EquipmentModel> { updatedEquipmentModel });
                     }
                 }
 
-                model.SetIndicators();
                 model.Status = SuccessStatus.Error;
-                return PartialView(model);
+                return PartialView("Chunk", new List<EquipmentModel> { model });
             }
             catch (Exception e)
             {
-                model.SetIndicators();
                 model.Status = SuccessStatus.Error;
-                return PartialView(model);
+                return PartialView("Chunk", new List<EquipmentModel> { model });
             }
         }
 

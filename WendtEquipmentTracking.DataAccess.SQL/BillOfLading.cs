@@ -35,6 +35,8 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         public string TrailerNumber { get; set; }
         public string Carrier { get; set; }
         public string FreightTerms { get; set; }
+        public string HTSCode { get; set; }
+        public string CountryOfOrigin { get; set; }
         public bool IsDeleted { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

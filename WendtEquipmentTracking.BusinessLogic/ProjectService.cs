@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using WendtEquipmentTracking.BusinessLogic.Api;
 using WendtEquipmentTracking.BusinessLogic.BO;
-using WendtEquipmentTracking.Common;
 using WendtEquipmentTracking.DataAccess.SQL;
 using WendtEquipmentTracking.DataAccess.SQL.Api;
 using WendtEquipmentTracking.DataAccess.SQL.Engine;
@@ -29,13 +28,34 @@ namespace WendtEquipmentTracking.BusinessLogic
 
         public IEnumerable<ProjectBO> GetAll()
         {
+
+
             var projects = projectEngine.ListAll().ToList();
+
+
 
             var projectBOs = Mapper.Map<IEnumerable<ProjectBO>>(projects);
 
             return projectBOs;
         }
-        
+
+        public IEnumerable<ProjectBO> GetAllForNavigation()
+        {
+
+
+            var projects = projectEngine.ListAllLazy();
+            var projectBOs = projects.Select(p => new ProjectBO
+            {
+                ProjectId = p.ProjectId,
+                ProjectNumber = p.ProjectNumber
+            }).ToList();
+
+
+            //var projectBOs = Mapper.Map<IEnumerable<ProjectBO>>(projects);
+
+            return projectBOs;
+        }
+
         public ProjectBO GetById(int id)
         {
             var project = projectEngine.Get(ProjectSpecs.Id(id));
@@ -44,7 +64,7 @@ namespace WendtEquipmentTracking.BusinessLogic
 
             return projectBO;
         }
-        
+
         public void Update(ProjectBO projectBO)
         {
             var oldProject = projectEngine.Get(ProjectSpecs.Id(projectBO.ProjectId));
@@ -63,6 +83,7 @@ namespace WendtEquipmentTracking.BusinessLogic
             oldProject.ShipToContact2Email = projectBO.ShipToContact2Email;
             oldProject.ShipToContact2PhoneFax = projectBO.ShipToContact2PhoneFax;
             oldProject.ShipToCSZ = projectBO.ShipToCSZ;
+            oldProject.IsCustomsProject = projectBO.IsCustomsProject;
 
             projectEngine.UpdateProject(oldProject);
         }
@@ -71,7 +92,7 @@ namespace WendtEquipmentTracking.BusinessLogic
         {
             var project = projectEngine.Get(ProjectSpecs.Id(id));
 
-            if(project != null)
+            if (project != null)
             {
                 projectEngine.DeleteProject(project);
             }
