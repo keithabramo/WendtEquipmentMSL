@@ -82,7 +82,7 @@
         </tr>
     </thead>
     <tbody>
-        @Html.Partial("Chunk", Model)
+        @*@Html.Partial("Chunk", Model)*@
     </tbody>
     @if (Html.UserIsInRole(UserRoles.ReadWrite))
     {
@@ -100,6 +100,7 @@
         </div>
     }
 
+    @Html.Partial("Template", new EquipmentModel())
 </div>
 
 @section Scripts {

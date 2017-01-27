@@ -87,7 +87,7 @@
                 @Html.EditorFor(modelItem => item.Description, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(modelItem => item.Description, "", new { @class = "text-danger" })
             </td>
-            <td data-search="@item.UnitWeight" data-sort="@item.UnitWeight" class="@item.Indicators.UnitWeightColor.ToString()">
+            <td data-search="@item.UnitWeight" data-sort="@item.UnitWeight" class="@item.Indicators.UnitWeightColor">
                 @Html.EditorFor(modelItem => item.UnitWeight, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(modelItem => item.UnitWeight, "", new { @class = "text-danger" })
             </td>
@@ -99,19 +99,19 @@
                 @Html.HiddenFor(modelItem => item.TotalWeightShipped)
                 @item.TotalWeightShipped
             </td>
-            <td data-search="@item.ReadyToShip" data-sort="@item.ReadyToShip" class="@item.Indicators.ReadyToShipColor.ToString()">
+            <td data-search="@item.ReadyToShip" data-sort="@item.ReadyToShip" class="@item.Indicators.ReadyToShipColor">
                 @Html.EditorFor(modelItem => item.ReadyToShip, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(modelItem => item.ReadyToShip, "", new { @class = "text-danger" })
             </td>
-            <td class="@item.Indicators.ShippedQtyColor.ToString()">
+            <td class="@item.Indicators.ShippedQtyColor">
                 @Html.HiddenFor(modelItem => item.ShippedQuantity)
                 @item.ShippedQuantity
             </td>
-            <td class="@item.Indicators.LeftToShipColor.ToString()">
+            <td class="@item.Indicators.LeftToShipColor">
                 @Html.HiddenFor(modelItem => item.LeftToShip)
                 @item.LeftToShip
             </td>
-            <td class="@item.Indicators.FullyShippedColor.ToString()">
+            <td class="@item.Indicators.FullyShippedColor">
                 @Html.HiddenFor(modelItem => item.FullyShipped)
                 @if (item.FullyShipped.HasValue && item.FullyShipped.Value == true)
                 {
@@ -126,11 +126,11 @@
                 @:NA
             }
             </td>
-            <td class="@item.Indicators.CustomsValueColor.ToString()">
+            <td class="@item.Indicators.CustomsValueColor">
                 @Html.HiddenFor(modelItem => item.CustomsValue)
                 @item.CustomsValue
             </td>
-            <td class="@item.Indicators.SalePriceColor.ToString()">
+            <td class="@item.Indicators.SalePriceColor">
                 @Html.HiddenFor(modelItem => item.SalePrice)
                 @item.SalePrice
             </td>
@@ -142,7 +142,7 @@
                 @Html.HiddenFor(modelItem => item.AutoShipFile)
                 @item.AutoShipFile
             </td>
-            <td data-search="@item.SalesOrderNumber" data-sort="@item.SalesOrderNumber" class="@item.Indicators.SalesOrderNumberColor.ToString()">
+            <td data-search="@item.SalesOrderNumber" data-sort="@item.SalesOrderNumber" class="@item.Indicators.SalesOrderNumberColor">
                 @Html.HiddenFor(modelItem => item.SalesOrderNumber)
                 @item.SalesOrderNumber
             </td>
@@ -198,7 +198,7 @@ else
         <td class="long-column">
             @item.Description
         </td>
-        <td class="@item.Indicators.UnitWeightColor.ToString()">
+        <td class="@item.Indicators.UnitWeightColor">
             @item.UnitWeight
         </td>
         <td>
@@ -207,16 +207,16 @@ else
         <td>
             @item.TotalWeightShipped
         </td>
-        <td class="@item.Indicators.ReadyToShipColor.ToString()">
+        <td class="@item.Indicators.ReadyToShipColor">
             @item.ReadyToShip
         </td>
-        <td class="@item.Indicators.ShippedQtyColor.ToString()">
+        <td class="@item.Indicators.ShippedQtyColor">
             @item.ShippedQuantity
         </td>
-        <td class="@item.Indicators.LeftToShipColor.ToString()">
+        <td class="@item.Indicators.LeftToShipColor">
             @item.LeftToShip
         </td>
-        <td class="@item.Indicators.FullyShippedColor.ToString()">
+        <td class="@item.Indicators.FullyShippedColor">
             @if (item.FullyShipped.HasValue && item.FullyShipped.Value == true)
             {
                 @:Yes
@@ -230,10 +230,10 @@ else
                 @:NA
                     }
         </td>
-        <td class="@item.Indicators.CustomsValueColor.ToString()">
+        <td class="@item.Indicators.CustomsValueColor">
             @item.CustomsValue
         </td>
-        <td class="@item.Indicators.SalePriceColor.ToString()">
+        <td class="@item.Indicators.SalePriceColor">
             @item.SalePrice
         </td>
         <td>
@@ -242,7 +242,7 @@ else
         <td>
             @item.AutoShipFile
         </td>
-        <td class="@item.Indicators.SalesOrderNumberColor.ToString()">
+        <td class="@item.Indicators.SalesOrderNumberColor">
             @item.SalesOrderNumber
         </td>
     </tr>}

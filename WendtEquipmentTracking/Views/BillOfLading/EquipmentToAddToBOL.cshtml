@@ -102,7 +102,7 @@
                 <td class="long-column">
                     @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.Description)
                 </td>
-                <td class="@Model.BillOfLadingEquipments[i].Equipment.Indicators.UnitWeightColor.ToString()">
+                <td class="@Model.BillOfLadingEquipments[i].Equipment.Indicators.UnitWeightColor">
                     @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.UnitWeight)
                 </td>
                 <td>
@@ -111,16 +111,16 @@
                 <td>
                     @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.TotalWeightShipped)
                 </td>
-                <td class="@Model.BillOfLadingEquipments[i].Equipment.Indicators.ReadyToShipColor.ToString()">
+                <td class="@Model.BillOfLadingEquipments[i].Equipment.Indicators.ReadyToShipColor">
                     @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.ReadyToShip)
                 </td>
-                <td class="@Model.BillOfLadingEquipments[i].Equipment.Indicators.ShippedQtyColor.ToString()">
+                <td class="@Model.BillOfLadingEquipments[i].Equipment.Indicators.ShippedQtyColor">
                     @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.ShippedQuantity)
                 </td>
-                <td class="@Model.BillOfLadingEquipments[i].Equipment.Indicators.LeftToShipColor.ToString()">
+                <td class="@Model.BillOfLadingEquipments[i].Equipment.Indicators.LeftToShipColor">
                     @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.LeftToShip)
                 </td>
-                <td class="@Model.BillOfLadingEquipments[i].Equipment.Indicators.FullyShippedColor.ToString()">
+                <td class="@Model.BillOfLadingEquipments[i].Equipment.Indicators.FullyShippedColor">
                     @if (Model.BillOfLadingEquipments[i].Equipment.FullyShipped.HasValue && Model.BillOfLadingEquipments[i].Equipment.FullyShipped.Value == true)
                     {
                         @:Yes
@@ -134,10 +134,10 @@
                         @:NA
         }
                 </td>
-                <td class="@Model.BillOfLadingEquipments[i].Equipment.Indicators.CustomsValueColor.ToString()">
+                <td class="@Model.BillOfLadingEquipments[i].Equipment.Indicators.CustomsValueColor">
                     @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.CustomsValue)
                 </td>
-                <td class="@Model.BillOfLadingEquipments[i].Equipment.Indicators.SalePriceColor.ToString()">
+                <td class="@Model.BillOfLadingEquipments[i].Equipment.Indicators.SalePriceColor">
                     @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.SalePrice)
                 </td>
                 <td>
@@ -146,7 +146,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.AutoShipFile)
                 </td>
-                <td class="@Model.BillOfLadingEquipments[i].Equipment.Indicators.SalesOrderNumberColor.ToString()">
+                <td class="@Model.BillOfLadingEquipments[i].Equipment.Indicators.SalesOrderNumberColor">
                     @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.SalesOrderNumber)
                 </td>
             </tr>

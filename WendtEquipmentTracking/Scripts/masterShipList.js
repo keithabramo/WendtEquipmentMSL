@@ -5,9 +5,8 @@
 
         this.editsMade = false;
         this.editQueue = [];
-        this.createURL = ROOT_URL + "Equipment/Create";
-        this.editURL = ROOT_URL + "Equipment/Edit";
-        this.chunkURL = ROOT_URL + "Equipment/Chunk";
+        this.createURL = ROOT_URL + "api/EquipmentApi/Create";
+        this.editURL = ROOT_URL + "api/EquipmentApi/Edit";
 
         this.initStyles = function () {
             $.fn.dataTable.ext.search.push(
@@ -30,13 +29,12 @@
                 }
             );
 
-            table.DataTable()
-                .order([2, 'asc'])
-                .draw();
+            //table.DataTable()
+            //    .order([2, 'asc'])
+            //    .draw();
 
             $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="readyToShipFilter" /> Equipment Released</label>');
 
-            this.loadChunk(50);
         }
 
         this.initEvents = function () {
@@ -57,12 +55,16 @@
             table.DataTable().on('autoFill', function (e, datatable, cells) {
 
                 $.each(cells, function (i, cell) {
-                    
-                    var rowIndex = cell[0].index.row;
-                    var $row = $(table.DataTable().row(rowIndex).node());
+
+                    var index = cell[0].index;
+
+                    var $cell = $(table.DataTable().cell(index.row, index.column).node());
+                    $cell.find("input").val(cell[0].set);
+
+                    var $row = $(table.DataTable().row(index.row).node());
 
                     $this.editQueue.push($row);
-                    
+
                 });
 
                 $this.updateRow.call($this, $this.editQueue.pop());
@@ -114,11 +116,12 @@
                     url: url,
                     data: $form.serialize(),
                     success: function (data) {
-                         
-                        if (!$(data).hasClass("danger")) {
-                            var rowNode = table.DataTable().row.add($(data)[0]).draw().node();
-                            var $newRow = $(rowNode);
-                            
+
+                        $this.resetValidation($row);
+
+                        if (data.Status === 1) {
+                            var $newRow = $this.addRow(data);
+
                             $newRow.animate({
                                 backgroundColor: "#dff0d8"
                             }, 1000);
@@ -131,32 +134,27 @@
 
                             //reset create row
                             $row.find(".createSubmit").button("reset");
-                            $row.removeClass("danger").addClass("warning");
 
                             $row.find("input").not("[type='checkbox'], [type='button']").val("");
-                            $row.find("input[type='checkbox']").removeAttr("data-val-required");
                             if ($row.find("input[type='checkbox']").is(":checked")) {
                                 $row.find("input[type='checkbox']").click();
                             }
                             $row.find("input[name='IsHardware']").val("false")
                             $row.find("select").prop('selectedIndex', 0);
 
-                            //Removes validation from input-fields
-                            $row.find('.input-validation-error')
-                                .addClass('input-validation-valid')
-                                .removeClass('input-validation-error');
-                            //Removes validation message after input-fields
-                            $row.find('.field-validation-error')
-                                .addClass('field-validation-valid')
-                                .removeClass('field-validation-error')
-                                .removeClass('text-danger')
-                                .text("");
+                            form.initStyles();
 
                         } else {
-                            $row.replaceWith($(data));
-                        }
+                            $row.find(".createSubmit").button("reset");
+                            $row.addClass("danger");
 
-                        form.initStyles();
+                            $.each(data.Errors, function (i, error) {
+                                var name = error.Name.replace("model.", "");
+
+                                var $input = $row.find("input[name='" + name + "']").addClass('input-validation-error');
+                                $input.siblings(".field-validation-valid").text(error.Message).addClass('field-validation-error');
+                            });
+                        }
                     }
                 });
             });
@@ -165,14 +163,13 @@
         this.updateRow = function ($row) {
             var $this = this;
 
-            var url = $this.editURL + "/" + $row.find("input[name='item.EquipmentId']").val();
+            var url = $this.editURL + "/" + $row.find("input[name='EquipmentId']").val();
             var $form = $("<form/>");
 
             $row.find("input[name], select[name]").each(function (i, e) {
 
                 //cloning selects does not clone selected value, known jquery bug
                 var $element = $(e).clone().val(e.value);
-                $element.attr("name", $element.attr("name").replace("item.", ""));
 
                 $form.append($element);
             });
@@ -183,11 +180,13 @@
                 data: $form.serialize(),
                 success: function (data) {
 
-                    table.DataTable().row($row).remove().draw();
-                    var rowNode = table.DataTable().row.add($(data)[0]).draw().node();
-                    var $newRow = $(rowNode);
+                    $this.resetValidation($row);
 
-                    if (!$newRow.hasClass("danger")) {
+                    if (data.Status === 1) {
+                        table.DataTable().row($row).remove().draw();
+
+                        var $newRow = $this.addRow(data);
+
                         $newRow.animate({
                             backgroundColor: "#dff0d8"
                         }, 1000);
@@ -197,9 +196,20 @@
                                 backgroundColor: "#ffffff"
                             }, 1000);
                         }, 2000);
-                    }
 
-                    form.initStyles();
+                        form.initStyles();
+                    } else {
+
+                        $row.addClass("danger");
+
+                        $.each(data.Errors, function (i, error) {
+                            var name = error.Name.replace("model.", "");
+
+                            var $input = $row.find("input[name='" + name + "']").addClass('input-validation-error');
+                            $input.siblings(".field-validation-valid").text(error.Message).addClass('field-validation-error');
+                        });
+                        
+                    }
 
                     if ($this.editQueue.length) {
                         $this.updateRow($this.editQueue.pop());
@@ -208,33 +218,28 @@
             });
         }
 
-        this.loadChunk = function (skip) {
-            var $this = this;
-            var url = this.chunkURL;
-            var take = 4000;
+        this.addRow = function (data) {
+            var rowNode = table.DataTable().row.add(data).draw().node();
+            return $(rowNode);
+        }
 
-            $.ajax({
-                type: "GET",
-                url: url,
-                data: { skip: skip, take: take },
-                dataType: "html",
-                success: function (data) {
-                    var rows = $(data);
-                    if (rows.length) {
+        this.resetValidation = function ($row) {
 
-                        table.DataTable().rows.add(rows).draw();
-                        
-                        form.initStyles();
-                        
-                        skip += take;
+            $row.removeClass("danger");
 
-                        $this.loadChunk.call($this, skip);
+            $row.find("input[type='checkbox']").removeAttr("data-val-required");
+            
+            //Removes validation from input-fields
+            $row.find('.input-validation-error')
+                .addClass('input-validation-valid')
+                .removeClass('input-validation-error');
+            //Removes validation message after input-fields
+            $row.find('.field-validation-error')
+                .addClass('field-validation-valid')
+                .removeClass('field-validation-error')
+                .removeClass('text-danger')
+                .text("");
 
-                    } else {
-                        waitingDialog.hide();
-                    }
-                }
-            });
         }
 
         this.initStyles();

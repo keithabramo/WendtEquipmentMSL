@@ -13,17 +13,17 @@
             Fuchsia
         }
 
-        public Colors UnitWeightColor { get; set; }
-        public Colors ReadyToShipColor { get; set; }
-        public Colors ShippedQtyColor { get; set; }
-        public Colors LeftToShipColor { get; set; }
-        public Colors FullyShippedColor { get; set; }
-        public Colors CustomsValueColor { get; set; }
-        public Colors SalePriceColor { get; set; }
-        public Colors CountyOfOriginColor { get; set; }
-        public Colors SalesOrderNumberColor { get; set; }
-        public Colors BillOfLadingNumberColor { get; set; }
-        public Colors DateShippedNumberColor { get; set; }
-        public Colors ShippedFromColor { get; set; }
+        public string UnitWeightColor { get; set; }
+        public string ReadyToShipColor { get; set; }
+        public string ShippedQtyColor { get; set; }
+        public string LeftToShipColor { get; set; }
+        public string FullyShippedColor { get; set; }
+        public string CustomsValueColor { get; set; }
+        public string SalePriceColor { get; set; }
+        public string CountyOfOriginColor { get; set; }
+        public string SalesOrderNumberColor { get; set; }
+        public string BillOfLadingNumberColor { get; set; }
+        public string DateShippedNumberColor { get; set; }
+        public string ShippedFromColor { get; set; }
     }
 }

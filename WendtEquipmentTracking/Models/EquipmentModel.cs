@@ -108,20 +108,23 @@ namespace WendtEquipmentTracking.App.Models
         public string SalesOrderNumber { get; set; }
 
 
+
+
+
+
+
+
+        public bool HasBillOfLading { get; set; }
+        public bool IsHardwareKit { get; set; }
+        public bool IsAssociatedToHardwareKit { get; set; }
+        public string AssociatedHardwareKitNumber { get; set; }
+
         public IList<BillOfLadingEquipmentModel> BillOfLadingEquipments { get; set; }
 
         public HardwareKitModel HardwareKit { get; set; }
 
         public IList<HardwareKitEquipmentModel> HardwareKitEquipments { get; set; }
-
-
-        public HardwareKitEquipmentModel HardwwareKitEquipment
-        {
-            get
-            {
-                return HardwareKitEquipments.Where(h => h.HardwareKit.IsCurrentRevision).FirstOrDefault();
-            }
-        }
+        
 
         public IndicatorsModel Indicators { get; set; }
 
@@ -132,7 +135,7 @@ namespace WendtEquipmentTracking.App.Models
             //unit weight
             if (UnitWeight == null || UnitWeight <= 0)
             {
-                Indicators.UnitWeightColor = IndicatorsModel.Colors.Red;
+                Indicators.UnitWeightColor = IndicatorsModel.Colors.Red.ToString();
             }
 
             //ready to ship does not have a clean way to check for red
@@ -140,56 +143,56 @@ namespace WendtEquipmentTracking.App.Models
             {
                 if (BillOfLadingEquipments.Any(be => be.BillOfLading.ToStorage && be.BillOfLading.IsCurrentRevision))
                 {
-                    Indicators.ReadyToShipColor = IndicatorsModel.Colors.Green;
+                    Indicators.ReadyToShipColor = IndicatorsModel.Colors.Green.ToString();
                 }
                 else
                 {
-                    Indicators.ReadyToShipColor = IndicatorsModel.Colors.Yellow;
+                    Indicators.ReadyToShipColor = IndicatorsModel.Colors.Yellow.ToString();
                 }
             }
 
             //ship qty
             if (ShippedQuantity > Quantity)
             {
-                Indicators.ShippedQtyColor = IndicatorsModel.Colors.Red;
+                Indicators.ShippedQtyColor = IndicatorsModel.Colors.Red.ToString();
             }
 
             //left to ship
             if (ShippedQuantity > Quantity)
             {
-                Indicators.LeftToShipColor = IndicatorsModel.Colors.Red;
+                Indicators.LeftToShipColor = IndicatorsModel.Colors.Red.ToString();
             }
 
             //fully shipped
             if (ShippedQuantity > Quantity)
             {
-                Indicators.FullyShippedColor = IndicatorsModel.Colors.Fuchsia;
+                Indicators.FullyShippedColor = IndicatorsModel.Colors.Fuchsia.ToString();
             }
             else if (FullyShipped.HasValue && FullyShipped.Value == false)
             {
-                Indicators.FullyShippedColor = IndicatorsModel.Colors.Pink;
+                Indicators.FullyShippedColor = IndicatorsModel.Colors.Pink.ToString();
             }
             else if (!FullyShipped.HasValue || FullyShipped.Value == true)
             {
-                Indicators.FullyShippedColor = IndicatorsModel.Colors.Purple;
+                Indicators.FullyShippedColor = IndicatorsModel.Colors.Purple.ToString();
             }
 
             //customs value
             if (isCustomsProject && (!CustomsValue.HasValue || CustomsValue.Value <= 0))
             {
-                Indicators.CustomsValueColor = IndicatorsModel.Colors.Red;
+                Indicators.CustomsValueColor = IndicatorsModel.Colors.Red.ToString();
             }
 
             //sales price
             if (isCustomsProject && (!SalePrice.HasValue || SalePrice.Value <= 0))
             {
-                Indicators.SalePriceColor = IndicatorsModel.Colors.Red;
+                Indicators.SalePriceColor = IndicatorsModel.Colors.Red.ToString();
             }
 
             //sales order
             if (string.IsNullOrEmpty(WorkOrderNumber) || !WorkOrderNumber.Contains(projectNumber.Trim()))
             {
-                Indicators.SalesOrderNumberColor = IndicatorsModel.Colors.Red;
+                Indicators.SalesOrderNumberColor = IndicatorsModel.Colors.Red.ToString();
             }
         }
     }

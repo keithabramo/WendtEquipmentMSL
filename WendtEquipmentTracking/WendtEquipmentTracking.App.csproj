@@ -165,6 +165,7 @@
     <Compile Include="Common\ActionNav.cs" />
     <Compile Include="Common\SuccessStatus.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\EquipmentApiController.cs" />
     <Compile Include="Controllers\WorkOrderPriceApiController.cs" />
     <Compile Include="Controllers\WorkOrderPriceController.cs" />
     <Compile Include="Controllers\HardwareKitController.cs" />
@@ -177,6 +178,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BaseModelError.cs" />
     <Compile Include="Models\HardwareKitGroupModel.cs" />
     <Compile Include="Models\HardwareKitEquipmentModel.cs" />
     <Compile Include="Models\BillOfLadingEquipmentModel.cs" />
@@ -261,6 +263,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <None Include="Properties\PublishProfiles\ReleaseProfile.pubxml" />
     <None Include="Properties\PublishProfiles\StagingProfile.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Images\logo.jpg" />
@@ -339,6 +342,7 @@
     <Content Include="Views\WorkOrderPrice\Edit.cshtml" />
     <Content Include="Views\WorkOrderPrice\Index.cshtml" />
     <Content Include="Views\Equipment\Chunk.cshtml" />
+    <Content Include="Views\Equipment\Template.cshtml" />
     <None Include="Web.Staging.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
