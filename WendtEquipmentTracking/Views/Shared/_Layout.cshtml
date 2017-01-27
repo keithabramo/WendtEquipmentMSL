@@ -30,21 +30,24 @@
                       Master Ship List
                 </a>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Projects", "Index", "Project")</li>
-                    <li>@Html.ActionLink("BOLs", "Index", "BillOfLading")</li>
-                    <li>@Html.ActionLink("Hardware Kits", "Index", "HardwareKit")</li>
-                    <li>@Html.ActionLink("Work Order Prices", "Index", "WorkOrderPrice")</li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    @Html.Action("ProjectNavPartial", "Project", true)
-                    <li>
-                        <strong class="navbar-text">@Html.CurrentUsername()</strong>
-                    </li>
-                </ul>
-            </div>
+            @if (!Html.UserIsInRole(UserRoles.None))
+            {
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Projects", "Index", "Project")</li>
+                        <li>@Html.ActionLink("BOLs", "Index", "BillOfLading")</li>
+                        <li>@Html.ActionLink("Hardware Kits", "Index", "HardwareKit")</li>
+                        <li>@Html.ActionLink("Work Order Prices", "Index", "WorkOrderPrice")</li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        @Html.Action("ProjectNavPartial", "Project", true)
+                        <li>
+                            <strong class="navbar-text">@Html.CurrentUsername()</strong>
+                        </li>
+                    </ul>
+                </div>
+            }
         </div>
     </div>
     <div class="container-fluid">

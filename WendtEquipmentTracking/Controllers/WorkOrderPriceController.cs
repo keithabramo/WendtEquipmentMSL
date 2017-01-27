@@ -11,7 +11,7 @@ using WendtEquipmentTracking.BusinessLogic.BO;
 
 namespace WendtEquipmentTracking.App.Controllers
 {
-    public class WorkOrderPriceController : Controller
+    public class WorkOrderPriceController : BaseController
     {
         private IWorkOrderPriceService workOrderPriceService;
         private IProjectService projectService;

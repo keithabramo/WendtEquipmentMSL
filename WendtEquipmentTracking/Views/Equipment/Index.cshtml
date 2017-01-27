@@ -75,14 +75,10 @@
             <th>
                 @Html.DisplayNameFor(model => model.SalesOrderNumber)
             </th>
-            @if (Html.UserIsInRole(UserRoles.ReadWrite))
-            {
             <th class="long-column"></th>
-            }
         </tr>
     </thead>
     <tbody>
-        @*@Html.Partial("Chunk", Model)*@
     </tbody>
     @if (Html.UserIsInRole(UserRoles.ReadWrite))
     {

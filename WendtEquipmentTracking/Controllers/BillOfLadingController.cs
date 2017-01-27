@@ -11,7 +11,7 @@ using WendtEquipmentTracking.BusinessLogic.BO;
 
 namespace WendtEquipmentTracking.App.Controllers
 {
-    public class BillOfLadingController : Controller
+    public class BillOfLadingController : BaseController
     {
         private IBillOfLadingService billOfLadingService;
         private IProjectService projectService;

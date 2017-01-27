@@ -164,6 +164,7 @@
     <Compile Include="Common\HtmlHelperExtensions.cs" />
     <Compile Include="Common\ActionNav.cs" />
     <Compile Include="Common\SuccessStatus.cs" />
+    <Compile Include="Common\WendtAuthorizeAttribute.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\EquipmentApiController.cs" />
     <Compile Include="Controllers\WorkOrderPriceApiController.cs" />
@@ -343,6 +344,8 @@
     <Content Include="Views\WorkOrderPrice\Index.cshtml" />
     <Content Include="Views\Equipment\Chunk.cshtml" />
     <Content Include="Views\Equipment\Template.cshtml" />
+    <Content Include="Views\Shared\NotFound.cshtml" />
+    <Content Include="Views\Shared\Unauthorized.cshtml" />
     <None Include="Web.Staging.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -11,7 +11,7 @@ using WendtEquipmentTracking.BusinessLogic.BO;
 
 namespace WendtEquipmentTracking.App.Controllers
 {
-    public class HardwareKitController : Controller
+    public class HardwareKitController : BaseController
     {
         private IHardwareKitService hardwareKitService;
         private IProjectService projectService;

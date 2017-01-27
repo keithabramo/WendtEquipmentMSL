@@ -35,14 +35,13 @@ $(function () {
                     "columnDefs": [
                         {
                             "data": "EquipmentId", "targets": 0,
-                            //"render": function ( data, type, full, meta ) {
-                            //    return type === "sort" ? full.HasBillOfLading : data;
-                            //},
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
 
                                 var $cell = $(cell);
-                                var $cellTemplate = $(".template div").eq(colIndex).clone();
-                                if ($cellTemplate.length) {
+                                var $template = $(".template");
+
+                                if ($template.length) {
+                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
 
                                     $cell.html($cellTemplate.html());
                                     $cell.find("input").val(data);
@@ -62,9 +61,11 @@ $(function () {
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
 
                                 var $cell = $(cell);
-                                var $cellTemplate = $(".template div").eq(colIndex).clone();
+                                var $template = $(".template");
 
-                                if ($cellTemplate.length) {
+                                if ($template.length) {
+                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
+
                                     var readOnly = rowData.HasHardwareKitAssociation || rowData.HasBillOfLading || rowData.IsHardwareKit;
 
                                     $cell.html($cellTemplate.html());
@@ -98,9 +99,10 @@ $(function () {
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
 
                                 var $cell = $(cell);
-                                var $cellTemplate = $(".template div").eq(colIndex).clone();
+                                var $template = $(".template");
 
-                                if ($cellTemplate.length) {
+                                if ($template.length) {
+                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
 
                                     $cell.html($cellTemplate.html());
                                     $cell.find("input").val(data).prop("readOnly", rowData.IsHardware || rowData.IsHardwareKit);
@@ -115,9 +117,10 @@ $(function () {
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
 
                                 var $cell = $(cell);
-                                var $cellTemplate = $(".template div").eq(colIndex).clone();
+                                var $template = $(".template");
 
-                                if ($cellTemplate.length) {
+                                if ($template.length) {
+                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
 
                                     $cell.html($cellTemplate.html());
                                     $cell.find("input").val(data);
@@ -131,9 +134,10 @@ $(function () {
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
 
                                 var $cell = $(cell);
-                                var $cellTemplate = $(".template div").eq(colIndex).clone();
+                                var $template = $(".template");
 
-                                if ($cellTemplate.length) {
+                                if ($template.length) {
+                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
 
                                     $cell.html($cellTemplate.html());
                                     $cell.find("input").val(data).attr("id", "releaseDate" + rowData.EquipmentId);
@@ -148,9 +152,10 @@ $(function () {
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
 
                                 var $cell = $(cell);
-                                var $cellTemplate = $(".template div").eq(colIndex).clone();
+                                var $template = $(".template");
 
-                                if ($cellTemplate.length) {
+                                if ($template.length) {
+                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
 
                                     $cell.html($cellTemplate.html());
                                     $cell.find("input").val(data);
@@ -165,9 +170,10 @@ $(function () {
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
 
                                 var $cell = $(cell);
-                                var $cellTemplate = $(".template div").eq(colIndex).clone();
+                                var $template = $(".template");
 
-                                if ($cellTemplate.length) {
+                                if ($template.length) {
+                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
 
                                     $cell.html($cellTemplate.html());
                                     $cell.find("input").val(data);
@@ -182,9 +188,10 @@ $(function () {
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
 
                                 var $cell = $(cell);
-                                var $cellTemplate = $(".template div").eq(colIndex).clone();
+                                var $template = $(".template");
 
-                                if ($cellTemplate.length) {
+                                if ($template.length) {
+                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
 
                                     $cell.html($cellTemplate.html());
                                     $cell.find("input").val(data).prop("readOnly", rowData.IsHardwareKit);
@@ -199,9 +206,10 @@ $(function () {
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
 
                                 var $cell = $(cell);
-                                var $cellTemplate = $(".template div").eq(colIndex).clone();
+                                var $template = $(".template");
 
-                                if ($cellTemplate.length) {
+                                if ($template.length) {
+                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
 
                                     $cell.html($cellTemplate.html());
                                     $cell.find("input").val(data);
@@ -216,9 +224,10 @@ $(function () {
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
 
                                 var $cell = $(cell);
-                                var $cellTemplate = $(".template div").eq(colIndex).clone();
+                                var $template = $(".template");
 
-                                if ($cellTemplate.length) {
+                                if ($template.length) {
+                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
 
                                     $cell.html($cellTemplate.html());
                                     $cell.find("input").val(data);
@@ -233,9 +242,10 @@ $(function () {
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
 
                                 var $cell = $(cell);
-                                var $cellTemplate = $(".template div").eq(colIndex).clone();
+                                var $template = $(".template");
 
-                                if ($cellTemplate.length) {
+                                if ($template.length) {
+                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
 
                                     $cell.html($cellTemplate.html());
                                     $cell.find("input").val(data);
@@ -252,9 +262,10 @@ $(function () {
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
 
                                 var $cell = $(cell);
-                                var $cellTemplate = $(".template div").eq(colIndex).clone();
+                                var $template = $(".template");
 
-                                if ($cellTemplate.length) {
+                                if ($template.length) {
+                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
 
                                     $cell.html($cellTemplate.html());
                                     $cell.find("input").val(data);
@@ -270,9 +281,10 @@ $(function () {
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
 
                                 var $cell = $(cell);
-                                var $cellTemplate = $(".template div").eq(colIndex).clone();
+                                var $template = $(".template");
 
-                                if ($cellTemplate.length) {
+                                if ($template.length) {
+                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
 
                                     $cell.html($cellTemplate.html());
                                     $cell.find("input").val(data);
@@ -288,9 +300,10 @@ $(function () {
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
 
                                 var $cell = $(cell);
-                                var $cellTemplate = $(".template div").eq(colIndex).clone();
+                                var $template = $(".template");
 
-                                if ($cellTemplate.length) {
+                                if ($template.length) {
+                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
 
                                     $cell.html($cellTemplate.html());
                                     $cell.find("input").val(data);
@@ -307,9 +320,10 @@ $(function () {
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
 
                                 var $cell = $(cell);
-                                var $cellTemplate = $(".template div").eq(colIndex).clone();
+                                var $template = $(".template");
 
-                                if ($cellTemplate.length) {
+                                if ($template.length) {
+                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
 
                                     $cell.html($cellTemplate.html());
                                     $cell.find("input").val(data);
@@ -327,9 +341,10 @@ $(function () {
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
 
                                 var $cell = $(cell);
-                                var $cellTemplate = $(".template div").eq(colIndex).clone();
+                                var $template = $(".template");
 
-                                if ($cellTemplate.length) {
+                                if ($template.length) {
+                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
 
                                     $cell.html($cellTemplate.html());
                                     $cell.find("input").val(data);
@@ -347,24 +362,23 @@ $(function () {
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
 
                                 var $cell = $(cell);
-                                var $cellTemplate = $(".template div").eq(colIndex).clone();
+                                var $template = $(".template");
 
-                                if ($cellTemplate.length) {
+                                var value = "N\A";
+                                if (data === true) {
+                                    value = "Yes";
+                                } else if (data === false) {
+                                    value = "No";
+                                }
+
+                                if ($template.length) {
+                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
 
                                     $cell.html($cellTemplate.html());
                                     $cell.find("input").val(data);
-
-                                    var value = "N\A";
-                                    if(data === true) {
-                                        value = "Yes";
-                                    } else if (data === false) {
-                                        value = "No";
-                                    }
-
                                     $cell.append(value);
-
                                 } else {
-                                    $cell.html(data);
+                                    $cell.html(value);
                                 }
 
                                 $cell.addClass(rowData.Indicators.FullyShippedColor);
@@ -375,15 +389,20 @@ $(function () {
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
 
                                 var $cell = $(cell);
-                                var $cellTemplate = $(".template div").eq(colIndex).clone();
+                                var $template = $(".template");
 
-                                if ($cellTemplate.length) {
+                                if ($template.length) {
+                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
 
                                     $cell.html($cellTemplate.html());
                                     $cell.find("input").val(data);
 
+                                    var value = "$" + (data ? data.toFixed(2) : 0);
+                                    $cell.append(value);
+
                                 } else {
-                                    $cell.html(data);
+                                    var value = "$" + (data ? data.toFixed(2) : 0);
+                                    $cell.html(value);
                                 }
 
                                 $cell.addClass(rowData.Indicators.CustomsValueColor);
@@ -394,15 +413,20 @@ $(function () {
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
 
                                 var $cell = $(cell);
-                                var $cellTemplate = $(".template div").eq(colIndex).clone();
+                                var $template = $(".template");
 
-                                if ($cellTemplate.length) {
+                                if ($template.length) {
+                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
 
                                     $cell.html($cellTemplate.html());
                                     $cell.find("input").val(data);
 
+                                    var value = "$" + (data ? data.toFixed(2) : 0);
+                                    $cell.append(value);
+
                                 } else {
-                                    $cell.html(data);
+                                    var value = "$" + (data ? data.toFixed(2) : 0);
+                                    $cell.html(value);
                                 }
 
                                 $cell.addClass(rowData.Indicators.SalePriceColor);
@@ -413,9 +437,10 @@ $(function () {
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
 
                                 var $cell = $(cell);
-                                var $cellTemplate = $(".template div").eq(colIndex).clone();
+                                var $template = $(".template");
 
-                                if ($cellTemplate.length) {
+                                if ($template.length) {
+                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
 
                                     $cell.html($cellTemplate.html());
                                     $cell.find("input").val(data);
@@ -430,12 +455,15 @@ $(function () {
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
 
                                 var $cell = $(cell);
-                                var $cellTemplate = $(".template div").eq(colIndex).clone();
+                                var $template = $(".template");
 
-                                if ($cellTemplate.length) {
+                                if ($template.length) {
+                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
 
                                     $cell.html($cellTemplate.html());
                                     $cell.find("input").val(data);
+
+                                    $cell.append(data);
 
                                 } else {
                                     $cell.html(data);
@@ -447,12 +475,15 @@ $(function () {
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
 
                                 var $cell = $(cell);
-                                var $cellTemplate = $(".template div").eq(colIndex).clone();
+                                var $template = $(".template");
 
-                                if ($cellTemplate.length) {
+                                if ($template.length) {
+                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
 
                                     $cell.html($cellTemplate.html());
                                     $cell.find("input").val(data);
+
+                                    $cell.append(data);
 
                                 } else {
                                     $cell.html(data);
@@ -465,9 +496,10 @@ $(function () {
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
 
                                 var $cell = $(cell);
-                                var $cellTemplate = $(".template div").eq(colIndex).clone();
+                                var $template = $(".template");
 
-                                if ($cellTemplate.length) {
+                                if ($template.length) {
+                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
 
                                     $cell.html($cellTemplate.html());
                                     $cell.find("a").attr("href", $cell.find("a").attr("href") + "/" + rowData.EquipmentId);

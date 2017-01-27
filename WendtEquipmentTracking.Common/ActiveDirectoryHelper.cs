@@ -61,7 +61,6 @@ namespace WendtEquipmentTracking.Common
                     }
                 }
             }
-
             user.Role = UserRoles.ReadWrite;
             return user;
         }
@@ -184,10 +183,11 @@ namespace WendtEquipmentTracking.Common
             if (userPrincipal != null)
             {
                 var role = UserRoles.None;
-                if(userPrincipal.GetAuthorizationGroups().Any(ag => ag.Name == "MSL_RW"))
+                if (userPrincipal.GetAuthorizationGroups().Any(ag => ag.Name == "MSL_RW"))
                 {
                     role = UserRoles.ReadWrite;
-                } else if(userPrincipal.GetAuthorizationGroups().Any(ag => ag.Name == "MSL_R"))
+                }
+                else if (userPrincipal.GetAuthorizationGroups().Any(ag => ag.Name == "MSL_R"))
                 {
                     role = UserRoles.ReadOnly;
                 }

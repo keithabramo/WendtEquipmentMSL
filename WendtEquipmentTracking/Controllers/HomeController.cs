@@ -20,6 +20,7 @@ namespace WendtEquipmentTracking.App.Controllers
             projectService = new ProjectService();
         }
 
+        [WendtAuthorize]
         public ActionResult Index()
         {
             if (CookieHelper.Exists("ProjectId"))
@@ -38,6 +39,7 @@ namespace WendtEquipmentTracking.App.Controllers
             }
         }
 
+        [WendtAuthorize]
         public ActionResult ClearCache()
         {
             foreach (DictionaryEntry entry in System.Web.HttpContext.Current.Cache)
@@ -48,6 +50,7 @@ namespace WendtEquipmentTracking.App.Controllers
             return RedirectToAction("Index");
         }
 
+        [WendtAuthorize]
         public ActionResult ADDetails()
         {
             var user = ActiveDirectoryHelper.CurrentUserUsername();
@@ -56,11 +59,28 @@ namespace WendtEquipmentTracking.App.Controllers
             return Content(info);
         }
 
+        [WendtAuthorize]
         public ActionResult ClearProjectNavCache()
         {
             clearProjectNavCache();
 
             return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult Error()
+        {
+            return View();
+        }
+
+        public ActionResult NotFound()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        public ActionResult Unauthorized()
+        {
+            return View();
         }
 
         private void clearProjectNavCache()
