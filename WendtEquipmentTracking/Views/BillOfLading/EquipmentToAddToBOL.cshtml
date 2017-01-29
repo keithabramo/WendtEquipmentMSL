@@ -6,6 +6,9 @@
     <thead>
         <tr>
             <th>
+                <input type="checkbox" class="selectAll" /> Select All
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.BillOfLadingEquipments[0].Quantity)
             </th>
             <th>
@@ -74,6 +77,9 @@
         @for (int i = 0; i < Model.BillOfLadingEquipments.Count(); i++)
         {
             <tr>
+                <td>
+                    @Html.CheckBoxFor(modelItem => modelItem.BillOfLadingEquipments[i].Checked, htmlAttributes: new { @checked = "checked" })
+                </td>
                 <td>
                     @Html.HiddenFor(modelItem => modelItem.BillOfLadingEquipments[i].EquipmentId)
                     @Html.EditorFor(modelItem => modelItem.BillOfLadingEquipments[i].Quantity, new { htmlAttributes = new { @class = "form-control" } })

@@ -1,6 +1,8 @@
-﻿using System.DirectoryServices.AccountManagement;
+﻿using System;
+using System.DirectoryServices.AccountManagement;
 using System.Linq;
 using System.Web;
+using System.Web.Caching;
 using WendtEquipmentTracking.Common.DTO;
 
 namespace WendtEquipmentTracking.Common
@@ -52,16 +54,18 @@ namespace WendtEquipmentTracking.Common
 
                         user = mapToUser(userPrincipal);
 
-                        HttpContext.Current.Cache["currentUser" + username] = user;
+                        HttpContext.Current.Cache.Add("currentUser" + username, user, null, DateTime.Now.AddDays(2), Cache.NoSlidingExpiration, CacheItemPriority.Normal, null);
                     }
                     catch
                     {
                         user = new ActiveDirectoryUser();
-                        HttpContext.Current.Cache["currentUser" + username] = user;
+                        //HttpContext.Current.Cache.Add("currentUser" + username, user, null, DateTime.Now.AddDays(2), Cache.NoSlidingExpiration, CacheItemPriority.Normal, null);
+
                     }
                 }
             }
-            user.Role = UserRoles.ReadWrite;
+
+            //user.Role = UserRoles.ReadWrite;
             return user;
         }
 
@@ -203,7 +207,6 @@ namespace WendtEquipmentTracking.Common
                     Role = role
                 };
             }
-
             return user;
         }
     }

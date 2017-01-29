@@ -111,7 +111,7 @@ namespace WendtEquipmentTracking.App.Controllers
                     {
                         var projectId = Convert.ToInt32(projectIdCookie);
                         model.ProjectId = projectId;
-                        model.BillOfLadingEquipments = model.BillOfLadingEquipments.Where(be => be.Quantity > 0).ToList();
+                        model.BillOfLadingEquipments = model.BillOfLadingEquipments.Where(be => be.Quantity > 0 && be.Checked).ToList();
 
                         var billOfLadingBO = Mapper.Map<BillOfLadingBO>(model);
 
@@ -161,7 +161,7 @@ namespace WendtEquipmentTracking.App.Controllers
                     {
                         var projectId = Convert.ToInt32(projectIdCookie);
                         model.ProjectId = projectId;
-                        model.BillOfLadingEquipments = model.BillOfLadingEquipments.Where(be => be.Quantity > 0).ToList();
+                        model.BillOfLadingEquipments = model.BillOfLadingEquipments.Where(be => be.Quantity > 0 && be.Checked).ToList();
 
                         var billOfLading = billOfLadingService.GetById(id);
 
@@ -288,7 +288,8 @@ namespace WendtEquipmentTracking.App.Controllers
             {
                 Equipment = e,
                 EquipmentId = e.EquipmentId,
-                Quantity = model.BillOfLadingEquipments.FirstOrDefault(be => be.EquipmentId == e.EquipmentId).Quantity
+                Quantity = model.BillOfLadingEquipments.Any(be => be.EquipmentId == e.EquipmentId) ? model.BillOfLadingEquipments.FirstOrDefault(be => be.EquipmentId == e.EquipmentId).Quantity : 0,
+                Checked = model.BillOfLadingEquipments.Any(be => be.EquipmentId == e.EquipmentId)
             }).ToList();
 
             var modelBOLEquipments = model.BillOfLadingEquipments.Where(be => equipmentModels == null || !equipmentModels.Any(fullbe => fullbe.EquipmentId == be.EquipmentId));

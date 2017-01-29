@@ -270,6 +270,7 @@
     <Content Include="Images\logo.jpg" />
     <Content Include="Scripts\datatables.js" />
     <Content Include="Scripts\datatables.min.js" />
+    <Content Include="Scripts\billOfLading.js" />
     <Content Include="Scripts\workOrderPrice.js" />
     <Content Include="Scripts\import.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
