@@ -66,7 +66,7 @@ $(function () {
                                 if ($template.length) {
                                     var $cellTemplate = $template.find("div").eq(colIndex).clone();
 
-                                    var readOnly = rowData.HasHardwareKitAssociation || rowData.HasBillOfLading || rowData.IsHardwareKit;
+                                    var readOnly = rowData.IsAssociatedToHardwareKit || rowData.HasBillOfLading || rowData.IsHardwareKit;
 
                                     $cell.html($cellTemplate.html());
                                     $cell.find("input").prop("checked", data)
@@ -78,8 +78,8 @@ $(function () {
                                     }
                                     
 
-                                    if (rowData.HasHardwareKitAssociation) {
-                                        $cell.append("Associated to Hardware Kit: " + rowDate.AssociatedHarwareKitNumber);
+                                    if (rowData.IsAssociatedToHardwareKit) {
+                                        $cell.append("<br> Associated to Hardware Kit: " + rowData.AssociatedHardwareKitNumber);
                                     }
 
                                 } else {
