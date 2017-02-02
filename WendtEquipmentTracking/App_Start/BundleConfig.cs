@@ -41,6 +41,12 @@ namespace WendtEquipmentTracking.App
             bundles.Add(new ScriptBundle("~/bundles/workOrderPrice").Include(
                        "~/Scripts/workOrderPrice.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/handsontable").Include(
+                       "~/Scripts/handsontable.full.min.js",
+                       "~/Scripts/handsontableCustom.js"
+                       ));
+
+
 
 
             bundles.Add(new StyleBundle("~/Content/css")
@@ -48,6 +54,7 @@ namespace WendtEquipmentTracking.App
                 .Include(
                     "~/Content/bootstrap.css",
                     "~/Content/datatables.css",
+                    //"~/Content/handsontable.full.min.css",
                     "~/Content/Site.css"
                 ));
         }

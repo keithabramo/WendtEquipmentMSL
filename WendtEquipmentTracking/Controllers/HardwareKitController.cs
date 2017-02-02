@@ -267,8 +267,7 @@ namespace WendtEquipmentTracking.App.Controllers
             //Get Data
 
 
-            var equipmentBOs = equipmentService.GetAll().Where(e => e.ProjectId == projectId
-                                                                    && e.IsHardware
+            var equipmentBOs = equipmentService.GetAll(projectId).Where(e => e.IsHardware
                                                                     && (e.HardwareKitEquipments == null || e.HardwareKitEquipments.Count() == 0));
 
             var hardwareGroups = equipmentBOs
@@ -305,8 +304,7 @@ namespace WendtEquipmentTracking.App.Controllers
             var projectId = Convert.ToInt32(projectIdCookie);
 
             //Get Data
-            var equipmentBOs = equipmentService.GetAll().Where(e => e.ProjectId == projectId
-                                                                    && e.IsHardware
+            var equipmentBOs = equipmentService.GetAll(projectId).Where(e => e.IsHardware
                                                                     && (e.HardwareKitEquipments == null || e.HardwareKitEquipments.Count() == 0));
 
             var hardwareGroups = equipmentBOs.Where(hg => !model.HardwareGroups.Any(mhg => mhg.ShippingTagNumber == hg.ShippingTagNumber))

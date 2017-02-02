@@ -35,22 +35,24 @@ namespace WendtEquipmentTracking.App.Controllers
             }
 
             var projectId = Convert.ToInt32(projectIdCookie);
-            var projectBO = projectService.GetById(projectId);
 
             //Get Data
-            var equipmentBOs = equipmentService.GetSome(projectId, 0, 50).ToList();
+            var equipmentBOs = equipmentService.GetAll(projectId);
 
             // the code that you want to measure comes here
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
 
             var equipmentModels = Mapper.Map<List<EquipmentModel>>(equipmentBOs);
-            equipmentModels.ToList().ForEach(e =>
-            {
-                e.SetIndicators(projectBO.ProjectNumber, projectBO.IsCustomsProject);
-            });
-
+            
             return View(equipmentModels);
+        }
+
+        //
+        // GET: /Equipment/Handsontable
+        public ActionResult Handsontable()
+        {
+            return View();
         }
 
         //

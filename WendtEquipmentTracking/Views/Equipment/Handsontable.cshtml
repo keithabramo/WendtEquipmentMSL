@@ -1,0 +1,15 @@
+﻿@model IEnumerable<EquipmentModel>
+
+@{
+    ViewBag.Title = "";
+}
+
+@Html.Partial("ActionNavPartial", ActionNav.MSL)
+<br />
+<hr />
+
+<div id="msl-table"></div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/handsontable")
+}

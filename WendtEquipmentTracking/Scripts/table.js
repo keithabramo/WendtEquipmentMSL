@@ -69,10 +69,12 @@ $(function () {
                                     var readOnly = rowData.IsAssociatedToHardwareKit || rowData.HasBillOfLading || rowData.IsHardwareKit;
 
                                     $cell.html($cellTemplate.html());
-                                    $cell.find("input").prop("checked", data)
+
+                                    $cell.find("input").val(data);
+                                    $cell.find("input[type='checkbox']").prop("checked", data);
 
                                     if (readOnly) {
-                                        $cell.find("input").prop("disabled", readOnly);
+                                        $cell.find("input[type='checkbox']").prop("disabled", readOnly);
                                     } else {
                                         $cell.find("input[type='hidden']").remove();
                                     }
@@ -199,6 +201,8 @@ $(function () {
                                 } else {
                                     $cell.html(data);
                                 }
+
+                                $cell.addClass("text-right");
                             }
                         },
                         {
@@ -243,18 +247,20 @@ $(function () {
 
                                 var $cell = $(cell);
                                 var $template = $(".template");
+                                var value = (data ? data.toFixed(2) : (0).toFixed(2));
 
                                 if ($template.length) {
                                     var $cellTemplate = $template.find("div").eq(colIndex).clone();
 
                                     $cell.html($cellTemplate.html());
-                                    $cell.find("input").val(data);
+                                    $cell.find("input").val(value);
 
                                 } else {
-                                    $cell.html(data);
+                                    $cell.html(value);
                                 }
 
                                 $cell.addClass(rowData.Indicators.UnitWeightColor);
+                                $cell.addClass("text-right");
                             }
                         },
                         {
@@ -263,17 +269,20 @@ $(function () {
 
                                 var $cell = $(cell);
                                 var $template = $(".template");
+                                var value = (data ? data.toFixed(2) : (0).toFixed(2));
 
                                 if ($template.length) {
                                     var $cellTemplate = $template.find("div").eq(colIndex).clone();
 
                                     $cell.html($cellTemplate.html());
-                                    $cell.find("input").val(data);
-                                    $cell.append(data);
+                                    $cell.find("input").val(value);
+                                    $cell.append(value);
 
                                 } else {
-                                    $cell.html(data);
+                                    $cell.html(value);
                                 }
+
+                                $cell.addClass("text-right");
                             }
                         },
                         {
@@ -282,17 +291,20 @@ $(function () {
 
                                 var $cell = $(cell);
                                 var $template = $(".template");
+                                var value = (data ? data.toFixed(2) : (0).toFixed(2));
 
                                 if ($template.length) {
                                     var $cellTemplate = $template.find("div").eq(colIndex).clone();
 
                                     $cell.html($cellTemplate.html());
                                     $cell.find("input").val(data);
-                                    $cell.append(data);
+                                    $cell.append(value);
 
                                 } else {
-                                    $cell.html(data);
+                                    $cell.html(value);
                                 }
+
+                                $cell.addClass("text-right");
                             }
                         },
                         {
@@ -313,6 +325,7 @@ $(function () {
                                 }
 
                                 $cell.addClass(rowData.Indicators.ReadyToShipColor);
+                                $cell.addClass("text-right");
                             }
                         },
                         {
@@ -334,6 +347,7 @@ $(function () {
                                 }
 
                                 $cell.addClass(rowData.Indicators.ShippedQtyColor);
+                                $cell.addClass("text-right");
                             }
                         },
                         {
@@ -355,6 +369,7 @@ $(function () {
                                 }
 
                                 $cell.addClass(rowData.Indicators.LeftToShipColor);
+                                $cell.addClass("text-right");
                             }
                         },
                         {
@@ -406,6 +421,7 @@ $(function () {
                                 }
 
                                 $cell.addClass(rowData.Indicators.CustomsValueColor);
+                                $cell.addClass("text-right");
                             }
                         },
                         {
@@ -430,6 +446,7 @@ $(function () {
                                 }
 
                                 $cell.addClass(rowData.Indicators.SalePriceColor);
+                                $cell.addClass("text-right");
                             }
                         },
                         {
@@ -444,26 +461,6 @@ $(function () {
 
                                     $cell.html($cellTemplate.html());
                                     $cell.find("input").val(data);
-
-                                } else {
-                                    $cell.html(data);
-                                }
-                            }
-                        },
-                        {
-                            "data": "AutoShipFile", "targets": 20,
-                            createdCell: function (cell, data, rowData, rowIndex, colIndex) {
-
-                                var $cell = $(cell);
-                                var $template = $(".template");
-
-                                if ($template.length) {
-                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
-
-                                    $cell.html($cellTemplate.html());
-                                    $cell.find("input").val(data);
-
-                                    $cell.append(data);
 
                                 } else {
                                     $cell.html(data);
@@ -490,6 +487,26 @@ $(function () {
                                 }
 
                                 $cell.addClass(rowData.Indicators.SalesOrderNumberColor);
+                            }
+                        },
+                        {
+                            "data": "AutoShipFile", "targets": 20,
+                            createdCell: function (cell, data, rowData, rowIndex, colIndex) {
+
+                                var $cell = $(cell);
+                                var $template = $(".template");
+
+                                if ($template.length) {
+                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
+
+                                    $cell.html($cellTemplate.html());
+                                    $cell.find("input").val(data);
+
+                                    $cell.append(data);
+
+                                } else {
+                                    $cell.html(data);
+                                }
                             }
                         },
                         { "data": "HasBillOfLading", "targets": 22,
@@ -527,6 +544,12 @@ $(function () {
                 fixedHeader: true,
                 drawCallback: function( settings ) {
                     $(":focus").blur().focus();
+
+                    if ($(".pagination li").length === 2) {
+                        $(".pagination").parent().hide();
+                    } else {
+                        $(".pagination").parent().show();
+                    }
                 },
                 dom: "<'row'<'col-sm-4 text-left custom'f><'col-sm-4 text-center'i><'col-sm-4 text-right'l>>" +
                      "<'row'<'col-sm-12'tr>>" +
@@ -535,10 +558,6 @@ $(function () {
 
             delete $.fn.dataTable.AutoFill.actions.fillHorizontal;
             delete $.fn.dataTable.AutoFill.actions.increment;
-
-            if ($(".pagination li").length === 2) {
-                $(".pagination").parent().hide();
-            }
 
             waitingDialog.hide();
         }

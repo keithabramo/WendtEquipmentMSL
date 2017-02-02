@@ -6,7 +6,7 @@
             @Html.HiddenFor(modelItem => modelItem.EquipmentId)
         </div> @* Equipment Id *@
         <div>
-            @Html.HiddenFor(modelItem => modelItem.IsHardware)
+            @*@Html.HiddenFor(modelItem => modelItem.IsHardware)*@
             @Html.CheckBoxFor(modelItem => modelItem.IsHardware)
         </div> @* Is Hardware *@
         <div>
@@ -30,7 +30,7 @@
             @Html.ValidationMessageFor(modelItem => modelItem.WorkOrderNumber, "", new { @class = "text-danger" })
         </div>@* WorkOrderNumber *@
         <div>
-            @Html.EditorFor(modelItem => modelItem.Quantity, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(modelItem => modelItem.Quantity, new { htmlAttributes = new { @class = "form-control text-right" } })
             @Html.ValidationMessageFor(modelItem => modelItem.Quantity, "", new { @class = "text-danger" })
         </div>@* Quantity *@
         <div>
@@ -42,32 +42,32 @@
             @Html.ValidationMessageFor(modelItem => modelItem.Description, "", new { @class = "text-danger" })
         </div>@* Description *@
         <div>
-            @Html.EditorFor(modelItem => modelItem.UnitWeight, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(modelItem => modelItem.UnitWeight, new { htmlAttributes = new { @class = "form-control text-right" } })
             @Html.ValidationMessageFor(modelItem => modelItem.UnitWeight, "", new { @class = "text-danger" })
         </div>@* UnitWeight *@
-        <div>
+        <div class="text-right">
             @Html.HiddenFor(modelItem => modelItem.TotalWeight)
         </div>@* TotalWeight *@
-        <div>
+        <div class="text-right">
             @Html.HiddenFor(modelItem => modelItem.TotalWeightShipped)
         </div>@* TotalWeightShipped *@
-        <div>
-            @Html.EditorFor(modelItem => modelItem.ReadyToShip, new { htmlAttributes = new { @class = "form-control" } })
+        <div class="text-right">
+            @Html.EditorFor(modelItem => modelItem.ReadyToShip, new { htmlAttributes = new { @class = "form-control text-right" } })
             @Html.ValidationMessageFor(modelItem => modelItem.ReadyToShip, "", new { @class = "text-danger" })
         </div>@* ReadyToShip *@
-        <div>
+        <div class="text-right">
             @Html.HiddenFor(modelItem => modelItem.ShippedQuantity)
         </div>@* ShippedQuantity *@
-        <div>
+        <div class="text-right">
             @Html.HiddenFor(modelItem => modelItem.LeftToShip)
         </div>@* LeftToShip *@
         <div>
             @Html.HiddenFor(modelItem => modelItem.FullyShipped)
         </div>@* FullyShipped *@
-        <div>
+        <div class="text-right">
             @Html.HiddenFor(modelItem => modelItem.CustomsValue)
         </div>@* CustomsValue *@
-        <div>
+        <div class="text-right">
             @Html.HiddenFor(modelItem => modelItem.SalePrice)
         </div>@* SalePrice *@
         <div>
@@ -75,11 +75,11 @@
             @Html.ValidationMessageFor(modelItem => modelItem.Notes, "", new { @class = "text-danger" })
         </div>@* Notes *@
         <div>
-            @Html.HiddenFor(modelItem => modelItem.AutoShipFile)
-        </div>@* AutoShipFile *@
-        <div>
             @Html.HiddenFor(modelItem => modelItem.SalesOrderNumber)
         </div>@* SalesOrderNumber *@
+        <div>
+            @Html.HiddenFor(modelItem => modelItem.AutoShipFile)
+        </div>@* AutoShipFile *@
         <div>
             @Ajax.ActionLink("Delete", "Delete", new AjaxOptions { Confirm = "Are you sure you want to delete this equipment record?", OnSuccess = "DeleteSuccess", HttpMethod = "POST" })
         </div>@* Delete *@

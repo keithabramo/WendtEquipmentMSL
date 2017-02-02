@@ -40,7 +40,7 @@ namespace WendtEquipmentTracking.App.Controllers
             var projectBO = projectService.GetById(projectId);
 
             //Get Data
-            var equipmentBOs = equipmentService.GetAll().Where(e => e.ProjectId == projectId);
+            var equipmentBOs = equipmentService.GetAll(projectId);
 
             equipmentModels = Mapper.Map<List<EquipmentModel>>(equipmentBOs);
             equipmentModels.ToList().ForEach(e =>

@@ -14,7 +14,7 @@ namespace WendtEquipmentTracking.BusinessLogic.Api
 
         void Delete(int id);
 
-        IEnumerable<EquipmentBO> GetAll();
+        IEnumerable<EquipmentBO> GetAll(int projectId);
         IEnumerable<EquipmentBO> GetSome(int projectId, int skip, int take);
         IEnumerable<EquipmentBO> GetByBillOfLadingId(int billOfLadingId);
         IEnumerable<EquipmentBO> GetHardwareByShippingTagNumber(int projectId, string shipTagNumber);

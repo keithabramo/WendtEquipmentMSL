@@ -48,7 +48,7 @@ namespace WendtEquipmentTracking.App.Models
         public double Quantity { get; set; }
 
 
-        [DisplayName("Shipping Tag #")]
+        [DisplayName("SHIP TAG #")]
         [Required]
         public string ShippingTagNumber { get; set; }
 
@@ -59,6 +59,7 @@ namespace WendtEquipmentTracking.App.Models
 
 
         [DisplayName("Unit Weight")]
+        [DisplayFormat(DataFormatString = "{#.##}")]
         [Required]
         public double? UnitWeight { get; set; }
 
@@ -101,7 +102,7 @@ namespace WendtEquipmentTracking.App.Models
         public string Notes { get; set; }
 
 
-        [DisplayName("Auto Ship File")]
+        [DisplayName("DWG/PT")]
         public string AutoShipFile { get; set; }
 
         [DisplayName("Sales Order Number")]
@@ -124,7 +125,7 @@ namespace WendtEquipmentTracking.App.Models
         public HardwareKitModel HardwareKit { get; set; }
 
         public IList<HardwareKitEquipmentModel> HardwareKitEquipments { get; set; }
-        
+
 
         public IndicatorsModel Indicators { get; set; }
 
@@ -133,7 +134,7 @@ namespace WendtEquipmentTracking.App.Models
             Indicators = new IndicatorsModel();
 
             //unit weight
-            if (UnitWeight == null || UnitWeight <= 0)
+            if ((UnitWeight == null || UnitWeight <= 0) && !IsHardware)
             {
                 Indicators.UnitWeightColor = IndicatorsModel.Colors.Red.ToString();
             }
