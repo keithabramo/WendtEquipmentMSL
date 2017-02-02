@@ -29,9 +29,9 @@
                 }
             );
 
-            //table.DataTable()
-            //    .order([2, 'asc'])
-            //    .draw();
+            table.DataTable()
+                .order([2, 'asc'])
+                .draw();
 
             $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="readyToShipFilter" /> Equipment Released</label>');
 
@@ -106,7 +106,9 @@
                 var $form = $("<form/>");
 
                 $row.find("input[name], select[name]").each(function (i, e) {
-                    var $element = $(e).clone();
+
+                    //cloning selects does not clone selected value, known jquery bug
+                    var $element = $(e).clone().val(e.value);
 
                     $form.append($element);
                 });
@@ -121,6 +123,7 @@
 
                         if (data.Status === 1) {
                             var $newRow = $this.addRow(data);
+                            table.DataTable().draw(false);
 
                             $newRow.animate({
                                 backgroundColor: "#dff0d8"
@@ -183,9 +186,9 @@
                     $this.resetValidation($row);
 
                     if (data.Status === 1) {
-                        table.DataTable().row($row).remove().draw();
-
-                        var $newRow = $this.addRow(data);
+                        table.DataTable().row($row).remove();
+                        var $newRow = $row;
+                        $this.addRow(data);
 
                         $newRow.animate({
                             backgroundColor: "#dff0d8"
@@ -219,7 +222,7 @@
         }
 
         this.addRow = function (data) {
-            var rowNode = table.DataTable().row.add(data).draw().node();
+            var rowNode = table.DataTable().row.add(data).node();
             return $(rowNode);
         }
 

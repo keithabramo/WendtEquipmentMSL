@@ -213,9 +213,25 @@ dl.dl-horizontal dd {
 
     .table-styled .form-control {
         font-size: 10px !important;
-        min-width: 75px;
-        max-width: 90px;
+        width: auto;
+        min-width: 0;
         padding: 6px;
+    }
+
+    .table-styled .small .form-control {
+        width: 50px;
+    }
+
+    .table-styled .medium .form-control {
+        width: 100px;
+    }
+
+    .table-styled .long .form-control {
+        width: 200px;
+    }
+
+    .table-styled .long-column {
+        width: 100px;
     }
 
     .table-styled .expand {
@@ -223,9 +239,7 @@ dl.dl-horizontal dd {
         font-size: 12px;
     }
 
-    .table-styled .long-column {
-        min-width: 100px;
-    }
+    
 
 
 .my-datatable > thead > tr:first-child > th {

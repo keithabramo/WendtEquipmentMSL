@@ -4,7 +4,17 @@
 
         this.initStyles = function () {
             
-            $(".datePicker").datepicker();
+            //$(".hasDatepicker").datepicker('remove'); //detach
+            $(".table .datePicker").datepicker({
+                onSelect: function () {
+                    // The "this" keyword refers to the input (in this case: #someinput)
+                    if ($(this).closest("td").length) {
+                        $(this).change();
+                        $(this).closest("td").next().find("input").focus();
+                        
+                    }
+                }
+            });
 
             $(".autocomplete").autocomplete({
                 source: "/api/WorkOrderPriceApi/Search"

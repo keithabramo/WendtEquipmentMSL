@@ -34,7 +34,7 @@ $(function () {
 
                     "columnDefs": [
                         {
-                            "data": "EquipmentId", "targets": 0,
+                            "data": "HasBillOfLading", "targets": 0,
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
 
                                 var $cell = $(cell);
@@ -44,7 +44,7 @@ $(function () {
                                     var $cellTemplate = $template.find("div").eq(colIndex).clone();
 
                                     $cell.html($cellTemplate.html());
-                                    $cell.find("input").val(data);
+                                    $cell.find("input").val(rowData.EquipmentId);
 
                                     if (rowData.HasBillOfLading) {
                                         $cell.append("<span class='glyphicon glyphicon-plus text-primary'></span>");
@@ -112,6 +112,8 @@ $(function () {
                                 } else {
                                     $cell.html(data);
                                 }
+
+                                $cell.addClass("long");
                             }
                         },
                         {
@@ -125,7 +127,7 @@ $(function () {
                                     var $cellTemplate = $template.find("div").eq(colIndex).clone();
 
                                     $cell.html($cellTemplate.html());
-                                    $cell.find("input").val(data);
+                                    $cell.find("select").val(data);
                                 } else {
                                     $cell.html(data);
                                 }
@@ -137,16 +139,22 @@ $(function () {
 
                                 var $cell = $(cell);
                                 var $template = $(".template");
+                                var value = data;
+                                if (data) {
+                                    value = $.datepicker.formatDate('mm/dd/yy', new Date(data))
+                                }
 
                                 if ($template.length) {
                                     var $cellTemplate = $template.find("div").eq(colIndex).clone();
 
                                     $cell.html($cellTemplate.html());
-                                    $cell.find("input").val(data).attr("id", "releaseDate" + rowData.EquipmentId);
+                                    $cell.find("input").val(value).attr("id", "releaseDate" + rowData.EquipmentId);
 
                                 } else {
-                                    $cell.html(data);
+                                    $cell.html(value);
                                 }
+
+                                $cell.addClass("medium");
                             }
                         },
                         {
@@ -165,6 +173,8 @@ $(function () {
                                 } else {
                                     $cell.html(data);
                                 }
+
+                                $cell.addClass("long");
                             }
                         },
                         {
@@ -183,6 +193,8 @@ $(function () {
                                 } else {
                                     $cell.html(data);
                                 }
+
+                                $cell.addClass("medium");
                             }
                         },
                         {
@@ -203,6 +215,7 @@ $(function () {
                                 }
 
                                 $cell.addClass("text-right");
+                                $cell.addClass("small");
                             }
                         },
                         {
@@ -221,6 +234,8 @@ $(function () {
                                 } else {
                                     $cell.html(data);
                                 }
+
+                                $cell.addClass("long");
                             }
                         },
                         {
@@ -239,6 +254,8 @@ $(function () {
                                 } else {
                                     $cell.html(data);
                                 }
+
+                                $cell.addClass("long");
                             }
                         },
                         {
@@ -261,6 +278,7 @@ $(function () {
 
                                 $cell.addClass(rowData.Indicators.UnitWeightColor);
                                 $cell.addClass("text-right");
+                                $cell.addClass("small");
                             }
                         },
                         {
@@ -283,6 +301,7 @@ $(function () {
                                 }
 
                                 $cell.addClass("text-right");
+                                $cell.addClass("small");
                             }
                         },
                         {
@@ -305,6 +324,7 @@ $(function () {
                                 }
 
                                 $cell.addClass("text-right");
+                                $cell.addClass("small");
                             }
                         },
                         {
@@ -326,6 +346,7 @@ $(function () {
 
                                 $cell.addClass(rowData.Indicators.ReadyToShipColor);
                                 $cell.addClass("text-right");
+                                $cell.addClass("small");
                             }
                         },
                         {
@@ -348,6 +369,7 @@ $(function () {
 
                                 $cell.addClass(rowData.Indicators.ShippedQtyColor);
                                 $cell.addClass("text-right");
+                                $cell.addClass("small");
                             }
                         },
                         {
@@ -370,6 +392,7 @@ $(function () {
 
                                 $cell.addClass(rowData.Indicators.LeftToShipColor);
                                 $cell.addClass("text-right");
+                                $cell.addClass("small");
                             }
                         },
                         {
@@ -397,6 +420,7 @@ $(function () {
                                 }
 
                                 $cell.addClass(rowData.Indicators.FullyShippedColor);
+                                $cell.addClass("small");
                             }
                         },
                         {
@@ -422,6 +446,7 @@ $(function () {
 
                                 $cell.addClass(rowData.Indicators.CustomsValueColor);
                                 $cell.addClass("text-right");
+                                $cell.addClass("small");
                             }
                         },
                         {
@@ -447,6 +472,7 @@ $(function () {
 
                                 $cell.addClass(rowData.Indicators.SalePriceColor);
                                 $cell.addClass("text-right");
+                                $cell.addClass("small");
                             }
                         },
                         {
@@ -468,7 +494,7 @@ $(function () {
                             }
                         },
                         {
-                            "data": "SalesOrderNumber", "targets": 21,
+                            "data": "SalesOrderNumber", "targets": 20,
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
 
                                 var $cell = $(cell);
@@ -490,7 +516,7 @@ $(function () {
                             }
                         },
                         {
-                            "data": "AutoShipFile", "targets": 20,
+                            "data": "AutoShipFile", "targets": 21,
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
 
                                 var $cell = $(cell);
@@ -507,9 +533,11 @@ $(function () {
                                 } else {
                                     $cell.html(data);
                                 }
+
+                                $cell.addClass("small");
                             }
                         },
-                        { "data": "HasBillOfLading", "targets": 22,
+                        { "data": "EquipmentId", "targets": 22,
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
 
                                 var $cell = $(cell);
@@ -549,6 +577,10 @@ $(function () {
                         $(".pagination").parent().hide();
                     } else {
                         $(".pagination").parent().show();
+                    }
+
+                    if (form) {
+                        form.initStyles();
                     }
                 },
                 dom: "<'row'<'col-sm-4 text-left custom'f><'col-sm-4 text-center'i><'col-sm-4 text-right'l>>" +
