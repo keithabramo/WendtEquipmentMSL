@@ -59,13 +59,13 @@ namespace WendtEquipmentTracking.Common
                     catch
                     {
                         user = new ActiveDirectoryUser();
-                        //HttpContext.Current.Cache.Add("currentUser" + username, user, null, DateTime.Now.AddDays(2), Cache.NoSlidingExpiration, CacheItemPriority.Normal, null);
+                        HttpContext.Current.Cache.Add("currentUser" + username, user, null, DateTime.Now.AddDays(2), Cache.NoSlidingExpiration, CacheItemPriority.Normal, null);
 
                     }
                 }
             }
 
-            //user.Role = UserRoles.ReadWrite;
+            user.Role = UserRoles.ReadWrite;
             return user;
         }
 

@@ -1,10 +1,51 @@
 ﻿waitingDialog.show();
 
+jQuery.fn.putCursorAtEnd = function () {
+
+    return this.each(function () {
+
+        // Cache references
+        var $el = $(this),
+            el = this;
+
+        // Only focus if input isn't already
+        if (!$el.is(":focus")) {
+            $el.focus();
+        }
+
+        // If this function exists... (IE 9+)
+        if (el.setSelectionRange) {
+
+            // Double the length because Opera is inconsistent about whether a carriage return is one character or two.
+            var len = $el.val().length * 2;
+
+            // Timeout seems to be required for Blink
+            setTimeout(function () {
+                el.setSelectionRange(len, len);
+            }, 1);
+
+        } else {
+
+            // As a fallback, replace the contents with itself
+            // Doesn't work in Chrome, but Chrome supports setSelectionRange
+            $el.val($el.val());
+
+        }
+
+        // Scroll to the bottom, in case we're in a tall textarea
+        // (Necessary for Firefox and Chrome)
+        this.scrollTop = 999999;
+
+    });
+
+};
+
 $(function () {
 
     var Table = function () {
 
         this.dataTable;
+        this.$focusedInput;
 
         this.DataTable = function () {
             return this.dataTable;
@@ -12,6 +53,7 @@ $(function () {
 
         this.initStyles = function () {
             var $searchHeader = $(".table.my-datatable thead tr").clone();
+            var $this = this;
 
             $searchHeader.find("th").each(function () {
                 var title = $.trim($(this).text());
@@ -31,7 +73,25 @@ $(function () {
                         url: ROOT_URL + "api/EquipmentApi/Table",
                         dataSrc: ""
                     },
+                    drawCallback: function () {
+                        
 
+                        if ($this.DataTable()) {
+                            $this.DataTable().fixedHeader.enable();
+                        }
+
+                        if ($this.index >= 0) {
+                            var $newInput = $("thead input[type='text']").eq($this.index);
+                            if (!$newInput.length) {
+                                $this.index -= $("thead input[type='text']").length;
+                                $newInput = $("thead input[type='text']").eq($this.index);
+                            }
+
+                            $newInput.putCursorAtEnd();
+                            $this.index = -1;
+                        }
+                        
+                    },
                     "columnDefs": [
                         {
                             "data": "HasBillOfLading", "targets": 0,
@@ -570,8 +630,10 @@ $(function () {
                 pageLength: 25,
                 deferRender: true,
                 fixedHeader: true,
-                drawCallback: function( settings ) {
-                    $(":focus").blur().focus();
+                drawCallback: function (settings) {
+                    if ($this.$focuedInput) {
+                        //$this.$focusedInput[0].focus();
+                    }
 
                     if ($(".pagination li").length === 2) {
                         $(".pagination").parent().hide();
@@ -631,10 +693,21 @@ $(function () {
 
                 var $input = $("thead tr").eq(0).find("th").eq(this.index()).find("input");
 
-                $input.on('keyup change', function () {
-                    if (column.search() !== this.value) {
-                        column.search(this.value).draw();
-                    }
+                var timeout = 0;
+                $input.on('keyup change input search', function () {
+                    clearTimeout(timeout);
+                    var searchInput = this;
+                    $this.index = $("thead input[type='text']").index($(this));
+
+                    timeout = setTimeout(function () {
+
+                        if (column.search() !== searchInput.value) {
+                            $this.DataTable().fixedHeader.disable();
+                            column.search(searchInput.value).draw();
+                        }
+                    }, 500);
+
+                    
                 });
             });
         }
@@ -645,6 +718,9 @@ $(function () {
     }
 
     table = new Table();
+
+
+    
 
 });
 

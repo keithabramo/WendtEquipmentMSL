@@ -274,6 +274,7 @@
     <Content Include="Scripts\billOfLading.js" />
     <Content Include="Scripts\handsontable.full.min.js" />
     <Content Include="Scripts\handsontableCustom.js" />
+    <Content Include="Scripts\jquery.floatThead.js" />
     <Content Include="Scripts\workOrderPrice.js" />
     <Content Include="Scripts\import.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
