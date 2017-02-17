@@ -4,8 +4,9 @@
 
         this.initStyles = function () {
             
-            //$(".hasDatepicker").datepicker('remove'); //detach
-            $(".table .datePicker").datepicker({
+            //hack since create row is being copyed for the scrolly stuff we need to remove extra id so datepicker stops breaking
+           
+            $(".table tbody .datePicker").datepicker({
                 onSelect: function () {
                     // The "this" keyword refers to the input (in this case: #someinput)
                     if ($(this).closest("td").length) {

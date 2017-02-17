@@ -20,7 +20,7 @@ namespace WendtEquipmentTracking.App
 
             bundles.Add(new ScriptBundle("~/bundles/table").Include(
                         "~/Scripts/waitingDialog.js",
-                        "~/Scripts/datatables.js",
+                        "~/Scripts/datatables.min.js",
                         "~/Scripts/jquery.floatThead.js",
                         "~/Scripts/table.js"));
 
@@ -55,7 +55,7 @@ namespace WendtEquipmentTracking.App
                 .IncludeDirectory("~/Content/themes/base", "*.css")
                 .Include(
                     "~/Content/bootstrap.css",
-                    "~/Content/datatables.css",
+                    "~/Content/datatables.min.css",
                     //"~/Content/handsontable.full.min.css",
                     "~/Content/Site.css"
                 ));

@@ -19,6 +19,7 @@ $(function () {
                 $cell.html(data);
             }
 
+            $cell.removeAttr("class");
             $cell.addClass("long");
         }
         this.PriorityRender = function ($cell, rowData) {
@@ -55,6 +56,7 @@ $(function () {
                 $cell.html(value);
             }
 
+            $cell.removeAttr("class");
             $cell.addClass("medium");
         }
         this.DrawingNumberRender = function ($cell, rowData) {
@@ -73,6 +75,7 @@ $(function () {
                 $cell.html(data);
             }
 
+            $cell.removeAttr("class");
             $cell.addClass("long");
         }
         this.WorkOrderNumberRender = function ($cell, rowData) {
@@ -90,6 +93,7 @@ $(function () {
                 $cell.html(data);
             }
 
+            $cell.removeAttr("class");
             $cell.addClass("medium");
         }
         this.QuantityRender = function ($cell, rowData) {
@@ -107,6 +111,7 @@ $(function () {
                 $cell.html(data);
             }
 
+            $cell.removeAttr("class");
             $cell.addClass("text-right");
             $cell.addClass("small");
         }
@@ -125,6 +130,7 @@ $(function () {
                 $cell.html(data);
             }
 
+            $cell.removeAttr("class");
             $cell.addClass("long");
         }
         this.DescriptionRender = function ($cell, rowData) {
@@ -142,6 +148,7 @@ $(function () {
                 $cell.html(data);
             }
 
+            $cell.removeAttr("class");
             $cell.addClass("long");
         }
         this.UnitWeightRender = function ($cell, rowData) {
@@ -160,6 +167,7 @@ $(function () {
                 $cell.html(value);
             }
 
+            $cell.removeAttr("class");
             $cell.addClass(rowData.Indicators.UnitWeightColor);
             $cell.addClass("text-right");
             $cell.addClass("small");
@@ -181,6 +189,7 @@ $(function () {
                 $cell.html(value);
             }
 
+            $cell.removeAttr("class");
             $cell.addClass("text-right");
             $cell.addClass("small");
         }
@@ -201,6 +210,7 @@ $(function () {
                 $cell.html(value);
             }
 
+            $cell.removeAttr("class");
             $cell.addClass("text-right");
             $cell.addClass("small");
         }
@@ -219,6 +229,7 @@ $(function () {
                 $cell.html(data);
             }
 
+            $cell.removeAttr("class");
             $cell.addClass(rowData.Indicators.ReadyToShipColor);
             $cell.addClass("text-right");
             $cell.addClass("small");
@@ -239,6 +250,7 @@ $(function () {
                 $cell.html(data);
             }
 
+            $cell.removeAttr("class");
             $cell.addClass(rowData.Indicators.ShippedQtyColor);
             $cell.addClass("text-right");
             $cell.addClass("small");
@@ -259,6 +271,7 @@ $(function () {
                 $cell.html(data);
             }
 
+            $cell.removeAttr("class");
             $cell.addClass(rowData.Indicators.LeftToShipColor);
             $cell.addClass("text-right");
             $cell.addClass("small");
@@ -285,6 +298,7 @@ $(function () {
                 $cell.html(value);
             }
 
+            $cell.removeAttr("class");
             $cell.addClass(rowData.Indicators.FullyShippedColor);
             $cell.addClass("small");
         }
@@ -307,6 +321,7 @@ $(function () {
                 $cell.html(value);
             }
 
+            $cell.removeAttr("class");
             $cell.addClass(rowData.Indicators.CustomsValueColor);
             $cell.addClass("text-right");
             $cell.addClass("small");
@@ -330,6 +345,7 @@ $(function () {
                 $cell.html(value);
             }
 
+            $cell.removeAttr("class");
             $cell.addClass(rowData.Indicators.SalePriceColor);
             $cell.addClass("text-right");
             $cell.addClass("small");
@@ -366,6 +382,7 @@ $(function () {
                 $cell.html(data);
             }
 
+            $cell.removeAttr("class");
             $cell.addClass(rowData.Indicators.SalesOrderNumberColor);
         }
         this.AutoShipFileRender = function ($cell, rowData) {
@@ -385,6 +402,7 @@ $(function () {
                 $cell.html(data);
             }
 
+            $cell.removeAttr("class");
             $cell.addClass("small");
         }
         this.DeleteRender = function ($cell, rowData) {
@@ -420,7 +438,11 @@ $(function () {
                 $cell.html("");
             }
 
-            $cell.attr("data-toggle", "collapse").attr("data-id", rowData.EquipmentId).addClass("expand");
+            $cell.attr("data-toggle", "collapse").attr("data-id", rowData.EquipmentId);
+
+            $cell.removeAttr("class");
+            $cell.addClass("expand")
+            $cell.addClass("small");
         }
     }
 

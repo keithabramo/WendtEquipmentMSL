@@ -10,7 +10,7 @@
         @Html.DropDownListFor(modelItem => modelItem.Priority, new SelectList(Priorities.GetPriorities()), new { @class = "form-control" })
         @Html.ValidationMessageFor(modelItem => modelItem.Priority, "", new { @class = "text-danger" })
     </td>
-    <td class="medium">
+    <td class="medium releaseDateColumn">
         @Html.EditorFor(modelItem => modelItem.ReleaseDate, new { htmlAttributes = new { @class = "form-control datePicker", id = "releaseDate" + Model.EquipmentId } })
         @Html.ValidationMessageFor(modelItem => modelItem.ReleaseDate, "", new { @class = "text-danger" })
     </td>

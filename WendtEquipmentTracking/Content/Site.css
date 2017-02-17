@@ -259,3 +259,7 @@ dl.dl-horizontal dd {
 .dataTables_paginate {
     text-align: inherit;
 }
+
+div.DTS .odd {
+    background-color: white !important;
+}

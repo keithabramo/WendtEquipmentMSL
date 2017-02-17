@@ -30,7 +30,8 @@
             );
 
             $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="readyToShipFilter" /> Work In Progress</label>');
-
+            
+            
         }
 
         this.initEvents = function () {
@@ -185,6 +186,30 @@
                         table.DataTable().row($row).remove();
                         var $newRow = $row;
                         $this.addRow(data);
+
+                        mslRender.EquipmentNameRender($newRow.find("td").eq(0), data);
+                        mslRender.PriorityRender($newRow.find("td").eq(1), data);
+                        mslRender.ReleaseDateRender($newRow.find("td").eq(2), data);
+                        mslRender.DrawingNumberRender($newRow.find("td").eq(3), data);
+                        mslRender.WorkOrderNumberRender($newRow.find("td").eq(4), data);
+                        mslRender.QuantityRender($newRow.find("td").eq(5), data);
+                        mslRender.ShippingTagNumberRender($newRow.find("td").eq(6), data);
+                        mslRender.DescriptionRender($newRow.find("td").eq(7), data);
+                        mslRender.UnitWeightRender($newRow.find("td").eq(8), data);
+                        mslRender.TotalWeightRender($newRow.find("td").eq(9), data);
+                        mslRender.TotalWeightShippedRender($newRow.find("td").eq(10), data);
+                        mslRender.ReadyToShipRender($newRow.find("td").eq(11), data);
+                        mslRender.ShippedQuantityRender($newRow.find("td").eq(12), data);
+                        mslRender.LeftToShipRender($newRow.find("td").eq(13), data);
+                        mslRender.FullyShippedRender($newRow.find("td").eq(14), data);
+                        mslRender.CustomsValueRender($newRow.find("td").eq(15), data);
+                        mslRender.SalePriceRender($newRow.find("td").eq(16), data);
+                        mslRender.NotesRender($newRow.find("td").eq(17), data);
+                        mslRender.SalesOrderNumberRender($newRow.find("td").eq(18), data);
+                        mslRender.AutoShipFileRender($newRow.find("td").eq(19), data);
+                        mslRender.DeleteRender($newRow.find("td").eq(20), data);
+                        mslRender.HasBillOfLadingRender($newRow.find("td").eq(21), data);
+
 
                         $newRow.animate({
                             backgroundColor: "#dff0d8"
