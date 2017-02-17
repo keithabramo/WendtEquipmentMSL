@@ -1,13 +1,7 @@
 ﻿@model EquipmentModel
 
 <tr class="@(Model.Status == SuccessStatus.Error ? "danger" : "warning")">
-    <td>
-        <input type="button" value="Create" class="btn btn-sm btn-primary createSubmit" />
-    </td>
-    <td>
-        @Html.CheckBoxFor(modelItem => modelItem.IsHardware)
-        @Html.ValidationMessageFor(modelItem => modelItem.IsHardware, "", new { @class = "text-danger" })
-    </td>
+    
     <td class="long">
         @Html.EditorFor(modelItem => modelItem.EquipmentName, new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(modelItem => modelItem.EquipmentName, "", new { @class = "text-danger" })
@@ -59,5 +53,8 @@
     <td></td>
     <td></td>
     <td></td>
+    <td>
+        <input type="button" value="Create" class="btn btn-sm btn-primary createSubmit" />
+    </td>
 </tr>
 

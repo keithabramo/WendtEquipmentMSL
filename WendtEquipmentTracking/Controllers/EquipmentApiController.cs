@@ -76,6 +76,7 @@ namespace WendtEquipmentTracking.App.Controllers
                         model.ProjectId = user.ProjectId;
 
                         var equipmentBO = Mapper.Map<EquipmentBO>(model);
+                        equipmentBO.IsHardware = model.EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase);
 
                         var id = equipmentService.Save(equipmentBO);
 
@@ -127,6 +128,9 @@ namespace WendtEquipmentTracking.App.Controllers
                         var equipment = equipmentService.GetById(id);
 
                         Mapper.Map<EquipmentModel, EquipmentBO>(model, equipment);
+
+                        equipment.IsHardware = model.EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase);
+
 
                         equipmentService.Update(equipment);
 

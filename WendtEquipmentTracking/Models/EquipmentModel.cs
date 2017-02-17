@@ -20,9 +20,6 @@ namespace WendtEquipmentTracking.App.Models
         [Required]
         public string EquipmentName { get; set; }
 
-        [DisplayName("Is Hardware?")]
-        public bool IsHardware { get; set; }
-
         [DisplayName("Priority")]
         [Required]
         public string Priority { get; set; }
@@ -134,7 +131,7 @@ namespace WendtEquipmentTracking.App.Models
             Indicators = new IndicatorsModel();
 
             //unit weight
-            if ((UnitWeight == null || UnitWeight <= 0) && !IsHardware)
+            if ((UnitWeight == null || UnitWeight <= 0) && !EquipmentName.Equals("hardware",StringComparison.InvariantCultureIgnoreCase) )
             {
                 Indicators.UnitWeightColor = IndicatorsModel.Colors.Red.ToString();
             }

@@ -103,7 +103,6 @@ namespace WendtEquipmentTracking.App.Controllers
                     equipmentModels.ForEach(e =>
                     {
                         e.Checked = true;
-                        e.IsHardware = e.EquipmentName.Equals("HARDWARE", StringComparison.InvariantCultureIgnoreCase);
                     });
 
                     return PartialView("ImportEquipmentPartial", equipmentModels);

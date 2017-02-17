@@ -28,6 +28,7 @@ namespace WendtEquipmentTracking.App
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/masterShipList").Include(
+                       "~/Scripts/mslRender.js",
                        "~/Scripts/masterShipList.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/hardwareKit").Include(

@@ -50,7 +50,7 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Helper
             {
                 EquipmentName = rowValues[0].ToString(),
                 Priority = rowValues[1].ToString(),
-                ReleaseDate = rowValues[2].ToString(),
+                ReleaseDate = rowValues[2] != null ? DateTime.Now.ToShortDateString() : string.Empty, //was not getting current date
                 DrawingNumber = rowValues[3].ToString(),
                 WorkOrderNumber = rowValues[4].ToString(),
                 Quantity = rowValues[5].ToString(),

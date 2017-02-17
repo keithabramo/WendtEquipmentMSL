@@ -29,10 +29,6 @@
                 }
             );
 
-            table.DataTable()
-                .order([2, 'asc'])
-                .draw();
-
             $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="readyToShipFilter" /> Work In Progress</label>');
 
         }

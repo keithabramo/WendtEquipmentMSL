@@ -275,6 +275,7 @@
     <Content Include="Scripts\handsontable.full.min.js" />
     <Content Include="Scripts\handsontableCustom.js" />
     <Content Include="Scripts\jquery.floatThead.js" />
+    <Content Include="Scripts\mslRender.js" />
     <Content Include="Scripts\workOrderPrice.js" />
     <Content Include="Scripts\import.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
@@ -347,7 +348,6 @@
     <Content Include="Views\WorkOrderPrice\Create.cshtml" />
     <Content Include="Views\WorkOrderPrice\Edit.cshtml" />
     <Content Include="Views\WorkOrderPrice\Index.cshtml" />
-    <Content Include="Views\Equipment\Chunk.cshtml" />
     <Content Include="Views\Equipment\Template.cshtml" />
     <Content Include="Views\Shared\NotFound.cshtml" />
     <Content Include="Views\Shared\Unauthorized.cshtml" />

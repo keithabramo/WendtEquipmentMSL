@@ -94,530 +94,141 @@ $(function () {
                     },
                     "columnDefs": [
                         {
-                            "data": "HasBillOfLading", "targets": 0,
+                            "data": "EquipmentName", "targets": 0,
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
-
-                                var $cell = $(cell);
-                                var $template = $(".template");
-
-                                if ($template.length) {
-                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
-
-                                    $cell.html($cellTemplate.html());
-                                    $cell.find("input").val(rowData.EquipmentId);
-
-                                    if (rowData.HasBillOfLading) {
-                                        $cell.append("<span class='glyphicon glyphicon-plus text-primary'></span>");
-                                    }
-                                } else {
-                                    $cell.html("");
-                                }
-
-                                $cell.attr("data-toggle", "collapse").attr("data-id", rowData.EquipmentId).addClass("expand");
+                                mslRender.EquipmentNameRender($(cell), rowData);
                             }
                         },
                         {
-                            "data": "IsHardware", "targets": 1,
+                            "data": "Priority", "targets": 1,
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
-
-                                var $cell = $(cell);
-                                var $template = $(".template");
-
-                                if ($template.length) {
-                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
-
-                                    var readOnly = rowData.IsAssociatedToHardwareKit || rowData.HasBillOfLading || rowData.IsHardwareKit;
-
-                                    $cell.html($cellTemplate.html());
-
-                                    $cell.find("input").val(data);
-                                    $cell.find("input[type='checkbox']").prop("checked", data);
-
-                                    if (readOnly) {
-                                        $cell.find("input[type='checkbox']").prop("disabled", readOnly);
-                                    } else {
-                                        $cell.find("input[type='hidden']").remove();
-                                    }
-                                    
-
-                                    if (rowData.IsAssociatedToHardwareKit) {
-                                        $cell.append("<br> Associated to Hardware Kit: " + rowData.AssociatedHardwareKitNumber);
-                                    }
-
-                                } else {
-
-                                    $cell.html("<input type='checkbox'/>");
-                                    $cell.find("input").prop("checked", data)
-                                    $cell.prop("disabled", true);
-
-                                    if (rowData.HasHardwareKitAssociation) {
-                                        $cell.append("Associated to Hardware Kit: " + rowDate.AssociatedHarwareKitNumber);
-                                    }
-                                }
+                                mslRender.PriorityRender($(cell), rowData);
                             }
                         },
                         {
-                            "data": "EquipmentName", "targets": 2,
+                            "data": "ReleaseDate", "targets": 2,
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
-
-                                var $cell = $(cell);
-                                var $template = $(".template");
-
-                                if ($template.length) {
-                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
-
-                                    $cell.html($cellTemplate.html());
-                                    $cell.find("input").val(data).prop("readOnly", rowData.IsHardware || rowData.IsHardwareKit);
-
-                                } else {
-                                    $cell.html(data);
-                                }
-
-                                $cell.addClass("long");
+                                mslRender.ReleaseDateRender($(cell), rowData);
                             }
                         },
                         {
-                            "data": "Priority", "targets": 3,
+                            "data": "DrawingNumber", "targets": 3,
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
-
-                                var $cell = $(cell);
-                                var $template = $(".template");
-
-                                if ($template.length) {
-                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
-
-                                    $cell.html($cellTemplate.html());
-                                    $cell.find("select").val(data);
-                                } else {
-                                    $cell.html(data);
-                                }
+                                mslRender.DrawingNumberRender($(cell), rowData);
                             }
                         },
                         {
-                            "data": "ReleaseDate", "targets": 4,
+                            "data": "WorkOrderNumber", "targets": 4,
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
-
-                                var $cell = $(cell);
-                                var $template = $(".template");
-                                var value = data;
-                                if (data) {
-                                    value = $.datepicker.formatDate('mm/dd/yy', new Date(data))
-                                }
-
-                                if ($template.length) {
-                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
-
-                                    $cell.html($cellTemplate.html());
-                                    $cell.find("input").val(value).attr("id", "releaseDate" + rowData.EquipmentId);
-
-                                } else {
-                                    $cell.html(value);
-                                }
-
-                                $cell.addClass("medium");
+                                mslRender.WorkOrderNumberRender($(cell), rowData);
                             }
                         },
                         {
-                            "data": "DrawingNumber", "targets": 5,
+                            "data": "Quantity", "targets": 5,
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
-
-                                var $cell = $(cell);
-                                var $template = $(".template");
-
-                                if ($template.length) {
-                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
-
-                                    $cell.html($cellTemplate.html());
-                                    $cell.find("input").val(data);
-
-                                } else {
-                                    $cell.html(data);
-                                }
-
-                                $cell.addClass("long");
+                                mslRender.QuantityRender($(cell), rowData);
                             }
                         },
                         {
-                            "data": "WorkOrderNumber", "targets": 6,
+                            "data": "ShippingTagNumber", "targets": 6,
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
-
-                                var $cell = $(cell);
-                                var $template = $(".template");
-
-                                if ($template.length) {
-                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
-
-                                    $cell.html($cellTemplate.html());
-                                    $cell.find("input").val(data);
-
-                                } else {
-                                    $cell.html(data);
-                                }
-
-                                $cell.addClass("medium");
+                                mslRender.ShippingTagNumberRender($(cell), rowData);
                             }
                         },
                         {
-                            "data": "Quantity", "targets": 7,
+                            "data": "Description", "targets": 7,
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
-
-                                var $cell = $(cell);
-                                var $template = $(".template");
-
-                                if ($template.length) {
-                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
-
-                                    $cell.html($cellTemplate.html());
-                                    $cell.find("input").val(data).prop("readOnly", rowData.IsHardwareKit);
-
-                                } else {
-                                    $cell.html(data);
-                                }
-
-                                $cell.addClass("text-right");
-                                $cell.addClass("small");
+                                mslRender.DescriptionRender($(cell), rowData);
                             }
                         },
                         {
-                            "data": "ShippingTagNumber", "targets": 8,
+                            "data": "UnitWeight", "targets": 8,
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
-
-                                var $cell = $(cell);
-                                var $template = $(".template");
-
-                                if ($template.length) {
-                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
-
-                                    $cell.html($cellTemplate.html());
-                                    $cell.find("input").val(data);
-
-                                } else {
-                                    $cell.html(data);
-                                }
-
-                                $cell.addClass("long");
+                                mslRender.UnitWeightRender($(cell), rowData);
                             }
                         },
                         {
-                            "data": "Description", "targets": 9,
+                            "data": "TotalWeight", "targets": 9,
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
-
-                                var $cell = $(cell);
-                                var $template = $(".template");
-
-                                if ($template.length) {
-                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
-
-                                    $cell.html($cellTemplate.html());
-                                    $cell.find("input").val(data);
-
-                                } else {
-                                    $cell.html(data);
-                                }
-
-                                $cell.addClass("long");
+                                mslRender.TotalWeightRender($(cell), rowData);
                             }
                         },
                         {
-                            "data": "UnitWeight", "targets": 10,
+                            "data": "TotalWeightShipped", "targets": 10,
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
-
-                                var $cell = $(cell);
-                                var $template = $(".template");
-                                var value = (data ? data.toFixed(2) : (0).toFixed(2));
-
-                                if ($template.length) {
-                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
-
-                                    $cell.html($cellTemplate.html());
-                                    $cell.find("input").val(value);
-
-                                } else {
-                                    $cell.html(value);
-                                }
-
-                                $cell.addClass(rowData.Indicators.UnitWeightColor);
-                                $cell.addClass("text-right");
-                                $cell.addClass("small");
+                                mslRender.TotalWeightShippedRender($(cell), rowData);
                             }
                         },
                         {
-                            "data": "TotalWeight", "targets": 11,
+                            "data": "ReadyToShip", "targets": 11,
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
-
-                                var $cell = $(cell);
-                                var $template = $(".template");
-                                var value = (data ? data.toFixed(2) : (0).toFixed(2));
-
-                                if ($template.length) {
-                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
-
-                                    $cell.html($cellTemplate.html());
-                                    $cell.find("input").val(value);
-                                    $cell.append(value);
-
-                                } else {
-                                    $cell.html(value);
-                                }
-
-                                $cell.addClass("text-right");
-                                $cell.addClass("small");
+                                mslRender.ReadyToShipRender($(cell), rowData);
                             }
                         },
                         {
-                            "data": "TotalWeightShipped", "targets": 12,
+                            "data": "ShippedQuantity", "targets": 12,
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
-
-                                var $cell = $(cell);
-                                var $template = $(".template");
-                                var value = (data ? data.toFixed(2) : (0).toFixed(2));
-
-                                if ($template.length) {
-                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
-
-                                    $cell.html($cellTemplate.html());
-                                    $cell.find("input").val(data);
-                                    $cell.append(value);
-
-                                } else {
-                                    $cell.html(value);
-                                }
-
-                                $cell.addClass("text-right");
-                                $cell.addClass("small");
+                                mslRender.ShippedQuantityRender($(cell), rowData);
                             }
                         },
                         {
-                            "data": "ReadyToShip", "targets": 13,
+                            "data": "LeftToShip", "targets": 13,
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
-
-                                var $cell = $(cell);
-                                var $template = $(".template");
-
-                                if ($template.length) {
-                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
-
-                                    $cell.html($cellTemplate.html());
-                                    $cell.find("input").val(data);
-
-                                } else {
-                                    $cell.html(data);
-                                }
-
-                                $cell.addClass(rowData.Indicators.ReadyToShipColor);
-                                $cell.addClass("text-right");
-                                $cell.addClass("small");
+                                mslRender.EquipmentNameRender($(cell), rowData);
                             }
                         },
                         {
-                            "data": "ShippedQuantity", "targets": 14,
+                            "data": "FullyShipped", "targets": 14,
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
-
-                                var $cell = $(cell);
-                                var $template = $(".template");
-
-                                if ($template.length) {
-                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
-
-                                    $cell.html($cellTemplate.html());
-                                    $cell.find("input").val(data);
-                                    $cell.append(data);
-
-                                } else {
-                                    $cell.html(data);
-                                }
-
-                                $cell.addClass(rowData.Indicators.ShippedQtyColor);
-                                $cell.addClass("text-right");
-                                $cell.addClass("small");
+                                mslRender.FullyShippedRender($(cell), rowData);
                             }
                         },
                         {
-                            "data": "LeftToShip", "targets": 15,
+                            "data": "CustomsValue", "targets": 15,
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
-
-                                var $cell = $(cell);
-                                var $template = $(".template");
-
-                                if ($template.length) {
-                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
-
-                                    $cell.html($cellTemplate.html());
-                                    $cell.find("input").val(data);
-                                    $cell.append(data);
-
-                                } else {
-                                    $cell.html(data);
-                                }
-
-                                $cell.addClass(rowData.Indicators.LeftToShipColor);
-                                $cell.addClass("text-right");
-                                $cell.addClass("small");
+                                mslRender.CustomsValueRender($(cell), rowData);
                             }
                         },
                         {
-                            "data": "FullyShipped", "targets": 16,
+                            "data": "SalePrice", "targets": 16,
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
-
-                                var $cell = $(cell);
-                                var $template = $(".template");
-
-                                var value = "N\A";
-                                if (data === true) {
-                                    value = "Yes";
-                                } else if (data === false) {
-                                    value = "No";
-                                }
-
-                                if ($template.length) {
-                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
-
-                                    $cell.html($cellTemplate.html());
-                                    $cell.find("input").val(data);
-                                    $cell.append(value);
-                                } else {
-                                    $cell.html(value);
-                                }
-
-                                $cell.addClass(rowData.Indicators.FullyShippedColor);
-                                $cell.addClass("small");
+                                mslRender.SalePriceRender($(cell), rowData);
                             }
                         },
                         {
-                            "data": "CustomsValue", "targets": 17,
+                            "data": "Notes", "targets": 17,
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
-
-                                var $cell = $(cell);
-                                var $template = $(".template");
-
-                                if ($template.length) {
-                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
-
-                                    $cell.html($cellTemplate.html());
-                                    $cell.find("input").val(data);
-
-                                    var value = "$" + (data ? data.toFixed(2) : 0);
-                                    $cell.append(value);
-
-                                } else {
-                                    var value = "$" + (data ? data.toFixed(2) : 0);
-                                    $cell.html(value);
-                                }
-
-                                $cell.addClass(rowData.Indicators.CustomsValueColor);
-                                $cell.addClass("text-right");
-                                $cell.addClass("small");
+                                mslRender.NotesRender($(cell), rowData);
                             }
                         },
                         {
-                            "data": "SalePrice", "targets": 18,
+                            "data": "SalesOrderNumber", "targets": 18,
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
-
-                                var $cell = $(cell);
-                                var $template = $(".template");
-
-                                if ($template.length) {
-                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
-
-                                    $cell.html($cellTemplate.html());
-                                    $cell.find("input").val(data);
-
-                                    var value = "$" + (data ? data.toFixed(2) : 0);
-                                    $cell.append(value);
-
-                                } else {
-                                    var value = "$" + (data ? data.toFixed(2) : 0);
-                                    $cell.html(value);
-                                }
-
-                                $cell.addClass(rowData.Indicators.SalePriceColor);
-                                $cell.addClass("text-right");
-                                $cell.addClass("small");
+                                mslRender.SalesOrderNumberRender($(cell), rowData);
                             }
                         },
                         {
-                            "data": "Notes", "targets": 19,
+                            "data": "AutoShipFile", "targets": 19,
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
-
-                                var $cell = $(cell);
-                                var $template = $(".template");
-
-                                if ($template.length) {
-                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
-
-                                    $cell.html($cellTemplate.html());
-                                    $cell.find("input").val(data);
-
-                                } else {
-                                    $cell.html(data);
-                                }
+                                mslRender.AutoShipFileRender($(cell), rowData);
                             }
                         },
                         {
-                            "data": "SalesOrderNumber", "targets": 20,
+                            "data": "EquipmentId", "targets": 20, searchable: false, sortable: false,
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
-
-                                var $cell = $(cell);
-                                var $template = $(".template");
-
-                                if ($template.length) {
-                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
-
-                                    $cell.html($cellTemplate.html());
-                                    $cell.find("input").val(data);
-
-                                    $cell.append(data);
-
-                                } else {
-                                    $cell.html(data);
-                                }
-
-                                $cell.addClass(rowData.Indicators.SalesOrderNumberColor);
+                                mslRender.DeleteRender($(cell), rowData);
                             }
                         },
                         {
-                            "data": "AutoShipFile", "targets": 21,
+                            "data": "HasBillOfLading", "targets": 21, searchable: false,
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
-
-                                var $cell = $(cell);
-                                var $template = $(".template");
-
-                                if ($template.length) {
-                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
-
-                                    $cell.html($cellTemplate.html());
-                                    $cell.find("input").val(data);
-
-                                    $cell.append(data);
-
-                                } else {
-                                    $cell.html(data);
-                                }
-
-                                $cell.addClass("small");
+                                mslRender.HasBillOfLadingRender($(cell), rowData);
                             }
                         },
-                        { "data": "EquipmentId", "targets": 22,
-                            createdCell: function (cell, data, rowData, rowIndex, colIndex) {
-
-                                var $cell = $(cell);
-                                var $template = $(".template");
-
-                                if ($template.length) {
-                                    var $cellTemplate = $template.find("div").eq(colIndex).clone();
-
-                                    $cell.html($cellTemplate.html());
-                                    $cell.find("a").attr("href", $cell.find("a").attr("href") + "/" + rowData.EquipmentId);
-
-                                } else {
-                                    $cell.html("");
-                                }
-                            }
-                        },
-                        { "data": "IsHardwareKit", "targets": 23, visible: false },
-                        { "data": "IsAssociatedToHardwareKit", "targets": 24, visible: false },
-                        { "data": "AssociatedHardwareKitNumber", "targets": 25, visible: false },
-                        { "data": "Indicators", "targets": 26, visible: false }
+                        { "data": "IsHardwareKit", "targets": 22, visible: false, searchable: false },
+                        { "data": "IsAssociatedToHardwareKit", "targets": 23, visible: false, searchable: false },
+                        { "data": "AssociatedHardwareKitNumber", "targets": 24, visible: false, searchable: false },
+                        { "data": "Indicators", "targets": 25, visible: false, searchable: false }
                     ],
                     autoFill: {
                         update: false,
@@ -721,6 +332,36 @@ $(function () {
 
 
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 });
 
