@@ -15,11 +15,13 @@ namespace WendtEquipmentTracking.App.Controllers
     {
         private IEquipmentService equipmentService;
         private IProjectService projectService;
+        private IUserService userService;
 
         public EquipmentApiController()
         {
             equipmentService = new EquipmentService();
             projectService = new ProjectService();
+            userService = new UserService();
         }
 
         //
@@ -29,18 +31,17 @@ namespace WendtEquipmentTracking.App.Controllers
         {
             var equipmentModels = new List<EquipmentModel>();
 
-            var projectIdCookie = CookieHelper.Get("ProjectId");
+            var user = userService.GetCurrentUser();
 
-            if (string.IsNullOrEmpty(projectIdCookie))
+            if (user == null)
             {
                 return equipmentModels;
             }
 
-            var projectId = Convert.ToInt32(projectIdCookie);
-            var projectBO = projectService.GetById(projectId);
+            var projectBO = projectService.GetById(user.ProjectId);
 
             //Get Data
-            var equipmentBOs = equipmentService.GetAll(projectId);
+            var equipmentBOs = equipmentService.GetAll(user.ProjectId);
 
             equipmentModels = Mapper.Map<List<EquipmentModel>>(equipmentBOs);
             equipmentModels.ToList().ForEach(e =>
@@ -66,14 +67,13 @@ namespace WendtEquipmentTracking.App.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var projectIdCookie = CookieHelper.Get("ProjectId");
+                    var user = userService.GetCurrentUser();
 
-                    if (!string.IsNullOrEmpty(projectIdCookie))
+                    if (user != null)
                     {
-                        var projectId = Convert.ToInt32(projectIdCookie);
-                        var projectBO = projectService.GetById(projectId);
+                        var projectBO = projectService.GetById(user.ProjectId);
 
-                        model.ProjectId = projectId;
+                        model.ProjectId = user.ProjectId;
 
                         var equipmentBO = Mapper.Map<EquipmentBO>(model);
 
@@ -117,14 +117,13 @@ namespace WendtEquipmentTracking.App.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var projectIdCookie = CookieHelper.Get("ProjectId");
+                    var user = userService.GetCurrentUser();
 
-                    if (!string.IsNullOrEmpty(projectIdCookie))
+                    if (user != null)
                     {
-                        var projectId = Convert.ToInt32(projectIdCookie);
-                        var projectBO = projectService.GetById(projectId);
+                        var projectBO = projectService.GetById(user.ProjectId);
 
-                        model.ProjectId = projectId;
+                        model.ProjectId = user.ProjectId;
                         var equipment = equipmentService.GetById(id);
 
                         Mapper.Map<EquipmentModel, EquipmentBO>(model, equipment);

@@ -16,12 +16,14 @@ namespace WendtEquipmentTracking.App.Controllers
         private IBillOfLadingService billOfLadingService;
         private IProjectService projectService;
         private IEquipmentService equipmentService;
+        private IUserService userService;
 
         public BillOfLadingController()
         {
             billOfLadingService = new BillOfLadingService();
             projectService = new ProjectService();
             equipmentService = new EquipmentService();
+            userService = new UserService();
         }
 
         //
@@ -29,16 +31,15 @@ namespace WendtEquipmentTracking.App.Controllers
 
         public ActionResult Index()
         {
-            var projectIdCookie = CookieHelper.Get("ProjectId");
+            var user = userService.GetCurrentUser();
 
-            if (string.IsNullOrEmpty(projectIdCookie))
+            if (user == null)
             {
                 return RedirectToAction("Index", "Home");
             }
 
-            var projectId = Convert.ToInt32(projectIdCookie);
 
-            var billOfLadingBOs = billOfLadingService.GetAll().Where(b => b.ProjectId == projectId && b.IsCurrentRevision).ToList();
+            var billOfLadingBOs = billOfLadingService.GetAll().Where(b => b.ProjectId == user.ProjectId && b.IsCurrentRevision).ToList();
 
             var billOfLadingModels = Mapper.Map<IEnumerable<BillOfLadingModel>>(billOfLadingBOs);
 
@@ -69,21 +70,20 @@ namespace WendtEquipmentTracking.App.Controllers
 
         public ActionResult Create()
         {
-            var projectIdCookie = CookieHelper.Get("ProjectId");
+            var user = userService.GetCurrentUser();
 
-            if (string.IsNullOrEmpty(projectIdCookie))
+            if (user == null)
             {
                 return RedirectToAction("Index", "Home");
             }
-
-            var projectId = Convert.ToInt32(projectIdCookie);
+            
 
             //Get Data
-            var projectBO = projectService.GetById(projectId);
+            var projectBO = projectService.GetById(user.ProjectId);
 
             if (projectBO == null)
             {
-                CookieHelper.Delete("ProjectId");
+                userService.Delete();
                 return RedirectToAction("Index", "Home");
             }
 
@@ -105,12 +105,12 @@ namespace WendtEquipmentTracking.App.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var projectIdCookie = CookieHelper.Get("ProjectId");
+                    var user = userService.GetCurrentUser();
 
-                    if (!string.IsNullOrEmpty(projectIdCookie))
+                    if (user != null)
                     {
-                        var projectId = Convert.ToInt32(projectIdCookie);
-                        model.ProjectId = projectId;
+                        
+                        model.ProjectId = user.ProjectId;
                         model.BillOfLadingEquipments = model.BillOfLadingEquipments.Where(be => be.Quantity > 0 && be.Checked).ToList();
 
                         var billOfLadingBO = Mapper.Map<BillOfLadingBO>(model);
@@ -155,12 +155,11 @@ namespace WendtEquipmentTracking.App.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var projectIdCookie = CookieHelper.Get("ProjectId");
+                    var user = userService.GetCurrentUser();
 
-                    if (!string.IsNullOrEmpty(projectIdCookie))
+                    if (user != null)
                     {
-                        var projectId = Convert.ToInt32(projectIdCookie);
-                        model.ProjectId = projectId;
+                        model.ProjectId = user.ProjectId;
                         model.BillOfLadingEquipments = model.BillOfLadingEquipments.Where(be => be.Quantity > 0 && be.Checked).ToList();
 
                         var billOfLading = billOfLadingService.GetById(id);
@@ -219,19 +218,17 @@ namespace WendtEquipmentTracking.App.Controllers
         [ChildActionOnly]
         public ActionResult EquipmentToAddToBOL()
         {
-            var projectIdCookie = CookieHelper.Get("ProjectId");
+            var user = userService.GetCurrentUser();
 
-            if (string.IsNullOrEmpty(projectIdCookie))
+            if (user == null)
             {
                 return RedirectToAction("Index", "Home");
             }
-
-            var projectId = Convert.ToInt32(projectIdCookie);
-
-            var projectBO = projectService.GetById(projectId);
+            
+            var projectBO = projectService.GetById(user.ProjectId);
 
             //Get Data
-            var equipmentBOs = equipmentService.GetAll(projectId).Where(e => e.ReadyToShip != null
+            var equipmentBOs = equipmentService.GetAll(user.ProjectId).Where(e => e.ReadyToShip != null
                                                                     && e.ReadyToShip > 0
                                                                     && !e.IsHardware).ToList();
 
@@ -265,18 +262,17 @@ namespace WendtEquipmentTracking.App.Controllers
         [ChildActionOnly]
         public ActionResult EquipmentToEditForBOL(BillOfLadingModel model)
         {
-            var projectIdCookie = CookieHelper.Get("ProjectId");
+            var user = userService.GetCurrentUser();
 
-            if (string.IsNullOrEmpty(projectIdCookie))
+            if (user == null)
             {
                 return RedirectToAction("Index", "Home");
             }
 
-            var projectId = Convert.ToInt32(projectIdCookie);
-            var projectBO = projectService.GetById(projectId);
+            var projectBO = projectService.GetById(user.ProjectId);
 
             //Get Data
-            var equipmentBOs = equipmentService.GetAll(projectId).Where(e => e.ReadyToShip != null
+            var equipmentBOs = equipmentService.GetAll(user.ProjectId).Where(e => e.ReadyToShip != null
                                                                     && e.ReadyToShip > 0
                                                                     && !e.IsHardware).ToList();
 

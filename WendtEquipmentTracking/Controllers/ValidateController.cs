@@ -14,6 +14,7 @@ namespace WendtEquipmentTracking.App.Controllers
         private IBillOfLadingService billOfLadingService;
         private IHardwareKitService hardwareKitService;
         private IWorkOrderPriceService workOrderPriceService;
+        private IUserService userService;
 
 
         public ValidateController()
@@ -22,6 +23,7 @@ namespace WendtEquipmentTracking.App.Controllers
             billOfLadingService = new BillOfLadingService();
             hardwareKitService = new HardwareKitService();
             workOrderPriceService = new WorkOrderPriceService();
+            userService = new UserService();
         }
 
         // GET: ValidImportFile
@@ -40,16 +42,15 @@ namespace WendtEquipmentTracking.App.Controllers
         // GET: ValidBOLNumber
         public ActionResult ValidBOLNumber(string billOfLadingNumber, int? billOfLadingId)
         {
-            var projectIdCookie = CookieHelper.Get("ProjectId");
+            var user = userService.GetCurrentUser();
 
-            if (string.IsNullOrEmpty(projectIdCookie))
+            if (user == null)
             {
                 return Json(true, JsonRequestBehavior.AllowGet);
             }
 
-            var projectId = Convert.ToInt32(projectIdCookie);
 
-            var exists = billOfLadingService.GetAll().Any(b => b.ProjectId == projectId
+            var exists = billOfLadingService.GetAll().Any(b => b.ProjectId == user.ProjectId
                                                                           && b.IsCurrentRevision
                                                                           && b.BillOfLadingId != billOfLadingId
                                                                           && b.BillOfLadingNumber == billOfLadingNumber);
@@ -63,16 +64,14 @@ namespace WendtEquipmentTracking.App.Controllers
             var valid = true;
             if (string.IsNullOrEmpty(htsCode))
             {
-                var projectIdCookie = CookieHelper.Get("ProjectId");
+                var user = userService.GetCurrentUser();
 
-                if (string.IsNullOrEmpty(projectIdCookie))
+                if (user == null)
                 {
                     return Json(true, JsonRequestBehavior.AllowGet);
                 }
-
-                var projectId = Convert.ToInt32(projectIdCookie);
-
-                var projectBO = projectService.GetById(projectId);
+                
+                var projectBO = projectService.GetById(user.ProjectId);
 
                 valid = !projectBO.IsCustomsProject;
             }
@@ -86,16 +85,15 @@ namespace WendtEquipmentTracking.App.Controllers
             var valid = true;
             if (string.IsNullOrEmpty(countryOfOrigin))
             {
-                var projectIdCookie = CookieHelper.Get("ProjectId");
+                var user = userService.GetCurrentUser();
 
-                if (string.IsNullOrEmpty(projectIdCookie))
+                if (user == null)
                 {
                     return Json(true, JsonRequestBehavior.AllowGet);
                 }
 
-                var projectId = Convert.ToInt32(projectIdCookie);
 
-                var projectBO = projectService.GetById(projectId);
+                var projectBO = projectService.GetById(user.ProjectId);
 
                 valid = !projectBO.IsCustomsProject;
             }
@@ -106,17 +104,14 @@ namespace WendtEquipmentTracking.App.Controllers
         // GET: ValidWorkOrderNumber
         public ActionResult ValidWorkOrderNumber(string workOrderNumber, int? workOrderPriceId)
         {
-            var projectIdCookie = CookieHelper.Get("ProjectId");
+            var user = userService.GetCurrentUser();
 
-            if (string.IsNullOrEmpty(projectIdCookie))
+            if (user == null)
             {
                 return Json(true, JsonRequestBehavior.AllowGet);
             }
-
-            var projectId = Convert.ToInt32(projectIdCookie);
-
-
-            var exists = workOrderPriceService.GetAll().Any(b => b.ProjectId == projectId
+            
+            var exists = workOrderPriceService.GetAll().Any(b => b.ProjectId == user.ProjectId
                                                                  && b.WorkOrderPriceId != workOrderPriceId
                                                                  && b.WorkOrderNumber == workOrderNumber);
 
@@ -126,17 +121,16 @@ namespace WendtEquipmentTracking.App.Controllers
         // GET: ValidWorkOrderNumber
         public ActionResult ValidHardwareKitNumber(string hardwareKitNumber, int? hardwareKitId)
         {
-            var projectIdCookie = CookieHelper.Get("ProjectId");
+            var user = userService.GetCurrentUser();
 
-            if (string.IsNullOrEmpty(projectIdCookie))
+            if (user == null)
             {
                 return Json(true, JsonRequestBehavior.AllowGet);
             }
 
-            var projectId = Convert.ToInt32(projectIdCookie);
 
 
-            var exists = hardwareKitService.GetAll().Any(b => b.ProjectId == projectId
+            var exists = hardwareKitService.GetAll().Any(b => b.ProjectId == user.ProjectId
                                                               && b.IsCurrentRevision
                                                               && b.HardwareKitId != hardwareKitId
                                                               && b.HardwareKitNumber == hardwareKitNumber);

@@ -11,7 +11,7 @@ using System.Data.Entity.Infrastructure.MappingViews;
 
 [assembly: DbMappingViewCacheTypeAttribute(
     typeof(WendtEquipmentTracking.DataAccess.SQL.WendtEquipmentTrackingEntities),
-    typeof(Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySetseb927f3a5b9cbc94002c27db52186960baaf2ab7214f00828a590b106aa0e62c))]
+    typeof(Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets0bb995af3246bbde3a08ffd83380d4a515a93c51016dfc48a81637087d7873eb))]
 
 namespace Edm_EntityMappingGeneratedViews
 {
@@ -23,14 +23,14 @@ namespace Edm_EntityMappingGeneratedViews
     /// Implements a mapping view cache.
     /// </summary>
     [GeneratedCode("Entity Framework Power Tools", "0.9.0.0")]
-    internal sealed class ViewsForBaseEntitySetseb927f3a5b9cbc94002c27db52186960baaf2ab7214f00828a590b106aa0e62c : DbMappingViewCache
+    internal sealed class ViewsForBaseEntitySets0bb995af3246bbde3a08ffd83380d4a515a93c51016dfc48a81637087d7873eb : DbMappingViewCache
     {
         /// <summary>
         /// Gets a hash value computed over the mapping closure.
         /// </summary>
         public override string MappingHashValue
         {
-            get { return "eb927f3a5b9cbc94002c27db52186960baaf2ab7214f00828a590b106aa0e62c"; }
+            get { return "0bb995af3246bbde3a08ffd83380d4a515a93c51016dfc48a81637087d7873eb"; }
         }
 
         /// <summary>
@@ -115,6 +115,16 @@ namespace Edm_EntityMappingGeneratedViews
             if (extentName == "WendtEquipmentTrackingEntities.WorkOrderPrices")
             {
                 return GetView13();
+            }
+
+            if (extentName == "WendtEquipmentTrackingDataAccessSQLModelStoreContainer.User")
+            {
+                return GetView14();
+            }
+
+            if (extentName == "WendtEquipmentTrackingEntities.Users")
+            {
+                return GetView15();
             }
 
             return null;
@@ -541,6 +551,44 @@ namespace Edm_EntityMappingGeneratedViews
             T.IsDeleted AS WorkOrderPrice_IsDeleted, 
             True AS _from0
         FROM WendtEquipmentTrackingDataAccessSQLModelStoreContainer.WorkOrderPrice AS T
+    ) AS T1");
+        }
+
+        /// <summary>
+        /// Gets the view for WendtEquipmentTrackingDataAccessSQLModelStoreContainer.User.
+        /// </summary>
+        /// <returns>The mapping view.</returns>
+        private static DbMappingView GetView14()
+        {
+            return new DbMappingView(@"
+    SELECT VALUE -- Constructing User
+        [WendtEquipmentTracking.DataAccess.SQL.Model.Store.User](T1.User_UserId, T1.User_UserName, T1.User_ProjectId)
+    FROM (
+        SELECT 
+            T.UserId AS User_UserId, 
+            T.UserName AS User_UserName, 
+            T.ProjectId AS User_ProjectId, 
+            True AS _from0
+        FROM WendtEquipmentTrackingEntities.Users AS T
+    ) AS T1");
+        }
+
+        /// <summary>
+        /// Gets the view for WendtEquipmentTrackingEntities.Users.
+        /// </summary>
+        /// <returns>The mapping view.</returns>
+        private static DbMappingView GetView15()
+        {
+            return new DbMappingView(@"
+    SELECT VALUE -- Constructing Users
+        [WendtEquipmentTracking.DataAccess.SQL.Model.User](T1.User_UserId, T1.User_UserName, T1.User_ProjectId)
+    FROM (
+        SELECT 
+            T.UserId AS User_UserId, 
+            T.UserName AS User_UserName, 
+            T.ProjectId AS User_ProjectId, 
+            True AS _from0
+        FROM WendtEquipmentTrackingDataAccessSQLModelStoreContainer.User AS T
     ) AS T1");
         }
     }

@@ -17,12 +17,14 @@ namespace WendtEquipmentTracking.App.Controllers
         private IImportService importService;
         private IEquipmentService equipmentService;
         private IWorkOrderPriceService workOrderPriceService;
+        private IUserService userService;
 
         public ImportController()
         {
             importService = new ImportService();
             equipmentService = new EquipmentService();
             workOrderPriceService = new WorkOrderPriceService();
+            userService = new UserService();
         }
 
         // GET: Equipment
@@ -126,12 +128,11 @@ namespace WendtEquipmentTracking.App.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var projectIdCookie = CookieHelper.Get("ProjectId");
+                    var user = userService.GetCurrentUser();
 
-                    if (!string.IsNullOrEmpty(projectIdCookie))
+                    if (user != null)
                     {
-                        var projectId = Convert.ToInt32(projectIdCookie);
-                        model.ToList().ForEach(c => c.ProjectId = projectId);
+                        model.ToList().ForEach(c => c.ProjectId = user.ProjectId);
 
                         var equipmentBOs = Mapper.Map<IEnumerable<EquipmentBO>>(model.Where(m => m.Checked).ToList());
                         equipmentService.SaveAll(equipmentBOs);
@@ -142,7 +143,7 @@ namespace WendtEquipmentTracking.App.Controllers
                 }
 
                 IEnumerable<string> allErrors = ModelState.Values.SelectMany(v => v.Errors.Select(b => b.ErrorMessage));
-                ModelState.AddModelError("", "There were some validation errors when trying to import equipment: \n" + String.Join("<br/>", allErrors) );
+                ModelState.AddModelError("", "There were some validation errors when trying to import equipment: \n" + String.Join("<br/>", allErrors));
 
                 resultModel.Status = SuccessStatus.Error;
 
@@ -222,12 +223,11 @@ namespace WendtEquipmentTracking.App.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var projectIdCookie = CookieHelper.Get("ProjectId");
+                    var user = userService.GetCurrentUser();
 
-                    if (!string.IsNullOrEmpty(projectIdCookie))
+                    if (user != null)
                     {
-                        var projectId = Convert.ToInt32(projectIdCookie);
-                        model.ToList().ForEach(c => c.ProjectId = projectId);
+                        model.ToList().ForEach(c => c.ProjectId = user.ProjectId);
 
                         var workOrderPriceBOs = Mapper.Map<IEnumerable<WorkOrderPriceBO>>(model.Where(m => m.Checked).ToList());
                         workOrderPriceService.SaveAll(workOrderPriceBOs);

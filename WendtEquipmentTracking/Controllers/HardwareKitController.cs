@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using WendtEquipmentTracking.App.Common;
 using WendtEquipmentTracking.App.Models;
 using WendtEquipmentTracking.BusinessLogic;
 using WendtEquipmentTracking.BusinessLogic.Api;
@@ -16,6 +15,7 @@ namespace WendtEquipmentTracking.App.Controllers
         private IHardwareKitService hardwareKitService;
         private IProjectService projectService;
         private IEquipmentService equipmentService;
+        private IUserService userService;
 
         private const float DEFAULT_PERCENT = 10;
 
@@ -24,6 +24,7 @@ namespace WendtEquipmentTracking.App.Controllers
             hardwareKitService = new HardwareKitService();
             projectService = new ProjectService();
             equipmentService = new EquipmentService();
+            userService = new UserService();
         }
 
         //
@@ -31,16 +32,15 @@ namespace WendtEquipmentTracking.App.Controllers
 
         public ActionResult Index()
         {
-            var projectIdCookie = CookieHelper.Get("ProjectId");
+            var user = userService.GetCurrentUser();
 
-            if (string.IsNullOrEmpty(projectIdCookie))
+            if (user == null)
             {
                 return RedirectToAction("Index", "Home");
             }
 
-            var projectId = Convert.ToInt32(projectIdCookie);
 
-            var hardwareKitBOs = hardwareKitService.GetAll().Where(hk => hk.ProjectId == projectId && hk.IsCurrentRevision).ToList();
+            var hardwareKitBOs = hardwareKitService.GetAll().Where(hk => hk.ProjectId == user.ProjectId && hk.IsCurrentRevision).ToList();
 
             var hardwareKitModels = Mapper.Map<IEnumerable<HardwareKitModel>>(hardwareKitBOs);
 
@@ -104,17 +104,16 @@ namespace WendtEquipmentTracking.App.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var projectIdCookie = CookieHelper.Get("ProjectId");
+                    var user = userService.GetCurrentUser();
 
-                    if (!string.IsNullOrEmpty(projectIdCookie))
+                    if (user != null)
                     {
-                        var projectId = Convert.ToInt32(projectIdCookie);
-                        model.ProjectId = projectId;
+                        model.ProjectId = user.ProjectId;
 
                         var hardwareKitEquipmentsBOs = new List<HardwareKitEquipmentBO>();
                         foreach (var hardwareGroup in model.HardwareGroups.Where(m => m.Checked).ToList())
                         {
-                            var hardwareInWorkOrderBOs = equipmentService.GetHardwareByShippingTagNumber(projectId, hardwareGroup.ShippingTagNumber);
+                            var hardwareInWorkOrderBOs = equipmentService.GetHardwareByShippingTagNumber(user.ProjectId, hardwareGroup.ShippingTagNumber);
                             hardwareKitEquipmentsBOs.AddRange(hardwareInWorkOrderBOs.Select(h => new HardwareKitEquipmentBO
                             {
                                 EquipmentId = h.EquipmentId,
@@ -178,19 +177,18 @@ namespace WendtEquipmentTracking.App.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var projectIdCookie = CookieHelper.Get("ProjectId");
+                    var user = userService.GetCurrentUser();
 
-                    if (!string.IsNullOrEmpty(projectIdCookie))
+                    if (user != null)
                     {
-                        var projectId = Convert.ToInt32(projectIdCookie);
-                        model.ProjectId = projectId;
+                        model.ProjectId = user.ProjectId;
 
                         var hardwareKitBO = hardwareKitService.GetById(id);
 
                         var hardwareKitEquipmentsBOs = new List<HardwareKitEquipmentBO>();
                         foreach (var hardwareGroup in model.HardwareGroups.Where(m => m.Checked).ToList())
                         {
-                            var hardwareInWorkOrderBOs = equipmentService.GetHardwareByShippingTagNumber(projectId, hardwareGroup.ShippingTagNumber);
+                            var hardwareInWorkOrderBOs = equipmentService.GetHardwareByShippingTagNumber(user.ProjectId, hardwareGroup.ShippingTagNumber);
                             hardwareKitEquipmentsBOs.AddRange(hardwareInWorkOrderBOs.Select(h => new HardwareKitEquipmentBO
                             {
                                 EquipmentId = h.EquipmentId,
@@ -255,19 +253,16 @@ namespace WendtEquipmentTracking.App.Controllers
         [ChildActionOnly]
         public ActionResult HardwareToAddToHardwareKit()
         {
-            var projectIdCookie = CookieHelper.Get("ProjectId");
+            var user = userService.GetCurrentUser();
 
-            if (string.IsNullOrEmpty(projectIdCookie))
+            if (user == null)
             {
                 return RedirectToAction("Index", "Home");
             }
 
-            var projectId = Convert.ToInt32(projectIdCookie);
 
             //Get Data
-
-
-            var equipmentBOs = equipmentService.GetAll(projectId).Where(e => e.IsHardware
+            var equipmentBOs = equipmentService.GetAll(user.ProjectId).Where(e => e.IsHardware
                                                                     && (e.HardwareKitEquipments == null || e.HardwareKitEquipments.Count() == 0));
 
             var hardwareGroups = equipmentBOs
@@ -294,17 +289,15 @@ namespace WendtEquipmentTracking.App.Controllers
         [ChildActionOnly]
         public ActionResult HardwareToEditForHardwareKit(HardwareKitModel model)
         {
-            var projectIdCookie = CookieHelper.Get("ProjectId");
+            var user = userService.GetCurrentUser();
 
-            if (string.IsNullOrEmpty(projectIdCookie))
+            if (user == null)
             {
                 return RedirectToAction("Index", "Home");
             }
 
-            var projectId = Convert.ToInt32(projectIdCookie);
-
             //Get Data
-            var equipmentBOs = equipmentService.GetAll(projectId).Where(e => e.IsHardware
+            var equipmentBOs = equipmentService.GetAll(user.ProjectId).Where(e => e.IsHardware
                                                                     && (e.HardwareKitEquipments == null || e.HardwareKitEquipments.Count() == 0));
 
             var hardwareGroups = equipmentBOs.Where(hg => !model.HardwareGroups.Any(mhg => mhg.ShippingTagNumber == hg.ShippingTagNumber))

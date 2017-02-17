@@ -15,6 +15,7 @@ namespace WendtEquipmentTracking.App.Controllers
     {
         private IWorkOrderPriceService workOrderPriceService;
         private IProjectService projectService;
+        private IUserService userService;
 
         public WorkOrderPriceController()
         {
@@ -27,16 +28,15 @@ namespace WendtEquipmentTracking.App.Controllers
 
         public ActionResult Index()
         {
-            var projectIdCookie = CookieHelper.Get("ProjectId");
+            var user = userService.GetCurrentUser();
 
-            if (string.IsNullOrEmpty(projectIdCookie))
+            if (user == null)
             {
                 return RedirectToAction("Index", "Home");
             }
 
-            var projectId = Convert.ToInt32(projectIdCookie);
 
-            var workOrderBOs = workOrderPriceService.GetAll().Where(w => w.ProjectId == projectId).ToList();
+            var workOrderBOs = workOrderPriceService.GetAll().Where(w => w.ProjectId == user.ProjectId).ToList();
 
             var workOrderPriceModels = Mapper.Map<IEnumerable<WorkOrderPriceModel>>(workOrderBOs);
 
@@ -82,12 +82,11 @@ namespace WendtEquipmentTracking.App.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var projectIdCookie = CookieHelper.Get("ProjectId");
+                    var user = userService.GetCurrentUser();
 
-                    if (!string.IsNullOrEmpty(projectIdCookie))
+                    if (user != null)
                     {
-                        var projectId = Convert.ToInt32(projectIdCookie);
-                        model.ProjectId = projectId;
+                        model.ProjectId = user.ProjectId;
 
                         var workOrderPriceBO = Mapper.Map<WorkOrderPriceBO>(model);
 

@@ -124,6 +124,14 @@
           <Property Name="IsCustomsProject" Type="bit" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ProjectId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="WorkOrderPrice">
           <Key>
             <PropertyRef Name="WorkOrderPriceId" />
@@ -255,6 +263,7 @@
           <EntitySet Name="HardwareKit" EntityType="Self.HardwareKit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HardwareKitEquipment" EntityType="Self.HardwareKitEquipment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WorkOrderPrice" EntityType="Self.WorkOrderPrice" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_BillOfLadingEquipment_BillOfLading" Association="Self.FK_BillOfLadingEquipment_BillOfLading">
             <End Role="BillOfLading" EntitySet="BillOfLading" />
@@ -341,6 +350,7 @@
             <End Role="Project" EntitySet="Projects" />
             <End Role="WorkOrderPrice" EntitySet="WorkOrderPrices" />
           </AssociationSet>
+          <EntitySet Name="Users" EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.User" />
         </EntityContainer>
         <EntityType Name="BillOfLading">
           <Key>
@@ -603,6 +613,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectId" Type="Int32" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -748,6 +766,15 @@
                 <ScalarProperty Name="WorkOrderNumber" ColumnName="WorkOrderNumber" />
                 <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
                 <ScalarProperty Name="WorkOrderPriceId" ColumnName="WorkOrderPriceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="WendtEquipmentTracking.DataAccess.SQL.Model.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
-using WendtEquipmentTracking.App.Common;
 using WendtEquipmentTracking.App.Models;
 using WendtEquipmentTracking.BusinessLogic;
 using WendtEquipmentTracking.BusinessLogic.Api;
@@ -14,11 +11,13 @@ namespace WendtEquipmentTracking.App.Controllers
     {
         private IEquipmentService equipmentService;
         private IProjectService projectService;
+        private IUserService userService;
 
         public EquipmentController()
         {
             equipmentService = new EquipmentService();
             projectService = new ProjectService();
+            userService = new UserService();
         }
 
         //
@@ -27,24 +26,23 @@ namespace WendtEquipmentTracking.App.Controllers
         {
             var watch = System.Diagnostics.Stopwatch.StartNew();
 
-            var projectIdCookie = CookieHelper.Get("ProjectId");
+            var user = userService.GetCurrentUser();
 
-            if (string.IsNullOrEmpty(projectIdCookie))
+            if (user == null)
             {
                 return RedirectToAction("Index", "Home");
             }
 
-            var projectId = Convert.ToInt32(projectIdCookie);
 
             //Get Data
-            var equipmentBOs = equipmentService.GetAll(projectId);
+            var equipmentBOs = equipmentService.GetAll(user.ProjectId);
 
             // the code that you want to measure comes here
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
 
             var equipmentModels = Mapper.Map<List<EquipmentModel>>(equipmentBOs);
-            
+
             return View(equipmentModels);
         }
 

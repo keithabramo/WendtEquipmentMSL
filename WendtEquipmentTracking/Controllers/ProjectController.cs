@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
 using DevTrends.MvcDonutCaching;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using WendtEquipmentTracking.App.Common;
 using WendtEquipmentTracking.App.Models;
 using WendtEquipmentTracking.BusinessLogic;
 using WendtEquipmentTracking.BusinessLogic.Api;
@@ -15,10 +13,12 @@ namespace WendtEquipmentTracking.App.Controllers
     public class ProjectController : BaseController
     {
         private IProjectService projectService;
+        private IUserService userService;
 
         public ProjectController()
         {
             projectService = new ProjectService();
+            userService = new UserService();
         }
 
         //
@@ -151,6 +151,17 @@ namespace WendtEquipmentTracking.App.Controllers
 
                 projectService.Delete(id);
 
+                var user = userService.GetCurrentUser();
+
+                if (user != null)
+                {
+
+                    if (id == user.ProjectId)
+                    {
+                        userService.Delete();
+                    }
+                }
+
                 //clear the cache for the project list at the top right of the page
                 clearProjectNavCache();
 
@@ -174,14 +185,14 @@ namespace WendtEquipmentTracking.App.Controllers
         [DonutOutputCache(Duration = 3600)]
         public ActionResult ProjectNavPartial()
         {
-            var currentProjectIdCookie = CookieHelper.Get("ProjectId");
-            if (!string.IsNullOrEmpty(currentProjectIdCookie))
+            var user = userService.GetCurrentUser();
+
+            if (user != null)
             {
-                var currentProjectId = Convert.ToInt32(currentProjectIdCookie);
 
                 var projectBOs = projectService.GetAllForNavigation().ToList();
                 var projectModels = Mapper.Map<IEnumerable<ProjectModel>>(projectBOs);
-                var currentProjectModel = projectModels.SingleOrDefault(p => p.ProjectId == currentProjectId);
+                var currentProjectModel = projectModels.SingleOrDefault(p => p.ProjectId == user.ProjectId);
 
                 var model = new ProjectNavModel
                 {
@@ -198,10 +209,18 @@ namespace WendtEquipmentTracking.App.Controllers
         [HttpPost]
         public ActionResult ChangeProject(int ProjectId)
         {
-            CookieHelper.Set("ProjectId", ProjectId.ToString());
+            var user = userService.GetCurrentUser();
+
+            if (user != null)
+            {
+                userService.Update(ProjectId);
+            }
+            else
+            {
+                userService.Save(ProjectId);
+            }
 
             var projectBO = projectService.GetAllForNavigation().SingleOrDefault(p => p.ProjectId == ProjectId);
-            CookieHelper.Set("ProjectNumber", projectBO.ProjectNumber);
 
             //clear the cache for the project list at the top right of the page
             clearProjectNavCache();

@@ -79,6 +79,7 @@
     <Compile Include="AutoMapper\Profiles\ProjectConfig.cs" />
     <Compile Include="AutoMapper\Profiles\EquipmentConfig.cs" />
     <Compile Include="BO\HardwareKitEquipmentBO.cs" />
+    <Compile Include="BO\UserBO.cs" />
     <Compile Include="BO\WorkOrderPriceBO.cs" />
     <Compile Include="HardwareKitService.cs" />
     <Compile Include="BO\BillOfLadingBO.cs" />
@@ -89,6 +90,8 @@
     <Compile Include="BO\EquipmentBO.cs" />
     <Compile Include="ImportService.cs" />
     <Compile Include="BillOfLadingService.cs" />
+    <Compile Include="Api\IUserService.cs" />
+    <Compile Include="UserService.cs" />
     <Compile Include="WorkOrderPriceService.cs" />
     <Compile Include="ProjectService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

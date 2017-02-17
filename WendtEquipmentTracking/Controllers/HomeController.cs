@@ -14,16 +14,21 @@ namespace WendtEquipmentTracking.App.Controllers
     public class HomeController : Controller
     {
         private IProjectService projectService;
+        private IUserService userService;
 
         public HomeController()
         {
             projectService = new ProjectService();
+            userService = new UserService();
         }
 
         [WendtAuthorize]
         public ActionResult Index()
         {
-            if (CookieHelper.Exists("ProjectId"))
+            var user = userService.GetCurrentUser();
+
+
+            if (user != null)
             {
                 return RedirectToAction("Index", "Equipment");
             }
