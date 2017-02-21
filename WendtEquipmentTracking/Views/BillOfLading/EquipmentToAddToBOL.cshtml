@@ -57,10 +57,19 @@
                 @Html.DisplayNameFor(model => model.BillOfLadingEquipments[0].Equipment.FullyShipped)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.BillOfLadingEquipments[0].ShippedFrom)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.BillOfLadingEquipments[0].Equipment.CustomsValue)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.BillOfLadingEquipments[0].Equipment.SalePrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BillOfLadingEquipments[0].HTSCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BillOfLadingEquipments[0].CountryOfOrigin)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.BillOfLadingEquipments[0].Equipment.Notes)
@@ -140,11 +149,20 @@
                         @:NA
         }
                 </td>
+                <td>
+                    @Html.EditorFor(modelItem => modelItem.BillOfLadingEquipments[i].ShippedFrom, new { htmlAttributes = new { @class = "form-control" } })
+                </td>
                 <td class="@Model.BillOfLadingEquipments[i].Equipment.Indicators.CustomsValueColor">
                     @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.CustomsValue)
                 </td>
                 <td class="@Model.BillOfLadingEquipments[i].Equipment.Indicators.SalePriceColor">
                     @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.SalePrice)
+                </td>
+                <td>
+                    @Html.EditorFor(modelItem => modelItem.BillOfLadingEquipments[i].HTSCode, new { htmlAttributes = new { @class = "form-control" } })
+                </td>
+                <td>
+                    @Html.EditorFor(modelItem => modelItem.BillOfLadingEquipments[i].CountryOfOrigin, new { htmlAttributes = new { @class = "form-control" } })
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.Notes)

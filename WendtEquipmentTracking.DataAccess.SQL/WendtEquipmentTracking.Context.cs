@@ -31,7 +31,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         public virtual DbSet<HardwareKit> HardwareKits { get; set; }
         public virtual DbSet<HardwareKitEquipment> HardwareKitEquipments { get; set; }
         public virtual DbSet<Project> Projects { get; set; }
-        public virtual DbSet<WorkOrderPrice> WorkOrderPrices { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<WorkOrderPrice> WorkOrderPrices { get; set; }
     }
 }

@@ -17,9 +17,6 @@
                             <input class="selectAll" type="checkbox" checked="checked" /> Select All
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model[0].IsHardware)
-                        </th>
-                        <th>
                             @Html.DisplayNameFor(model => model[0].EquipmentName)
                         </th>
                         <th>
@@ -56,17 +53,7 @@
                                 @Html.CheckBoxFor(modelItem => modelItem[i].Checked, htmlAttributes: new { @checked = "Checked" })
                             </td>
                             <td>
-                                @Html.CheckBoxFor(modelItem => modelItem[i].IsHardware)
-                            </td>
-                            <td>
-                                @if (Model[i].IsHardware)
-                                {
-                                    @Html.EditorFor(modelItem => modelItem[i].EquipmentName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                                }
-                                else
-                                {
-                                    @Html.EditorFor(modelItem => modelItem[i].EquipmentName, new { htmlAttributes = new { @class = "form-control" } })
-                                }
+                                @Html.EditorFor(modelItem => modelItem[i].EquipmentName, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(modelItem => modelItem[i].EquipmentName, "", new { @class = "text-danger" })
                             </td>
                             <td>

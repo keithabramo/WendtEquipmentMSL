@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DevTrends.MvcDonutCaching;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -182,7 +183,7 @@ namespace WendtEquipmentTracking.App.Controllers
             }
         }
 
-        [DonutOutputCache(Duration = 3600)]
+        //[DonutOutputCache(Duration = 3600)]
         public ActionResult ProjectNavPartial()
         {
             var user = userService.GetCurrentUser();
@@ -194,11 +195,23 @@ namespace WendtEquipmentTracking.App.Controllers
                 var projectModels = Mapper.Map<IEnumerable<ProjectModel>>(projectBOs);
                 var currentProjectModel = projectModels.SingleOrDefault(p => p.ProjectId == user.ProjectId);
 
-                var model = new ProjectNavModel
+                var model = new ProjectNavModel();
+
+                try
                 {
-                    CurrentProject = currentProjectModel,
-                    Projects = projectModels
-                };
+                    model = new ProjectNavModel
+                    {
+                        CurrentProject = currentProjectModel,
+                        Projects = projectModels.OrderBy(p => Convert.ToInt32(p.ProjectNumber))
+                    };
+                } catch(Exception e)
+                {
+                    model = new ProjectNavModel
+                    {
+                        CurrentProject = currentProjectModel,
+                        Projects = projectModels.OrderBy(p => p.ProjectNumber)
+                    };
+                }
 
                 return PartialView(model);
             }
@@ -230,10 +243,10 @@ namespace WendtEquipmentTracking.App.Controllers
 
         private void clearProjectNavCache()
         {
-            var cacheManager = new OutputCacheManager();
+            //var cacheManager = new OutputCacheManager();
 
-            //remove a single cached action output (Index action)
-            cacheManager.RemoveItem("Project", "ProjectNavPartial");
+            ////remove a single cached action output (Index action)
+            //cacheManager.RemoveItem("Project", "ProjectNavPartial");
         }
     }
 }

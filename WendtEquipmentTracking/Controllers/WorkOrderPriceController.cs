@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using WendtEquipmentTracking.App.Common;
 using WendtEquipmentTracking.App.Models;
 using WendtEquipmentTracking.BusinessLogic;
 using WendtEquipmentTracking.BusinessLogic.Api;
@@ -21,6 +19,7 @@ namespace WendtEquipmentTracking.App.Controllers
         {
             workOrderPriceService = new WorkOrderPriceService();
             projectService = new ProjectService();
+            userService = new UserService();
         }
 
         //

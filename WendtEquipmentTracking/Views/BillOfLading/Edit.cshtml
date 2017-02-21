@@ -26,13 +26,6 @@
                     @Html.ValidationMessageFor(model => model.DateShipped, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-sm-4">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.ShippedFrom)
-                    @Html.EditorFor(model => model.ShippedFrom, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.ShippedFrom, "", new { @class = "text-danger" })
-                </div>
-            </div>
         </div>
         <div class="row">
             <div class="col-sm-4">
@@ -54,22 +47,6 @@
                     @Html.LabelFor(model => model.TrailerNumber)
                     @Html.EditorFor(model => model.TrailerNumber, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.TrailerNumber, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-4">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.HTSCode)
-                    @Html.EditorFor(model => model.HTSCode, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.HTSCode, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.CountryOfOrigin)
-                    @Html.EditorFor(model => model.CountryOfOrigin, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.CountryOfOrigin, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>

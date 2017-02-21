@@ -47,6 +47,9 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         public string Notes { get; set; }
         public string AutoShipFile { get; set; }
         public string SalesOrderNumber { get; set; }
+        public string ShippedFrom { get; set; }
+        public string HTSCode { get; set; }
+        public string CountryOfOrigin { get; set; }
         public bool IsHardware { get; set; }
         public bool IsDeleted { get; set; }
         public Nullable<int> HardwareKitId { get; set; }

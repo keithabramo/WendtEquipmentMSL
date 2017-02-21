@@ -134,6 +134,8 @@ namespace WendtEquipmentTracking.App.Controllers
                         model.ToList().ForEach(c => c.ProjectId = user.ProjectId);
 
                         var equipmentBOs = Mapper.Map<IEnumerable<EquipmentBO>>(model.Where(m => m.Checked).ToList());
+                        equipmentBOs.ToList().ForEach(e => e.IsHardware = e.EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase));
+
                         equipmentService.SaveAll(equipmentBOs);
 
                         resultModel.Status = SuccessStatus.Success;
@@ -193,7 +195,7 @@ namespace WendtEquipmentTracking.App.Controllers
                         var workOrderPriceBOs = importService.GetWorkOrderPricesImport(file);
 
                         var workOrderPriceModels = Mapper.Map<IList<WorkOrderPriceSelectionModel>>(workOrderPriceBOs);
-
+                        workOrderPriceModels.ToList().ForEach(w => w.Checked = true);
 
                         return View("ImportWorkOrderPrice", workOrderPriceModels);
                     }

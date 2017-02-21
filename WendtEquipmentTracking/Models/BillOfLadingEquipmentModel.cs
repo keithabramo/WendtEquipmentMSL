@@ -15,6 +15,15 @@ namespace WendtEquipmentTracking.App.Models
         [Required]
         public double Quantity { get; set; }
 
+        [DisplayName("Shipped From")]
+        public string ShippedFrom { get; set; }
+
+        [DisplayName("HTS Code")]
+        public string HTSCode { get; set; }
+
+        [DisplayName("Country Of Origin")]
+        public string CountryOfOrigin { get; set; }
+
         public BillOfLadingModel BillOfLading { get; set; }
         public EquipmentModel Equipment { get; set; }
     }

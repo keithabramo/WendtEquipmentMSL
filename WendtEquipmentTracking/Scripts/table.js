@@ -1,5 +1,46 @@
 ﻿waitingDialog.show();
 
+jQuery.fn.putCursorAtEnd = function () {
+
+    return this.each(function () {
+
+        // Cache references
+        var $el = $(this),
+            el = this;
+
+        // Only focus if input isn't already
+        if (!$el.is(":focus")) {
+            $el.focus();
+        }
+
+        // If this function exists... (IE 9+)
+        if (el.setSelectionRange) {
+
+            // Double the length because Opera is inconsistent about whether a carriage return is one character or two.
+            var len = $el.val().length * 2;
+
+            // Timeout seems to be required for Blink
+            setTimeout(function () {
+                el.setSelectionRange(len, len);
+            }, 1);
+
+        } else {
+
+            // As a fallback, replace the contents with itself
+            // Doesn't work in Chrome, but Chrome supports setSelectionRange
+            $el.val($el.val());
+
+        }
+
+        // Scroll to the bottom, in case we're in a tall textarea
+        // (Necessary for Firefox and Chrome)
+        this.scrollTop = 999999;
+
+    });
+
+};
+
+
 $(function () {
 
     var Table = function () {
@@ -33,36 +74,34 @@ $(function () {
                         dataSrc: ""
                     },
                     drawCallback: function (settings) {
+                        if ($this.DataTable()) {
+                            $this.DataTable().fixedHeader.enable();
+                        }
+
+                        if ($this.index >= 0) {
+                            var $newInput = $("thead input[type='text']").eq($this.index);
+                            if (!$newInput.length) {
+                                $this.index -= $("thead input[type='text']").length;
+                                $newInput = $("thead input[type='text']").eq($this.index);
+                            }
+
+                            $newInput.putCursorAtEnd();
+                            $this.index = -1;
+                        }
+
+
+                        if ($(".pagination li").length === 2) {
+                            $(".pagination").parent().hide();
+                        } else {
+                            $(".pagination").parent().show();
+                        }
+
                         if (form) {
                             form.initStyles();
                         }
-
-                        
-                        $(".dataTables_scrollBody [id='releaseDateCREATE']").remove();
-
-                        if ($(".datePicker").length > 2) {
-
-                            setTimeout(function () {
-                                if ($("[id='releaseDate0']").length && !$("[id='releaseDateCREATE']").length) {
-                                    var element = $(".dataTables_scrollFoot .datePicker");
-
-                                    var clone = element.clone();
-                                    clone.attr("id", "releaseDateCREATE").datepicker();
-
-                                    $(".dataTables_scrollFoot .releaseDateColumn").append(clone);
-
-                                    $("[id='releaseDate0']").remove();
-                                }
-                            }, 10000);
-                        }
                     },
                     deferRender: true,
-                    scrollY: 400,
-                    scrollX: "100%",
-                    scrollCollapse: true,
-                    //scroller: {
-                    //    displayBuffer: 500
-                    //},
+                    fixedHeader: true,
                     pageLength: 25,
                     "columnDefs": [
                         {
@@ -156,68 +195,102 @@ $(function () {
                             }
                         },
                         {
-                            "data": "CustomsValue", "targets": 15,
+                            "data": "ShippedFrom", "targets": 15,
+                            createdCell: function (cell, data, rowData, rowIndex, colIndex) {
+                                mslRender.ShippedFromRender($(cell), rowData);
+                            }
+                        },
+                        {
+                            "data": "CustomsValue", "targets": 16,
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                                 mslRender.CustomsValueRender($(cell), rowData);
                             }
                         },
                         {
-                            "data": "SalePrice", "targets": 16,
+                            "data": "SalePrice", "targets": 17,
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                                 mslRender.SalePriceRender($(cell), rowData);
                             }
                         },
                         {
-                            "data": "Notes", "targets": 17,
+                            "data": "HTSCode", "targets": 18,
+                            createdCell: function (cell, data, rowData, rowIndex, colIndex) {
+                                mslRender.HTSCodeRender($(cell), rowData);
+                            }
+                        },
+                        {
+                            "data": "CountryOfOrigin", "targets": 19,
+                            createdCell: function (cell, data, rowData, rowIndex, colIndex) {
+                                mslRender.CountryOfOriginRender($(cell), rowData);
+                            }
+                        },
+                        {
+                            "data": "Notes", "targets": 20,
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                                 mslRender.NotesRender($(cell), rowData);
                             }
                         },
                         {
-                            "data": "SalesOrderNumber", "targets": 18,
+                            "data": "SalesOrderNumber", "targets": 21,
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                                 mslRender.SalesOrderNumberRender($(cell), rowData);
                             }
                         },
                         {
-                            "data": "AutoShipFile", "targets": 19,
+                            "data": "AutoShipFile", "targets": 22,
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                                 mslRender.AutoShipFileRender($(cell), rowData);
                             }
                         },
                         {
-                            "data": "EquipmentId", "targets": 20, searchable: false, sortable: false,
+                            "data": "EquipmentId", "targets": 23, searchable: false, sortable: false,
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                                 mslRender.DeleteRender($(cell), rowData);
                             }
                         },
                         {
-                            "data": "HasBillOfLading", "targets": 21, searchable: false,
+                            "data": "HasBillOfLading", "targets": 24, searchable: false,
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                                 mslRender.HasBillOfLadingRender($(cell), rowData);
                             }
                         },
-                        { "data": "IsHardwareKit", "targets": 22, visible: false, searchable: false },
-                        { "data": "IsAssociatedToHardwareKit", "targets": 23, visible: false, searchable: false },
-                        { "data": "AssociatedHardwareKitNumber", "targets": 24, visible: false, searchable: false },
-                        { "data": "Indicators", "targets": 25, visible: false, searchable: false }
+                        { "data": "IsHardwareKit", "targets": 25, visible: false, searchable: false },
+                        { "data": "IsAssociatedToHardwareKit", "targets": 26, visible: false, searchable: false },
+                        { "data": "AssociatedHardwareKitNumber", "targets": 27, visible: false, searchable: false },
+                        { "data": "Indicators", "targets": 28, visible: false, searchable: false }
                     ],
                     autoFill: {
                         update: false,
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 11, 17, 18, 19]
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 11, 15, 18, 19, 20]
                     },
                     dom: "<'row'<'col-sm-4 text-left custom'f><'col-sm-4 text-center'i><'col-sm-4 text-right'l>>" +
                                              "<'row'<'col-sm-12'tr>>" +
                                              "<'row'<'col-sm-12 text-center'p>>"
-                    //dom: "<'row'<'col-sm-6 text-left custom'f><'col-sm-6 text-center'i>>" + 
-                    //     "<'row'<'col-sm-12'tr>>"
                 };
 
                 this.dataTable = $(".table.my-datatable").DataTable(mslSettings);
             } else {
                 this.dataTable = $(".table.my-datatable").DataTable({
                     pageLength: 25,
+                    deferRender: true,
+                    fixedHeader: true,
                     drawCallback: function (settings) {
+                        if ($this.DataTable()) {
+                            $this.DataTable().fixedHeader.enable();
+                        }
+
+                        if ($this.index >= 0) {
+                            var $newInput = $("thead input[type='text']").eq($this.index);
+                            if (!$newInput.length) {
+                                $this.index -= $("thead input[type='text']").length;
+                                $newInput = $("thead input[type='text']").eq($this.index);
+                            }
+
+                            $newInput.putCursorAtEnd();
+                            $this.index = -1;
+                        }
+
+
                         if ($(".pagination li").length === 2) {
                             $(".pagination").parent().hide();
                         } else {
@@ -282,10 +355,12 @@ $(function () {
                 $input.on('keyup change input search', function () {
                     clearTimeout(timeout);
                     var searchInput = this;
+                    $this.index = $("thead input[type='text']").index($(this));
 
                     timeout = setTimeout(function () {
 
                         if (column.search() !== searchInput.value) {
+                            $this.DataTable().fixedHeader.disable();
                             column.search(searchInput.value).draw();
                         }
                     }, 500);

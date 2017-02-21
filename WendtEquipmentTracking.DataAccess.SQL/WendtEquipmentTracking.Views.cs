@@ -11,7 +11,7 @@ using System.Data.Entity.Infrastructure.MappingViews;
 
 [assembly: DbMappingViewCacheTypeAttribute(
     typeof(WendtEquipmentTracking.DataAccess.SQL.WendtEquipmentTrackingEntities),
-    typeof(Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets0bb995af3246bbde3a08ffd83380d4a515a93c51016dfc48a81637087d7873eb))]
+    typeof(Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7640204db6455ec311fa9fa28a59e95b3f6b8443a50b2cdd5c4a60e2131fc371))]
 
 namespace Edm_EntityMappingGeneratedViews
 {
@@ -23,14 +23,14 @@ namespace Edm_EntityMappingGeneratedViews
     /// Implements a mapping view cache.
     /// </summary>
     [GeneratedCode("Entity Framework Power Tools", "0.9.0.0")]
-    internal sealed class ViewsForBaseEntitySets0bb995af3246bbde3a08ffd83380d4a515a93c51016dfc48a81637087d7873eb : DbMappingViewCache
+    internal sealed class ViewsForBaseEntitySets7640204db6455ec311fa9fa28a59e95b3f6b8443a50b2cdd5c4a60e2131fc371 : DbMappingViewCache
     {
         /// <summary>
         /// Gets a hash value computed over the mapping closure.
         /// </summary>
         public override string MappingHashValue
         {
-            get { return "0bb995af3246bbde3a08ffd83380d4a515a93c51016dfc48a81637087d7873eb"; }
+            get { return "7640204db6455ec311fa9fa28a59e95b3f6b8443a50b2cdd5c4a60e2131fc371"; }
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing BillOfLading
-        [WendtEquipmentTracking.DataAccess.SQL.Model.Store.BillOfLading](T1.BillOfLading_BillOfLadingId, T1.BillOfLading_ProjectId, T1.BillOfLading_Revision, T1.BillOfLading_IsCurrentRevision, T1.BillOfLading_CreatedBy, T1.BillOfLading_CreatedDate, T1.BillOfLading_ModifiedBy, T1.BillOfLading_ModifiedDate, T1.BillOfLading_BillOfLadingNumber, T1.BillOfLading_DateShipped, T1.BillOfLading_ShippedFrom, T1.BillOfLading_ToStorage, T1.BillOfLading_TrailerNumber, T1.BillOfLading_Carrier, T1.BillOfLading_FreightTerms, T1.BillOfLading_HTSCode, T1.BillOfLading_CountryOfOrigin, T1.BillOfLading_IsDeleted)
+        [WendtEquipmentTracking.DataAccess.SQL.Model.Store.BillOfLading](T1.BillOfLading_BillOfLadingId, T1.BillOfLading_ProjectId, T1.BillOfLading_Revision, T1.BillOfLading_IsCurrentRevision, T1.BillOfLading_CreatedBy, T1.BillOfLading_CreatedDate, T1.BillOfLading_ModifiedBy, T1.BillOfLading_ModifiedDate, T1.BillOfLading_BillOfLadingNumber, T1.BillOfLading_DateShipped, T1.BillOfLading_ToStorage, T1.BillOfLading_TrailerNumber, T1.BillOfLading_Carrier, T1.BillOfLading_FreightTerms, T1.BillOfLading_IsDeleted)
     FROM (
         SELECT 
             T.BillOfLadingId AS BillOfLading_BillOfLadingId, 
@@ -151,13 +151,10 @@ namespace Edm_EntityMappingGeneratedViews
             T.ModifiedDate AS BillOfLading_ModifiedDate, 
             T.BillOfLadingNumber AS BillOfLading_BillOfLadingNumber, 
             T.DateShipped AS BillOfLading_DateShipped, 
-            T.ShippedFrom AS BillOfLading_ShippedFrom, 
             T.ToStorage AS BillOfLading_ToStorage, 
             T.TrailerNumber AS BillOfLading_TrailerNumber, 
             T.Carrier AS BillOfLading_Carrier, 
             T.FreightTerms AS BillOfLading_FreightTerms, 
-            T.HTSCode AS BillOfLading_HTSCode, 
-            T.CountryOfOrigin AS BillOfLading_CountryOfOrigin, 
             T.IsDeleted AS BillOfLading_IsDeleted, 
             True AS _from0
         FROM WendtEquipmentTrackingEntities.BillOfLadings AS T
@@ -172,13 +169,16 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing BillOfLadingEquipment
-        [WendtEquipmentTracking.DataAccess.SQL.Model.Store.BillOfLadingEquipment](T1.BillOfLadingEquipment_BillOfLadingEquipmentId, T1.BillOfLadingEquipment_BillOfLadingId, T1.BillOfLadingEquipment_EquipmentId, T1.BillOfLadingEquipment_Quantity, T1.BillOfLadingEquipment_IsDeleted)
+        [WendtEquipmentTracking.DataAccess.SQL.Model.Store.BillOfLadingEquipment](T1.BillOfLadingEquipment_BillOfLadingEquipmentId, T1.BillOfLadingEquipment_BillOfLadingId, T1.BillOfLadingEquipment_EquipmentId, T1.BillOfLadingEquipment_Quantity, T1.BillOfLadingEquipment_ShippedFrom, T1.BillOfLadingEquipment_HTSCode, T1.BillOfLadingEquipment_CountryOfOrigin, T1.BillOfLadingEquipment_IsDeleted)
     FROM (
         SELECT 
             T.BillOfLadingEquipmentId AS BillOfLadingEquipment_BillOfLadingEquipmentId, 
             T.BillOfLadingId AS BillOfLadingEquipment_BillOfLadingId, 
             T.EquipmentId AS BillOfLadingEquipment_EquipmentId, 
             T.Quantity AS BillOfLadingEquipment_Quantity, 
+            T.ShippedFrom AS BillOfLadingEquipment_ShippedFrom, 
+            T.HTSCode AS BillOfLadingEquipment_HTSCode, 
+            T.CountryOfOrigin AS BillOfLadingEquipment_CountryOfOrigin, 
             T.IsDeleted AS BillOfLadingEquipment_IsDeleted, 
             True AS _from0
         FROM WendtEquipmentTrackingEntities.BillOfLadingEquipments AS T
@@ -193,7 +193,7 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing Equipment
-        [WendtEquipmentTracking.DataAccess.SQL.Model.Store.Equipment](T1.Equipment_EquipmentId, T1.Equipment_ProjectId, T1.Equipment_EquipmentName, T1.Equipment_Priority, T1.Equipment_CreatedBy, T1.Equipment_CreatedDate, T1.Equipment_ModifiedBy, T1.Equipment_ModifiedDate, T1.Equipment_ReleaseDate, T1.Equipment_DrawingNumber, T1.Equipment_WorkOrderNumber, T1.Equipment_Quantity, T1.Equipment_ShippingTagNumber, T1.Equipment_Description, T1.Equipment_UnitWeight, T1.Equipment_TotalWeight, T1.Equipment_TotalWeightShipped, T1.Equipment_ReadyToShip, T1.Equipment_ShippedQuantity, T1.Equipment_LeftToShip, T1.Equipment_FullyShipped, T1.Equipment_CustomsValue, T1.Equipment_SalePrice, T1.Equipment_Notes, T1.Equipment_AutoShipFile, T1.Equipment_SalesOrderNumber, T1.Equipment_IsHardware, T1.Equipment_IsDeleted, T1.Equipment_HardwareKitId)
+        [WendtEquipmentTracking.DataAccess.SQL.Model.Store.Equipment](T1.Equipment_EquipmentId, T1.Equipment_ProjectId, T1.Equipment_EquipmentName, T1.Equipment_Priority, T1.Equipment_CreatedBy, T1.Equipment_CreatedDate, T1.Equipment_ModifiedBy, T1.Equipment_ModifiedDate, T1.Equipment_ReleaseDate, T1.Equipment_DrawingNumber, T1.Equipment_WorkOrderNumber, T1.Equipment_Quantity, T1.Equipment_ShippingTagNumber, T1.Equipment_Description, T1.Equipment_UnitWeight, T1.Equipment_TotalWeight, T1.Equipment_TotalWeightShipped, T1.Equipment_ReadyToShip, T1.Equipment_ShippedQuantity, T1.Equipment_LeftToShip, T1.Equipment_FullyShipped, T1.Equipment_CustomsValue, T1.Equipment_SalePrice, T1.Equipment_Notes, T1.Equipment_AutoShipFile, T1.Equipment_SalesOrderNumber, T1.Equipment_ShippedFrom, T1.Equipment_HTSCode, T1.Equipment_CountryOfOrigin, T1.Equipment_IsHardware, T1.Equipment_IsDeleted, T1.Equipment_HardwareKitId)
     FROM (
         SELECT 
             T.EquipmentId AS Equipment_EquipmentId, 
@@ -222,6 +222,9 @@ namespace Edm_EntityMappingGeneratedViews
             T.Notes AS Equipment_Notes, 
             T.AutoShipFile AS Equipment_AutoShipFile, 
             T.SalesOrderNumber AS Equipment_SalesOrderNumber, 
+            T.ShippedFrom AS Equipment_ShippedFrom, 
+            T.HTSCode AS Equipment_HTSCode, 
+            T.CountryOfOrigin AS Equipment_CountryOfOrigin, 
             T.IsHardware AS Equipment_IsHardware, 
             T.IsDeleted AS Equipment_IsDeleted, 
             T.HardwareKitId AS Equipment_HardwareKitId, 
@@ -350,7 +353,7 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing BillOfLadings
-        [WendtEquipmentTracking.DataAccess.SQL.Model.BillOfLading](T1.BillOfLading_BillOfLadingId, T1.BillOfLading_ProjectId, T1.BillOfLading_Revision, T1.BillOfLading_IsCurrentRevision, T1.BillOfLading_CreatedBy, T1.BillOfLading_CreatedDate, T1.BillOfLading_ModifiedBy, T1.BillOfLading_ModifiedDate, T1.BillOfLading_BillOfLadingNumber, T1.BillOfLading_DateShipped, T1.BillOfLading_ShippedFrom, T1.BillOfLading_ToStorage, T1.BillOfLading_TrailerNumber, T1.BillOfLading_Carrier, T1.BillOfLading_FreightTerms, T1.BillOfLading_HTSCode, T1.BillOfLading_CountryOfOrigin, T1.BillOfLading_IsDeleted)
+        [WendtEquipmentTracking.DataAccess.SQL.Model.BillOfLading](T1.BillOfLading_BillOfLadingId, T1.BillOfLading_ProjectId, T1.BillOfLading_Revision, T1.BillOfLading_IsCurrentRevision, T1.BillOfLading_CreatedBy, T1.BillOfLading_CreatedDate, T1.BillOfLading_ModifiedBy, T1.BillOfLading_ModifiedDate, T1.BillOfLading_BillOfLadingNumber, T1.BillOfLading_DateShipped, T1.BillOfLading_ToStorage, T1.BillOfLading_TrailerNumber, T1.BillOfLading_Carrier, T1.BillOfLading_FreightTerms, T1.BillOfLading_IsDeleted)
     FROM (
         SELECT 
             T.BillOfLadingId AS BillOfLading_BillOfLadingId, 
@@ -363,13 +366,10 @@ namespace Edm_EntityMappingGeneratedViews
             T.ModifiedDate AS BillOfLading_ModifiedDate, 
             T.BillOfLadingNumber AS BillOfLading_BillOfLadingNumber, 
             T.DateShipped AS BillOfLading_DateShipped, 
-            T.ShippedFrom AS BillOfLading_ShippedFrom, 
             T.ToStorage AS BillOfLading_ToStorage, 
             T.TrailerNumber AS BillOfLading_TrailerNumber, 
             T.Carrier AS BillOfLading_Carrier, 
             T.FreightTerms AS BillOfLading_FreightTerms, 
-            T.HTSCode AS BillOfLading_HTSCode, 
-            T.CountryOfOrigin AS BillOfLading_CountryOfOrigin, 
             T.IsDeleted AS BillOfLading_IsDeleted, 
             True AS _from0
         FROM WendtEquipmentTrackingDataAccessSQLModelStoreContainer.BillOfLading AS T
@@ -384,13 +384,16 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing BillOfLadingEquipments
-        [WendtEquipmentTracking.DataAccess.SQL.Model.BillOfLadingEquipment](T1.BillOfLadingEquipment_BillOfLadingEquipmentId, T1.BillOfLadingEquipment_BillOfLadingId, T1.BillOfLadingEquipment_EquipmentId, T1.BillOfLadingEquipment_Quantity, T1.BillOfLadingEquipment_IsDeleted)
+        [WendtEquipmentTracking.DataAccess.SQL.Model.BillOfLadingEquipment](T1.BillOfLadingEquipment_BillOfLadingEquipmentId, T1.BillOfLadingEquipment_BillOfLadingId, T1.BillOfLadingEquipment_EquipmentId, T1.BillOfLadingEquipment_Quantity, T1.BillOfLadingEquipment_ShippedFrom, T1.BillOfLadingEquipment_HTSCode, T1.BillOfLadingEquipment_CountryOfOrigin, T1.BillOfLadingEquipment_IsDeleted)
     FROM (
         SELECT 
             T.BillOfLadingEquipmentId AS BillOfLadingEquipment_BillOfLadingEquipmentId, 
             T.BillOfLadingId AS BillOfLadingEquipment_BillOfLadingId, 
             T.EquipmentId AS BillOfLadingEquipment_EquipmentId, 
             T.Quantity AS BillOfLadingEquipment_Quantity, 
+            T.ShippedFrom AS BillOfLadingEquipment_ShippedFrom, 
+            T.HTSCode AS BillOfLadingEquipment_HTSCode, 
+            T.CountryOfOrigin AS BillOfLadingEquipment_CountryOfOrigin, 
             T.IsDeleted AS BillOfLadingEquipment_IsDeleted, 
             True AS _from0
         FROM WendtEquipmentTrackingDataAccessSQLModelStoreContainer.BillOfLadingEquipment AS T
@@ -405,7 +408,7 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing Equipments
-        [WendtEquipmentTracking.DataAccess.SQL.Model.Equipment](T1.Equipment_EquipmentId, T1.Equipment_ProjectId, T1.Equipment_EquipmentName, T1.Equipment_Priority, T1.Equipment_CreatedBy, T1.Equipment_CreatedDate, T1.Equipment_ModifiedBy, T1.Equipment_ModifiedDate, T1.Equipment_ReleaseDate, T1.Equipment_DrawingNumber, T1.Equipment_WorkOrderNumber, T1.Equipment_Quantity, T1.Equipment_ShippingTagNumber, T1.Equipment_Description, T1.Equipment_UnitWeight, T1.Equipment_TotalWeight, T1.Equipment_TotalWeightShipped, T1.Equipment_ReadyToShip, T1.Equipment_ShippedQuantity, T1.Equipment_LeftToShip, T1.Equipment_FullyShipped, T1.Equipment_CustomsValue, T1.Equipment_SalePrice, T1.Equipment_Notes, T1.Equipment_AutoShipFile, T1.Equipment_SalesOrderNumber, T1.Equipment_IsHardware, T1.Equipment_IsDeleted, T1.Equipment_HardwareKitId)
+        [WendtEquipmentTracking.DataAccess.SQL.Model.Equipment](T1.Equipment_EquipmentId, T1.Equipment_ProjectId, T1.Equipment_EquipmentName, T1.Equipment_Priority, T1.Equipment_CreatedBy, T1.Equipment_CreatedDate, T1.Equipment_ModifiedBy, T1.Equipment_ModifiedDate, T1.Equipment_ReleaseDate, T1.Equipment_DrawingNumber, T1.Equipment_WorkOrderNumber, T1.Equipment_Quantity, T1.Equipment_ShippingTagNumber, T1.Equipment_Description, T1.Equipment_UnitWeight, T1.Equipment_TotalWeight, T1.Equipment_TotalWeightShipped, T1.Equipment_ReadyToShip, T1.Equipment_ShippedQuantity, T1.Equipment_LeftToShip, T1.Equipment_FullyShipped, T1.Equipment_CustomsValue, T1.Equipment_SalePrice, T1.Equipment_Notes, T1.Equipment_AutoShipFile, T1.Equipment_SalesOrderNumber, T1.Equipment_ShippedFrom, T1.Equipment_HTSCode, T1.Equipment_CountryOfOrigin, T1.Equipment_IsHardware, T1.Equipment_IsDeleted, T1.Equipment_HardwareKitId)
     FROM (
         SELECT 
             T.EquipmentId AS Equipment_EquipmentId, 
@@ -434,6 +437,9 @@ namespace Edm_EntityMappingGeneratedViews
             T.Notes AS Equipment_Notes, 
             T.AutoShipFile AS Equipment_AutoShipFile, 
             T.SalesOrderNumber AS Equipment_SalesOrderNumber, 
+            T.ShippedFrom AS Equipment_ShippedFrom, 
+            T.HTSCode AS Equipment_HTSCode, 
+            T.CountryOfOrigin AS Equipment_CountryOfOrigin, 
             T.IsHardware AS Equipment_IsHardware, 
             T.IsDeleted AS Equipment_IsDeleted, 
             T.HardwareKitId AS Equipment_HardwareKitId, 

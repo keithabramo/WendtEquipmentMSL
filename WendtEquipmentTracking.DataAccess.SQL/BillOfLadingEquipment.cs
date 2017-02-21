@@ -18,6 +18,9 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         public int BillOfLadingId { get; set; }
         public int EquipmentId { get; set; }
         public double Quantity { get; set; }
+        public string ShippedFrom { get; set; }
+        public string HTSCode { get; set; }
+        public string CountryOfOrigin { get; set; }
         public bool IsDeleted { get; set; }
     
         public virtual BillOfLading BillOfLading { get; set; }

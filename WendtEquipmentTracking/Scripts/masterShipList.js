@@ -16,11 +16,10 @@
                     if (!filterReadyToShip) {
                         return true;
                     } else {
-                        var isHardware = data[1];
-                        var releaseDate = data[4];
-                        var leftToShip = data[15];
+                        var equipment = data[0];
+                        var leftToShip = data[13];
 
-                        if (isHardware === "False" && releaseDate && leftToShip && parseInt(leftToShip, 10) > 0) {
+                        if (equipment.toLowerCase() === "hardware" && leftToShip && parseInt(leftToShip, 10) > 0) {
                             return true;
                         }
                     }
@@ -202,13 +201,16 @@
                         mslRender.ShippedQuantityRender($newRow.find("td").eq(12), data);
                         mslRender.LeftToShipRender($newRow.find("td").eq(13), data);
                         mslRender.FullyShippedRender($newRow.find("td").eq(14), data);
-                        mslRender.CustomsValueRender($newRow.find("td").eq(15), data);
-                        mslRender.SalePriceRender($newRow.find("td").eq(16), data);
-                        mslRender.NotesRender($newRow.find("td").eq(17), data);
-                        mslRender.SalesOrderNumberRender($newRow.find("td").eq(18), data);
-                        mslRender.AutoShipFileRender($newRow.find("td").eq(19), data);
-                        mslRender.DeleteRender($newRow.find("td").eq(20), data);
-                        mslRender.HasBillOfLadingRender($newRow.find("td").eq(21), data);
+                        mslRender.ShippedFromRender($newRow.find("td").eq(15), data);
+                        mslRender.CustomsValueRender($newRow.find("td").eq(16), data);
+                        mslRender.SalePriceRender($newRow.find("td").eq(17), data);
+                        mslRender.HTSCodeRender($newRow.find("td").eq(18), data);
+                        mslRender.CountryOfOriginRender($newRow.find("td").eq(19), data);
+                        mslRender.NotesRender($newRow.find("td").eq(20), data);
+                        mslRender.SalesOrderNumberRender($newRow.find("td").eq(21), data);
+                        mslRender.AutoShipFileRender($newRow.find("td").eq(22), data);
+                        mslRender.DeleteRender($newRow.find("td").eq(23), data);
+                        mslRender.HasBillOfLadingRender($newRow.find("td").eq(24), data);
 
 
                         $newRow.animate({

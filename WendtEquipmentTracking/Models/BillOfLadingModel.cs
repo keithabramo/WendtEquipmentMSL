@@ -27,10 +27,6 @@ namespace WendtEquipmentTracking.App.Models
         [Required]
         public DateTime? DateShipped { get; set; }
 
-        [DisplayName("Shipped From")]
-        [Required]
-        public string ShippedFrom { get; set; }
-
         [DisplayName("Freight Terms")]
         public string FreightTerms { get; set; }
 
@@ -39,17 +35,6 @@ namespace WendtEquipmentTracking.App.Models
 
         [DisplayName("Trailer #")]
         public string TrailerNumber { get; set; }
-
-
-        [DisplayName("HTS Code")]
-        [Remote("HTSCodeRequired", "Validate", ErrorMessage = "This is a BOL for an export project, HTS Code is required")]
-        public string HTSCode { get; set; }
-
-
-        [DisplayName("Country Of Origin")]
-        [Remote("CountryOfOriginRequired", "Validate", ErrorMessage = "This is a BOL for an export project, Country Of Origin is required")]
-
-        public string CountryOfOrigin { get; set; }
 
         [DisplayName("To Storage")]
         public bool ToStorage { get; set; }

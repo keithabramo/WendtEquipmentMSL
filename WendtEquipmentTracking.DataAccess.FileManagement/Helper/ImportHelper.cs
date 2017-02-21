@@ -15,7 +15,7 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Helper
                 {
                     ColumnStart = 1,
                     RowStart = 2,
-                    NumberOfColumns = 2
+                    NumberOfColumns = 3
                 }
             },
             { "Mechanical", new ExcelDataLocation

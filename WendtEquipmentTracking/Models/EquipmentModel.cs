@@ -105,6 +105,14 @@ namespace WendtEquipmentTracking.App.Models
         [DisplayName("Sales Order Number")]
         public string SalesOrderNumber { get; set; }
 
+        [DisplayName("Shipped From")]
+        public string ShippedFrom { get; set; }
+
+        [DisplayName("HTS Code")]
+        public string HTSCode { get; set; }
+
+        [DisplayName("Country Of Origin")]
+        public string CountryOfOrigin { get; set; }
 
 
 
@@ -131,7 +139,7 @@ namespace WendtEquipmentTracking.App.Models
             Indicators = new IndicatorsModel();
 
             //unit weight
-            if ((UnitWeight == null || UnitWeight <= 0) && !EquipmentName.Equals("hardware",StringComparison.InvariantCultureIgnoreCase) )
+            if ((UnitWeight == null || UnitWeight <= 0) && !EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase))
             {
                 Indicators.UnitWeightColor = IndicatorsModel.Colors.Red.ToString();
             }
@@ -142,6 +150,10 @@ namespace WendtEquipmentTracking.App.Models
                 if (BillOfLadingEquipments.Any(be => be.BillOfLading.ToStorage && be.BillOfLading.IsCurrentRevision))
                 {
                     Indicators.ReadyToShipColor = IndicatorsModel.Colors.Green.ToString();
+                }
+                else if (ReadyToShip > Quantity)
+                {
+                    Indicators.ReadyToShipColor = IndicatorsModel.Colors.Pink.ToString();
                 }
                 else
                 {

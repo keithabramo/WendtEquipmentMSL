@@ -32,6 +32,9 @@ namespace WendtEquipmentTracking.BusinessLogic.BO
         public string Notes { get; set; }
         public string AutoShipFile { get; set; }
         public string SalesOrderNumber { get; set; }
+        public string ShippedFrom { get; set; }
+        public string HTSCode { get; set; }
+        public string CountryOfOrigin { get; set; }
 
         public HardwareKitBO HardwareKit { get; set; }
         public IEnumerable<BillOfLadingEquipmentBO> BillOfLadingEquipments { get; set; }

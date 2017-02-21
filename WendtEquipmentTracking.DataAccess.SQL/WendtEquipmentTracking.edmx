@@ -19,13 +19,10 @@
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="BillOfLadingNumber" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="DateShipped" Type="datetime" />
-          <Property Name="ShippedFrom" Type="nvarchar" MaxLength="1000" />
           <Property Name="ToStorage" Type="bit" Nullable="false" />
           <Property Name="TrailerNumber" Type="nvarchar" MaxLength="255" />
           <Property Name="Carrier" Type="nvarchar" MaxLength="255" />
           <Property Name="FreightTerms" Type="nvarchar" MaxLength="1000" />
-          <Property Name="HTSCode" Type="nvarchar" MaxLength="255" />
-          <Property Name="CountryOfOrigin" Type="nvarchar" MaxLength="50" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="BillOfLadingEquipment">
@@ -36,6 +33,9 @@
           <Property Name="BillOfLadingId" Type="int" Nullable="false" />
           <Property Name="EquipmentId" Type="int" Nullable="false" />
           <Property Name="Quantity" Type="float" Nullable="false" />
+          <Property Name="ShippedFrom" Type="nvarchar" MaxLength="1000" />
+          <Property Name="HTSCode" Type="nvarchar" MaxLength="255" />
+          <Property Name="CountryOfOrigin" Type="nvarchar" MaxLength="50" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Equipment">
@@ -68,6 +68,9 @@
           <Property Name="Notes" Type="nvarchar" MaxLength="255" />
           <Property Name="AutoShipFile" Type="nvarchar" MaxLength="50" />
           <Property Name="SalesOrderNumber" Type="nvarchar" MaxLength="255" />
+          <Property Name="ShippedFrom" Type="nvarchar" MaxLength="1000" />
+          <Property Name="HTSCode" Type="nvarchar" MaxLength="255" />
+          <Property Name="CountryOfOrigin" Type="nvarchar" MaxLength="50" />
           <Property Name="IsHardware" Type="bit" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="HardwareKitId" Type="int" />
@@ -313,6 +316,7 @@
           <EntitySet Name="HardwareKits" EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.HardwareKit" />
           <EntitySet Name="HardwareKitEquipments" EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.HardwareKitEquipment" />
           <EntitySet Name="Projects" EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.Project" />
+          <EntitySet Name="Users" EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.User" />
           <EntitySet Name="WorkOrderPrices" EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.WorkOrderPrice" />
           <AssociationSet Name="FK_BillOfLadingEquipment_BillOfLading" Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_BillOfLadingEquipment_BillOfLading">
             <End Role="BillOfLading" EntitySet="BillOfLadings" />
@@ -350,7 +354,6 @@
             <End Role="Project" EntitySet="Projects" />
             <End Role="WorkOrderPrice" EntitySet="WorkOrderPrices" />
           </AssociationSet>
-          <EntitySet Name="Users" EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.User" />
         </EntityContainer>
         <EntityType Name="BillOfLading">
           <Key>
@@ -366,13 +369,10 @@
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <Property Name="BillOfLadingNumber" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="DateShipped" Type="DateTime" Precision="3" />
-          <Property Name="ShippedFrom" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="ToStorage" Type="Boolean" Nullable="false" />
           <Property Name="TrailerNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Carrier" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="FreightTerms" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="HTSCode" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="CountryOfOrigin" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="BillOfLadingEquipments" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_BillOfLadingEquipment_BillOfLading" FromRole="BillOfLading" ToRole="BillOfLadingEquipment" />
           <NavigationProperty Name="Project" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_BillOfLanding_Project" FromRole="BillOfLading" ToRole="Project" />
@@ -385,6 +385,9 @@
           <Property Name="BillOfLadingId" Type="Int32" Nullable="false" />
           <Property Name="EquipmentId" Type="Int32" Nullable="false" />
           <Property Name="Quantity" Type="Double" Nullable="false" />
+          <Property Name="ShippedFrom" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="HTSCode" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CountryOfOrigin" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="BillOfLading" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_BillOfLadingEquipment_BillOfLading" FromRole="BillOfLadingEquipment" ToRole="BillOfLading" />
           <NavigationProperty Name="Equipment" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_BillOfLadingEquipment_Equipment" FromRole="BillOfLadingEquipment" ToRole="Equipment" />
@@ -419,6 +422,9 @@
           <Property Name="Notes" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="AutoShipFile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="SalesOrderNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ShippedFrom" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="HTSCode" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CountryOfOrigin" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsHardware" Type="Boolean" Nullable="false" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <Property Name="HardwareKitId" Type="Int32" />
@@ -487,6 +493,14 @@
           <NavigationProperty Name="Equipments" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_Equipment_Project" FromRole="Project" ToRole="Equipment" />
           <NavigationProperty Name="HardwareKits" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_HardwareKit_Project" FromRole="Project" ToRole="HardwareKit" />
           <NavigationProperty Name="WorkOrderPrices" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_WorkOrderPrice_Project" FromRole="Project" ToRole="WorkOrderPrice" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectId" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="WorkOrderPrice">
           <Key>
@@ -613,14 +627,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ProjectId" Type="Int32" Nullable="false" />
-        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -631,13 +637,10 @@
             <EntityTypeMapping TypeName="WendtEquipmentTracking.DataAccess.SQL.Model.BillOfLading">
               <MappingFragment StoreEntitySet="BillOfLading">
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="CountryOfOrigin" ColumnName="CountryOfOrigin" />
-                <ScalarProperty Name="HTSCode" ColumnName="HTSCode" />
                 <ScalarProperty Name="FreightTerms" ColumnName="FreightTerms" />
                 <ScalarProperty Name="Carrier" ColumnName="Carrier" />
                 <ScalarProperty Name="TrailerNumber" ColumnName="TrailerNumber" />
                 <ScalarProperty Name="ToStorage" ColumnName="ToStorage" />
-                <ScalarProperty Name="ShippedFrom" ColumnName="ShippedFrom" />
                 <ScalarProperty Name="DateShipped" ColumnName="DateShipped" />
                 <ScalarProperty Name="BillOfLadingNumber" ColumnName="BillOfLadingNumber" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
@@ -655,6 +658,9 @@
             <EntityTypeMapping TypeName="WendtEquipmentTracking.DataAccess.SQL.Model.BillOfLadingEquipment">
               <MappingFragment StoreEntitySet="BillOfLadingEquipment">
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CountryOfOrigin" ColumnName="CountryOfOrigin" />
+                <ScalarProperty Name="HTSCode" ColumnName="HTSCode" />
+                <ScalarProperty Name="ShippedFrom" ColumnName="ShippedFrom" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="EquipmentId" ColumnName="EquipmentId" />
                 <ScalarProperty Name="BillOfLadingId" ColumnName="BillOfLadingId" />
@@ -668,6 +674,9 @@
                 <ScalarProperty Name="HardwareKitId" ColumnName="HardwareKitId" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="IsHardware" ColumnName="IsHardware" />
+                <ScalarProperty Name="CountryOfOrigin" ColumnName="CountryOfOrigin" />
+                <ScalarProperty Name="HTSCode" ColumnName="HTSCode" />
+                <ScalarProperty Name="ShippedFrom" ColumnName="ShippedFrom" />
                 <ScalarProperty Name="SalesOrderNumber" ColumnName="SalesOrderNumber" />
                 <ScalarProperty Name="AutoShipFile" ColumnName="AutoShipFile" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
@@ -752,6 +761,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="WendtEquipmentTracking.DataAccess.SQL.Model.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="WorkOrderPrices">
             <EntityTypeMapping TypeName="WendtEquipmentTracking.DataAccess.SQL.Model.WorkOrderPrice">
               <MappingFragment StoreEntitySet="WorkOrderPrice">
@@ -766,15 +784,6 @@
                 <ScalarProperty Name="WorkOrderNumber" ColumnName="WorkOrderNumber" />
                 <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
                 <ScalarProperty Name="WorkOrderPriceId" ColumnName="WorkOrderPriceId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="WendtEquipmentTracking.DataAccess.SQL.Model.User">
-              <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

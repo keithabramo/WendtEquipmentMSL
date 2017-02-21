@@ -6,7 +6,7 @@
         @Html.EditorFor(modelItem => modelItem.EquipmentName, new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(modelItem => modelItem.EquipmentName, "", new { @class = "text-danger" })
     </td>
-    <td class="small">
+    <td class="smallWidth">
         @Html.DropDownListFor(modelItem => modelItem.Priority, new SelectList(Priorities.GetPriorities()), new { @class = "form-control" })
         @Html.ValidationMessageFor(modelItem => modelItem.Priority, "", new { @class = "text-danger" })
     </td>
@@ -22,7 +22,7 @@
         @Html.EditorFor(modelItem => modelItem.WorkOrderNumber, new { htmlAttributes = new { @class = "form-control autocomplete" } })
         @Html.ValidationMessageFor(modelItem => modelItem.WorkOrderNumber, "", new { @class = "text-danger" })
     </td>
-    <td class="text-right small">
+    <td class="text-right smallWidth">
         @Html.EditorFor(modelItem => modelItem.Quantity, new { htmlAttributes = new { @class = "form-control text-right" } })
         @Html.ValidationMessageFor(modelItem => modelItem.Quantity, "", new { @class = "text-danger" })
     </td>
@@ -34,7 +34,7 @@
         @Html.EditorFor(modelItem => modelItem.Description, new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(modelItem => modelItem.Description, "", new { @class = "text-danger" })
     </td>
-    <td class="text-right small">
+    <td class="text-right smallWidth">
         @Html.EditorFor(modelItem => modelItem.UnitWeight, new { htmlAttributes = new { @class = "form-control text-right" } })
         @Html.ValidationMessageFor(modelItem => modelItem.UnitWeight, "", new { @class = "text-danger" })
     </td>
@@ -44,8 +44,20 @@
     <td></td>
     <td></td>
     <td></td>
+    <td>
+        @Html.EditorFor(modelItem => modelItem.ShippedFrom, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(modelItem => modelItem.ShippedFrom, "", new { @class = "text-danger" })
+    </td>
     <td></td>
     <td></td>
+    <td>
+        @Html.EditorFor(modelItem => modelItem.HTSCode, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(modelItem => modelItem.HTSCode, "", new { @class = "text-danger" })
+    </td>
+    <td>
+        @Html.EditorFor(modelItem => modelItem.CountryOfOrigin, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(modelItem => modelItem.CountryOfOrigin, "", new { @class = "text-danger" })
+    </td>
     <td>
         @Html.EditorFor(modelItem => modelItem.Notes, new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(modelItem => modelItem.Notes, "", new { @class = "text-danger" })

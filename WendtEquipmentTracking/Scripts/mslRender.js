@@ -113,7 +113,7 @@ $(function () {
 
             $cell.removeAttr("class");
             $cell.addClass("text-right");
-            $cell.addClass("small");
+            $cell.addClass("smallWidth");
         }
         this.ShippingTagNumberRender = function ($cell, rowData) {
             var colIndex = 6;
@@ -170,7 +170,7 @@ $(function () {
             $cell.removeAttr("class");
             $cell.addClass(rowData.Indicators.UnitWeightColor);
             $cell.addClass("text-right");
-            $cell.addClass("small");
+            $cell.addClass("smallWidth");
         }
         this.TotalWeightRender = function ($cell, rowData) {
             var colIndex = 9;
@@ -191,7 +191,7 @@ $(function () {
 
             $cell.removeAttr("class");
             $cell.addClass("text-right");
-            $cell.addClass("small");
+            $cell.addClass("smallWidth");
         }
         this.TotalWeightShippedRender = function ($cell, rowData) {
             var colIndex = 10;
@@ -212,7 +212,7 @@ $(function () {
 
             $cell.removeAttr("class");
             $cell.addClass("text-right");
-            $cell.addClass("small");
+            $cell.addClass("smallWidth");
         }
         this.ReadyToShipRender = function ($cell, rowData) {
             var colIndex = 11;
@@ -232,7 +232,7 @@ $(function () {
             $cell.removeAttr("class");
             $cell.addClass(rowData.Indicators.ReadyToShipColor);
             $cell.addClass("text-right");
-            $cell.addClass("small");
+            $cell.addClass("smallWidth");
         }
         this.ShippedQuantityRender = function ($cell, rowData) {
             var colIndex = 12;
@@ -253,7 +253,7 @@ $(function () {
             $cell.removeAttr("class");
             $cell.addClass(rowData.Indicators.ShippedQtyColor);
             $cell.addClass("text-right");
-            $cell.addClass("small");
+            $cell.addClass("smallWidth");
         }
         this.LeftToShipRender = function ($cell, rowData) {
             var colIndex = 13;
@@ -274,7 +274,7 @@ $(function () {
             $cell.removeAttr("class");
             $cell.addClass(rowData.Indicators.LeftToShipColor);
             $cell.addClass("text-right");
-            $cell.addClass("small");
+            $cell.addClass("smallWidth");
         }
         this.FullyShippedRender = function ($cell, rowData) {
             var colIndex = 14;
@@ -300,10 +300,26 @@ $(function () {
 
             $cell.removeAttr("class");
             $cell.addClass(rowData.Indicators.FullyShippedColor);
-            $cell.addClass("small");
+            $cell.addClass("smallWidth");
+        }
+        this.ShipppedFromRender = function ($cell, rowData) {
+            var colIndex = 15;
+            var data = rowData.ShippedFrom;
+
+            var $template = $(".template");
+
+            if ($template.length) {
+                var $cellTemplate = $template.find("div").eq(colIndex).clone();
+
+                $cell.html($cellTemplate.html());
+                $cell.find("input").val(data);
+
+            } else {
+                $cell.html(data);
+            }
         }
         this.CustomsValueRender = function ($cell, rowData) {
-            var colIndex = 15;
+            var colIndex = 16;
             var data = rowData.CustomsValue;
             var $template = $(".template");
 
@@ -324,10 +340,10 @@ $(function () {
             $cell.removeAttr("class");
             $cell.addClass(rowData.Indicators.CustomsValueColor);
             $cell.addClass("text-right");
-            $cell.addClass("small");
+            $cell.addClass("smallWidth");
         }
         this.SalePriceRender = function ($cell, rowData) {
-            var colIndex = 16;
+            var colIndex = 17;
             var data = rowData.SalePrice;
             var $template = $(".template");
 
@@ -348,10 +364,42 @@ $(function () {
             $cell.removeAttr("class");
             $cell.addClass(rowData.Indicators.SalePriceColor);
             $cell.addClass("text-right");
-            $cell.addClass("small");
+            $cell.addClass("smallWidth");
+        }
+        this.HTSCodeRender = function ($cell, rowData) {
+            var colIndex = 18;
+            var data = rowData.HTSCode;
+
+            var $template = $(".template");
+
+            if ($template.length) {
+                var $cellTemplate = $template.find("div").eq(colIndex).clone();
+
+                $cell.html($cellTemplate.html());
+                $cell.find("input").val(data);
+
+            } else {
+                $cell.html(data);
+            }
+        }
+        this.CountryOfOriginRender = function ($cell, rowData) {
+            var colIndex = 19;
+            var data = rowData.CountryOfOrigin;
+
+            var $template = $(".template");
+
+            if ($template.length) {
+                var $cellTemplate = $template.find("div").eq(colIndex).clone();
+
+                $cell.html($cellTemplate.html());
+                $cell.find("input").val(data);
+
+            } else {
+                $cell.html(data);
+            }
         }
         this.NotesRender = function ($cell, rowData) {
-            var colIndex = 17;
+            var colIndex = 20;
             var data = rowData.Notes;
             var $template = $(".template");
 
@@ -366,7 +414,7 @@ $(function () {
             }
         }
         this.SalesOrderNumberRender = function ($cell, rowData) {
-            var colIndex = 18;
+            var colIndex = 21;
             var data = rowData.SalesOrder;
             var $template = $(".template");
 
@@ -386,7 +434,7 @@ $(function () {
             $cell.addClass(rowData.Indicators.SalesOrderNumberColor);
         }
         this.AutoShipFileRender = function ($cell, rowData) {
-            var colIndex = 19;
+            var colIndex = 22;
             var data = rowData.AutoShipFile;
             var $template = $(".template");
 
@@ -403,10 +451,10 @@ $(function () {
             }
 
             $cell.removeAttr("class");
-            $cell.addClass("small");
+            $cell.addClass("smallWidth");
         }
         this.DeleteRender = function ($cell, rowData) {
-            var colIndex = 20;
+            var colIndex = 23;
             var $template = $(".template");
 
             if ($template.length) {
@@ -420,7 +468,7 @@ $(function () {
             }
         }
         this.HasBillOfLadingRender = function ($cell, rowData) {
-            var colIndex = 21;
+            var colIndex = 24;
             var data = rowData.HasBillOfLading;
 
             var $template = $(".template");
@@ -442,7 +490,7 @@ $(function () {
 
             $cell.removeAttr("class");
             $cell.addClass("expand")
-            $cell.addClass("small");
+            $cell.addClass("smallWidth");
         }
     }
 
