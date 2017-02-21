@@ -246,7 +246,10 @@ namespace WendtEquipmentTracking.App.Controllers
             var billOfLadingEquipments = equipmentModels.Select(e => new BillOfLadingEquipmentModel
             {
                 Equipment = e,
-                EquipmentId = e.EquipmentId
+                EquipmentId = e.EquipmentId,
+                HTSCode = e.HTSCode,
+                CountryOfOrigin = e.CountryOfOrigin,
+                ShippedFrom = e.ShippedFrom
             }).ToList();
 
             var model = new BillOfLadingModel
@@ -278,14 +281,19 @@ namespace WendtEquipmentTracking.App.Controllers
 
             var equipmentModels = Mapper.Map<IEnumerable<EquipmentModel>>(equipmentBOs);
 
+            //from database
             var billOfLadingEquipments = equipmentModels.Select(e => new BillOfLadingEquipmentModel
             {
                 Equipment = e,
                 EquipmentId = e.EquipmentId,
                 Quantity = model.BillOfLadingEquipments.Any(be => be.EquipmentId == e.EquipmentId) ? model.BillOfLadingEquipments.FirstOrDefault(be => be.EquipmentId == e.EquipmentId).Quantity : 0,
+                ShippedFrom = model.BillOfLadingEquipments.Any(be => be.EquipmentId == e.EquipmentId) ? model.BillOfLadingEquipments.FirstOrDefault(be => be.EquipmentId == e.EquipmentId).ShippedFrom : e.ShippedFrom,
+                HTSCode = model.BillOfLadingEquipments.Any(be => be.EquipmentId == e.EquipmentId) ? model.BillOfLadingEquipments.FirstOrDefault(be => be.EquipmentId == e.EquipmentId).HTSCode : e.HTSCode,
+                CountryOfOrigin = model.BillOfLadingEquipments.Any(be => be.EquipmentId == e.EquipmentId) ? model.BillOfLadingEquipments.FirstOrDefault(be => be.EquipmentId == e.EquipmentId).CountryOfOrigin : e.CountryOfOrigin,
                 Checked = model.BillOfLadingEquipments.Any(be => be.EquipmentId == e.EquipmentId)
             }).ToList();
 
+            //get any added to model but not found in query because ready to ship is now 0
             var modelBOLEquipments = model.BillOfLadingEquipments.Where(be => equipmentModels == null || !equipmentModels.Any(fullbe => fullbe.EquipmentId == be.EquipmentId));
 
             billOfLadingEquipments.AddRange(modelBOLEquipments);

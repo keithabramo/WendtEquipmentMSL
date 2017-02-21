@@ -302,7 +302,7 @@ $(function () {
             $cell.addClass(rowData.Indicators.FullyShippedColor);
             $cell.addClass("smallWidth");
         }
-        this.ShipppedFromRender = function ($cell, rowData) {
+        this.ShippedFromRender = function ($cell, rowData) {
             var colIndex = 15;
             var data = rowData.ShippedFrom;
 

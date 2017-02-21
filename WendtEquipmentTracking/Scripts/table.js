@@ -297,7 +297,7 @@ $(function () {
                             $(".pagination").parent().show();
                         }
 
-                        if (form) {
+                        if (!form === undefined) {
                             form.initStyles();
                         }
                     },
