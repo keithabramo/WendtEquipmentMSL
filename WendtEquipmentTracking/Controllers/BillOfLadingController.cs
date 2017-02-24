@@ -141,7 +141,7 @@ namespace WendtEquipmentTracking.App.Controllers
             }
 
             var billOfLadingModel = Mapper.Map<BillOfLadingModel>(billOfLading);
-
+            billOfLadingModel.BillOfLadingEquipments.ToList().ForEach(e => e.Checked = true);
             return View(billOfLadingModel);
         }
 
@@ -291,18 +291,18 @@ namespace WendtEquipmentTracking.App.Controllers
                 HTSCode = model.BillOfLadingEquipments.Any(be => be.EquipmentId == e.EquipmentId) ? model.BillOfLadingEquipments.FirstOrDefault(be => be.EquipmentId == e.EquipmentId).HTSCode : e.HTSCode,
                 CountryOfOrigin = model.BillOfLadingEquipments.Any(be => be.EquipmentId == e.EquipmentId) ? model.BillOfLadingEquipments.FirstOrDefault(be => be.EquipmentId == e.EquipmentId).CountryOfOrigin : e.CountryOfOrigin,
                 Checked = model.BillOfLadingEquipments.Any(be => be.EquipmentId == e.EquipmentId)
-            }).ToList();
+            });
 
             //get any added to model but not found in query because ready to ship is now 0
-            var modelBOLEquipments = model.BillOfLadingEquipments.Where(be => equipmentModels == null || !equipmentModels.Any(fullbe => fullbe.EquipmentId == be.EquipmentId));
+            var modelBOLEquipments = model.BillOfLadingEquipments.Where(be => equipmentModels == null || !equipmentModels.Any(fullbe => fullbe.EquipmentId == be.EquipmentId)).ToList();
 
-            billOfLadingEquipments.AddRange(modelBOLEquipments);
-            billOfLadingEquipments.ToList().ForEach(e =>
+            modelBOLEquipments.AddRange(billOfLadingEquipments);
+            billOfLadingEquipments.OrderByDescending(e => e.Checked ? 1 : 0).ThenBy(e => e.Equipment.EquipmentName).ToList().ForEach(e =>
             {
                 e.Equipment.SetIndicators(projectBO.ProjectNumber, projectBO.IsCustomsProject);
             });
 
-            model.BillOfLadingEquipments = billOfLadingEquipments;
+            model.BillOfLadingEquipments = modelBOLEquipments;
 
             return PartialView("EquipmentToAddToBOL", model);
         }

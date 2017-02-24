@@ -305,13 +305,13 @@ namespace WendtEquipmentTracking.App.Controllers
                 {
                     ShippingTagNumber = key.ShippingTagNumber,
                     Description = key.Description,
-                    Quantity = g.Sum(e => e.Quantity.HasValue ? e.Quantity.Value : 0),
-                    Checked = true
+                    Quantity = g.Sum(e => e.Quantity.HasValue ? e.Quantity.Value : 0)
                 }).ToList();
 
+            var modelGroups = model.HardwareGroups.ToList();
+            modelGroups.AddRange(hardwareGroups);
 
-
-            model.HardwareGroups.ToList().AddRange(hardwareGroups);
+            model.HardwareGroups = modelGroups;
 
             return PartialView("HardwareToAddToHardwareKit", model);
         }
