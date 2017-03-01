@@ -43,7 +43,8 @@ $(function () {
             var $template = $(".template");
             var value = data;
             if (data) {
-                value = $.datepicker.formatDate('mm/dd/yy', new Date(data))
+                //needed to add some hours so chrome timezone interpretation doesn't kick it back a day (added 10 hours)
+                value = $.datepicker.formatDate('mm/dd/yy', new Date(data.replace("T00:00:00", "T10:00:00"))); 
             }
 
             if ($template.length) {
