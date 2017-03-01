@@ -8,15 +8,15 @@ namespace WendtEquipmentTracking.Common
         {
             return new List<string>
             {
-                "01",
-                "P02",
-                "P03",
-                "P04",
-                "P05",
-                "P06",
-                "P07",
-                "P08",
-                "P09",
+                "P1",
+                "P2",
+                "P3",
+                "P4",
+                "P5",
+                "P6",
+                "P7",
+                "P8",
+                "P9",
                 "P10",
                 "A1"
             };

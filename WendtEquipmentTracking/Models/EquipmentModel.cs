@@ -188,13 +188,13 @@ namespace WendtEquipmentTracking.App.Models
             }
 
             //customs value
-            if (isCustomsProject && (!CustomsValue.HasValue || CustomsValue.Value <= 0))
+            if (isCustomsProject && !EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase) && (!CustomsValue.HasValue || CustomsValue.Value <= 0))
             {
                 Indicators.CustomsValueColor = IndicatorsModel.Colors.Red.ToString();
             }
 
             //sales price
-            if (isCustomsProject && (!SalePrice.HasValue || SalePrice.Value <= 0))
+            if (isCustomsProject && !EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase) && (!SalePrice.HasValue || SalePrice.Value <= 0))
             {
                 Indicators.SalePriceColor = IndicatorsModel.Colors.Red.ToString();
             }
