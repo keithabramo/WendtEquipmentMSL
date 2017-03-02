@@ -24,8 +24,6 @@ namespace WendtEquipmentTracking.App.Controllers
         // GET: /Equipment/
         public ActionResult Index()
         {
-            var watch = System.Diagnostics.Stopwatch.StartNew();
-
             var user = userService.GetCurrentUser();
 
             if (user == null)
@@ -36,11 +34,6 @@ namespace WendtEquipmentTracking.App.Controllers
 
             //Get Data
             var equipmentBOs = equipmentService.GetAll(user.ProjectId);
-
-            // the code that you want to measure comes here
-            watch.Stop();
-            var elapsedMs = watch.ElapsedMilliseconds;
-
             var equipmentModels = Mapper.Map<List<EquipmentModel>>(equipmentBOs);
 
             return View(equipmentModels);

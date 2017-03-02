@@ -28,7 +28,27 @@
                 }
             );
 
+            $.fn.dataTable.ext.search.push(
+                function (settings, data, dataIndex) {
+                    var hardwareFilter = $('#hardwareFilter').is(":checked");
+
+                    if (!hardwareFilter) {
+                        return true;
+                    } else {
+                        var equipment = data[0];
+
+                        if (equipment.toLowerCase() !== "hardware") {
+                            return true;
+                        }
+                    }
+
+                    return false;
+                }
+            );
+
             $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="readyToShipFilter" /> Work In Progress</label>');
+            $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="hardwareFilter" /> Hide Hardware</label>');
+            $("div.createButtonContainer").append('<input type="button" value="Create" class="btn btn-sm btn-primary createSubmit" />');
             
             
         }
@@ -44,6 +64,9 @@
 
             //checbox ready to ship filter
             $('#readyToShipFilter').on("change", function () {
+                table.DataTable().draw();
+            });
+            $('#hardwareFilter').on("change", function () {
                 table.DataTable().draw();
             });
 
@@ -67,18 +90,6 @@
             });
 
 
-            //checking ishardware to see if we need to disable equipment name
-            $('.table').on('change', "input[name='IsHardware']", function () {
-                var isHardware = $(this).is(":checked");
-                var $equipmentNameInput = $(this).closest("tr").find("input[name='EquipmentName']");
-
-                if (isHardware) {
-                    $equipmentNameInput.val("HARDWARE").attr("readonly", "readonly");
-                } else {
-                    $equipmentNameInput.removeAttr("readonly");
-                }
-            });
-
             //saving an edited row if changes were made
             $('.table tbody').on('blur', "tr", function () {
 
@@ -94,10 +105,10 @@
             });
 
             //create row
-            $('.table tfoot').on('click', ".createSubmit", function () {
+            $('.table tfoot, .createButtonContainer').on('click', ".createSubmit", function () {
                 $(this).button("loading");
 
-                var $row = $(this).closest("tfoot tr");
+                var $row = $(".table tfoot tr");
                 var url = $this.createURL;
                 var $form = $("<form/>");
 
@@ -132,7 +143,7 @@
                             }, 2000);
 
                             //reset create row
-                            $row.find(".createSubmit").button("reset");
+                            $(".createSubmit").button("reset");
 
                             $row.find("input").not("[type='checkbox'], [type='button']").val("");
                             if ($row.find("input[type='checkbox']").is(":checked")) {
@@ -144,7 +155,7 @@
                             form.initStyles();
 
                         } else {
-                            $row.find(".createSubmit").button("reset");
+                            $(".createSubmit").button("reset");
                             $row.addClass("danger");
 
                             $.each(data.Errors, function (i, error) {

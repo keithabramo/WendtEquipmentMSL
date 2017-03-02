@@ -124,6 +124,7 @@ namespace WendtEquipmentTracking.App.Models
         public bool IsHardwareKit { get; set; }
         public bool IsAssociatedToHardwareKit { get; set; }
         public string AssociatedHardwareKitNumber { get; set; }
+        public bool IsDuplicate { get; set; }
 
         public IList<BillOfLadingEquipmentModel> BillOfLadingEquipments { get; set; }
 

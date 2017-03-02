@@ -55,6 +55,12 @@ namespace WendtEquipmentTracking.App.Controllers
                 e.HardwareKitEquipments = null;
             });
 
+            equipmentModels.GroupBy(x => new { x.DrawingNumber, x.WorkOrderNumber, x.Quantity, x.ShippingTagNumber, x.Description })
+              .Where(g => g.Count() > 1)
+              .SelectMany(y => y)
+              .ToList().ForEach(e => e.IsDuplicate = true);
+
+
             return equipmentModels;
         }
 

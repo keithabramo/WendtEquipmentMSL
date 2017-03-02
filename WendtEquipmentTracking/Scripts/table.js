@@ -100,9 +100,15 @@ $(function () {
                             form.initStyles();
                         }
                     },
+                    createdRow: function ( row, data, index ) {
+                        if (data.IsDuplicate) {
+                            $(row).addClass('warning');
+                        }
+                    },
                     deferRender: true,
                     fixedHeader: true,
-                    pageLength: 25,
+                    lengthMenu: [ [100, 500, -1], [100, 500, "All"] ],
+                    pageLength: 100,
                     "columnDefs": [
                         {
                             "data": "EquipmentName", "targets": 0,
@@ -257,21 +263,23 @@ $(function () {
                         { "data": "IsHardwareKit", "targets": 25, visible: false, searchable: false },
                         { "data": "IsAssociatedToHardwareKit", "targets": 26, visible: false, searchable: false },
                         { "data": "AssociatedHardwareKitNumber", "targets": 27, visible: false, searchable: false },
-                        { "data": "Indicators", "targets": 28, visible: false, searchable: false }
+                        { "data": "Indicators", "targets": 28, visible: false, searchable: false },
+                        { "data": "IsDuplicate", "targets": 29, visible: false, searchable: false }
                     ],
                     autoFill: {
                         update: false,
                         columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 11, 15, 18, 19, 20]
                     },
-                    dom: "<'row'<'col-sm-4 text-left custom'f><'col-sm-4 text-center'i><'col-sm-4 text-right'l>>" +
+                    dom: "<'row'<'col-sm-5 text-left custom'f><'col-sm-3 text-center'i><'col-sm-4 text-right'l>>" +
                                              "<'row'<'col-sm-12'tr>>" +
-                                             "<'row'<'col-sm-12 text-center'p>>"
+                                             "<'row'<'col-sm-2 text-left createButtonContainer'><'col-sm-10 text-center'p>>"
                 };
 
                 this.dataTable = $(".table.my-datatable").DataTable(mslSettings);
             } else {
                 this.dataTable = $(".table.my-datatable").DataTable({
-                    pageLength: 25,
+                    lengthMenu: [[100, 500, -1], [100, 500, "All"]],
+                    pageLength: 100,
                     deferRender: true,
                     fixedHeader: true,
                     drawCallback: function (settings) {
@@ -344,6 +352,30 @@ $(function () {
                 }
             });
 
+            $('.table.my-datatable').on('focus', "td", function (e) {
+                $(this).find("input").focus();
+            });
+
+            $('.table.my-datatable').on('keydown', "input", function (e) {
+                var currCell = $(this);
+                var c = "";
+
+                if (e.which == 38) {
+                    // Up Arrow
+                    c = currCell.closest('tr').prev().find('td:eq(' +
+                        currCell.closest("td").index() + ')').find("input");
+                } else if (e.which == 40) {
+                    // Down Arrow
+                    c = currCell.closest('tr').next().find('td:eq(' +
+                        currCell.closest("td").index() + ')').find("input");
+                }
+
+                // If we didn't hit a boundary, update the current cell
+                if (c.length > 0) {
+                    currCell = c;
+                    currCell.focus();
+                }
+            });
 
             // Apply the search
             this.dataTable.columns().every(function () {
