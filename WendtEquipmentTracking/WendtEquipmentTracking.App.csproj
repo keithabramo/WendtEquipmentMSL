@@ -156,6 +156,7 @@
     <Compile Include="AutoMapper\Converters\DateTimeToStringConverter.cs" />
     <Compile Include="AutoMapper\Converters\NullableDateTimeToStringConverter.cs" />
     <Compile Include="AutoMapper\Profiles\BillOfLadingConfig.cs" />
+    <Compile Include="AutoMapper\Profiles\PriorityConfig.cs" />
     <Compile Include="AutoMapper\Profiles\WorkOrderPriceConfig.cs" />
     <Compile Include="AutoMapper\Profiles\HardwareKitConfig.cs" />
     <Compile Include="AutoMapper\Profiles\ProjectConfig.cs" />
@@ -168,6 +169,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\EquipmentApiController.cs" />
     <Compile Include="Controllers\WorkOrderPriceApiController.cs" />
+    <Compile Include="Controllers\PriorityController.cs" />
     <Compile Include="Controllers\WorkOrderPriceController.cs" />
     <Compile Include="Controllers\HardwareKitController.cs" />
     <Compile Include="Controllers\BillOfLadingController.cs" />
@@ -265,6 +267,7 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Files\WorkOrderPriceTemplate.xlsx" />
+    <Compile Include="Models\PriorityModel.cs" />
     <None Include="Properties\PublishProfiles\ReleaseProfile.pubxml" />
     <None Include="Properties\PublishProfiles\StagingProfile.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
@@ -273,6 +276,7 @@
     <Content Include="Scripts\billOfLading.js" />
     <Content Include="Scripts\handsontable.full.min.js" />
     <Content Include="Scripts\handsontableCustom.js" />
+    <Content Include="Scripts\project.js" />
     <Content Include="Scripts\jquery.floatThead.js" />
     <Content Include="Scripts\mslRender.js" />
     <Content Include="Scripts\workOrderPrice.js" />
@@ -351,6 +355,9 @@
     <Content Include="Views\Shared\NotFound.cshtml" />
     <Content Include="Views\Shared\Unauthorized.cshtml" />
     <Content Include="Views\Equipment\Handsontable.cshtml" />
+    <Content Include="Views\Priority\Create.cshtml" />
+    <Content Include="Views\Priority\Edit.cshtml" />
+    <Content Include="Views\Priority\Index.cshtml" />
     <None Include="Web.Staging.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

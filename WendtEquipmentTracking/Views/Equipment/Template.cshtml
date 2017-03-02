@@ -7,11 +7,11 @@
             @Html.ValidationMessageFor(modelItem => modelItem.EquipmentName, "", new { @class = "text-danger" })
         </div> @* Equipment Name *@
         <div>
-            @Html.DropDownListFor(modelItem => modelItem.Priority, new SelectList(Priorities.GetPriorities()), new { @class = "form-control" })
+            @Html.DropDownListFor(modelItem => modelItem.Priority, new SelectList(Model.Priorities), new { @class = "form-control" })
             @Html.ValidationMessageFor(modelItem => modelItem.Priority, "", new { @class = "text-danger" })
         </div> @* Priority *@
         <div>
-            @Html.EditorFor(modelItem => modelItem.ReleaseDate, new { htmlAttributes = new { @class = "form-control datePicker" } })
+            @Html.EditorFor(modelItem => modelItem.ReleaseDate, new { htmlAttributes = new { @class = "form-control datePickerTable" } })
             @Html.ValidationMessageFor(modelItem => modelItem.ReleaseDate, "", new { @class = "text-danger" })
         </div>@* Release Date *@
         <div>

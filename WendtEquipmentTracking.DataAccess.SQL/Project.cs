@@ -18,9 +18,10 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         public Project()
         {
             this.BillOfLadings = new HashSet<BillOfLading>();
-            this.Equipments = new HashSet<Equipment>();
             this.HardwareKits = new HashSet<HardwareKit>();
             this.WorkOrderPrices = new HashSet<WorkOrderPrice>();
+            this.Priorities = new HashSet<Priority>();
+            this.Equipments = new HashSet<Equipment>();
         }
     
         public int ProjectId { get; set; }
@@ -48,10 +49,12 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BillOfLading> BillOfLadings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Equipment> Equipments { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HardwareKit> HardwareKits { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<WorkOrderPrice> WorkOrderPrices { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Priority> Priorities { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Equipment> Equipments { get; set; }
     }
 }

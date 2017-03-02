@@ -6,7 +6,7 @@
             
             //hack since create row is being copyed for the scrolly stuff we need to remove extra id so datepicker stops breaking
            
-            $(".table .datePicker").datepicker({
+            $(".table .datePickerTable").datepicker({
                 onSelect: function () {
                     // The "this" keyword refers to the input (in this case: #someinput)
                     if ($(this).closest("td").length) {
@@ -16,6 +16,8 @@
                     }
                 }
             });
+
+            $(".datePicker").datepicker();
 
             $(".autocomplete").autocomplete({
                 source: "/api/WorkOrderPriceApi/Search"

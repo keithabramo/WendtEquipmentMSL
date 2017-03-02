@@ -1,8 +1,6 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Web.Mvc;
-using WendtEquipmentTracking.App.Common;
 using WendtEquipmentTracking.BusinessLogic;
 using WendtEquipmentTracking.BusinessLogic.Api;
 
@@ -15,6 +13,7 @@ namespace WendtEquipmentTracking.App.Controllers
         private IHardwareKitService hardwareKitService;
         private IWorkOrderPriceService workOrderPriceService;
         private IUserService userService;
+        private IPriorityService priorityService;
 
 
         public ValidateController()
@@ -24,6 +23,7 @@ namespace WendtEquipmentTracking.App.Controllers
             hardwareKitService = new HardwareKitService();
             workOrderPriceService = new WorkOrderPriceService();
             userService = new UserService();
+            priorityService = new PriorityService();
         }
 
         // GET: ValidImportFile
@@ -70,7 +70,7 @@ namespace WendtEquipmentTracking.App.Controllers
                 {
                     return Json(true, JsonRequestBehavior.AllowGet);
                 }
-                
+
                 var projectBO = projectService.GetById(user.ProjectId);
 
                 valid = !projectBO.IsCustomsProject;
@@ -110,7 +110,7 @@ namespace WendtEquipmentTracking.App.Controllers
             {
                 return Json(true, JsonRequestBehavior.AllowGet);
             }
-            
+
             var exists = workOrderPriceService.GetAll().Any(b => b.ProjectId == user.ProjectId
                                                                  && b.WorkOrderPriceId != workOrderPriceId
                                                                  && b.WorkOrderNumber == workOrderNumber);
@@ -118,7 +118,7 @@ namespace WendtEquipmentTracking.App.Controllers
             return Json(!exists, JsonRequestBehavior.AllowGet);
         }
 
-        // GET: ValidWorkOrderNumber
+        // GET: ValidHardwareKitNumber
         public ActionResult ValidHardwareKitNumber(string hardwareKitNumber, int? hardwareKitId)
         {
             var user = userService.GetCurrentUser();
@@ -138,12 +138,28 @@ namespace WendtEquipmentTracking.App.Controllers
             return Json(!exists, JsonRequestBehavior.AllowGet);
         }
 
-        // GET: ValidWorkOrderNumber
+        // GET: ValidProjectNumber
         public ActionResult ValidProjectNumber(string projectNumber, int? projectId)
         {
             var projectBOs = projectService.GetAll();
 
             var exists = projectBOs.Any(b => b.ProjectId != projectId && b.ProjectNumber == projectNumber);
+
+            return Json(!exists, JsonRequestBehavior.AllowGet);
+        }
+
+        // GET: ValidPriorityNumber
+        public ActionResult ValidPriorityNumber(int priorityNumber, int? priorityId)
+        {
+            var user = userService.GetCurrentUser();
+
+            if (user == null)
+            {
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+
+            var exists = priorityService.GetAll(user.ProjectId).Any(b => b.PriorityId != priorityId
+                                                                 && b.PriorityNumber == priorityNumber);
 
             return Json(!exists, JsonRequestBehavior.AllowGet);
         }

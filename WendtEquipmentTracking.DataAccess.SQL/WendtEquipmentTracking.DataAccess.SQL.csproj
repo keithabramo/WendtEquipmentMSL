@@ -60,6 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\IPriorityPriceEngine.cs" />
     <Compile Include="Api\IWorkOrderPriceEngine.cs" />
     <Compile Include="Api\IHardwareKitEngine.cs" />
     <Compile Include="Api\IBillOfLadingEngine.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="Engine\BillOfLadingEngine.cs" />
     <Compile Include="Api\IUserEngine.cs" />
     <Compile Include="Engine\UserEngine.cs" />
+    <Compile Include="Engine\PriorityEngine.cs" />
     <Compile Include="Engine\WorkOrderPriceEngine.cs" />
     <Compile Include="Engine\ProjectEngine.cs" />
     <Compile Include="Engine\EquipmentEngine.cs" />
@@ -89,6 +91,9 @@
     </Compile>
     <Compile Include="IRepository.cs" />
     <Compile Include="ISpecification.cs" />
+    <Compile Include="Priority.cs">
+      <DependentUpon>WendtEquipmentTracking.tt</DependentUpon>
+    </Compile>
     <Compile Include="Project.cs">
       <DependentUpon>WendtEquipmentTracking.tt</DependentUpon>
     </Compile>
@@ -113,9 +118,13 @@
     <Compile Include="Specifications\Equipments\BillOfLadingId.cs" />
     <Compile Include="Specifications\Equipments\IdsSpecification.cs" />
     <Compile Include="Specifications\HardwareKits\IsDeleted.cs" />
+    <Compile Include="Specifications\Priorities\ProjectIdSpecification.cs" />
     <Compile Include="Specifications\Projects\IsDeleted.cs" />
     <Compile Include="Specifications\Users\UsernameSpecification.cs" />
     <Compile Include="Specifications\UserSpecs.cs" />
+    <Compile Include="Specifications\Priorities\IdSpecification.cs" />
+    <Compile Include="Specifications\Priorities\IsDeleted.cs" />
+    <Compile Include="Specifications\PrioritySpecs.cs" />
     <Compile Include="Specifications\WorkOrderPriceSpecs.cs" />
     <Compile Include="Specifications\WorkOrderPrices\IdSpecification.cs" />
     <Compile Include="Specifications\ProjectSpecs.cs" />

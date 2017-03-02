@@ -91,15 +91,6 @@ namespace WendtEquipmentTracking.BusinessLogic
             return equipmentBOs;
         }
 
-        public IEnumerable<EquipmentBO> GetSome(int projectId, int skip, int take)
-        {
-            var equipments = equipmentEngine.List(EquipmentSpecs.ProjectId(projectId)).Skip(skip).Take(take).ToList();
-
-            var equipmentBOs = Mapper.Map<IEnumerable<EquipmentBO>>(equipments);
-
-            return equipmentBOs;
-        }
-
         public EquipmentBO GetById(int id)
         {
             var equipment = equipmentEngine.Get(EquipmentSpecs.Id(id));

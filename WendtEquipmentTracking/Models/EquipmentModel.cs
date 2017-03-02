@@ -132,6 +132,7 @@ namespace WendtEquipmentTracking.App.Models
 
         public IList<HardwareKitEquipmentModel> HardwareKitEquipments { get; set; }
 
+        public IEnumerable<int> Priorities { get; set; }
 
         public IndicatorsModel Indicators { get; set; }
 

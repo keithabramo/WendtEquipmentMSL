@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using DevTrends.MvcDonutCaching;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -77,9 +76,6 @@ namespace WendtEquipmentTracking.App.Controllers
 
                     projectService.Save(projectBO);
 
-                    //clear the cache for the project list at the top right of the page
-                    clearProjectNavCache();
-
                     return RedirectToAction("Index");
                 }
 
@@ -123,9 +119,6 @@ namespace WendtEquipmentTracking.App.Controllers
 
                     projectService.Update(project);
 
-                    //clear the cache for the project list at the top right of the page
-                    clearProjectNavCache();
-
                     return RedirectToAction("Index");
                 }
 
@@ -138,50 +131,47 @@ namespace WendtEquipmentTracking.App.Controllers
         }
 
         // POST: Project/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, ProjectModel model)
-        {
-            try
-            {
-                var project = projectService.GetById(id);
+        //[HttpPost]
+        //public ActionResult Delete(int id, ProjectModel model)
+        //{
+        //    try
+        //    {
+        //        var project = projectService.GetById(id);
 
-                if (project == null)
-                {
-                    return HttpNotFound();
-                }
+        //        if (project == null)
+        //        {
+        //            return HttpNotFound();
+        //        }
 
-                projectService.Delete(id);
+        //        projectService.Delete(id);
 
-                var user = userService.GetCurrentUser();
+        //        var user = userService.GetCurrentUser();
 
-                if (user != null)
-                {
+        //        if (user != null)
+        //        {
 
-                    if (id == user.ProjectId)
-                    {
-                        userService.Delete();
-                    }
-                }
+        //            if (id == user.ProjectId)
+        //            {
+        //                userService.Delete();
+        //            }
+        //        }
 
-                //clear the cache for the project list at the top right of the page
-                clearProjectNavCache();
+        //        return RedirectToAction("Index");
+        //    }
+        //    catch
+        //    {
+        //        var project = projectService.GetById(id);
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                var project = projectService.GetById(id);
+        //        if (project == null)
+        //        {
+        //            return HttpNotFound();
+        //        }
 
-                if (project == null)
-                {
-                    return HttpNotFound();
-                }
+        //        model = Mapper.Map<ProjectModel>(project);
 
-                model = Mapper.Map<ProjectModel>(project);
-
-                return View(model);
-            }
-        }
+        //        return View(model);
+        //    }
+        //}
 
         //[DonutOutputCache(Duration = 3600)]
         public ActionResult ProjectNavPartial()
@@ -204,7 +194,8 @@ namespace WendtEquipmentTracking.App.Controllers
                         CurrentProject = currentProjectModel,
                         Projects = projectModels.OrderBy(p => Convert.ToInt32(p.ProjectNumber))
                     };
-                } catch(Exception e)
+                }
+                catch (Exception e)
                 {
                     model = new ProjectNavModel
                     {
@@ -235,18 +226,9 @@ namespace WendtEquipmentTracking.App.Controllers
 
             var projectBO = projectService.GetAllForNavigation().SingleOrDefault(p => p.ProjectId == ProjectId);
 
-            //clear the cache for the project list at the top right of the page
-            clearProjectNavCache();
 
             return RedirectToAction("Index", "Home");
         }
 
-        private void clearProjectNavCache()
-        {
-            //var cacheManager = new OutputCacheManager();
-
-            ////remove a single cached action output (Index action)
-            //cacheManager.RemoveItem("Project", "ProjectNavPartial");
-        }
     }
 }

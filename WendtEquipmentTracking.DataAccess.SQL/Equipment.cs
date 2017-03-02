@@ -24,7 +24,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         public int EquipmentId { get; set; }
         public int ProjectId { get; set; }
         public string EquipmentName { get; set; }
-        public string Priority { get; set; }
+        public Nullable<int> Priority { get; set; }
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
@@ -45,8 +45,6 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         public Nullable<double> CustomsValue { get; set; }
         public Nullable<double> SalePrice { get; set; }
         public string Notes { get; set; }
-        public string AutoShipFile { get; set; }
-        public string SalesOrderNumber { get; set; }
         public string ShippedFrom { get; set; }
         public string HTSCode { get; set; }
         public string CountryOfOrigin { get; set; }

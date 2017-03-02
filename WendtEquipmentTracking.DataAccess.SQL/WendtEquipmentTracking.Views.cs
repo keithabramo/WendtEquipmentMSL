@@ -11,7 +11,7 @@ using System.Data.Entity.Infrastructure.MappingViews;
 
 [assembly: DbMappingViewCacheTypeAttribute(
     typeof(WendtEquipmentTracking.DataAccess.SQL.WendtEquipmentTrackingEntities),
-    typeof(Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets7640204db6455ec311fa9fa28a59e95b3f6b8443a50b2cdd5c4a60e2131fc371))]
+    typeof(Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySetsa4a1d5e0edd739c44b1f35794a17038a3662f9e16be796fceeeec55fa043de20))]
 
 namespace Edm_EntityMappingGeneratedViews
 {
@@ -23,14 +23,14 @@ namespace Edm_EntityMappingGeneratedViews
     /// Implements a mapping view cache.
     /// </summary>
     [GeneratedCode("Entity Framework Power Tools", "0.9.0.0")]
-    internal sealed class ViewsForBaseEntitySets7640204db6455ec311fa9fa28a59e95b3f6b8443a50b2cdd5c4a60e2131fc371 : DbMappingViewCache
+    internal sealed class ViewsForBaseEntitySetsa4a1d5e0edd739c44b1f35794a17038a3662f9e16be796fceeeec55fa043de20 : DbMappingViewCache
     {
         /// <summary>
         /// Gets a hash value computed over the mapping closure.
         /// </summary>
         public override string MappingHashValue
         {
-            get { return "7640204db6455ec311fa9fa28a59e95b3f6b8443a50b2cdd5c4a60e2131fc371"; }
+            get { return "a4a1d5e0edd739c44b1f35794a17038a3662f9e16be796fceeeec55fa043de20"; }
         }
 
         /// <summary>
@@ -57,42 +57,42 @@ namespace Edm_EntityMappingGeneratedViews
                 return GetView1();
             }
 
-            if (extentName == "WendtEquipmentTrackingDataAccessSQLModelStoreContainer.Equipment")
+            if (extentName == "WendtEquipmentTrackingDataAccessSQLModelStoreContainer.HardwareKit")
             {
                 return GetView2();
             }
 
-            if (extentName == "WendtEquipmentTrackingDataAccessSQLModelStoreContainer.HardwareKit")
+            if (extentName == "WendtEquipmentTrackingDataAccessSQLModelStoreContainer.HardwareKitEquipment")
             {
                 return GetView3();
             }
 
-            if (extentName == "WendtEquipmentTrackingDataAccessSQLModelStoreContainer.HardwareKitEquipment")
+            if (extentName == "WendtEquipmentTrackingDataAccessSQLModelStoreContainer.Project")
             {
                 return GetView4();
             }
 
-            if (extentName == "WendtEquipmentTrackingDataAccessSQLModelStoreContainer.Project")
+            if (extentName == "WendtEquipmentTrackingDataAccessSQLModelStoreContainer.WorkOrderPrice")
             {
                 return GetView5();
             }
 
-            if (extentName == "WendtEquipmentTrackingDataAccessSQLModelStoreContainer.WorkOrderPrice")
+            if (extentName == "WendtEquipmentTrackingDataAccessSQLModelStoreContainer.Priority")
             {
                 return GetView6();
             }
 
-            if (extentName == "WendtEquipmentTrackingEntities.BillOfLadings")
+            if (extentName == "WendtEquipmentTrackingDataAccessSQLModelStoreContainer.Equipment")
             {
                 return GetView7();
             }
 
-            if (extentName == "WendtEquipmentTrackingEntities.BillOfLadingEquipments")
+            if (extentName == "WendtEquipmentTrackingEntities.BillOfLadings")
             {
                 return GetView8();
             }
 
-            if (extentName == "WendtEquipmentTrackingEntities.Equipments")
+            if (extentName == "WendtEquipmentTrackingEntities.BillOfLadingEquipments")
             {
                 return GetView9();
             }
@@ -117,14 +117,24 @@ namespace Edm_EntityMappingGeneratedViews
                 return GetView13();
             }
 
-            if (extentName == "WendtEquipmentTrackingDataAccessSQLModelStoreContainer.User")
+            if (extentName == "WendtEquipmentTrackingEntities.Priorities")
             {
                 return GetView14();
             }
 
-            if (extentName == "WendtEquipmentTrackingEntities.Users")
+            if (extentName == "WendtEquipmentTrackingEntities.Equipments")
             {
                 return GetView15();
+            }
+
+            if (extentName == "WendtEquipmentTrackingDataAccessSQLModelStoreContainer.User")
+            {
+                return GetView16();
+            }
+
+            if (extentName == "WendtEquipmentTrackingEntities.Users")
+            {
+                return GetView17();
             }
 
             return null;
@@ -186,58 +196,10 @@ namespace Edm_EntityMappingGeneratedViews
         }
 
         /// <summary>
-        /// Gets the view for WendtEquipmentTrackingDataAccessSQLModelStoreContainer.Equipment.
-        /// </summary>
-        /// <returns>The mapping view.</returns>
-        private static DbMappingView GetView2()
-        {
-            return new DbMappingView(@"
-    SELECT VALUE -- Constructing Equipment
-        [WendtEquipmentTracking.DataAccess.SQL.Model.Store.Equipment](T1.Equipment_EquipmentId, T1.Equipment_ProjectId, T1.Equipment_EquipmentName, T1.Equipment_Priority, T1.Equipment_CreatedBy, T1.Equipment_CreatedDate, T1.Equipment_ModifiedBy, T1.Equipment_ModifiedDate, T1.Equipment_ReleaseDate, T1.Equipment_DrawingNumber, T1.Equipment_WorkOrderNumber, T1.Equipment_Quantity, T1.Equipment_ShippingTagNumber, T1.Equipment_Description, T1.Equipment_UnitWeight, T1.Equipment_TotalWeight, T1.Equipment_TotalWeightShipped, T1.Equipment_ReadyToShip, T1.Equipment_ShippedQuantity, T1.Equipment_LeftToShip, T1.Equipment_FullyShipped, T1.Equipment_CustomsValue, T1.Equipment_SalePrice, T1.Equipment_Notes, T1.Equipment_AutoShipFile, T1.Equipment_SalesOrderNumber, T1.Equipment_ShippedFrom, T1.Equipment_HTSCode, T1.Equipment_CountryOfOrigin, T1.Equipment_IsHardware, T1.Equipment_IsDeleted, T1.Equipment_HardwareKitId)
-    FROM (
-        SELECT 
-            T.EquipmentId AS Equipment_EquipmentId, 
-            T.ProjectId AS Equipment_ProjectId, 
-            T.EquipmentName AS Equipment_EquipmentName, 
-            T.Priority AS Equipment_Priority, 
-            T.CreatedBy AS Equipment_CreatedBy, 
-            T.CreatedDate AS Equipment_CreatedDate, 
-            T.ModifiedBy AS Equipment_ModifiedBy, 
-            T.ModifiedDate AS Equipment_ModifiedDate, 
-            T.ReleaseDate AS Equipment_ReleaseDate, 
-            T.DrawingNumber AS Equipment_DrawingNumber, 
-            T.WorkOrderNumber AS Equipment_WorkOrderNumber, 
-            T.Quantity AS Equipment_Quantity, 
-            T.ShippingTagNumber AS Equipment_ShippingTagNumber, 
-            T.Description AS Equipment_Description, 
-            T.UnitWeight AS Equipment_UnitWeight, 
-            T.TotalWeight AS Equipment_TotalWeight, 
-            T.TotalWeightShipped AS Equipment_TotalWeightShipped, 
-            T.ReadyToShip AS Equipment_ReadyToShip, 
-            T.ShippedQuantity AS Equipment_ShippedQuantity, 
-            T.LeftToShip AS Equipment_LeftToShip, 
-            T.FullyShipped AS Equipment_FullyShipped, 
-            T.CustomsValue AS Equipment_CustomsValue, 
-            T.SalePrice AS Equipment_SalePrice, 
-            T.Notes AS Equipment_Notes, 
-            T.AutoShipFile AS Equipment_AutoShipFile, 
-            T.SalesOrderNumber AS Equipment_SalesOrderNumber, 
-            T.ShippedFrom AS Equipment_ShippedFrom, 
-            T.HTSCode AS Equipment_HTSCode, 
-            T.CountryOfOrigin AS Equipment_CountryOfOrigin, 
-            T.IsHardware AS Equipment_IsHardware, 
-            T.IsDeleted AS Equipment_IsDeleted, 
-            T.HardwareKitId AS Equipment_HardwareKitId, 
-            True AS _from0
-        FROM WendtEquipmentTrackingEntities.Equipments AS T
-    ) AS T1");
-        }
-
-        /// <summary>
         /// Gets the view for WendtEquipmentTrackingDataAccessSQLModelStoreContainer.HardwareKit.
         /// </summary>
         /// <returns>The mapping view.</returns>
-        private static DbMappingView GetView3()
+        private static DbMappingView GetView2()
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing HardwareKit
@@ -264,7 +226,7 @@ namespace Edm_EntityMappingGeneratedViews
         /// Gets the view for WendtEquipmentTrackingDataAccessSQLModelStoreContainer.HardwareKitEquipment.
         /// </summary>
         /// <returns>The mapping view.</returns>
-        private static DbMappingView GetView4()
+        private static DbMappingView GetView3()
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing HardwareKitEquipment
@@ -285,7 +247,7 @@ namespace Edm_EntityMappingGeneratedViews
         /// Gets the view for WendtEquipmentTrackingDataAccessSQLModelStoreContainer.Project.
         /// </summary>
         /// <returns>The mapping view.</returns>
-        private static DbMappingView GetView5()
+        private static DbMappingView GetView4()
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing Project
@@ -322,7 +284,7 @@ namespace Edm_EntityMappingGeneratedViews
         /// Gets the view for WendtEquipmentTrackingDataAccessSQLModelStoreContainer.WorkOrderPrice.
         /// </summary>
         /// <returns>The mapping view.</returns>
-        private static DbMappingView GetView6()
+        private static DbMappingView GetView5()
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing WorkOrderPrice
@@ -346,10 +308,82 @@ namespace Edm_EntityMappingGeneratedViews
         }
 
         /// <summary>
-        /// Gets the view for WendtEquipmentTrackingEntities.BillOfLadings.
+        /// Gets the view for WendtEquipmentTrackingDataAccessSQLModelStoreContainer.Priority.
+        /// </summary>
+        /// <returns>The mapping view.</returns>
+        private static DbMappingView GetView6()
+        {
+            return new DbMappingView(@"
+    SELECT VALUE -- Constructing Priority
+        [WendtEquipmentTracking.DataAccess.SQL.Model.Store.Priority](T1.Priority_PriorityId, T1.Priority_ProjectId, T1.Priority_PriorityNumber, T1.Priority_DueDate, T1.Priority_EquipmentName, T1.Priority_CreatedBy, T1.Priority_CreatedDate, T1.Priority_ModifiedBy, T1.Priority_ModifiedDate, T1.Priority_IsDeleted)
+    FROM (
+        SELECT 
+            T.PriorityId AS Priority_PriorityId, 
+            T.ProjectId AS Priority_ProjectId, 
+            T.PriorityNumber AS Priority_PriorityNumber, 
+            T.DueDate AS Priority_DueDate, 
+            T.EquipmentName AS Priority_EquipmentName, 
+            T.CreatedBy AS Priority_CreatedBy, 
+            T.CreatedDate AS Priority_CreatedDate, 
+            T.ModifiedBy AS Priority_ModifiedBy, 
+            T.ModifiedDate AS Priority_ModifiedDate, 
+            T.IsDeleted AS Priority_IsDeleted, 
+            True AS _from0
+        FROM WendtEquipmentTrackingEntities.Priorities AS T
+    ) AS T1");
+        }
+
+        /// <summary>
+        /// Gets the view for WendtEquipmentTrackingDataAccessSQLModelStoreContainer.Equipment.
         /// </summary>
         /// <returns>The mapping view.</returns>
         private static DbMappingView GetView7()
+        {
+            return new DbMappingView(@"
+    SELECT VALUE -- Constructing Equipment
+        [WendtEquipmentTracking.DataAccess.SQL.Model.Store.Equipment](T1.Equipment_EquipmentId, T1.Equipment_ProjectId, T1.Equipment_EquipmentName, T1.Equipment_Priority, T1.Equipment_CreatedBy, T1.Equipment_CreatedDate, T1.Equipment_ModifiedBy, T1.Equipment_ModifiedDate, T1.Equipment_ReleaseDate, T1.Equipment_DrawingNumber, T1.Equipment_WorkOrderNumber, T1.Equipment_Quantity, T1.Equipment_ShippingTagNumber, T1.Equipment_Description, T1.Equipment_UnitWeight, T1.Equipment_TotalWeight, T1.Equipment_TotalWeightShipped, T1.Equipment_ReadyToShip, T1.Equipment_ShippedQuantity, T1.Equipment_LeftToShip, T1.Equipment_FullyShipped, T1.Equipment_CustomsValue, T1.Equipment_SalePrice, T1.Equipment_Notes, T1.Equipment_ShippedFrom, T1.Equipment_HTSCode, T1.Equipment_CountryOfOrigin, T1.Equipment_IsHardware, T1.Equipment_IsDeleted, T1.Equipment_HardwareKitId)
+    FROM (
+        SELECT 
+            T.EquipmentId AS Equipment_EquipmentId, 
+            T.ProjectId AS Equipment_ProjectId, 
+            T.EquipmentName AS Equipment_EquipmentName, 
+            T.Priority AS Equipment_Priority, 
+            T.CreatedBy AS Equipment_CreatedBy, 
+            T.CreatedDate AS Equipment_CreatedDate, 
+            T.ModifiedBy AS Equipment_ModifiedBy, 
+            T.ModifiedDate AS Equipment_ModifiedDate, 
+            T.ReleaseDate AS Equipment_ReleaseDate, 
+            T.DrawingNumber AS Equipment_DrawingNumber, 
+            T.WorkOrderNumber AS Equipment_WorkOrderNumber, 
+            T.Quantity AS Equipment_Quantity, 
+            T.ShippingTagNumber AS Equipment_ShippingTagNumber, 
+            T.Description AS Equipment_Description, 
+            T.UnitWeight AS Equipment_UnitWeight, 
+            T.TotalWeight AS Equipment_TotalWeight, 
+            T.TotalWeightShipped AS Equipment_TotalWeightShipped, 
+            T.ReadyToShip AS Equipment_ReadyToShip, 
+            T.ShippedQuantity AS Equipment_ShippedQuantity, 
+            T.LeftToShip AS Equipment_LeftToShip, 
+            T.FullyShipped AS Equipment_FullyShipped, 
+            T.CustomsValue AS Equipment_CustomsValue, 
+            T.SalePrice AS Equipment_SalePrice, 
+            T.Notes AS Equipment_Notes, 
+            T.ShippedFrom AS Equipment_ShippedFrom, 
+            T.HTSCode AS Equipment_HTSCode, 
+            T.CountryOfOrigin AS Equipment_CountryOfOrigin, 
+            T.IsHardware AS Equipment_IsHardware, 
+            T.IsDeleted AS Equipment_IsDeleted, 
+            T.HardwareKitId AS Equipment_HardwareKitId, 
+            True AS _from0
+        FROM WendtEquipmentTrackingEntities.Equipments AS T
+    ) AS T1");
+        }
+
+        /// <summary>
+        /// Gets the view for WendtEquipmentTrackingEntities.BillOfLadings.
+        /// </summary>
+        /// <returns>The mapping view.</returns>
+        private static DbMappingView GetView8()
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing BillOfLadings
@@ -380,7 +414,7 @@ namespace Edm_EntityMappingGeneratedViews
         /// Gets the view for WendtEquipmentTrackingEntities.BillOfLadingEquipments.
         /// </summary>
         /// <returns>The mapping view.</returns>
-        private static DbMappingView GetView8()
+        private static DbMappingView GetView9()
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing BillOfLadingEquipments
@@ -397,54 +431,6 @@ namespace Edm_EntityMappingGeneratedViews
             T.IsDeleted AS BillOfLadingEquipment_IsDeleted, 
             True AS _from0
         FROM WendtEquipmentTrackingDataAccessSQLModelStoreContainer.BillOfLadingEquipment AS T
-    ) AS T1");
-        }
-
-        /// <summary>
-        /// Gets the view for WendtEquipmentTrackingEntities.Equipments.
-        /// </summary>
-        /// <returns>The mapping view.</returns>
-        private static DbMappingView GetView9()
-        {
-            return new DbMappingView(@"
-    SELECT VALUE -- Constructing Equipments
-        [WendtEquipmentTracking.DataAccess.SQL.Model.Equipment](T1.Equipment_EquipmentId, T1.Equipment_ProjectId, T1.Equipment_EquipmentName, T1.Equipment_Priority, T1.Equipment_CreatedBy, T1.Equipment_CreatedDate, T1.Equipment_ModifiedBy, T1.Equipment_ModifiedDate, T1.Equipment_ReleaseDate, T1.Equipment_DrawingNumber, T1.Equipment_WorkOrderNumber, T1.Equipment_Quantity, T1.Equipment_ShippingTagNumber, T1.Equipment_Description, T1.Equipment_UnitWeight, T1.Equipment_TotalWeight, T1.Equipment_TotalWeightShipped, T1.Equipment_ReadyToShip, T1.Equipment_ShippedQuantity, T1.Equipment_LeftToShip, T1.Equipment_FullyShipped, T1.Equipment_CustomsValue, T1.Equipment_SalePrice, T1.Equipment_Notes, T1.Equipment_AutoShipFile, T1.Equipment_SalesOrderNumber, T1.Equipment_ShippedFrom, T1.Equipment_HTSCode, T1.Equipment_CountryOfOrigin, T1.Equipment_IsHardware, T1.Equipment_IsDeleted, T1.Equipment_HardwareKitId)
-    FROM (
-        SELECT 
-            T.EquipmentId AS Equipment_EquipmentId, 
-            T.ProjectId AS Equipment_ProjectId, 
-            T.EquipmentName AS Equipment_EquipmentName, 
-            T.Priority AS Equipment_Priority, 
-            T.CreatedBy AS Equipment_CreatedBy, 
-            T.CreatedDate AS Equipment_CreatedDate, 
-            T.ModifiedBy AS Equipment_ModifiedBy, 
-            T.ModifiedDate AS Equipment_ModifiedDate, 
-            T.ReleaseDate AS Equipment_ReleaseDate, 
-            T.DrawingNumber AS Equipment_DrawingNumber, 
-            T.WorkOrderNumber AS Equipment_WorkOrderNumber, 
-            T.Quantity AS Equipment_Quantity, 
-            T.ShippingTagNumber AS Equipment_ShippingTagNumber, 
-            T.Description AS Equipment_Description, 
-            T.UnitWeight AS Equipment_UnitWeight, 
-            T.TotalWeight AS Equipment_TotalWeight, 
-            T.TotalWeightShipped AS Equipment_TotalWeightShipped, 
-            T.ReadyToShip AS Equipment_ReadyToShip, 
-            T.ShippedQuantity AS Equipment_ShippedQuantity, 
-            T.LeftToShip AS Equipment_LeftToShip, 
-            T.FullyShipped AS Equipment_FullyShipped, 
-            T.CustomsValue AS Equipment_CustomsValue, 
-            T.SalePrice AS Equipment_SalePrice, 
-            T.Notes AS Equipment_Notes, 
-            T.AutoShipFile AS Equipment_AutoShipFile, 
-            T.SalesOrderNumber AS Equipment_SalesOrderNumber, 
-            T.ShippedFrom AS Equipment_ShippedFrom, 
-            T.HTSCode AS Equipment_HTSCode, 
-            T.CountryOfOrigin AS Equipment_CountryOfOrigin, 
-            T.IsHardware AS Equipment_IsHardware, 
-            T.IsDeleted AS Equipment_IsDeleted, 
-            T.HardwareKitId AS Equipment_HardwareKitId, 
-            True AS _from0
-        FROM WendtEquipmentTrackingDataAccessSQLModelStoreContainer.Equipment AS T
     ) AS T1");
         }
 
@@ -561,10 +547,82 @@ namespace Edm_EntityMappingGeneratedViews
         }
 
         /// <summary>
-        /// Gets the view for WendtEquipmentTrackingDataAccessSQLModelStoreContainer.User.
+        /// Gets the view for WendtEquipmentTrackingEntities.Priorities.
         /// </summary>
         /// <returns>The mapping view.</returns>
         private static DbMappingView GetView14()
+        {
+            return new DbMappingView(@"
+    SELECT VALUE -- Constructing Priorities
+        [WendtEquipmentTracking.DataAccess.SQL.Model.Priority](T1.Priority_PriorityId, T1.Priority_ProjectId, T1.Priority_PriorityNumber, T1.Priority_DueDate, T1.Priority_EquipmentName, T1.Priority_CreatedBy, T1.Priority_CreatedDate, T1.Priority_ModifiedBy, T1.Priority_ModifiedDate, T1.Priority_IsDeleted)
+    FROM (
+        SELECT 
+            T.PriorityId AS Priority_PriorityId, 
+            T.ProjectId AS Priority_ProjectId, 
+            T.PriorityNumber AS Priority_PriorityNumber, 
+            T.DueDate AS Priority_DueDate, 
+            T.EquipmentName AS Priority_EquipmentName, 
+            T.CreatedBy AS Priority_CreatedBy, 
+            T.CreatedDate AS Priority_CreatedDate, 
+            T.ModifiedBy AS Priority_ModifiedBy, 
+            T.ModifiedDate AS Priority_ModifiedDate, 
+            T.IsDeleted AS Priority_IsDeleted, 
+            True AS _from0
+        FROM WendtEquipmentTrackingDataAccessSQLModelStoreContainer.Priority AS T
+    ) AS T1");
+        }
+
+        /// <summary>
+        /// Gets the view for WendtEquipmentTrackingEntities.Equipments.
+        /// </summary>
+        /// <returns>The mapping view.</returns>
+        private static DbMappingView GetView15()
+        {
+            return new DbMappingView(@"
+    SELECT VALUE -- Constructing Equipments
+        [WendtEquipmentTracking.DataAccess.SQL.Model.Equipment](T1.Equipment_EquipmentId, T1.Equipment_ProjectId, T1.Equipment_EquipmentName, T1.Equipment_Priority, T1.Equipment_CreatedBy, T1.Equipment_CreatedDate, T1.Equipment_ModifiedBy, T1.Equipment_ModifiedDate, T1.Equipment_ReleaseDate, T1.Equipment_DrawingNumber, T1.Equipment_WorkOrderNumber, T1.Equipment_Quantity, T1.Equipment_ShippingTagNumber, T1.Equipment_Description, T1.Equipment_UnitWeight, T1.Equipment_TotalWeight, T1.Equipment_TotalWeightShipped, T1.Equipment_ReadyToShip, T1.Equipment_ShippedQuantity, T1.Equipment_LeftToShip, T1.Equipment_FullyShipped, T1.Equipment_CustomsValue, T1.Equipment_SalePrice, T1.Equipment_Notes, T1.Equipment_ShippedFrom, T1.Equipment_HTSCode, T1.Equipment_CountryOfOrigin, T1.Equipment_IsHardware, T1.Equipment_IsDeleted, T1.Equipment_HardwareKitId)
+    FROM (
+        SELECT 
+            T.EquipmentId AS Equipment_EquipmentId, 
+            T.ProjectId AS Equipment_ProjectId, 
+            T.EquipmentName AS Equipment_EquipmentName, 
+            T.Priority AS Equipment_Priority, 
+            T.CreatedBy AS Equipment_CreatedBy, 
+            T.CreatedDate AS Equipment_CreatedDate, 
+            T.ModifiedBy AS Equipment_ModifiedBy, 
+            T.ModifiedDate AS Equipment_ModifiedDate, 
+            T.ReleaseDate AS Equipment_ReleaseDate, 
+            T.DrawingNumber AS Equipment_DrawingNumber, 
+            T.WorkOrderNumber AS Equipment_WorkOrderNumber, 
+            T.Quantity AS Equipment_Quantity, 
+            T.ShippingTagNumber AS Equipment_ShippingTagNumber, 
+            T.Description AS Equipment_Description, 
+            T.UnitWeight AS Equipment_UnitWeight, 
+            T.TotalWeight AS Equipment_TotalWeight, 
+            T.TotalWeightShipped AS Equipment_TotalWeightShipped, 
+            T.ReadyToShip AS Equipment_ReadyToShip, 
+            T.ShippedQuantity AS Equipment_ShippedQuantity, 
+            T.LeftToShip AS Equipment_LeftToShip, 
+            T.FullyShipped AS Equipment_FullyShipped, 
+            T.CustomsValue AS Equipment_CustomsValue, 
+            T.SalePrice AS Equipment_SalePrice, 
+            T.Notes AS Equipment_Notes, 
+            T.ShippedFrom AS Equipment_ShippedFrom, 
+            T.HTSCode AS Equipment_HTSCode, 
+            T.CountryOfOrigin AS Equipment_CountryOfOrigin, 
+            T.IsHardware AS Equipment_IsHardware, 
+            T.IsDeleted AS Equipment_IsDeleted, 
+            T.HardwareKitId AS Equipment_HardwareKitId, 
+            True AS _from0
+        FROM WendtEquipmentTrackingDataAccessSQLModelStoreContainer.Equipment AS T
+    ) AS T1");
+        }
+
+        /// <summary>
+        /// Gets the view for WendtEquipmentTrackingDataAccessSQLModelStoreContainer.User.
+        /// </summary>
+        /// <returns>The mapping view.</returns>
+        private static DbMappingView GetView16()
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing User
@@ -583,7 +641,7 @@ namespace Edm_EntityMappingGeneratedViews
         /// Gets the view for WendtEquipmentTrackingEntities.Users.
         /// </summary>
         /// <returns>The mapping view.</returns>
-        private static DbMappingView GetView15()
+        private static DbMappingView GetView17()
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing Users

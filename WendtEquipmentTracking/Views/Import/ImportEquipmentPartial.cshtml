@@ -57,11 +57,11 @@
                                 @Html.ValidationMessageFor(modelItem => modelItem[i].EquipmentName, "", new { @class = "text-danger" })
                             </td>
                             <td>
-                                @Html.DropDownListFor(modelItem => modelItem[i].Priority, new SelectList(Priorities.GetPriorities()), new { @class = "form-control" })
+                                @Html.DropDownListFor(modelItem => modelItem[i].Priority, new SelectList(Model[i].Priorities), new { @class = "form-control" })
                                 @Html.ValidationMessageFor(modelItem => modelItem[i].Priority, "", new { @class = "text-danger" })
                             </td>
                             <td>
-                                @Html.EditorFor(modelItem => modelItem[i].ReleaseDate, new { htmlAttributes = new { @class = "form-control datePicker" } })
+                                @Html.EditorFor(modelItem => modelItem[i].ReleaseDate, new { htmlAttributes = new { @class = "form-control datePickerTable" } })
                                 @Html.ValidationMessageFor(modelItem => modelItem[i].ReleaseDate, "", new { @class = "text-danger" })
                             </td>
                             <td>

@@ -18,6 +18,8 @@ namespace WendtEquipmentTracking.App.Controllers
         private IEquipmentService equipmentService;
         private IWorkOrderPriceService workOrderPriceService;
         private IUserService userService;
+        private IPriorityService priorityService;
+
 
         public ImportController()
         {
@@ -25,6 +27,7 @@ namespace WendtEquipmentTracking.App.Controllers
             equipmentService = new EquipmentService();
             workOrderPriceService = new WorkOrderPriceService();
             userService = new UserService();
+            priorityService = new PriorityService();
         }
 
         // GET: Equipment
@@ -90,6 +93,16 @@ namespace WendtEquipmentTracking.App.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    var user = userService.GetCurrentUser();
+
+                    IEnumerable<int> priorities = new List<int>();
+                    if (user != null)
+                    {
+                        var prioritiesBOs = priorityService.GetAll(user.ProjectId);
+
+                        priorities = prioritiesBOs.Select(p => p.PriorityNumber).OrderBy(p => p).ToList();
+                    }
+
 
                     var importBO = new ImportBO
                     {
@@ -99,10 +112,13 @@ namespace WendtEquipmentTracking.App.Controllers
 
                     var equipmentBOs = importService.GetEquipmentImport(importBO).ToList();
 
+
+
                     var equipmentModels = Mapper.Map<List<EquipmentSelectionModel>>(equipmentBOs);
                     equipmentModels.ForEach(e =>
                     {
                         e.Checked = true;
+                        e.Priorities = priorities;
                     });
 
                     return PartialView("ImportEquipmentPartial", equipmentModels);

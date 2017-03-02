@@ -109,7 +109,8 @@ $(function () {
                     fixedHeader: true,
                     lengthMenu: [ [100, 500, -1], [100, 500, "All"] ],
                     pageLength: 100,
-                    "columnDefs": [
+                    order: [[ 2, 'desc' ]],
+                    columnDefs: [
                         {
                             "data": "EquipmentName", "targets": 0,
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {

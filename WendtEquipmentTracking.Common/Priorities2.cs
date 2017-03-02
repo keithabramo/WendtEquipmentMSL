@@ -2,7 +2,7 @@
 
 namespace WendtEquipmentTracking.Common
 {
-    public static class Priorities
+    public static class Priorities2
     {
         public static IList<string> GetPriorities()
         {

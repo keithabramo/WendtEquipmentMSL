@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using WendtEquipmentTracking.App.Models;
 using WendtEquipmentTracking.BusinessLogic;
@@ -12,12 +13,14 @@ namespace WendtEquipmentTracking.App.Controllers
         private IEquipmentService equipmentService;
         private IProjectService projectService;
         private IUserService userService;
+        private IPriorityService priorityService;
 
         public EquipmentController()
         {
             equipmentService = new EquipmentService();
             projectService = new ProjectService();
             userService = new UserService();
+            priorityService = new PriorityService();
         }
 
         //
@@ -51,9 +54,44 @@ namespace WendtEquipmentTracking.App.Controllers
         [ChildActionOnly]
         public ActionResult Create()
         {
-            return PartialView(new EquipmentModel());
+            var user = userService.GetCurrentUser();
+
+            IEnumerable<int> priorities = new List<int>();
+            if (user != null)
+            {
+                var prioritiesBOs = priorityService.GetAll(user.ProjectId);
+
+                priorities = prioritiesBOs.Select(p => p.PriorityNumber).OrderBy(p => p).ToList();
+            }
+
+
+            return PartialView(new EquipmentModel
+            {
+                Priorities = priorities
+            });
         }
 
+        //
+        // GET: /Equipment/Template
+        [ChildActionOnly]
+        public ActionResult Template()
+        {
+            var user = userService.GetCurrentUser();
+
+            IEnumerable<int> priorities = new List<int>();
+            if (user != null)
+            {
+                var prioritiesBOs = priorityService.GetAll(user.ProjectId);
+
+                priorities = prioritiesBOs.Select(p => p.PriorityNumber).OrderBy(p => p).ToList();
+            }
+
+
+            return PartialView(new EquipmentModel
+            {
+                Priorities = priorities
+            });
+        }
 
 
 

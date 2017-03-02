@@ -12,15 +12,19 @@ namespace WendtEquipmentTracking.DataAccess.SQL
     using System;
     using System.Collections.Generic;
     
-    public partial class HardwareKitEquipment
+    public partial class Priority
     {
-        public int HardwareKitEquipmentId { get; set; }
-        public int HardwareKitId { get; set; }
-        public int EquipmentId { get; set; }
-        public double QuantityToShip { get; set; }
+        public int PriorityId { get; set; }
+        public int ProjectId { get; set; }
+        public int PriorityNumber { get; set; }
+        public System.DateTime DueDate { get; set; }
+        public string EquipmentName { get; set; }
+        public string CreatedBy { get; set; }
+        public System.DateTime CreatedDate { get; set; }
+        public string ModifiedBy { get; set; }
+        public Nullable<System.DateTime> ModifiedDate { get; set; }
         public bool IsDeleted { get; set; }
     
-        public virtual HardwareKit HardwareKit { get; set; }
-        public virtual Equipment Equipment { get; set; }
+        public virtual Project Project { get; set; }
     }
 }
