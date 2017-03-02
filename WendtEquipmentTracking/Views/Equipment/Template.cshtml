@@ -80,12 +80,6 @@
             @Html.ValidationMessageFor(modelItem => modelItem.Notes, "", new { @class = "text-danger" })
         </div>@* Notes *@
         <div>
-            @Html.HiddenFor(modelItem => modelItem.SalesOrderNumber)
-        </div>@* SalesOrderNumber *@
-        <div>
-            @Html.HiddenFor(modelItem => modelItem.AutoShipFile)
-        </div>@* AutoShipFile *@
-        <div>
             @Ajax.ActionLink("Delete", "Delete", new AjaxOptions { Confirm = "Are you sure you want to delete this equipment record?", OnSuccess = "DeleteSuccess", HttpMethod = "POST" })
         </div>@* Delete *@
         <div>

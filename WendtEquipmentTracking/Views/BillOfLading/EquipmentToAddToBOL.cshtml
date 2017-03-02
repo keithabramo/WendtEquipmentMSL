@@ -74,12 +74,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.BillOfLadingEquipments[0].Equipment.Notes)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.BillOfLadingEquipments[0].Equipment.SalesOrderNumber)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.BillOfLadingEquipments[0].Equipment.AutoShipFile)
-            </th>
+            </th>*@
         </tr>
     </thead>
     <tbody>
@@ -105,7 +105,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.DrawingNumber)
                 </td>
-                <td>
+                <td class="@Model.BillOfLadingEquipments[i].Equipment.Indicators.WorkOrderNumberColor">
                     @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.WorkOrderNumber)
                 </td>
                 <td>
@@ -166,12 +166,6 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.Notes)
-                </td>
-                <td class="@Model.BillOfLadingEquipments[i].Equipment.Indicators.SalesOrderNumberColor">
-                    @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.SalesOrderNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.AutoShipFile)
                 </td>
             </tr>
         }

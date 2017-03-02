@@ -184,27 +184,27 @@ dl.dl-horizontal dd {
     }
 
     .table-styled td.Red {
-        background-color: rgb(255, 0, 102);
+        background-color: rgb(255, 0, 102) !important;
     }
 
     .table-styled td.Yellow {
-        background-color: rgb(255, 255, 0);
+        background-color: rgb(255, 255, 0) !important;
     }
 
     .table-styled td.Green {
-        background-color: rgb(146, 208, 80);
+        background-color: rgb(146, 208, 80) !important;
     }
 
     .table-styled td.Purple {
-        background-color: rgb(204, 192, 218);
+        background-color: rgb(204, 192, 218) !important;
     }
 
     .table-styled td.Pink {
-        background-color: rgb(255, 199, 206);
+        background-color: rgb(255, 199, 206) !important;
     }
 
     .table-styled td.Fuchsia {
-        background-color: rgb(255, 51, 204);
+        background-color: rgb(255, 51, 204) !important;
     }
 
     .table-styled .links a {
@@ -239,8 +239,13 @@ dl.dl-horizontal dd {
         font-size: 12px;
     }
 
-    
+.table.masterShipList tbody td {
+    text-transform: uppercase;
+} 
 
+.table.masterShipList tbody td input {
+    text-transform: uppercase;
+} 
 
 .my-datatable > thead > tr:first-child > th {
     padding-right: 5px !important;

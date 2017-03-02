@@ -83,6 +83,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
                         var equipmentBO = Mapper.Map<EquipmentBO>(model);
                         equipmentBO.IsHardware = model.EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase);
+                        equipmentBO.UnitWeight = equipmentBO.IsHardware ? .01 : equipmentBO.UnitWeight;
 
                         var id = equipmentService.Save(equipmentBO);
 
@@ -136,6 +137,7 @@ namespace WendtEquipmentTracking.App.Controllers
                         Mapper.Map<EquipmentModel, EquipmentBO>(model, equipment);
 
                         equipment.IsHardware = model.EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase);
+                        equipment.UnitWeight = equipment.IsHardware ? .01 : equipment.UnitWeight;
 
 
                         equipmentService.Update(equipment);

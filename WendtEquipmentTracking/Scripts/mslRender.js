@@ -13,10 +13,14 @@ $(function () {
                 var $cellTemplate = $template.find("div").eq(colIndex).clone();
 
                 $cell.html($cellTemplate.html());
-                $cell.find("input").val(data).prop("readOnly", rowData.IsHardware || rowData.IsHardwareKit);
+                $cell.find("input").val(data).prop("readOnly", rowData.IsAssociatedToHardwareKit || rowData.IsHardwareKit);
 
             } else {
                 $cell.html(data);
+            }
+
+            if (rowData.IsAssociatedToHardwareKit) {
+                $cell.append("<br> Associated to Hardware Kit: " + rowData.AssociatedHardwareKitNumber);
             }
 
             $cell.removeAttr("class");
@@ -95,6 +99,7 @@ $(function () {
             }
 
             $cell.removeAttr("class");
+            $cell.addClass(rowData.Indicators.WorkOrderNumberColor);
             $cell.addClass("medium");
         }
         this.QuantityRender = function ($cell, rowData) {
@@ -106,7 +111,7 @@ $(function () {
                 var $cellTemplate = $template.find("div").eq(colIndex).clone();
 
                 $cell.html($cellTemplate.html());
-                $cell.find("input").val(data).prop("readOnly", rowData.IsHardwareKit);
+                $cell.find("input").val(data).prop("readOnly", rowData.IsAssociatedToHardwareKit || rowData.IsHardwareKit);
 
             } else {
                 $cell.html(data);
@@ -414,48 +419,8 @@ $(function () {
                 $cell.html(data);
             }
         }
-        this.SalesOrderNumberRender = function ($cell, rowData) {
-            var colIndex = 21;
-            var data = rowData.SalesOrder;
-            var $template = $(".template");
-
-            if ($template.length) {
-                var $cellTemplate = $template.find("div").eq(colIndex).clone();
-
-                $cell.html($cellTemplate.html());
-                $cell.find("input").val(data);
-
-                $cell.append(data);
-
-            } else {
-                $cell.html(data);
-            }
-
-            $cell.removeAttr("class");
-            $cell.addClass(rowData.Indicators.SalesOrderNumberColor);
-        }
-        this.AutoShipFileRender = function ($cell, rowData) {
-            var colIndex = 22;
-            var data = rowData.AutoShipFile;
-            var $template = $(".template");
-
-            if ($template.length) {
-                var $cellTemplate = $template.find("div").eq(colIndex).clone();
-
-                $cell.html($cellTemplate.html());
-                $cell.find("input").val(data);
-
-                $cell.append(data);
-
-            } else {
-                $cell.html(data);
-            }
-
-            $cell.removeAttr("class");
-            $cell.addClass("smallWidth");
-        }
         this.DeleteRender = function ($cell, rowData) {
-            var colIndex = 23;
+            var colIndex = 21;
             var $template = $(".template");
 
             if ($template.length) {
@@ -469,7 +434,7 @@ $(function () {
             }
         }
         this.HasBillOfLadingRender = function ($cell, rowData) {
-            var colIndex = 24;
+            var colIndex = 22;
             var data = rowData.HasBillOfLading;
 
             var $template = $(".template");

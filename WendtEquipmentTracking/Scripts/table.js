@@ -104,6 +104,9 @@ $(function () {
                         if (data.IsDuplicate) {
                             $(row).addClass('warning');
                         }
+                        if (data.FullyShipped === true) {
+                            $(row).find("input").attr("readOnly", "readOnly");
+                        }
                     },
                     deferRender: true,
                     fixedHeader: true,
@@ -238,34 +241,22 @@ $(function () {
                             }
                         },
                         {
-                            "data": "SalesOrderNumber", "targets": 21,
-                            createdCell: function (cell, data, rowData, rowIndex, colIndex) {
-                                mslRender.SalesOrderNumberRender($(cell), rowData);
-                            }
-                        },
-                        {
-                            "data": "AutoShipFile", "targets": 22,
-                            createdCell: function (cell, data, rowData, rowIndex, colIndex) {
-                                mslRender.AutoShipFileRender($(cell), rowData);
-                            }
-                        },
-                        {
-                            "data": "EquipmentId", "targets": 23, searchable: false, sortable: false,
+                            "data": "EquipmentId", "targets": 21, searchable: false, sortable: false,
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                                 mslRender.DeleteRender($(cell), rowData);
                             }
                         },
                         {
-                            "data": "HasBillOfLading", "targets": 24, searchable: false,
+                            "data": "HasBillOfLading", "targets": 22, searchable: false,
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                                 mslRender.HasBillOfLadingRender($(cell), rowData);
                             }
                         },
-                        { "data": "IsHardwareKit", "targets": 25, visible: false, searchable: false },
-                        { "data": "IsAssociatedToHardwareKit", "targets": 26, visible: false, searchable: false },
-                        { "data": "AssociatedHardwareKitNumber", "targets": 27, visible: false, searchable: false },
-                        { "data": "Indicators", "targets": 28, visible: false, searchable: false },
-                        { "data": "IsDuplicate", "targets": 29, visible: false, searchable: false }
+                        { "data": "IsHardwareKit", "targets": 23, visible: false, searchable: false },
+                        { "data": "IsAssociatedToHardwareKit", "targets": 24, visible: false, searchable: false },
+                        { "data": "AssociatedHardwareKitNumber", "targets": 25, visible: false, searchable: false },
+                        { "data": "Indicators", "targets": 26, visible: false, searchable: false },
+                        { "data": "IsDuplicate", "targets": 27, visible: false, searchable: false }
                     ],
                     autoFill: {
                         update: false,

@@ -217,10 +217,8 @@
                         mslRender.HTSCodeRender($newRow.find("td").eq(18), data);
                         mslRender.CountryOfOriginRender($newRow.find("td").eq(19), data);
                         mslRender.NotesRender($newRow.find("td").eq(20), data);
-                        mslRender.SalesOrderNumberRender($newRow.find("td").eq(21), data);
-                        mslRender.AutoShipFileRender($newRow.find("td").eq(22), data);
-                        mslRender.DeleteRender($newRow.find("td").eq(23), data);
-                        mslRender.HasBillOfLadingRender($newRow.find("td").eq(24), data);
+                        mslRender.DeleteRender($newRow.find("td").eq(21), data);
+                        mslRender.HasBillOfLadingRender($newRow.find("td").eq(22), data);
 
 
                         $newRow.animate({

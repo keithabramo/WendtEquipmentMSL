@@ -150,7 +150,11 @@ namespace WendtEquipmentTracking.App.Controllers
                         model.ToList().ForEach(c => c.ProjectId = user.ProjectId);
 
                         var equipmentBOs = Mapper.Map<IEnumerable<EquipmentBO>>(model.Where(m => m.Checked).ToList());
-                        equipmentBOs.ToList().ForEach(e => e.IsHardware = e.EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase));
+                        equipmentBOs.ToList().ForEach(e =>
+                        {
+                            e.IsHardware = e.EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase);
+                            e.UnitWeight = e.IsHardware ? .01 : e.UnitWeight;
+                        });
 
                         equipmentService.SaveAll(equipmentBOs);
 

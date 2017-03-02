@@ -99,12 +99,6 @@ namespace WendtEquipmentTracking.App.Models
         public string Notes { get; set; }
 
 
-        [DisplayName("DWG/PT")]
-        public string AutoShipFile { get; set; }
-
-        [DisplayName("Sales Order Number")]
-        public string SalesOrderNumber { get; set; }
-
         [DisplayName("Shipped From")]
         public string ShippedFrom { get; set; }
 
@@ -202,9 +196,9 @@ namespace WendtEquipmentTracking.App.Models
             }
 
             //sales order
-            if (string.IsNullOrEmpty(WorkOrderNumber) || !WorkOrderNumber.Contains(projectNumber.Trim()))
+            if (string.IsNullOrEmpty(WorkOrderNumber) || !WorkOrderNumber.StartsWith(projectNumber.Trim()))
             {
-                Indicators.SalesOrderNumberColor = IndicatorsModel.Colors.Red.ToString();
+                Indicators.WorkOrderNumberColor = IndicatorsModel.Colors.Yellow.ToString();
             }
         }
     }
