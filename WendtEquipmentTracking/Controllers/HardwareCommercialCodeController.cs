@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
 using WendtEquipmentTracking.App.Models;
 using WendtEquipmentTracking.BusinessLogic;
@@ -25,15 +23,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
         public ActionResult Index()
         {
-            var hardwareCommercialCodeBOs = hardwareCommercialCodeService.GetAll().ToList();
-
-            var hardwareCommercialCodeModels = Mapper.Map<IEnumerable<HardwareCommercialCodeModel>>(hardwareCommercialCodeBOs);
-
-            //Filter and sort data
-
-            hardwareCommercialCodeModels = hardwareCommercialCodeModels.OrderBy(r => r.PartNumber);
-
-            return View(hardwareCommercialCodeModels);
+            return View();
         }
 
         //

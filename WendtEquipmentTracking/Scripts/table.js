@@ -70,6 +70,7 @@ $(function () {
 
             var mslSettings = {};
             var isMSL = $(".masterShipList").length;
+            var isHCC = $(".hardwareCommercialCodeTable").length;
             if (isMSL) {
                 mslSettings = {
                     ajax: {
@@ -296,6 +297,66 @@ $(function () {
                 };
 
                 this.dataTable = $(".table.my-datatable").DataTable(mslSettings);
+            } else if (isHCC) {
+                hccSettings = {
+                    ajax: {
+                        url: ROOT_URL + "api/HardwareCommercialCodeApi/Table",
+                        dataSrc: ""
+                    },
+                    drawCallback: function (settings) {
+                        if ($this.DataTable()) {
+                            $this.DataTable().fixedHeader.enable();
+                        }
+
+                        if ($this.index >= 0) {
+                            var $newInput = $("thead input[type='text']").eq($this.index);
+                            if (!$newInput.length) {
+                                $this.index -= $("thead input[type='text']").length;
+                                $newInput = $("thead input[type='text']").eq($this.index);
+                            }
+
+                            $newInput.putCursorAtEnd();
+                            $this.index = -1;
+                        }
+
+
+                        if ($(".pagination li").length === 2) {
+                            $(".pagination").parent().hide();
+                        } else {
+                            $(".pagination").parent().show();
+                        }
+                    },
+                    deferRender: true,
+                    fixedHeader: true,
+                    lengthMenu: [[100, 500, -1], [100, 500, "All"]],
+                    pageLength: 100,
+                    columnDefs: [
+                        { "data": "PartNumber", "targets": 0 },
+                        { "data": "Description", "targets": 1 },
+                        { "data": "CommodityCode", "targets": 2 },
+                        { "data": "HardwareCommercialCodeId", "targets": 3, sortable: false, searchable: false,
+                            createdCell: function (cell, data, rowData, rowIndex, colIndex) {
+                                var $cell = $(cell);
+                                var $template = $(".template");
+
+                                if ($template.length) {
+                                    var $cellTemplate = $template.find("div.deleteColumn").clone();
+
+                                    $cell.html($cellTemplate.html());
+                                    $cell.find("a").attr("href", $cell.find("a").attr("href") + "/" + rowData.HardwareCommercialCodeId);
+
+                                } else {
+                                    $cell.html("");
+                                }
+                            }
+                        }
+                    ],
+                    dom: "<'row'<'col-sm-4 text-left custom'f><'col-sm-4 text-center'i><'col-sm-4 text-right'l>>" +
+                         "<'row'<'col-sm-12'tr>>" +
+                         "<'row'<'col-sm-12 text-center'p>>"
+                };
+                this.dataTable = $(".table.my-datatable").DataTable(hccSettings);
+
             } else {
                 this.dataTable = $(".table.my-datatable").DataTable({
                     lengthMenu: [[100, 500, -1], [100, 500, "All"]],
@@ -407,7 +468,12 @@ $(function () {
                 $input.on('keyup change input search', function () {
                     clearTimeout(timeout);
                     var searchInput = this;
-                    $this.index = $("thead input[type='text']").index($(this));
+
+                    if ($(this).closest("thead").length > 0) {
+                        $this.index = $("thead input[type='text']").index($(this));
+                    } else {
+                        $this.index = -1;
+                    }
 
                     timeout = setTimeout(function () {
 

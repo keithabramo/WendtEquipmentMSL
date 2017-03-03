@@ -157,6 +157,7 @@
     <Compile Include="AutoMapper\Converters\NullableDateTimeToStringConverter.cs" />
     <Compile Include="AutoMapper\Profiles\BillOfLadingConfig.cs" />
     <Compile Include="AutoMapper\Profiles\PriorityConfig.cs" />
+    <Compile Include="AutoMapper\Profiles\HardwareCommercialCodeConfig.cs" />
     <Compile Include="AutoMapper\Profiles\WorkOrderPriceConfig.cs" />
     <Compile Include="AutoMapper\Profiles\HardwareKitConfig.cs" />
     <Compile Include="AutoMapper\Profiles\ProjectConfig.cs" />
@@ -167,6 +168,7 @@
     <Compile Include="Common\SuccessStatus.cs" />
     <Compile Include="Common\WendtAuthorizeAttribute.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\HardwareCommercialCodeApiController.cs" />
     <Compile Include="Controllers\EquipmentApiController.cs" />
     <Compile Include="Controllers\WorkOrderPriceApiController.cs" />
     <Compile Include="Controllers\PriorityController.cs" />
