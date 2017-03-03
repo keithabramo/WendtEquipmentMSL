@@ -11,17 +11,17 @@ namespace WendtEquipmentTracking.App.Models
 
         public bool Checked { get; set; }
 
-        [DisplayName("Quantity Shipped with this BOL")]
+        [DisplayName("Qty Shipped with this BOL")]
         [Required]
         public double Quantity { get; set; }
 
         [DisplayName("Shipped From")]
         public string ShippedFrom { get; set; }
 
-        [DisplayName("HTS Code")]
+        [DisplayName("HTS")]
         public string HTSCode { get; set; }
 
-        [DisplayName("Country Of Origin")]
+        [DisplayName("COO")]
         public string CountryOfOrigin { get; set; }
 
         public BillOfLadingModel BillOfLading { get; set; }

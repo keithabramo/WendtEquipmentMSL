@@ -11,7 +11,7 @@ using System.Data.Entity.Infrastructure.MappingViews;
 
 [assembly: DbMappingViewCacheTypeAttribute(
     typeof(WendtEquipmentTracking.DataAccess.SQL.WendtEquipmentTrackingEntities),
-    typeof(Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySetsa4a1d5e0edd739c44b1f35794a17038a3662f9e16be796fceeeec55fa043de20))]
+    typeof(Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySetsda7e9ad7d998b7e291da2d5afe6cefcbed480398d1847b906d669998b2a6afd7))]
 
 namespace Edm_EntityMappingGeneratedViews
 {
@@ -23,14 +23,14 @@ namespace Edm_EntityMappingGeneratedViews
     /// Implements a mapping view cache.
     /// </summary>
     [GeneratedCode("Entity Framework Power Tools", "0.9.0.0")]
-    internal sealed class ViewsForBaseEntitySetsa4a1d5e0edd739c44b1f35794a17038a3662f9e16be796fceeeec55fa043de20 : DbMappingViewCache
+    internal sealed class ViewsForBaseEntitySetsda7e9ad7d998b7e291da2d5afe6cefcbed480398d1847b906d669998b2a6afd7 : DbMappingViewCache
     {
         /// <summary>
         /// Gets a hash value computed over the mapping closure.
         /// </summary>
         public override string MappingHashValue
         {
-            get { return "a4a1d5e0edd739c44b1f35794a17038a3662f9e16be796fceeeec55fa043de20"; }
+            get { return "da7e9ad7d998b7e291da2d5afe6cefcbed480398d1847b906d669998b2a6afd7"; }
         }
 
         /// <summary>
@@ -135,6 +135,16 @@ namespace Edm_EntityMappingGeneratedViews
             if (extentName == "WendtEquipmentTrackingEntities.Users")
             {
                 return GetView17();
+            }
+
+            if (extentName == "WendtEquipmentTrackingDataAccessSQLModelStoreContainer.HardwareCommercialCode")
+            {
+                return GetView18();
+            }
+
+            if (extentName == "WendtEquipmentTrackingEntities.HardwareCommercialCodes")
+            {
+                return GetView19();
             }
 
             return null;
@@ -653,6 +663,56 @@ namespace Edm_EntityMappingGeneratedViews
             T.ProjectId AS User_ProjectId, 
             True AS _from0
         FROM WendtEquipmentTrackingDataAccessSQLModelStoreContainer.User AS T
+    ) AS T1");
+        }
+
+        /// <summary>
+        /// Gets the view for WendtEquipmentTrackingDataAccessSQLModelStoreContainer.HardwareCommercialCode.
+        /// </summary>
+        /// <returns>The mapping view.</returns>
+        private static DbMappingView GetView18()
+        {
+            return new DbMappingView(@"
+    SELECT VALUE -- Constructing HardwareCommercialCode
+        [WendtEquipmentTracking.DataAccess.SQL.Model.Store.HardwareCommercialCode](T1.HardwareCommercialCode_HardwareCommercialCodeId, T1.HardwareCommercialCode_PartNumber, T1.HardwareCommercialCode_Description, T1.HardwareCommercialCode_CommodityCode, T1.HardwareCommercialCode_CreatedBy, T1.HardwareCommercialCode_CreatedDate, T1.HardwareCommercialCode_ModifiedBy, T1.HardwareCommercialCode_ModifiedDate, T1.HardwareCommercialCode_IsDeleted)
+    FROM (
+        SELECT 
+            T.HardwareCommercialCodeId AS HardwareCommercialCode_HardwareCommercialCodeId, 
+            T.PartNumber AS HardwareCommercialCode_PartNumber, 
+            T.Description AS HardwareCommercialCode_Description, 
+            T.CommodityCode AS HardwareCommercialCode_CommodityCode, 
+            T.CreatedBy AS HardwareCommercialCode_CreatedBy, 
+            T.CreatedDate AS HardwareCommercialCode_CreatedDate, 
+            T.ModifiedBy AS HardwareCommercialCode_ModifiedBy, 
+            T.ModifiedDate AS HardwareCommercialCode_ModifiedDate, 
+            T.IsDeleted AS HardwareCommercialCode_IsDeleted, 
+            True AS _from0
+        FROM WendtEquipmentTrackingEntities.HardwareCommercialCodes AS T
+    ) AS T1");
+        }
+
+        /// <summary>
+        /// Gets the view for WendtEquipmentTrackingEntities.HardwareCommercialCodes.
+        /// </summary>
+        /// <returns>The mapping view.</returns>
+        private static DbMappingView GetView19()
+        {
+            return new DbMappingView(@"
+    SELECT VALUE -- Constructing HardwareCommercialCodes
+        [WendtEquipmentTracking.DataAccess.SQL.Model.HardwareCommercialCode](T1.HardwareCommercialCode_HardwareCommercialCodeId, T1.HardwareCommercialCode_PartNumber, T1.HardwareCommercialCode_Description, T1.HardwareCommercialCode_CommodityCode, T1.HardwareCommercialCode_CreatedBy, T1.HardwareCommercialCode_CreatedDate, T1.HardwareCommercialCode_ModifiedBy, T1.HardwareCommercialCode_ModifiedDate, T1.HardwareCommercialCode_IsDeleted)
+    FROM (
+        SELECT 
+            T.HardwareCommercialCodeId AS HardwareCommercialCode_HardwareCommercialCodeId, 
+            T.PartNumber AS HardwareCommercialCode_PartNumber, 
+            T.Description AS HardwareCommercialCode_Description, 
+            T.CommodityCode AS HardwareCommercialCode_CommodityCode, 
+            T.CreatedBy AS HardwareCommercialCode_CreatedBy, 
+            T.CreatedDate AS HardwareCommercialCode_CreatedDate, 
+            T.ModifiedBy AS HardwareCommercialCode_ModifiedBy, 
+            T.ModifiedDate AS HardwareCommercialCode_ModifiedDate, 
+            T.IsDeleted AS HardwareCommercialCode_IsDeleted, 
+            True AS _from0
+        FROM WendtEquipmentTrackingDataAccessSQLModelStoreContainer.HardwareCommercialCode AS T
     ) AS T1");
         }
     }

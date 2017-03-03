@@ -57,9 +57,12 @@ $(function () {
 
             $searchHeader.find("th").each(function () {
                 var title = $.trim($(this).text());
+                var noSearch = $(this).hasClass("noSearch");
 
-                if (title) {
+                if (title && !noSearch) {
                     $(this).html('<input class="form-control" type="text" placeholder="Search ' + title + '" />');
+                } else if (noSearch) {
+                    $(this).html("");
                 }
             });
 
@@ -112,142 +115,167 @@ $(function () {
                     fixedHeader: true,
                     lengthMenu: [ [100, 500, -1], [100, 500, "All"] ],
                     pageLength: 100,
-                    order: [[ 2, 'desc' ]],
+                    order: [[2, 'desc']],
+                    autoWidth: false,
                     columnDefs: [
+                        //{width: "10px", targets: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22]},
                         {
                             "data": "EquipmentName", "targets": 0,
+                            className: "equipmentNameWidth",
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                                 mslRender.EquipmentNameRender($(cell), rowData);
                             }
                         },
                         {
                             "data": "Priority", "targets": 1,
+                            className: "priorityWidth",
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                                 mslRender.PriorityRender($(cell), rowData);
                             }
                         },
                         {
                             "data": "ReleaseDate", "targets": 2,
+                            className: "releaseDateWidth",
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                                 mslRender.ReleaseDateRender($(cell), rowData);
                             }
                         },
                         {
                             "data": "DrawingNumber", "targets": 3,
+                            className: "drawingNumberWidth",
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                                 mslRender.DrawingNumberRender($(cell), rowData);
                             }
                         },
                         {
                             "data": "WorkOrderNumber", "targets": 4,
+                            className: "workOrderNumberWidth",
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                                 mslRender.WorkOrderNumberRender($(cell), rowData);
                             }
                         },
                         {
                             "data": "Quantity", "targets": 5,
+                            className: "quantityWidth text-right",
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                                 mslRender.QuantityRender($(cell), rowData);
                             }
                         },
                         {
                             "data": "ShippingTagNumber", "targets": 6,
+                            className: "shippingTagNumberWidth",
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                                 mslRender.ShippingTagNumberRender($(cell), rowData);
                             }
                         },
                         {
                             "data": "Description", "targets": 7,
+                            className: "descriptionWidth",
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                                 mslRender.DescriptionRender($(cell), rowData);
                             }
                         },
                         {
                             "data": "UnitWeight", "targets": 8,
+                            className: "unitWeightWidth text-right",
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                                 mslRender.UnitWeightRender($(cell), rowData);
                             }
                         },
                         {
                             "data": "TotalWeight", "targets": 9,
+                            className: "totalWeightWidth text-right",
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                                 mslRender.TotalWeightRender($(cell), rowData);
                             }
                         },
                         {
                             "data": "TotalWeightShipped", "targets": 10,
+                            className: "totalWeightShippedWidth text-right",
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                                 mslRender.TotalWeightShippedRender($(cell), rowData);
                             }
                         },
                         {
                             "data": "ReadyToShip", "targets": 11,
+                            className: "readyToShipWidth text-right",
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                                 mslRender.ReadyToShipRender($(cell), rowData);
                             }
                         },
                         {
                             "data": "ShippedQuantity", "targets": 12,
+                            className: "shippedQuantityWidth text-right",
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                                 mslRender.ShippedQuantityRender($(cell), rowData);
                             }
                         },
                         {
                             "data": "LeftToShip", "targets": 13,
+                            className: "leftToShipWidth text-right",
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                                 mslRender.LeftToShipRender($(cell), rowData);
                             }
                         },
                         {
                             "data": "FullyShipped", "targets": 14,
+                            className: "fullyShippedWidth",
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                                 mslRender.FullyShippedRender($(cell), rowData);
                             }
                         },
                         {
                             "data": "ShippedFrom", "targets": 15,
+                            className: "shippedFromWidth",
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                                 mslRender.ShippedFromRender($(cell), rowData);
                             }
                         },
                         {
                             "data": "CustomsValue", "targets": 16,
+                            className: "customsValueWidth text-right",
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                                 mslRender.CustomsValueRender($(cell), rowData);
                             }
                         },
                         {
                             "data": "SalePrice", "targets": 17,
+                            className: "salePriceWidth text-right",
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                                 mslRender.SalePriceRender($(cell), rowData);
                             }
                         },
                         {
                             "data": "HTSCode", "targets": 18,
+                            className: "htsCodeWidth",
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                                 mslRender.HTSCodeRender($(cell), rowData);
                             }
                         },
                         {
                             "data": "CountryOfOrigin", "targets": 19,
+                            className: "countryOfOriginWidth",
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                                 mslRender.CountryOfOriginRender($(cell), rowData);
                             }
                         },
                         {
                             "data": "Notes", "targets": 20,
+                            className: "notesWidth",
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                                 mslRender.NotesRender($(cell), rowData);
                             }
                         },
                         {
                             "data": "EquipmentId", "targets": 21, searchable: false, sortable: false,
+                            className: "deleteWidth",
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                                 mslRender.DeleteRender($(cell), rowData);
                             }
                         },
                         {
                             "data": "HasBillOfLading", "targets": 22, searchable: false,
+                            className: "hasBillOfLadingWidth expand",
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                                 mslRender.HasBillOfLadingRender($(cell), rowData);
                             }

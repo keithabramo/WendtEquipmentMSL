@@ -170,6 +170,7 @@
     <Compile Include="Controllers\EquipmentApiController.cs" />
     <Compile Include="Controllers\WorkOrderPriceApiController.cs" />
     <Compile Include="Controllers\PriorityController.cs" />
+    <Compile Include="Controllers\HardwareCommercialCodeController.cs" />
     <Compile Include="Controllers\WorkOrderPriceController.cs" />
     <Compile Include="Controllers\HardwareKitController.cs" />
     <Compile Include="Controllers\BillOfLadingController.cs" />
@@ -182,6 +183,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\BaseModelError.cs" />
+    <Compile Include="Models\HardwareCommercialCodeModel.cs" />
     <Compile Include="Models\HardwareKitGroupModel.cs" />
     <Compile Include="Models\HardwareKitEquipmentModel.cs" />
     <Compile Include="Models\BillOfLadingEquipmentModel.cs" />
@@ -358,6 +360,9 @@
     <Content Include="Views\Priority\Create.cshtml" />
     <Content Include="Views\Priority\Edit.cshtml" />
     <Content Include="Views\Priority\Index.cshtml" />
+    <Content Include="Views\HardwareCommercialCode\Create.cshtml" />
+    <Content Include="Views\HardwareCommercialCode\Edit.cshtml" />
+    <Content Include="Views\HardwareCommercialCode\Index.cshtml" />
     <None Include="Web.Staging.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

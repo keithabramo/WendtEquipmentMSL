@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\IPriorityPriceEngine.cs" />
+    <Compile Include="Api\IHardwareCommercialCodeEngine.cs" />
     <Compile Include="Api\IWorkOrderPriceEngine.cs" />
     <Compile Include="Api\IHardwareKitEngine.cs" />
     <Compile Include="Api\IBillOfLadingEngine.cs" />
@@ -77,10 +78,14 @@
     <Compile Include="Api\IUserEngine.cs" />
     <Compile Include="Engine\UserEngine.cs" />
     <Compile Include="Engine\PriorityEngine.cs" />
+    <Compile Include="Engine\HardwareCommercialCodeEngine.cs" />
     <Compile Include="Engine\WorkOrderPriceEngine.cs" />
     <Compile Include="Engine\ProjectEngine.cs" />
     <Compile Include="Engine\EquipmentEngine.cs" />
     <Compile Include="Equipment.cs">
+      <DependentUpon>WendtEquipmentTracking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HardwareCommercialCode.cs">
       <DependentUpon>WendtEquipmentTracking.tt</DependentUpon>
     </Compile>
     <Compile Include="HardwareKit.cs">
@@ -125,6 +130,9 @@
     <Compile Include="Specifications\Priorities\IdSpecification.cs" />
     <Compile Include="Specifications\Priorities\IsDeleted.cs" />
     <Compile Include="Specifications\PrioritySpecs.cs" />
+    <Compile Include="Specifications\HardwareCommercialCodes\IdSpecification.cs" />
+    <Compile Include="Specifications\HardwareCommercialCodes\IsDeleted.cs" />
+    <Compile Include="Specifications\HardwareCommercialCodeSpecs.cs" />
     <Compile Include="Specifications\WorkOrderPriceSpecs.cs" />
     <Compile Include="Specifications\WorkOrderPrices\IdSpecification.cs" />
     <Compile Include="Specifications\ProjectSpecs.cs" />

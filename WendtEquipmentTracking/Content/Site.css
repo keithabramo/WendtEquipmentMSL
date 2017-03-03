@@ -174,8 +174,8 @@ dl.dl-horizontal dd {
 }
 
     .table-styled th {
-        white-space: nowrap;
-        vertical-align: top;
+        /*white-space: nowrap;*/
+        vertical-align: top !important;
         text-align: center;
     }
 
@@ -213,37 +213,120 @@ dl.dl-horizontal dd {
 
     .table-styled .form-control {
         font-size: 10px !important;
-        width: auto;
         min-width: 0;
         padding: 6px;
     }
 
-    .table-styled .smallWidth .form-control {
-        width: 50px;
-    }
 
-    .table-styled .medium .form-control {
-        width: 100px;
-    }
 
-    .table-styled .long .form-control {
+
+
+
+
+
+
+    .table-styled .equipmentNameWidth .form-control {
         width: 200px;
     }
 
-    .table-styled .long-column {
+    .table-styled .priorityWidth .form-control {
+        width: 50px;
+    }
+
+    .table-styled .releaseDateWidth .form-control {
+        width: 70px;
+    }
+
+    .table-styled .drawingNumberWidth .form-control {
         width: 100px;
     }
 
+    .table-styled .workOrderNumberWidth .form-control {
+        width: 100px;
+    }
+
+    .table-styled .quantityWidth .form-control {
+        width: 50px;
+    }
+
+    .table-styled .shippingTagNumberWidth .form-control {
+        width: 100px;
+    }
+
+    .table-styled .descriptionWidth .form-control {
+        width: 300px;
+    }
+
+    .table-styled .unitWeightWidth .form-control {
+        width: 50px;
+    }
+
+    .table-styled .totalWeightWidth .form-control {
+        width: 50px;
+    }
+
+    .table-styled .totalWeightShippedWidth .form-control {
+        width: 50px;
+    }
+
+    .table-styled .readyToShipWidth .form-control {
+        width: 35px;
+    }
+
+    .table-styled .shippedQuantityWidth .form-control {
+        width: 30px;
+    }
+
+    .table-styled .leftToShipWidth .form-control {
+        width: 30px;
+    }
+
+    .table-styled .fullyShippedWidth .form-control {
+        width: 30px;
+    }
+
+    .table-styled .shippedFromWidth .form-control {
+        width: 100px;
+    }
+
+    .table-styled .customsValueWidth .form-control {
+        width: 50px;
+    }
+
+    .table-styled .salePriceWidth .form-control {
+        width: 50px;
+    }
+
+    .table-styled .htsCodeWidth .form-control {
+        width: 100px;
+    }
+
+    .table-styled .countryOfOriginWidth .form-control {
+        width: 100px;
+    }
+
+    .table-styled .notesWidth .form-control {
+        width: 200px;
+    }
+
+
+
+
+
+
+
+
+
+
     .table-styled .expand {
         cursor: pointer;
-        font-size: 12px;
     }
 
 .table.masterShipList tbody td {
     text-transform: uppercase;
 } 
 
-.table.masterShipList tbody td input {
+.table.masterShipList tbody td .form-control {
     text-transform: uppercase;
 } 
 

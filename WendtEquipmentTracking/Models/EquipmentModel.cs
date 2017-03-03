@@ -36,7 +36,7 @@ namespace WendtEquipmentTracking.App.Models
         public string DrawingNumber { get; set; }
 
 
-        [DisplayName("Work Order No.")]
+        [DisplayName("Work Order #")]
         [Required]
         public string WorkOrderNumber { get; set; }
 
@@ -45,35 +45,35 @@ namespace WendtEquipmentTracking.App.Models
         public double Quantity { get; set; }
 
 
-        [DisplayName("SHIP TAG #")]
+        [DisplayName("Ship Tag #")]
         [Required]
         public string ShippingTagNumber { get; set; }
 
-
+        [DataType(DataType.MultilineText)]
         [DisplayName("Description")]
         [Required]
         public string Description { get; set; }
 
 
-        [DisplayName("Unit Weight")]
+        [DisplayName("Unit Wt")]
         [DisplayFormat(DataFormatString = "{#.##}")]
         [Required]
         public double? UnitWeight { get; set; }
 
 
-        [DisplayName("Total Weight")]
+        [DisplayName("Total Wt")]
         public double? TotalWeight { get; set; }
 
 
-        [DisplayName("Total Weight Shipped")]
+        [DisplayName("Total Wt Shipped")]
         public double? TotalWeightShipped { get; set; }
 
 
-        [DisplayName("Ready To Ship")]
+        [DisplayName("RTS")]
         public double? ReadyToShip { get; set; }
 
 
-        [DisplayName("Shipped Qty")]
+        [DisplayName("Ship Qty")]
         public double? ShippedQuantity { get; set; }
 
 
@@ -94,7 +94,7 @@ namespace WendtEquipmentTracking.App.Models
         [DataType(DataType.Currency)]
         public double? SalePrice { get; set; }
 
-
+        [DataType(DataType.MultilineText)]
         [DisplayName("Notes")]
         public string Notes { get; set; }
 
@@ -102,10 +102,10 @@ namespace WendtEquipmentTracking.App.Models
         [DisplayName("Shipped From")]
         public string ShippedFrom { get; set; }
 
-        [DisplayName("HTS Code")]
+        [DisplayName("HTS")]
         public string HTSCode { get; set; }
 
-        [DisplayName("Country Of Origin")]
+        [DisplayName("COO")]
         public string CountryOfOrigin { get; set; }
 
 

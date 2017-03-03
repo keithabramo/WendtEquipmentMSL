@@ -22,9 +22,6 @@ $(function () {
             if (rowData.IsAssociatedToHardwareKit) {
                 $cell.append("<br> Associated to Hardware Kit: " + rowData.AssociatedHardwareKitNumber);
             }
-
-            $cell.removeAttr("class");
-            $cell.addClass("long");
         }
         this.PriorityRender = function ($cell, rowData) {
             var colIndex = 1;
@@ -60,9 +57,6 @@ $(function () {
             } else {
                 $cell.html(value);
             }
-
-            $cell.removeAttr("class");
-            $cell.addClass("medium");
         }
         this.DrawingNumberRender = function ($cell, rowData) {
             var colIndex = 3;
@@ -79,9 +73,6 @@ $(function () {
             } else {
                 $cell.html(data);
             }
-
-            $cell.removeAttr("class");
-            $cell.addClass("long");
         }
         this.WorkOrderNumberRender = function ($cell, rowData) {
             var colIndex = 4;
@@ -98,9 +89,7 @@ $(function () {
                 $cell.html(data);
             }
 
-            $cell.removeAttr("class");
             $cell.addClass(rowData.Indicators.WorkOrderNumberColor);
-            $cell.addClass("medium");
         }
         this.QuantityRender = function ($cell, rowData) {
             var colIndex = 5;
@@ -116,10 +105,6 @@ $(function () {
             } else {
                 $cell.html(data);
             }
-
-            $cell.removeAttr("class");
-            $cell.addClass("text-right");
-            $cell.addClass("smallWidth");
         }
         this.ShippingTagNumberRender = function ($cell, rowData) {
             var colIndex = 6;
@@ -135,9 +120,6 @@ $(function () {
             } else {
                 $cell.html(data);
             }
-
-            $cell.removeAttr("class");
-            $cell.addClass("long");
         }
         this.DescriptionRender = function ($cell, rowData) {
             var colIndex = 7;
@@ -148,14 +130,11 @@ $(function () {
                 var $cellTemplate = $template.find("div").eq(colIndex).clone();
 
                 $cell.html($cellTemplate.html());
-                $cell.find("input").val(data);
+                $cell.find("textarea").val(data);
 
             } else {
                 $cell.html(data);
             }
-
-            $cell.removeAttr("class");
-            $cell.addClass("long");
         }
         this.UnitWeightRender = function ($cell, rowData) {
             var colIndex = 8;
@@ -173,10 +152,7 @@ $(function () {
                 $cell.html(value);
             }
 
-            $cell.removeAttr("class");
             $cell.addClass(rowData.Indicators.UnitWeightColor);
-            $cell.addClass("text-right");
-            $cell.addClass("smallWidth");
         }
         this.TotalWeightRender = function ($cell, rowData) {
             var colIndex = 9;
@@ -194,10 +170,6 @@ $(function () {
             } else {
                 $cell.html(value);
             }
-
-            $cell.removeAttr("class");
-            $cell.addClass("text-right");
-            $cell.addClass("smallWidth");
         }
         this.TotalWeightShippedRender = function ($cell, rowData) {
             var colIndex = 10;
@@ -215,10 +187,6 @@ $(function () {
             } else {
                 $cell.html(value);
             }
-
-            $cell.removeAttr("class");
-            $cell.addClass("text-right");
-            $cell.addClass("smallWidth");
         }
         this.ReadyToShipRender = function ($cell, rowData) {
             var colIndex = 11;
@@ -235,10 +203,7 @@ $(function () {
                 $cell.html(data);
             }
 
-            $cell.removeAttr("class");
             $cell.addClass(rowData.Indicators.ReadyToShipColor);
-            $cell.addClass("text-right");
-            $cell.addClass("smallWidth");
         }
         this.ShippedQuantityRender = function ($cell, rowData) {
             var colIndex = 12;
@@ -256,10 +221,7 @@ $(function () {
                 $cell.html(data);
             }
 
-            $cell.removeAttr("class");
             $cell.addClass(rowData.Indicators.ShippedQtyColor);
-            $cell.addClass("text-right");
-            $cell.addClass("smallWidth");
         }
         this.LeftToShipRender = function ($cell, rowData) {
             var colIndex = 13;
@@ -277,10 +239,7 @@ $(function () {
                 $cell.html(data);
             }
 
-            $cell.removeAttr("class");
             $cell.addClass(rowData.Indicators.LeftToShipColor);
-            $cell.addClass("text-right");
-            $cell.addClass("smallWidth");
         }
         this.FullyShippedRender = function ($cell, rowData) {
             var colIndex = 14;
@@ -304,9 +263,7 @@ $(function () {
                 $cell.html(value);
             }
 
-            $cell.removeAttr("class");
             $cell.addClass(rowData.Indicators.FullyShippedColor);
-            $cell.addClass("smallWidth");
         }
         this.ShippedFromRender = function ($cell, rowData) {
             var colIndex = 15;
@@ -343,10 +300,8 @@ $(function () {
                 $cell.html(value);
             }
 
-            $cell.removeAttr("class");
+
             $cell.addClass(rowData.Indicators.CustomsValueColor);
-            $cell.addClass("text-right");
-            $cell.addClass("smallWidth");
         }
         this.SalePriceRender = function ($cell, rowData) {
             var colIndex = 17;
@@ -367,10 +322,8 @@ $(function () {
                 $cell.html(value);
             }
 
-            $cell.removeAttr("class");
+
             $cell.addClass(rowData.Indicators.SalePriceColor);
-            $cell.addClass("text-right");
-            $cell.addClass("smallWidth");
         }
         this.HTSCodeRender = function ($cell, rowData) {
             var colIndex = 18;
@@ -413,7 +366,7 @@ $(function () {
                 var $cellTemplate = $template.find("div").eq(colIndex).clone();
 
                 $cell.html($cellTemplate.html());
-                $cell.find("input").val(data);
+                $cell.find("textarea").val(data);
 
             } else {
                 $cell.html(data);
@@ -454,9 +407,6 @@ $(function () {
 
             $cell.attr("data-toggle", "collapse").attr("data-id", rowData.EquipmentId);
 
-            $cell.removeAttr("class");
-            $cell.addClass("expand")
-            $cell.addClass("smallWidth");
         }
     }
 

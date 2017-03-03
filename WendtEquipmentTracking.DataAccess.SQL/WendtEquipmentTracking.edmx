@@ -73,6 +73,20 @@
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="HardwareKitId" Type="int" />
         </EntityType>
+        <EntityType Name="HardwareCommercialCode">
+          <Key>
+            <PropertyRef Name="HardwareCommercialCodeId" />
+          </Key>
+          <Property Name="HardwareCommercialCodeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PartNumber" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="CommodityCode" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="255" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="HardwareKit">
           <Key>
             <PropertyRef Name="HardwareKitId" />
@@ -288,6 +302,7 @@
           <EntitySet Name="BillOfLading" EntityType="Self.BillOfLading" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BillOfLadingEquipment" EntityType="Self.BillOfLadingEquipment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Equipment" EntityType="Self.Equipment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HardwareCommercialCode" EntityType="Self.HardwareCommercialCode" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HardwareKit" EntityType="Self.HardwareKit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HardwareKitEquipment" EntityType="Self.HardwareKitEquipment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Priority" EntityType="Self.Priority" Schema="dbo" store:Type="Tables" />
@@ -389,6 +404,7 @@
             <End Role="Equipment" EntitySet="Equipments" />
             <End Role="HardwareKitEquipment" EntitySet="HardwareKitEquipments" />
           </AssociationSet>
+          <EntitySet Name="HardwareCommercialCodes" EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.HardwareCommercialCode" />
         </EntityContainer>
         <EntityType Name="BillOfLading">
           <Key>
@@ -689,6 +705,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="HardwareCommercialCode">
+          <Key>
+            <PropertyRef Name="HardwareCommercialCodeId" />
+          </Key>
+          <Property Name="HardwareCommercialCodeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PartNumber" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CommodityCode" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -860,6 +890,21 @@
                 <ScalarProperty Name="EquipmentName" ColumnName="EquipmentName" />
                 <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
                 <ScalarProperty Name="EquipmentId" ColumnName="EquipmentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HardwareCommercialCodes">
+            <EntityTypeMapping TypeName="WendtEquipmentTracking.DataAccess.SQL.Model.HardwareCommercialCode">
+              <MappingFragment StoreEntitySet="HardwareCommercialCode">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CommodityCode" ColumnName="CommodityCode" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PartNumber" ColumnName="PartNumber" />
+                <ScalarProperty Name="HardwareCommercialCodeId" ColumnName="HardwareCommercialCodeId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

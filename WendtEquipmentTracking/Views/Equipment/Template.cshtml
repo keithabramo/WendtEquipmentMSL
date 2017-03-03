@@ -38,20 +38,20 @@
             @Html.EditorFor(modelItem => modelItem.UnitWeight, new { htmlAttributes = new { @class = "form-control text-right" } })
             @Html.ValidationMessageFor(modelItem => modelItem.UnitWeight, "", new { @class = "text-danger" })
         </div>@* UnitWeight *@
-        <div class="text-right">
+        <div>
             @Html.HiddenFor(modelItem => modelItem.TotalWeight)
         </div>@* TotalWeight *@
-        <div class="text-right">
+        <div>
             @Html.HiddenFor(modelItem => modelItem.TotalWeightShipped)
         </div>@* TotalWeightShipped *@
-        <div class="text-right">
+        <div>
             @Html.EditorFor(modelItem => modelItem.ReadyToShip, new { htmlAttributes = new { @class = "form-control text-right" } })
             @Html.ValidationMessageFor(modelItem => modelItem.ReadyToShip, "", new { @class = "text-danger" })
         </div>@* ReadyToShip *@
-        <div class="text-right">
+        <div>
             @Html.HiddenFor(modelItem => modelItem.ShippedQuantity)
         </div>@* ShippedQuantity *@
-        <div class="text-right">
+        <div>
             @Html.HiddenFor(modelItem => modelItem.LeftToShip)
         </div>@* LeftToShip *@
         <div>
@@ -61,10 +61,10 @@
             @Html.EditorFor(modelItem => modelItem.ShippedFrom, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(modelItem => modelItem.ShippedFrom, "", new { @class = "text-danger" })
         </div>@* ShippedFrom *@
-        <div class="text-right">
+        <div>
             @Html.HiddenFor(modelItem => modelItem.CustomsValue)
         </div>@* CustomsValue *@
-        <div class="text-right">
+        <div>
             @Html.HiddenFor(modelItem => modelItem.SalePrice)
         </div>@* SalePrice *@
         <div>

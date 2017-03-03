@@ -57,7 +57,7 @@
 
 
             //edits made
-            $('.table').on('change', "> tbody > tr input, > tbody > tr select", function () {
+            $('.table').on('change', "> tbody > tr input, > tbody > tr select, > tbody > tr textarea", function () {
                 $this.editsMade = true;
             });
 
@@ -111,7 +111,7 @@
                 var url = $this.createURL;
                 var $form = $("<form/>");
 
-                $row.find("input[name], select[name]").each(function (i, e) {
+                $row.find("input[name], select[name], textarea[name]").each(function (i, e) {
 
                     //cloning selects does not clone selected value, known jquery bug
                     var $element = $(e).clone().val(e.value);
@@ -144,11 +144,10 @@
                             //reset create row
                             $(".createSubmit").button("reset");
 
-                            $row.find("input").not("[type='checkbox'], [type='button']").val("");
+                            $row.find("input, textarea").not("[type='checkbox'], [type='button']").val("");
                             if ($row.find("input[type='checkbox']").is(":checked")) {
                                 $row.find("input[type='checkbox']").click();
                             }
-                            $row.find("input[name='IsHardware']").val("false")
                             $row.find("select").prop('selectedIndex', 0);
 
                             form.initStyles();
@@ -160,7 +159,7 @@
                             $.each(data.Errors, function (i, error) {
                                 var name = error.Name.replace("model.", "");
 
-                                var $input = $row.find("input[name='" + name + "']").addClass('input-validation-error');
+                                var $input = $row.find("input[name='" + name + "'], textarea[name='" + name + "'], select[name='" + name + "']").addClass('input-validation-error');
                                 $input.siblings(".field-validation-valid").text(error.Message).addClass('field-validation-error');
                             });
                         }
@@ -175,7 +174,7 @@
             var url = $this.editURL + "/" + $row.find("input[name='EquipmentId']").val();
             var $form = $("<form/>");
 
-            $row.find("input[name], select[name]").each(function (i, e) {
+            $row.find("input[name], select[name], textarea[name]").each(function (i, e) {
 
                 //cloning selects does not clone selected value, known jquery bug
                 var $element = $(e).clone().val(e.value);
@@ -239,7 +238,7 @@
                         $.each(data.Errors, function (i, error) {
                             var name = error.Name.replace("model.", "");
 
-                            var $input = $row.find("input[name='" + name + "']").addClass('input-validation-error');
+                            var $input = $row.find("input[name='" + name + "'], select[name='" + name + "'], textarea[name='" + name + "']").addClass('input-validation-error');
                             $input.siblings(".field-validation-valid").text(error.Message).addClass('field-validation-error');
                         });
                         

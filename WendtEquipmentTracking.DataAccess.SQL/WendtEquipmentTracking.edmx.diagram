@@ -25,6 +25,7 @@
         <AssociationConnector Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_Equipment_HardwareKit" />
         <AssociationConnector Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_Equipment_Project" />
         <AssociationConnector Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_HardwareKitEquipment_Equipment" />
+        <EntityTypeShape EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.HardwareCommercialCode" Width="1.5" PointX="5.375" PointY="0.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
