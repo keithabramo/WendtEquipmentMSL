@@ -296,7 +296,14 @@ $(function () {
                                              "<'row'<'col-sm-2 text-left createButtonContainer'><'col-sm-10 text-center'p>>"
                 };
 
+                var $template = $(".template");
+                if (!$template.length) {
+                    mslSettings.autoFill = false;
+                }
+
+
                 this.dataTable = $(".table.my-datatable").DataTable(mslSettings);
+
             } else if (isHCC) {
                 hccSettings = {
                     ajax: {
