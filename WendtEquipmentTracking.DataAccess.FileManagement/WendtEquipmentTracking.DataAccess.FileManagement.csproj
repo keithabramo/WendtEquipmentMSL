@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\IImportEngine.cs" />
+    <Compile Include="Domain\HardwareCommercialCodeImport.cs" />
     <Compile Include="Domain\WorkOrderPriceRow.cs" />
     <Compile Include="Domain\EquipmentRow.cs" />
     <Compile Include="Domain\Import.cs" />

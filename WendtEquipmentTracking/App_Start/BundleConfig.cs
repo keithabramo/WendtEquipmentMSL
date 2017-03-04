@@ -46,6 +46,9 @@ namespace WendtEquipmentTracking.App
             bundles.Add(new ScriptBundle("~/bundles/project").Include(
                        "~/Scripts/project.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/dropzone").Include(
+                     "~/Scripts/dropzone/dropzone.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/handsontable").Include(
                        "~/Scripts/handsontable.full.min.js",
                        "~/Scripts/handsontableCustom.js"
@@ -62,6 +65,10 @@ namespace WendtEquipmentTracking.App
                     //"~/Content/handsontable.full.min.css",
                     "~/Content/Site.css"
                 ));
+
+            bundles.Add(new StyleBundle("~/Content/dropzone").Include(
+                     "~/Scripts/dropzone/basic.css",
+                     "~/Scripts/dropzone/dropzone.css"));
         }
     }
 }

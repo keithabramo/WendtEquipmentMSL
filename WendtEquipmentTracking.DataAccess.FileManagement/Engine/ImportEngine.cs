@@ -1,7 +1,6 @@
 ﻿using Excel.Helper;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using WendtEquipmentTracking.DataAccess.FileManagement.Api;
 using WendtEquipmentTracking.DataAccess.FileManagement.Domain;
 using WendtEquipmentTracking.DataAccess.FileManagement.Helper;
@@ -10,19 +9,19 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement
 {
     public class ImportEngine : IImportEngine
     {
+        public string SaveEquipmentFile(byte[] equipmentFile)
+        {
+            var tempFile = Path.GetTempFileName();
+            File.WriteAllBytes(tempFile, equipmentFile);
+
+            return tempFile;
+        }
+
         public IEnumerable<EquipmentRow> GetEquipment(Import import)
         {
+            var equipmentData = ImportHelper.GetEquipment(import);
 
-            var excelHelper = new ExcelDataReaderHelper(import.FileName);
-
-            var importData = new List<EquipmentRow>();
-            foreach (var sheet in import.Sheets)
-            {
-                var sheetData = ImportHelper.GetEquipmentFromSheet(sheet, excelHelper);
-                importData.AddRange(sheetData);
-            }
-
-            return importData;
+            return equipmentData;
         }
 
         public IEnumerable<WorkOrderPriceRow> GetWorkOrderPrices(byte[] importFile)
@@ -37,21 +36,7 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement
             return workOrderPriceRecords;
         }
 
-        public Import GetSheets(byte[] importFile)
-        {
-            var tempFile = Path.GetTempFileName();
-            File.WriteAllBytes(tempFile, importFile);
 
-            var excelHelper = new ExcelDataReaderHelper(tempFile);
-
-            var import = new Import
-            {
-                Sheets = excelHelper.WorksheetNames.ToList(),
-                FileName = tempFile
-            };
-
-            return import;
-        }
 
 
     }

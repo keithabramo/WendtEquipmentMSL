@@ -19,6 +19,7 @@ namespace WendtEquipmentTracking.App.Controllers
         private IWorkOrderPriceService workOrderPriceService;
         private IUserService userService;
         private IPriorityService priorityService;
+        private IProjectService projectService;
 
 
         public ImportController()
@@ -28,19 +29,18 @@ namespace WendtEquipmentTracking.App.Controllers
             workOrderPriceService = new WorkOrderPriceService();
             userService = new UserService();
             priorityService = new PriorityService();
+            projectService = new ProjectService();
         }
 
         // GET: Equipment
         public ActionResult Equipment()
         {
-            var model = new ImportModel();
-
-            return View(model);
+            return View();
         }
 
         // POST: Equipment
         [HttpPost]
-        public ActionResult Equipment(ImportModel model)
+        public ActionResult SelectEquipmentFile(ImportModel model)
         {
             try
             {
@@ -56,17 +56,28 @@ namespace WendtEquipmentTracking.App.Controllers
                             file = memoryStream.ToArray();
                         }
 
-                        var importBO = importService.GetSheets(file);
+                        var filePath = importService.SaveEquipmentFile(file);
 
-                        model.Sheets = importBO.Sheets.Select(s => new ImportSheetModel
+                        var user = userService.GetCurrentUser();
+
+                        string projectNumber = string.Empty;
+                        IEnumerable<int> priorities = new List<int>();
+                        if (user != null)
                         {
-                            Checked = true,
-                            Name = s
-                        }).ToList();
+                            var projectBO = projectService.GetById(user.ProjectId);
+                            var priorityBOs = priorityService.GetAll(user.ProjectId);
 
-                        model.FileName = importBO.FileName;
+                            projectNumber = projectBO.ProjectNumber;
+                            priorities = priorityBOs.Select(p => p.PriorityNumber);
+                        }
 
-                        return View("SelectEquipmentSheets", model);
+                        model.Priorities = priorities;
+                        model.QuantityMultiplier = 1;
+                        model.WorkOrderNumber = projectNumber;
+                        model.DrawingNumber = model.File.FileName;
+                        model.FilePath = filePath;
+
+                        return View("EquipmentConfigurationPartial", model);
                     }
                     else
                     {
@@ -85,51 +96,40 @@ namespace WendtEquipmentTracking.App.Controllers
             }
         }
 
-        // POST: SelectEquipmentSheets
+        // POST: Equipment
         [HttpPost]
-        public ActionResult SelectEquipmentSheets(ImportModel model)
+        public ActionResult ConfigureEquipment(ImportModel model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var user = userService.GetCurrentUser();
 
-                    IEnumerable<int> priorities = new List<int>();
-                    if (user != null)
+                    if (model.File != null)
                     {
-                        var prioritiesBOs = priorityService.GetAll(user.ProjectId);
+                        var importBO = Mapper.Map<EquipmentImportBO>(model);
 
-                        priorities = prioritiesBOs.Select(p => p.PriorityNumber).OrderBy(p => p).ToList();
+                        var equipmentBOs = importService.GetEquipmentImport(importBO);
+
+                        var equipmentModels = Mapper.Map<IList<EquipmentSelectionModel>>(equipmentBOs);
+                        equipmentModels.ToList().ForEach(w => w.Checked = true);
+
+                        return View("ImportEquipmentPartial", equipmentModels);
                     }
-
-
-                    var importBO = new ImportBO
+                    else
                     {
-                        Sheets = model.Sheets.Where(s => s.Checked).Select(s => s.Name),
-                        FileName = model.FileName
-                    };
-
-                    var equipmentBOs = importService.GetEquipmentImport(importBO).ToList();
-
-
-
-                    var equipmentModels = Mapper.Map<List<EquipmentSelectionModel>>(equipmentBOs);
-                    equipmentModels.ForEach(e =>
-                    {
-                        e.Checked = true;
-                        e.Priorities = priorities;
-                    });
-
-                    return PartialView("ImportEquipmentPartial", equipmentModels);
+                        ModelState.AddModelError("File", "You must specify a file.");
+                    }
                 }
 
-                return PartialView("ImportEquipmentPartial");
+                model.Status = SuccessStatus.Error;
+                return View(model);
             }
             catch (Exception e)
             {
-                ModelState.AddModelError("", e.Message);
-                return PartialView("ImportEquipmentPartial");
+                model.Status = SuccessStatus.Error;
+                ModelState.AddModelError("File", e.Message);
+                return View(model);
             }
         }
 
@@ -179,10 +179,6 @@ namespace WendtEquipmentTracking.App.Controllers
                 return View("Equipment");
             }
         }
-
-
-
-
 
 
 

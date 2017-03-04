@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-
-namespace WendtEquipmentTracking.DataAccess.FileManagement.Domain
+﻿namespace WendtEquipmentTracking.BusinessLogic.BO
 {
-    public class Import
+    public class EquipmentImportBO
     {
         public string FilePath { get; set; }
 
@@ -12,6 +10,5 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Domain
         public string WorkOrderNumber { get; set; }
         public int QuantityMultiplier { get; set; }
 
-        public IEnumerable<HardwareCommercialCodeImport> hardwareCommercialCodes { get; set; }
     }
 }

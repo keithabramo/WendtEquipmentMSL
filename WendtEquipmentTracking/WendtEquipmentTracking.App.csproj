@@ -196,7 +196,6 @@
     <Compile Include="Models\EquipmentModel.cs" />
     <Compile Include="Models\HardwareKitModel.cs" />
     <Compile Include="Models\BaseModel.cs" />
-    <Compile Include="Models\ImportSheetModel.cs" />
     <Compile Include="Models\ImportModel.cs" />
     <Compile Include="Models\ProjectNavModel.cs" />
     <Compile Include="Models\ProjectModel.cs" />
@@ -278,6 +277,14 @@
     <Content Include="Images\logo.jpg" />
     <Content Include="Scripts\datatables.min.js" />
     <Content Include="Scripts\billOfLading.js" />
+    <Content Include="Scripts\dropzone\basic.css" />
+    <Content Include="Scripts\dropzone\basic.min.css" />
+    <Content Include="Scripts\dropzone\dropzone-amd-module.js" />
+    <Content Include="Scripts\dropzone\dropzone-amd-module.min.js" />
+    <Content Include="Scripts\dropzone\dropzone.css" />
+    <Content Include="Scripts\dropzone\dropzone.js" />
+    <Content Include="Scripts\dropzone\dropzone.min.css" />
+    <Content Include="Scripts\dropzone\dropzone.min.js" />
     <Content Include="Scripts\handsontable.full.min.js" />
     <Content Include="Scripts\handsontableCustom.js" />
     <Content Include="Scripts\project.js" />
@@ -365,6 +372,7 @@
     <Content Include="Views\HardwareCommercialCode\Create.cshtml" />
     <Content Include="Views\HardwareCommercialCode\Edit.cshtml" />
     <Content Include="Views\HardwareCommercialCode\Index.cshtml" />
+    <Content Include="Views\Import\EquipmentConfigurationPartial.cshtml" />
     <None Include="Web.Staging.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

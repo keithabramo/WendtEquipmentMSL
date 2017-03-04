@@ -5,30 +5,34 @@ using WendtEquipmentTracking.BusinessLogic.BO;
 using WendtEquipmentTracking.DataAccess.FileManagement;
 using WendtEquipmentTracking.DataAccess.FileManagement.Api;
 using WendtEquipmentTracking.DataAccess.FileManagement.Domain;
+using WendtEquipmentTracking.DataAccess.SQL.Api;
+using WendtEquipmentTracking.DataAccess.SQL.Engine;
 
 namespace WendtEquipmentTracking.BusinessLogic
 {
     public class ImportService : IImportService
     {
         private IImportEngine importEngine;
+        private IHardwareCommercialCodeEngine hardwareCommercialCodeEngine;
 
         public ImportService()
         {
             importEngine = new ImportEngine();
+            hardwareCommercialCodeEngine = new HardwareCommercialCodeEngine();
         }
 
-        public ImportBO GetSheets(byte[] file)
+        public string SaveEquipmentFile(byte[] file)
         {
-            var import = importEngine.GetSheets(file);
-
-            var importBO = Mapper.Map<ImportBO>(import);
-
-            return importBO;
+            return importEngine.SaveEquipmentFile(file);
         }
 
-        public IEnumerable<EquipmentBO> GetEquipmentImport(ImportBO importBO)
+
+        public IEnumerable<EquipmentBO> GetEquipmentImport(EquipmentImportBO importBO)
         {
+            var hardwareCommercialCodes = hardwareCommercialCodeEngine.ListAll();
+
             var import = Mapper.Map<Import>(importBO);
+            import.hardwareCommercialCodes = Mapper.Map<IEnumerable<HardwareCommercialCodeImport>>(hardwareCommercialCodes);
 
             var equipmentRows = importEngine.GetEquipment(import);
 

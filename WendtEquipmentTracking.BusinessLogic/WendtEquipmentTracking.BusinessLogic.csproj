@@ -92,7 +92,7 @@
     <Compile Include="BO\BillOfLadingEquipmentBO.cs" />
     <Compile Include="BO\HardwareKitBO.cs" />
     <Compile Include="BO\ProjectBO.cs" />
-    <Compile Include="BO\ImportBO.cs" />
+    <Compile Include="BO\EquipmentImportBO.cs" />
     <Compile Include="BO\EquipmentBO.cs" />
     <Compile Include="ImportService.cs" />
     <Compile Include="BillOfLadingService.cs" />

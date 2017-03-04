@@ -8,8 +8,7 @@
 
 <h4>Import Equipment <br /><small>Select the excel document containing the equipment you would like to import.</small></h4>
 
-
-@using (Html.BeginForm("Equipment", "Import", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Ajax.BeginForm("SelectEquipmentFile", null, new AjaxOptions { UpdateTargetId = "equipmentConfiguration", InsertionMode = InsertionMode.Replace, OnComplete = "OnComplete" }, new { enctype = "multipart/form-data", @class = "dropzone" }))
 {
     @Html.AntiForgeryToken()
 
@@ -19,22 +18,31 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.File)
-                        @Html.TextBoxFor(model => model.File, new { @class = "form-control", type = "file" })
-                        @Html.ValidationMessageFor(model => model.File, "", new { @class = "text-danger" })
-                </div>
+            <div class="col-md-3">
 
                 <div class="form-group">
-                        <input type="submit" value="Continue" class="btn btn-primary" />
+                    @Html.LabelFor(model => model.File)
+                    @Html.TextBoxFor(model => model.File, new { @class = "form-control", type = "file" })
+                    @Html.ValidationMessageFor(model => model.File, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
     </div>
 }
 
+<div id="equipmentConfiguration">
+
+</div>
+
+
+<div id="equipmentRows">
+
+</div>
+
 @section Scripts {
+    @Scripts.Render("~/bundles/dropzone")
     @Scripts.Render("~/bundles/form")
     @Scripts.Render("~/bundles/import")
+
+    @Styles.Render("~/Content/dropzone")
 }

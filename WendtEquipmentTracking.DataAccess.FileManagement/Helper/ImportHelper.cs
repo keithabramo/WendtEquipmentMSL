@@ -1,7 +1,9 @@
-﻿using Excel.Helper;
+﻿using Excel;
+using Excel.Helper;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using WendtEquipmentTracking.DataAccess.FileManagement.Domain;
 
@@ -17,47 +19,81 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Helper
                     RowStart = 2,
                     NumberOfColumns = 3
                 }
-            },
-            { "Mechanical", new ExcelDataLocation
-                {
-                    ColumnStart = 14,
-                    RowStart = 2,
-                    NumberOfColumns = 9
-                }
-            },
-            { "Advance Steel Assembly List", new ExcelDataLocation
-                {
-                    ColumnStart = 8,
-                    RowStart = 3,
-                    NumberOfColumns = 9
-                }
-            },
-            { "Advanced Steel Hardware", new ExcelDataLocation
-                {
-                    ColumnStart = 9,
-                    RowStart = 3,
-                    NumberOfColumns = 9
-                }
             }
         };
 
-        public static IEnumerable<EquipmentRow> GetEquipmentFromSheet(string sheetName, ExcelDataReaderHelper excelHelper)
+        public static IEnumerable<EquipmentRow> GetEquipment(Import import)
         {
-            var dataLocation = dataLocations[sheetName];
 
-            object[][] values = excelHelper.GetRangeCells(sheetName, dataLocation.ColumnStart, dataLocation.RowStart, dataLocation.NumberOfColumns);
-            var records = values.Where(r => r[0] != null).Select(rowValues => new EquipmentRow
+            FileStream stream = File.Open(import.FilePath, FileMode.Open, FileAccess.Read);
+            IExcelDataReader excelReader;
+
+            //1. Reading Excel file
+            if (Path.GetExtension(import.FilePath).ToUpper() == ".XLS")
             {
-                EquipmentName = rowValues[0].ToString(),
-                Priority = rowValues[1].ToString(),
-                ReleaseDate = rowValues[2] != null ? DateTime.Now.ToShortDateString() : string.Empty, //was not getting current date
-                DrawingNumber = rowValues[3].ToString(),
-                WorkOrderNumber = rowValues[4].ToString(),
-                Quantity = rowValues[5].ToString(),
-                ShippingTagNumber = rowValues[6].ToString(),
-                Description = rowValues[7].ToString(),
-                UnitWeight = rowValues[8].ToString()
-            }).ToList();
+                //1.1 Reading from a binary Excel file ('97-2003 format; *.xls)
+                excelReader = ExcelReaderFactory.CreateBinaryReader(stream);
+            }
+            else
+            {
+                //1.2 Reading from a OpenXml Excel file (2007 format; *.xlsx)
+                excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream);
+            }
+
+
+            //2. DataSet - Create column names from first row
+            excelReader.IsFirstRowAsColumnNames = true;
+            DataSet result = excelReader.AsDataSet();
+
+            //5. Data Reader methods
+            IList<EquipmentRow> records = new List<EquipmentRow>();
+            while (excelReader.Read())
+            {
+                var item = excelReader[0];
+                var quantity = excelReader[1];
+                var description = excelReader[2];
+                var partNumber = excelReader[3];
+                var length = excelReader[4];
+                var width = excelReader[5];
+                var specification = excelReader[6];
+                var um = excelReader[7];
+                var unitWeight = excelReader[8];
+                var totalWeight = excelReader[9];
+
+                var hardwareCommercialCode = import.hardwareCommercialCodes.SingleOrDefault(h => h.PartNumber == partNumber.ToString());
+                string equipmentName = string.Empty;
+                if (hardwareCommercialCode != null)
+                {
+                    equipmentName = hardwareCommercialCode.CommodityCode;
+                }
+
+                int quantityNumber = 0;
+                if (!Int32.TryParse(quantity.ToString(), out quantityNumber))
+                {
+                    quantityNumber = 0;
+                }
+
+                double unitWeightNumber = 0;
+                if (!Double.TryParse(unitWeight.ToString(), out unitWeightNumber))
+                {
+                    unitWeightNumber = 0;
+                }
+
+                var equipmentRecord = new EquipmentRow
+                {
+                    EquipmentName = equipmentName,
+                    Priority = import.Priority,
+                    ReleaseDate = DateTime.Now,
+                    DrawingNumber = import.DrawingNumber,
+                    WorkOrderNumber = import.WorkOrderNumber,
+                    Quantity = import.QuantityMultiplier * quantityNumber,
+                    ShippingTagNumber = partNumber.ToString(),
+                    Description = description.ToString(),
+                    UnitWeight = unitWeightNumber
+                };
+
+                records.Add(equipmentRecord);
+            }
 
             return records;
         }
