@@ -22,7 +22,7 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Helper
             }
         };
 
-        public static IEnumerable<EquipmentRow> GetEquipment(Import import)
+        public static IEnumerable<EquipmentRow> GetEquipment(EquipmentImport import)
         {
 
             FileStream stream = File.Open(import.FilePath, FileMode.Open, FileAccess.Read);
@@ -47,24 +47,34 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Helper
 
             //5. Data Reader methods
             IList<EquipmentRow> records = new List<EquipmentRow>();
-            while (excelReader.Read())
+            bool first = true;
+            foreach (DataRow row in result.Tables[0].Rows)
             {
-                var item = excelReader[0];
-                var quantity = excelReader[1];
-                var description = excelReader[2];
-                var partNumber = excelReader[3];
-                var length = excelReader[4];
-                var width = excelReader[5];
-                var specification = excelReader[6];
-                var um = excelReader[7];
-                var unitWeight = excelReader[8];
-                var totalWeight = excelReader[9];
+                //if (first)
+                //{
+                //    first = false;
+                //    continue;
+                //}
+
+                var item = row["ITEM"];
+                var quantity = row["QTY"];
+                var description = row["DESCRIPTION"];
+                var partNumber = row["PART NUMBER"];
+                var length = row["LENGTH"];
+                var width = row["WIDTH"];
+                var specification = row["SPECIFICATION"];
+                var um = row["UM"];
+                var unitWeight = row["UNIT WT. (LBS)"];
+                var totalWeight = row["TOTAL WT. (LBS)"];
 
                 var hardwareCommercialCode = import.hardwareCommercialCodes.SingleOrDefault(h => h.PartNumber == partNumber.ToString());
                 string equipmentName = string.Empty;
                 if (hardwareCommercialCode != null)
                 {
                     equipmentName = hardwareCommercialCode.CommodityCode;
+                } else
+                {
+                    equipmentName = import.Equipment;
                 }
 
                 int quantityNumber = 0;
@@ -77,6 +87,10 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Helper
                 if (!Double.TryParse(unitWeight.ToString(), out unitWeightNumber))
                 {
                     unitWeightNumber = 0;
+                }
+                if(equipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    unitWeightNumber = .01;
                 }
 
                 var equipmentRecord = new EquipmentRow

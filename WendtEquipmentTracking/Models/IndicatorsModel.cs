@@ -13,6 +13,7 @@
             Fuchsia
         }
 
+        public string EquipmentNameColor { get; set; }
         public string UnitWeightColor { get; set; }
         public string ReadyToShipColor { get; set; }
         public string ShippedQtyColor { get; set; }

@@ -17,7 +17,7 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement
             return tempFile;
         }
 
-        public IEnumerable<EquipmentRow> GetEquipment(Import import)
+        public IEnumerable<EquipmentRow> GetEquipment(EquipmentImport import)
         {
             var equipmentData = ImportHelper.GetEquipment(import);
 

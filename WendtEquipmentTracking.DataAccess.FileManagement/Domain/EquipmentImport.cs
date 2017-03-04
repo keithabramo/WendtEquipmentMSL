@@ -2,7 +2,7 @@
 
 namespace WendtEquipmentTracking.DataAccess.FileManagement.Domain
 {
-    public class Import
+    public class EquipmentImport
     {
         public string FilePath { get; set; }
 

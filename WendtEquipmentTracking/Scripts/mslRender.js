@@ -22,6 +22,8 @@ $(function () {
             if (rowData.IsAssociatedToHardwareKit) {
                 $cell.append("<br> Associated to Hardware Kit: " + rowData.AssociatedHardwareKitNumber);
             }
+
+            $cell.addClass(rowData.Indicators.EquipmentNameColor);
         }
         this.PriorityRender = function ($cell, rowData) {
             var colIndex = 1;

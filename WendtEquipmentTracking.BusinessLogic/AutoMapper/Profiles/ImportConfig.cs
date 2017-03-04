@@ -8,7 +8,8 @@ namespace WendtEquipmentTracking.BusinessLogic.AutoMapper.Profiles
     {
         public ImportConfig()
         {
-            base.CreateMap<Import, EquipmentImportBO>();
+            base.CreateMap<EquipmentImport, EquipmentImportBO>();
+            base.CreateMap<EquipmentImportBO, EquipmentImport>();
 
         }
     }

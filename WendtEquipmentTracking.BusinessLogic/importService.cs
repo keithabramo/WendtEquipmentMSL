@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using System.Collections.Generic;
+using System.Linq;
 using WendtEquipmentTracking.BusinessLogic.Api;
 using WendtEquipmentTracking.BusinessLogic.BO;
 using WendtEquipmentTracking.DataAccess.FileManagement;
@@ -29,9 +30,9 @@ namespace WendtEquipmentTracking.BusinessLogic
 
         public IEnumerable<EquipmentBO> GetEquipmentImport(EquipmentImportBO importBO)
         {
-            var hardwareCommercialCodes = hardwareCommercialCodeEngine.ListAll();
+            var hardwareCommercialCodes = hardwareCommercialCodeEngine.ListAll().ToList();
 
-            var import = Mapper.Map<Import>(importBO);
+            var import = Mapper.Map<EquipmentImport>(importBO);
             import.hardwareCommercialCodes = Mapper.Map<IEnumerable<HardwareCommercialCodeImport>>(hardwareCommercialCodes);
 
             var equipmentRows = importEngine.GetEquipment(import);

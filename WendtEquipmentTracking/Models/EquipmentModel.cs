@@ -134,6 +134,12 @@ namespace WendtEquipmentTracking.App.Models
         {
             Indicators = new IndicatorsModel();
 
+            //equipment
+            if (EquipmentName.Equals("DO NOT USE", StringComparison.InvariantCultureIgnoreCase))
+            {
+                Indicators.EquipmentNameColor = IndicatorsModel.Colors.Red.ToString();
+            }
+
             //unit weight
             if ((UnitWeight == null || UnitWeight <= 0) && !EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase))
             {

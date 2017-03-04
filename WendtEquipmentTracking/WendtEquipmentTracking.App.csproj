@@ -158,6 +158,7 @@
     <Compile Include="AutoMapper\Profiles\BillOfLadingConfig.cs" />
     <Compile Include="AutoMapper\Profiles\PriorityConfig.cs" />
     <Compile Include="AutoMapper\Profiles\HardwareCommercialCodeConfig.cs" />
+    <Compile Include="AutoMapper\Profiles\ImportConfig.cs" />
     <Compile Include="AutoMapper\Profiles\WorkOrderPriceConfig.cs" />
     <Compile Include="AutoMapper\Profiles\HardwareKitConfig.cs" />
     <Compile Include="AutoMapper\Profiles\ProjectConfig.cs" />
@@ -190,6 +191,7 @@
     <Compile Include="Models\HardwareKitEquipmentModel.cs" />
     <Compile Include="Models\BillOfLadingEquipmentModel.cs" />
     <Compile Include="Models\BillOfLadingModel.cs" />
+    <Compile Include="Models\EquipmentImportModel.cs" />
     <Compile Include="Models\WorkOrderPriceSelectionModel.cs" />
     <Compile Include="Models\EquipmentSelectionModel.cs" />
     <Compile Include="Models\IndicatorsModel.cs" />
@@ -343,7 +345,6 @@
     <Content Include="Views\BillOfLading\Edit.cshtml" />
     <Content Include="Views\HardwareKit\Edit.cshtml" />
     <Content Include="Views\Import\Equipment.cshtml" />
-    <Content Include="Views\Import\SelectEquipmentSheets.cshtml" />
     <Content Include="Views\Import\ImportEquipmentPartial.cshtml" />
     <Content Include="Views\Equipment\Create.cshtml" />
     <Content Include="Views\Equipment\BOLsAssociatedToEquipment.cshtml" />

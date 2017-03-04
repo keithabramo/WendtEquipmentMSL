@@ -1,57 +1,66 @@
-﻿@model ImportModel
+﻿@model EquipmentImportModel
 
-@using (Ajax.BeginForm("ConfigureEquipment", new { enctype = "multipart/form-data", @class = "dropzone" }, new AjaxOptions { UpdateTargetId = "EquipmentRows", InsertionMode = InsertionMode.Replace, OnComplete = "OnComplete" }))
+@if (Model.Status == SuccessStatus.Error)
 {
+    <p> There was an error while trying to upload your document: @Model.Errors.FirstOrDefault().Message </p>
+}
+else
+{
+    using (Ajax.BeginForm("ConfigureEquipment", new AjaxOptions { UpdateTargetId = "equipmentRows", InsertionMode = InsertionMode.Replace, OnComplete = "OnComplete" }))
+    {
 
-    @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
 
-    <div class="form">
-        <hr />
+        <div class="form">
+            <hr />
 
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <div class="row">
-            <div class="col-md-3">
+            <div class="row">
+                <div class="col-md-3">
 
-                <div class="form-group">
-                    <table class="table table-condensed table-hover table-bordered table-styled">
-                        <tr>
-                            <td>Equipment</td>
-                            <td class="warning">
-                                @Html.EditorFor(model => model.Equipment, new { htmlAttributes = new { @class = "form-control" } })
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Priority</td>
-                            <td class="warning">
-                                @Html.DropDownListFor(model => model.Priority, new SelectList(Model.Priorities), new { @class = "form-control" })
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Drawing</td>
-                            <td class="warning">
-                                @Html.EditorFor(model => model.DrawingNumber, new { htmlAttributes = new { @class = "form-control" } })
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>WO #</td>
-                            <td class="warning">
-                                @Html.EditorFor(model => model.WorkOrderNumber, new { htmlAttributes = new { @class = "form-control" } })
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Qty Multiplier</td>
-                            <td class="warning">
-                                @Html.EditorFor(model => model.QuantityMultiplier, new { htmlAttributes = new { @class = "form-control" } })
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+                    <div class="form-group">
+                        <table class="table table-condensed table-hover table-bordered table-styled">
+                            <tr>
+                                <td>Equipment</td>
+                                <td class="warning">
+                                    @Html.HiddenFor(model => model.FilePath)
+                                    @Html.EditorFor(model => model.Equipment, new { htmlAttributes = new { @class = "form-control" } })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Priority</td>
+                                <td class="warning">
+                                    @Html.DropDownListFor(model => model.Priority, new SelectList(Model.Priorities), new { @class = "form-control" })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Drawing</td>
+                                <td class="warning">
+                                    @Html.EditorFor(model => model.DrawingNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>WO #</td>
+                                <td class="warning">
+                                    @Html.EditorFor(model => model.WorkOrderNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Qty Multiplier</td>
+                                <td class="warning">
+                                    @Html.EditorFor(model => model.QuantityMultiplier, new { htmlAttributes = new { @class = "form-control" } })
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
 
-                <div class="form-group">
-                    <input type="submit" value="Continue" class="btn btn-primary" />
+                    <div class="form-group">
+                        <input type="submit" value="Continue" class="btn btn-primary" />
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    }
+
 }

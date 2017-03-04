@@ -40,7 +40,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
         // POST: Equipment
         [HttpPost]
-        public ActionResult SelectEquipmentFile(ImportModel model)
+        public ActionResult SelectEquipmentFile(EquipmentImportModel model)
         {
             try
             {
@@ -74,10 +74,10 @@ namespace WendtEquipmentTracking.App.Controllers
                         model.Priorities = priorities;
                         model.QuantityMultiplier = 1;
                         model.WorkOrderNumber = projectNumber;
-                        model.DrawingNumber = model.File.FileName;
+                        model.DrawingNumber = Path.GetFileNameWithoutExtension(model.File.FileName);
                         model.FilePath = filePath;
 
-                        return View("EquipmentConfigurationPartial", model);
+                        return PartialView("EquipmentConfigurationPartial", model);
                     }
                     else
                     {
@@ -86,50 +86,57 @@ namespace WendtEquipmentTracking.App.Controllers
                 }
 
                 model.Status = SuccessStatus.Error;
-                return View(model);
+                return PartialView("EquipmentConfigurationPartial", model);
             }
             catch (Exception e)
             {
                 model.Status = SuccessStatus.Error;
                 ModelState.AddModelError("File", e.Message);
-                return View(model);
+                return PartialView("EquipmentConfigurationPartial", model);
             }
         }
 
         // POST: Equipment
         [HttpPost]
-        public ActionResult ConfigureEquipment(ImportModel model)
+        public ActionResult ConfigureEquipment(EquipmentImportModel model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
+                    var importBO = Mapper.Map<EquipmentImportBO>(model);
+                    var equipmentBOs = importService.GetEquipmentImport(importBO);
+                    var equipmentModels = Mapper.Map<IList<EquipmentSelectionModel>>(equipmentBOs);
 
-                    if (model.File != null)
+
+                    var user = userService.GetCurrentUser();
+
+                    IEnumerable<int> priorities = new List<int>();
+                    if (user != null)
                     {
-                        var importBO = Mapper.Map<EquipmentImportBO>(model);
-
-                        var equipmentBOs = importService.GetEquipmentImport(importBO);
-
-                        var equipmentModels = Mapper.Map<IList<EquipmentSelectionModel>>(equipmentBOs);
-                        equipmentModels.ToList().ForEach(w => w.Checked = true);
-
-                        return View("ImportEquipmentPartial", equipmentModels);
+                        var priorityBOs = priorityService.GetAll(user.ProjectId);
+                        priorities = priorityBOs.Select(p => p.PriorityNumber);
                     }
-                    else
+
+
+                    equipmentModels.ToList().ForEach(w =>
                     {
-                        ModelState.AddModelError("File", "You must specify a file.");
-                    }
+                        w.Checked = true;
+                        w.Priorities = priorities;
+                    });
+
+                    return PartialView("ImportEquipmentPartial", equipmentModels);
+
                 }
 
                 model.Status = SuccessStatus.Error;
-                return View(model);
+                return PartialView("EquipmentConfigurationPartial", model);
             }
             catch (Exception e)
             {
                 model.Status = SuccessStatus.Error;
                 ModelState.AddModelError("File", e.Message);
-                return View(model);
+                return PartialView("EquipmentConfigurationPartial", model);
             }
         }
 

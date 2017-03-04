@@ -1,24 +1,31 @@
-﻿$(function () {
+﻿Dropzone.autoDiscover = false;
+
+$(function () {
 
     var Import = function () {
 
         this.initStyles = function () {
+            
 
-
-            Dropzone.options.mydropzone = {
-                addRemoveLinks: true,
-                autoProcessQueue: false, // this is important as you dont want form to be submitted unless you have clicked the submit button
-                autoDiscover: false,
-                previewsContainer: '#dropzonePreview',
-                clickable: false, 
-                accept: function (file, done) {
-                    console.log("uploaded");
-                    done();
+            Dropzone.options.myDropzone = {
+                maxFiles: 1,
+                acceptedFiles: ".xls, .xlsx, .xlsm",
+                error: function(file){
+                    if (!file.accepted) {
+                        this.removeFile(file);
+                    }
                 },
-                error: function (file, msg) {
-                    alert(msg);
-                }
+                success: function (file, response) {
+                    $("#equipmentConfiguration").html(response);
+                    $("#equipmentRows").html("");
+                },
+                maxfilesexceeded: function(file) {
+                    this.removeAllFiles();
+                    this.addFile(file);
+               }
             };
+
+            $('#myDropzone').dropzone();
         }
 
         this.initEvents = function () {
@@ -31,8 +38,6 @@
                     $(".table tbody tr td:first-child [type='checkbox']").prop("checked", true);
                 }
             });
-
-
             
         }
 

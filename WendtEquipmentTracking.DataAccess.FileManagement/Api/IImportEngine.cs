@@ -7,7 +7,7 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Api
     {
         string SaveEquipmentFile(byte[] equipmentFile);
 
-        IEnumerable<EquipmentRow> GetEquipment(Import import);
+        IEnumerable<EquipmentRow> GetEquipment(EquipmentImport import);
 
         IEnumerable<WorkOrderPriceRow> GetWorkOrderPrices(byte[] importFile);
 
