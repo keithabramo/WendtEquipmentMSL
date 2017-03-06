@@ -38,6 +38,13 @@ $(function () {
                     $(".table tbody tr td:first-child [type='checkbox']").prop("checked", true);
                 }
             });
+
+            $(document).on("keypress keydown keyup", 'form', function (event) {
+                if (event.keyCode == 13) {
+                    event.preventDefault();
+                    return false;
+                }
+            });
             
         }
 

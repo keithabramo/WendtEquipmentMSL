@@ -65,7 +65,7 @@ namespace WendtEquipmentTracking.Common
                 }
             }
 
-            user.Role = UserRoles.ReadOnly;
+            user.Role = UserRoles.ReadWrite;
             return user;
         }
 
