@@ -7,6 +7,7 @@
         ImportEquipment,
         CreateBOL,
         CreateHardwareKit,
-        ImportWorkOrderPrice
+        ImportWorkOrderPrice,
+        Priorities
     }
 }

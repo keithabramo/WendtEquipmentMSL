@@ -64,9 +64,9 @@ namespace WendtEquipmentTracking.BusinessLogic
             return billOfLadingBO;
         }
 
-        public IEnumerable<BillOfLadingBO> GetByBillOfLadingNumber(string billOfLadingNumber)
+        public IEnumerable<BillOfLadingBO> GetByBillOfLadingNumber(int projectId, string billOfLadingNumber)
         {
-            var billOfLadings = billOfLadingEngine.List(BillOfLadingSpecs.BillOfLadingNumber(billOfLadingNumber));
+            var billOfLadings = billOfLadingEngine.List(BillOfLadingSpecs.ProjectId(projectId) && BillOfLadingSpecs.BillOfLadingNumber(billOfLadingNumber));
 
             var billOfLadingBOs = Mapper.Map<IEnumerable<BillOfLadingBO>>(billOfLadings);
 

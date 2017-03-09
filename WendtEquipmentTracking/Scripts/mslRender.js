@@ -1,8 +1,9 @@
 ﻿
 $(function () {
 
-    var MSLRender = function () {
+    var colorClasses = "White Red Yellow Green Purple Pink Fuchsia";
 
+    var MSLRender = function () {
         
         this.EquipmentNameRender = function ($cell, rowData) {
             var colIndex = 0;
@@ -23,6 +24,7 @@ $(function () {
                 $cell.append("<br> Associated to Hardware Kit: " + rowData.AssociatedHardwareKitNumber);
             }
 
+            $cell.removeClass(colorClasses);
             $cell.addClass(rowData.Indicators.EquipmentNameColor);
         }
         this.PriorityRender = function ($cell, rowData) {
@@ -91,6 +93,7 @@ $(function () {
                 $cell.html(data);
             }
 
+            $cell.removeClass(colorClasses);
             $cell.addClass(rowData.Indicators.WorkOrderNumberColor);
         }
         this.QuantityRender = function ($cell, rowData) {
@@ -154,6 +157,7 @@ $(function () {
                 $cell.html(value);
             }
 
+            $cell.removeClass(colorClasses);
             $cell.addClass(rowData.Indicators.UnitWeightColor);
         }
         this.TotalWeightRender = function ($cell, rowData) {
@@ -205,6 +209,7 @@ $(function () {
                 $cell.html(data);
             }
 
+            $cell.removeClass(colorClasses);
             $cell.addClass(rowData.Indicators.ReadyToShipColor);
         }
         this.ShippedQuantityRender = function ($cell, rowData) {
@@ -223,6 +228,7 @@ $(function () {
                 $cell.html(data);
             }
 
+            $cell.removeClass(colorClasses);
             $cell.addClass(rowData.Indicators.ShippedQtyColor);
         }
         this.LeftToShipRender = function ($cell, rowData) {
@@ -241,30 +247,26 @@ $(function () {
                 $cell.html(data);
             }
 
+            $cell.removeClass(colorClasses);
             $cell.addClass(rowData.Indicators.LeftToShipColor);
         }
         this.FullyShippedRender = function ($cell, rowData) {
             var colIndex = 14;
-            var data = rowData.FullyShipped;
+            var data = rowData.FullyShippedText;
             var $template = $(".template");
 
-            var value = "N\A";
-            if (data === true) {
-                value = "Yes";
-            } else if (data === false) {
-                value = "No";
-            }
 
             if ($template.length) {
                 var $cellTemplate = $template.find("div").eq(colIndex).clone();
 
                 $cell.html($cellTemplate.html());
-                $cell.find("input").val(data);
-                $cell.append(value);
+                $cell.find("input").val(rowData.FullyShipped);
+                $cell.append(data);
             } else {
-                $cell.html(value);
+                $cell.html(data);
             }
 
+            $cell.removeClass(colorClasses);
             $cell.addClass(rowData.Indicators.FullyShippedColor);
         }
         this.ShippedFromRender = function ($cell, rowData) {
@@ -302,7 +304,7 @@ $(function () {
                 $cell.html(value);
             }
 
-
+            $cell.removeClass(colorClasses);
             $cell.addClass(rowData.Indicators.CustomsValueColor);
         }
         this.SalePriceRender = function ($cell, rowData) {
@@ -324,7 +326,7 @@ $(function () {
                 $cell.html(value);
             }
 
-
+            $cell.removeClass(colorClasses);
             $cell.addClass(rowData.Indicators.SalePriceColor);
         }
         this.HTSCodeRender = function ($cell, rowData) {

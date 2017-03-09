@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using WendtEquipmentTracking.App.Common;
 using WendtEquipmentTracking.App.Models;
 using WendtEquipmentTracking.BusinessLogic;
 using WendtEquipmentTracking.BusinessLogic.Api;
@@ -51,7 +50,14 @@ namespace WendtEquipmentTracking.App.Controllers
 
         public ActionResult Details(string billOfLadingNumber)
         {
-            var billOfLadings = billOfLadingService.GetByBillOfLadingNumber(billOfLadingNumber);
+            var user = userService.GetCurrentUser();
+
+            if (user == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var billOfLadings = billOfLadingService.GetByBillOfLadingNumber(user.ProjectId, billOfLadingNumber);
 
             if (billOfLadings == null)
             {
@@ -76,7 +82,7 @@ namespace WendtEquipmentTracking.App.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            
+
 
             //Get Data
             var projectBO = projectService.GetById(user.ProjectId);
@@ -109,22 +115,38 @@ namespace WendtEquipmentTracking.App.Controllers
 
                     if (user != null)
                     {
-                        
+
                         model.ProjectId = user.ProjectId;
                         model.BillOfLadingEquipments = model.BillOfLadingEquipments.Where(be => be.Quantity > 0 && be.Checked).ToList();
 
-                        var billOfLadingBO = Mapper.Map<BillOfLadingBO>(model);
+                        if (model.BillOfLadingEquipments.Count() != 0)
+                        {
 
-                        billOfLadingService.Save(billOfLadingBO);
+                            var billOfLadingBO = Mapper.Map<BillOfLadingBO>(model);
 
-                        return RedirectToAction("Index");
+                            billOfLadingService.Save(billOfLadingBO);
+
+                            return RedirectToAction("Index");
+                        }
+                        ModelState.AddModelError("", "You must select at least one equipment item to associate with this BOL");
+
                     }
+
+
                 }
+
+                model.Status = Common.SuccessStatus.Error;
+                model.Errors = ModelState.Where(v => v.Value.Errors.Count() > 0).ToList().Select(v => new BaseModelError { Name = v.Key, Message = v.Value.Errors.First().ErrorMessage });
 
                 return View(model);
             }
-            catch
+            catch (Exception e)
             {
+                model.Status = Common.SuccessStatus.Error;
+                ModelState.AddModelError("", "An error occurred: " + e.Message);
+
+                model.Errors = ModelState.Where(v => v.Value.Errors.Count() > 0).ToList().Select(v => new BaseModelError { Name = v.Key, Message = v.Value.Errors.First().ErrorMessage });
+
                 return View(model);
             }
         }
@@ -162,20 +184,35 @@ namespace WendtEquipmentTracking.App.Controllers
                         model.ProjectId = user.ProjectId;
                         model.BillOfLadingEquipments = model.BillOfLadingEquipments.Where(be => be.Quantity > 0 && be.Checked).ToList();
 
-                        var billOfLading = billOfLadingService.GetById(id);
+                        if (model.BillOfLadingEquipments.Count() != 0)
+                        {
+                            var billOfLading = billOfLadingService.GetById(id);
 
-                        Mapper.Map<BillOfLadingModel, BillOfLadingBO>(model, billOfLading);
+                            Mapper.Map<BillOfLadingModel, BillOfLadingBO>(model, billOfLading);
 
-                        billOfLadingService.Update(billOfLading);
+                            billOfLadingService.Update(billOfLading);
 
-                        return RedirectToAction("Index");
+                            return RedirectToAction("Index");
+                        }
+
+                        ModelState.AddModelError("", "You must select at least one equipment item to associate with this BOL");
+
                     }
                 }
 
+                model.Status = Common.SuccessStatus.Error;
+                model.Errors = ModelState.Where(v => v.Value.Errors.Count() > 0).ToList().Select(v => new BaseModelError { Name = v.Key, Message = v.Value.Errors.First().ErrorMessage });
+
                 return View(model);
             }
-            catch
+            catch (Exception e)
             {
+                model.Status = Common.SuccessStatus.Error;
+                ModelState.AddModelError("", "An error occurred: " + e.Message);
+
+                model.Errors = ModelState.Where(v => v.Value.Errors.Count() > 0).ToList().Select(v => new BaseModelError { Name = v.Key, Message = v.Value.Errors.First().ErrorMessage });
+
+
                 return View(model);
             }
         }
@@ -224,7 +261,7 @@ namespace WendtEquipmentTracking.App.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            
+
             var projectBO = projectService.GetById(user.ProjectId);
 
             //Get Data

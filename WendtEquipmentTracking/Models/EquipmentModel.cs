@@ -22,7 +22,7 @@ namespace WendtEquipmentTracking.App.Models
 
         [DisplayName("Priority")]
         [Required]
-        public string Priority { get; set; }
+        public int Priority { get; set; }
 
 
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
@@ -109,7 +109,23 @@ namespace WendtEquipmentTracking.App.Models
         public string CountryOfOrigin { get; set; }
 
 
-
+        [DisplayName("Fully Shipped")]
+        public string FullyShippedText
+        {
+            get
+            {
+                if(!FullyShipped.HasValue)
+                {
+                    return "NA";
+                } else if(FullyShipped.Value == true)
+                {
+                    return "YES";
+                } else
+                {
+                    return "NO";
+                }
+            }
+        }
 
 
 

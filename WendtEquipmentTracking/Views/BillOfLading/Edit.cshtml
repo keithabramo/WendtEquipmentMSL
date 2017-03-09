@@ -13,7 +13,7 @@
     <div class="form">
         <h4>BOL: <strong>@Html.DisplayFor(model => model.BillOfLadingNumber)</strong> <br /> <small>Edit</small></h4>
         <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
         @Html.HiddenFor(model => model.BillOfLadingId)
         @Html.HiddenFor(model => model.BillOfLadingNumber)
 

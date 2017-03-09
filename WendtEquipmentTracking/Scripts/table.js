@@ -109,7 +109,7 @@ $(function () {
                             $(row).addClass('warning');
                         }
                         if (data.FullyShipped === true) {
-                            $(row).find("input").attr("readOnly", "readOnly");
+                            $(row).find("input, select, textarea").attr("readOnly", "readOnly").attr("disabled", "disabled");
                         }
                     },
                     deferRender: true,
@@ -219,7 +219,7 @@ $(function () {
                             }
                         },
                         {
-                            "data": "FullyShipped", "targets": 14,
+                            "data": "FullyShippedText", "targets": 14,
                             className: "fullyShippedWidth",
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                                 mslRender.FullyShippedRender($(cell), rowData);
@@ -285,7 +285,8 @@ $(function () {
                         { "data": "IsAssociatedToHardwareKit", "targets": 24, visible: false, searchable: false },
                         { "data": "AssociatedHardwareKitNumber", "targets": 25, visible: false, searchable: false },
                         { "data": "Indicators", "targets": 26, visible: false, searchable: false },
-                        { "data": "IsDuplicate", "targets": 27, visible: false, searchable: false }
+                        { "data": "IsDuplicate", "targets": 27, visible: false, searchable: false },
+                        { "data": "FullyShipped", "targets": 28, visible: false, searchable: false }
                     ],
                     autoFill: {
                         update: false,

@@ -57,7 +57,7 @@
                                 @Html.ValidationMessageFor(modelItem => modelItem[i].EquipmentName, "", new { @class = "text-danger" })
                             </td>
                             <td>
-                                @Html.DropDownListFor(modelItem => modelItem[i].Priority, new SelectList(Model[i].Priorities), new { @class = "form-control" })
+                                @Html.DropDownListFor(modelItem => modelItem[i].Priority, new SelectList(Model[i].Priorities, Model[i].Priority), new { @class = "form-control" })
                                 @Html.ValidationMessageFor(modelItem => modelItem[i].Priority, "", new { @class = "text-danger" })
                             </td>
                             <td>

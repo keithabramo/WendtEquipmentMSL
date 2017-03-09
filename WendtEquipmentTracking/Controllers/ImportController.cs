@@ -40,10 +40,13 @@ namespace WendtEquipmentTracking.App.Controllers
 
         // POST: Equipment
         [HttpPost]
-        public ActionResult SelectEquipmentFile(EquipmentImportModel model)
+        public ActionResult SelectEquipmentFile(ImportModel model)
         {
+            var equipmentImportModel = new EquipmentImportModel();
+
             try
             {
+
                 if (ModelState.IsValid)
                 {
 
@@ -71,13 +74,13 @@ namespace WendtEquipmentTracking.App.Controllers
                             priorities = priorityBOs.Select(p => p.PriorityNumber);
                         }
 
-                        model.Priorities = priorities;
-                        model.QuantityMultiplier = 1;
-                        model.WorkOrderNumber = projectNumber;
-                        model.DrawingNumber = Path.GetFileNameWithoutExtension(model.File.FileName);
-                        model.FilePath = filePath;
+                        equipmentImportModel.Priorities = priorities;
+                        equipmentImportModel.QuantityMultiplier = 1;
+                        equipmentImportModel.WorkOrderNumber = projectNumber;
+                        equipmentImportModel.DrawingNumber = Path.GetFileNameWithoutExtension(model.File.FileName);
+                        equipmentImportModel.FilePath = filePath;
 
-                        return PartialView("EquipmentConfigurationPartial", model);
+                        return PartialView("EquipmentConfigurationPartial", equipmentImportModel);
                     }
                     else
                     {
@@ -85,14 +88,18 @@ namespace WendtEquipmentTracking.App.Controllers
                     }
                 }
 
-                model.Status = SuccessStatus.Error;
-                return PartialView("EquipmentConfigurationPartial", model);
+                equipmentImportModel.Status = SuccessStatus.Error;
+                equipmentImportModel.Errors = ModelState.Where(v => v.Value.Errors.Count() > 0).ToList().Select(v => new BaseModelError { Name = v.Key, Message = v.Value.Errors.First().ErrorMessage });
+
+                return PartialView("EquipmentConfigurationPartial", equipmentImportModel);
             }
             catch (Exception e)
             {
-                model.Status = SuccessStatus.Error;
+                equipmentImportModel.Status = SuccessStatus.Error;
                 ModelState.AddModelError("File", e.Message);
-                return PartialView("EquipmentConfigurationPartial", model);
+                equipmentImportModel.Errors = ModelState.Where(v => v.Value.Errors.Count() > 0).ToList().Select(v => new BaseModelError { Name = v.Key, Message = v.Value.Errors.First().ErrorMessage });
+
+                return PartialView("EquipmentConfigurationPartial", equipmentImportModel);
             }
         }
 
@@ -130,12 +137,16 @@ namespace WendtEquipmentTracking.App.Controllers
                 }
 
                 model.Status = SuccessStatus.Error;
+                model.Errors = ModelState.Where(v => v.Value.Errors.Count() > 0).ToList().Select(v => new BaseModelError { Name = v.Key, Message = v.Value.Errors.First().ErrorMessage });
+
                 return PartialView("EquipmentConfigurationPartial", model);
             }
             catch (Exception e)
             {
                 model.Status = SuccessStatus.Error;
                 ModelState.AddModelError("File", e.Message);
+                model.Errors = ModelState.Where(v => v.Value.Errors.Count() > 0).ToList().Select(v => new BaseModelError { Name = v.Key, Message = v.Value.Errors.First().ErrorMessage });
+
                 return PartialView("EquipmentConfigurationPartial", model);
             }
         }
@@ -169,11 +180,9 @@ namespace WendtEquipmentTracking.App.Controllers
                         return RedirectToAction("Index", "Home");
                     }
                 }
-
-                IEnumerable<string> allErrors = ModelState.Values.SelectMany(v => v.Errors.Select(b => b.ErrorMessage));
-                ModelState.AddModelError("", "There were some validation errors when trying to import equipment: \n" + String.Join("<br/>", allErrors));
-
+                
                 resultModel.Status = SuccessStatus.Error;
+                resultModel.Errors = ModelState.Where(v => v.Value.Errors.Count() > 0).ToList().Select(v => new BaseModelError { Name = v.Key, Message = v.Value.Errors.First().ErrorMessage });
 
                 return View("Equipment");
             }
@@ -182,6 +191,8 @@ namespace WendtEquipmentTracking.App.Controllers
                 ModelState.AddModelError("", e.Message);
 
                 resultModel.Status = SuccessStatus.Error;
+                resultModel.Errors = ModelState.Where(v => v.Value.Errors.Count() > 0).ToList().Select(v => new BaseModelError { Name = v.Key, Message = v.Value.Errors.First().ErrorMessage });
+
 
                 return View("Equipment");
             }
@@ -229,12 +240,16 @@ namespace WendtEquipmentTracking.App.Controllers
                 }
 
                 model.Status = SuccessStatus.Error;
+                model.Errors = ModelState.Where(v => v.Value.Errors.Count() > 0).ToList().Select(v => new BaseModelError { Name = v.Key, Message = v.Value.Errors.First().ErrorMessage });
+
                 return View(model);
             }
             catch (Exception e)
             {
                 model.Status = SuccessStatus.Error;
                 ModelState.AddModelError("File", e.Message);
+                model.Errors = ModelState.Where(v => v.Value.Errors.Count() > 0).ToList().Select(v => new BaseModelError { Name = v.Key, Message = v.Value.Errors.First().ErrorMessage });
+
                 return View(model);
             }
         }

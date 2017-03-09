@@ -10,6 +10,11 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Specifications
             return new IdSpecification(id);
         }
 
+        public static Specification<BillOfLading> ProjectId(int projectId)
+        {
+            return new ProjectIdSpecification(projectId);
+        }
+
         public static Specification<BillOfLading> BillOfLadingNumber(string billOfLandningNumber)
         {
             return new BillOfLadingNumberSpecification(billOfLandningNumber);

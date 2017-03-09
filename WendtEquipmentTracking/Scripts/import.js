@@ -18,6 +18,7 @@ $(function () {
                 success: function (file, response) {
                     $("#equipmentConfiguration").html(response);
                     $("#equipmentRows").html("");
+                    OnComplete();
                 },
                 maxfilesexceeded: function(file) {
                     this.removeAllFiles();
@@ -58,7 +59,7 @@ $(function () {
 
 function OnComplete() {
     $("[type='submit']").button("reset");
-    $.validator.unobtrusive.parse('#EquipmentRows')
+    $.validator.unobtrusive.parse('#equipmentRows')
     $.validator.unobtrusive.parse('#equipmentConfiguration')
     form.initStyles();
     form.initEvents();

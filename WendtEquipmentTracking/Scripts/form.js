@@ -2,6 +2,8 @@
 
     var Form = function () {
 
+        this.invalid = false;
+
         this.initStyles = function () {
             
             //hack since create row is being copyed for the scrolly stuff we need to remove extra id so datepicker stops breaking
@@ -29,11 +31,13 @@
             var $forms = $("form");
 
 
-            $forms.on("submit", function () {
-                if ($(this).valid()) {
-                    $(this).find("[type='submit']").button("loading");
-                    return true;
-                }
+            $("[type='submit']").on("click", function () {
+                    $(this).button("loading");
+            });
+
+            $forms.on('invalid-form.validate', function () {
+                $("[type='submit']").button("reset");
+                $this.invalid = true;
             });
         }
 

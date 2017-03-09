@@ -85,7 +85,7 @@
                 </td>
                 <td class="quantityWidth">
                     @Html.HiddenFor(modelItem => modelItem.BillOfLadingEquipments[i].EquipmentId)
-                    @Html.EditorFor(modelItem => modelItem.BillOfLadingEquipments[i].Quantity, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(modelItem => modelItem.BillOfLadingEquipments[i].Quantity, new { htmlAttributes = new { @class = "form-control quantity" } })
                 </td>
                 <td class="equipmentNameWidth @Model.BillOfLadingEquipments[i].Equipment.Indicators.EquipmentNameColor">
                     @Html.DisplayFor(modelItem => modelItem.BillOfLadingEquipments[i].Equipment.EquipmentName)

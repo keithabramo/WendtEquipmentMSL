@@ -17,6 +17,7 @@ namespace WendtEquipmentTracking.App.Models
         public int PriorityNumber { get; set; }
 
         [DisplayName("Date")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         [Required]
         public DateTime DueDate { get; set; }
 

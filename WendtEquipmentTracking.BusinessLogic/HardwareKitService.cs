@@ -58,9 +58,9 @@ namespace WendtEquipmentTracking.BusinessLogic
             return hardwareKitBO;
         }
 
-        public IEnumerable<HardwareKitBO> GetByHardwareKitNumber(string hardwareKitNumber)
+        public IEnumerable<HardwareKitBO> GetByHardwareKitNumber(int projectId, string hardwareKitNumber)
         {
-            var hardwareKits = hardwareKitEngine.List(HardwareKitSpecs.HardwareKitNumber(hardwareKitNumber));
+            var hardwareKits = hardwareKitEngine.List(HardwareKitSpecs.ProjectId(projectId) && HardwareKitSpecs.HardwareKitNumber(hardwareKitNumber));
 
             var hardwareKitBOs = Mapper.Map<IEnumerable<HardwareKitBO>>(hardwareKits);
 

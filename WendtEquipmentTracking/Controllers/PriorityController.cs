@@ -129,13 +129,22 @@ namespace WendtEquipmentTracking.App.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var priority = priorityService.GetById(id);
 
-                    Mapper.Map<PriorityModel, PriorityBO>(model, priority);
+                    var user = userService.GetCurrentUser();
 
-                    priorityService.Update(priority);
+                    if (user != null)
+                    {
+                        model.ProjectId = user.ProjectId;
 
-                    return RedirectToAction("Index");
+                        var priority = priorityService.GetById(id);
+
+                        Mapper.Map<PriorityModel, PriorityBO>(model, priority);
+
+
+                        priorityService.Update(priority);
+
+                        return RedirectToAction("Index");
+                    }
                 }
 
                 return View(model);

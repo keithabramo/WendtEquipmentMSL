@@ -52,7 +52,14 @@ namespace WendtEquipmentTracking.App.Controllers
 
         public ActionResult Details(string hardwareKitNumber)
         {
-            var hardwareKitBOs = hardwareKitService.GetByHardwareKitNumber(hardwareKitNumber);
+            var user = userService.GetCurrentUser();
+
+            if (user == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var hardwareKitBOs = hardwareKitService.GetByHardwareKitNumber(user.ProjectId, hardwareKitNumber);
 
             if (hardwareKitBOs == null)
             {

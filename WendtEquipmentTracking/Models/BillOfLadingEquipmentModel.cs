@@ -12,7 +12,6 @@ namespace WendtEquipmentTracking.App.Models
         public bool Checked { get; set; }
 
         [DisplayName("Qty Shipped with this BOL")]
-        [Required]
         public double Quantity { get; set; }
 
         [DisplayName("Shipped From")]

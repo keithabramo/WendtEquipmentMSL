@@ -72,7 +72,8 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Helper
                 if (hardwareCommercialCode != null)
                 {
                     equipmentName = hardwareCommercialCode.CommodityCode;
-                } else
+                }
+                else
                 {
                     equipmentName = import.Equipment;
                 }
@@ -88,7 +89,7 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Helper
                 {
                     unitWeightNumber = 0;
                 }
-                if(equipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase))
+                if (!string.IsNullOrEmpty(equipmentName) && equipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase))
                 {
                     unitWeightNumber = .01;
                 }
