@@ -55,7 +55,61 @@ namespace WendtEquipmentTracking.App.Controllers
                 e.HardwareKitEquipments = null;
             });
 
-            equipmentModels.GroupBy(x => new { x.DrawingNumber, x.WorkOrderNumber, x.Quantity, x.ShippingTagNumber, x.Description })
+            equipmentModels.GroupBy(x => new
+            {
+                DrawingNumber = x.DrawingNumber != null ? x.DrawingNumber.ToUpperInvariant() : string.Empty,
+                WorkOrderNumber = x.WorkOrderNumber != null ? x.WorkOrderNumber.ToUpperInvariant() : string.Empty,
+                Quantity = x.Quantity,
+                ShippingTagNumber = x.ShippingTagNumber != null ? x.ShippingTagNumber.ToUpperInvariant() : string.Empty,
+                Description = x.Description != null ? x.Description.ToUpperInvariant() : string.Empty
+            })
+              .Where(g => g.Count() > 1)
+              .SelectMany(y => y)
+              .ToList().ForEach(e => e.IsDuplicate = true);
+
+
+            return equipmentModels;
+        }
+
+        //
+        // GET: api/EquipmentApi/Table
+        [HttpGet]
+        public IEnumerable<EquipmentModel> TableBOL()
+        {
+            var equipmentModels = new List<EquipmentModel>();
+
+            var user = userService.GetCurrentUser();
+
+            if (user == null)
+            {
+                return equipmentModels;
+            }
+
+            var projectBO = projectService.GetById(user.ProjectId);
+
+            //Get Data
+            var equipmentBOs = equipmentService.GetAll(user.ProjectId);
+
+            equipmentModels = Mapper.Map<List<EquipmentModel>>(equipmentBOs);
+            equipmentModels.ToList().ForEach(e =>
+            {
+                e.SetIndicators(projectBO.ProjectNumber, projectBO.IsCustomsProject);
+                e.HasBillOfLading = e.BillOfLadingEquipments.Count() > 0;
+                e.IsHardwareKit = e.HardwareKit != null;
+                e.IsAssociatedToHardwareKit = e.HardwareKitEquipments.Where(h => h.HardwareKit.IsCurrentRevision).FirstOrDefault() != null;
+                e.AssociatedHardwareKitNumber = e.IsAssociatedToHardwareKit ? e.HardwareKitEquipments.Where(h => h.HardwareKit.IsCurrentRevision).FirstOrDefault().HardwareKit.HardwareKitNumber : string.Empty;
+                e.BillOfLadingEquipments = null;
+                e.HardwareKitEquipments = null;
+            });
+
+            equipmentModels.GroupBy(x => new
+            {
+                DrawingNumber = x.DrawingNumber != null ? x.DrawingNumber.ToUpperInvariant() : string.Empty,
+                WorkOrderNumber = x.WorkOrderNumber != null ? x.WorkOrderNumber.ToUpperInvariant() : string.Empty,
+                Quantity = x.Quantity,
+                ShippingTagNumber = x.ShippingTagNumber != null ? x.ShippingTagNumber.ToUpperInvariant() : string.Empty,
+                Description = x.Description != null ? x.Description.ToUpperInvariant() : string.Empty
+            })
               .Where(g => g.Count() > 1)
               .SelectMany(y => y)
               .ToList().ForEach(e => e.IsDuplicate = true);
@@ -98,6 +152,23 @@ namespace WendtEquipmentTracking.App.Controllers
                         newEquipmentModel.AssociatedHardwareKitNumber = newEquipmentModel.IsAssociatedToHardwareKit ? newEquipmentModel.HardwareKitEquipments.Where(h => h.HardwareKit.IsCurrentRevision).FirstOrDefault().HardwareKit.HardwareKitNumber : string.Empty;
                         newEquipmentModel.BillOfLadingEquipments = null;
                         newEquipmentModel.HardwareKitEquipments = null;
+
+
+                        var equipmentBOs = equipmentService.GetAll(user.ProjectId);
+
+
+                        var duplicate = equipmentBOs.Any(x =>
+                           x.EquipmentId != newEquipmentModel.EquipmentId &&
+                           (x.DrawingNumber ?? string.Empty).Equals((newEquipmentModel.DrawingNumber ?? string.Empty), StringComparison.InvariantCultureIgnoreCase) &&
+                           (x.WorkOrderNumber ?? string.Empty).Equals((newEquipmentModel.WorkOrderNumber ?? string.Empty), StringComparison.InvariantCultureIgnoreCase) &&
+                           x.Quantity == newEquipmentModel.Quantity &&
+                           (x.ShippingTagNumber ?? string.Empty).Equals((newEquipmentModel.ShippingTagNumber ?? string.Empty), StringComparison.InvariantCultureIgnoreCase) &&
+                           (x.Description ?? string.Empty).Equals((newEquipmentModel.Description ?? string.Empty), StringComparison.InvariantCultureIgnoreCase)
+                        );
+
+
+                        newEquipmentModel.IsDuplicate = duplicate;
+
 
                         newEquipmentModel.Status = SuccessStatus.Success;
                         return newEquipmentModel;
@@ -152,6 +223,24 @@ namespace WendtEquipmentTracking.App.Controllers
                         updatedEquipmentModel.AssociatedHardwareKitNumber = updatedEquipmentModel.IsAssociatedToHardwareKit ? updatedEquipmentModel.HardwareKitEquipments.Where(h => h.HardwareKit.IsCurrentRevision).FirstOrDefault().HardwareKit.HardwareKitNumber : string.Empty;
                         updatedEquipmentModel.BillOfLadingEquipments = null;
                         updatedEquipmentModel.HardwareKitEquipments = null;
+
+
+                        var equipmentBOs = equipmentService.GetAll(user.ProjectId);
+
+
+                        var duplicate = equipmentBOs.Any(x =>
+                            x.EquipmentId != updatedEquipmentModel.EquipmentId &&
+                            (x.DrawingNumber ?? string.Empty).Equals((updatedEquipmentModel.DrawingNumber ?? string.Empty), StringComparison.InvariantCultureIgnoreCase) &&
+                           (x.WorkOrderNumber ?? string.Empty).Equals((updatedEquipmentModel.WorkOrderNumber ?? string.Empty), StringComparison.InvariantCultureIgnoreCase) &&
+                           x.Quantity == updatedEquipmentModel.Quantity &&
+                           (x.ShippingTagNumber ?? string.Empty).Equals((updatedEquipmentModel.ShippingTagNumber ?? string.Empty), StringComparison.InvariantCultureIgnoreCase) &&
+                           (x.Description ?? string.Empty).Equals((updatedEquipmentModel.Description ?? string.Empty), StringComparison.InvariantCultureIgnoreCase)
+                        );
+
+                        updatedEquipmentModel.IsDuplicate = duplicate;
+
+
+
 
                         updatedEquipmentModel.Status = SuccessStatus.Success;
                         return updatedEquipmentModel;

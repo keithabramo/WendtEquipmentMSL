@@ -65,24 +65,24 @@
                         @if (!string.IsNullOrEmpty(item.ShipToContact1))
                     {
                             @Html.DisplayFor(modelItem => item.ShipToContact1) <br />
-                            @:Phone: @Html.DisplayFor(modelItem => item.ShipToContact1) <br />
-                            @:Email: @Html.DisplayFor(modelItem => item.ShipToContact1)
+                            @:Phone: @Html.DisplayFor(modelItem => item.ShipToContact1PhoneFax) <br />
+                            @:Email: @Html.DisplayFor(modelItem => item.ShipToContact1Email)
                     }
                     </td>
                     <td>
                         @if (!string.IsNullOrEmpty(item.ShipToContact2))
                     {
                             @Html.DisplayFor(modelItem => item.ShipToContact2) <br />
-                            @:Phone: @Html.DisplayFor(modelItem => item.ShipToContact2) <br />
-                            @:Email: @Html.DisplayFor(modelItem => item.ShipToContact2)
+                            @:Phone: @Html.DisplayFor(modelItem => item.ShipToContact2PhoneFax) <br />
+                            @:Email: @Html.DisplayFor(modelItem => item.ShipToContact2Email)
                     }
                     </td>
                     <td>
                         @if (!string.IsNullOrEmpty(item.ShipToBroker))
                     {
                             @Html.DisplayFor(modelItem => item.ShipToBroker) <br />
-                            @:Phone: @Html.DisplayFor(modelItem => item.ShipToBroker) <br />
-                            @:Email: @Html.DisplayFor(modelItem => item.ShipToBroker)
+                            @:Phone: @Html.DisplayFor(modelItem => item.ShipToBrokerPhoneFax) <br />
+                            @:Email: @Html.DisplayFor(modelItem => item.ShipToBrokerEmail)
                     }
                     </td>
                     <td>

@@ -23,6 +23,17 @@ namespace WendtEquipmentTracking.BusinessLogic
         {
             var equipment = Mapper.Map<Equipment>(equipmentBO);
 
+            equipment.CountryOfOrigin = (equipment.CountryOfOrigin?? string.Empty).ToUpperInvariant();
+            equipment.Description = (equipment.Description?? string.Empty).ToUpperInvariant();
+            equipment.DrawingNumber = (equipment.DrawingNumber?? string.Empty).ToUpperInvariant();
+            equipment.EquipmentName = (equipment.EquipmentName?? string.Empty).ToUpperInvariant();
+            equipment.HTSCode = (equipment.HTSCode?? string.Empty).ToUpperInvariant();
+            equipment.Notes = (equipment.Notes?? string.Empty).ToUpperInvariant();
+            equipment.ShippedFrom = (equipment.ShippedFrom?? string.Empty).ToUpperInvariant();
+            equipment.ShippingTagNumber = (equipment.ShippingTagNumber?? string.Empty).ToUpperInvariant();
+            equipment.WorkOrderNumber = (equipment.WorkOrderNumber?? string.Empty).ToUpperInvariant();
+
+
             var equipmentId = equipmentEngine.AddNewEquipment(equipment);
 
             //this will dispose and reinstantiate a new context so we get the latest updates
@@ -35,6 +46,19 @@ namespace WendtEquipmentTracking.BusinessLogic
         public void SaveAll(IEnumerable<EquipmentBO> equipmentBOs)
         {
             var equipments = Mapper.Map<IEnumerable<Equipment>>(equipmentBOs);
+            equipments.ToList().ForEach(e =>
+            {
+                e.CountryOfOrigin = (e.CountryOfOrigin ?? string.Empty).ToUpperInvariant();
+                e.Description = (e.Description ?? string.Empty).ToUpperInvariant();
+                e.DrawingNumber = (e.DrawingNumber ?? string.Empty).ToUpperInvariant();
+                e.EquipmentName = (e.EquipmentName ?? string.Empty).ToUpperInvariant();
+                e.HTSCode = (e.HTSCode ?? string.Empty).ToUpperInvariant();
+                e.Notes = (e.Notes ?? string.Empty).ToUpperInvariant();
+                e.ShippedFrom = (e.ShippedFrom ?? string.Empty).ToUpperInvariant();
+                e.ShippingTagNumber = (e.ShippingTagNumber ?? string.Empty).ToUpperInvariant();
+                e.WorkOrderNumber = (e.WorkOrderNumber ?? string.Empty).ToUpperInvariant();
+            });
+
 
             equipmentEngine.AddAllNewEquipment(equipments);
         }
@@ -49,6 +73,15 @@ namespace WendtEquipmentTracking.BusinessLogic
 
             Mapper.Map<EquipmentBO, Equipment>(equipmentBO, oldEquipment);
 
+            oldEquipment.CountryOfOrigin = (oldEquipment.CountryOfOrigin ?? string.Empty).ToUpperInvariant();
+            oldEquipment.Description = (oldEquipment.Description ?? string.Empty).ToUpperInvariant();
+            oldEquipment.DrawingNumber = (oldEquipment.DrawingNumber ?? string.Empty).ToUpperInvariant();
+            oldEquipment.EquipmentName = (oldEquipment.EquipmentName ?? string.Empty).ToUpperInvariant();
+            oldEquipment.HTSCode = (oldEquipment.HTSCode ?? string.Empty).ToUpperInvariant();
+            oldEquipment.Notes = (oldEquipment.Notes ?? string.Empty).ToUpperInvariant();
+            oldEquipment.ShippedFrom = (oldEquipment.ShippedFrom ?? string.Empty).ToUpperInvariant();
+            oldEquipment.ShippingTagNumber = (oldEquipment.ShippingTagNumber ?? string.Empty).ToUpperInvariant();
+            oldEquipment.WorkOrderNumber = (oldEquipment.WorkOrderNumber ?? string.Empty).ToUpperInvariant();
 
             equipmentEngine.UpdateEquipment(oldEquipment);
 
@@ -68,6 +101,19 @@ namespace WendtEquipmentTracking.BusinessLogic
             {
                 Mapper.Map<EquipmentBO, Equipment>(equipmentBOs.SingleOrDefault(e => e.EquipmentId == oldEquipment.EquipmentId), oldEquipment);
             }
+
+            oldEquipments.ToList().ForEach(e =>
+            {
+                e.CountryOfOrigin = (e.CountryOfOrigin ?? string.Empty).ToUpperInvariant();
+                e.Description = (e.Description ?? string.Empty).ToUpperInvariant();
+                e.DrawingNumber = (e.DrawingNumber ?? string.Empty).ToUpperInvariant();
+                e.EquipmentName = (e.EquipmentName ?? string.Empty).ToUpperInvariant();
+                e.HTSCode = (e.HTSCode ?? string.Empty).ToUpperInvariant();
+                e.Notes = (e.Notes ?? string.Empty).ToUpperInvariant();
+                e.ShippedFrom = (e.ShippedFrom ?? string.Empty).ToUpperInvariant();
+                e.ShippingTagNumber = (e.ShippingTagNumber ?? string.Empty).ToUpperInvariant();
+                e.WorkOrderNumber = (e.WorkOrderNumber ?? string.Empty).ToUpperInvariant();
+            });
 
             equipmentEngine.UpdateAllEquipment(oldEquipments.ToList());
         }

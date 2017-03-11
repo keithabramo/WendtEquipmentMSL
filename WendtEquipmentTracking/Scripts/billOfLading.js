@@ -27,6 +27,10 @@
                 }
             });
 
+            $("table").on('change', 'input, textarea, select', function () {
+                table.DataTable().cell($(this).closest("td")[0]).draw();
+            });
+
             $("form").submit(function () {
                 if (!form.invalid) {
                     var $inputs = table.DataTable().$('input, select');
@@ -35,6 +39,24 @@
                     $hidden.append($inputs);
                 }
                 form.invalid = false;
+            });
+
+            //autofill selection after finished event
+            table.DataTable().on('autoFill', function (e, datatable, cells) {
+
+                $.each(cells, function (i, cell) {
+
+                    var index = cell[0].index;
+                    var newValue = $(cell[0].set).val();
+
+                    datatableCell = table.DataTable().cell(index.row, index.column);
+
+                    var $cell = $(datatableCell.node());
+                    $cell.find("input, textarea").val(newValue);
+
+                    datatableCell.data($cell.html()).draw();
+
+                });
             });
         }
 

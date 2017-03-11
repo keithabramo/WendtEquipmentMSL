@@ -164,6 +164,7 @@
     <Compile Include="AutoMapper\Profiles\ProjectConfig.cs" />
     <Compile Include="AutoMapper\Profiles\EquipmentConfig.cs" />
     <Compile Include="Common\CookiesHelper.cs" />
+    <Compile Include="Common\CustomDateTimeConverter.cs" />
     <Compile Include="Common\HtmlHelperExtensions.cs" />
     <Compile Include="Common\ActionNav.cs" />
     <Compile Include="Common\SuccessStatus.cs" />

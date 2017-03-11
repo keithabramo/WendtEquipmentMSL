@@ -70,7 +70,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             billOfLading.ModifiedDate = now;
             billOfLading.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
 
-            var currentBillOfLading = this.Get(BillOfLadingSpecs.CurrentRevision() && BillOfLadingSpecs.BillOfLadingNumber(billOfLading.BillOfLadingNumber));
+            var currentBillOfLading = this.Get(BillOfLadingSpecs.ProjectId(billOfLading.ProjectId) && BillOfLadingSpecs.CurrentRevision() && BillOfLadingSpecs.BillOfLadingNumber(billOfLading.BillOfLadingNumber));
             currentBillOfLading.IsCurrentRevision = false;
 
             billOfLading.Revision = currentBillOfLading.Revision + 1;

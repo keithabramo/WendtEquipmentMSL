@@ -21,7 +21,9 @@ jQuery.fn.putCursorAtEnd = function () {
 
             // Timeout seems to be required for Blink
             setTimeout(function () {
-                el.setSelectionRange(len, len);
+                if (el.setSelectionRange) {
+                    el.setSelectionRange(len, len);
+                }
             }, 1);
 
         } else {
@@ -52,25 +54,16 @@ $(function () {
         };
 
         this.initStyles = function () {
-            var $searchHeader = $(".table.my-datatable thead tr").clone();
             var $this = this;
+            
+            
 
-            $searchHeader.find("th").each(function () {
-                var title = $.trim($(this).text());
-                var noSearch = $(this).hasClass("noSearch");
-
-                if (title && !noSearch) {
-                    $(this).html('<input class="form-control" type="text" placeholder="Search ' + title + '" />');
-                } else if (noSearch) {
-                    $(this).html("");
-                }
-            });
-
-            $(".table.my-datatable thead").prepend($searchHeader);
+            
 
             var mslSettings = {};
             var isMSL = $(".masterShipList").length;
             var isHCC = $(".hardwareCommercialCodeTable").length;
+            var isBOL = $(".bolUpdateTable").length;
             if (isMSL) {
                 mslSettings = {
                     ajax: {
@@ -78,6 +71,9 @@ $(function () {
                         dataSrc: ""
                     },
                     drawCallback: function (settings) {
+                        
+                        $this.createColumnFilters();
+
                         if ($this.DataTable()) {
                             $this.DataTable().fixedHeader.enable();
                         }
@@ -305,6 +301,53 @@ $(function () {
 
                 this.dataTable = $(".table.my-datatable").DataTable(mslSettings);
 
+            } else if (isBOL) {
+                this.dataTable = $(".table.my-datatable").DataTable({
+                    lengthMenu: [[100, 500, -1], [100, 500, "All"]],
+                    pageLength: 100,
+                    deferRender: true,
+                    fixedHeader: true,
+                    drawCallback: function (settings) {
+                        $this.createColumnFilters();
+
+
+                        if ($this.DataTable()) {
+                            $this.DataTable().fixedHeader.enable();
+                        }
+
+                        if ($this.index >= 0) {
+                            var $newInput = $("thead input[type='text']").eq($this.index);
+                            if (!$newInput.length) {
+                                $this.index -= $("thead input[type='text']").length;
+                                $newInput = $("thead input[type='text']").eq($this.index);
+                            }
+
+                            $newInput.putCursorAtEnd();
+                            $this.index = -1;
+                        }
+
+
+                        if ($(".pagination li").length === 2) {
+                            $(".pagination").parent().hide();
+                        } else {
+                            $(".pagination").parent().show();
+                        }
+
+                        if (!form === undefined) {
+                            form.initStyles();
+                        }
+                    },
+                    autoFill: {
+                        update: false,
+                        columns: [1, 17, 20, 21]
+                    },
+                    order: [[3, 'desc']],
+                    autoWidth: false,
+                    dom: "<'row'<'col-sm-4 text-left custom'f><'col-sm-4 text-center'i><'col-sm-4 text-right'l>>" +
+                         "<'row'<'col-sm-12'tr>>" +
+                         "<'row'<'col-sm-12 text-center'p>>"
+
+                });
             } else if (isHCC) {
                 hccSettings = {
                     ajax: {
@@ -312,6 +355,8 @@ $(function () {
                         dataSrc: ""
                     },
                     drawCallback: function (settings) {
+                        $this.createColumnFilters();
+
                         if ($this.DataTable()) {
                             $this.DataTable().fixedHeader.enable();
                         }
@@ -342,7 +387,8 @@ $(function () {
                         { "data": "PartNumber", "targets": 0 },
                         { "data": "Description", "targets": 1 },
                         { "data": "CommodityCode", "targets": 2 },
-                        { "data": "HardwareCommercialCodeId", "targets": 3, sortable: false, searchable: false,
+                        {
+                            "data": "HardwareCommercialCodeId", "targets": 3, sortable: false, searchable: false,
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                                 var $cell = $(cell);
                                 var $template = $(".template");
@@ -372,6 +418,8 @@ $(function () {
                     deferRender: true,
                     fixedHeader: true,
                     drawCallback: function (settings) {
+                        $this.createColumnFilters();
+
                         if ($this.DataTable()) {
                             $this.DataTable().fixedHeader.enable();
                         }
@@ -496,6 +544,26 @@ $(function () {
             });
         }
 
+        this.createColumnFilters = function () {
+            if ($(".table.my-datatable thead tr").length === 1) {
+                var $searchHeader = $(".table.my-datatable thead tr").clone();
+
+                $searchHeader.find("th").each(function () {
+                    var title = $.trim($(this).text());
+                    var noSearch = $(this).hasClass("noSearch");
+
+                    if (title && !noSearch) {
+                        $(this).html('<input class="form-control" type="text" placeholder="Search ' + title + '" />');
+                    } else if (noSearch) {
+                        $(this).html("");
+                    }
+                });
+
+                $searchHeader.find("th").removeClass("sorting sorting_desc sorting_asc");
+
+                $(".table.my-datatable thead").prepend($searchHeader);
+            }
+        };
 
         this.initStyles();
         this.initEvents();

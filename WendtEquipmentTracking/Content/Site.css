@@ -225,75 +225,75 @@ dl.dl-horizontal dd {
 
 
 
-    .table-styled .equipmentNameWidth .form-control {
+    .table-styled tbody .equipmentNameWidth .form-control {
         width: 200px;
     }
 
-    .table-styled .priorityWidth .form-control {
+    .table-styled tbody .priorityWidth .form-control {
         width: 50px;
     }
 
-    .table-styled .releaseDateWidth .form-control {
+    .table-styled tbody .releaseDateWidth .form-control {
         width: 70px;
     }
 
-    .table-styled .drawingNumberWidth .form-control {
+    .table-styled tbody .drawingNumberWidth .form-control {
         width: 100px;
     }
 
-    .table-styled .workOrderNumberWidth .form-control {
+    .table-styled tbody .workOrderNumberWidth .form-control {
         width: 100px;
     }
 
-    .table-styled .quantityWidth .form-control {
+    .table-styled tbody .quantityWidth .form-control {
         width: 50px;
     }
 
-    .table-styled .shippingTagNumberWidth .form-control {
-        width: 100px;
+    .table-styled tbody .shippingTagNumberWidth .form-control {
+        width: 120px;
     }
 
-    .table-styled .descriptionWidth .form-control {
+    .table-styled tbody .descriptionWidth .form-control {
         width: 300px;
     }
 
-    .table-styled .unitWeightWidth .form-control {
+    .table-styled tbody .unitWeightWidth .form-control {
         width: 50px;
     }
 
-    .table-styled .totalWeightWidth .form-control {
+    .table-styled tbody .totalWeightWidth .form-control {
         width: 50px;
     }
 
-    .table-styled .totalWeightShippedWidth .form-control {
+    .table-styled tbody .totalWeightShippedWidth .form-control {
         width: 50px;
     }
 
-    .table-styled .readyToShipWidth .form-control {
+    .table-styled tbody .readyToShipWidth .form-control {
         width: 35px;
     }
 
-    .table-styled .shippedQuantityWidth .form-control {
+    .table-styled tbody .shippedQuantityWidth .form-control {
         width: 30px;
     }
 
-    .table-styled .leftToShipWidth .form-control {
+    .table-styled tbody .leftToShipWidth .form-control {
         width: 30px;
     }
 
-    .table-styled .fullyShippedWidth .form-control {
+    .table-styled tbody .fullyShippedWidth .form-control {
         width: 30px;
     }
 
-    .table-styled .shippedFromWidth .form-control {
+    .table-styled tbody .shippedFromWidth .form-control {
         width: 100px;
     }
 
-    .table-styled .customsValueWidth .form-control {
+    .table-styled tbody .customsValueWidth .form-control {
         width: 50px;
     }
 
-    .table-styled .salePriceWidth .form-control {
+    .table-styled tbody .salePriceWidth .form-control {
         width: 50px;
     }
 
@@ -316,6 +316,14 @@ dl.dl-horizontal dd {
 
 
 
+    .table-styled thead .form-control, .table-styled tfoot .form-control {
+        width: 100% !important;
+    }
+
+
+
+
+
 
 
     .table-styled .expand {
@@ -326,7 +334,7 @@ dl.dl-horizontal dd {
     text-transform: uppercase;
 } 
 
-.table.masterShipList tbody td .form-control {
+.table.masterShipList .form-control {
     text-transform: uppercase;
 } 
 

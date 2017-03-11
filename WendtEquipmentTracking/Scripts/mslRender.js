@@ -120,7 +120,7 @@ $(function () {
                 var $cellTemplate = $template.find("div").eq(colIndex).clone();
 
                 $cell.html($cellTemplate.html());
-                $cell.find("input").val(data);
+                $cell.find("textarea").val(data);
 
             } else {
                 $cell.html(data);

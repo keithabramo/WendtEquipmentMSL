@@ -77,7 +77,7 @@
                     var index = cell[0].index;
 
                     var $cell = $(table.DataTable().cell(index.row, index.column).node());
-                    $cell.find("input").val(cell[0].set);
+                    $cell.find("input, textarea").val(cell[0].set);
 
                     var $row = $(table.DataTable().row(index.row).node());
 
@@ -218,6 +218,15 @@
                         mslRender.NotesRender($newRow.find("td").eq(20), data);
                         mslRender.DeleteRender($newRow.find("td").eq(21), data);
                         mslRender.HasBillOfLadingRender($newRow.find("td").eq(22), data);
+
+                        if (data.IsDuplicate) {
+                            $newRow.addClass('warning');
+                        } else {
+                            $newRow.removeClass('warning');
+                        }
+                        if (data.FullyShipped === true) {
+                            $newRow.find("input, select, textarea").attr("readOnly", "readOnly").attr("disabled", "disabled");
+                        }
 
 
                         $newRow.animate({

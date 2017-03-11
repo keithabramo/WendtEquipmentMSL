@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using WendtEquipmentTracking.App.Common;
 
 namespace WendtEquipmentTracking.App.Models
 {
@@ -24,7 +26,7 @@ namespace WendtEquipmentTracking.App.Models
         [Required]
         public int Priority { get; set; }
 
-
+        [JsonConverter(typeof(CustomDateTimeConverter))]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         [DisplayName("Release Date")]
         [Required]
@@ -44,7 +46,7 @@ namespace WendtEquipmentTracking.App.Models
         [DisplayName("Qty")]
         public double Quantity { get; set; }
 
-
+        [DataType(DataType.MultilineText)]
         [DisplayName("Ship Tag #")]
         [Required]
         public string ShippingTagNumber { get; set; }
@@ -94,6 +96,26 @@ namespace WendtEquipmentTracking.App.Models
         [DataType(DataType.Currency)]
         public double? SalePrice { get; set; }
 
+
+        [DisplayName("Customs Value")]
+        [DataType(DataType.Currency)]
+
+        public double CustomsValueText { get
+            {
+                return CustomsValue.HasValue ? CustomsValue.Value : 0;
+            }
+        }
+        [DisplayName("Sale Price")]
+        [DataType(DataType.Currency)]
+
+        public double SalePriceText
+        {
+            get
+            {
+                return SalePrice.HasValue ? SalePrice.Value : 0;
+            }
+        }
+
         [DataType(DataType.MultilineText)]
         [DisplayName("Notes")]
         public string Notes { get; set; }
@@ -114,13 +136,15 @@ namespace WendtEquipmentTracking.App.Models
         {
             get
             {
-                if(!FullyShipped.HasValue)
+                if (!FullyShipped.HasValue)
                 {
                     return "NA";
-                } else if(FullyShipped.Value == true)
+                }
+                else if (FullyShipped.Value == true)
                 {
                     return "YES";
-                } else
+                }
+                else
                 {
                     return "NO";
                 }
@@ -206,13 +230,13 @@ namespace WendtEquipmentTracking.App.Models
             }
 
             //customs value
-            if (isCustomsProject && !EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase) && (!CustomsValue.HasValue || CustomsValue.Value <= 0))
+            if (isCustomsProject && (!FullyShipped.Value == true) && !EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase) && (!CustomsValue.HasValue || CustomsValue.Value <= 0))
             {
                 Indicators.CustomsValueColor = IndicatorsModel.Colors.Red.ToString();
             }
 
             //sales price
-            if (isCustomsProject && !EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase) && (!SalePrice.HasValue || SalePrice.Value <= 0))
+            if (isCustomsProject && (!FullyShipped.Value == true) && !EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase) && (!SalePrice.HasValue || SalePrice.Value <= 0))
             {
                 Indicators.SalePriceColor = IndicatorsModel.Colors.Red.ToString();
             }
