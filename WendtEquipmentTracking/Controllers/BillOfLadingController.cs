@@ -334,7 +334,7 @@ namespace WendtEquipmentTracking.App.Controllers
             var modelBOLEquipments = model.BillOfLadingEquipments.Where(be => equipmentModels == null || !equipmentModels.Any(fullbe => fullbe.EquipmentId == be.EquipmentId)).ToList();
 
             modelBOLEquipments.AddRange(billOfLadingEquipments);
-            billOfLadingEquipments.OrderByDescending(e => e.Checked ? 1 : 0).ThenBy(e => e.Equipment.EquipmentName).ToList().ForEach(e =>
+            modelBOLEquipments.OrderByDescending(e => e.Checked ? 1 : 0).ThenBy(e => e.Equipment.EquipmentName).ToList().ForEach(e =>
             {
                 e.Equipment.SetIndicators(projectBO.ProjectNumber, projectBO.IsCustomsProject);
             });
