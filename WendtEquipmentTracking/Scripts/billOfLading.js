@@ -28,7 +28,9 @@
             });
 
             $("table").on('change', 'input, textarea, select', function () {
-                table.DataTable().cell($(this).closest("td")[0]).draw();
+                var datatableCell = table.DataTable().cell($(this).closest("td")[0]);
+                $(this).attr("value", $(this).val());
+                datatableCell.data($(this).closest("td").html()).draw();
             });
 
             $("form").submit(function () {
@@ -52,7 +54,7 @@
                     datatableCell = table.DataTable().cell(index.row, index.column);
 
                     var $cell = $(datatableCell.node());
-                    $cell.find("input, textarea").val(newValue);
+                    $cell.find("input, textarea").attr("value", newValue).val(newValue).change();
 
                     datatableCell.data($cell.html()).draw();
 
