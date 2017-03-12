@@ -129,13 +129,19 @@ namespace WendtEquipmentTracking.App.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var workOrderPrice = workOrderPriceService.GetById(id);
+                    var user = userService.GetCurrentUser();
 
-                    Mapper.Map<WorkOrderPriceModel, WorkOrderPriceBO>(model, workOrderPrice);
+                    if (user != null)
+                    {
+                        model.ProjectId = user.ProjectId;
+                        var workOrderPrice = workOrderPriceService.GetById(id);
 
-                    workOrderPriceService.Update(workOrderPrice);
+                        Mapper.Map<WorkOrderPriceModel, WorkOrderPriceBO>(model, workOrderPrice);
 
-                    return RedirectToAction("Index");
+                        workOrderPriceService.Update(workOrderPrice);
+
+                        return RedirectToAction("Index");
+                    }
                 }
 
                 return View(model);

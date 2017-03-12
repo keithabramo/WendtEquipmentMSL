@@ -100,7 +100,9 @@ namespace WendtEquipmentTracking.App.Models
         [DisplayName("Customs Value")]
         [DataType(DataType.Currency)]
 
-        public double CustomsValueText { get
+        public double CustomsValueText
+        {
+            get
             {
                 return CustomsValue.HasValue ? CustomsValue.Value : 0;
             }
@@ -230,13 +232,13 @@ namespace WendtEquipmentTracking.App.Models
             }
 
             //customs value
-            if (isCustomsProject && (!FullyShipped.Value == true) && !EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase) && (!CustomsValue.HasValue || CustomsValue.Value <= 0))
+            if (isCustomsProject && !(FullyShipped.HasValue && FullyShipped.Value == true) && !EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase) && (!CustomsValue.HasValue || CustomsValue.Value <= 0))
             {
                 Indicators.CustomsValueColor = IndicatorsModel.Colors.Red.ToString();
             }
 
             //sales price
-            if (isCustomsProject && (!FullyShipped.Value == true) && !EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase) && (!SalePrice.HasValue || SalePrice.Value <= 0))
+            if (isCustomsProject && !(FullyShipped.HasValue && FullyShipped.Value == true) && !EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase) && (!SalePrice.HasValue || SalePrice.Value <= 0))
             {
                 Indicators.SalePriceColor = IndicatorsModel.Colors.Red.ToString();
             }
