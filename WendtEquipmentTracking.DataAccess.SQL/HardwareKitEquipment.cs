@@ -20,7 +20,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         public double QuantityToShip { get; set; }
         public bool IsDeleted { get; set; }
     
-        public virtual HardwareKit HardwareKit { get; set; }
         public virtual Equipment Equipment { get; set; }
+        public virtual HardwareKit HardwareKit { get; set; }
     }
 }

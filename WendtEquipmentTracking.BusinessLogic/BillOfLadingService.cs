@@ -13,13 +13,13 @@ namespace WendtEquipmentTracking.BusinessLogic
     public class BillOfLadingService : IBillOfLadingService
     {
         private IBillOfLadingEngine billOfLadingEngine;
-        private IEquipmentService equipmentService;
+        private IEquipmentEngine equipmentEngine;
 
 
         public BillOfLadingService()
         {
             billOfLadingEngine = new BillOfLadingEngine();
-            equipmentService = new EquipmentService();
+            equipmentEngine = new EquipmentEngine();
         }
 
         public void Save(BillOfLadingBO billOfLadingBO)
@@ -27,6 +27,15 @@ namespace WendtEquipmentTracking.BusinessLogic
             var billOfLading = Mapper.Map<BillOfLading>(billOfLadingBO);
 
             billOfLadingEngine.AddNewBillOfLading(billOfLading);
+
+            foreach (var billOfLadingEquipment in billOfLadingBO.BillOfLadingEquipments)
+            {
+                var equipment = equipmentEngine.Get(EquipmentSpecs.Id(billOfLadingEquipment.EquipmentId));
+                equipment.HTSCode = (billOfLadingEquipment.HTSCode ?? string.Empty).ToUpper();
+                equipment.CountryOfOrigin = (billOfLadingEquipment.CountryOfOrigin ?? string.Empty).ToUpper();
+
+                equipmentEngine.UpdateEquipment(equipment);
+            }
         }
 
         public void Update(BillOfLadingBO billOfLadingBO)
@@ -34,6 +43,16 @@ namespace WendtEquipmentTracking.BusinessLogic
             var billOfLading = Mapper.Map<BillOfLading>(billOfLadingBO);
 
             billOfLadingEngine.UpdateBillOfLading(billOfLading);
+
+            foreach (var billOfLadingEquipment in billOfLadingBO.BillOfLadingEquipments)
+            {
+                var equipment = equipmentEngine.Get(EquipmentSpecs.Id(billOfLadingEquipment.EquipmentId));
+                equipment.HTSCode = (billOfLadingEquipment.HTSCode ?? string.Empty).ToUpper();
+                equipment.CountryOfOrigin = (billOfLadingEquipment.CountryOfOrigin ?? string.Empty).ToUpper();
+
+                equipmentEngine.UpdateEquipment(equipment);
+            }
+
         }
 
         public void Delete(int id)

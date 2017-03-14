@@ -30,10 +30,10 @@
                 @Html.DisplayNameFor(model => model.ShippedFrom)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.HTSCode)
+                @Html.DisplayNameFor(model => model.Equipment.HTSCode)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CountryOfOrigin)
+                @Html.DisplayNameFor(model => model.Equipment.CountryOfOrigin)
             </th>
         </tr>
     </thead>
@@ -69,10 +69,10 @@
                     @Html.DisplayFor(modelItem => item.ShippedFrom)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.HTSCode)
+                    @Html.DisplayFor(modelItem => item.Equipment.HTSCode)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.CountryOfOrigin)
+                    @Html.DisplayFor(modelItem => item.Equipment.CountryOfOrigin)
                 </td>
             </tr>
         }

@@ -341,7 +341,7 @@ $(function () {
                         update: false,
                         columns: [1, 17, 20, 21]
                     },
-                    order: [[3, 'desc']],
+                    order: [[4, 'desc']],
                     autoWidth: false,
                     dom: "<'row'<'col-sm-4 text-left custom'f><'col-sm-4 text-center'i><'col-sm-4 text-right'l>>" +
                          "<'row'<'col-sm-12'tr>>" +

@@ -325,8 +325,7 @@ namespace WendtEquipmentTracking.App.Controllers
                 EquipmentId = e.EquipmentId,
                 Quantity = model.BillOfLadingEquipments.Any(be => be.EquipmentId == e.EquipmentId) ? model.BillOfLadingEquipments.FirstOrDefault(be => be.EquipmentId == e.EquipmentId).Quantity : 0,
                 ShippedFrom = model.BillOfLadingEquipments.Any(be => be.EquipmentId == e.EquipmentId) ? model.BillOfLadingEquipments.FirstOrDefault(be => be.EquipmentId == e.EquipmentId).ShippedFrom : e.ShippedFrom,
-                HTSCode = model.BillOfLadingEquipments.Any(be => be.EquipmentId == e.EquipmentId) ? model.BillOfLadingEquipments.FirstOrDefault(be => be.EquipmentId == e.EquipmentId).HTSCode : e.HTSCode,
-                CountryOfOrigin = model.BillOfLadingEquipments.Any(be => be.EquipmentId == e.EquipmentId) ? model.BillOfLadingEquipments.FirstOrDefault(be => be.EquipmentId == e.EquipmentId).CountryOfOrigin : e.CountryOfOrigin,
+                
                 Checked = model.BillOfLadingEquipments.Any(be => be.EquipmentId == e.EquipmentId)
             });
 
@@ -337,6 +336,8 @@ namespace WendtEquipmentTracking.App.Controllers
             modelBOLEquipments.OrderByDescending(e => e.Checked ? 1 : 0).ThenBy(e => e.Equipment.EquipmentName).ToList().ForEach(e =>
             {
                 e.Equipment.SetIndicators(projectBO.ProjectNumber, projectBO.IsCustomsProject);
+                e.HTSCode = e.Equipment.HTSCode;
+                e.CountryOfOrigin = e.Equipment.CountryOfOrigin;
             });
 
             model.BillOfLadingEquipments = modelBOLEquipments;
