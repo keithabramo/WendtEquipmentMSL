@@ -65,6 +65,11 @@ body {
             background-color: #eeba52;
         }
 
+.navbar-inverse.development {
+    background-color: red;
+    border-color: red;
+}
+
 .center-block {
     float: none;
 }

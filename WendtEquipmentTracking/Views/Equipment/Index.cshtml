@@ -5,9 +5,10 @@
 }
 
 @Html.Partial("ActionNavPartial", ActionNav.MSL)
-<br />
 <hr />
 
+
+<h2 class="text-center col-sm-4 center-block"><strong>@ViewBag.ProjectNumber</strong></h2>
 <div class="row">
     <div class="col-sm-12">
         @Html.ActionLink("Recalculate Customs Value & Sale Price", "Index", null, new { @class = "btn btn-sm btn-primary" })

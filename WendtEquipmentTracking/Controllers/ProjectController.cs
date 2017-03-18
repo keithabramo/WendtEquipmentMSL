@@ -176,36 +176,42 @@ namespace WendtEquipmentTracking.App.Controllers
         //[DonutOutputCache(Duration = 3600)]
         public ActionResult ProjectNavPartial()
         {
-            var user = userService.GetCurrentUser();
-
-            if (user != null)
+            try
             {
+                var user = userService.GetCurrentUser();
 
-                var projectBOs = projectService.GetAllForNavigation().ToList();
-                var projectModels = Mapper.Map<IEnumerable<ProjectModel>>(projectBOs);
-                var currentProjectModel = projectModels.SingleOrDefault(p => p.ProjectId == user.ProjectId);
-
-                var model = new ProjectNavModel();
-
-                try
+                if (user != null)
                 {
-                    model = new ProjectNavModel
+
+                    var projectBOs = projectService.GetAllForNavigation().ToList();
+                    var projectModels = Mapper.Map<IEnumerable<ProjectModel>>(projectBOs);
+                    var currentProjectModel = projectModels.SingleOrDefault(p => p.ProjectId == user.ProjectId);
+
+                    var model = new ProjectNavModel();
+
+                    try
                     {
-                        CurrentProject = currentProjectModel,
-                        Projects = projectModels.OrderBy(p => Convert.ToInt32(p.ProjectNumber))
-                    };
-                }
-                catch (Exception e)
-                {
-                    model = new ProjectNavModel
+                        model = new ProjectNavModel
+                        {
+                            CurrentProject = currentProjectModel,
+                            Projects = projectModels.OrderBy(p => Convert.ToInt32(p.ProjectNumber))
+                        };
+                    }
+                    catch (Exception e)
                     {
-                        CurrentProject = currentProjectModel,
-                        Projects = projectModels.OrderBy(p => p.ProjectNumber)
-                    };
+                        model = new ProjectNavModel
+                        {
+                            CurrentProject = currentProjectModel,
+                            Projects = projectModels.OrderBy(p => p.ProjectNumber)
+                        };
+                    }
+
+                    return PartialView(model);
                 }
 
-                return PartialView(model);
             }
+            catch
+            { }
 
             return PartialView();
         }

@@ -39,6 +39,8 @@ namespace WendtEquipmentTracking.App.Controllers
             var equipmentBOs = equipmentService.GetAll(user.ProjectId);
             var equipmentModels = Mapper.Map<List<EquipmentModel>>(equipmentBOs);
 
+            ViewBag.ProjectNumber = projectService.GetById(user.ProjectId).ProjectNumber;
+
             return View(equipmentModels);
         }
 
