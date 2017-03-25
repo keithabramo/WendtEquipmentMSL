@@ -72,16 +72,26 @@
             //autofill selection after finished event
             table.DataTable().on('autoFill', function (e, datatable, cells) {
 
+                var value;
                 $.each(cells, function (i, cell) {
 
                     var index = cell[0].index;
 
                     var $cell = $(table.DataTable().cell(index.row, index.column).node());
-                    $cell.find("input, textarea").val(cell[0].set);
 
-                    var $row = $(table.DataTable().row(index.row).node());
+                    if (i === 0) {
+                        value = $cell.find("input, textarea").val();
+                    } else {
+                        $cell.find("input, textarea").val(value).attr("value", value);
 
-                    $this.editQueue.push($row);
+                        var $clone = $cell.clone();
+                        table.DataTable().cell($cell).invalidate(value);
+                        $(table.DataTable().cell(index.row, index.column).node()).html($clone.html());
+
+                        var $row = $(table.DataTable().row(index.row).node());
+
+                        $this.editQueue.push($row);
+                    }
 
                 });
 
@@ -191,7 +201,7 @@
                     $this.resetValidation($row);
 
                     if (data.Status === 1) {
-                        table.DataTable().row($row).invalidate(data).draw();
+                        table.DataTable().row($row).invalidate(data);
 
 
                         var $newRow = $row;
@@ -232,7 +242,7 @@
 
                         $newRow.animate({
                             backgroundColor: "#dff0d8"
-                        }, 1000);
+                        }, 250);
 
                         setTimeout(function () {
                             $newRow.animate({
