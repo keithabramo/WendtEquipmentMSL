@@ -19,7 +19,7 @@
                         var equipment = data[0];
                         var leftToShip = data[13];
 
-                        if (equipment.toLowerCase() === "hardware" && leftToShip && parseInt(leftToShip, 10) > 0) {
+                        if (leftToShip && parseInt(leftToShip, 10) > 0) {
                             return true;
                         }
                     }
@@ -191,9 +191,10 @@
                     $this.resetValidation($row);
 
                     if (data.Status === 1) {
-                        table.DataTable().row($row).remove();
+                        table.DataTable().row($row).invalidate(data).draw();
+
+
                         var $newRow = $row;
-                        $this.addRow(data);
 
                         mslRender.EquipmentNameRender($newRow.find("td").eq(0), data);
                         mslRender.PriorityRender($newRow.find("td").eq(1), data);
@@ -240,6 +241,9 @@
                         }, 2000);
 
                         form.initStyles();
+
+
+
                     } else {
 
                         $row.addClass("danger");

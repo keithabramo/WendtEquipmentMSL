@@ -13,7 +13,7 @@
                 var checked = $(this).is(":checked");
 
                 if (checked) {
-                    table.DataTable().$("input[type='checkbox']").prop("checked", true);
+                    table.DataTable().$("input[type='checkbox']").prop("checked", true).change();
                 }
             });
 
@@ -27,11 +27,25 @@
                 }
             });
 
-            $("table").on('change', 'input, textarea, select', function () {
-                var datatableCell = table.DataTable().cell($(this).closest("td")[0]);
-                $(this).attr("value", $(this).val());
-                datatableCell.data($(this).closest("td").html()).draw();
+            $("table").on('change', 'tbody input[type="checkbox"]', function () {
+                var checked = $(this).is(":checked");
+
+                if (checked) {
+                    var leftToShipVal = $(this).closest("tr").find(".originalLeftToShip").val();
+                    var $quantity = $(this).closest("tr").find(".quantity");
+
+                    if (!$quantity.val() || $quantity.val() === "0") {
+                        $quantity.val(leftToShipVal);
+                    }
+                    
+                }
             });
+
+            //$("table").on('change', 'input, textarea, select', function () {
+            //    var datatableCell = table.DataTable().cell($(this).closest("td")[0]);
+            //    $(this).attr("value", $(this).val());
+            //    datatableCell.data($(this).closest("td").html()).draw();
+            //});
 
             $("form").submit(function () {
                 if (!form.invalid) {

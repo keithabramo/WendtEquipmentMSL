@@ -336,6 +336,8 @@ $(function () {
                         if (!form === undefined) {
                             form.initStyles();
                         }
+
+                        $("table").find('tbody input[type="checkbox"]').change();
                     },
                     autoFill: {
                         update: false,
@@ -348,7 +350,8 @@ $(function () {
                          "<'row'<'col-sm-12 text-center'p>>"
 
                 });
-            } else if (isHCC) {
+            }
+            else if (isHCC) {
                 hccSettings = {
                     ajax: {
                         url: ROOT_URL + "api/HardwareCommercialCodeApi/Table",
@@ -411,7 +414,8 @@ $(function () {
                 };
                 this.dataTable = $(".table.my-datatable").DataTable(hccSettings);
 
-            } else {
+            }
+            else {
                 this.dataTable = $(".table.my-datatable").DataTable({
                     lengthMenu: [[100, 500, -1], [100, 500, "All"]],
                     pageLength: 100,

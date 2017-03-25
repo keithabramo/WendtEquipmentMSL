@@ -44,12 +44,15 @@
                             </td>
                             <td>
                                 @Html.EditorFor(modelItem => modelItem[i].WorkOrderNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(modelItem => modelItem[i].WorkOrderNumber, "", new { @class = "text-danger" })
                             </td>
                             <td>
                                 @Html.EditorFor(modelItem => modelItem[i].CostPrice, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(modelItem => modelItem[i].CostPrice, "", new { @class = "text-danger" })
                             </td>
                             <td>
                                 @Html.EditorFor(modelItem => modelItem[i].SalePrice, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(modelItem => modelItem[i].SalePrice, "", new { @class = "text-danger" })
                             </td>
                         </tr>
                     }

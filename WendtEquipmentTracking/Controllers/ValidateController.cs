@@ -104,6 +104,7 @@ namespace WendtEquipmentTracking.App.Controllers
         // GET: ValidWorkOrderNumber
         public ActionResult ValidWorkOrderNumber(string workOrderNumber, int? workOrderPriceId)
         {
+
             var user = userService.GetCurrentUser();
 
             if (user == null)
@@ -116,6 +117,42 @@ namespace WendtEquipmentTracking.App.Controllers
                                                                  && b.WorkOrderNumber == workOrderNumber);
 
             return Json(!exists, JsonRequestBehavior.AllowGet);
+        }
+
+        // GET: ValidWorkOrderNumber
+        public ActionResult ValidWorkOrderNumberImport()
+        {
+
+            if (Request.QueryString.AllKeys.FirstOrDefault(p => p.ToLower().Contains("workordernumber")) != null)
+            {
+                var isChecked = false;
+                if (Request.QueryString.AllKeys.FirstOrDefault(p => p.ToLower().Contains("checked")) != null)
+                {
+                    isChecked = Request.QueryString[Request.QueryString.AllKeys.First(p => p.ToLower().Contains("checked"))] == "true";
+                }
+
+                if (isChecked)
+                {
+
+                    string workOrderNumber = Request.QueryString[Request.QueryString.AllKeys.First(p => p.ToLower().Contains("workordernumber"))];
+
+                    var user = userService.GetCurrentUser();
+
+                    if (user == null)
+                    {
+                        return Json(true, JsonRequestBehavior.AllowGet);
+                    }
+
+                    var exists = workOrderPriceService.GetAll().Any(b => b.ProjectId == user.ProjectId
+                                                                         && b.WorkOrderNumber == workOrderNumber);
+
+                    return Json(!exists, JsonRequestBehavior.AllowGet);
+                }
+            }
+
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+
         }
 
         // GET: ValidHardwareKitNumber
