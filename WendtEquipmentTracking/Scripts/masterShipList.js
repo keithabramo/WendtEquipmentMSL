@@ -85,6 +85,7 @@
                         $cell.find("input, textarea").val(value).attr("value", value);
 
                         var $clone = $cell.clone();
+                        $clone.find("textarea").val(value).text(value);
                         table.DataTable().cell($cell).invalidate(value);
                         $(table.DataTable().cell(index.row, index.column).node()).html($clone.html());
 
