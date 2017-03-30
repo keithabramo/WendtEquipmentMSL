@@ -31,11 +31,11 @@
                 var checked = $(this).is(":checked");
 
                 if (checked) {
-                    var leftToShipVal = $(this).closest("tr").find(".originalLeftToShip").val();
+                    var readyToShipVal = $(this).closest("tr").find(".originalReadyToShip").val();
                     var $quantity = $(this).closest("tr").find(".quantity");
 
                     if (!$quantity.val() || $quantity.val() === "0") {
-                        $quantity.val(leftToShipVal);
+                        $quantity.val(readyToShipVal);
                     }
                     
                 }
@@ -60,18 +60,20 @@
             //autofill selection after finished event
             table.DataTable().on('autoFill', function (e, datatable, cells) {
 
+                var value;
                 $.each(cells, function (i, cell) {
 
                     var index = cell[0].index;
-                    var newValue = $(cell[0].set).val();
-
                     datatableCell = table.DataTable().cell(index.row, index.column);
-
                     var $cell = $(datatableCell.node());
-                    $cell.find("input, textarea").attr("value", newValue).val(newValue).change();
 
-                    datatableCell.data($cell.html()).draw();
+                    if (i === 0) {
+                        value = $cell.find("input, textarea").val();
+                    } else {
+                        $cell.find("input, textarea").val(value).attr("value", value).change();
 
+                        datatableCell.data($cell.html()).draw();
+                    }
                 });
             });
         }

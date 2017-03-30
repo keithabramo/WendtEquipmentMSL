@@ -77,7 +77,6 @@
                 $.each(cells, function (i, cell) {
 
                     var index = cell[0].index;
-
                     var $cell = $(table.DataTable().cell(index.row, index.column).node());
 
                     if (i === 0) {
