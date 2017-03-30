@@ -18,8 +18,9 @@
                     } else {
                         var equipment = data[0];
                         var leftToShip = data[13];
+                        var isAssociatedToHardwareKit = data[25];
 
-                        if (leftToShip && parseInt(leftToShip, 10) > 0) {
+                        if (leftToShip && parseInt(leftToShip, 10) > 0 && !isAssociatedToHardwareKit) {
                             return true;
                         }
                     }

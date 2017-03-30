@@ -279,7 +279,7 @@ $(function () {
                         },
                         { "data": "IsHardwareKit", "targets": 23, visible: false, searchable: false },
                         { "data": "IsAssociatedToHardwareKit", "targets": 24, visible: false, searchable: false },
-                        { "data": "AssociatedHardwareKitNumber", "targets": 25, visible: false, searchable: false },
+                        { "data": "AssociatedHardwareKitNumber", "targets": 25, visible: false },
                         { "data": "Indicators", "targets": 26, visible: false, searchable: false },
                         { "data": "IsDuplicate", "targets": 27, visible: false, searchable: false },
                         { "data": "FullyShipped", "targets": 28, visible: false, searchable: false }
