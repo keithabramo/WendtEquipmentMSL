@@ -497,18 +497,18 @@ $(function () {
                 $(this).find("input").focus();
             });
 
-            $('.table.my-datatable').on('keydown', "input", function (e) {
+            $('.table.my-datatable').on('keydown', "input, textarea", function (e) {
                 var currCell = $(this);
                 var c = "";
 
                 if (e.which == 38) {
                     // Up Arrow
                     c = currCell.closest('tr').prev().find('td:eq(' +
-                        currCell.closest("td").index() + ')').find("input");
+                        currCell.closest("td").index() + ')').find("input, textarea");
                 } else if (e.which == 40) {
                     // Down Arrow
                     c = currCell.closest('tr').next().find('td:eq(' +
-                        currCell.closest("td").index() + ')').find("input");
+                        currCell.closest("td").index() + ')').find("input, textarea");
                 }
 
                 // If we didn't hit a boundary, update the current cell

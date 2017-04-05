@@ -80,14 +80,15 @@
                     var $cell = $(table.DataTable().cell(index.row, index.column).node());
 
                     if (i === 0) {
-                        value = $cell.find("input, textarea").val();
+                        value = $cell.find("select, input, textarea").val();
                     } else {
-                        $cell.find("input, textarea").val(value).attr("value", value);
+                        $cell.find("select, input, textarea").val(value).attr("value", value);
 
                         var $clone = $cell.clone();
                         $clone.find("textarea").val(value).text(value);
                         table.DataTable().cell($cell).invalidate(value);
                         $(table.DataTable().cell(index.row, index.column).node()).html($clone.html());
+                        $(table.DataTable().cell(index.row, index.column).node()).find("select").val(value);
 
                         var $row = $(table.DataTable().row(index.row).node());
 
