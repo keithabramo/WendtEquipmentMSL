@@ -86,7 +86,7 @@
 
                         var $clone = $cell.clone();
                         $clone.find("textarea").val(value).text(value);
-                        table.DataTable().cell($cell).invalidate(value);
+                        table.DataTable().cell($cell).data(value).invalidate();
                         $(table.DataTable().cell(index.row, index.column).node()).html($clone.html());
                         $(table.DataTable().cell(index.row, index.column).node()).find("select").val(value);
 
@@ -203,7 +203,7 @@
                     $this.resetValidation($row);
 
                     if (data.Status === 1) {
-                        table.DataTable().row($row).invalidate(data);
+                        table.DataTable().row($row).data(data).invalidate();
 
 
                         var $newRow = $row;
