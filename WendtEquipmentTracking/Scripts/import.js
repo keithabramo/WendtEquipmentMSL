@@ -46,6 +46,16 @@ $(function () {
                     return false;
                 }
             });
+
+            $(document).on("change", "table tbody input[type='checkbox']", function () {
+                var checked = $(this).is(":checked");
+
+                if (checked) {
+                    $(this).closest("tr").find(":input").not("[type='checkbox']").attr("data-val-required", "true");
+                } else {
+                    $(this).closest("tr").find(":input").not("[type='checkbox']").removeAttr("data-val-required");
+                }
+            })
             
         }
 

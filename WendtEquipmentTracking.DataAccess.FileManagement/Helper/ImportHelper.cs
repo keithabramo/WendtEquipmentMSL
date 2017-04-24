@@ -50,6 +50,7 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Helper
             bool first = true;
             foreach (DataRow row in result.Tables[0].Rows)
             {
+                
                 //if (first)
                 //{
                 //    first = false;
@@ -66,6 +67,11 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Helper
                 var um = row["UM"];
                 var unitWeight = row["UNIT WT. (LBS)"];
                 var totalWeight = row["TOTAL WT. (LBS)"];
+
+                if ((quantity == null || string.IsNullOrWhiteSpace(quantity.ToString())) && (description == null || string.IsNullOrWhiteSpace(description.ToString())) && (partNumber == null || string.IsNullOrWhiteSpace(partNumber.ToString())))
+                {
+                    continue;
+                }
 
                 var hardwareCommercialCode = import.hardwareCommercialCodes.SingleOrDefault(h => h.PartNumber == partNumber.ToString());
                 string equipmentName = string.Empty;
