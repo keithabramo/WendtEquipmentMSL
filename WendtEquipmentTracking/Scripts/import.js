@@ -51,10 +51,29 @@ $(function () {
                 var checked = $(this).is(":checked");
 
                 if (checked) {
-                    $(this).closest("tr").find(":input").not("[type='checkbox']").attr("data-val-required", "true");
+                    $(this).closest("tr").find(":input").not("[type='checkbox']").each(function () {
+                        $(this)
+                            .attr("data-val-required", $(this).attr("data-val-required-temp"))
+                            .attr("data-val", "true");
+                    });
+
+                    
+
                 } else {
-                    $(this).closest("tr").find(":input").not("[type='checkbox']").removeAttr("data-val-required");
+                    $(this).closest("tr").find(":input").not("[type='checkbox']").each(function () {
+                        $(this)
+                            .attr("data-val-required-temp", $(this).attr("data-val-required"))
+                            .removeAttr("data-val-required")
+                            .removeAttr("data-val");
+                    });
+
+                    $(this).closest("tr").find(".text-danger").removeClass("field-validation-error").addClass("field-validation-valid").html("");
+
                 }
+
+                $('form').removeData('unobtrusiveValidation');
+                $('form').removeData('validator');
+                $.validator.unobtrusive.parse('form');
             })
             
         }

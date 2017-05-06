@@ -159,8 +159,8 @@ namespace WendtEquipmentTracking.App.Controllers
             var resultModel = new ImportModel();
             try
             {
-                if (ModelState.IsValid)
-                {
+                //if (ModelState.IsValid)
+                //{
                     var user = userService.GetCurrentUser();
 
                     if (user != null)
@@ -179,7 +179,7 @@ namespace WendtEquipmentTracking.App.Controllers
                         resultModel.Status = SuccessStatus.Success;
                         return RedirectToAction("Index", "Home");
                     }
-                }
+                //}
                 
                 resultModel.Status = SuccessStatus.Error;
                 resultModel.Errors = ModelState.Where(v => v.Value.Errors.Count() > 0).ToList().Select(v => new BaseModelError { Name = v.Key, Message = v.Value.Errors.First().ErrorMessage });
@@ -260,8 +260,8 @@ namespace WendtEquipmentTracking.App.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
-                {
+                //if (ModelState.IsValid)
+                //{
                     var user = userService.GetCurrentUser();
 
                     if (user != null)
@@ -273,7 +273,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
                         return RedirectToAction("Index", "WorkOrderPrice");
                     }
-                }
+                //}
 
                 return View("ImportWorkOrderPrice", model);
             }
