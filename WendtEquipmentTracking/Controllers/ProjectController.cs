@@ -81,8 +81,9 @@ namespace WendtEquipmentTracking.App.Controllers
 
                 return View(model);
             }
-            catch
+            catch (Exception e)
             {
+                LogError(e);
                 return View(model);
             }
         }
@@ -124,8 +125,9 @@ namespace WendtEquipmentTracking.App.Controllers
 
                 return View(model);
             }
-            catch
+            catch (Exception e)
             {
+                LogError(e);
                 return View(model);
             }
         }
@@ -199,6 +201,7 @@ namespace WendtEquipmentTracking.App.Controllers
                     }
                     catch (Exception e)
                     {
+                        LogError(e);
                         model = new ProjectNavModel
                         {
                             CurrentProject = currentProjectModel,
@@ -210,8 +213,11 @@ namespace WendtEquipmentTracking.App.Controllers
                 }
 
             }
-            catch
-            { }
+            catch (Exception e)
+            {
+
+                LogError(e);
+            }
 
             return PartialView();
         }

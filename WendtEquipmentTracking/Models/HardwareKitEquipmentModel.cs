@@ -11,7 +11,7 @@ namespace WendtEquipmentTracking.App.Models
 
         [DisplayName("Total Quantity")]
         [Required]
-        public double Quantity { get; set; }
+        public double QuantityToShip { get; set; }
 
         public HardwareKitModel HardwareKit { get; set; }
         public EquipmentModel Equipment { get; set; }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -114,7 +115,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception e)
             {
                 var equipment = equipmentService.GetById(id);
 
@@ -124,6 +125,9 @@ namespace WendtEquipmentTracking.App.Controllers
                 }
 
                 model = Mapper.Map<EquipmentModel>(equipment);
+
+
+                LogError(e);
 
                 return View(model);
             }

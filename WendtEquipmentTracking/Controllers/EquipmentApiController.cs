@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using WendtEquipmentTracking.App.Models;
 using WendtEquipmentTracking.BusinessLogic;
 using WendtEquipmentTracking.BusinessLogic.Api;
 using WendtEquipmentTracking.BusinessLogic.BO;
+using WendtEquipmentTracking.Common;
 
 namespace WendtEquipmentTracking.App.Controllers
 {
@@ -16,6 +18,8 @@ namespace WendtEquipmentTracking.App.Controllers
         private IEquipmentService equipmentService;
         private IProjectService projectService;
         private IUserService userService;
+        private ILog logger = LogManager.GetLogger("File");
+
 
         public EquipmentApiController()
         {
@@ -183,6 +187,9 @@ namespace WendtEquipmentTracking.App.Controllers
             {
                 model.Status = SuccessStatus.Error;
                 model.Errors = new List<BaseModelError> { new BaseModelError { Name = "Generic", Message = "There was an issue saving thie record" } };
+
+                LogError(e);
+
                 return model;
             }
         }
@@ -238,25 +245,29 @@ namespace WendtEquipmentTracking.App.Controllers
                         );
 
                         updatedEquipmentModel.IsDuplicate = duplicate;
-
-
-
-
+                        
                         updatedEquipmentModel.Status = SuccessStatus.Success;
                         return updatedEquipmentModel;
                     }
                 }
-
                 model.Status = SuccessStatus.Error;
                 model.Errors = ModelState.Where(v => v.Value.Errors.Count() > 0).ToList().Select(v => new BaseModelError { Name = v.Key, Message = v.Value.Errors.First().ErrorMessage });
                 return model;
             }
             catch (Exception e)
             {
+                LogError(e);
+
                 model.Status = SuccessStatus.Error;
                 model.Errors = new List<BaseModelError> { new BaseModelError { Name = "Generic", Message = "There was an issue saving thie record" } };
+
                 return model;
             }
+        }
+
+        private void LogError(Exception e)
+        {
+            logger.Error("MSL Web API Error - " + ActiveDirectoryHelper.CurrentUserUsername() + ":", e);
         }
     }
 }

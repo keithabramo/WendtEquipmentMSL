@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System;
 using System.Web.Mvc;
 using WendtEquipmentTracking.App.Models;
 using WendtEquipmentTracking.BusinessLogic;
@@ -71,8 +72,11 @@ namespace WendtEquipmentTracking.App.Controllers
 
                 return View(model);
             }
-            catch
+            catch (Exception e)
             {
+
+                LogError(e);
+
                 return View(model);
             }
         }
@@ -114,8 +118,9 @@ namespace WendtEquipmentTracking.App.Controllers
 
                 return View(model);
             }
-            catch
+            catch (Exception e)
             {
+                LogError(e);
                 return View(model);
             }
         }
@@ -153,8 +158,9 @@ namespace WendtEquipmentTracking.App.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception e)
             {
+                LogError(e);
                 var hardwareCommercialCode = hardwareCommercialCodeService.GetById(id);
 
                 if (hardwareCommercialCode == null)

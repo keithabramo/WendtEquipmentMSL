@@ -38,7 +38,7 @@
                     @Html.DisplayFor(modelItem => modelItem.HardwareGroups[i].Description)
                 </td>
                 <td>
-                    @Html.HiddenFor(modelItem => modelItem.HardwareGroups[i].Quantity)
+                    @Html.HiddenFor(modelItem => modelItem.HardwareGroups[i].Quantity, new { @class = "original-quantity" })
                     @Html.DisplayFor(modelItem => modelItem.HardwareGroups[i].Quantity)
                 </td>
                 <td>

@@ -157,7 +157,19 @@ namespace WendtEquipmentTracking.BusinessLogic
 
         public IEnumerable<EquipmentBO> GetHardwareByShippingTagNumber(int projectId, string shippingTagNumber)
         {
-            var equipments = equipmentEngine.List(EquipmentSpecs.ProjectId(projectId) && EquipmentSpecs.IsHardware() && !EquipmentSpecs.IsAttachedToHardwareKit() && EquipmentSpecs.ShippingTagNumber(shippingTagNumber));
+            return GetHardwareByShippingTagNumber(projectId, shippingTagNumber, null);
+        }
+
+        public IEnumerable<EquipmentBO> GetHardwareByShippingTagNumber(int projectId, string shippingTagNumber, int? hardwareKitId)
+        {
+            var hardwareKitSpec = !EquipmentSpecs.IsAttachedToHardwareKit();
+            if (hardwareKitId.HasValue)
+            {
+                hardwareKitSpec = hardwareKitSpec || EquipmentSpecs.HardwareKitId(hardwareKitId.Value);
+            }
+
+
+            var equipments = equipmentEngine.List(EquipmentSpecs.ProjectId(projectId) && EquipmentSpecs.IsHardware() && hardwareKitSpec && EquipmentSpecs.ShippingTagNumber(shippingTagNumber));
 
             var equipmentBOs = Mapper.Map<IEnumerable<EquipmentBO>>(equipments);
 

@@ -76,7 +76,7 @@ namespace WendtEquipmentTracking.App.Controllers
                     ShippingTagNumber = key.ShippingTagNumber,
                     Description = key.Description,
                     Quantity = g.Sum(e => e.Equipment.Quantity.HasValue ? e.Equipment.Quantity.Value : 0),
-                    QuantityToShip = (int)Math.Ceiling(g.Sum(e => e.Quantity))
+                    QuantityToShip = (int)Math.Ceiling(g.Sum(e => e.QuantityToShip))
                 }).ToList();
 
                 var hardwareKitModel = Mapper.Map<HardwareKitModel>(hardwareKitBO);
@@ -125,7 +125,7 @@ namespace WendtEquipmentTracking.App.Controllers
                             {
                                 EquipmentId = h.EquipmentId,
                                 HardwareKitId = model.HardwareKitId,
-                                Quantity = h.Quantity.HasValue ? h.Quantity.Value + (h.Quantity.Value * (model.ExtraQuantityPercentage / 100)) : 0
+                                QuantityToShip = h.Quantity.HasValue ? h.Quantity.Value + (h.Quantity.Value * (model.ExtraQuantityPercentage / 100)) : 0
                             }));
                         }
 
@@ -141,8 +141,9 @@ namespace WendtEquipmentTracking.App.Controllers
 
                 return View(model);
             }
-            catch
+            catch (Exception e)
             {
+                LogError(e);
                 return View(model);
             }
         }
@@ -164,7 +165,7 @@ namespace WendtEquipmentTracking.App.Controllers
                     ShippingTagNumber = key.ShippingTagNumber,
                     Description = key.Description,
                     Quantity = g.Sum(e => e.Equipment.Quantity.HasValue ? e.Equipment.Quantity.Value : 0),
-                    QuantityToShip = (int)Math.Ceiling(g.Sum(e => e.Quantity)),
+                    QuantityToShip = (int)Math.Ceiling(g.Sum(e => e.QuantityToShip)),
                     Checked = true
                 }).ToList();
 
@@ -195,12 +196,12 @@ namespace WendtEquipmentTracking.App.Controllers
                         var hardwareKitEquipmentsBOs = new List<HardwareKitEquipmentBO>();
                         foreach (var hardwareGroup in model.HardwareGroups.Where(m => m.Checked).ToList())
                         {
-                            var hardwareInWorkOrderBOs = equipmentService.GetHardwareByShippingTagNumber(user.ProjectId, hardwareGroup.ShippingTagNumber);
+                            var hardwareInWorkOrderBOs = equipmentService.GetHardwareByShippingTagNumber(user.ProjectId, hardwareGroup.ShippingTagNumber, model.HardwareKitId);
                             hardwareKitEquipmentsBOs.AddRange(hardwareInWorkOrderBOs.Select(h => new HardwareKitEquipmentBO
                             {
                                 EquipmentId = h.EquipmentId,
                                 HardwareKitId = model.HardwareKitId,
-                                Quantity = h.Quantity.HasValue ? h.Quantity.Value + (h.Quantity.Value * (model.ExtraQuantityPercentage / 100)) : 0
+                                QuantityToShip = h.Quantity.HasValue ? h.Quantity.Value + (h.Quantity.Value * (model.ExtraQuantityPercentage / 100)) : 0
                             }));
                         }
 
@@ -217,8 +218,9 @@ namespace WendtEquipmentTracking.App.Controllers
 
                 return View(model);
             }
-            catch
+            catch (Exception e)
             {
+                LogError(e);
                 return View(model);
             }
         }
@@ -240,8 +242,9 @@ namespace WendtEquipmentTracking.App.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception e)
             {
+                LogError(e);
                 var hardwareKit = hardwareKitService.GetById(id);
 
                 if (hardwareKit == null)
@@ -269,8 +272,15 @@ namespace WendtEquipmentTracking.App.Controllers
 
 
             //Get Data
-            var equipmentBOs = equipmentService.GetAll(user.ProjectId).Where(e => e.IsHardware
-                                                                    && (e.HardwareKitEquipments == null || e.HardwareKitEquipments.Count() == 0));
+            var equipmentBOs = equipmentService
+                .GetAll(user.ProjectId)
+                .Where(e =>
+                        e.IsHardware
+                        && (e.HardwareKitEquipments == null
+                            || e.HardwareKitEquipments.Count() == 0
+                            || e.HardwareKitEquipments.Count(hke => hke.HardwareKit.IsCurrentRevision == true) == 0
+                           )
+                    );
 
             var hardwareGroups = equipmentBOs
                 .GroupBy(e => new { e.ShippingTagNumber, e.Description }, (key, g) => new HardwareKitGroupModel
@@ -304,8 +314,15 @@ namespace WendtEquipmentTracking.App.Controllers
             }
 
             //Get Data
-            var equipmentBOs = equipmentService.GetAll(user.ProjectId).Where(e => e.IsHardware
-                                                                    && (e.HardwareKitEquipments == null || e.HardwareKitEquipments.Count() == 0));
+            var equipmentBOs = equipmentService
+                .GetAll(user.ProjectId)
+                .Where(e =>
+                        e.IsHardware
+                        && (e.HardwareKitEquipments == null
+                            || e.HardwareKitEquipments.Count() == 0
+                            || e.HardwareKitEquipments.Count(hke => hke.HardwareKit.IsCurrentRevision == true) == 0
+                           )
+                    );
 
             var hardwareGroups = equipmentBOs.Where(hg => !model.HardwareGroups.Any(mhg => mhg.ShippingTagNumber == hg.ShippingTagNumber))
                 .GroupBy(e => new { e.ShippingTagNumber, e.Description }, (key, g) => new HardwareKitGroupModel

@@ -147,6 +147,8 @@ namespace WendtEquipmentTracking.App.Controllers
 
                 model.Errors = ModelState.Where(v => v.Value.Errors.Count() > 0).ToList().Select(v => new BaseModelError { Name = v.Key, Message = v.Value.Errors.First().ErrorMessage });
 
+                LogError(e);
+
                 return View(model);
             }
         }
@@ -212,6 +214,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
                 model.Errors = ModelState.Where(v => v.Value.Errors.Count() > 0).ToList().Select(v => new BaseModelError { Name = v.Key, Message = v.Value.Errors.First().ErrorMessage });
 
+                LogError(e);
 
                 return View(model);
             }
@@ -234,7 +237,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception e)
             {
                 var billOfLading = billOfLadingService.GetById(id);
 
@@ -245,6 +248,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
                 model = Mapper.Map<BillOfLadingModel>(billOfLading);
 
+                LogError(e);
                 return View(model);
             }
         }
@@ -325,7 +329,7 @@ namespace WendtEquipmentTracking.App.Controllers
                 EquipmentId = e.EquipmentId,
                 Quantity = model.BillOfLadingEquipments.Any(be => be.EquipmentId == e.EquipmentId) ? model.BillOfLadingEquipments.FirstOrDefault(be => be.EquipmentId == e.EquipmentId).Quantity : 0,
                 ShippedFrom = model.BillOfLadingEquipments.Any(be => be.EquipmentId == e.EquipmentId) ? model.BillOfLadingEquipments.FirstOrDefault(be => be.EquipmentId == e.EquipmentId).ShippedFrom : e.ShippedFrom,
-                
+
                 Checked = model.BillOfLadingEquipments.Any(be => be.EquipmentId == e.EquipmentId)
             });
 

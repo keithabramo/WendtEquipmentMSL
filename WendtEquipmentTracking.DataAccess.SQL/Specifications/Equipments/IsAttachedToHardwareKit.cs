@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace WendtEquipmentTracking.DataAccess.SQL.Specifications.Equipments
@@ -9,7 +10,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Specifications.Equipments
 
         public override Expression<Func<Equipment, bool>> IsSatisfiedBy()
         {
-            return e => e.HardwareKitEquipments.Count > 0;
+            return e => e.HardwareKitEquipments.Any(hke => hke.HardwareKit.IsCurrentRevision);
         }
     }
 }

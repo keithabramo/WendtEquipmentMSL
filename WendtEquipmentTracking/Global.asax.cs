@@ -19,6 +19,7 @@ namespace WendtEquipmentTracking.App
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AutoMapperConfig.RegisterMappings();
+            log4net.Config.XmlConfigurator.Configure();
         }
     }
 }

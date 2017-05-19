@@ -90,6 +90,9 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             equipment.ModifiedDate = now;
             equipment.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
 
+            //TODO REMOVE!
+            throw new Exception("This is a test");
+
 
             this.repository.Update(equipment);
             this.repository.Save();

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -97,8 +98,9 @@ namespace WendtEquipmentTracking.App.Controllers
 
                 return View(model);
             }
-            catch
+            catch (Exception e)
             {
+                LogError(e);
                 return View(model);
             }
         }
@@ -146,8 +148,9 @@ namespace WendtEquipmentTracking.App.Controllers
 
                 return View(model);
             }
-            catch
+            catch (Exception e)
             {
+                LogError(e);
                 return View(model);
             }
         }
@@ -185,8 +188,9 @@ namespace WendtEquipmentTracking.App.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception e)
             {
+                LogError(e);
                 var workOrderPrice = workOrderPriceService.GetById(id);
 
                 if (workOrderPrice == null)

@@ -95,6 +95,7 @@ namespace WendtEquipmentTracking.App.Controllers
             }
             catch (Exception e)
             {
+                LogError(e);
                 equipmentImportModel.Status = SuccessStatus.Error;
                 ModelState.AddModelError("File", e.Message);
                 equipmentImportModel.Errors = ModelState.Where(v => v.Value.Errors.Count() > 0).ToList().Select(v => new BaseModelError { Name = v.Key, Message = v.Value.Errors.First().ErrorMessage });
@@ -143,6 +144,7 @@ namespace WendtEquipmentTracking.App.Controllers
             }
             catch (Exception e)
             {
+                LogError(e);
                 model.Status = SuccessStatus.Error;
                 ModelState.AddModelError("File", e.Message);
                 model.Errors = ModelState.Where(v => v.Value.Errors.Count() > 0).ToList().Select(v => new BaseModelError { Name = v.Key, Message = v.Value.Errors.First().ErrorMessage });
@@ -161,26 +163,26 @@ namespace WendtEquipmentTracking.App.Controllers
             {
                 //if (ModelState.IsValid)
                 //{
-                    var user = userService.GetCurrentUser();
+                var user = userService.GetCurrentUser();
 
-                    if (user != null)
+                if (user != null)
+                {
+                    model.ToList().ForEach(c => c.ProjectId = user.ProjectId);
+
+                    var equipmentBOs = Mapper.Map<IEnumerable<EquipmentBO>>(model.Where(m => m.Checked).ToList());
+                    equipmentBOs.ToList().ForEach(e =>
                     {
-                        model.ToList().ForEach(c => c.ProjectId = user.ProjectId);
+                        e.IsHardware = e.EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase);
+                        e.UnitWeight = e.IsHardware ? .01 : e.UnitWeight;
+                    });
 
-                        var equipmentBOs = Mapper.Map<IEnumerable<EquipmentBO>>(model.Where(m => m.Checked).ToList());
-                        equipmentBOs.ToList().ForEach(e =>
-                        {
-                            e.IsHardware = e.EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase);
-                            e.UnitWeight = e.IsHardware ? .01 : e.UnitWeight;
-                        });
+                    equipmentService.SaveAll(equipmentBOs);
 
-                        equipmentService.SaveAll(equipmentBOs);
-
-                        resultModel.Status = SuccessStatus.Success;
-                        return RedirectToAction("Index", "Home");
-                    }
+                    resultModel.Status = SuccessStatus.Success;
+                    return RedirectToAction("Index", "Home");
+                }
                 //}
-                
+
                 resultModel.Status = SuccessStatus.Error;
                 resultModel.Errors = ModelState.Where(v => v.Value.Errors.Count() > 0).ToList().Select(v => new BaseModelError { Name = v.Key, Message = v.Value.Errors.First().ErrorMessage });
 
@@ -188,6 +190,7 @@ namespace WendtEquipmentTracking.App.Controllers
             }
             catch (Exception e)
             {
+                LogError(e);
                 ModelState.AddModelError("", e.Message);
 
                 resultModel.Status = SuccessStatus.Error;
@@ -246,6 +249,7 @@ namespace WendtEquipmentTracking.App.Controllers
             }
             catch (Exception e)
             {
+                LogError(e);
                 model.Status = SuccessStatus.Error;
                 ModelState.AddModelError("File", e.Message);
                 model.Errors = ModelState.Where(v => v.Value.Errors.Count() > 0).ToList().Select(v => new BaseModelError { Name = v.Key, Message = v.Value.Errors.First().ErrorMessage });
@@ -262,23 +266,24 @@ namespace WendtEquipmentTracking.App.Controllers
             {
                 //if (ModelState.IsValid)
                 //{
-                    var user = userService.GetCurrentUser();
+                var user = userService.GetCurrentUser();
 
-                    if (user != null)
-                    {
-                        model.ToList().ForEach(c => c.ProjectId = user.ProjectId);
+                if (user != null)
+                {
+                    model.ToList().ForEach(c => c.ProjectId = user.ProjectId);
 
-                        var workOrderPriceBOs = Mapper.Map<IEnumerable<WorkOrderPriceBO>>(model.Where(m => m.Checked).ToList());
-                        workOrderPriceService.SaveAll(workOrderPriceBOs);
+                    var workOrderPriceBOs = Mapper.Map<IEnumerable<WorkOrderPriceBO>>(model.Where(m => m.Checked).ToList());
+                    workOrderPriceService.SaveAll(workOrderPriceBOs);
 
-                        return RedirectToAction("Index", "WorkOrderPrice");
-                    }
+                    return RedirectToAction("Index", "WorkOrderPrice");
+                }
                 //}
 
                 return View("ImportWorkOrderPrice", model);
             }
             catch (Exception e)
             {
+                LogError(e);
                 ModelState.AddModelError("", e.Message);
 
                 return View("ImportWorkOrderPrice", model);
