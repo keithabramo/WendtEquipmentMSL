@@ -245,7 +245,7 @@ namespace WendtEquipmentTracking.App.Controllers
                         );
 
                         updatedEquipmentModel.IsDuplicate = duplicate;
-                        
+
                         updatedEquipmentModel.Status = SuccessStatus.Success;
                         return updatedEquipmentModel;
                     }

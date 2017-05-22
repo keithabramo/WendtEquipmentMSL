@@ -91,7 +91,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             equipment.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
 
             //TODO REMOVE!
-            throw new Exception("This is a test");
+            //throw new Exception("This is a test");
 
 
             this.repository.Update(equipment);
