@@ -51,7 +51,7 @@ namespace WendtEquipmentTracking.App.Controllers
             equipmentModels.ToList().ForEach(e =>
             {
                 e.SetIndicators(projectBO.ProjectNumber, projectBO.IsCustomsProject);
-                e.HasBillOfLading = e.BillOfLadingEquipments.Count() > 0;
+                e.HasBillOfLading = e.BillOfLadingEquipments.Where(b => b.BillOfLading.IsCurrentRevision).Count() > 0;
                 e.IsHardwareKit = e.HardwareKit != null;
                 e.IsAssociatedToHardwareKit = e.HardwareKitEquipments.Where(h => h.HardwareKit.IsCurrentRevision).FirstOrDefault() != null;
                 e.AssociatedHardwareKitNumber = e.IsAssociatedToHardwareKit ? e.HardwareKitEquipments.Where(h => h.HardwareKit.IsCurrentRevision).FirstOrDefault().HardwareKit.HardwareKitNumber : string.Empty;
@@ -98,7 +98,7 @@ namespace WendtEquipmentTracking.App.Controllers
             equipmentModels.ToList().ForEach(e =>
             {
                 e.SetIndicators(projectBO.ProjectNumber, projectBO.IsCustomsProject);
-                e.HasBillOfLading = e.BillOfLadingEquipments.Count() > 0;
+                e.HasBillOfLading = e.BillOfLadingEquipments.Where(b => b.BillOfLading.IsCurrentRevision).Count() > 0;
                 e.IsHardwareKit = e.HardwareKit != null;
                 e.IsAssociatedToHardwareKit = e.HardwareKitEquipments.Where(h => h.HardwareKit.IsCurrentRevision).FirstOrDefault() != null;
                 e.AssociatedHardwareKitNumber = e.IsAssociatedToHardwareKit ? e.HardwareKitEquipments.Where(h => h.HardwareKit.IsCurrentRevision).FirstOrDefault().HardwareKit.HardwareKitNumber : string.Empty;
@@ -150,7 +150,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
                         var newEquipmentModel = Mapper.Map<EquipmentModel>(newEquipmentBO);
                         newEquipmentModel.SetIndicators(projectBO.ProjectNumber, projectBO.IsCustomsProject);
-                        newEquipmentModel.HasBillOfLading = newEquipmentModel.BillOfLadingEquipments.Count() > 0;
+                        newEquipmentModel.HasBillOfLading = newEquipmentModel.BillOfLadingEquipments.Where(b => b.BillOfLading.IsCurrentRevision).Count() > 0;
                         newEquipmentModel.IsHardwareKit = newEquipmentModel.HardwareKit != null;
                         newEquipmentModel.IsAssociatedToHardwareKit = newEquipmentModel.HardwareKitEquipments.Where(h => h.HardwareKit.IsCurrentRevision).FirstOrDefault() != null;
                         newEquipmentModel.AssociatedHardwareKitNumber = newEquipmentModel.IsAssociatedToHardwareKit ? newEquipmentModel.HardwareKitEquipments.Where(h => h.HardwareKit.IsCurrentRevision).FirstOrDefault().HardwareKit.HardwareKitNumber : string.Empty;
@@ -224,7 +224,7 @@ namespace WendtEquipmentTracking.App.Controllers
                         var updatedEquipmentModel = Mapper.Map<EquipmentModel>(updatedEquipmentBO);
 
                         updatedEquipmentModel.SetIndicators(projectBO.ProjectNumber, projectBO.IsCustomsProject);
-                        updatedEquipmentModel.HasBillOfLading = updatedEquipmentModel.BillOfLadingEquipments.Count() > 0;
+                        updatedEquipmentModel.HasBillOfLading = updatedEquipmentModel.BillOfLadingEquipments.Where(b => b.BillOfLading.IsCurrentRevision).Count() > 0;
                         updatedEquipmentModel.IsHardwareKit = updatedEquipmentModel.HardwareKit != null;
                         updatedEquipmentModel.IsAssociatedToHardwareKit = updatedEquipmentModel.HardwareKitEquipments.Where(h => h.HardwareKit.IsCurrentRevision).FirstOrDefault() != null;
                         updatedEquipmentModel.AssociatedHardwareKitNumber = updatedEquipmentModel.IsAssociatedToHardwareKit ? updatedEquipmentModel.HardwareKitEquipments.Where(h => h.HardwareKit.IsCurrentRevision).FirstOrDefault().HardwareKit.HardwareKitNumber : string.Empty;

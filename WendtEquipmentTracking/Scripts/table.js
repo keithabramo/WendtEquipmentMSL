@@ -131,7 +131,7 @@ $(function () {
                             }
                         },
                         {
-                            "data": "ReleaseDate", "targets": 2,
+                            "data": "ReleaseDate", "targets": 2, "type": "date",
                             className: "releaseDateWidth",
                             createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                                 mslRender.ReleaseDateRender($(cell), rowData);
