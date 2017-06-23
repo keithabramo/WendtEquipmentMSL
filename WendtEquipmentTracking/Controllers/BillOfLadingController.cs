@@ -271,6 +271,7 @@ namespace WendtEquipmentTracking.App.Controllers
             //Get Data
             var equipmentBOs = equipmentService.GetAll(user.ProjectId).Where(e => e.ReadyToShip != null
                                                                     && e.ReadyToShip > 0
+                                                                    && !(e.FullyShipped ?? false)
                                                                     && !e.IsHardware).ToList();
 
             var equipmentModels = Mapper.Map<IEnumerable<EquipmentModel>>(equipmentBOs);
@@ -318,6 +319,7 @@ namespace WendtEquipmentTracking.App.Controllers
             //Get Data
             var equipmentBOs = equipmentService.GetAll(user.ProjectId).Where(e => e.ReadyToShip != null
                                                                     && e.ReadyToShip > 0
+                                                                    && !(e.FullyShipped ?? false)
                                                                     && !e.IsHardware).ToList();
 
             var equipmentModels = Mapper.Map<IEnumerable<EquipmentModel>>(equipmentBOs);

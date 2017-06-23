@@ -17,6 +17,6 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         void Delete(TEntity entity);
         void Update(TEntity entity);
         void Save();
-        IEnumerable<K> ExectuteStoredProcedure<K>(string procedureName, List<SqlParameter> parameters);
+        int ExectuteStoredProcedure(string procedureName, List<SqlParameter> parameters);
     }
 }

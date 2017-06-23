@@ -191,7 +191,7 @@ namespace WendtEquipmentTracking.App.Models
             //ready to ship does not have a clean way to check for red
             if (ReadyToShip > 0)
             {
-                if (BillOfLadingEquipments.Any(be => be.BillOfLading.ToStorage && be.BillOfLading.IsCurrentRevision))
+                if (BillOfLadingEquipments.Any(be => be != null && be.BillOfLading.ToStorage && be.BillOfLading.IsCurrentRevision))
                 {
                     Indicators.ReadyToShipColor = IndicatorsModel.Colors.Green.ToString();
                 }

@@ -159,13 +159,11 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         /// Exectutes a stored procedure
         /// </summary>
         /// <param name="disposing">A boolean value indicating whether or not to dispose managed resources</param>
-        public IEnumerable<K> ExectuteStoredProcedure<K>(string procedureName, List<SqlParameter> parameters)
+        public int ExectuteStoredProcedure(string procedureName, List<SqlParameter> parameters)
         {
             string parameterNameList = buildParamNameList(parameters);
 
-            var result = entities.Database
-                .SqlQuery<K>(procedureName + " " + parameterNameList, parameters.ToArray())
-                .ToList();
+            var result = entities.Database.ExecuteSqlCommand("exec " + procedureName + " " + parameterNameList, parameters.ToArray());
 
             return result;
         }
@@ -179,7 +177,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL
                 {
                     parameterNameList += ",";
                 }
-                parameterNameList += parameter.ParameterName + " = " + parameter.ParameterName;
+                parameterNameList += "@" + parameter.ParameterName + " = @" + parameter.ParameterName;
             }
 
             return parameterNameList;

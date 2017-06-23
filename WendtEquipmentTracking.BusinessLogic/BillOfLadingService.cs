@@ -36,6 +36,9 @@ namespace WendtEquipmentTracking.BusinessLogic
 
                 equipmentEngine.UpdateEquipment(equipment);
             }
+
+            //update needs to happen after BOL AND all BOL Equipment have been saved
+            billOfLadingEngine.UpdateRTS(billOfLading.BillOfLadingId);
         }
 
         public void Update(BillOfLadingBO billOfLadingBO)
@@ -52,6 +55,9 @@ namespace WendtEquipmentTracking.BusinessLogic
 
                 equipmentEngine.UpdateEquipment(equipment);
             }
+
+            //update needs to happen after BOL AND all BOL Equipment have been saved
+            billOfLadingEngine.UpdateRTS(billOfLading.BillOfLadingId);
 
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using WendtEquipmentTracking.Common;
 using WendtEquipmentTracking.DataAccess.SQL.Api;
@@ -88,6 +89,11 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
             this.repository.Update(billOfLading);
             this.repository.Save();
+        }
+
+        public void UpdateRTS(int billOfLadingId)
+        {
+            this.repository.ExectuteStoredProcedure("UpdateRTSAfterBOLRevision", new List<SqlParameter> { new SqlParameter("BillOfLadingId", billOfLadingId) });
         }
 
         public void SetDBContext(WendtEquipmentTrackingEntities dbContext)
