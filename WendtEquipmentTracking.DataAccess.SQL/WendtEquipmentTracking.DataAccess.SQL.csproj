@@ -109,6 +109,7 @@
     <Compile Include="Specifications\BillOfLading\IsDeleted.cs" />
     <Compile Include="Specifications\Equipments\IsAttachedToHardwareKit.cs" />
     <Compile Include="Specifications\Equipments\IsHardware.cs" />
+    <Compile Include="Specifications\Equipments\Description.cs" />
     <Compile Include="Specifications\Equipments\ShippingTagNumberSpecification.cs" />
     <Compile Include="Specifications\Equipments\ProjectIdSpecification.cs" />
     <Compile Include="Specifications\Equipments\HardwareKitId.cs" />

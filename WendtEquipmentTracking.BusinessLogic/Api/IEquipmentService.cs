@@ -16,8 +16,8 @@ namespace WendtEquipmentTracking.BusinessLogic.Api
 
         IEnumerable<EquipmentBO> GetAll(int projectId);
         IEnumerable<EquipmentBO> GetByBillOfLadingId(int billOfLadingId);
-        IEnumerable<EquipmentBO> GetHardwareByShippingTagNumber(int projectId, string shipTagNumber);
-        IEnumerable<EquipmentBO> GetHardwareByShippingTagNumber(int projectId, string shipTagNumber, int? hardwareKitId);
+        IEnumerable<EquipmentBO> GetHardwareByShippingTagNumberAndDescription(int projectId, string shipTagNumber, string description);
+        IEnumerable<EquipmentBO> GetHardwareByShippingTagNumberAndDescription(int projectId, string shipTagNumber, string description, int? hardwareKitId);
 
         EquipmentBO GetById(int id);
 

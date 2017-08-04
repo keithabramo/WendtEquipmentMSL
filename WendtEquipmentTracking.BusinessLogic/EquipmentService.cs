@@ -23,15 +23,15 @@ namespace WendtEquipmentTracking.BusinessLogic
         {
             var equipment = Mapper.Map<Equipment>(equipmentBO);
 
-            equipment.CountryOfOrigin = (equipment.CountryOfOrigin?? string.Empty).ToUpperInvariant();
-            equipment.Description = (equipment.Description?? string.Empty).ToUpperInvariant();
-            equipment.DrawingNumber = (equipment.DrawingNumber?? string.Empty).ToUpperInvariant();
-            equipment.EquipmentName = (equipment.EquipmentName?? string.Empty).ToUpperInvariant();
-            equipment.HTSCode = (equipment.HTSCode?? string.Empty).ToUpperInvariant();
-            equipment.Notes = (equipment.Notes?? string.Empty).ToUpperInvariant();
-            equipment.ShippedFrom = (equipment.ShippedFrom?? string.Empty).ToUpperInvariant();
-            equipment.ShippingTagNumber = (equipment.ShippingTagNumber?? string.Empty).ToUpperInvariant();
-            equipment.WorkOrderNumber = (equipment.WorkOrderNumber?? string.Empty).ToUpperInvariant();
+            equipment.CountryOfOrigin = (equipment.CountryOfOrigin ?? string.Empty).ToUpperInvariant();
+            equipment.Description = (equipment.Description ?? string.Empty).ToUpperInvariant();
+            equipment.DrawingNumber = (equipment.DrawingNumber ?? string.Empty).ToUpperInvariant();
+            equipment.EquipmentName = (equipment.EquipmentName ?? string.Empty).ToUpperInvariant();
+            equipment.HTSCode = (equipment.HTSCode ?? string.Empty).ToUpperInvariant();
+            equipment.Notes = (equipment.Notes ?? string.Empty).ToUpperInvariant();
+            equipment.ShippedFrom = (equipment.ShippedFrom ?? string.Empty).ToUpperInvariant();
+            equipment.ShippingTagNumber = (equipment.ShippingTagNumber ?? string.Empty).ToUpperInvariant();
+            equipment.WorkOrderNumber = (equipment.WorkOrderNumber ?? string.Empty).ToUpperInvariant();
 
 
             var equipmentId = equipmentEngine.AddNewEquipment(equipment);
@@ -155,12 +155,12 @@ namespace WendtEquipmentTracking.BusinessLogic
             return equipmentBOs;
         }
 
-        public IEnumerable<EquipmentBO> GetHardwareByShippingTagNumber(int projectId, string shippingTagNumber)
+        public IEnumerable<EquipmentBO> GetHardwareByShippingTagNumberAndDescription(int projectId, string shippingTagNumber, string description)
         {
-            return GetHardwareByShippingTagNumber(projectId, shippingTagNumber, null);
+            return GetHardwareByShippingTagNumberAndDescription(projectId, shippingTagNumber, description, null);
         }
 
-        public IEnumerable<EquipmentBO> GetHardwareByShippingTagNumber(int projectId, string shippingTagNumber, int? hardwareKitId)
+        public IEnumerable<EquipmentBO> GetHardwareByShippingTagNumberAndDescription(int projectId, string shippingTagNumber, string description, int? hardwareKitId)
         {
             var hardwareKitSpec = !EquipmentSpecs.IsAttachedToHardwareKit();
             if (hardwareKitId.HasValue)
@@ -169,7 +169,7 @@ namespace WendtEquipmentTracking.BusinessLogic
             }
 
 
-            var equipments = equipmentEngine.List(EquipmentSpecs.ProjectId(projectId) && EquipmentSpecs.IsHardware() && hardwareKitSpec && EquipmentSpecs.ShippingTagNumber(shippingTagNumber));
+            var equipments = equipmentEngine.List(EquipmentSpecs.ProjectId(projectId) && EquipmentSpecs.IsHardware() && hardwareKitSpec && EquipmentSpecs.ShippingTagNumber(shippingTagNumber) && EquipmentSpecs.Description(description));
 
             var equipmentBOs = Mapper.Map<IEnumerable<EquipmentBO>>(equipments);
 

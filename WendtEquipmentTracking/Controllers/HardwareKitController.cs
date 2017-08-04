@@ -120,7 +120,7 @@ namespace WendtEquipmentTracking.App.Controllers
                         var hardwareKitEquipmentsBOs = new List<HardwareKitEquipmentBO>();
                         foreach (var hardwareGroup in model.HardwareGroups.Where(m => m.Checked).ToList())
                         {
-                            var hardwareInWorkOrderBOs = equipmentService.GetHardwareByShippingTagNumber(user.ProjectId, hardwareGroup.ShippingTagNumber);
+                            var hardwareInWorkOrderBOs = equipmentService.GetHardwareByShippingTagNumberAndDescription(user.ProjectId, hardwareGroup.ShippingTagNumber, hardwareGroup.Description);
                             hardwareKitEquipmentsBOs.AddRange(hardwareInWorkOrderBOs.Select(h => new HardwareKitEquipmentBO
                             {
                                 EquipmentId = h.EquipmentId,
@@ -196,7 +196,7 @@ namespace WendtEquipmentTracking.App.Controllers
                         var hardwareKitEquipmentsBOs = new List<HardwareKitEquipmentBO>();
                         foreach (var hardwareGroup in model.HardwareGroups.Where(m => m.Checked).ToList())
                         {
-                            var hardwareInWorkOrderBOs = equipmentService.GetHardwareByShippingTagNumber(user.ProjectId, hardwareGroup.ShippingTagNumber, model.HardwareKitId);
+                            var hardwareInWorkOrderBOs = equipmentService.GetHardwareByShippingTagNumberAndDescription(user.ProjectId, hardwareGroup.ShippingTagNumber, hardwareGroup.Description, model.HardwareKitId);
                             hardwareKitEquipmentsBOs.AddRange(hardwareInWorkOrderBOs.Select(h => new HardwareKitEquipmentBO
                             {
                                 EquipmentId = h.EquipmentId,
