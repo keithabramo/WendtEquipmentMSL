@@ -14,12 +14,17 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         public Repository()
         {
             this.entities = new WendtEquipmentTrackingEntities();
+
+            //Done to prevent blocking -- this COULD make dirty reads but is unlikely in this application to matter
+            entities.Database.ExecuteSqlCommand("SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED");
             table = entities.Set<T>();
         }
 
         public Repository(WendtEquipmentTrackingEntities entities)
         {
             this.entities = entities;
+            entities.Database.ExecuteSqlCommand("SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED");
+
             table = entities.Set<T>();
         }
 
