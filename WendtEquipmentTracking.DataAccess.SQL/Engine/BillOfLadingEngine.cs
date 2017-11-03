@@ -14,10 +14,6 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
     {
         private IRepository<BillOfLading> repository = null;
 
-        public BillOfLadingEngine()
-        {
-            this.repository = new Repository<BillOfLading>();
-        }
 
         public BillOfLadingEngine(WendtEquipmentTrackingEntities dbContext)
         {
@@ -59,7 +55,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             billOfLading.IsCurrentRevision = true;
 
             this.repository.Insert(billOfLading);
-            this.repository.Save();
+
         }
 
         public void UpdateBillOfLading(BillOfLading billOfLading)
@@ -79,7 +75,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
             this.repository.Insert(billOfLading);
             this.repository.Update(currentBillOfLading);
-            this.repository.Save();
+
         }
 
         public void DeleteBillOfLading(BillOfLading billOfLading)
@@ -88,7 +84,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             billOfLading.BillOfLadingEquipments.ToList().ForEach(ble => ble.IsDeleted = true);
 
             this.repository.Update(billOfLading);
-            this.repository.Save();
+
         }
 
         public void UpdateRTS(int billOfLadingId)

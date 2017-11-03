@@ -16,6 +16,8 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Api
 
         void UpdateWorkOrderPrice(WorkOrderPrice workOrderPrice);
 
+        void UpdateWorkOrderPrices(IEnumerable<WorkOrderPrice> workOrderPrices);
+
         void DeleteWorkOrderPrice(WorkOrderPrice workOrderPrice);
 
         void SetDBContext(WendtEquipmentTrackingEntities dbContext);

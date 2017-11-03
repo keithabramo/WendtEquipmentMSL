@@ -11,11 +11,6 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
     {
         private IRepository<Priority> repository = null;
 
-        public PriorityEngine()
-        {
-            this.repository = new Repository<Priority>();
-        }
-
         public PriorityEngine(WendtEquipmentTrackingEntities dbContext)
         {
             this.repository = new Repository<Priority>(dbContext);
@@ -51,7 +46,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             priority.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
 
             this.repository.Insert(priority);
-            this.repository.Save();
+
         }
 
         public void AddAllNewPriority(IEnumerable<Priority> prioritys)
@@ -68,7 +63,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             }
 
             this.repository.InsertAll(prioritys);
-            this.repository.Save();
+
         }
 
         public void UpdatePriority(Priority priority)
@@ -79,7 +74,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             priority.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
 
             this.repository.Update(priority);
-            this.repository.Save();
+
         }
 
         public void DeletePriority(Priority priority)
@@ -87,7 +82,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             priority.IsDeleted = true;
 
             this.repository.Update(priority);
-            this.repository.Save();
+
         }
 
         public void SetDBContext(WendtEquipmentTrackingEntities dbContext)

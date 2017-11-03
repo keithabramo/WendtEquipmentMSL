@@ -1,6 +1,7 @@
 ﻿@model EquipmentModel
 
-<tr class="@(Model.Status == SuccessStatus.Error ? "danger" : "info")">
+@*<tr class="@(Model.Status == SuccessStatus.Error ? "danger" : "info")">
+*@<tr class="info">
     
     <td class="equipmentNameWidth">
         @Html.EditorFor(modelItem => modelItem.EquipmentName, new { htmlAttributes = new { @class = "form-control" } })

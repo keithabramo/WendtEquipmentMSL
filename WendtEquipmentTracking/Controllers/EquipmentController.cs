@@ -45,12 +45,6 @@ namespace WendtEquipmentTracking.App.Controllers
             return View(equipmentModels);
         }
 
-        //
-        // GET: /Equipment/Handsontable
-        public ActionResult Handsontable()
-        {
-            return View();
-        }
 
         //
         // GET: /Equipment/Create
@@ -117,17 +111,7 @@ namespace WendtEquipmentTracking.App.Controllers
             }
             catch (Exception e)
             {
-                var equipment = equipmentService.GetById(id);
-
-                if (equipment == null)
-                {
-                    return HttpNotFound();
-                }
-
-                model = Mapper.Map<EquipmentModel>(equipment);
-
-
-                LogError(e);
+                HandleError("There was an error while attempting to delete this equipment", e);
 
                 return View(model);
             }

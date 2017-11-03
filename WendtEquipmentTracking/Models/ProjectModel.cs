@@ -54,5 +54,8 @@ namespace WendtEquipmentTracking.App.Models
 
         [DisplayName("Is Export Project?")]
         public bool IsCustomsProject { get; set; }
+
+        [DisplayName("Include Soft Costs on Commercial Invoice?")]
+        public bool IncludeSoftCosts { get; set; }
     }
 }

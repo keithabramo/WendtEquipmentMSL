@@ -11,11 +11,6 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
     {
         private IRepository<WorkOrderPrice> repository = null;
 
-        public WorkOrderPriceEngine()
-        {
-            this.repository = new Repository<WorkOrderPrice>();
-        }
-
         public WorkOrderPriceEngine(WendtEquipmentTrackingEntities dbContext)
         {
             this.repository = new Repository<WorkOrderPrice>(dbContext);
@@ -51,7 +46,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             workOrderPrice.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
 
             this.repository.Insert(workOrderPrice);
-            this.repository.Save();
+
         }
 
         public void AddAllNewWorkOrderPrice(IEnumerable<WorkOrderPrice> workOrderPrices)
@@ -68,7 +63,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             }
 
             this.repository.InsertAll(workOrderPrices);
-            this.repository.Save();
+
         }
 
         public void UpdateWorkOrderPrice(WorkOrderPrice workOrderPrice)
@@ -79,7 +74,22 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             workOrderPrice.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
 
             this.repository.Update(workOrderPrice);
-            this.repository.Save();
+
+        }
+
+        public void UpdateWorkOrderPrices(IEnumerable<WorkOrderPrice> workOrderPrices)
+        {
+            var now = DateTime.Now;
+
+            foreach (var workOrderPrice in workOrderPrices)
+            {
+                workOrderPrice.ModifiedDate = now;
+                workOrderPrice.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
+
+                this.repository.Update(workOrderPrice);
+            }
+
+
         }
 
         public void DeleteWorkOrderPrice(WorkOrderPrice workOrderPrice)
@@ -87,7 +97,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             workOrderPrice.IsDeleted = true;
 
             this.repository.Update(workOrderPrice);
-            this.repository.Save();
+
         }
 
         public void SetDBContext(WendtEquipmentTrackingEntities dbContext)

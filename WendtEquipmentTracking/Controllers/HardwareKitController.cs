@@ -143,7 +143,7 @@ namespace WendtEquipmentTracking.App.Controllers
             }
             catch (Exception e)
             {
-                LogError(e);
+                HandleError("There was an error attempting to create this hardware kit", e);
                 return View(model);
             }
         }
@@ -220,7 +220,7 @@ namespace WendtEquipmentTracking.App.Controllers
             }
             catch (Exception e)
             {
-                LogError(e);
+                HandleError("There was an error attempting to save this hardware kit", e);
                 return View(model);
             }
         }
@@ -244,15 +244,7 @@ namespace WendtEquipmentTracking.App.Controllers
             }
             catch (Exception e)
             {
-                LogError(e);
-                var hardwareKit = hardwareKitService.GetById(id);
-
-                if (hardwareKit == null)
-                {
-                    return HttpNotFound();
-                }
-
-                model = Mapper.Map<HardwareKitModel>(hardwareKit);
+                HandleError("There was an error attempting to delete this hardware kit", e);
 
                 return View(model);
             }

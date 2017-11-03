@@ -33,6 +33,12 @@
                         <th>
                             @Html.DisplayNameFor(model => model[0].SalePrice)
                         </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model[0].ReleasedPercent)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model[0].ShippedPercent)
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -53,6 +59,14 @@
                             <td>
                                 @Html.EditorFor(modelItem => modelItem[i].SalePrice, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(modelItem => modelItem[i].SalePrice, "", new { @class = "text-danger" })
+                            </td>
+                            <td>
+                                @Html.EditorFor(modelItem => modelItem[i].ReleasedPercent, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(modelItem => modelItem[i].ReleasedPercent, "", new { @class = "text-danger" })
+                            </td>
+                            <td>
+                                @Html.EditorFor(modelItem => modelItem[i].ShippedPercent, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(modelItem => modelItem[i].ShippedPercent, "", new { @class = "text-danger" })
                             </td>
                         </tr>
                     }

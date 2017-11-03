@@ -11,11 +11,6 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
     {
         private IRepository<HardwareCommercialCode> repository = null;
 
-        public HardwareCommercialCodeEngine()
-        {
-            this.repository = new Repository<HardwareCommercialCode>();
-        }
-
         public HardwareCommercialCodeEngine(WendtEquipmentTrackingEntities dbContext)
         {
             this.repository = new Repository<HardwareCommercialCode>(dbContext);
@@ -51,7 +46,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             hardwareCommercialCode.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
 
             this.repository.Insert(hardwareCommercialCode);
-            this.repository.Save();
+
         }
 
         public void AddAllNewHardwareCommercialCode(IEnumerable<HardwareCommercialCode> hardwareCommercialCodes)
@@ -68,7 +63,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             }
 
             this.repository.InsertAll(hardwareCommercialCodes);
-            this.repository.Save();
+
         }
 
         public void UpdateHardwareCommercialCode(HardwareCommercialCode hardwareCommercialCode)
@@ -79,7 +74,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             hardwareCommercialCode.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
 
             this.repository.Update(hardwareCommercialCode);
-            this.repository.Save();
+
         }
 
         public void DeleteHardwareCommercialCode(HardwareCommercialCode hardwareCommercialCode)
@@ -87,7 +82,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             hardwareCommercialCode.IsDeleted = true;
 
             this.repository.Update(hardwareCommercialCode);
-            this.repository.Save();
+
         }
 
         public void SetDBContext(WendtEquipmentTrackingEntities dbContext)

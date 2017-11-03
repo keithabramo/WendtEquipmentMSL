@@ -85,6 +85,14 @@
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'WendtEquipmentTracking.dbo.HardwareCommercialCode2' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="HardwareCommercialCode2">
+          <Property Name="Part #" Type="nvarchar" MaxLength="255" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
+          <Property Name="Commodity Code" Type="nvarchar" MaxLength="255" />
+          <Property Name="Verify if ok to use or not" Type="nvarchar" MaxLength="255" />
+        </EntityType>-->
         <EntityType Name="HardwareKit">
           <Key>
             <PropertyRef Name="HardwareKitId" />
@@ -150,6 +158,7 @@
           <Property Name="ShipToBrokerPhoneFax" Type="nvarchar" MaxLength="50" />
           <Property Name="ShipToBrokerEmail" Type="nvarchar" MaxLength="255" />
           <Property Name="IsCustomsProject" Type="bit" Nullable="false" />
+          <Property Name="IncludeSoftCosts" Type="bit" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
@@ -170,6 +179,8 @@
           <Property Name="SalePrice" Type="float" Nullable="false" />
           <Property Name="CostPrice" Type="float" Nullable="false" />
           <Property Name="TotalWeight" Type="float" Nullable="false" />
+          <Property Name="ReleasedPercent" Type="float" Nullable="false" />
+          <Property Name="ShippedPercent" Type="float" Nullable="false" />
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="255" />
@@ -296,6 +307,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="UpdateRTSAfterBOLRevision" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="BillOfLadingId" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="WendtEquipmentTrackingDataAccessSQLModelStoreContainer">
           <EntitySet Name="BillOfLading" EntityType="Self.BillOfLading" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BillOfLadingEquipment" EntityType="Self.BillOfLadingEquipment" Schema="dbo" store:Type="Tables" />
@@ -353,6 +367,9 @@
     <edmx:ConceptualModels>
       <Schema Namespace="WendtEquipmentTracking.DataAccess.SQL.Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="WendtEquipmentTrackingEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="UpdateRTSAfterBOLRevision">
+          <Parameter Name="BillOfLadingId" Mode="In" Type="Int32" />
+          </FunctionImport>
           <EntitySet Name="BillOfLadings" EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.BillOfLading" />
           <EntitySet Name="BillOfLadingEquipments" EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.BillOfLadingEquipment" />
           <EntitySet Name="Equipments" EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.Equipment" />
@@ -563,6 +580,7 @@
           <Property Name="ShipToBrokerPhoneFax" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ShipToBrokerEmail" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="IsCustomsProject" Type="Boolean" Nullable="false" />
+          <Property Name="IncludeSoftCosts" Type="Boolean" Nullable="false" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="BillOfLadings" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_BillOfLanding_Project" FromRole="Project" ToRole="BillOfLading" />
           <NavigationProperty Name="Equipments" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_Equipment_Project" FromRole="Project" ToRole="Equipment" />
@@ -588,6 +606,8 @@
           <Property Name="SalePrice" Type="Double" Nullable="false" />
           <Property Name="CostPrice" Type="Double" Nullable="false" />
           <Property Name="TotalWeight" Type="Double" Nullable="false" />
+          <Property Name="ReleasedPercent" Type="Double" Nullable="false" />
+          <Property Name="ShippedPercent" Type="Double" Nullable="false" />
           <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
@@ -721,6 +741,7 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="WendtEquipmentTrackingDataAccessSQLModelStoreContainer" CdmEntityContainer="WendtEquipmentTrackingEntities">
+          <FunctionImportMapping FunctionImportName="UpdateRTSAfterBOLRevision" FunctionName="WendtEquipmentTracking.DataAccess.SQL.Model.Store.UpdateRTSAfterBOLRevision" />
           <EntitySetMapping Name="BillOfLadings">
             <EntityTypeMapping TypeName="WendtEquipmentTracking.DataAccess.SQL.Model.BillOfLading">
               <MappingFragment StoreEntitySet="BillOfLading">
@@ -853,6 +874,7 @@
             <EntityTypeMapping TypeName="WendtEquipmentTracking.DataAccess.SQL.Model.Project">
               <MappingFragment StoreEntitySet="Project">
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IncludeSoftCosts" ColumnName="IncludeSoftCosts" />
                 <ScalarProperty Name="IsCustomsProject" ColumnName="IsCustomsProject" />
                 <ScalarProperty Name="ShipToBrokerEmail" ColumnName="ShipToBrokerEmail" />
                 <ScalarProperty Name="ShipToBrokerPhoneFax" ColumnName="ShipToBrokerPhoneFax" />
@@ -893,6 +915,8 @@
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ShippedPercent" ColumnName="ShippedPercent" />
+                <ScalarProperty Name="ReleasedPercent" ColumnName="ReleasedPercent" />
                 <ScalarProperty Name="TotalWeight" ColumnName="TotalWeight" />
                 <ScalarProperty Name="CostPrice" ColumnName="CostPrice" />
                 <ScalarProperty Name="SalePrice" ColumnName="SalePrice" />

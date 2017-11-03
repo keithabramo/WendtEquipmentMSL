@@ -12,11 +12,13 @@ namespace WendtEquipmentTracking.BusinessLogic
 {
     public class HardwareCommercialCodeService : IHardwareCommercialCodeService
     {
+        private WendtEquipmentTrackingEntities dbContext;
         private IHardwareCommercialCodeEngine hardwareCommercialCodeEngine;
 
         public HardwareCommercialCodeService()
         {
-            hardwareCommercialCodeEngine = new HardwareCommercialCodeEngine();
+            dbContext = new WendtEquipmentTrackingEntities();
+            hardwareCommercialCodeEngine = new HardwareCommercialCodeEngine(dbContext);
         }
 
         public void Save(HardwareCommercialCodeBO hardwareCommercialCodeBO)
@@ -24,6 +26,8 @@ namespace WendtEquipmentTracking.BusinessLogic
             var hardwareCommercialCode = Mapper.Map<HardwareCommercialCode>(hardwareCommercialCodeBO);
 
             hardwareCommercialCodeEngine.AddNewHardwareCommercialCode(hardwareCommercialCode);
+
+            dbContext.SaveChanges();
         }
 
         public void SaveAll(IEnumerable<HardwareCommercialCodeBO> hardwareCommercialCodeBOs)
@@ -31,6 +35,8 @@ namespace WendtEquipmentTracking.BusinessLogic
             var hardwareCommercialCodes = Mapper.Map<IEnumerable<HardwareCommercialCode>>(hardwareCommercialCodeBOs);
 
             hardwareCommercialCodeEngine.AddAllNewHardwareCommercialCode(hardwareCommercialCodes);
+
+            dbContext.SaveChanges();
         }
 
         public IEnumerable<HardwareCommercialCodeBO> GetAll()
@@ -58,6 +64,8 @@ namespace WendtEquipmentTracking.BusinessLogic
             Mapper.Map<HardwareCommercialCodeBO, HardwareCommercialCode>(hardwareCommercialCodeBO, oldHardwareCommercialCode);
 
             hardwareCommercialCodeEngine.UpdateHardwareCommercialCode(oldHardwareCommercialCode);
+
+            dbContext.SaveChanges();
         }
 
         public void Delete(int id)
@@ -68,6 +76,8 @@ namespace WendtEquipmentTracking.BusinessLogic
             {
                 hardwareCommercialCodeEngine.DeleteHardwareCommercialCode(hardwareCommercialCode);
             }
+
+            dbContext.SaveChanges();
         }
     }
 }

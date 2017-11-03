@@ -4,16 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
-using WendtEquipmentTracking.App.Common;
 using WendtEquipmentTracking.App.Models;
 using WendtEquipmentTracking.BusinessLogic;
 using WendtEquipmentTracking.BusinessLogic.Api;
 using WendtEquipmentTracking.BusinessLogic.BO;
-using WendtEquipmentTracking.Common;
 
 namespace WendtEquipmentTracking.App.Controllers
 {
-    public class EquipmentApiController : ApiController
+    public class EquipmentApiController : BaseApiController
     {
         private IEquipmentService equipmentService;
         private IProjectService projectService;
@@ -173,22 +171,17 @@ namespace WendtEquipmentTracking.App.Controllers
 
                         newEquipmentModel.IsDuplicate = duplicate;
 
-
-                        newEquipmentModel.Status = SuccessStatus.Success;
                         return newEquipmentModel;
                     }
                 }
 
-                model.Status = SuccessStatus.Error;
-                model.Errors = ModelState.Where(v => v.Value.Errors.Count() > 0).ToList().Select(v => new BaseModelError { Name = v.Key, Message = v.Value.Errors.First().ErrorMessage });
+                HandleError(ModelState);
+
                 return model;
             }
             catch (Exception e)
             {
-                model.Status = SuccessStatus.Error;
-                model.Errors = new List<BaseModelError> { new BaseModelError { Name = "Generic", Message = "There was an issue saving thie record" } };
-
-                LogError(e);
+                HandleError(e);
 
                 return model;
             }
@@ -246,28 +239,20 @@ namespace WendtEquipmentTracking.App.Controllers
 
                         updatedEquipmentModel.IsDuplicate = duplicate;
 
-                        updatedEquipmentModel.Status = SuccessStatus.Success;
                         return updatedEquipmentModel;
                     }
                 }
-                model.Status = SuccessStatus.Error;
-                model.Errors = ModelState.Where(v => v.Value.Errors.Count() > 0).ToList().Select(v => new BaseModelError { Name = v.Key, Message = v.Value.Errors.First().ErrorMessage });
+
+                HandleError(ModelState);
+
                 return model;
             }
             catch (Exception e)
             {
-                LogError(e);
-
-                model.Status = SuccessStatus.Error;
-                model.Errors = new List<BaseModelError> { new BaseModelError { Name = "Generic", Message = "There was an issue saving thie record" } };
+                HandleError(e);
 
                 return model;
             }
-        }
-
-        private void LogError(Exception e)
-        {
-            logger.Error("MSL Web API Error - " + ActiveDirectoryHelper.CurrentUserUsername() + ":", e);
         }
     }
 }

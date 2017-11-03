@@ -120,6 +120,18 @@
                     </div>
                 </div>
             </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            @Html.EditorFor(model => model.IncludeSoftCosts)
+                            @Html.DisplayNameFor(model => model.IncludeSoftCosts)
+
+                            @Html.ValidationMessageFor(model => model.IncludeSoftCosts, "", new { @class = "text-danger" })
+                        </label>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="row">
             <div class="col-sm-4">

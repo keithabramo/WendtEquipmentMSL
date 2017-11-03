@@ -1,9 +1,9 @@
 ﻿namespace WendtEquipmentTracking.App.Common
 {
-    public enum SuccessStatus
+    public enum StatusCodes
     {
-        None,
         Success,
+        Information,
         Error
     }
 }

@@ -173,13 +173,57 @@ dl.dl-horizontal dd {
     overflow-y: auto;
 }
 
+
+
+
+
+
+
+
+div.dataTables_wrapper div.dataTables_filter label, div.dataTables_wrapper div.dataTables_length label {
+    font-weight: normal;
+    white-space: nowrap;
+    text-align: left;
+}
+
+div.dataTables_wrapper div.dataTables_filter input, div.dataTables_wrapper div.dataTables_length select {
+    margin-left: 0.5em;
+    width: auto;
+    display: inline-block;
+}
+
+div.dataTables_wrapper .dataTables_filter {
+    text-align: inherit;
+    float: left;
+    margin-right: 10px;
+}
+
+div.dataTables_wrapper .dataTables_info {
+     float: none; 
+     padding-top: 0; 
+}
+
+div.dataTables_wrapper .dataTables_length {
+    text-align: inherit;
+    float: right;
+}
+
+div.dataTables_wrapper .dataTables_paginate {
+    text-align: inherit;
+}
+
+
+
+
+
+
+
 /* all tables */
 .table-styled {
     font-size: 10px;
 }
 
     .table-styled th {
-        /*white-space: nowrap;*/
         vertical-align: top !important;
         text-align: center;
     }
@@ -216,121 +260,6 @@ dl.dl-horizontal dd {
         white-space: nowrap;
     }
 
-    .table-styled .form-control {
-        font-size: 10px !important;
-        min-width: 0;
-        padding: 6px;
-    }
-
-
-
-
-
-
-
-
-
-    .table-styled tbody .equipmentNameWidth .form-control {
-        width: 200px;
-    }
-
-    .table-styled tbody .priorityWidth .form-control {
-        width: 50px;
-    }
-
-    .table-styled tbody .releaseDateWidth .form-control {
-        width: 70px;
-    }
-
-    .table-styled tbody .drawingNumberWidth .form-control {
-        width: 100px;
-    }
-
-    .table-styled tbody .workOrderNumberWidth .form-control {
-        width: 100px;
-    }
-
-    .table-styled tbody .quantityWidth .form-control {
-        width: 50px;
-    }
-
-    .table-styled tbody .shippingTagNumberWidth .form-control {
-        width: 120px;
-    }
-
-    .table-styled tbody .descriptionWidth .form-control {
-        width: 300px;
-    }
-
-    .table-styled tbody .unitWeightWidth .form-control {
-        width: 50px;
-    }
-
-    .table-styled tbody .totalWeightWidth .form-control {
-        width: 50px;
-    }
-
-    .table-styled tbody .totalWeightShippedWidth .form-control {
-        width: 50px;
-    }
-
-    .table-styled tbody .readyToShipWidth .form-control {
-        width: 35px;
-    }
-
-    .table-styled tbody .shippedQuantityWidth .form-control {
-        width: 30px;
-    }
-
-    .table-styled tbody .leftToShipWidth .form-control {
-        width: 30px;
-    }
-
-    .table-styled tbody .fullyShippedWidth .form-control {
-        width: 30px;
-    }
-
-    .table-styled tbody .shippedFromWidth .form-control {
-        width: 100px;
-    }
-
-    .table-styled tbody .customsValueWidth .form-control {
-        width: 50px;
-    }
-
-    .table-styled tbody .salePriceWidth .form-control {
-        width: 50px;
-    }
-
-    .table-styled .htsCodeWidth .form-control {
-        width: 100px;
-    }
-
-    .table-styled .countryOfOriginWidth .form-control {
-        width: 100px;
-    }
-
-    .table-styled .notesWidth .form-control {
-        width: 200px;
-    }
-
-
-
-
-
-
-
-
-    .table-styled thead .form-control, .table-styled tfoot .form-control {
-        width: 100% !important;
-    }
-
-
-
-
-
-
-
     .table-styled .expand {
         cursor: pointer;
     }
@@ -343,27 +272,26 @@ dl.dl-horizontal dd {
     text-transform: uppercase;
 } 
 
-.my-datatable > thead > tr:first-child > th {
-    padding-right: 5px !important;
-}
 
 .my-datatable th {
     cursor: pointer;
 }
 
-.dataTables_filter {
-    text-align: inherit;
-    float: left;
-    margin-right: 10px;
-}
 
-.dataTables_paginate {
-    text-align: inherit;
-}
 
-div.DTS .odd {
-    background-color: white !important;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*Remove arrows from number fields*/
 input[type=number]::-webkit-inner-spin-button, 

@@ -20,6 +20,8 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         public double SalePrice { get; set; }
         public double CostPrice { get; set; }
         public double TotalWeight { get; set; }
+        public double ReleasedPercent { get; set; }
+        public double ShippedPercent { get; set; }
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public string ModifiedBy { get; set; }

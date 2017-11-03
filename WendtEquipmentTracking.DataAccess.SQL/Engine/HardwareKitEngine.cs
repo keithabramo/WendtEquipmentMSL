@@ -13,11 +13,6 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
     {
         private IRepository<HardwareKit> repository = null;
 
-        public HardwareKitEngine()
-        {
-            this.repository = new Repository<HardwareKit>();
-        }
-
         public HardwareKitEngine(WendtEquipmentTrackingEntities dbContext)
         {
             this.repository = new Repository<HardwareKit>(dbContext);
@@ -45,7 +40,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
                 .Include(x => x.HardwareKitEquipments);
         }
 
-        public int AddNewHardwareKit(HardwareKit hardwareKit)
+        public void AddNewHardwareKit(HardwareKit hardwareKit)
         {
             var now = DateTime.Now;
 
@@ -58,9 +53,6 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             hardwareKit.IsCurrentRevision = true;
 
             this.repository.Insert(hardwareKit);
-            this.repository.Save();
-
-            return hardwareKit.HardwareKitId;
         }
 
         public void UpdateHardwareKit(HardwareKit hardwareKit)
@@ -80,7 +72,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
             this.repository.Insert(hardwareKit);
             this.repository.Update(currentHardwareKit);
-            this.repository.Save();
+
         }
 
         public void DeleteHardwareKit(HardwareKit hardwareKit)
@@ -90,7 +82,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             hardwareKit.Equipments.ToList().ForEach(ble => ble.IsDeleted = true);
 
             this.repository.Update(hardwareKit);
-            this.repository.Save();
+
         }
 
         public void SetDBContext(WendtEquipmentTrackingEntities dbContext)

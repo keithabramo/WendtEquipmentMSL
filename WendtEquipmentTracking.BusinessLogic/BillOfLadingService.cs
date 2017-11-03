@@ -12,14 +12,16 @@ namespace WendtEquipmentTracking.BusinessLogic
 {
     public class BillOfLadingService : IBillOfLadingService
     {
+        private WendtEquipmentTrackingEntities dbContext;
         private IBillOfLadingEngine billOfLadingEngine;
         private IEquipmentEngine equipmentEngine;
 
 
         public BillOfLadingService()
         {
-            billOfLadingEngine = new BillOfLadingEngine();
-            equipmentEngine = new EquipmentEngine();
+            dbContext = new WendtEquipmentTrackingEntities();
+            billOfLadingEngine = new BillOfLadingEngine(dbContext);
+            equipmentEngine = new EquipmentEngine(dbContext);
         }
 
         public void Save(BillOfLadingBO billOfLadingBO)
@@ -33,31 +35,65 @@ namespace WendtEquipmentTracking.BusinessLogic
                 var equipment = equipmentEngine.Get(EquipmentSpecs.Id(billOfLadingEquipment.EquipmentId));
                 equipment.HTSCode = (billOfLadingEquipment.HTSCode ?? string.Empty).ToUpper();
                 equipment.CountryOfOrigin = (billOfLadingEquipment.CountryOfOrigin ?? string.Empty).ToUpper();
+                equipment.ReadyToShip = equipment.ReadyToShip - billOfLadingEquipment.Quantity;
 
                 equipmentEngine.UpdateEquipment(equipment);
             }
 
+            dbContext.SaveChanges();
+
             //update needs to happen after BOL AND all BOL Equipment have been saved
-            billOfLadingEngine.UpdateRTS(billOfLading.BillOfLadingId);
+            //billOfLadingEngine.UpdateRTS(billOfLading.BillOfLadingId);
         }
 
         public void Update(BillOfLadingBO billOfLadingBO)
         {
             var billOfLading = Mapper.Map<BillOfLading>(billOfLadingBO);
 
-            billOfLadingEngine.UpdateBillOfLading(billOfLading);
+            var oldBillOfLading = billOfLadingEngine.Get(BillOfLadingSpecs.ProjectId(billOfLadingBO.ProjectId) && BillOfLadingSpecs.BillOfLadingNumber(billOfLadingBO.BillOfLadingNumber) && BillOfLadingSpecs.CurrentRevision());
 
-            foreach (var billOfLadingEquipment in billOfLadingBO.BillOfLadingEquipments)
+            foreach (var oldBOLE in oldBillOfLading.BillOfLadingEquipments)
+            {
+                var updatedBOLE = billOfLadingBO.BillOfLadingEquipments.FirstOrDefault(x => x.EquipmentId == oldBOLE.EquipmentId);
+                var equipment = equipmentEngine.Get(EquipmentSpecs.Id(oldBOLE.EquipmentId));
+
+                if (updatedBOLE != null)
+                {
+                    equipment.ReadyToShip = equipment.ReadyToShip - (updatedBOLE.Quantity - oldBOLE.Quantity);
+                    equipment.HTSCode = (updatedBOLE.HTSCode ?? string.Empty).ToUpper();
+                    equipment.CountryOfOrigin = (updatedBOLE.CountryOfOrigin ?? string.Empty).ToUpper();
+                }
+                else
+                {
+                    equipment.ReadyToShip = equipment.ReadyToShip + oldBOLE.Quantity;
+                }
+
+
+                equipmentEngine.UpdateEquipment(equipment);
+            }
+
+            var newEquipment = billOfLadingBO.BillOfLadingEquipments.Where(x => !oldBillOfLading.BillOfLadingEquipments.Any(old => old.EquipmentId == x.EquipmentId));
+            foreach (var billOfLadingEquipment in newEquipment)
             {
                 var equipment = equipmentEngine.Get(EquipmentSpecs.Id(billOfLadingEquipment.EquipmentId));
+
+                equipment.ReadyToShip = equipment.ReadyToShip - billOfLadingEquipment.Quantity;
                 equipment.HTSCode = (billOfLadingEquipment.HTSCode ?? string.Empty).ToUpper();
                 equipment.CountryOfOrigin = (billOfLadingEquipment.CountryOfOrigin ?? string.Empty).ToUpper();
 
                 equipmentEngine.UpdateEquipment(equipment);
             }
 
+
+            billOfLadingEngine.UpdateBillOfLading(billOfLading);
+
+
+
+            dbContext.SaveChanges();
+
+
             //update needs to happen after BOL AND all BOL Equipment have been saved
-            billOfLadingEngine.UpdateRTS(billOfLading.BillOfLadingId);
+            //billOfLadingEngine.UpdateRTS(billOfLading.BillOfLadingId);
 
         }
 
@@ -69,6 +105,8 @@ namespace WendtEquipmentTracking.BusinessLogic
             {
                 billOfLadingEngine.DeleteBillOfLading(billOfLading);
             }
+
+            dbContext.SaveChanges();
         }
 
         public IEnumerable<BillOfLadingBO> GetAll()

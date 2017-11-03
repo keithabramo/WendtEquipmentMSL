@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web.Mvc;
-using WendtEquipmentTracking.App.Common;
 using WendtEquipmentTracking.App.Models;
 using WendtEquipmentTracking.BusinessLogic;
 using WendtEquipmentTracking.BusinessLogic.Api;
@@ -88,18 +87,13 @@ namespace WendtEquipmentTracking.App.Controllers
                     }
                 }
 
-                equipmentImportModel.Status = SuccessStatus.Error;
-                equipmentImportModel.Errors = ModelState.Where(v => v.Value.Errors.Count() > 0).ToList().Select(v => new BaseModelError { Name = v.Key, Message = v.Value.Errors.First().ErrorMessage });
+                HandleError("There was an issue while trying to load this equipment file", ModelState);
 
                 return PartialView("EquipmentConfigurationPartial", equipmentImportModel);
             }
             catch (Exception e)
             {
-                LogError(e);
-                equipmentImportModel.Status = SuccessStatus.Error;
-                ModelState.AddModelError("File", e.Message);
-                equipmentImportModel.Errors = ModelState.Where(v => v.Value.Errors.Count() > 0).ToList().Select(v => new BaseModelError { Name = v.Key, Message = v.Value.Errors.First().ErrorMessage });
-
+                HandleError("There was an error while trying to load this equipment file", e);
                 return PartialView("EquipmentConfigurationPartial", equipmentImportModel);
             }
         }
@@ -137,17 +131,13 @@ namespace WendtEquipmentTracking.App.Controllers
 
                 }
 
-                model.Status = SuccessStatus.Error;
-                model.Errors = ModelState.Where(v => v.Value.Errors.Count() > 0).ToList().Select(v => new BaseModelError { Name = v.Key, Message = v.Value.Errors.First().ErrorMessage });
+                HandleError("There was an issue while trying to setup this equipment file", ModelState);
 
                 return PartialView("EquipmentConfigurationPartial", model);
             }
             catch (Exception e)
             {
-                LogError(e);
-                model.Status = SuccessStatus.Error;
-                ModelState.AddModelError("File", e.Message);
-                model.Errors = ModelState.Where(v => v.Value.Errors.Count() > 0).ToList().Select(v => new BaseModelError { Name = v.Key, Message = v.Value.Errors.First().ErrorMessage });
+                HandleError("There was an error while trying to setup this equipment file", e);
 
                 return PartialView("EquipmentConfigurationPartial", model);
             }
@@ -161,8 +151,6 @@ namespace WendtEquipmentTracking.App.Controllers
             var resultModel = new ImportModel();
             try
             {
-                //if (ModelState.IsValid)
-                //{
                 var user = userService.GetCurrentUser();
 
                 if (user != null)
@@ -178,24 +166,17 @@ namespace WendtEquipmentTracking.App.Controllers
 
                     equipmentService.SaveAll(equipmentBOs);
 
-                    resultModel.Status = SuccessStatus.Success;
+                    SuccessMessage("Equipment Import was successful");
                     return RedirectToAction("Index", "Home");
                 }
-                //}
 
-                resultModel.Status = SuccessStatus.Error;
-                resultModel.Errors = ModelState.Where(v => v.Value.Errors.Count() > 0).ToList().Select(v => new BaseModelError { Name = v.Key, Message = v.Value.Errors.First().ErrorMessage });
+                HandleError("There was an issue while Importing this equipment", ModelState);
 
                 return View("Equipment");
             }
             catch (Exception e)
             {
-                LogError(e);
-                ModelState.AddModelError("", e.Message);
-
-                resultModel.Status = SuccessStatus.Error;
-                resultModel.Errors = ModelState.Where(v => v.Value.Errors.Count() > 0).ToList().Select(v => new BaseModelError { Name = v.Key, Message = v.Value.Errors.First().ErrorMessage });
-
+                HandleError("There was an issue while Importing this equipment", e);
 
                 return View("Equipment");
             }
@@ -242,18 +223,13 @@ namespace WendtEquipmentTracking.App.Controllers
                     }
                 }
 
-                model.Status = SuccessStatus.Error;
-                model.Errors = ModelState.Where(v => v.Value.Errors.Count() > 0).ToList().Select(v => new BaseModelError { Name = v.Key, Message = v.Value.Errors.First().ErrorMessage });
+                HandleError("There was an issue while loading this file", ModelState);
 
                 return View(model);
             }
             catch (Exception e)
             {
-                LogError(e);
-                model.Status = SuccessStatus.Error;
-                ModelState.AddModelError("File", e.Message);
-                model.Errors = ModelState.Where(v => v.Value.Errors.Count() > 0).ToList().Select(v => new BaseModelError { Name = v.Key, Message = v.Value.Errors.First().ErrorMessage });
-
+                HandleError("There was an error while loading this file", e);
                 return View(model);
             }
         }
@@ -264,8 +240,6 @@ namespace WendtEquipmentTracking.App.Controllers
         {
             try
             {
-                //if (ModelState.IsValid)
-                //{
                 var user = userService.GetCurrentUser();
 
                 if (user != null)
@@ -275,16 +249,17 @@ namespace WendtEquipmentTracking.App.Controllers
                     var workOrderPriceBOs = Mapper.Map<IEnumerable<WorkOrderPriceBO>>(model.Where(m => m.Checked).ToList());
                     workOrderPriceService.SaveAll(workOrderPriceBOs);
 
+                    SuccessMessage("Import successful!");
                     return RedirectToAction("Index", "WorkOrderPrice");
                 }
-                //}
+
+                HandleError("There was an issue while importing these work order prices", ModelState);
 
                 return View("ImportWorkOrderPrice", model);
             }
             catch (Exception e)
             {
-                LogError(e);
-                ModelState.AddModelError("", e.Message);
+                HandleError("There was an error while importing these work order prices", e);
 
                 return View("ImportWorkOrderPrice", model);
             }

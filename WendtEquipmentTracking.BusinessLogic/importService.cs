@@ -6,6 +6,7 @@ using WendtEquipmentTracking.BusinessLogic.BO;
 using WendtEquipmentTracking.DataAccess.FileManagement;
 using WendtEquipmentTracking.DataAccess.FileManagement.Api;
 using WendtEquipmentTracking.DataAccess.FileManagement.Domain;
+using WendtEquipmentTracking.DataAccess.SQL;
 using WendtEquipmentTracking.DataAccess.SQL.Api;
 using WendtEquipmentTracking.DataAccess.SQL.Engine;
 
@@ -13,13 +14,15 @@ namespace WendtEquipmentTracking.BusinessLogic
 {
     public class ImportService : IImportService
     {
+        private WendtEquipmentTrackingEntities dbContext;
         private IImportEngine importEngine;
         private IHardwareCommercialCodeEngine hardwareCommercialCodeEngine;
 
         public ImportService()
         {
+            dbContext = new WendtEquipmentTrackingEntities();
             importEngine = new ImportEngine();
-            hardwareCommercialCodeEngine = new HardwareCommercialCodeEngine();
+            hardwareCommercialCodeEngine = new HardwareCommercialCodeEngine(dbContext);
         }
 
         public string SaveEquipmentFile(byte[] file)

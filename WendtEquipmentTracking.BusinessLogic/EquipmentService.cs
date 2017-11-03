@@ -12,11 +12,13 @@ namespace WendtEquipmentTracking.BusinessLogic
 {
     public class EquipmentService : IEquipmentService
     {
+        private WendtEquipmentTrackingEntities dbContext;
         private IEquipmentEngine equipmentEngine;
 
         public EquipmentService()
         {
-            equipmentEngine = new EquipmentEngine();
+            dbContext = new WendtEquipmentTrackingEntities();
+            equipmentEngine = new EquipmentEngine(dbContext);
         }
 
         public int Save(EquipmentBO equipmentBO)
@@ -34,13 +36,15 @@ namespace WendtEquipmentTracking.BusinessLogic
             equipment.WorkOrderNumber = (equipment.WorkOrderNumber ?? string.Empty).ToUpperInvariant();
 
 
-            var equipmentId = equipmentEngine.AddNewEquipment(equipment);
+            equipmentEngine.AddNewEquipment(equipment);
+
+            dbContext.SaveChanges();
 
             //this will dispose and reinstantiate a new context so we get the latest updates
             //needed for ajax call of create equipment not getting the newest data from trigger update
             equipmentEngine.SetDBContext(new WendtEquipmentTrackingEntities());
 
-            return equipmentId;
+            return equipment.EquipmentId;
         }
 
         public void SaveAll(IEnumerable<EquipmentBO> equipmentBOs)
@@ -61,6 +65,8 @@ namespace WendtEquipmentTracking.BusinessLogic
 
 
             equipmentEngine.AddAllNewEquipment(equipments);
+
+            dbContext.SaveChanges();
         }
 
         public void Update(EquipmentBO alteredEquipmentBO)
@@ -84,6 +90,8 @@ namespace WendtEquipmentTracking.BusinessLogic
             oldEquipment.WorkOrderNumber = (oldEquipment.WorkOrderNumber ?? string.Empty).ToUpperInvariant();
 
             equipmentEngine.UpdateEquipment(oldEquipment);
+
+            dbContext.SaveChanges();
 
             //this will dispose and reinstantiate a new context so we get the latest updates
             //needed for ajax call of edit equipment not getting the newest data from trigger update
@@ -116,6 +124,8 @@ namespace WendtEquipmentTracking.BusinessLogic
             });
 
             equipmentEngine.UpdateAllEquipment(oldEquipments.ToList());
+
+            dbContext.SaveChanges();
         }
 
         public void Delete(int id)
@@ -126,6 +136,8 @@ namespace WendtEquipmentTracking.BusinessLogic
             {
                 equipmentEngine.DeleteEquipment(equipment);
             }
+
+            dbContext.SaveChanges();
         }
 
         public IEnumerable<EquipmentBO> GetAll(int projectId)

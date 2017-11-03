@@ -1,7 +1,9 @@
 ﻿using log4net;
 using System;
+using System.Linq;
 using System.Web.Mvc;
 using WendtEquipmentTracking.App.Common;
+using WendtEquipmentTracking.Common;
 
 namespace WendtEquipmentTracking.App.Controllers
 {
@@ -11,9 +13,37 @@ namespace WendtEquipmentTracking.App.Controllers
         protected ILog logger = LogManager.GetLogger("File");
 
 
-        protected void LogError(Exception e)
+        protected void SuccessMessage(string message)
         {
-            logger.Error("MSL Controller Error", e);
+            ViewData.SetStatusMessage(message, StatusCodes.Success);
+        }
+
+        protected void InformationMessage(string message)
+        {
+            ViewData.SetStatusMessage(message, StatusCodes.Information);
+        }
+
+        protected void ErrorMessage(string message)
+        {
+            ViewData.SetStatusMessage(message, StatusCodes.Error);
+        }
+
+
+        protected void HandleError(string clientMessage, Exception e)
+        {
+            var guid = new Guid();
+            ViewData.SetStatusMessage(clientMessage + ". If this issue continues please give the following issue ID to your system administrator: " + guid, StatusCodes.Error);
+
+            logger.Error("MSL Controller Error - GUID: " + guid + " User: " + ActiveDirectoryHelper.CurrentUserUsername() + " Exception: ", e);
+        }
+
+        protected void HandleError(string clientMessage, ModelStateDictionary modelState)
+        {
+            var guid = new Guid();
+            ViewData.SetStatusMessage(clientMessage + ". If this issue continues please give the following issue ID to your system administrator: " + guid, StatusCodes.Error);
+
+            var errors = string.Join(";", ModelState.Where(v => v.Value.Errors.Count() > 0).ToList().Select(v => v.Key + " : " + v.Value.Errors.First().ErrorMessage));
+            logger.Error("Custom ModelState Errors - GUID: " + guid + " User: " + ActiveDirectoryHelper.CurrentUserUsername() + " Errors: " + errors);
         }
     }
 }

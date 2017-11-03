@@ -79,11 +79,13 @@ namespace WendtEquipmentTracking.App.Controllers
                     return RedirectToAction("Index");
                 }
 
+                HandleError("There was an issue attempting to create this project", ModelState);
+
                 return View(model);
             }
             catch (Exception e)
             {
-                LogError(e);
+                HandleError("There was an error attempting to create this project", e);
                 return View(model);
             }
         }
@@ -123,59 +125,16 @@ namespace WendtEquipmentTracking.App.Controllers
                     return RedirectToAction("Index");
                 }
 
+                HandleError("There was an issue attempting to save this project", ModelState);
                 return View(model);
             }
             catch (Exception e)
             {
-                LogError(e);
+                HandleError("There was an error attempting to save this project", e);
                 return View(model);
             }
         }
 
-        // POST: Project/Delete/5
-        //[HttpPost]
-        //public ActionResult Delete(int id, ProjectModel model)
-        //{
-        //    try
-        //    {
-        //        var project = projectService.GetById(id);
-
-        //        if (project == null)
-        //        {
-        //            return HttpNotFound();
-        //        }
-
-        //        projectService.Delete(id);
-
-        //        var user = userService.GetCurrentUser();
-
-        //        if (user != null)
-        //        {
-
-        //            if (id == user.ProjectId)
-        //            {
-        //                userService.Delete();
-        //            }
-        //        }
-
-        //        return RedirectToAction("Index");
-        //    }
-        //    catch
-        //    {
-        //        var project = projectService.GetById(id);
-
-        //        if (project == null)
-        //        {
-        //            return HttpNotFound();
-        //        }
-
-        //        model = Mapper.Map<ProjectModel>(project);
-
-        //        return View(model);
-        //    }
-        //}
-
-        //[DonutOutputCache(Duration = 3600)]
         public ActionResult ProjectNavPartial()
         {
             try
@@ -201,7 +160,7 @@ namespace WendtEquipmentTracking.App.Controllers
                     }
                     catch (Exception e)
                     {
-                        LogError(e);
+                        HandleError("There was an error attempting to load this list of projects due to projects numbers containing text", e);
                         model = new ProjectNavModel
                         {
                             CurrentProject = currentProjectModel,
@@ -215,8 +174,7 @@ namespace WendtEquipmentTracking.App.Controllers
             }
             catch (Exception e)
             {
-
-                LogError(e);
+                HandleError("There was an error attempting to load this list of projects", e);
             }
 
             return PartialView();

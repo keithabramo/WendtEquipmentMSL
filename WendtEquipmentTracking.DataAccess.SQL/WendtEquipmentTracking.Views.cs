@@ -11,7 +11,7 @@ using System.Data.Entity.Infrastructure.MappingViews;
 
 [assembly: DbMappingViewCacheTypeAttribute(
     typeof(WendtEquipmentTracking.DataAccess.SQL.WendtEquipmentTrackingEntities),
-    typeof(Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySetsc79ffa23b7ef5c38b7ddf413ad20b9c70ca6f62f242169009aa4e05002d76432))]
+    typeof(Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySetsea807dc6b0a0c6e8dafa071f9f009e37385085c3e7ff6245964a7c18b0ed4bd3))]
 
 namespace Edm_EntityMappingGeneratedViews
 {
@@ -23,14 +23,14 @@ namespace Edm_EntityMappingGeneratedViews
     /// Implements a mapping view cache.
     /// </summary>
     [GeneratedCode("Entity Framework Power Tools", "0.9.0.0")]
-    internal sealed class ViewsForBaseEntitySetsc79ffa23b7ef5c38b7ddf413ad20b9c70ca6f62f242169009aa4e05002d76432 : DbMappingViewCache
+    internal sealed class ViewsForBaseEntitySetsea807dc6b0a0c6e8dafa071f9f009e37385085c3e7ff6245964a7c18b0ed4bd3 : DbMappingViewCache
     {
         /// <summary>
         /// Gets a hash value computed over the mapping closure.
         /// </summary>
         public override string MappingHashValue
         {
-            get { return "c79ffa23b7ef5c38b7ddf413ad20b9c70ca6f62f242169009aa4e05002d76432"; }
+            get { return "ea807dc6b0a0c6e8dafa071f9f009e37385085c3e7ff6245964a7c18b0ed4bd3"; }
         }
 
         /// <summary>
@@ -331,7 +331,7 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing Project
-        [WendtEquipmentTracking.DataAccess.SQL.Model.Store.Project](T1.Project_ProjectId, T1.Project_ProjectNumber, T1.Project_CreatedBy, T1.Project_CreatedDate, T1.Project_ModifiedBy, T1.Project_ModifiedDate, T1.Project_FreightTerms, T1.Project_ShipToCompany, T1.Project_ShipToAddress, T1.Project_ShipToCSZ, T1.Project_ShipToContact1, T1.Project_ShipToContact1PhoneFax, T1.Project_ShipToContact1Email, T1.Project_ShipToContact2, T1.Project_ShipToContact2PhoneFax, T1.Project_ShipToContact2Email, T1.Project_ShipToBroker, T1.Project_ShipToBrokerPhoneFax, T1.Project_ShipToBrokerEmail, T1.Project_IsCustomsProject, T1.Project_IsDeleted)
+        [WendtEquipmentTracking.DataAccess.SQL.Model.Store.Project](T1.Project_ProjectId, T1.Project_ProjectNumber, T1.Project_CreatedBy, T1.Project_CreatedDate, T1.Project_ModifiedBy, T1.Project_ModifiedDate, T1.Project_FreightTerms, T1.Project_ShipToCompany, T1.Project_ShipToAddress, T1.Project_ShipToCSZ, T1.Project_ShipToContact1, T1.Project_ShipToContact1PhoneFax, T1.Project_ShipToContact1Email, T1.Project_ShipToContact2, T1.Project_ShipToContact2PhoneFax, T1.Project_ShipToContact2Email, T1.Project_ShipToBroker, T1.Project_ShipToBrokerPhoneFax, T1.Project_ShipToBrokerEmail, T1.Project_IsCustomsProject, T1.Project_IncludeSoftCosts, T1.Project_IsDeleted)
     FROM (
         SELECT 
             T.ProjectId AS Project_ProjectId, 
@@ -354,6 +354,7 @@ namespace Edm_EntityMappingGeneratedViews
             T.ShipToBrokerPhoneFax AS Project_ShipToBrokerPhoneFax, 
             T.ShipToBrokerEmail AS Project_ShipToBrokerEmail, 
             T.IsCustomsProject AS Project_IsCustomsProject, 
+            T.IncludeSoftCosts AS Project_IncludeSoftCosts, 
             T.IsDeleted AS Project_IsDeleted, 
             True AS _from0
         FROM WendtEquipmentTrackingEntities.Projects AS T
@@ -368,7 +369,7 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing WorkOrderPrice
-        [WendtEquipmentTracking.DataAccess.SQL.Model.Store.WorkOrderPrice](T1.WorkOrderPrice_WorkOrderPriceId, T1.WorkOrderPrice_ProjectId, T1.WorkOrderPrice_WorkOrderNumber, T1.WorkOrderPrice_SalePrice, T1.WorkOrderPrice_CostPrice, T1.WorkOrderPrice_TotalWeight, T1.WorkOrderPrice_CreatedBy, T1.WorkOrderPrice_CreatedDate, T1.WorkOrderPrice_ModifiedBy, T1.WorkOrderPrice_ModifiedDate, T1.WorkOrderPrice_IsDeleted)
+        [WendtEquipmentTracking.DataAccess.SQL.Model.Store.WorkOrderPrice](T1.WorkOrderPrice_WorkOrderPriceId, T1.WorkOrderPrice_ProjectId, T1.WorkOrderPrice_WorkOrderNumber, T1.WorkOrderPrice_SalePrice, T1.WorkOrderPrice_CostPrice, T1.WorkOrderPrice_TotalWeight, T1.WorkOrderPrice_ReleasedPercent, T1.WorkOrderPrice_ShippedPercent, T1.WorkOrderPrice_CreatedBy, T1.WorkOrderPrice_CreatedDate, T1.WorkOrderPrice_ModifiedBy, T1.WorkOrderPrice_ModifiedDate, T1.WorkOrderPrice_IsDeleted)
     FROM (
         SELECT 
             T.WorkOrderPriceId AS WorkOrderPrice_WorkOrderPriceId, 
@@ -377,6 +378,8 @@ namespace Edm_EntityMappingGeneratedViews
             T.SalePrice AS WorkOrderPrice_SalePrice, 
             T.CostPrice AS WorkOrderPrice_CostPrice, 
             T.TotalWeight AS WorkOrderPrice_TotalWeight, 
+            T.ReleasedPercent AS WorkOrderPrice_ReleasedPercent, 
+            T.ShippedPercent AS WorkOrderPrice_ShippedPercent, 
             T.CreatedBy AS WorkOrderPrice_CreatedBy, 
             T.CreatedDate AS WorkOrderPrice_CreatedDate, 
             T.ModifiedBy AS WorkOrderPrice_ModifiedBy, 
@@ -568,7 +571,7 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing Projects
-        [WendtEquipmentTracking.DataAccess.SQL.Model.Project](T1.Project_ProjectId, T1.Project_ProjectNumber, T1.Project_CreatedBy, T1.Project_CreatedDate, T1.Project_ModifiedBy, T1.Project_ModifiedDate, T1.Project_FreightTerms, T1.Project_ShipToCompany, T1.Project_ShipToAddress, T1.Project_ShipToCSZ, T1.Project_ShipToContact1, T1.Project_ShipToContact1PhoneFax, T1.Project_ShipToContact1Email, T1.Project_ShipToContact2, T1.Project_ShipToContact2PhoneFax, T1.Project_ShipToContact2Email, T1.Project_ShipToBroker, T1.Project_ShipToBrokerPhoneFax, T1.Project_ShipToBrokerEmail, T1.Project_IsCustomsProject, T1.Project_IsDeleted)
+        [WendtEquipmentTracking.DataAccess.SQL.Model.Project](T1.Project_ProjectId, T1.Project_ProjectNumber, T1.Project_CreatedBy, T1.Project_CreatedDate, T1.Project_ModifiedBy, T1.Project_ModifiedDate, T1.Project_FreightTerms, T1.Project_ShipToCompany, T1.Project_ShipToAddress, T1.Project_ShipToCSZ, T1.Project_ShipToContact1, T1.Project_ShipToContact1PhoneFax, T1.Project_ShipToContact1Email, T1.Project_ShipToContact2, T1.Project_ShipToContact2PhoneFax, T1.Project_ShipToContact2Email, T1.Project_ShipToBroker, T1.Project_ShipToBrokerPhoneFax, T1.Project_ShipToBrokerEmail, T1.Project_IsCustomsProject, T1.Project_IncludeSoftCosts, T1.Project_IsDeleted)
     FROM (
         SELECT 
             T.ProjectId AS Project_ProjectId, 
@@ -591,6 +594,7 @@ namespace Edm_EntityMappingGeneratedViews
             T.ShipToBrokerPhoneFax AS Project_ShipToBrokerPhoneFax, 
             T.ShipToBrokerEmail AS Project_ShipToBrokerEmail, 
             T.IsCustomsProject AS Project_IsCustomsProject, 
+            T.IncludeSoftCosts AS Project_IncludeSoftCosts, 
             T.IsDeleted AS Project_IsDeleted, 
             True AS _from0
         FROM WendtEquipmentTrackingDataAccessSQLModelStoreContainer.Project AS T
@@ -605,7 +609,7 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing WorkOrderPrices
-        [WendtEquipmentTracking.DataAccess.SQL.Model.WorkOrderPrice](T1.WorkOrderPrice_WorkOrderPriceId, T1.WorkOrderPrice_ProjectId, T1.WorkOrderPrice_WorkOrderNumber, T1.WorkOrderPrice_SalePrice, T1.WorkOrderPrice_CostPrice, T1.WorkOrderPrice_TotalWeight, T1.WorkOrderPrice_CreatedBy, T1.WorkOrderPrice_CreatedDate, T1.WorkOrderPrice_ModifiedBy, T1.WorkOrderPrice_ModifiedDate, T1.WorkOrderPrice_IsDeleted)
+        [WendtEquipmentTracking.DataAccess.SQL.Model.WorkOrderPrice](T1.WorkOrderPrice_WorkOrderPriceId, T1.WorkOrderPrice_ProjectId, T1.WorkOrderPrice_WorkOrderNumber, T1.WorkOrderPrice_SalePrice, T1.WorkOrderPrice_CostPrice, T1.WorkOrderPrice_TotalWeight, T1.WorkOrderPrice_ReleasedPercent, T1.WorkOrderPrice_ShippedPercent, T1.WorkOrderPrice_CreatedBy, T1.WorkOrderPrice_CreatedDate, T1.WorkOrderPrice_ModifiedBy, T1.WorkOrderPrice_ModifiedDate, T1.WorkOrderPrice_IsDeleted)
     FROM (
         SELECT 
             T.WorkOrderPriceId AS WorkOrderPrice_WorkOrderPriceId, 
@@ -614,6 +618,8 @@ namespace Edm_EntityMappingGeneratedViews
             T.SalePrice AS WorkOrderPrice_SalePrice, 
             T.CostPrice AS WorkOrderPrice_CostPrice, 
             T.TotalWeight AS WorkOrderPrice_TotalWeight, 
+            T.ReleasedPercent AS WorkOrderPrice_ReleasedPercent, 
+            T.ShippedPercent AS WorkOrderPrice_ShippedPercent, 
             T.CreatedBy AS WorkOrderPrice_CreatedBy, 
             T.CreatedDate AS WorkOrderPrice_CreatedDate, 
             T.ModifiedBy AS WorkOrderPrice_ModifiedBy, 

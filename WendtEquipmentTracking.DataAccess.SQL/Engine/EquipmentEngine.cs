@@ -13,11 +13,6 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
     {
         private IRepository<Equipment> repository = null;
 
-        public EquipmentEngine()
-        {
-            this.repository = new Repository<Equipment>();
-        }
-
         public EquipmentEngine(WendtEquipmentTrackingEntities dbContext)
         {
             this.repository = new Repository<Equipment>(dbContext);
@@ -51,7 +46,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
                 .Include(x => x.HardwareKitEquipments.Select(ble => ble.HardwareKit));
         }
 
-        public int AddNewEquipment(Equipment equipment)
+        public void AddNewEquipment(Equipment equipment)
         {
             var now = DateTime.Now;
 
@@ -61,9 +56,6 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             equipment.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
 
             this.repository.Insert(equipment);
-            this.repository.Save();
-
-            return equipment.EquipmentId;
         }
 
         public void AddAllNewEquipment(IEnumerable<Equipment> equipments)
@@ -80,7 +72,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             }
 
             this.repository.InsertAll(equipments);
-            this.repository.Save();
+
         }
 
         public void UpdateEquipment(Equipment equipment)
@@ -95,7 +87,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
 
             this.repository.Update(equipment);
-            this.repository.Save();
+
         }
 
         public void UpdateAllEquipment(IList<Equipment> equipments)
@@ -109,7 +101,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
                 this.repository.Update(equipment);
             }
 
-            this.repository.Save();
+
         }
 
         public void DeleteEquipment(Equipment equipment)
@@ -119,7 +111,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             equipment.HardwareKitEquipments.ToList().ForEach(ble => ble.IsDeleted = true);
 
             this.repository.Update(equipment);
-            this.repository.Save();
+
         }
 
         public void SetDBContext(WendtEquipmentTrackingEntities dbContext)

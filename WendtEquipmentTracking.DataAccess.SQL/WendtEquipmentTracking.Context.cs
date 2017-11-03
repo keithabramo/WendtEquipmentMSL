@@ -12,6 +12,8 @@ namespace WendtEquipmentTracking.DataAccess.SQL
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class WendtEquipmentTrackingEntities : DbContext
     {
@@ -35,5 +37,14 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         public virtual DbSet<Project> Projects { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<WorkOrderPrice> WorkOrderPrices { get; set; }
+    
+        public virtual int UpdateRTSAfterBOLRevision(Nullable<int> billOfLadingId)
+        {
+            var billOfLadingIdParameter = billOfLadingId.HasValue ?
+                new ObjectParameter("BillOfLadingId", billOfLadingId) :
+                new ObjectParameter("BillOfLadingId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateRTSAfterBOLRevision", billOfLadingIdParameter);
+        }
     }
 }

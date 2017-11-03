@@ -75,7 +75,7 @@ namespace WendtEquipmentTracking.App.Controllers
             catch (Exception e)
             {
 
-                LogError(e);
+                HandleError("There was an error while trying to create this hardware/commerical code", e);
 
                 return View(model);
             }
@@ -120,7 +120,7 @@ namespace WendtEquipmentTracking.App.Controllers
             }
             catch (Exception e)
             {
-                LogError(e);
+                HandleError("There was an error attempting to save this hardware/commercial code", e);
                 return View(model);
             }
         }
@@ -160,15 +160,7 @@ namespace WendtEquipmentTracking.App.Controllers
             }
             catch (Exception e)
             {
-                LogError(e);
-                var hardwareCommercialCode = hardwareCommercialCodeService.GetById(id);
-
-                if (hardwareCommercialCode == null)
-                {
-                    return HttpNotFound();
-                }
-
-                model = Mapper.Map<HardwareCommercialCodeModel>(hardwareCommercialCode);
+                HandleError("There was an issue attempting to delete this Hardware/Commercial code", e);
 
                 return View(model);
             }

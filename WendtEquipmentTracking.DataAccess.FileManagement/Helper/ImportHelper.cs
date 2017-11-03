@@ -1,5 +1,5 @@
-﻿using Excel;
-using Excel.Helper;
+﻿using Excel.Helper;
+using ExcelDataReader;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -17,7 +17,7 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Helper
                 {
                     ColumnStart = 1,
                     RowStart = 2,
-                    NumberOfColumns = 3
+                    NumberOfColumns = 5
                 }
             }
         };
@@ -42,15 +42,22 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Helper
 
 
             //2. DataSet - Create column names from first row
-            excelReader.IsFirstRowAsColumnNames = true;
-            DataSet result = excelReader.AsDataSet();
+            DataSet result = excelReader.AsDataSet(new ExcelDataSetConfiguration
+            {
+                ConfigureDataTable = (tableReader) => new ExcelDataTableConfiguration()
+                {
+                    // Gets or sets a value indicating whether to use a row from the 
+                    // data as column names.
+                    UseHeaderRow = true
+                }
+            });
 
             //5. Data Reader methods
             IList<EquipmentRow> records = new List<EquipmentRow>();
-            bool first = true;
+            //bool first = true;
             foreach (DataRow row in result.Tables[0].Rows)
             {
-                
+
                 //if (first)
                 //{
                 //    first = false;
@@ -128,7 +135,9 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Helper
             {
                 WorkOrderNumber = rowValues[0].ToString(),
                 CostPrice = Convert.ToDouble(rowValues[1].ToString().Replace("$", "").Replace(",", "")),
-                SalePrice = Convert.ToDouble(rowValues[2].ToString().Replace("$", "").Replace(",", ""))
+                SalePrice = Convert.ToDouble(rowValues[2].ToString().Replace("$", "").Replace(",", "")),
+                ReleasedPercent = Convert.ToDouble(rowValues[3].ToString().Replace("%", "")),
+                ShippedPercent = Convert.ToDouble(rowValues[4].ToString().Replace("%", ""))
             }).ToList();
 
             return records;

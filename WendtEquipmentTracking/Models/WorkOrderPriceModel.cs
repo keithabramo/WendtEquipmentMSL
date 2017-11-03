@@ -22,8 +22,16 @@ namespace WendtEquipmentTracking.App.Models
 
 
         [DataType(DataType.Currency)]
-        [DisplayName("Customs Price")]
+        [DisplayName("Sales+Soft Costs")]
         [Required]
         public double CostPrice { get; set; }
+
+
+        [DisplayName("Released %")]
+        public double ReleasedPercent { get; set; }
+
+
+        [DisplayName("Shipped %")]
+        public double ShippedPercent { get; set; }
     }
 }

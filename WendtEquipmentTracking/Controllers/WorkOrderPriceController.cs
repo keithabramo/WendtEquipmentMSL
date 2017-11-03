@@ -96,11 +96,13 @@ namespace WendtEquipmentTracking.App.Controllers
                     }
                 }
 
+                HandleError("There was an issue attempting to create this work order price", ModelState);
+
                 return View(model);
             }
             catch (Exception e)
             {
-                LogError(e);
+                HandleError("There was an error attempting to create this work order price", e);
                 return View(model);
             }
         }
@@ -146,11 +148,13 @@ namespace WendtEquipmentTracking.App.Controllers
                     }
                 }
 
+                HandleError("There was an issue attempting to save this work order price", ModelState);
+
                 return View(model);
             }
             catch (Exception e)
             {
-                LogError(e);
+                HandleError("There was an error attempting to save this work order price", e);
                 return View(model);
             }
         }
@@ -190,15 +194,7 @@ namespace WendtEquipmentTracking.App.Controllers
             }
             catch (Exception e)
             {
-                LogError(e);
-                var workOrderPrice = workOrderPriceService.GetById(id);
-
-                if (workOrderPrice == null)
-                {
-                    return HttpNotFound();
-                }
-
-                model = Mapper.Map<WorkOrderPriceModel>(workOrderPrice);
+                HandleError("There was an error attempting to delete this work order price", e);
 
                 return View(model);
             }

@@ -95,12 +95,14 @@ namespace WendtEquipmentTracking.App.Controllers
                         return RedirectToAction("Index");
                     }
                 }
+                HandleError("There was an issue while creating this priority", ModelState);
 
                 return View(model);
             }
             catch (Exception e)
             {
-                LogError(e);
+                HandleError("There was an error while creating this priority", e);
+
                 return View(model);
             }
         }
@@ -149,11 +151,13 @@ namespace WendtEquipmentTracking.App.Controllers
                     }
                 }
 
+                HandleError("There was an issue while saving this priority", ModelState);
+
                 return View(model);
             }
             catch (Exception e)
             {
-                LogError(e);
+                HandleError("There was an error while saving this priority", e);
                 return View(model);
             }
         }
@@ -193,15 +197,7 @@ namespace WendtEquipmentTracking.App.Controllers
             }
             catch (Exception e)
             {
-                LogError(e);
-                var priority = priorityService.GetById(id);
-
-                if (priority == null)
-                {
-                    return HttpNotFound();
-                }
-
-                model = Mapper.Map<PriorityModel>(priority);
+                HandleError("There was an issue attempting to delete this priority", e);
 
                 return View(model);
             }

@@ -8,11 +8,6 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
     {
         private IRepository<User> repository = null;
 
-        public UserEngine()
-        {
-            this.repository = new Repository<User>();
-        }
-
         public UserEngine(WendtEquipmentTrackingEntities dbContext)
         {
             this.repository = new Repository<User>(dbContext);
@@ -41,21 +36,21 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
         public void AddNewUser(User user)
         {
             this.repository.Insert(user);
-            this.repository.Save();
+
         }
 
         public void UpdateUser(User user)
         {
 
             this.repository.Update(user);
-            this.repository.Save();
+
         }
 
         public void DeleteUser(User user)
         {
 
             this.repository.Delete(user);
-            this.repository.Save();
+
         }
 
         public void SetDBContext(WendtEquipmentTrackingEntities dbContext)

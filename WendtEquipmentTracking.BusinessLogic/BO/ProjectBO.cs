@@ -20,6 +20,7 @@ namespace WendtEquipmentTracking.BusinessLogic.BO
         public string ShipToBrokerPhoneFax { get; set; }
         public string ShipToBrokerEmail { get; set; }
         public bool IsCustomsProject { get; set; }
+        public bool IncludeSoftCosts { get; set; }
 
 
         public string CreatedBy { get; set; }

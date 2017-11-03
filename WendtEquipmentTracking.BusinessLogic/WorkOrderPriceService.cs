@@ -12,11 +12,13 @@ namespace WendtEquipmentTracking.BusinessLogic
 {
     public class WorkOrderPriceService : IWorkOrderPriceService
     {
+        private WendtEquipmentTrackingEntities dbContext;
         private IWorkOrderPriceEngine workOrderPriceEngine;
 
         public WorkOrderPriceService()
         {
-            workOrderPriceEngine = new WorkOrderPriceEngine();
+            dbContext = new WendtEquipmentTrackingEntities();
+            workOrderPriceEngine = new WorkOrderPriceEngine(dbContext);
         }
 
         public void Save(WorkOrderPriceBO workOrderPriceBO)
@@ -24,6 +26,8 @@ namespace WendtEquipmentTracking.BusinessLogic
             var workOrderPrice = Mapper.Map<WorkOrderPrice>(workOrderPriceBO);
 
             workOrderPriceEngine.AddNewWorkOrderPrice(workOrderPrice);
+
+            dbContext.SaveChanges();
         }
 
         public void SaveAll(IEnumerable<WorkOrderPriceBO> workOrderPriceBOs)
@@ -31,6 +35,8 @@ namespace WendtEquipmentTracking.BusinessLogic
             var workOrderPrices = Mapper.Map<IEnumerable<WorkOrderPrice>>(workOrderPriceBOs);
 
             workOrderPriceEngine.AddAllNewWorkOrderPrice(workOrderPrices);
+
+            dbContext.SaveChanges();
         }
 
         public IEnumerable<WorkOrderPriceBO> GetAll()
@@ -58,6 +64,23 @@ namespace WendtEquipmentTracking.BusinessLogic
             Mapper.Map<WorkOrderPriceBO, WorkOrderPrice>(workOrderPriceBO, oldWorkOrderPrice);
 
             workOrderPriceEngine.UpdateWorkOrderPrice(oldWorkOrderPrice);
+
+            dbContext.SaveChanges();
+        }
+
+        public void UpdateAll(IEnumerable<WorkOrderPriceBO> workOrderPriceBOs)
+        {
+            var oldWorkOrderPrices = workOrderPriceEngine.List(WorkOrderPriceSpecs.Ids(workOrderPriceBOs.Select(x => x.WorkOrderPriceId)));
+
+            foreach (var oldWorkOrderPrice in oldWorkOrderPrices)
+            {
+                Mapper.Map<WorkOrderPriceBO, WorkOrderPrice>(workOrderPriceBOs.FirstOrDefault(x => x.WorkOrderPriceId == oldWorkOrderPrice.WorkOrderPriceId), oldWorkOrderPrice);
+
+            }
+
+            workOrderPriceEngine.UpdateWorkOrderPrices(oldWorkOrderPrices);
+
+            dbContext.SaveChanges();
         }
 
         public void Delete(int id)
@@ -68,6 +91,8 @@ namespace WendtEquipmentTracking.BusinessLogic
             {
                 workOrderPriceEngine.DeleteWorkOrderPrice(workOrderPrice);
             }
+
+            dbContext.SaveChanges();
         }
     }
 }

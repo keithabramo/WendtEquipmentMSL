@@ -13,24 +13,28 @@ namespace WendtEquipmentTracking.BusinessLogic
 {
     public class HardwareKitService : IHardwareKitService
     {
+        private WendtEquipmentTrackingEntities dbContext;
         private IHardwareKitEngine hardwareKitEngine;
         private IEquipmentEngine equipmentEngine;
 
 
         public HardwareKitService()
         {
-            hardwareKitEngine = new HardwareKitEngine();
-            equipmentEngine = new EquipmentEngine();
+            dbContext = new WendtEquipmentTrackingEntities();
+            hardwareKitEngine = new HardwareKitEngine(dbContext);
+            equipmentEngine = new EquipmentEngine(dbContext);
         }
 
         public void Save(HardwareKitBO hardwareKitBO)
         {
             var hardwareKit = Mapper.Map<HardwareKit>(hardwareKitBO);
 
-            var hardwareKitId = hardwareKitEngine.AddNewHardwareKit(hardwareKit);
+            hardwareKitEngine.AddNewHardwareKit(hardwareKit);
+
+            dbContext.SaveChanges();
 
             var equipment = new Equipment();
-            equipment.HardwareKitId = hardwareKitId;
+            equipment.HardwareKitId = hardwareKit.HardwareKitId;
             equipment.EquipmentName = "Hardware Kit " + hardwareKitBO.HardwareKitNumber;
             equipment.Description = "Misc";
             equipment.ProjectId = hardwareKitBO.ProjectId;
@@ -38,6 +42,8 @@ namespace WendtEquipmentTracking.BusinessLogic
             equipment.ReleaseDate = DateTime.Now;
 
             equipmentEngine.AddNewEquipment(equipment);
+
+            dbContext.SaveChanges();
         }
 
         public IEnumerable<HardwareKitBO> GetAll()
@@ -72,6 +78,8 @@ namespace WendtEquipmentTracking.BusinessLogic
             var hardwareKit = Mapper.Map<HardwareKit>(hardwareKitBO);
 
             hardwareKitEngine.UpdateHardwareKit(hardwareKit);
+
+            dbContext.SaveChanges();
         }
 
         public void Delete(int id)
@@ -82,6 +90,8 @@ namespace WendtEquipmentTracking.BusinessLogic
             {
                 hardwareKitEngine.DeleteHardwareKit(hardwareKit);
             }
+
+            dbContext.SaveChanges();
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using WendtEquipmentTracking.BusinessLogic.Api;
+﻿using WendtEquipmentTracking.BusinessLogic.Api;
 using WendtEquipmentTracking.BusinessLogic.BO;
 using WendtEquipmentTracking.Common;
 using WendtEquipmentTracking.DataAccess.SQL;
@@ -11,11 +10,13 @@ namespace WendtEquipmentTracking.BusinessLogic
 {
     public class UserService : IUserService
     {
+        private WendtEquipmentTrackingEntities dbContext;
         private IUserEngine userEngine;
 
         public UserService()
         {
-            userEngine = new UserEngine();
+            dbContext = new WendtEquipmentTrackingEntities();
+            userEngine = new UserEngine(dbContext);
         }
 
         public void Save(int projectId)
@@ -27,6 +28,8 @@ namespace WendtEquipmentTracking.BusinessLogic
             };
 
             userEngine.AddNewUser(user);
+
+            dbContext.SaveChanges();
         }
 
         public UserBO GetCurrentUser()
@@ -58,6 +61,8 @@ namespace WendtEquipmentTracking.BusinessLogic
             oldUser.ProjectId = projectId;
 
             userEngine.UpdateUser(oldUser);
+
+            dbContext.SaveChanges();
         }
 
         public void Delete()
@@ -70,6 +75,8 @@ namespace WendtEquipmentTracking.BusinessLogic
             {
                 userEngine.DeleteUser(user);
             }
+
+            dbContext.SaveChanges();
         }
     }
 }

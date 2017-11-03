@@ -20,9 +20,14 @@ namespace WendtEquipmentTracking.App
 
             bundles.Add(new ScriptBundle("~/bundles/table").Include(
                         "~/Scripts/waitingDialog.js",
-                        "~/Scripts/datatables.min.js",
+                        "~/Scripts/datatablesAndEditor.min.js",
                         "~/Scripts/jquery.floatThead.js",
                         "~/Scripts/table.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/editor").Include(
+                        "~/Scripts/datatablesAndEditor.min.js",
+                        "~/Scripts/jquery.floatThead.js",
+                        "~/Scripts/editor.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
@@ -49,20 +54,11 @@ namespace WendtEquipmentTracking.App
             bundles.Add(new ScriptBundle("~/bundles/dropzone").Include(
                      "~/Scripts/dropzone/dropzone.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/handsontable").Include(
-                       "~/Scripts/handsontable.full.min.js",
-                       "~/Scripts/handsontableCustom.js"
-                       ));
-
-
-
-
             bundles.Add(new StyleBundle("~/Content/css")
                 .IncludeDirectory("~/Content/themes/base", "*.css")
                 .Include(
                     "~/Content/bootstrap.css",
-                    "~/Content/datatables.min.css",
-                    //"~/Content/handsontable.full.min.css",
+                    "~/Content/datatablesAndEditor.min.css",
                     "~/Content/Site.css"
                 ));
 

@@ -12,11 +12,13 @@ namespace WendtEquipmentTracking.BusinessLogic
 {
     public class ProjectService : IProjectService
     {
+        private WendtEquipmentTrackingEntities dbContext;
         private IProjectEngine projectEngine;
 
         public ProjectService()
         {
-            projectEngine = new ProjectEngine();
+            dbContext = new WendtEquipmentTrackingEntities();
+            projectEngine = new ProjectEngine(dbContext);
         }
 
         public void Save(ProjectBO projectBO)
@@ -24,6 +26,8 @@ namespace WendtEquipmentTracking.BusinessLogic
             var project = Mapper.Map<Project>(projectBO);
 
             projectEngine.AddNewProject(project);
+
+            dbContext.SaveChanges();
         }
 
         public IEnumerable<ProjectBO> GetAll()
@@ -84,8 +88,11 @@ namespace WendtEquipmentTracking.BusinessLogic
             oldProject.ShipToContact2PhoneFax = projectBO.ShipToContact2PhoneFax;
             oldProject.ShipToCSZ = projectBO.ShipToCSZ;
             oldProject.IsCustomsProject = projectBO.IsCustomsProject;
+            oldProject.IncludeSoftCosts = projectBO.IncludeSoftCosts;
 
             projectEngine.UpdateProject(oldProject);
+
+            dbContext.SaveChanges();
         }
 
         public void Delete(int id)
@@ -96,6 +103,8 @@ namespace WendtEquipmentTracking.BusinessLogic
             {
                 projectEngine.DeleteProject(project);
             }
+
+            dbContext.SaveChanges();
         }
     }
 }

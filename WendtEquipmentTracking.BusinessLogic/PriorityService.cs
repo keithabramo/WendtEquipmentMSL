@@ -12,11 +12,13 @@ namespace WendtEquipmentTracking.BusinessLogic
 {
     public class PriorityService : IPriorityService
     {
+        private WendtEquipmentTrackingEntities dbContext;
         private IPriorityEngine priorityEngine;
 
         public PriorityService()
         {
-            priorityEngine = new PriorityEngine();
+            dbContext = new WendtEquipmentTrackingEntities();
+            priorityEngine = new PriorityEngine(dbContext);
         }
 
         public void Save(PriorityBO priorityBO)
@@ -24,6 +26,8 @@ namespace WendtEquipmentTracking.BusinessLogic
             var priority = Mapper.Map<Priority>(priorityBO);
 
             priorityEngine.AddNewPriority(priority);
+
+            dbContext.SaveChanges();
         }
 
         public void SaveAll(IEnumerable<PriorityBO> priorityBOs)
@@ -31,6 +35,8 @@ namespace WendtEquipmentTracking.BusinessLogic
             var prioritys = Mapper.Map<IEnumerable<Priority>>(priorityBOs);
 
             priorityEngine.AddAllNewPriority(prioritys);
+
+            dbContext.SaveChanges();
         }
 
         public IEnumerable<PriorityBO> GetAll(int projectId)
@@ -58,6 +64,8 @@ namespace WendtEquipmentTracking.BusinessLogic
             Mapper.Map<PriorityBO, Priority>(priorityBO, oldPriority);
 
             priorityEngine.UpdatePriority(oldPriority);
+
+            dbContext.SaveChanges();
         }
 
         public void Delete(int id)
@@ -68,6 +76,8 @@ namespace WendtEquipmentTracking.BusinessLogic
             {
                 priorityEngine.DeletePriority(priority);
             }
+
+            dbContext.SaveChanges();
         }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using WendtEquipmentTracking.App.Common;
 using WendtEquipmentTracking.App.Models;
 using WendtEquipmentTracking.BusinessLogic;
 using WendtEquipmentTracking.BusinessLogic.Api;
@@ -128,26 +129,21 @@ namespace WendtEquipmentTracking.App.Controllers
 
                             return RedirectToAction("Index");
                         }
-                        ModelState.AddModelError("", "You must select at least one equipment item to associate with this BOL");
+                        ViewData.SetStatusMessage("You must select at least one equipment item to associate with this BOL", StatusCodes.Error);
+
 
                     }
 
 
                 }
 
-                model.Status = Common.SuccessStatus.Error;
-                model.Errors = ModelState.Where(v => v.Value.Errors.Count() > 0).ToList().Select(v => new BaseModelError { Name = v.Key, Message = v.Value.Errors.First().ErrorMessage });
+                HandleError("There was an error saving your Bill Of Lading", ModelState);
 
                 return View(model);
             }
             catch (Exception e)
             {
-                model.Status = Common.SuccessStatus.Error;
-                ModelState.AddModelError("", "An error occurred: " + e.Message);
-
-                model.Errors = ModelState.Where(v => v.Value.Errors.Count() > 0).ToList().Select(v => new BaseModelError { Name = v.Key, Message = v.Value.Errors.First().ErrorMessage });
-
-                LogError(e);
+                HandleError("There was an error saving your Bill Of Lading", e);
 
                 return View(model);
             }
@@ -197,24 +193,17 @@ namespace WendtEquipmentTracking.App.Controllers
                             return RedirectToAction("Index");
                         }
 
-                        ModelState.AddModelError("", "You must select at least one equipment item to associate with this BOL");
-
+                        ViewData.SetStatusMessage("You must select at least one equipment item to associate with this BOL", StatusCodes.Error);
                     }
                 }
 
-                model.Status = Common.SuccessStatus.Error;
-                model.Errors = ModelState.Where(v => v.Value.Errors.Count() > 0).ToList().Select(v => new BaseModelError { Name = v.Key, Message = v.Value.Errors.First().ErrorMessage });
+                HandleError("There was an error while saving this BOL", ModelState);
 
                 return View(model);
             }
             catch (Exception e)
             {
-                model.Status = Common.SuccessStatus.Error;
-                ModelState.AddModelError("", "An error occurred: " + e.Message);
-
-                model.Errors = ModelState.Where(v => v.Value.Errors.Count() > 0).ToList().Select(v => new BaseModelError { Name = v.Key, Message = v.Value.Errors.First().ErrorMessage });
-
-                LogError(e);
+                HandleError("An error occured while saving this Bill Of Lading", e);
 
                 return View(model);
             }
@@ -239,16 +228,7 @@ namespace WendtEquipmentTracking.App.Controllers
             }
             catch (Exception e)
             {
-                var billOfLading = billOfLadingService.GetById(id);
-
-                if (billOfLading == null)
-                {
-                    return HttpNotFound();
-                }
-
-                model = Mapper.Map<BillOfLadingModel>(billOfLading);
-
-                LogError(e);
+                HandleError("There was an error while trying to delete this Bill of Lading", e);
                 return View(model);
             }
         }

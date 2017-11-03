@@ -12,11 +12,6 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
     {
         private IRepository<Project> repository = null;
 
-        public ProjectEngine()
-        {
-            this.repository = new Repository<Project>();
-        }
-
         public ProjectEngine(WendtEquipmentTrackingEntities dbContext)
         {
             this.repository = new Repository<Project>(dbContext);
@@ -57,7 +52,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             project.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
 
             this.repository.Insert(project);
-            this.repository.Save();
+
         }
 
         public void UpdateProject(Project project)
@@ -68,7 +63,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             project.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
 
             this.repository.Update(project);
-            this.repository.Save();
+
         }
 
         public void DeleteProject(Project project)
@@ -80,7 +75,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             project.WorkOrderPrices.ToList().ForEach(ble => ble.IsDeleted = true);
 
             this.repository.Update(project);
-            this.repository.Save();
+
         }
 
         public void SetDBContext(WendtEquipmentTrackingEntities dbContext)

@@ -128,14 +128,6 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         }
 
         /// <summary>
-        /// Saves all context changes
-        /// </summary>
-        public void Save()
-        {
-            entities.SaveChanges();
-        }
-
-        /// <summary>
         /// Releases all resources used by the WarrantManagement.DataExtract.Dal.ReportDataBase
         /// </summary>
         public void Dispose()
