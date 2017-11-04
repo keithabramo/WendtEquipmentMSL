@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿
 using System.Collections.Generic;
 using System.Linq;
 using WendtEquipmentTracking.BusinessLogic.Api;
@@ -23,7 +23,16 @@ namespace WendtEquipmentTracking.BusinessLogic
 
         public void Save(WorkOrderPriceBO workOrderPriceBO)
         {
-            var workOrderPrice = Mapper.Map<WorkOrderPrice>(workOrderPriceBO);
+            var workOrderPrice = new WorkOrderPrice
+            {
+                CostPrice = workOrderPriceBO.CostPrice,
+                ProjectId = workOrderPriceBO.ProjectId,
+                ReleasedPercent = workOrderPriceBO.ReleasedPercent,
+                SalePrice = workOrderPriceBO.SalePrice,
+                ShippedPercent = workOrderPriceBO.ShippedPercent,
+                WorkOrderNumber = workOrderPriceBO.WorkOrderNumber,
+                WorkOrderPriceId = workOrderPriceBO.WorkOrderPriceId
+            };
 
             workOrderPriceEngine.AddNewWorkOrderPrice(workOrderPrice);
 
@@ -32,18 +41,36 @@ namespace WendtEquipmentTracking.BusinessLogic
 
         public void SaveAll(IEnumerable<WorkOrderPriceBO> workOrderPriceBOs)
         {
-            var workOrderPrices = Mapper.Map<IEnumerable<WorkOrderPrice>>(workOrderPriceBOs);
+            var workOrderPrices = workOrderPriceBOs.Select(x => new WorkOrderPrice
+            {
+                CostPrice = x.CostPrice,
+                ProjectId = x.ProjectId,
+                ReleasedPercent = x.ReleasedPercent,
+                SalePrice = x.SalePrice,
+                ShippedPercent = x.ShippedPercent,
+                WorkOrderNumber = x.WorkOrderNumber,
+                WorkOrderPriceId = x.WorkOrderPriceId
+            });
 
-            workOrderPriceEngine.AddAllNewWorkOrderPrice(workOrderPrices);
+            workOrderPriceEngine.AddNewWorkOrderPrices(workOrderPrices);
 
             dbContext.SaveChanges();
         }
 
-        public IEnumerable<WorkOrderPriceBO> GetAll()
+        public IEnumerable<WorkOrderPriceBO> GetAll(int projectId)
         {
-            var workOrderPrices = workOrderPriceEngine.ListAll().ToList();
+            var workOrderPrices = workOrderPriceEngine.List(WorkOrderPriceSpecs.ProjectId(projectId));
 
-            var workOrderPriceBOs = Mapper.Map<IEnumerable<WorkOrderPriceBO>>(workOrderPrices);
+            var workOrderPriceBOs = workOrderPrices.Select(x => new WorkOrderPriceBO
+            {
+                CostPrice = x.CostPrice,
+                ProjectId = x.ProjectId,
+                ReleasedPercent = x.ReleasedPercent,
+                SalePrice = x.SalePrice,
+                ShippedPercent = x.ShippedPercent,
+                WorkOrderNumber = x.WorkOrderNumber,
+                WorkOrderPriceId = x.WorkOrderPriceId
+            });
 
             return workOrderPriceBOs;
         }
@@ -52,7 +79,16 @@ namespace WendtEquipmentTracking.BusinessLogic
         {
             var workOrderPrice = workOrderPriceEngine.Get(WorkOrderPriceSpecs.Id(id));
 
-            var workOrderPriceBO = Mapper.Map<WorkOrderPriceBO>(workOrderPrice);
+            var workOrderPriceBO = new WorkOrderPriceBO
+            {
+                CostPrice = workOrderPrice.CostPrice,
+                ProjectId = workOrderPrice.ProjectId,
+                ReleasedPercent = workOrderPrice.ReleasedPercent,
+                SalePrice = workOrderPrice.SalePrice,
+                ShippedPercent = workOrderPrice.ShippedPercent,
+                WorkOrderNumber = workOrderPrice.WorkOrderNumber,
+                WorkOrderPriceId = workOrderPrice.WorkOrderPriceId
+            };
 
             return workOrderPriceBO;
         }
@@ -60,8 +96,12 @@ namespace WendtEquipmentTracking.BusinessLogic
         public void Update(WorkOrderPriceBO workOrderPriceBO)
         {
             var oldWorkOrderPrice = workOrderPriceEngine.Get(WorkOrderPriceSpecs.Id(workOrderPriceBO.WorkOrderPriceId));
-
-            Mapper.Map<WorkOrderPriceBO, WorkOrderPrice>(workOrderPriceBO, oldWorkOrderPrice);
+            oldWorkOrderPrice.CostPrice = workOrderPriceBO.CostPrice;
+            oldWorkOrderPrice.ProjectId = workOrderPriceBO.ProjectId;
+            oldWorkOrderPrice.ReleasedPercent = workOrderPriceBO.ReleasedPercent;
+            oldWorkOrderPrice.SalePrice = workOrderPriceBO.SalePrice;
+            oldWorkOrderPrice.ShippedPercent = workOrderPriceBO.ShippedPercent;
+            oldWorkOrderPrice.WorkOrderNumber = workOrderPriceBO.WorkOrderNumber;
 
             workOrderPriceEngine.UpdateWorkOrderPrice(oldWorkOrderPrice);
 
@@ -74,8 +114,17 @@ namespace WendtEquipmentTracking.BusinessLogic
 
             foreach (var oldWorkOrderPrice in oldWorkOrderPrices)
             {
-                Mapper.Map<WorkOrderPriceBO, WorkOrderPrice>(workOrderPriceBOs.FirstOrDefault(x => x.WorkOrderPriceId == oldWorkOrderPrice.WorkOrderPriceId), oldWorkOrderPrice);
+                var workOrderPriceBO = workOrderPriceBOs.FirstOrDefault(x => x.WorkOrderPriceId == oldWorkOrderPrice.WorkOrderPriceId);
 
+                if (workOrderPriceBO != null)
+                {
+                    oldWorkOrderPrice.CostPrice = workOrderPriceBO.CostPrice;
+                    oldWorkOrderPrice.ProjectId = workOrderPriceBO.ProjectId;
+                    oldWorkOrderPrice.ReleasedPercent = workOrderPriceBO.ReleasedPercent;
+                    oldWorkOrderPrice.SalePrice = workOrderPriceBO.SalePrice;
+                    oldWorkOrderPrice.ShippedPercent = workOrderPriceBO.ShippedPercent;
+                    oldWorkOrderPrice.WorkOrderNumber = workOrderPriceBO.WorkOrderNumber;
+                }
             }
 
             workOrderPriceEngine.UpdateWorkOrderPrices(oldWorkOrderPrices);

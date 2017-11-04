@@ -11,7 +11,7 @@ namespace WendtEquipmentTracking.BusinessLogic.Api
 
         void Delete(int id);
 
-        IEnumerable<HardwareKitBO> GetAll();
+        IEnumerable<HardwareKitBO> GetAll(int projectId);
 
         HardwareKitBO GetById(int id);
 

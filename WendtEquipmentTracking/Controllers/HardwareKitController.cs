@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,9 +40,17 @@ namespace WendtEquipmentTracking.App.Controllers
             }
 
 
-            var hardwareKitBOs = hardwareKitService.GetAll().Where(hk => hk.ProjectId == user.ProjectId && hk.IsCurrentRevision).ToList();
+            var hardwareKitBOs = hardwareKitService.GetAll(user.ProjectId).Where(hk => hk.IsCurrentRevision).ToList();
 
-            var hardwareKitModels = Mapper.Map<IEnumerable<HardwareKitModel>>(hardwareKitBOs);
+            var hardwareKitModels = hardwareKitBOs.Select(x => new HardwareKitModel
+            {
+                ExtraQuantityPercentage = x.ExtraQuantityPercentage,
+                HardwareKitId = x.HardwareKitId,
+                HardwareKitNumber = x.HardwareKitNumber,
+                IsCurrentRevision = x.IsCurrentRevision,
+                ProjectId = x.ProjectId,
+                Revision = x.Revision
+            });
 
             return View(hardwareKitModels);
         }
@@ -79,8 +87,16 @@ namespace WendtEquipmentTracking.App.Controllers
                     QuantityToShip = (int)Math.Ceiling(g.Sum(e => e.QuantityToShip))
                 }).ToList();
 
-                var hardwareKitModel = Mapper.Map<HardwareKitModel>(hardwareKitBO);
-                hardwareKitModel.HardwareGroups = hardwareGroupModels;
+                var hardwareKitModel = new HardwareKitModel
+                {
+                    ExtraQuantityPercentage = hardwareKitBO.ExtraQuantityPercentage,
+                    HardwareKitId = hardwareKitBO.HardwareKitId,
+                    HardwareKitNumber = hardwareKitBO.HardwareKitNumber,
+                    IsCurrentRevision = hardwareKitBO.IsCurrentRevision,
+                    ProjectId = hardwareKitBO.ProjectId,
+                    Revision = hardwareKitBO.Revision,
+                    HardwareGroups = hardwareGroupModels
+                };
 
                 model.Add(hardwareKitModel);
             }
@@ -129,9 +145,17 @@ namespace WendtEquipmentTracking.App.Controllers
                             }));
                         }
 
-                        var hardwareKitBO = Mapper.Map<HardwareKitBO>(model);
 
-                        hardwareKitBO.HardwareKitEquipments = hardwareKitEquipmentsBOs;
+                        var hardwareKitBO = new HardwareKitBO
+                        {
+                            ExtraQuantityPercentage = model.ExtraQuantityPercentage,
+                            HardwareKitId = model.HardwareKitId,
+                            HardwareKitNumber = model.HardwareKitNumber,
+                            IsCurrentRevision = model.IsCurrentRevision,
+                            ProjectId = model.ProjectId,
+                            Revision = model.Revision,
+                            HardwareKitEquipments = hardwareKitEquipmentsBOs
+                        };
 
                         hardwareKitService.Save(hardwareKitBO);
 
@@ -169,8 +193,16 @@ namespace WendtEquipmentTracking.App.Controllers
                     Checked = true
                 }).ToList();
 
-            var hardwareKitModel = Mapper.Map<HardwareKitModel>(hardwareKitBO);
-            hardwareKitModel.HardwareGroups = hardwareGroupModels;
+            var hardwareKitModel = new HardwareKitModel
+            {
+                ExtraQuantityPercentage = hardwareKitBO.ExtraQuantityPercentage,
+                HardwareKitId = hardwareKitBO.HardwareKitId,
+                HardwareKitNumber = hardwareKitBO.HardwareKitNumber,
+                IsCurrentRevision = hardwareKitBO.IsCurrentRevision,
+                ProjectId = hardwareKitBO.ProjectId,
+                Revision = hardwareKitBO.Revision,
+                HardwareGroups = hardwareGroupModels
+            };
 
             return View(hardwareKitModel);
         }
@@ -191,8 +223,6 @@ namespace WendtEquipmentTracking.App.Controllers
                     {
                         model.ProjectId = user.ProjectId;
 
-                        var hardwareKitBO = hardwareKitService.GetById(id);
-
                         var hardwareKitEquipmentsBOs = new List<HardwareKitEquipmentBO>();
                         foreach (var hardwareGroup in model.HardwareGroups.Where(m => m.Checked).ToList())
                         {
@@ -206,9 +236,16 @@ namespace WendtEquipmentTracking.App.Controllers
                         }
 
 
-                        Mapper.Map<HardwareKitModel, HardwareKitBO>(model, hardwareKitBO);
-
-                        hardwareKitBO.HardwareKitEquipments = hardwareKitEquipmentsBOs;
+                        var hardwareKitBO = new HardwareKitBO
+                        {
+                            ExtraQuantityPercentage = model.ExtraQuantityPercentage,
+                            HardwareKitId = model.HardwareKitId,
+                            HardwareKitNumber = model.HardwareKitNumber,
+                            IsCurrentRevision = model.IsCurrentRevision,
+                            ProjectId = model.ProjectId,
+                            Revision = model.Revision,
+                            HardwareKitEquipments = hardwareKitEquipmentsBOs
+                        };
 
                         hardwareKitService.Update(hardwareKitBO);
 

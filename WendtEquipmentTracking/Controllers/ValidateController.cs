@@ -50,9 +50,8 @@ namespace WendtEquipmentTracking.App.Controllers
             }
 
 
-            var exists = billOfLadingService.GetAll().Any(b => b.ProjectId == user.ProjectId
-                                                                          && b.IsCurrentRevision
-                                                                          && b.BillOfLadingId != billOfLadingId
+            var exists = billOfLadingService.GetCurrentByProject(user.ProjectId).Any(b =>
+                                                                          b.BillOfLadingId != billOfLadingId
                                                                           && b.BillOfLadingNumber == billOfLadingNumber);
 
             return Json(!exists, JsonRequestBehavior.AllowGet);
@@ -112,8 +111,7 @@ namespace WendtEquipmentTracking.App.Controllers
                 return Json(true, JsonRequestBehavior.AllowGet);
             }
 
-            var exists = workOrderPriceService.GetAll().Any(b => b.ProjectId == user.ProjectId
-                                                                 && b.WorkOrderPriceId != workOrderPriceId
+            var exists = workOrderPriceService.GetAll(user.ProjectId).Any(b => b.WorkOrderPriceId != workOrderPriceId
                                                                  && b.WorkOrderNumber == workOrderNumber);
 
             return Json(!exists, JsonRequestBehavior.AllowGet);
@@ -143,8 +141,7 @@ namespace WendtEquipmentTracking.App.Controllers
                         return Json(true, JsonRequestBehavior.AllowGet);
                     }
 
-                    var exists = workOrderPriceService.GetAll().Any(b => b.ProjectId == user.ProjectId
-                                                                         && b.WorkOrderNumber == workOrderNumber);
+                    var exists = workOrderPriceService.GetAll(user.ProjectId).Any(b => b.WorkOrderNumber == workOrderNumber);
 
                     return Json(!exists, JsonRequestBehavior.AllowGet);
                 }
@@ -167,8 +164,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
 
 
-            var exists = hardwareKitService.GetAll().Any(b => b.ProjectId == user.ProjectId
-                                                              && b.IsCurrentRevision
+            var exists = hardwareKitService.GetAll(user.ProjectId).Any(b => b.IsCurrentRevision
                                                               && b.HardwareKitId != hardwareKitId
                                                               && b.HardwareKitNumber == hardwareKitNumber);
 

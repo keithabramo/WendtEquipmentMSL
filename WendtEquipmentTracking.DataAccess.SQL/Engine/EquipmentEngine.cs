@@ -23,7 +23,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             this.repository = repository;
         }
 
-        public IEnumerable<Equipment> ListAll()
+        public IQueryable<Equipment> ListAll()
         {
             return this.repository.Find(!EquipmentSpecs.IsDeleted())
                 .Include(x => x.BillOfLadingEquipments)
@@ -37,7 +37,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             return this.repository.Single(!EquipmentSpecs.IsDeleted() && specification);
         }
 
-        public IEnumerable<Equipment> List(Specification<Equipment> specification)
+        public IQueryable<Equipment> List(Specification<Equipment> specification)
         {
             return this.repository.Find(!EquipmentSpecs.IsDeleted() && specification)
                 .Include(x => x.BillOfLadingEquipments)
@@ -90,7 +90,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         }
 
-        public void UpdateAllEquipment(IList<Equipment> equipments)
+        public void UpdateEquipments(IQueryable<Equipment> equipments)
         {
             var now = DateTime.Now;
 

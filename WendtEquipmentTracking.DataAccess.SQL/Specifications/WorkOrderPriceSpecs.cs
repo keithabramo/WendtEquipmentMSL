@@ -20,5 +20,10 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Specifications
         {
             return new IsDeletedSpecification();
         }
+
+        public static Specification<WorkOrderPrice> ProjectId(int projectId)
+        {
+            return new ProjectIdSpecification(projectId);
+        }
     }
 }

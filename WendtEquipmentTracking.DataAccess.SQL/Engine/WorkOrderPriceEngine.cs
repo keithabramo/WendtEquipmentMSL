@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using WendtEquipmentTracking.Common;
 using WendtEquipmentTracking.DataAccess.SQL.Api;
 using WendtEquipmentTracking.DataAccess.SQL.Specifications;
@@ -21,7 +22,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             this.repository = repository;
         }
 
-        public IEnumerable<WorkOrderPrice> ListAll()
+        public IQueryable<WorkOrderPrice> ListAll()
         {
             return this.repository.Find(!WorkOrderPriceSpecs.IsDeleted());
         }
@@ -31,7 +32,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             return this.repository.Single(!WorkOrderPriceSpecs.IsDeleted() && specification);
         }
 
-        public IEnumerable<WorkOrderPrice> List(Specification<WorkOrderPrice> specification)
+        public IQueryable<WorkOrderPrice> List(Specification<WorkOrderPrice> specification)
         {
             return this.repository.Find(!WorkOrderPriceSpecs.IsDeleted() && specification);
         }
@@ -49,7 +50,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         }
 
-        public void AddAllNewWorkOrderPrice(IEnumerable<WorkOrderPrice> workOrderPrices)
+        public void AddNewWorkOrderPrices(IEnumerable<WorkOrderPrice> workOrderPrices)
         {
             var now = DateTime.Now;
 
@@ -77,7 +78,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         }
 
-        public void UpdateWorkOrderPrices(IEnumerable<WorkOrderPrice> workOrderPrices)
+        public void UpdateWorkOrderPrices(IQueryable<WorkOrderPrice> workOrderPrices)
         {
             var now = DateTime.Now;
 

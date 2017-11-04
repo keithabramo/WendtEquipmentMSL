@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.SqlClient;
 using System.Linq;
 using WendtEquipmentTracking.Common;
 using WendtEquipmentTracking.DataAccess.SQL.Api;
@@ -25,7 +23,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             this.repository = repository;
         }
 
-        public IEnumerable<BillOfLading> ListAll()
+        public IQueryable<BillOfLading> ListAll()
         {
             return this.repository.Find(!BillOfLadingSpecs.IsDeleted())
                 .Include(x => x.BillOfLadingEquipments);
@@ -36,7 +34,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             return this.repository.Single(!BillOfLadingSpecs.IsDeleted() && specification);
         }
 
-        public IEnumerable<BillOfLading> List(Specification<BillOfLading> specification)
+        public IQueryable<BillOfLading> List(Specification<BillOfLading> specification)
         {
             return this.repository.Find(!BillOfLadingSpecs.IsDeleted() && specification)
                 .Include(x => x.BillOfLadingEquipments);
@@ -85,11 +83,6 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
             this.repository.Update(billOfLading);
 
-        }
-
-        public void UpdateRTS(int billOfLadingId)
-        {
-            this.repository.ExectuteStoredProcedure("UpdateRTSAfterBOLRevision", new List<SqlParameter> { new SqlParameter("BillOfLadingId", billOfLadingId) });
         }
 
         public void SetDBContext(WendtEquipmentTrackingEntities dbContext)

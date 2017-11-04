@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace WendtEquipmentTracking.DataAccess.SQL.Api
 {
     public interface IHardwareCommercialCodeEngine
     {
-        IEnumerable<HardwareCommercialCode> ListAll();
+        IQueryable<HardwareCommercialCode> ListAll();
 
         HardwareCommercialCode Get(Specification<HardwareCommercialCode> specification);
 
-        IEnumerable<HardwareCommercialCode> List(Specification<HardwareCommercialCode> specification);
+        IQueryable<HardwareCommercialCode> List(Specification<HardwareCommercialCode> specification);
 
         void AddNewHardwareCommercialCode(HardwareCommercialCode hardwareCommercialCode);
 

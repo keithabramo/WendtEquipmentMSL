@@ -39,7 +39,7 @@ namespace WendtEquipmentTracking.App.Models
         [DisplayName("To Storage")]
         public bool ToStorage { get; set; }
 
-        public IList<BillOfLadingEquipmentModel> BillOfLadingEquipments { get; set; }
+        public IEnumerable<BillOfLadingEquipmentModel> BillOfLadingEquipments { get; set; }
 
     }
 }

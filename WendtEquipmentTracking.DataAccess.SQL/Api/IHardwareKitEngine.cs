@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace WendtEquipmentTracking.DataAccess.SQL.Api
 {
     public interface IHardwareKitEngine
     {
-        IEnumerable<HardwareKit> ListAll();
+        IQueryable<HardwareKit> ListAll();
 
         HardwareKit Get(Specification<HardwareKit> specification);
 
-        IEnumerable<HardwareKit> List(Specification<HardwareKit> specification);
+        IQueryable<HardwareKit> List(Specification<HardwareKit> specification);
 
         void AddNewHardwareKit(HardwareKit hardwareKit);
 

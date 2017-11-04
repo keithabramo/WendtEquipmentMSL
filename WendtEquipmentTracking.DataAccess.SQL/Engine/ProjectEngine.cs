@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using WendtEquipmentTracking.Common;
 using WendtEquipmentTracking.DataAccess.SQL.Api;
@@ -22,22 +21,18 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             this.repository = repository;
         }
 
-        public IEnumerable<Project> ListAll()
+        public IQueryable<Project> ListAll()
         {
             return this.repository.Find(!ProjectSpecs.IsDeleted());
         }
 
-        public IEnumerable<Project> ListAllLazy()
-        {
-            return this.repository.Find(!ProjectSpecs.IsDeleted());
-        }
 
         public Project Get(Specification<Project> specification)
         {
             return this.repository.Single(!ProjectSpecs.IsDeleted() && specification);
         }
 
-        public IEnumerable<Project> List(Specification<Project> specification)
+        public IQueryable<Project> List(Specification<Project> specification)
         {
             return this.repository.Find(!ProjectSpecs.IsDeleted() && specification);
         }

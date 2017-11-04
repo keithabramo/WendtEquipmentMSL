@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using WendtEquipmentTracking.BusinessLogic.Api;
 using WendtEquipmentTracking.BusinessLogic.BO;
@@ -23,7 +22,14 @@ namespace WendtEquipmentTracking.BusinessLogic
 
         public void Save(PriorityBO priorityBO)
         {
-            var priority = Mapper.Map<Priority>(priorityBO);
+            var priority = new Priority
+            {
+                DueDate = priorityBO.DueDate,
+                EquipmentName = priorityBO.EquipmentName,
+                PriorityId = priorityBO.PriorityId,
+                PriorityNumber = priorityBO.PriorityNumber,
+                ProjectId = priorityBO.ProjectId
+            };
 
             priorityEngine.AddNewPriority(priority);
 
@@ -32,18 +38,32 @@ namespace WendtEquipmentTracking.BusinessLogic
 
         public void SaveAll(IEnumerable<PriorityBO> priorityBOs)
         {
-            var prioritys = Mapper.Map<IEnumerable<Priority>>(priorityBOs);
+            var prioritys = priorityBOs.Select(x => new Priority
+            {
+                DueDate = x.DueDate,
+                EquipmentName = x.EquipmentName,
+                PriorityId = x.PriorityId,
+                PriorityNumber = x.PriorityNumber,
+                ProjectId = x.ProjectId
+            });
 
-            priorityEngine.AddAllNewPriority(prioritys);
+            priorityEngine.AddNewPrioritys(prioritys);
 
             dbContext.SaveChanges();
         }
 
         public IEnumerable<PriorityBO> GetAll(int projectId)
         {
-            var prioritys = priorityEngine.List(PrioritySpecs.ProjectId(projectId)).ToList();
+            var prioritys = priorityEngine.List(PrioritySpecs.ProjectId(projectId));
 
-            var priorityBOs = Mapper.Map<IEnumerable<PriorityBO>>(prioritys);
+            var priorityBOs = prioritys.Select(x => new PriorityBO
+            {
+                DueDate = x.DueDate,
+                EquipmentName = x.EquipmentName,
+                PriorityId = x.PriorityId,
+                PriorityNumber = x.PriorityNumber,
+                ProjectId = x.ProjectId
+            });
 
             return priorityBOs;
         }
@@ -52,7 +72,14 @@ namespace WendtEquipmentTracking.BusinessLogic
         {
             var priority = priorityEngine.Get(PrioritySpecs.Id(id));
 
-            var priorityBO = Mapper.Map<PriorityBO>(priority);
+            var priorityBO = new PriorityBO
+            {
+                DueDate = priority.DueDate,
+                EquipmentName = priority.EquipmentName,
+                PriorityId = priority.PriorityId,
+                PriorityNumber = priority.PriorityNumber,
+                ProjectId = priority.ProjectId
+            };
 
             return priorityBO;
         }
@@ -60,8 +87,9 @@ namespace WendtEquipmentTracking.BusinessLogic
         public void Update(PriorityBO priorityBO)
         {
             var oldPriority = priorityEngine.Get(PrioritySpecs.Id(priorityBO.PriorityId));
-
-            Mapper.Map<PriorityBO, Priority>(priorityBO, oldPriority);
+            oldPriority.DueDate = priorityBO.DueDate;
+            oldPriority.EquipmentName = priorityBO.EquipmentName;
+            oldPriority.PriorityNumber = priorityBO.PriorityNumber;
 
             priorityEngine.UpdatePriority(oldPriority);
 

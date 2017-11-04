@@ -1,5 +1,6 @@
-﻿using AutoMapper;
+﻿
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
 using WendtEquipmentTracking.App.Models;
 using WendtEquipmentTracking.BusinessLogic;
@@ -21,12 +22,17 @@ namespace WendtEquipmentTracking.App.Controllers
         [HttpGet]
         public IEnumerable<HardwareCommercialCodeModel> Table()
         {
-            var hardwareCommercialCodeModels = new List<HardwareCommercialCodeModel>();
 
             //Get Data
             var hardwareCommercialCodeBOs = hardwareCommercialCodeService.GetAll();
 
-            hardwareCommercialCodeModels = Mapper.Map<List<HardwareCommercialCodeModel>>(hardwareCommercialCodeBOs);
+            var hardwareCommercialCodeModels = hardwareCommercialCodeBOs.Select(x => new HardwareCommercialCodeModel
+            {
+                CommodityCode = x.CommodityCode,
+                Description = x.Description,
+                HardwareCommercialCodeId = x.HardwareCommercialCodeId,
+                PartNumber = x.PartNumber
+            });
 
             return hardwareCommercialCodeModels;
         }

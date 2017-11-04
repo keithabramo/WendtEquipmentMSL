@@ -1,18 +1,19 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace WendtEquipmentTracking.DataAccess.SQL.Api
 {
     public interface IPriorityEngine
     {
-        IEnumerable<Priority> ListAll();
+        IQueryable<Priority> ListAll();
 
         Priority Get(Specification<Priority> specification);
 
-        IEnumerable<Priority> List(Specification<Priority> specification);
+        IQueryable<Priority> List(Specification<Priority> specification);
 
         void AddNewPriority(Priority priority);
 
-        void AddAllNewPriority(IEnumerable<Priority> prioritys);
+        void AddNewPrioritys(IEnumerable<Priority> prioritys);
 
         void UpdatePriority(Priority priority);
 

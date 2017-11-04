@@ -1,6 +1,5 @@
-﻿using AutoMapper;
+﻿
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using WendtEquipmentTracking.App.Models;
@@ -27,14 +26,33 @@ namespace WendtEquipmentTracking.App.Controllers
         public ViewResult Index()
         {
             //Get Data
-            var projectBOs = projectService.GetAll().ToList();
+            var projectBOs = projectService.GetAll();
 
-            var projectModels = Mapper.Map<IEnumerable<ProjectModel>>(projectBOs);
+            var model = projectBOs.Select(x => new ProjectModel
+            {
+                FreightTerms = x.FreightTerms,
+                IncludeSoftCosts = x.IncludeSoftCosts,
+                IsCustomsProject = x.IsCustomsProject,
+                ProjectId = x.ProjectId,
+                ProjectNumber = x.ProjectNumber,
+                ShipToAddress = x.ShipToAddress,
+                ShipToBroker = x.ShipToBroker,
+                ShipToBrokerEmail = x.ShipToBrokerEmail,
+                ShipToBrokerPhoneFax = x.ShipToBrokerPhoneFax,
+                ShipToCompany = x.ShipToCompany,
+                ShipToContact1 = x.ShipToContact1,
+                ShipToContact1Email = x.ShipToContact1Email,
+                ShipToContact1PhoneFax = x.ShipToContact1PhoneFax,
+                ShipToContact2 = x.ShipToContact2,
+                ShipToContact2Email = x.ShipToContact2Email,
+                ShipToContact2PhoneFax = x.ShipToContact2PhoneFax,
+                ShipToCSZ = x.ShipToCSZ
+            });
 
             //Filter and sort data
-            projectModels = projectModels.OrderBy(r => r.ProjectNumber);
+            model = model.OrderBy(r => r.ProjectNumber);
 
-            return View(projectModels.ToList());
+            return View(model);
         }
 
         //
@@ -49,7 +67,27 @@ namespace WendtEquipmentTracking.App.Controllers
                 return HttpNotFound();
             }
 
-            var model = Mapper.Map<ProjectModel>(project);
+            var model = new ProjectModel
+            {
+                FreightTerms = project.FreightTerms,
+                IncludeSoftCosts = project.IncludeSoftCosts,
+                IsCustomsProject = project.IsCustomsProject,
+                ProjectId = project.ProjectId,
+                ProjectNumber = project.ProjectNumber,
+                ShipToAddress = project.ShipToAddress,
+                ShipToBroker = project.ShipToBroker,
+                ShipToBrokerEmail = project.ShipToBrokerEmail,
+                ShipToBrokerPhoneFax = project.ShipToBrokerPhoneFax,
+                ShipToCompany = project.ShipToCompany,
+                ShipToContact1 = project.ShipToContact1,
+                ShipToContact1Email = project.ShipToContact1Email,
+                ShipToContact1PhoneFax = project.ShipToContact1PhoneFax,
+                ShipToContact2 = project.ShipToContact2,
+                ShipToContact2Email = project.ShipToContact2Email,
+                ShipToContact2PhoneFax = project.ShipToContact2PhoneFax,
+                ShipToCSZ = project.ShipToCSZ
+            };
+
 
             return View(model);
         }
@@ -72,7 +110,28 @@ namespace WendtEquipmentTracking.App.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var projectBO = Mapper.Map<ProjectBO>(model);
+                    var projectBO = new ProjectBO
+                    {
+                        FreightTerms = model.FreightTerms,
+                        IncludeSoftCosts = model.IncludeSoftCosts,
+                        IsCustomsProject = model.IsCustomsProject,
+                        ProjectId = model.ProjectId,
+                        ProjectNumber = model.ProjectNumber,
+                        ShipToAddress = model.ShipToAddress,
+                        ShipToBroker = model.ShipToBroker,
+                        ShipToBrokerEmail = model.ShipToBrokerEmail,
+                        ShipToBrokerPhoneFax = model.ShipToBrokerPhoneFax,
+                        ShipToCompany = model.ShipToCompany,
+                        ShipToContact1 = model.ShipToContact1,
+                        ShipToContact1Email = model.ShipToContact1Email,
+                        ShipToContact1PhoneFax = model.ShipToContact1PhoneFax,
+                        ShipToContact2 = model.ShipToContact2,
+                        ShipToContact2Email = model.ShipToContact2Email,
+                        ShipToContact2PhoneFax = model.ShipToContact2PhoneFax,
+                        ShipToCSZ = model.ShipToCSZ
+                    };
+
+
 
                     projectService.Save(projectBO);
 
@@ -101,9 +160,28 @@ namespace WendtEquipmentTracking.App.Controllers
                 return HttpNotFound();
             }
 
-            var projectModel = Mapper.Map<ProjectModel>(project);
+            var model = new ProjectModel
+            {
+                FreightTerms = project.FreightTerms,
+                IncludeSoftCosts = project.IncludeSoftCosts,
+                IsCustomsProject = project.IsCustomsProject,
+                ProjectId = project.ProjectId,
+                ProjectNumber = project.ProjectNumber,
+                ShipToAddress = project.ShipToAddress,
+                ShipToBroker = project.ShipToBroker,
+                ShipToBrokerEmail = project.ShipToBrokerEmail,
+                ShipToBrokerPhoneFax = project.ShipToBrokerPhoneFax,
+                ShipToCompany = project.ShipToCompany,
+                ShipToContact1 = project.ShipToContact1,
+                ShipToContact1Email = project.ShipToContact1Email,
+                ShipToContact1PhoneFax = project.ShipToContact1PhoneFax,
+                ShipToContact2 = project.ShipToContact2,
+                ShipToContact2Email = project.ShipToContact2Email,
+                ShipToContact2PhoneFax = project.ShipToContact2PhoneFax,
+                ShipToCSZ = project.ShipToCSZ
+            };
 
-            return View(projectModel);
+            return View(model);
         }
 
         //
@@ -116,11 +194,28 @@ namespace WendtEquipmentTracking.App.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var project = projectService.GetById(id);
+                    var projectBO = new ProjectBO
+                    {
+                        FreightTerms = model.FreightTerms,
+                        IncludeSoftCosts = model.IncludeSoftCosts,
+                        IsCustomsProject = model.IsCustomsProject,
+                        ProjectId = model.ProjectId,
+                        ProjectNumber = model.ProjectNumber,
+                        ShipToAddress = model.ShipToAddress,
+                        ShipToBroker = model.ShipToBroker,
+                        ShipToBrokerEmail = model.ShipToBrokerEmail,
+                        ShipToBrokerPhoneFax = model.ShipToBrokerPhoneFax,
+                        ShipToCompany = model.ShipToCompany,
+                        ShipToContact1 = model.ShipToContact1,
+                        ShipToContact1Email = model.ShipToContact1Email,
+                        ShipToContact1PhoneFax = model.ShipToContact1PhoneFax,
+                        ShipToContact2 = model.ShipToContact2,
+                        ShipToContact2Email = model.ShipToContact2Email,
+                        ShipToContact2PhoneFax = model.ShipToContact2PhoneFax,
+                        ShipToCSZ = model.ShipToCSZ
+                    };
 
-                    Mapper.Map<ProjectModel, ProjectBO>(model, project);
-
-                    projectService.Update(project);
+                    projectService.Update(projectBO);
 
                     return RedirectToAction("Index");
                 }
@@ -144,8 +239,12 @@ namespace WendtEquipmentTracking.App.Controllers
                 if (user != null)
                 {
 
-                    var projectBOs = projectService.GetAllForNavigation().ToList();
-                    var projectModels = Mapper.Map<IEnumerable<ProjectModel>>(projectBOs);
+                    var projectBOs = projectService.GetAllForNavigation();
+                    var projectModels = projectBOs.Select(x => new ProjectModel
+                    {
+                        ProjectId = x.ProjectId,
+                        ProjectNumber = x.ProjectNumber
+                    });
                     var currentProjectModel = projectModels.SingleOrDefault(p => p.ProjectId == user.ProjectId);
 
                     var model = new ProjectNavModel();
@@ -193,9 +292,6 @@ namespace WendtEquipmentTracking.App.Controllers
             {
                 userService.Save(ProjectId);
             }
-
-            var projectBO = projectService.GetAllForNavigation().SingleOrDefault(p => p.ProjectId == ProjectId);
-
 
             return RedirectToAction("Index", "Home");
         }

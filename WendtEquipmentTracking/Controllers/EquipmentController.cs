@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using WendtEquipmentTracking.App.Models;
@@ -35,14 +33,9 @@ namespace WendtEquipmentTracking.App.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-
-            //Get Data
-            var equipmentBOs = equipmentService.GetAll(user.ProjectId);
-            var equipmentModels = Mapper.Map<List<EquipmentModel>>(equipmentBOs);
-
             ViewBag.ProjectNumber = projectService.GetById(user.ProjectId).ProjectNumber;
 
-            return View(equipmentModels);
+            return View();
         }
 
 
@@ -93,28 +86,28 @@ namespace WendtEquipmentTracking.App.Controllers
 
 
         // POST: Equipment/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, EquipmentModel model)
-        {
-            try
-            {
-                var equipment = equipmentService.GetById(id);
+        //[HttpPost]
+        //public ActionResult Delete(int id, EquipmentModel model)
+        //{
+        //    try
+        //    {
+        //        var equipment = equipmentService.GetById(id);
 
-                if (equipment == null)
-                {
-                    return HttpNotFound();
-                }
+        //        if (equipment == null)
+        //        {
+        //            return HttpNotFound();
+        //        }
 
-                equipmentService.Delete(id);
+        //        equipmentService.Delete(id);
 
-                return RedirectToAction("Index");
-            }
-            catch (Exception e)
-            {
-                HandleError("There was an error while attempting to delete this equipment", e);
+        //        return RedirectToAction("Index");
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        HandleError("There was an error while attempting to delete this equipment", e);
 
-                return View(model);
-            }
-        }
+        //        return View(model);
+        //    }
+        //}
     }
 }

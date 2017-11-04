@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using WendtEquipmentTracking.Common;
 using WendtEquipmentTracking.DataAccess.SQL.Api;
 using WendtEquipmentTracking.DataAccess.SQL.Specifications;
@@ -21,7 +22,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             this.repository = repository;
         }
 
-        public IEnumerable<Priority> ListAll()
+        public IQueryable<Priority> ListAll()
         {
             return this.repository.Find(!PrioritySpecs.IsDeleted());
         }
@@ -31,7 +32,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             return this.repository.Single(!PrioritySpecs.IsDeleted() && specification);
         }
 
-        public IEnumerable<Priority> List(Specification<Priority> specification)
+        public IQueryable<Priority> List(Specification<Priority> specification)
         {
             return this.repository.Find(!PrioritySpecs.IsDeleted() && specification);
         }
@@ -49,7 +50,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         }
 
-        public void AddAllNewPriority(IEnumerable<Priority> prioritys)
+        public void AddNewPrioritys(IEnumerable<Priority> prioritys)
         {
             var now = DateTime.Now;
 

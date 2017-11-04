@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿
 using System.Collections.Generic;
 using System.Linq;
 using WendtEquipmentTracking.BusinessLogic.Api;
@@ -23,7 +23,13 @@ namespace WendtEquipmentTracking.BusinessLogic
 
         public void Save(HardwareCommercialCodeBO hardwareCommercialCodeBO)
         {
-            var hardwareCommercialCode = Mapper.Map<HardwareCommercialCode>(hardwareCommercialCodeBO);
+            var hardwareCommercialCode = new HardwareCommercialCode
+            {
+                CommodityCode = hardwareCommercialCodeBO.CommodityCode,
+                Description = hardwareCommercialCodeBO.Description,
+                HardwareCommercialCodeId = hardwareCommercialCodeBO.HardwareCommercialCodeId,
+                PartNumber = hardwareCommercialCodeBO.PartNumber
+            };
 
             hardwareCommercialCodeEngine.AddNewHardwareCommercialCode(hardwareCommercialCode);
 
@@ -32,7 +38,13 @@ namespace WendtEquipmentTracking.BusinessLogic
 
         public void SaveAll(IEnumerable<HardwareCommercialCodeBO> hardwareCommercialCodeBOs)
         {
-            var hardwareCommercialCodes = Mapper.Map<IEnumerable<HardwareCommercialCode>>(hardwareCommercialCodeBOs);
+            var hardwareCommercialCodes = hardwareCommercialCodeBOs.Select(x => new HardwareCommercialCode
+            {
+                CommodityCode = x.CommodityCode,
+                Description = x.Description,
+                HardwareCommercialCodeId = x.HardwareCommercialCodeId,
+                PartNumber = x.PartNumber
+            });
 
             hardwareCommercialCodeEngine.AddAllNewHardwareCommercialCode(hardwareCommercialCodes);
 
@@ -41,9 +53,15 @@ namespace WendtEquipmentTracking.BusinessLogic
 
         public IEnumerable<HardwareCommercialCodeBO> GetAll()
         {
-            var hardwareCommercialCodes = hardwareCommercialCodeEngine.ListAll().ToList();
+            var hardwareCommercialCodes = hardwareCommercialCodeEngine.ListAll();
 
-            var hardwareCommercialCodeBOs = Mapper.Map<IEnumerable<HardwareCommercialCodeBO>>(hardwareCommercialCodes);
+            var hardwareCommercialCodeBOs = hardwareCommercialCodes.Select(x => new HardwareCommercialCodeBO
+            {
+                CommodityCode = x.CommodityCode,
+                Description = x.Description,
+                HardwareCommercialCodeId = x.HardwareCommercialCodeId,
+                PartNumber = x.PartNumber
+            });
 
             return hardwareCommercialCodeBOs;
         }
@@ -52,7 +70,13 @@ namespace WendtEquipmentTracking.BusinessLogic
         {
             var hardwareCommercialCode = hardwareCommercialCodeEngine.Get(HardwareCommercialCodeSpecs.Id(id));
 
-            var hardwareCommercialCodeBO = Mapper.Map<HardwareCommercialCodeBO>(hardwareCommercialCode);
+            var hardwareCommercialCodeBO = new HardwareCommercialCodeBO
+            {
+                CommodityCode = hardwareCommercialCode.CommodityCode,
+                Description = hardwareCommercialCode.Description,
+                HardwareCommercialCodeId = hardwareCommercialCode.HardwareCommercialCodeId,
+                PartNumber = hardwareCommercialCode.PartNumber
+            };
 
             return hardwareCommercialCodeBO;
         }
@@ -61,7 +85,10 @@ namespace WendtEquipmentTracking.BusinessLogic
         {
             var oldHardwareCommercialCode = hardwareCommercialCodeEngine.Get(HardwareCommercialCodeSpecs.Id(hardwareCommercialCodeBO.HardwareCommercialCodeId));
 
-            Mapper.Map<HardwareCommercialCodeBO, HardwareCommercialCode>(hardwareCommercialCodeBO, oldHardwareCommercialCode);
+            oldHardwareCommercialCode.CommodityCode = hardwareCommercialCodeBO.CommodityCode;
+            oldHardwareCommercialCode.Description = hardwareCommercialCodeBO.Description;
+            oldHardwareCommercialCode.HardwareCommercialCodeId = hardwareCommercialCodeBO.HardwareCommercialCodeId;
+            oldHardwareCommercialCode.PartNumber = hardwareCommercialCodeBO.PartNumber;
 
             hardwareCommercialCodeEngine.UpdateHardwareCommercialCode(oldHardwareCommercialCode);
 

@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using log4net;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -16,7 +14,6 @@ namespace WendtEquipmentTracking.App.Controllers
         private IEquipmentService equipmentService;
         private IProjectService projectService;
         private IUserService userService;
-        private ILog logger = LogManager.GetLogger("File");
 
 
         public EquipmentApiController()
@@ -31,7 +28,7 @@ namespace WendtEquipmentTracking.App.Controllers
         [HttpGet]
         public IEnumerable<EquipmentModel> Table()
         {
-            var equipmentModels = new List<EquipmentModel>();
+            IEnumerable<EquipmentModel> equipmentModels = new List<EquipmentModel>();
 
             var user = userService.GetCurrentUser();
 
@@ -45,7 +42,34 @@ namespace WendtEquipmentTracking.App.Controllers
             //Get Data
             var equipmentBOs = equipmentService.GetAll(user.ProjectId);
 
-            equipmentModels = Mapper.Map<List<EquipmentModel>>(equipmentBOs);
+            equipmentModels = equipmentBOs.Select(x => new EquipmentModel
+            {
+                EquipmentId = x.EquipmentId,
+                CustomsValue = x.CustomsValue,
+                FullyShipped = x.FullyShipped,
+                LeftToShip = x.LeftToShip,
+                Priority = x.Priority,
+                ProjectId = x.ProjectId,
+                Quantity = x.Quantity.HasValue ? x.Quantity.Value : 0,
+                ReadyToShip = x.ReadyToShip,
+                ReleaseDate = x.ReleaseDate,
+                SalePrice = x.SalePrice,
+                ShippedQuantity = x.ShippedQuantity,
+                TotalWeight = x.TotalWeight,
+                TotalWeightShipped = x.TotalWeightShipped,
+                UnitWeight = x.UnitWeight,
+                CountryOfOrigin = (x.CountryOfOrigin ?? string.Empty).ToUpperInvariant(),
+                Description = (x.Description ?? string.Empty).ToUpperInvariant(),
+                DrawingNumber = (x.DrawingNumber ?? string.Empty).ToUpperInvariant(),
+                EquipmentName = (x.EquipmentName ?? string.Empty).ToUpperInvariant(),
+                HTSCode = (x.HTSCode ?? string.Empty).ToUpperInvariant(),
+                Notes = (x.Notes ?? string.Empty).ToUpperInvariant(),
+                ShippedFrom = (x.ShippedFrom ?? string.Empty).ToUpperInvariant(),
+                ShippingTagNumber = (x.ShippingTagNumber ?? string.Empty).ToUpperInvariant(),
+                WorkOrderNumber = (x.WorkOrderNumber ?? string.Empty).ToUpperInvariant()
+            });
+
+            //HANDLE THIS
             equipmentModels.ToList().ForEach(e =>
             {
                 e.SetIndicators(projectBO.ProjectNumber, projectBO.IsCustomsProject);
@@ -53,21 +77,20 @@ namespace WendtEquipmentTracking.App.Controllers
                 e.IsHardwareKit = e.HardwareKit != null;
                 e.IsAssociatedToHardwareKit = e.HardwareKitEquipments.Where(h => h.HardwareKit.IsCurrentRevision).FirstOrDefault() != null;
                 e.AssociatedHardwareKitNumber = e.IsAssociatedToHardwareKit ? e.HardwareKitEquipments.Where(h => h.HardwareKit.IsCurrentRevision).FirstOrDefault().HardwareKit.HardwareKitNumber : string.Empty;
-                e.BillOfLadingEquipments = null;
-                e.HardwareKitEquipments = null;
             });
 
-            equipmentModels.GroupBy(x => new
-            {
-                DrawingNumber = x.DrawingNumber != null ? x.DrawingNumber.ToUpperInvariant() : string.Empty,
-                WorkOrderNumber = x.WorkOrderNumber != null ? x.WorkOrderNumber.ToUpperInvariant() : string.Empty,
-                Quantity = x.Quantity,
-                ShippingTagNumber = x.ShippingTagNumber != null ? x.ShippingTagNumber.ToUpperInvariant() : string.Empty,
-                Description = x.Description != null ? x.Description.ToUpperInvariant() : string.Empty
-            })
-              .Where(g => g.Count() > 1)
-              .SelectMany(y => y)
-              .ToList().ForEach(e => e.IsDuplicate = true);
+            equipmentModels
+                .GroupBy(x => new
+                {
+                    DrawingNumber = x.DrawingNumber != null ? x.DrawingNumber.ToUpperInvariant() : string.Empty,
+                    WorkOrderNumber = x.WorkOrderNumber != null ? x.WorkOrderNumber.ToUpperInvariant() : string.Empty,
+                    Quantity = x.Quantity,
+                    ShippingTagNumber = x.ShippingTagNumber != null ? x.ShippingTagNumber.ToUpperInvariant() : string.Empty,
+                    Description = x.Description != null ? x.Description.ToUpperInvariant() : string.Empty
+                })
+                .Where(g => g.Count() > 1)
+                .SelectMany(y => y)
+                .ToList().ForEach(e => e.IsDuplicate = true);
 
 
             return equipmentModels;
@@ -78,7 +101,7 @@ namespace WendtEquipmentTracking.App.Controllers
         [HttpGet]
         public IEnumerable<EquipmentModel> TableBOL()
         {
-            var equipmentModels = new List<EquipmentModel>();
+            IEnumerable<EquipmentModel> equipmentModels = new List<EquipmentModel>();
 
             var user = userService.GetCurrentUser();
 
@@ -92,7 +115,33 @@ namespace WendtEquipmentTracking.App.Controllers
             //Get Data
             var equipmentBOs = equipmentService.GetAll(user.ProjectId);
 
-            equipmentModels = Mapper.Map<List<EquipmentModel>>(equipmentBOs);
+            equipmentModels = equipmentBOs.Select(x => new EquipmentModel
+            {
+                EquipmentId = x.EquipmentId,
+                CustomsValue = x.CustomsValue,
+                FullyShipped = x.FullyShipped,
+                LeftToShip = x.LeftToShip,
+                Priority = x.Priority,
+                ProjectId = x.ProjectId,
+                Quantity = x.Quantity.HasValue ? x.Quantity.Value : 0,
+                ReadyToShip = x.ReadyToShip,
+                ReleaseDate = x.ReleaseDate,
+                SalePrice = x.SalePrice,
+                ShippedQuantity = x.ShippedQuantity,
+                TotalWeight = x.TotalWeight,
+                TotalWeightShipped = x.TotalWeightShipped,
+                UnitWeight = x.UnitWeight,
+                CountryOfOrigin = (x.CountryOfOrigin ?? string.Empty).ToUpperInvariant(),
+                Description = (x.Description ?? string.Empty).ToUpperInvariant(),
+                DrawingNumber = (x.DrawingNumber ?? string.Empty).ToUpperInvariant(),
+                EquipmentName = (x.EquipmentName ?? string.Empty).ToUpperInvariant(),
+                HTSCode = (x.HTSCode ?? string.Empty).ToUpperInvariant(),
+                Notes = (x.Notes ?? string.Empty).ToUpperInvariant(),
+                ShippedFrom = (x.ShippedFrom ?? string.Empty).ToUpperInvariant(),
+                ShippingTagNumber = (x.ShippingTagNumber ?? string.Empty).ToUpperInvariant(),
+                WorkOrderNumber = (x.WorkOrderNumber ?? string.Empty).ToUpperInvariant()
+            });
+
             equipmentModels.ToList().ForEach(e =>
             {
                 e.SetIndicators(projectBO.ProjectNumber, projectBO.IsCustomsProject);
@@ -104,17 +153,18 @@ namespace WendtEquipmentTracking.App.Controllers
                 e.HardwareKitEquipments = null;
             });
 
-            equipmentModels.GroupBy(x => new
-            {
-                DrawingNumber = x.DrawingNumber != null ? x.DrawingNumber.ToUpperInvariant() : string.Empty,
-                WorkOrderNumber = x.WorkOrderNumber != null ? x.WorkOrderNumber.ToUpperInvariant() : string.Empty,
-                Quantity = x.Quantity,
-                ShippingTagNumber = x.ShippingTagNumber != null ? x.ShippingTagNumber.ToUpperInvariant() : string.Empty,
-                Description = x.Description != null ? x.Description.ToUpperInvariant() : string.Empty
-            })
-              .Where(g => g.Count() > 1)
-              .SelectMany(y => y)
-              .ToList().ForEach(e => e.IsDuplicate = true);
+            equipmentModels
+                .GroupBy(x => new
+                {
+                    DrawingNumber = x.DrawingNumber != null ? x.DrawingNumber.ToUpperInvariant() : string.Empty,
+                    WorkOrderNumber = x.WorkOrderNumber != null ? x.WorkOrderNumber.ToUpperInvariant() : string.Empty,
+                    Quantity = x.Quantity,
+                    ShippingTagNumber = x.ShippingTagNumber != null ? x.ShippingTagNumber.ToUpperInvariant() : string.Empty,
+                    Description = x.Description != null ? x.Description.ToUpperInvariant() : string.Empty
+                })
+                .Where(g => g.Count() > 1)
+                .SelectMany(y => y)
+                .ToList().ForEach(e => e.IsDuplicate = true);
 
 
             return equipmentModels;
@@ -137,8 +187,33 @@ namespace WendtEquipmentTracking.App.Controllers
 
                         model.ProjectId = user.ProjectId;
 
-                        var equipmentBO = Mapper.Map<EquipmentBO>(model);
-                        equipmentBO.IsHardware = model.EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase);
+                        var equipmentBO = new EquipmentBO
+                        {
+                            EquipmentId = model.EquipmentId,
+                            CustomsValue = model.CustomsValue,
+                            FullyShipped = model.FullyShipped,
+                            LeftToShip = model.LeftToShip,
+                            Priority = model.Priority,
+                            ProjectId = model.ProjectId,
+                            Quantity = model.Quantity,
+                            ReadyToShip = model.ReadyToShip,
+                            ReleaseDate = model.ReleaseDate,
+                            SalePrice = model.SalePrice,
+                            ShippedQuantity = model.ShippedQuantity,
+                            TotalWeight = model.TotalWeight,
+                            TotalWeightShipped = model.TotalWeightShipped,
+                            UnitWeight = model.UnitWeight,
+                            CountryOfOrigin = (model.CountryOfOrigin ?? string.Empty).ToUpperInvariant(),
+                            Description = (model.Description ?? string.Empty).ToUpperInvariant(),
+                            DrawingNumber = (model.DrawingNumber ?? string.Empty).ToUpperInvariant(),
+                            EquipmentName = (model.EquipmentName ?? string.Empty).ToUpperInvariant(),
+                            HTSCode = (model.HTSCode ?? string.Empty).ToUpperInvariant(),
+                            Notes = (model.Notes ?? string.Empty).ToUpperInvariant(),
+                            ShippedFrom = (model.ShippedFrom ?? string.Empty).ToUpperInvariant(),
+                            ShippingTagNumber = (model.ShippingTagNumber ?? string.Empty).ToUpperInvariant(),
+                            WorkOrderNumber = (model.WorkOrderNumber ?? string.Empty).ToUpperInvariant(),
+                            IsHardware = model.EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase)
+                        };
                         equipmentBO.UnitWeight = equipmentBO.IsHardware ? .01 : equipmentBO.UnitWeight;
 
                         var id = equipmentService.Save(equipmentBO);
@@ -146,18 +221,42 @@ namespace WendtEquipmentTracking.App.Controllers
 
                         var newEquipmentBO = equipmentService.GetById(id);
 
-                        var newEquipmentModel = Mapper.Map<EquipmentModel>(newEquipmentBO);
+                        var newEquipmentModel = new EquipmentModel
+                        {
+                            EquipmentId = newEquipmentBO.EquipmentId,
+                            CustomsValue = newEquipmentBO.CustomsValue,
+                            FullyShipped = newEquipmentBO.FullyShipped,
+                            LeftToShip = newEquipmentBO.LeftToShip,
+                            Priority = newEquipmentBO.Priority,
+                            ProjectId = newEquipmentBO.ProjectId,
+                            Quantity = newEquipmentBO.Quantity.HasValue ? newEquipmentBO.Quantity.Value : 0,
+                            ReadyToShip = newEquipmentBO.ReadyToShip,
+                            ReleaseDate = newEquipmentBO.ReleaseDate,
+                            SalePrice = newEquipmentBO.SalePrice,
+                            ShippedQuantity = newEquipmentBO.ShippedQuantity,
+                            TotalWeight = newEquipmentBO.TotalWeight,
+                            TotalWeightShipped = newEquipmentBO.TotalWeightShipped,
+                            UnitWeight = newEquipmentBO.UnitWeight,
+                            CountryOfOrigin = (newEquipmentBO.CountryOfOrigin ?? string.Empty).ToUpperInvariant(),
+                            Description = (newEquipmentBO.Description ?? string.Empty).ToUpperInvariant(),
+                            DrawingNumber = (newEquipmentBO.DrawingNumber ?? string.Empty).ToUpperInvariant(),
+                            EquipmentName = (newEquipmentBO.EquipmentName ?? string.Empty).ToUpperInvariant(),
+                            HTSCode = (newEquipmentBO.HTSCode ?? string.Empty).ToUpperInvariant(),
+                            Notes = (newEquipmentBO.Notes ?? string.Empty).ToUpperInvariant(),
+                            ShippedFrom = (newEquipmentBO.ShippedFrom ?? string.Empty).ToUpperInvariant(),
+                            ShippingTagNumber = (newEquipmentBO.ShippingTagNumber ?? string.Empty).ToUpperInvariant(),
+                            WorkOrderNumber = (newEquipmentBO.WorkOrderNumber ?? string.Empty).ToUpperInvariant()
+                        };
+
                         newEquipmentModel.SetIndicators(projectBO.ProjectNumber, projectBO.IsCustomsProject);
                         newEquipmentModel.HasBillOfLading = newEquipmentModel.BillOfLadingEquipments.Where(b => b.BillOfLading.IsCurrentRevision).Count() > 0;
                         newEquipmentModel.IsHardwareKit = newEquipmentModel.HardwareKit != null;
                         newEquipmentModel.IsAssociatedToHardwareKit = newEquipmentModel.HardwareKitEquipments.Where(h => h.HardwareKit.IsCurrentRevision).FirstOrDefault() != null;
                         newEquipmentModel.AssociatedHardwareKitNumber = newEquipmentModel.IsAssociatedToHardwareKit ? newEquipmentModel.HardwareKitEquipments.Where(h => h.HardwareKit.IsCurrentRevision).FirstOrDefault().HardwareKit.HardwareKitNumber : string.Empty;
-                        newEquipmentModel.BillOfLadingEquipments = null;
-                        newEquipmentModel.HardwareKitEquipments = null;
 
 
+                        //check if there are any duplicates
                         var equipmentBOs = equipmentService.GetAll(user.ProjectId);
-
 
                         var duplicate = equipmentBOs.Any(x =>
                            x.EquipmentId != newEquipmentModel.EquipmentId &&
@@ -203,39 +302,88 @@ namespace WendtEquipmentTracking.App.Controllers
                         var projectBO = projectService.GetById(user.ProjectId);
 
                         model.ProjectId = user.ProjectId;
-                        var equipment = equipmentService.GetById(id);
 
-                        Mapper.Map<EquipmentModel, EquipmentBO>(model, equipment);
+                        var equipmentBO = new EquipmentBO
+                        {
+                            EquipmentId = model.EquipmentId,
+                            CustomsValue = model.CustomsValue,
+                            FullyShipped = model.FullyShipped,
+                            LeftToShip = model.LeftToShip,
+                            Priority = model.Priority,
+                            ProjectId = model.ProjectId,
+                            Quantity = model.Quantity,
+                            ReadyToShip = model.ReadyToShip,
+                            ReleaseDate = model.ReleaseDate,
+                            SalePrice = model.SalePrice,
+                            ShippedQuantity = model.ShippedQuantity,
+                            TotalWeight = model.TotalWeight,
+                            TotalWeightShipped = model.TotalWeightShipped,
+                            UnitWeight = model.UnitWeight,
+                            CountryOfOrigin = (model.CountryOfOrigin ?? string.Empty).ToUpperInvariant(),
+                            Description = (model.Description ?? string.Empty).ToUpperInvariant(),
+                            DrawingNumber = (model.DrawingNumber ?? string.Empty).ToUpperInvariant(),
+                            EquipmentName = (model.EquipmentName ?? string.Empty).ToUpperInvariant(),
+                            HTSCode = (model.HTSCode ?? string.Empty).ToUpperInvariant(),
+                            Notes = (model.Notes ?? string.Empty).ToUpperInvariant(),
+                            ShippedFrom = (model.ShippedFrom ?? string.Empty).ToUpperInvariant(),
+                            ShippingTagNumber = (model.ShippingTagNumber ?? string.Empty).ToUpperInvariant(),
+                            WorkOrderNumber = (model.WorkOrderNumber ?? string.Empty).ToUpperInvariant(),
+                            IsHardware = model.EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase)
+                        };
+                        equipmentBO.UnitWeight = equipmentBO.IsHardware ? .01 : equipmentBO.UnitWeight;
 
-                        equipment.IsHardware = model.EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase);
-                        equipment.UnitWeight = equipment.IsHardware ? .01 : equipment.UnitWeight;
+                        equipmentService.Update(equipmentBO);
 
 
-                        equipmentService.Update(equipment);
+
 
                         var updatedEquipmentBO = equipmentService.GetById(id);
-                        var updatedEquipmentModel = Mapper.Map<EquipmentModel>(updatedEquipmentBO);
+                        var updatedEquipmentModel = new EquipmentModel
+                        {
+                            EquipmentId = updatedEquipmentBO.EquipmentId,
+                            CustomsValue = updatedEquipmentBO.CustomsValue,
+                            FullyShipped = updatedEquipmentBO.FullyShipped,
+                            LeftToShip = updatedEquipmentBO.LeftToShip,
+                            Priority = updatedEquipmentBO.Priority,
+                            ProjectId = updatedEquipmentBO.ProjectId,
+                            Quantity = updatedEquipmentBO.Quantity.HasValue ? updatedEquipmentBO.Quantity.Value : 0,
+                            ReadyToShip = updatedEquipmentBO.ReadyToShip,
+                            ReleaseDate = updatedEquipmentBO.ReleaseDate,
+                            SalePrice = updatedEquipmentBO.SalePrice,
+                            ShippedQuantity = updatedEquipmentBO.ShippedQuantity,
+                            TotalWeight = updatedEquipmentBO.TotalWeight,
+                            TotalWeightShipped = updatedEquipmentBO.TotalWeightShipped,
+                            UnitWeight = updatedEquipmentBO.UnitWeight,
+                            CountryOfOrigin = (updatedEquipmentBO.CountryOfOrigin ?? string.Empty).ToUpperInvariant(),
+                            Description = (updatedEquipmentBO.Description ?? string.Empty).ToUpperInvariant(),
+                            DrawingNumber = (updatedEquipmentBO.DrawingNumber ?? string.Empty).ToUpperInvariant(),
+                            EquipmentName = (updatedEquipmentBO.EquipmentName ?? string.Empty).ToUpperInvariant(),
+                            HTSCode = (updatedEquipmentBO.HTSCode ?? string.Empty).ToUpperInvariant(),
+                            Notes = (updatedEquipmentBO.Notes ?? string.Empty).ToUpperInvariant(),
+                            ShippedFrom = (updatedEquipmentBO.ShippedFrom ?? string.Empty).ToUpperInvariant(),
+                            ShippingTagNumber = (updatedEquipmentBO.ShippingTagNumber ?? string.Empty).ToUpperInvariant(),
+                            WorkOrderNumber = (updatedEquipmentBO.WorkOrderNumber ?? string.Empty).ToUpperInvariant()
+                        };
 
                         updatedEquipmentModel.SetIndicators(projectBO.ProjectNumber, projectBO.IsCustomsProject);
                         updatedEquipmentModel.HasBillOfLading = updatedEquipmentModel.BillOfLadingEquipments.Where(b => b.BillOfLading.IsCurrentRevision).Count() > 0;
                         updatedEquipmentModel.IsHardwareKit = updatedEquipmentModel.HardwareKit != null;
                         updatedEquipmentModel.IsAssociatedToHardwareKit = updatedEquipmentModel.HardwareKitEquipments.Where(h => h.HardwareKit.IsCurrentRevision).FirstOrDefault() != null;
                         updatedEquipmentModel.AssociatedHardwareKitNumber = updatedEquipmentModel.IsAssociatedToHardwareKit ? updatedEquipmentModel.HardwareKitEquipments.Where(h => h.HardwareKit.IsCurrentRevision).FirstOrDefault().HardwareKit.HardwareKitNumber : string.Empty;
-                        updatedEquipmentModel.BillOfLadingEquipments = null;
-                        updatedEquipmentModel.HardwareKitEquipments = null;
 
 
+                        //check if there are any duplicates
                         var equipmentBOs = equipmentService.GetAll(user.ProjectId);
 
-
                         var duplicate = equipmentBOs.Any(x =>
-                            x.EquipmentId != updatedEquipmentModel.EquipmentId &&
-                            (x.DrawingNumber ?? string.Empty).Equals((updatedEquipmentModel.DrawingNumber ?? string.Empty), StringComparison.InvariantCultureIgnoreCase) &&
+                           x.EquipmentId != updatedEquipmentModel.EquipmentId &&
+                           (x.DrawingNumber ?? string.Empty).Equals((updatedEquipmentModel.DrawingNumber ?? string.Empty), StringComparison.InvariantCultureIgnoreCase) &&
                            (x.WorkOrderNumber ?? string.Empty).Equals((updatedEquipmentModel.WorkOrderNumber ?? string.Empty), StringComparison.InvariantCultureIgnoreCase) &&
                            x.Quantity == updatedEquipmentModel.Quantity &&
                            (x.ShippingTagNumber ?? string.Empty).Equals((updatedEquipmentModel.ShippingTagNumber ?? string.Empty), StringComparison.InvariantCultureIgnoreCase) &&
                            (x.Description ?? string.Empty).Equals((updatedEquipmentModel.Description ?? string.Empty), StringComparison.InvariantCultureIgnoreCase)
                         );
+
 
                         updatedEquipmentModel.IsDuplicate = duplicate;
 

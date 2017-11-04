@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using WendtEquipmentTracking.Common;
@@ -23,7 +22,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             this.repository = repository;
         }
 
-        public IEnumerable<HardwareKit> ListAll()
+        public IQueryable<HardwareKit> ListAll()
         {
             return this.repository.Find(!HardwareKitSpecs.IsDeleted())
                 .Include(x => x.HardwareKitEquipments);
@@ -34,7 +33,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             return this.repository.Single(!HardwareKitSpecs.IsDeleted() && specification);
         }
 
-        public IEnumerable<HardwareKit> List(Specification<HardwareKit> specification)
+        public IQueryable<HardwareKit> List(Specification<HardwareKit> specification)
         {
             return this.repository.Find(!HardwareKitSpecs.IsDeleted() && specification)
                 .Include(x => x.HardwareKitEquipments);

@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿
 using System;
 using System.Web.Mvc;
 using WendtEquipmentTracking.App.Models;
@@ -39,7 +39,13 @@ namespace WendtEquipmentTracking.App.Controllers
                 return HttpNotFound();
             }
 
-            var model = Mapper.Map<HardwareCommercialCodeModel>(hardwareCommercialCode);
+            var model = new HardwareCommercialCodeModel
+            {
+                CommodityCode = hardwareCommercialCode.CommodityCode,
+                Description = hardwareCommercialCode.Description,
+                HardwareCommercialCodeId = hardwareCommercialCode.HardwareCommercialCodeId,
+                PartNumber = hardwareCommercialCode.PartNumber
+            };
 
             return View(model);
         }
@@ -62,8 +68,13 @@ namespace WendtEquipmentTracking.App.Controllers
             {
                 if (ModelState.IsValid)
                 {
-
-                    var hardwareCommercialCodeBO = Mapper.Map<HardwareCommercialCodeBO>(model);
+                    var hardwareCommercialCodeBO = new HardwareCommercialCodeBO
+                    {
+                        CommodityCode = model.CommodityCode,
+                        Description = model.Description,
+                        HardwareCommercialCodeId = model.HardwareCommercialCodeId,
+                        PartNumber = model.PartNumber
+                    };
 
                     hardwareCommercialCodeService.Save(hardwareCommercialCodeBO);
 
@@ -92,9 +103,15 @@ namespace WendtEquipmentTracking.App.Controllers
                 return HttpNotFound();
             }
 
-            var hardwareCommercialCodeModel = Mapper.Map<HardwareCommercialCodeModel>(hardwareCommercialCode);
+            var model = new HardwareCommercialCodeModel
+            {
+                CommodityCode = hardwareCommercialCode.CommodityCode,
+                Description = hardwareCommercialCode.Description,
+                HardwareCommercialCodeId = hardwareCommercialCode.HardwareCommercialCodeId,
+                PartNumber = hardwareCommercialCode.PartNumber
+            };
 
-            return View(hardwareCommercialCodeModel);
+            return View(model);
         }
 
         //
@@ -107,11 +124,15 @@ namespace WendtEquipmentTracking.App.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var hardwareCommercialCode = hardwareCommercialCodeService.GetById(id);
+                    var hardwareCommercialCodeBO = new HardwareCommercialCodeBO
+                    {
+                        CommodityCode = model.CommodityCode,
+                        Description = model.Description,
+                        HardwareCommercialCodeId = model.HardwareCommercialCodeId,
+                        PartNumber = model.PartNumber
+                    };
 
-                    Mapper.Map<HardwareCommercialCodeModel, HardwareCommercialCodeBO>(model, hardwareCommercialCode);
-
-                    hardwareCommercialCodeService.Update(hardwareCommercialCode);
+                    hardwareCommercialCodeService.Update(hardwareCommercialCodeBO);
 
                     return RedirectToAction("Index");
                 }
@@ -136,7 +157,13 @@ namespace WendtEquipmentTracking.App.Controllers
                 return HttpNotFound();
             }
 
-            var model = Mapper.Map<HardwareCommercialCodeModel>(hardwareCommercialCode);
+            var model = new HardwareCommercialCodeModel
+            {
+                CommodityCode = hardwareCommercialCode.CommodityCode,
+                Description = hardwareCommercialCode.Description,
+                HardwareCommercialCodeId = hardwareCommercialCode.HardwareCommercialCodeId,
+                PartNumber = hardwareCommercialCode.PartNumber
+            };
 
             return View(model);
         }

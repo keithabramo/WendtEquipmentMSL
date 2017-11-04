@@ -1,9 +1,7 @@
-﻿using AutoMapper;
+﻿
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using WendtEquipmentTracking.App.Common;
 using WendtEquipmentTracking.App.Models;
 using WendtEquipmentTracking.BusinessLogic;
 using WendtEquipmentTracking.BusinessLogic.Api;
@@ -39,9 +37,20 @@ namespace WendtEquipmentTracking.App.Controllers
             }
 
 
-            var billOfLadingBOs = billOfLadingService.GetAll().Where(b => b.ProjectId == user.ProjectId && b.IsCurrentRevision).ToList();
-
-            var billOfLadingModels = Mapper.Map<IEnumerable<BillOfLadingModel>>(billOfLadingBOs);
+            var billOfLadingBOs = billOfLadingService.GetCurrentByProject(user.ProjectId);
+            var billOfLadingModels = billOfLadingBOs.Select(x => new BillOfLadingModel
+            {
+                BillOfLadingId = x.BillOfLadingId,
+                BillOfLadingNumber = x.BillOfLadingNumber,
+                Carrier = x.Carrier,
+                DateShipped = x.DateShipped,
+                FreightTerms = x.FreightTerms,
+                IsCurrentRevision = x.IsCurrentRevision,
+                ProjectId = x.ProjectId,
+                Revision = x.Revision,
+                ToStorage = x.ToStorage,
+                TrailerNumber = x.TrailerNumber
+            });
 
             return View(billOfLadingModels);
         }
@@ -65,9 +74,22 @@ namespace WendtEquipmentTracking.App.Controllers
                 return HttpNotFound();
             }
 
-            var model = Mapper.Map<IEnumerable<BillOfLadingModel>>(billOfLadings);
 
-            model = model.OrderByDescending(b => b.Revision).ToList();
+            var model = billOfLadings.Select(x => new BillOfLadingModel
+            {
+                BillOfLadingId = x.BillOfLadingId,
+                BillOfLadingNumber = x.BillOfLadingNumber,
+                Carrier = x.Carrier,
+                DateShipped = x.DateShipped,
+                FreightTerms = x.FreightTerms,
+                IsCurrentRevision = x.IsCurrentRevision,
+                ProjectId = x.ProjectId,
+                Revision = x.Revision,
+                ToStorage = x.ToStorage,
+                TrailerNumber = x.TrailerNumber
+            });
+
+            model = model.OrderByDescending(b => b.Revision);
 
             return View(model);
         }
@@ -122,19 +144,39 @@ namespace WendtEquipmentTracking.App.Controllers
 
                         if (model.BillOfLadingEquipments.Count() != 0)
                         {
+                            var billOfLadingBO = new BillOfLadingBO
+                            {
+                                BillOfLadingId = model.BillOfLadingId,
+                                BillOfLadingNumber = model.BillOfLadingNumber,
+                                Carrier = model.Carrier,
+                                DateShipped = model.DateShipped,
+                                FreightTerms = model.FreightTerms,
+                                IsCurrentRevision = model.IsCurrentRevision,
+                                ProjectId = model.ProjectId,
+                                Revision = model.Revision,
+                                ToStorage = model.ToStorage,
+                                TrailerNumber = model.TrailerNumber,
+                                BillOfLadingEquipments = model.BillOfLadingEquipments.Select(e => new BillOfLadingEquipmentBO
+                                {
+                                    BillOfLadingEquipmentId = e.BillOfLadingEquipmentId,
+                                    BillOfLadingId = e.BillOfLadingId,
+                                    CountryOfOrigin = e.CountryOfOrigin,
+                                    EquipmentId = e.EquipmentId,
+                                    HTSCode = e.HTSCode,
+                                    Quantity = e.Quantity,
+                                    ShippedFrom = e.ShippedFrom
+                                })
+                            };
 
-                            var billOfLadingBO = Mapper.Map<BillOfLadingBO>(model);
 
                             billOfLadingService.Save(billOfLadingBO);
 
                             return RedirectToAction("Index");
                         }
-                        ViewData.SetStatusMessage("You must select at least one equipment item to associate with this BOL", StatusCodes.Error);
+                        ErrorMessage("You must select at least one equipment item to associate with this BOL");
 
 
                     }
-
-
                 }
 
                 HandleError("There was an error saving your Bill Of Lading", ModelState);
@@ -160,9 +202,32 @@ namespace WendtEquipmentTracking.App.Controllers
                 return HttpNotFound();
             }
 
-            var billOfLadingModel = Mapper.Map<BillOfLadingModel>(billOfLading);
-            billOfLadingModel.BillOfLadingEquipments.ToList().ForEach(e => e.Checked = true);
-            return View(billOfLadingModel);
+            var model = new BillOfLadingModel
+            {
+                BillOfLadingId = billOfLading.BillOfLadingId,
+                BillOfLadingNumber = billOfLading.BillOfLadingNumber,
+                Carrier = billOfLading.Carrier,
+                DateShipped = billOfLading.DateShipped,
+                FreightTerms = billOfLading.FreightTerms,
+                IsCurrentRevision = billOfLading.IsCurrentRevision,
+                ProjectId = billOfLading.ProjectId,
+                Revision = billOfLading.Revision,
+                ToStorage = billOfLading.ToStorage,
+                TrailerNumber = billOfLading.TrailerNumber,
+                BillOfLadingEquipments = billOfLading.BillOfLadingEquipments.Select(e => new BillOfLadingEquipmentModel
+                {
+                    BillOfLadingEquipmentId = e.BillOfLadingEquipmentId,
+                    BillOfLadingId = e.BillOfLadingId,
+                    CountryOfOrigin = e.CountryOfOrigin,
+                    EquipmentId = e.EquipmentId,
+                    HTSCode = e.HTSCode,
+                    Quantity = e.Quantity,
+                    ShippedFrom = e.ShippedFrom,
+                    Checked = true
+                })
+            };
+
+            return View(model);
         }
 
         //
@@ -180,20 +245,38 @@ namespace WendtEquipmentTracking.App.Controllers
                     if (user != null)
                     {
                         model.ProjectId = user.ProjectId;
-                        model.BillOfLadingEquipments = model.BillOfLadingEquipments.Where(be => be.Quantity > 0 && be.Checked).ToList();
+                        model.BillOfLadingEquipments = model.BillOfLadingEquipments.Where(be => be.Quantity > 0 && be.Checked);
 
                         if (model.BillOfLadingEquipments.Count() != 0)
                         {
-                            var billOfLading = billOfLadingService.GetById(id);
-
-                            Mapper.Map<BillOfLadingModel, BillOfLadingBO>(model, billOfLading);
+                            var billOfLading = new BillOfLadingBO
+                            {
+                                BillOfLadingId = model.BillOfLadingId,
+                                BillOfLadingNumber = model.BillOfLadingNumber,
+                                Carrier = model.Carrier,
+                                DateShipped = model.DateShipped,
+                                FreightTerms = model.FreightTerms,
+                                IsCurrentRevision = model.IsCurrentRevision,
+                                ProjectId = model.ProjectId,
+                                Revision = model.Revision,
+                                ToStorage = model.ToStorage,
+                                TrailerNumber = model.TrailerNumber,
+                                BillOfLadingEquipments = model.BillOfLadingEquipments.Select(e => new BillOfLadingEquipmentBO
+                                {
+                                    BillOfLadingEquipmentId = e.BillOfLadingEquipmentId,
+                                    BillOfLadingId = e.BillOfLadingId,
+                                    EquipmentId = e.EquipmentId,
+                                    Quantity = e.Quantity,
+                                    ShippedFrom = e.ShippedFrom
+                                }).ToList()
+                            };
 
                             billOfLadingService.Update(billOfLading);
 
                             return RedirectToAction("Index");
                         }
 
-                        ViewData.SetStatusMessage("You must select at least one equipment item to associate with this BOL", StatusCodes.Error);
+                        SuccessMessage("You must select at least one equipment item to associate with this BOL");
                     }
                 }
 
@@ -254,7 +337,32 @@ namespace WendtEquipmentTracking.App.Controllers
                                                                     && !(e.FullyShipped ?? false)
                                                                     && !e.IsHardware).ToList();
 
-            var equipmentModels = Mapper.Map<IEnumerable<EquipmentModel>>(equipmentBOs);
+            var equipmentModels = equipmentBOs.Select(x => new EquipmentModel
+            {
+                EquipmentId = x.EquipmentId,
+                CustomsValue = x.CustomsValue,
+                FullyShipped = x.FullyShipped,
+                LeftToShip = x.LeftToShip,
+                Priority = x.Priority,
+                ProjectId = x.ProjectId,
+                Quantity = x.Quantity.HasValue ? x.Quantity.Value : 0,
+                ReadyToShip = x.ReadyToShip,
+                ReleaseDate = x.ReleaseDate,
+                SalePrice = x.SalePrice,
+                ShippedQuantity = x.ShippedQuantity,
+                TotalWeight = x.TotalWeight,
+                TotalWeightShipped = x.TotalWeightShipped,
+                UnitWeight = x.UnitWeight,
+                CountryOfOrigin = (x.CountryOfOrigin ?? string.Empty).ToUpperInvariant(),
+                Description = (x.Description ?? string.Empty).ToUpperInvariant(),
+                DrawingNumber = (x.DrawingNumber ?? string.Empty).ToUpperInvariant(),
+                EquipmentName = (x.EquipmentName ?? string.Empty).ToUpperInvariant(),
+                HTSCode = (x.HTSCode ?? string.Empty).ToUpperInvariant(),
+                Notes = (x.Notes ?? string.Empty).ToUpperInvariant(),
+                ShippedFrom = (x.ShippedFrom ?? string.Empty).ToUpperInvariant(),
+                ShippingTagNumber = (x.ShippingTagNumber ?? string.Empty).ToUpperInvariant(),
+                WorkOrderNumber = (x.WorkOrderNumber ?? string.Empty).ToUpperInvariant()
+            });
 
             equipmentModels.ToList().ForEach(e =>
             {
@@ -302,7 +410,32 @@ namespace WendtEquipmentTracking.App.Controllers
                                                                     && !(e.FullyShipped ?? false)
                                                                     && !e.IsHardware).ToList();
 
-            var equipmentModels = Mapper.Map<IEnumerable<EquipmentModel>>(equipmentBOs);
+            var equipmentModels = equipmentBOs.Select(x => new EquipmentModel
+            {
+                EquipmentId = x.EquipmentId,
+                CustomsValue = x.CustomsValue,
+                FullyShipped = x.FullyShipped,
+                LeftToShip = x.LeftToShip,
+                Priority = x.Priority,
+                ProjectId = x.ProjectId,
+                Quantity = x.Quantity.HasValue ? x.Quantity.Value : 0,
+                ReadyToShip = x.ReadyToShip,
+                ReleaseDate = x.ReleaseDate,
+                SalePrice = x.SalePrice,
+                ShippedQuantity = x.ShippedQuantity,
+                TotalWeight = x.TotalWeight,
+                TotalWeightShipped = x.TotalWeightShipped,
+                UnitWeight = x.UnitWeight,
+                CountryOfOrigin = (x.CountryOfOrigin ?? string.Empty).ToUpperInvariant(),
+                Description = (x.Description ?? string.Empty).ToUpperInvariant(),
+                DrawingNumber = (x.DrawingNumber ?? string.Empty).ToUpperInvariant(),
+                EquipmentName = (x.EquipmentName ?? string.Empty).ToUpperInvariant(),
+                HTSCode = (x.HTSCode ?? string.Empty).ToUpperInvariant(),
+                Notes = (x.Notes ?? string.Empty).ToUpperInvariant(),
+                ShippedFrom = (x.ShippedFrom ?? string.Empty).ToUpperInvariant(),
+                ShippingTagNumber = (x.ShippingTagNumber ?? string.Empty).ToUpperInvariant(),
+                WorkOrderNumber = (x.WorkOrderNumber ?? string.Empty).ToUpperInvariant()
+            });
 
             //from database
             var billOfLadingEquipments = equipmentModels.Select(e => new BillOfLadingEquipmentModel

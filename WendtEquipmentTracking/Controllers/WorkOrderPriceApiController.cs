@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using WendtEquipmentTracking.App.Common;
@@ -37,7 +35,7 @@ namespace WendtEquipmentTracking.App.Controllers
             }
 
             //Get Data
-            var workOrderPriceBOs = workOrderPriceService.GetAll().Where(w => w.ProjectId == user.ProjectId);
+            var workOrderPriceBOs = workOrderPriceService.GetAll(user.ProjectId);
 
             workOrderPrices = workOrderPriceBOs
                                 .Where(wop => wop.WorkOrderNumber.Contains(term))
@@ -55,9 +53,18 @@ namespace WendtEquipmentTracking.App.Controllers
         {
             var user = userService.GetCurrentUser();
 
-            var workOrderBOs = workOrderPriceService.GetAll().Where(w => w.ProjectId == user.ProjectId).ToList();
+            var workOrderBOs = workOrderPriceService.GetAll(user.ProjectId);
 
-            var workOrderPriceModels = Mapper.Map<IEnumerable<WorkOrderPriceModel>>(workOrderBOs);
+            var workOrderPriceModels = workOrderBOs.Select(x => new WorkOrderPriceModel
+            {
+                CostPrice = x.CostPrice,
+                ProjectId = x.ProjectId,
+                ReleasedPercent = x.ReleasedPercent,
+                SalePrice = x.SalePrice,
+                ShippedPercent = x.ShippedPercent,
+                WorkOrderNumber = x.WorkOrderNumber,
+                WorkOrderPriceId = x.WorkOrderPriceId
+            });
 
             workOrderPriceModels = workOrderPriceModels.OrderBy(r => r.WorkOrderNumber);
 
@@ -79,21 +86,25 @@ namespace WendtEquipmentTracking.App.Controllers
                 var row = data[workOrderPriceId];
                 var workOrderPriceProperties = row as Dictionary<string, object>;
 
-                //var workOrderPriceBO = new WorkOrderPriceBO
-                //{
-                //    CostPrice = Convert.ToDouble(workOrderPriceProperties["CostPrice"])
-                //};
                 var workOrderPrice = workOrderPriceProperties.ToObject<WorkOrderPriceBO>();
 
                 workOrderPrices.Add(workOrderPrice);
             }
 
-
-
             workOrderPriceService.UpdateAll(workOrderPrices);
 
+            var workOrderPriceModels = workOrderPrices.Select(x => new WorkOrderPriceModel
+            {
+                CostPrice = x.CostPrice,
+                ProjectId = x.ProjectId,
+                ReleasedPercent = x.ReleasedPercent,
+                SalePrice = x.SalePrice,
+                ShippedPercent = x.ShippedPercent,
+                WorkOrderNumber = x.WorkOrderNumber,
+                WorkOrderPriceId = x.WorkOrderPriceId
+            });
 
-            return new DtResponse { data = Mapper.Map<IEnumerable<WorkOrderPriceModel>>(workOrderPrices) };
+            return new DtResponse { data = workOrderPriceModels };
         }
 
 

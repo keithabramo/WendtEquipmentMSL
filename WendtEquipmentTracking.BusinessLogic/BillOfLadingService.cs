@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿
 using System.Collections.Generic;
 using System.Linq;
 using WendtEquipmentTracking.BusinessLogic.Api;
@@ -26,7 +26,28 @@ namespace WendtEquipmentTracking.BusinessLogic
 
         public void Save(BillOfLadingBO billOfLadingBO)
         {
-            var billOfLading = Mapper.Map<BillOfLading>(billOfLadingBO);
+
+            var billOfLading = new BillOfLading
+            {
+                BillOfLadingId = billOfLadingBO.BillOfLadingId,
+                BillOfLadingNumber = billOfLadingBO.BillOfLadingNumber,
+                Carrier = billOfLadingBO.Carrier,
+                DateShipped = billOfLadingBO.DateShipped,
+                FreightTerms = billOfLadingBO.FreightTerms,
+                IsCurrentRevision = billOfLadingBO.IsCurrentRevision,
+                ProjectId = billOfLadingBO.ProjectId,
+                Revision = billOfLadingBO.Revision,
+                ToStorage = billOfLadingBO.ToStorage,
+                TrailerNumber = billOfLadingBO.TrailerNumber,
+                BillOfLadingEquipments = billOfLadingBO.BillOfLadingEquipments.Select(e => new BillOfLadingEquipment
+                {
+                    BillOfLadingEquipmentId = e.BillOfLadingEquipmentId,
+                    BillOfLadingId = e.BillOfLadingId,
+                    EquipmentId = e.EquipmentId,
+                    Quantity = e.Quantity,
+                    ShippedFrom = e.ShippedFrom
+                }).ToList()
+            };
 
             billOfLadingEngine.AddNewBillOfLading(billOfLading);
 
@@ -41,17 +62,35 @@ namespace WendtEquipmentTracking.BusinessLogic
             }
 
             dbContext.SaveChanges();
-
-            //update needs to happen after BOL AND all BOL Equipment have been saved
-            //billOfLadingEngine.UpdateRTS(billOfLading.BillOfLadingId);
         }
 
         public void Update(BillOfLadingBO billOfLadingBO)
         {
-            var billOfLading = Mapper.Map<BillOfLading>(billOfLadingBO);
+            var billOfLading = new BillOfLading
+            {
+                BillOfLadingId = billOfLadingBO.BillOfLadingId,
+                BillOfLadingNumber = billOfLadingBO.BillOfLadingNumber,
+                Carrier = billOfLadingBO.Carrier,
+                DateShipped = billOfLadingBO.DateShipped,
+                FreightTerms = billOfLadingBO.FreightTerms,
+                IsCurrentRevision = billOfLadingBO.IsCurrentRevision,
+                ProjectId = billOfLadingBO.ProjectId,
+                Revision = billOfLadingBO.Revision,
+                ToStorage = billOfLadingBO.ToStorage,
+                TrailerNumber = billOfLadingBO.TrailerNumber,
+                BillOfLadingEquipments = billOfLadingBO.BillOfLadingEquipments.Select(e => new BillOfLadingEquipment
+                {
+                    BillOfLadingEquipmentId = e.BillOfLadingEquipmentId,
+                    BillOfLadingId = e.BillOfLadingId,
+                    EquipmentId = e.EquipmentId,
+                    Quantity = e.Quantity,
+                    ShippedFrom = e.ShippedFrom
+                }).ToList()
+            };
 
+
+            //update deleted and updated equipements
             var oldBillOfLading = billOfLadingEngine.Get(BillOfLadingSpecs.ProjectId(billOfLadingBO.ProjectId) && BillOfLadingSpecs.BillOfLadingNumber(billOfLadingBO.BillOfLadingNumber) && BillOfLadingSpecs.CurrentRevision());
-
             foreach (var oldBOLE in oldBillOfLading.BillOfLadingEquipments)
             {
                 var updatedBOLE = billOfLadingBO.BillOfLadingEquipments.FirstOrDefault(x => x.EquipmentId == oldBOLE.EquipmentId);
@@ -72,6 +111,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                 equipmentEngine.UpdateEquipment(equipment);
             }
 
+            //update new equipment for this bol
             var newEquipment = billOfLadingBO.BillOfLadingEquipments.Where(x => !oldBillOfLading.BillOfLadingEquipments.Any(old => old.EquipmentId == x.EquipmentId));
             foreach (var billOfLadingEquipment in newEquipment)
             {
@@ -90,11 +130,6 @@ namespace WendtEquipmentTracking.BusinessLogic
 
 
             dbContext.SaveChanges();
-
-
-            //update needs to happen after BOL AND all BOL Equipment have been saved
-            //billOfLadingEngine.UpdateRTS(billOfLading.BillOfLadingId);
-
         }
 
         public void Delete(int id)
@@ -111,18 +146,60 @@ namespace WendtEquipmentTracking.BusinessLogic
 
         public IEnumerable<BillOfLadingBO> GetAll()
         {
-            var billOfLadings = billOfLadingEngine.ListAll().ToList();
+            var billOfLadings = billOfLadingEngine.ListAll();
 
-            var billOfLadingBOs = Mapper.Map<IEnumerable<BillOfLadingBO>>(billOfLadings);
+            var billOfLadingBOs = billOfLadings.Select(x => new BillOfLadingBO
+            {
+                BillOfLadingId = x.BillOfLadingId,
+                BillOfLadingNumber = x.BillOfLadingNumber,
+                Carrier = x.Carrier,
+                DateShipped = x.DateShipped,
+                FreightTerms = x.FreightTerms,
+                IsCurrentRevision = x.IsCurrentRevision,
+                ProjectId = x.ProjectId,
+                Revision = x.Revision,
+                ToStorage = x.ToStorage,
+                TrailerNumber = x.TrailerNumber,
+                BillOfLadingEquipments = x.BillOfLadingEquipments.Select(e => new BillOfLadingEquipmentBO
+                {
+                    BillOfLadingEquipmentId = e.BillOfLadingEquipmentId,
+                    BillOfLadingId = e.BillOfLadingId,
+                    EquipmentId = e.EquipmentId,
+                    Quantity = e.Quantity,
+                    ShippedFrom = e.ShippedFrom
+                })
 
-            return billOfLadingBOs;
+            });
+
+            return billOfLadingBOs.ToList();
         }
 
         public BillOfLadingBO GetById(int id)
         {
             var billOfLading = billOfLadingEngine.Get(BillOfLadingSpecs.Id(id));
 
-            var billOfLadingBO = Mapper.Map<BillOfLadingBO>(billOfLading);
+            var billOfLadingBO = new BillOfLadingBO
+            {
+                BillOfLadingId = billOfLading.BillOfLadingId,
+                BillOfLadingNumber = billOfLading.BillOfLadingNumber,
+                Carrier = billOfLading.Carrier,
+                DateShipped = billOfLading.DateShipped,
+                FreightTerms = billOfLading.FreightTerms,
+                IsCurrentRevision = billOfLading.IsCurrentRevision,
+                ProjectId = billOfLading.ProjectId,
+                Revision = billOfLading.Revision,
+                ToStorage = billOfLading.ToStorage,
+                TrailerNumber = billOfLading.TrailerNumber,
+                BillOfLadingEquipments = billOfLading.BillOfLadingEquipments.Select(e => new BillOfLadingEquipmentBO
+                {
+                    BillOfLadingEquipmentId = e.BillOfLadingEquipmentId,
+                    BillOfLadingId = e.BillOfLadingId,
+                    EquipmentId = e.EquipmentId,
+                    Quantity = e.Quantity,
+                    ShippedFrom = e.ShippedFrom
+                })
+
+            };
 
             return billOfLadingBO;
         }
@@ -131,11 +208,60 @@ namespace WendtEquipmentTracking.BusinessLogic
         {
             var billOfLadings = billOfLadingEngine.List(BillOfLadingSpecs.ProjectId(projectId) && BillOfLadingSpecs.BillOfLadingNumber(billOfLadingNumber));
 
-            var billOfLadingBOs = Mapper.Map<IEnumerable<BillOfLadingBO>>(billOfLadings);
+            var billOfLadingBOs = billOfLadings.Select(x => new BillOfLadingBO
+            {
+                BillOfLadingId = x.BillOfLadingId,
+                BillOfLadingNumber = x.BillOfLadingNumber,
+                Carrier = x.Carrier,
+                DateShipped = x.DateShipped,
+                FreightTerms = x.FreightTerms,
+                IsCurrentRevision = x.IsCurrentRevision,
+                ProjectId = x.ProjectId,
+                Revision = x.Revision,
+                ToStorage = x.ToStorage,
+                TrailerNumber = x.TrailerNumber,
+                BillOfLadingEquipments = x.BillOfLadingEquipments.Select(e => new BillOfLadingEquipmentBO
+                {
+                    BillOfLadingEquipmentId = e.BillOfLadingEquipmentId,
+                    BillOfLadingId = e.BillOfLadingId,
+                    EquipmentId = e.EquipmentId,
+                    Quantity = e.Quantity,
+                    ShippedFrom = e.ShippedFrom
+                })
+
+            });
 
             return billOfLadingBOs;
         }
+        public IEnumerable<BillOfLadingBO> GetCurrentByProject(int projectId)
+        {
+            var billOfLadings = billOfLadingEngine.List(BillOfLadingSpecs.ProjectId(projectId) && BillOfLadingSpecs.CurrentRevision());
 
+            var billOfLadingBOs = billOfLadings.Select(x => new BillOfLadingBO
+            {
+                BillOfLadingId = x.BillOfLadingId,
+                BillOfLadingNumber = x.BillOfLadingNumber,
+                Carrier = x.Carrier,
+                DateShipped = x.DateShipped,
+                FreightTerms = x.FreightTerms,
+                IsCurrentRevision = x.IsCurrentRevision,
+                ProjectId = x.ProjectId,
+                Revision = x.Revision,
+                ToStorage = x.ToStorage,
+                TrailerNumber = x.TrailerNumber,
+                BillOfLadingEquipments = x.BillOfLadingEquipments.Select(e => new BillOfLadingEquipmentBO
+                {
+                    BillOfLadingEquipmentId = e.BillOfLadingEquipmentId,
+                    BillOfLadingId = e.BillOfLadingId,
+                    EquipmentId = e.EquipmentId,
+                    Quantity = e.Quantity,
+                    ShippedFrom = e.ShippedFrom
+                })
+
+            });
+
+            return billOfLadingBOs;
+        }
 
     }
 }

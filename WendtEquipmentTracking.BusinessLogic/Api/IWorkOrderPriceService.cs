@@ -15,7 +15,7 @@ namespace WendtEquipmentTracking.BusinessLogic.Api
 
         void Delete(int id);
 
-        IEnumerable<WorkOrderPriceBO> GetAll();
+        IEnumerable<WorkOrderPriceBO> GetAll(int projectId);
 
         WorkOrderPriceBO GetById(int id);
 

@@ -1,6 +1,5 @@
-﻿using AutoMapper;
+﻿
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using WendtEquipmentTracking.App.Models;
@@ -38,9 +37,14 @@ namespace WendtEquipmentTracking.App.Controllers
 
             var priorityBOs = priorityService.GetAll(user.ProjectId).ToList();
 
-            var priorityModels = Mapper.Map<IEnumerable<PriorityModel>>(priorityBOs);
-
-            //Filter and sort data
+            var priorityModels = priorityBOs.Select(x => new PriorityModel
+            {
+                DueDate = x.DueDate,
+                EquipmentName = x.EquipmentName,
+                PriorityId = x.PriorityId,
+                PriorityNumber = x.PriorityNumber,
+                ProjectId = x.ProjectId
+            });
 
             priorityModels = priorityModels.OrderBy(r => r.PriorityNumber);
 
@@ -59,7 +63,14 @@ namespace WendtEquipmentTracking.App.Controllers
                 return HttpNotFound();
             }
 
-            var model = Mapper.Map<PriorityModel>(priority);
+            var model = new PriorityModel
+            {
+                DueDate = priority.DueDate,
+                EquipmentName = priority.EquipmentName,
+                PriorityId = priority.PriorityId,
+                PriorityNumber = priority.PriorityNumber,
+                ProjectId = priority.ProjectId
+            };
 
             return View(model);
         }
@@ -88,7 +99,14 @@ namespace WendtEquipmentTracking.App.Controllers
                     {
                         model.ProjectId = user.ProjectId;
 
-                        var priorityBO = Mapper.Map<PriorityBO>(model);
+                        var priorityBO = new PriorityBO
+                        {
+                            DueDate = model.DueDate,
+                            EquipmentName = model.EquipmentName,
+                            PriorityId = model.PriorityId.HasValue ? model.PriorityId.Value : 0,
+                            PriorityNumber = model.PriorityNumber,
+                            ProjectId = model.ProjectId
+                        };
 
                         priorityService.Save(priorityBO);
 
@@ -118,9 +136,16 @@ namespace WendtEquipmentTracking.App.Controllers
                 return HttpNotFound();
             }
 
-            var priorityModel = Mapper.Map<PriorityModel>(priority);
+            var model = new PriorityModel
+            {
+                DueDate = priority.DueDate,
+                EquipmentName = priority.EquipmentName,
+                PriorityId = priority.PriorityId,
+                PriorityNumber = priority.PriorityNumber,
+                ProjectId = priority.ProjectId
+            };
 
-            return View(priorityModel);
+            return View(model);
         }
 
         //
@@ -140,12 +165,16 @@ namespace WendtEquipmentTracking.App.Controllers
                     {
                         model.ProjectId = user.ProjectId;
 
-                        var priority = priorityService.GetById(id);
+                        var priorityBO = new PriorityBO
+                        {
+                            DueDate = model.DueDate,
+                            EquipmentName = model.EquipmentName,
+                            PriorityId = model.PriorityId.HasValue ? model.PriorityId.Value : 0,
+                            PriorityNumber = model.PriorityNumber,
+                            ProjectId = model.ProjectId
+                        };
 
-                        Mapper.Map<PriorityModel, PriorityBO>(model, priority);
-
-
-                        priorityService.Update(priority);
+                        priorityService.Update(priorityBO);
 
                         return RedirectToAction("Index");
                     }
@@ -173,7 +202,14 @@ namespace WendtEquipmentTracking.App.Controllers
                 return HttpNotFound();
             }
 
-            var model = Mapper.Map<PriorityModel>(priority);
+            var model = new PriorityModel
+            {
+                DueDate = priority.DueDate,
+                EquipmentName = priority.EquipmentName,
+                PriorityId = priority.PriorityId,
+                PriorityNumber = priority.PriorityNumber,
+                ProjectId = priority.ProjectId
+            };
 
             return View(model);
         }

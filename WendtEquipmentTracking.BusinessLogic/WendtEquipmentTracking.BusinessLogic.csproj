@@ -74,14 +74,6 @@
     <Compile Include="Api\IProjectService.cs" />
     <Compile Include="Api\IImportService.cs" />
     <Compile Include="Api\IEquipmentService.cs" />
-    <Compile Include="AutoMapper\Profiles\PriorityConfig.cs" />
-    <Compile Include="AutoMapper\Profiles\HardwareCommercialCodeConfig.cs" />
-    <Compile Include="AutoMapper\Profiles\WorkOrderPriceConfig.cs" />
-    <Compile Include="AutoMapper\Profiles\HardwareKitConfig.cs" />
-    <Compile Include="AutoMapper\Profiles\ImportConfig.cs" />
-    <Compile Include="AutoMapper\Profiles\BillOfLadingConfig.cs" />
-    <Compile Include="AutoMapper\Profiles\ProjectConfig.cs" />
-    <Compile Include="AutoMapper\Profiles\EquipmentConfig.cs" />
     <Compile Include="BO\HardwareCommercialCodeBO.cs" />
     <Compile Include="BO\HardwareKitEquipmentBO.cs" />
     <Compile Include="BO\PriorityBO.cs" />

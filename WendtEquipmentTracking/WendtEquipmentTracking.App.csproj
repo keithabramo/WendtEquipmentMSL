@@ -48,10 +48,6 @@
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="AutoMapper, Version=6.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.6.1.1\lib\net45\AutoMapper.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="DevTrends.MvcDonutCaching, Version=1.3.0.0, Culture=neutral, PublicKeyToken=73c58d802958a09f, processorArchitecture=MSIL">
       <HintPath>..\packages\MvcDonutCaching.1.3.0\lib\net40\DevTrends.MvcDonutCaching.dll</HintPath>
       <Private>True</Private>
@@ -151,22 +147,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="AutoMapper\Converters\DateTimeToNullableDateTimeConverter.cs" />
-    <Compile Include="AutoMapper\Converters\DateTimeToStringConverter.cs" />
-    <Compile Include="AutoMapper\Converters\NullableDateTimeToStringConverter.cs" />
-    <Compile Include="AutoMapper\Profiles\BillOfLadingConfig.cs" />
-    <Compile Include="AutoMapper\Profiles\PriorityConfig.cs" />
-    <Compile Include="AutoMapper\Profiles\HardwareCommercialCodeConfig.cs" />
-    <Compile Include="AutoMapper\Profiles\ImportConfig.cs" />
-    <Compile Include="AutoMapper\Profiles\WorkOrderPriceConfig.cs" />
-    <Compile Include="AutoMapper\Profiles\HardwareKitConfig.cs" />
-    <Compile Include="AutoMapper\Profiles\ProjectConfig.cs" />
-    <Compile Include="AutoMapper\Profiles\EquipmentConfig.cs" />
     <Compile Include="Common\CookiesHelper.cs" />
     <Compile Include="Common\CustomDateTimeConverter.cs" />
     <Compile Include="Common\DatatableHelpers.cs" />

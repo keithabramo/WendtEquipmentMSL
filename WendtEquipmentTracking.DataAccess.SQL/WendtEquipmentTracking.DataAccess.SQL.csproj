@@ -149,6 +149,7 @@
     <Compile Include="Specifications\EquipmentSpecs.cs" />
     <Compile Include="Specifications\Equipments\IdSpecification.cs" />
     <Compile Include="Specifications\WorkOrderPrices\IsDeleted.cs" />
+    <Compile Include="Specifications\WorkOrderPrices\ProjectIdSpecification.cs" />
     <Compile Include="User.cs">
       <DependentUpon>WendtEquipmentTracking.tt</DependentUpon>
     </Compile>

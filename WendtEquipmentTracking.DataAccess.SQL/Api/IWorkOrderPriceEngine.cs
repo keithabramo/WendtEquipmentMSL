@@ -1,22 +1,23 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace WendtEquipmentTracking.DataAccess.SQL.Api
 {
     public interface IWorkOrderPriceEngine
     {
-        IEnumerable<WorkOrderPrice> ListAll();
+        IQueryable<WorkOrderPrice> ListAll();
 
         WorkOrderPrice Get(Specification<WorkOrderPrice> specification);
 
-        IEnumerable<WorkOrderPrice> List(Specification<WorkOrderPrice> specification);
+        IQueryable<WorkOrderPrice> List(Specification<WorkOrderPrice> specification);
 
         void AddNewWorkOrderPrice(WorkOrderPrice workOrderPrice);
 
-        void AddAllNewWorkOrderPrice(IEnumerable<WorkOrderPrice> workOrderPrices);
+        void AddNewWorkOrderPrices(IEnumerable<WorkOrderPrice> workOrderPrices);
 
         void UpdateWorkOrderPrice(WorkOrderPrice workOrderPrice);
 
-        void UpdateWorkOrderPrices(IEnumerable<WorkOrderPrice> workOrderPrices);
+        void UpdateWorkOrderPrices(IQueryable<WorkOrderPrice> workOrderPrices);
 
         void DeleteWorkOrderPrice(WorkOrderPrice workOrderPrice);
 

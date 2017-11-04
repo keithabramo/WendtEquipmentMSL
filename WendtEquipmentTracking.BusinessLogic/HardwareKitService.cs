@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +27,22 @@ namespace WendtEquipmentTracking.BusinessLogic
 
         public void Save(HardwareKitBO hardwareKitBO)
         {
-            var hardwareKit = Mapper.Map<HardwareKit>(hardwareKitBO);
+            var hardwareKit = new HardwareKit
+            {
+                ExtraQuantityPercentage = hardwareKitBO.ExtraQuantityPercentage,
+                HardwareKitId = hardwareKitBO.HardwareKitId,
+                HardwareKitNumber = hardwareKitBO.HardwareKitNumber,
+                IsCurrentRevision = hardwareKitBO.IsCurrentRevision,
+                ProjectId = hardwareKitBO.ProjectId,
+                Revision = hardwareKitBO.Revision,
+                HardwareKitEquipments = hardwareKitBO.HardwareKitEquipments.Select(x => new HardwareKitEquipment
+                {
+                    EquipmentId = x.EquipmentId,
+                    HardwareKitEquipmentId = x.HardwareKitEquipmentId,
+                    HardwareKitId = x.HardwareKitId,
+                    QuantityToShip = x.QuantityToShip
+                }).ToList()
+            };
 
             hardwareKitEngine.AddNewHardwareKit(hardwareKit);
 
@@ -46,11 +61,27 @@ namespace WendtEquipmentTracking.BusinessLogic
             dbContext.SaveChanges();
         }
 
-        public IEnumerable<HardwareKitBO> GetAll()
+        public IEnumerable<HardwareKitBO> GetAll(int projectId)
         {
-            var hardwareKits = hardwareKitEngine.ListAll().ToList();
+            var hardwareKits = hardwareKitEngine.List(HardwareKitSpecs.ProjectId(projectId));
 
-            var hardwareKitBOs = Mapper.Map<IEnumerable<HardwareKitBO>>(hardwareKits);
+            var hardwareKitBOs = hardwareKits.Select(x => new HardwareKitBO
+            {
+                ExtraQuantityPercentage = x.ExtraQuantityPercentage,
+                HardwareKitId = x.HardwareKitId,
+                HardwareKitNumber = x.HardwareKitNumber,
+                IsCurrentRevision = x.IsCurrentRevision,
+                ProjectId = x.ProjectId,
+                Revision = x.Revision,
+                HardwareKitEquipments = x.HardwareKitEquipments.Select(e => new HardwareKitEquipmentBO
+                {
+                    EquipmentId = e.EquipmentId,
+                    HardwareKitEquipmentId = e.HardwareKitEquipmentId,
+                    HardwareKitId = e.HardwareKitId,
+                    QuantityToShip = e.QuantityToShip
+                })
+            });
+
 
             return hardwareKitBOs;
         }
@@ -59,7 +90,22 @@ namespace WendtEquipmentTracking.BusinessLogic
         {
             var hardwareKit = hardwareKitEngine.Get(HardwareKitSpecs.Id(id));
 
-            var hardwareKitBO = Mapper.Map<HardwareKitBO>(hardwareKit);
+            var hardwareKitBO = new HardwareKitBO
+            {
+                ExtraQuantityPercentage = hardwareKit.ExtraQuantityPercentage,
+                HardwareKitId = hardwareKit.HardwareKitId,
+                HardwareKitNumber = hardwareKit.HardwareKitNumber,
+                IsCurrentRevision = hardwareKit.IsCurrentRevision,
+                ProjectId = hardwareKit.ProjectId,
+                Revision = hardwareKit.Revision,
+                HardwareKitEquipments = hardwareKit.HardwareKitEquipments.Select(e => new HardwareKitEquipmentBO
+                {
+                    EquipmentId = e.EquipmentId,
+                    HardwareKitEquipmentId = e.HardwareKitEquipmentId,
+                    HardwareKitId = e.HardwareKitId,
+                    QuantityToShip = e.QuantityToShip
+                })
+            };
 
             return hardwareKitBO;
         }
@@ -68,18 +114,61 @@ namespace WendtEquipmentTracking.BusinessLogic
         {
             var hardwareKits = hardwareKitEngine.List(HardwareKitSpecs.ProjectId(projectId) && HardwareKitSpecs.HardwareKitNumber(hardwareKitNumber));
 
-            var hardwareKitBOs = Mapper.Map<IEnumerable<HardwareKitBO>>(hardwareKits);
+            var hardwareKitBOs = hardwareKits.Select(x => new HardwareKitBO
+            {
+                ExtraQuantityPercentage = x.ExtraQuantityPercentage,
+                HardwareKitId = x.HardwareKitId,
+                HardwareKitNumber = x.HardwareKitNumber,
+                IsCurrentRevision = x.IsCurrentRevision,
+                ProjectId = x.ProjectId,
+                Revision = x.Revision,
+                HardwareKitEquipments = x.HardwareKitEquipments.Select(e => new HardwareKitEquipmentBO
+                {
+                    EquipmentId = e.EquipmentId,
+                    HardwareKitEquipmentId = e.HardwareKitEquipmentId,
+                    HardwareKitId = e.HardwareKitId,
+                    QuantityToShip = e.QuantityToShip
+                })
+            });
 
             return hardwareKitBOs;
         }
 
         public void Update(HardwareKitBO hardwareKitBO)
         {
-            var hardwareKit = Mapper.Map<HardwareKit>(hardwareKitBO);
+            var hardwareKit = new HardwareKit
+            {
+                ExtraQuantityPercentage = hardwareKitBO.ExtraQuantityPercentage,
+                HardwareKitId = hardwareKitBO.HardwareKitId,
+                HardwareKitNumber = hardwareKitBO.HardwareKitNumber,
+                IsCurrentRevision = hardwareKitBO.IsCurrentRevision,
+                ProjectId = hardwareKitBO.ProjectId,
+                Revision = hardwareKitBO.Revision,
+                HardwareKitEquipments = hardwareKitBO.HardwareKitEquipments.Select(x => new HardwareKitEquipment
+                {
+                    EquipmentId = x.EquipmentId,
+                    HardwareKitEquipmentId = x.HardwareKitEquipmentId,
+                    HardwareKitId = x.HardwareKitId,
+                    QuantityToShip = x.QuantityToShip
+                }).ToList()
+            };
 
             hardwareKitEngine.UpdateHardwareKit(hardwareKit);
 
             dbContext.SaveChanges();
+
+
+            var equipment = equipmentEngine.Get(EquipmentSpecs.HardwareKitId(hardwareKitBO.HardwareKitId));
+
+            if (equipment != null)
+            {
+                equipment.HardwareKitId = hardwareKit.HardwareKitId;
+                equipment.EquipmentName = "Hardware Kit " + hardwareKitBO.HardwareKitNumber;
+
+                equipmentEngine.UpdateEquipment(equipment);
+
+                dbContext.SaveChanges();
+            }
         }
 
         public void Delete(int id)

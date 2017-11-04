@@ -1,16 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
 
 namespace WendtEquipmentTracking.DataAccess.SQL.Api
 {
     public interface IProjectEngine
     {
-        IEnumerable<Project> ListAll();
+        IQueryable<Project> ListAll();
 
-        IEnumerable<Project> ListAllLazy();
 
         Project Get(Specification<Project> specification);
 
-        IEnumerable<Project> List(Specification<Project> specification);
+        IQueryable<Project> List(Specification<Project> specification);
 
         void AddNewProject(Project project);
 

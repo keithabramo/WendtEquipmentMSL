@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿
 using System.Collections.Generic;
 using System.Linq;
 using WendtEquipmentTracking.BusinessLogic.Api;
@@ -33,14 +33,38 @@ namespace WendtEquipmentTracking.BusinessLogic
 
         public IEnumerable<EquipmentBO> GetEquipmentImport(EquipmentImportBO importBO)
         {
-            var hardwareCommercialCodes = hardwareCommercialCodeEngine.ListAll().ToList();
+            var hardwareCommercialCodes = hardwareCommercialCodeEngine.ListAll();
 
-            var import = Mapper.Map<EquipmentImport>(importBO);
-            import.hardwareCommercialCodes = Mapper.Map<IEnumerable<HardwareCommercialCodeImport>>(hardwareCommercialCodes);
+            var import = new EquipmentImport
+            {
+                DrawingNumber = importBO.DrawingNumber,
+                Equipment = importBO.Equipment,
+                FilePath = importBO.FilePath,
+                hardwareCommercialCodes = hardwareCommercialCodes.Select(x => new HardwareCommercialCodeImport
+                {
+                    CommodityCode = x.CommodityCode,
+                    Description = x.Description,
+                    PartNumber = x.PartNumber
+                }),
+                Priority = importBO.Priority,
+                QuantityMultiplier = importBO.QuantityMultiplier,
+                WorkOrderNumber = importBO.WorkOrderNumber,
+            };
 
             var equipmentRows = importEngine.GetEquipment(import);
 
-            var equipmentBOs = Mapper.Map<IEnumerable<EquipmentBO>>(equipmentRows);
+            var equipmentBOs = equipmentRows.Select(x => new EquipmentBO
+            {
+                Description = x.Description,
+                DrawingNumber = x.DrawingNumber,
+                EquipmentName = x.EquipmentName,
+                Priority = x.Priority,
+                Quantity = x.Quantity,
+                ReleaseDate = x.ReleaseDate,
+                ShippingTagNumber = x.ShippingTagNumber,
+                UnitWeight = x.UnitWeight,
+                WorkOrderNumber = x.WorkOrderNumber
+            });
 
             return equipmentBOs;
         }
@@ -49,7 +73,14 @@ namespace WendtEquipmentTracking.BusinessLogic
         {
             var workOrderPriceRows = importEngine.GetWorkOrderPrices(file);
 
-            var workOrderPriceBOs = Mapper.Map<IEnumerable<WorkOrderPriceBO>>(workOrderPriceRows);
+            var workOrderPriceBOs = workOrderPriceRows.Select(x => new WorkOrderPriceBO
+            {
+                CostPrice = x.CostPrice,
+                ReleasedPercent = x.ReleasedPercent,
+                SalePrice = x.SalePrice,
+                ShippedPercent = x.CostPrice,
+                WorkOrderNumber = x.WorkOrderNumber
+            });
 
             return workOrderPriceBOs;
         }

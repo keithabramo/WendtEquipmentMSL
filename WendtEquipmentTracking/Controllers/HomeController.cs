@@ -1,7 +1,8 @@
-﻿using AutoMapper;
+﻿
 using DevTrends.MvcDonutCaching;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using WendtEquipmentTracking.App.Common;
 using WendtEquipmentTracking.App.Models;
@@ -38,7 +39,10 @@ namespace WendtEquipmentTracking.App.Controllers
 
                 var projectBOs = projectService.GetAllForNavigation();
 
-                var model = Mapper.Map<IEnumerable<ProjectModel>>(projectBOs);
+                var model = projectBOs.Select(x => new ProjectModel {
+                    ProjectId = x.ProjectId,
+                    ProjectNumber = x.ProjectNumber
+                });
 
                 return View(model);
             }

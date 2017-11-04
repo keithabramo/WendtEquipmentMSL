@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
 using WendtEquipmentTracking.DataAccess.SQL.Api;
 
 namespace WendtEquipmentTracking.DataAccess.SQL.Engine
@@ -18,7 +18,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             this.repository = repository;
         }
 
-        public IEnumerable<User> ListAll()
+        public IQueryable<User> ListAll()
         {
             return this.repository.GetAll();
         }
@@ -28,7 +28,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             return this.repository.Single(specification);
         }
 
-        public IEnumerable<User> List(Specification<User> specification)
+        public IQueryable<User> List(Specification<User> specification)
         {
             return this.repository.Find(specification);
         }

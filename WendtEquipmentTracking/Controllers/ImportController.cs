@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -106,9 +106,45 @@ namespace WendtEquipmentTracking.App.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var importBO = Mapper.Map<EquipmentImportBO>(model);
+                    var importBO = new EquipmentImportBO
+                    {
+                        DrawingNumber = model.DrawingNumber,
+                        Equipment = model.Equipment,
+                        FilePath = model.FilePath,
+                        Priority = model.Priority,
+                        QuantityMultiplier = model.QuantityMultiplier,
+                        WorkOrderNumber = model.WorkOrderNumber
+                    };
+
                     var equipmentBOs = importService.GetEquipmentImport(importBO);
-                    var equipmentModels = Mapper.Map<IList<EquipmentSelectionModel>>(equipmentBOs);
+
+                    var equipmentModels = equipmentBOs.Select(x => new EquipmentSelectionModel
+                    {
+                        CountryOfOrigin = x.CountryOfOrigin,
+                        CustomsValue = x.CustomsValue,
+                        Description = x.Description,
+                        DrawingNumber = x.DrawingNumber,
+                        EquipmentId = x.EquipmentId,
+                        EquipmentName = x.EquipmentName,
+                        FullyShipped = x.FullyShipped,
+                        HTSCode = x.HTSCode,
+                        LeftToShip = x.LeftToShip,
+                        Notes = x.Notes,
+                        Priority = x.Priority,
+                        ProjectId = x.ProjectId,
+                        Quantity = x.Quantity.HasValue ? x.Quantity.Value : 0,
+                        ReadyToShip = x.ReadyToShip,
+                        ReleaseDate = x.ReleaseDate,
+                        SalePrice = x.SalePrice,
+                        ShippedFrom = x.ShippedFrom,
+                        ShippedQuantity = x.ShippedQuantity,
+                        ShippingTagNumber = x.ShippingTagNumber,
+                        TotalWeight = x.TotalWeight,
+                        TotalWeightShipped = x.TotalWeightShipped,
+                        UnitWeight = x.UnitWeight,
+                        WorkOrderNumber = x.WorkOrderNumber
+                    });
+
 
 
                     var user = userService.GetCurrentUser();
@@ -155,12 +191,40 @@ namespace WendtEquipmentTracking.App.Controllers
 
                 if (user != null)
                 {
+                    model = model.Where(m => m.Checked);
                     model.ToList().ForEach(c => c.ProjectId = user.ProjectId);
 
-                    var equipmentBOs = Mapper.Map<IEnumerable<EquipmentBO>>(model.Where(m => m.Checked).ToList());
+
+
+                    var equipmentBOs = model.Select(x => new EquipmentBO
+                    {
+                        CountryOfOrigin = x.CountryOfOrigin,
+                        CustomsValue = x.CustomsValue,
+                        Description = x.Description,
+                        DrawingNumber = x.DrawingNumber,
+                        EquipmentId = x.EquipmentId,
+                        EquipmentName = x.EquipmentName,
+                        FullyShipped = x.FullyShipped,
+                        HTSCode = x.HTSCode,
+                        LeftToShip = x.LeftToShip,
+                        Notes = x.Notes,
+                        Priority = x.Priority,
+                        ProjectId = x.ProjectId,
+                        Quantity = x.Quantity,
+                        ReadyToShip = x.ReadyToShip,
+                        ReleaseDate = x.ReleaseDate,
+                        SalePrice = x.SalePrice,
+                        ShippedFrom = x.ShippedFrom,
+                        ShippedQuantity = x.ShippedQuantity,
+                        ShippingTagNumber = x.ShippingTagNumber,
+                        TotalWeight = x.TotalWeight,
+                        TotalWeightShipped = x.TotalWeightShipped,
+                        UnitWeight = x.UnitWeight,
+                        WorkOrderNumber = x.WorkOrderNumber,
+                        IsHardware = x.EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase)
+                    });
                     equipmentBOs.ToList().ForEach(e =>
                     {
-                        e.IsHardware = e.EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase);
                         e.UnitWeight = e.IsHardware ? .01 : e.UnitWeight;
                     });
 
@@ -212,8 +276,17 @@ namespace WendtEquipmentTracking.App.Controllers
 
                         var workOrderPriceBOs = importService.GetWorkOrderPricesImport(file);
 
-                        var workOrderPriceModels = Mapper.Map<IList<WorkOrderPriceSelectionModel>>(workOrderPriceBOs);
-                        workOrderPriceModels.ToList().ForEach(w => w.Checked = true);
+                        var workOrderPriceModels = workOrderPriceBOs.Select(x => new WorkOrderPriceSelectionModel
+                        {
+                            CostPrice = x.CostPrice,
+                            ProjectId = x.ProjectId,
+                            ReleasedPercent = x.ReleasedPercent,
+                            SalePrice = x.SalePrice,
+                            ShippedPercent = x.ShippedPercent,
+                            WorkOrderNumber = x.WorkOrderNumber,
+                            WorkOrderPriceId = x.WorkOrderPriceId,
+                            Checked = true
+                        });
 
                         return View("ImportWorkOrderPrice", workOrderPriceModels);
                     }
@@ -244,9 +317,20 @@ namespace WendtEquipmentTracking.App.Controllers
 
                 if (user != null)
                 {
+                    model = model.Where(x => x.Checked);
                     model.ToList().ForEach(c => c.ProjectId = user.ProjectId);
 
-                    var workOrderPriceBOs = Mapper.Map<IEnumerable<WorkOrderPriceBO>>(model.Where(m => m.Checked).ToList());
+                    var workOrderPriceBOs = model.Select(x => new WorkOrderPriceBO
+                    {
+                        CostPrice = x.CostPrice,
+                        ProjectId = x.ProjectId,
+                        ReleasedPercent = x.ReleasedPercent,
+                        SalePrice = x.SalePrice,
+                        ShippedPercent = x.ShippedPercent,
+                        WorkOrderNumber = x.WorkOrderNumber,
+                        WorkOrderPriceId = x.WorkOrderPriceId
+                    });
+
                     workOrderPriceService.SaveAll(workOrderPriceBOs);
 
                     SuccessMessage("Import successful!");
