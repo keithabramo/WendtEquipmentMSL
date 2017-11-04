@@ -9,10 +9,6 @@ namespace WendtEquipmentTracking.BusinessLogic.BO
         public int ProjectId { get; set; }
         public int Revision { get; set; }
         public bool IsCurrentRevision { get; set; }
-        public string CreatedBy { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public string ModifiedBy { get; set; }
-        public DateTime? ModifiedDate { get; set; }
         public string BillOfLadingNumber { get; set; }
         public DateTime? DateShipped { get; set; }
         public string FreightTerms { get; set; }

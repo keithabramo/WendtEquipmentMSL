@@ -86,7 +86,31 @@ namespace WendtEquipmentTracking.App.Controllers
                 ProjectId = x.ProjectId,
                 Revision = x.Revision,
                 ToStorage = x.ToStorage,
-                TrailerNumber = x.TrailerNumber
+                TrailerNumber = x.TrailerNumber,
+                BillOfLadingEquipments = x.BillOfLadingEquipments.Select(e => new BillOfLadingEquipmentModel
+                {
+                    BillOfLadingEquipmentId = e.BillOfLadingEquipmentId,
+                    BillOfLadingId = e.BillOfLadingId,
+                    CountryOfOrigin = e.CountryOfOrigin,
+                    EquipmentId = e.EquipmentId,
+                    HTSCode = e.HTSCode,
+                    Quantity = e.Quantity,
+                    ShippedFrom = e.ShippedFrom,
+                    Equipment = new EquipmentModel
+                    {
+                        EquipmentName = e.Equipment.EquipmentName,
+                        Description = e.Equipment.Description,
+                        ShippingTagNumber = e.Equipment.ShippingTagNumber,
+                        WorkOrderNumber = e.Equipment.WorkOrderNumber,
+                        ReadyToShip = e.Equipment.ReadyToShip,
+                        LeftToShip = e.Equipment.LeftToShip,
+                        ShippedQuantity = e.Equipment.ShippedQuantity,
+                        Quantity = e.Equipment.Quantity.HasValue ? e.Equipment.Quantity.Value : 0,
+                        ShippedFrom = e.Equipment.ShippedFrom,
+                        HTSCode = e.Equipment.HTSCode,
+                        CountryOfOrigin = e.Equipment.CountryOfOrigin
+                    }
+                }).ToList()
             });
 
             model = model.OrderByDescending(b => b.Revision);
@@ -224,7 +248,7 @@ namespace WendtEquipmentTracking.App.Controllers
                     Quantity = e.Quantity,
                     ShippedFrom = e.ShippedFrom,
                     Checked = true
-                })
+                }).ToList()
             };
 
             return View(model);
@@ -245,7 +269,7 @@ namespace WendtEquipmentTracking.App.Controllers
                     if (user != null)
                     {
                         model.ProjectId = user.ProjectId;
-                        model.BillOfLadingEquipments = model.BillOfLadingEquipments.Where(be => be.Quantity > 0 && be.Checked);
+                        model.BillOfLadingEquipments = model.BillOfLadingEquipments.Where(be => be.Quantity > 0 && be.Checked).ToList();
 
                         if (model.BillOfLadingEquipments.Count() != 0)
                         {

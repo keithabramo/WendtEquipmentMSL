@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using WendtEquipmentTracking.App.Common;
 
 namespace WendtEquipmentTracking.App.Models
@@ -155,18 +154,15 @@ namespace WendtEquipmentTracking.App.Models
 
 
 
-
+        //Calculated Properties
         public bool HasBillOfLading { get; set; }
+        public bool HasBillOfLadingInStorage { get; set; }
         public bool IsHardwareKit { get; set; }
         public bool IsAssociatedToHardwareKit { get; set; }
         public string AssociatedHardwareKitNumber { get; set; }
         public bool IsDuplicate { get; set; }
 
-        public IList<BillOfLadingEquipmentModel> BillOfLadingEquipments { get; set; }
 
-        public HardwareKitModel HardwareKit { get; set; }
-
-        public IList<HardwareKitEquipmentModel> HardwareKitEquipments { get; set; }
 
         public IEnumerable<int> Priorities { get; set; }
 
@@ -191,7 +187,8 @@ namespace WendtEquipmentTracking.App.Models
             //ready to ship does not have a clean way to check for red
             if (ReadyToShip > 0)
             {
-                if (BillOfLadingEquipments.Any(be => be != null && be.BillOfLading.ToStorage && be.BillOfLading.IsCurrentRevision))
+                if (HasBillOfLadingInStorage)
+                //if (BillOfLadingEquipments.Any(be => be != null && be.BillOfLading.ToStorage && be.BillOfLading.IsCurrentRevision))
                 {
                     Indicators.ReadyToShipColor = IndicatorsModel.Colors.Green.ToString();
                 }

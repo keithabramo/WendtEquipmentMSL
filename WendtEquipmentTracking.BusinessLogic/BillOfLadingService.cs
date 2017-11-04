@@ -198,7 +198,6 @@ namespace WendtEquipmentTracking.BusinessLogic
                     Quantity = e.Quantity,
                     ShippedFrom = e.ShippedFrom
                 })
-
             };
 
             return billOfLadingBO;
@@ -231,7 +230,7 @@ namespace WendtEquipmentTracking.BusinessLogic
 
             });
 
-            return billOfLadingBOs;
+            return billOfLadingBOs.ToList();
         }
         public IEnumerable<BillOfLadingBO> GetCurrentByProject(int projectId)
         {
@@ -260,7 +259,7 @@ namespace WendtEquipmentTracking.BusinessLogic
 
             });
 
-            return billOfLadingBOs;
+            return billOfLadingBOs.ToList();
         }
 
     }

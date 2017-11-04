@@ -45,7 +45,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                     CommodityCode = x.CommodityCode,
                     Description = x.Description,
                     PartNumber = x.PartNumber
-                }),
+                }).ToList(),
                 Priority = importBO.Priority,
                 QuantityMultiplier = importBO.QuantityMultiplier,
                 WorkOrderNumber = importBO.WorkOrderNumber,
@@ -66,7 +66,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                 WorkOrderNumber = x.WorkOrderNumber
             });
 
-            return equipmentBOs;
+            return equipmentBOs.ToList();
         }
 
         public IEnumerable<WorkOrderPriceBO> GetWorkOrderPricesImport(byte[] file)
@@ -82,7 +82,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                 WorkOrderNumber = x.WorkOrderNumber
             });
 
-            return workOrderPriceBOs;
+            return workOrderPriceBOs.ToList();
         }
     }
 }

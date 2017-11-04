@@ -63,7 +63,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                 PartNumber = x.PartNumber
             });
 
-            return hardwareCommercialCodeBOs;
+            return hardwareCommercialCodeBOs.ToList();
         }
 
         public HardwareCommercialCodeBO GetById(int id)

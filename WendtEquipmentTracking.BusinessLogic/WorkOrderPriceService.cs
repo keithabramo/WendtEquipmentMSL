@@ -72,7 +72,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                 WorkOrderPriceId = x.WorkOrderPriceId
             });
 
-            return workOrderPriceBOs;
+            return workOrderPriceBOs.ToList();
         }
 
         public WorkOrderPriceBO GetById(int id)
@@ -110,6 +110,7 @@ namespace WendtEquipmentTracking.BusinessLogic
 
         public void UpdateAll(IEnumerable<WorkOrderPriceBO> workOrderPriceBOs)
         {
+            //Performance Issue?
             var oldWorkOrderPrices = workOrderPriceEngine.List(WorkOrderPriceSpecs.Ids(workOrderPriceBOs.Select(x => x.WorkOrderPriceId)));
 
             foreach (var oldWorkOrderPrice in oldWorkOrderPrices)

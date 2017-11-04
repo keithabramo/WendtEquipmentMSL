@@ -19,7 +19,6 @@ namespace WendtEquipmentTracking.App
                         "~/Scripts/form.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/table").Include(
-                        "~/Scripts/waitingDialog.js",
                         "~/Scripts/datatablesAndEditor.min.js",
                         "~/Scripts/jquery.floatThead.js",
                         "~/Scripts/table.js"));

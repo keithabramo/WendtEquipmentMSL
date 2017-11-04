@@ -73,7 +73,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                 ShipToCSZ = x.ShipToCSZ
             });
 
-            return projectBOs;
+            return projectBOs.ToList();
         }
 
         public IEnumerable<ProjectBO> GetAllForNavigation()
@@ -85,7 +85,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                 ProjectNumber = p.ProjectNumber
             });
 
-            return projectBOs;
+            return projectBOs.ToList();
         }
 
         public ProjectBO GetById(int id)

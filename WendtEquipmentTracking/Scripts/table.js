@@ -1,46 +1,44 @@
-﻿waitingDialog.show();
+﻿//jQuery.fn.putCursorAtEnd = function () {
 
-jQuery.fn.putCursorAtEnd = function () {
+//    return this.each(function () {
 
-    return this.each(function () {
+//        // Cache references
+//        var $el = $(this),
+//            el = this;
 
-        // Cache references
-        var $el = $(this),
-            el = this;
+//        // Only focus if input isn't already
+//        if (!$el.is(":focus")) {
+//            $el.focus();
+//        }
 
-        // Only focus if input isn't already
-        if (!$el.is(":focus")) {
-            $el.focus();
-        }
+//        // If this function exists... (IE 9+)
+//        if (el.setSelectionRange) {
 
-        // If this function exists... (IE 9+)
-        if (el.setSelectionRange) {
+//            // Double the length because Opera is inconsistent about whether a carriage return is one character or two.
+//            var len = $el.val().length * 2;
 
-            // Double the length because Opera is inconsistent about whether a carriage return is one character or two.
-            var len = $el.val().length * 2;
+//            // Timeout seems to be required for Blink
+//            setTimeout(function () {
+//                if (el.setSelectionRange) {
+//                    el.setSelectionRange(len, len);
+//                }
+//            }, 1);
 
-            // Timeout seems to be required for Blink
-            setTimeout(function () {
-                if (el.setSelectionRange) {
-                    el.setSelectionRange(len, len);
-                }
-            }, 1);
+//        } else {
 
-        } else {
+//            // As a fallback, replace the contents with itself
+//            // Doesn't work in Chrome, but Chrome supports setSelectionRange
+//            $el.val($el.val());
 
-            // As a fallback, replace the contents with itself
-            // Doesn't work in Chrome, but Chrome supports setSelectionRange
-            $el.val($el.val());
+//        }
 
-        }
+//        // Scroll to the bottom, in case we're in a tall textarea
+//        // (Necessary for Firefox and Chrome)
+//        this.scrollTop = 999999;
 
-        // Scroll to the bottom, in case we're in a tall textarea
-        // (Necessary for Firefox and Chrome)
-        this.scrollTop = 999999;
+//    });
 
-    });
-
-};
+//};
 
 
 $(function () {
@@ -85,7 +83,7 @@ $(function () {
                                 $newInput = $("thead input[type='text']").eq($this.index);
                             }
 
-                            $newInput.putCursorAtEnd();
+                            //$newInput.putCursorAtEnd();
                             $this.index = -1;
                         }
 
@@ -322,7 +320,7 @@ $(function () {
                                 $newInput = $("thead input[type='text']").eq($this.index);
                             }
 
-                            $newInput.putCursorAtEnd();
+                            //$newInput.putCursorAtEnd();
                             $this.index = -1;
                         }
 
@@ -371,7 +369,7 @@ $(function () {
                                 $newInput = $("thead input[type='text']").eq($this.index);
                             }
 
-                            $newInput.putCursorAtEnd();
+                            //$newInput.putCursorAtEnd();
                             $this.index = -1;
                         }
 
@@ -435,7 +433,7 @@ $(function () {
                                 $newInput = $("thead input[type='text']").eq($this.index);
                             }
 
-                            $newInput.putCursorAtEnd();
+                            //$newInput.putCursorAtEnd();
                             $this.index = -1;
                         }
 
@@ -459,8 +457,6 @@ $(function () {
 
             delete $.fn.dataTable.AutoFill.actions.fillHorizontal;
             delete $.fn.dataTable.AutoFill.actions.increment;
-
-            waitingDialog.hide();
         }
 
         this.initEvents = function () {

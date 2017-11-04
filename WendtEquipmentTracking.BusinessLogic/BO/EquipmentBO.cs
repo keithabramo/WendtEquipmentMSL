@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace WendtEquipmentTracking.BusinessLogic.BO
 {
@@ -10,10 +9,6 @@ namespace WendtEquipmentTracking.BusinessLogic.BO
         public string EquipmentName { get; set; }
         public bool IsHardware { get; set; }
         public int Priority { get; set; }
-        public string CreatedBy { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public string ModifiedBy { get; set; }
-        public DateTime? ModifiedDate { get; set; }
         public DateTime? ReleaseDate { get; set; }
         public string DrawingNumber { get; set; }
         public string WorkOrderNumber { get; set; }
@@ -34,8 +29,15 @@ namespace WendtEquipmentTracking.BusinessLogic.BO
         public string HTSCode { get; set; }
         public string CountryOfOrigin { get; set; }
 
-        public HardwareKitBO HardwareKit { get; set; }
-        public IEnumerable<BillOfLadingEquipmentBO> BillOfLadingEquipments { get; set; }
-        public IEnumerable<HardwareKitEquipmentBO> HardwareKitEquipments { get; set; }
+        //calculated properties
+        public bool HasBillOfLading { get; set; }
+        public bool HasBillOfLadingInStorage { get; set; }
+        public bool IsHardwareKit { get; set; }
+        public bool IsAssociatedToHardwareKit { get; set; }
+        public string AssociatedHardwareKitNumber { get; set; }
+
+        //public HardwareKitBO HardwareKit { get; set; }
+        //public IEnumerable<BillOfLadingEquipmentBO> BillOfLadingEquipments { get; set; }
+        //public IEnumerable<HardwareKitEquipmentBO> HardwareKitEquipments { get; set; }
     }
 }

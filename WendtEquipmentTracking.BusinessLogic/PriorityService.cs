@@ -65,7 +65,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                 ProjectId = x.ProjectId
             });
 
-            return priorityBOs;
+            return priorityBOs.ToList();
         }
 
         public PriorityBO GetById(int id)

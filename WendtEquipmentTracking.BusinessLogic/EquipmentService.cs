@@ -139,6 +139,7 @@ namespace WendtEquipmentTracking.BusinessLogic
 
         public void UpdateAll(IEnumerable<EquipmentBO> equipmentBOs)
         {
+            //Performance Issue?
             var oldEquipments = equipmentEngine.List(EquipmentSpecs.Ids(equipmentBOs.Select(e => e.EquipmentId)));
 
             foreach (var oldEquipment in oldEquipments)
@@ -212,19 +213,24 @@ namespace WendtEquipmentTracking.BusinessLogic
                 TotalWeight = x.TotalWeight,
                 TotalWeightShipped = x.TotalWeightShipped,
                 UnitWeight = x.UnitWeight,
-                CountryOfOrigin = (x.CountryOfOrigin ?? string.Empty).ToUpperInvariant(),
-                Description = (x.Description ?? string.Empty).ToUpperInvariant(),
-                DrawingNumber = (x.DrawingNumber ?? string.Empty).ToUpperInvariant(),
-                EquipmentName = (x.EquipmentName ?? string.Empty).ToUpperInvariant(),
-                HTSCode = (x.HTSCode ?? string.Empty).ToUpperInvariant(),
-                Notes = (x.Notes ?? string.Empty).ToUpperInvariant(),
-                ShippedFrom = (x.ShippedFrom ?? string.Empty).ToUpperInvariant(),
-                ShippingTagNumber = (x.ShippingTagNumber ?? string.Empty).ToUpperInvariant(),
-                WorkOrderNumber = (x.WorkOrderNumber ?? string.Empty).ToUpperInvariant()
+                CountryOfOrigin = x.CountryOfOrigin,
+                Description = x.Description,
+                DrawingNumber = x.DrawingNumber,
+                EquipmentName = x.EquipmentName,
+                HTSCode = x.HTSCode,
+                Notes = x.Notes,
+                ShippedFrom = x.ShippedFrom,
+                ShippingTagNumber = x.ShippingTagNumber,
+                WorkOrderNumber = x.WorkOrderNumber,
+                HasBillOfLading = x.BillOfLadingEquipments.Where(b => b.BillOfLading.IsCurrentRevision).Count() > 0,
+                HasBillOfLadingInStorage = x.BillOfLadingEquipments.Any(be => be.BillOfLading.ToStorage && be.BillOfLading.IsCurrentRevision),
+                IsHardwareKit = x.HardwareKit != null,
+                IsAssociatedToHardwareKit = x.HardwareKitEquipments.Any(h => h.HardwareKit.IsCurrentRevision),
+                AssociatedHardwareKitNumber = x.HardwareKitEquipments.Any(h => h.HardwareKit.IsCurrentRevision) ? x.HardwareKitEquipments.Where(h => h.HardwareKit.IsCurrentRevision).FirstOrDefault().HardwareKit.HardwareKitNumber : string.Empty
             });
 
 
-            return equipmentBOs;
+            return equipmentBOs.ToList();
         }
 
         public EquipmentBO GetById(int id)
@@ -283,18 +289,24 @@ namespace WendtEquipmentTracking.BusinessLogic
                 TotalWeight = x.TotalWeight,
                 TotalWeightShipped = x.TotalWeightShipped,
                 UnitWeight = x.UnitWeight,
-                CountryOfOrigin = (x.CountryOfOrigin ?? string.Empty).ToUpperInvariant(),
-                Description = (x.Description ?? string.Empty).ToUpperInvariant(),
-                DrawingNumber = (x.DrawingNumber ?? string.Empty).ToUpperInvariant(),
-                EquipmentName = (x.EquipmentName ?? string.Empty).ToUpperInvariant(),
-                HTSCode = (x.HTSCode ?? string.Empty).ToUpperInvariant(),
-                Notes = (x.Notes ?? string.Empty).ToUpperInvariant(),
-                ShippedFrom = (x.ShippedFrom ?? string.Empty).ToUpperInvariant(),
-                ShippingTagNumber = (x.ShippingTagNumber ?? string.Empty).ToUpperInvariant(),
-                WorkOrderNumber = (x.WorkOrderNumber ?? string.Empty).ToUpperInvariant()
+                CountryOfOrigin = x.CountryOfOrigin,
+                Description = x.Description,
+                DrawingNumber = x.DrawingNumber,
+                EquipmentName = x.EquipmentName,
+                HTSCode = x.HTSCode,
+                Notes = x.Notes,
+                ShippedFrom = x.ShippedFrom,
+                ShippingTagNumber = x.ShippingTagNumber,
+                WorkOrderNumber = x.WorkOrderNumber,
+
+                HasBillOfLading = x.BillOfLadingEquipments.Where(b => b.BillOfLading.IsCurrentRevision).Count() > 0,
+                HasBillOfLadingInStorage = x.BillOfLadingEquipments.Any(be => be.BillOfLading.ToStorage && be.BillOfLading.IsCurrentRevision),
+                IsHardwareKit = x.HardwareKit != null,
+                IsAssociatedToHardwareKit = x.HardwareKitEquipments.Any(h => h.HardwareKit.IsCurrentRevision),
+                AssociatedHardwareKitNumber = x.HardwareKitEquipments.Any(h => h.HardwareKit.IsCurrentRevision) ? x.HardwareKitEquipments.Where(h => h.HardwareKit.IsCurrentRevision).FirstOrDefault().HardwareKit.HardwareKitNumber : string.Empty
             });
 
-            return equipmentBOs;
+            return equipmentBOs.ToList();
         }
 
         public IEnumerable<EquipmentBO> GetHardwareByShippingTagNumberAndDescription(int projectId, string shippingTagNumber, string description)
@@ -330,18 +342,24 @@ namespace WendtEquipmentTracking.BusinessLogic
                 TotalWeight = x.TotalWeight,
                 TotalWeightShipped = x.TotalWeightShipped,
                 UnitWeight = x.UnitWeight,
-                CountryOfOrigin = (x.CountryOfOrigin ?? string.Empty).ToUpperInvariant(),
-                Description = (x.Description ?? string.Empty).ToUpperInvariant(),
-                DrawingNumber = (x.DrawingNumber ?? string.Empty).ToUpperInvariant(),
-                EquipmentName = (x.EquipmentName ?? string.Empty).ToUpperInvariant(),
-                HTSCode = (x.HTSCode ?? string.Empty).ToUpperInvariant(),
-                Notes = (x.Notes ?? string.Empty).ToUpperInvariant(),
-                ShippedFrom = (x.ShippedFrom ?? string.Empty).ToUpperInvariant(),
-                ShippingTagNumber = (x.ShippingTagNumber ?? string.Empty).ToUpperInvariant(),
-                WorkOrderNumber = (x.WorkOrderNumber ?? string.Empty).ToUpperInvariant()
+                CountryOfOrigin = x.CountryOfOrigin,
+                Description = x.Description,
+                DrawingNumber = x.DrawingNumber,
+                EquipmentName = x.EquipmentName,
+                HTSCode = x.HTSCode,
+                Notes = x.Notes,
+                ShippedFrom = x.ShippedFrom,
+                ShippingTagNumber = x.ShippingTagNumber,
+                WorkOrderNumber = x.WorkOrderNumber,
+
+                HasBillOfLading = x.BillOfLadingEquipments.Any(b => b.BillOfLading.IsCurrentRevision),
+                HasBillOfLadingInStorage = x.BillOfLadingEquipments.Any(be => be.BillOfLading.ToStorage && be.BillOfLading.IsCurrentRevision),
+                IsHardwareKit = x.HardwareKit != null,
+                IsAssociatedToHardwareKit = x.HardwareKitEquipments.Any(h => h.HardwareKit.IsCurrentRevision),
+                AssociatedHardwareKitNumber = x.HardwareKitEquipments.Any(h => h.HardwareKit.IsCurrentRevision) ? x.HardwareKitEquipments.Where(h => h.HardwareKit.IsCurrentRevision).FirstOrDefault().HardwareKit.HardwareKitNumber : string.Empty
             });
 
-            return equipmentBOs;
+            return equipmentBOs.ToList();
         }
     }
 }

@@ -66,17 +66,18 @@ namespace WendtEquipmentTracking.App.Controllers
                 Notes = (x.Notes ?? string.Empty).ToUpperInvariant(),
                 ShippedFrom = (x.ShippedFrom ?? string.Empty).ToUpperInvariant(),
                 ShippingTagNumber = (x.ShippingTagNumber ?? string.Empty).ToUpperInvariant(),
-                WorkOrderNumber = (x.WorkOrderNumber ?? string.Empty).ToUpperInvariant()
+                WorkOrderNumber = (x.WorkOrderNumber ?? string.Empty).ToUpperInvariant(),
+
+                HasBillOfLading = x.HasBillOfLading,
+                HasBillOfLadingInStorage = x.HasBillOfLadingInStorage,
+                IsHardwareKit = x.IsHardwareKit,
+                IsAssociatedToHardwareKit = x.IsAssociatedToHardwareKit,
+                AssociatedHardwareKitNumber = x.AssociatedHardwareKitNumber
             });
 
-            //HANDLE THIS
             equipmentModels.ToList().ForEach(e =>
             {
                 e.SetIndicators(projectBO.ProjectNumber, projectBO.IsCustomsProject);
-                e.HasBillOfLading = e.BillOfLadingEquipments.Where(b => b.BillOfLading.IsCurrentRevision).Count() > 0;
-                e.IsHardwareKit = e.HardwareKit != null;
-                e.IsAssociatedToHardwareKit = e.HardwareKitEquipments.Where(h => h.HardwareKit.IsCurrentRevision).FirstOrDefault() != null;
-                e.AssociatedHardwareKitNumber = e.IsAssociatedToHardwareKit ? e.HardwareKitEquipments.Where(h => h.HardwareKit.IsCurrentRevision).FirstOrDefault().HardwareKit.HardwareKitNumber : string.Empty;
             });
 
             equipmentModels
@@ -139,18 +140,18 @@ namespace WendtEquipmentTracking.App.Controllers
                 Notes = (x.Notes ?? string.Empty).ToUpperInvariant(),
                 ShippedFrom = (x.ShippedFrom ?? string.Empty).ToUpperInvariant(),
                 ShippingTagNumber = (x.ShippingTagNumber ?? string.Empty).ToUpperInvariant(),
-                WorkOrderNumber = (x.WorkOrderNumber ?? string.Empty).ToUpperInvariant()
+                WorkOrderNumber = (x.WorkOrderNumber ?? string.Empty).ToUpperInvariant(),
+
+                HasBillOfLading = x.HasBillOfLading,
+                HasBillOfLadingInStorage = x.HasBillOfLadingInStorage,
+                IsHardwareKit = x.IsHardwareKit,
+                IsAssociatedToHardwareKit = x.IsAssociatedToHardwareKit,
+                AssociatedHardwareKitNumber = x.AssociatedHardwareKitNumber
             });
 
             equipmentModels.ToList().ForEach(e =>
             {
                 e.SetIndicators(projectBO.ProjectNumber, projectBO.IsCustomsProject);
-                e.HasBillOfLading = e.BillOfLadingEquipments.Where(b => b.BillOfLading.IsCurrentRevision).Count() > 0;
-                e.IsHardwareKit = e.HardwareKit != null;
-                e.IsAssociatedToHardwareKit = e.HardwareKitEquipments.Where(h => h.HardwareKit.IsCurrentRevision).FirstOrDefault() != null;
-                e.AssociatedHardwareKitNumber = e.IsAssociatedToHardwareKit ? e.HardwareKitEquipments.Where(h => h.HardwareKit.IsCurrentRevision).FirstOrDefault().HardwareKit.HardwareKitNumber : string.Empty;
-                e.BillOfLadingEquipments = null;
-                e.HardwareKitEquipments = null;
             });
 
             equipmentModels
@@ -245,15 +246,16 @@ namespace WendtEquipmentTracking.App.Controllers
                             Notes = (newEquipmentBO.Notes ?? string.Empty).ToUpperInvariant(),
                             ShippedFrom = (newEquipmentBO.ShippedFrom ?? string.Empty).ToUpperInvariant(),
                             ShippingTagNumber = (newEquipmentBO.ShippingTagNumber ?? string.Empty).ToUpperInvariant(),
-                            WorkOrderNumber = (newEquipmentBO.WorkOrderNumber ?? string.Empty).ToUpperInvariant()
+                            WorkOrderNumber = (newEquipmentBO.WorkOrderNumber ?? string.Empty).ToUpperInvariant(),
+
+                            HasBillOfLading = newEquipmentBO.HasBillOfLading,
+                            HasBillOfLadingInStorage = newEquipmentBO.HasBillOfLadingInStorage,
+                            IsHardwareKit = newEquipmentBO.IsHardwareKit,
+                            IsAssociatedToHardwareKit = newEquipmentBO.IsAssociatedToHardwareKit,
+                            AssociatedHardwareKitNumber = newEquipmentBO.AssociatedHardwareKitNumber
                         };
 
                         newEquipmentModel.SetIndicators(projectBO.ProjectNumber, projectBO.IsCustomsProject);
-                        newEquipmentModel.HasBillOfLading = newEquipmentModel.BillOfLadingEquipments.Where(b => b.BillOfLading.IsCurrentRevision).Count() > 0;
-                        newEquipmentModel.IsHardwareKit = newEquipmentModel.HardwareKit != null;
-                        newEquipmentModel.IsAssociatedToHardwareKit = newEquipmentModel.HardwareKitEquipments.Where(h => h.HardwareKit.IsCurrentRevision).FirstOrDefault() != null;
-                        newEquipmentModel.AssociatedHardwareKitNumber = newEquipmentModel.IsAssociatedToHardwareKit ? newEquipmentModel.HardwareKitEquipments.Where(h => h.HardwareKit.IsCurrentRevision).FirstOrDefault().HardwareKit.HardwareKitNumber : string.Empty;
-
 
                         //check if there are any duplicates
                         var equipmentBOs = equipmentService.GetAll(user.ProjectId);
@@ -362,15 +364,16 @@ namespace WendtEquipmentTracking.App.Controllers
                             Notes = (updatedEquipmentBO.Notes ?? string.Empty).ToUpperInvariant(),
                             ShippedFrom = (updatedEquipmentBO.ShippedFrom ?? string.Empty).ToUpperInvariant(),
                             ShippingTagNumber = (updatedEquipmentBO.ShippingTagNumber ?? string.Empty).ToUpperInvariant(),
-                            WorkOrderNumber = (updatedEquipmentBO.WorkOrderNumber ?? string.Empty).ToUpperInvariant()
+                            WorkOrderNumber = (updatedEquipmentBO.WorkOrderNumber ?? string.Empty).ToUpperInvariant(),
+
+                            HasBillOfLading = updatedEquipmentBO.HasBillOfLading,
+                            HasBillOfLadingInStorage = updatedEquipmentBO.HasBillOfLadingInStorage,
+                            IsHardwareKit = updatedEquipmentBO.IsHardwareKit,
+                            IsAssociatedToHardwareKit = updatedEquipmentBO.IsAssociatedToHardwareKit,
+                            AssociatedHardwareKitNumber = updatedEquipmentBO.AssociatedHardwareKitNumber
                         };
 
                         updatedEquipmentModel.SetIndicators(projectBO.ProjectNumber, projectBO.IsCustomsProject);
-                        updatedEquipmentModel.HasBillOfLading = updatedEquipmentModel.BillOfLadingEquipments.Where(b => b.BillOfLading.IsCurrentRevision).Count() > 0;
-                        updatedEquipmentModel.IsHardwareKit = updatedEquipmentModel.HardwareKit != null;
-                        updatedEquipmentModel.IsAssociatedToHardwareKit = updatedEquipmentModel.HardwareKitEquipments.Where(h => h.HardwareKit.IsCurrentRevision).FirstOrDefault() != null;
-                        updatedEquipmentModel.AssociatedHardwareKitNumber = updatedEquipmentModel.IsAssociatedToHardwareKit ? updatedEquipmentModel.HardwareKitEquipments.Where(h => h.HardwareKit.IsCurrentRevision).FirstOrDefault().HardwareKit.HardwareKitNumber : string.Empty;
-
 
                         //check if there are any duplicates
                         var equipmentBOs = equipmentService.GetAll(user.ProjectId);

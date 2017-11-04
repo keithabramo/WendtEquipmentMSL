@@ -83,7 +83,7 @@ namespace WendtEquipmentTracking.BusinessLogic
             });
 
 
-            return hardwareKitBOs;
+            return hardwareKitBOs.ToList();
         }
 
         public HardwareKitBO GetById(int id)
@@ -131,7 +131,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                 })
             });
 
-            return hardwareKitBOs;
+            return hardwareKitBOs.ToList();
         }
 
         public void Update(HardwareKitBO hardwareKitBO)

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace WendtEquipmentTracking.BusinessLogic.BO
+﻿namespace WendtEquipmentTracking.BusinessLogic.BO
 {
     public class ProjectBO
     {
@@ -21,11 +19,5 @@ namespace WendtEquipmentTracking.BusinessLogic.BO
         public string ShipToBrokerEmail { get; set; }
         public bool IsCustomsProject { get; set; }
         public bool IncludeSoftCosts { get; set; }
-
-
-        public string CreatedBy { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public string ModifiedBy { get; set; }
-        public DateTime? ModifiedDate { get; set; }
     }
 }

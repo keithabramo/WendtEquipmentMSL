@@ -301,15 +301,9 @@ namespace WendtEquipmentTracking.App.Controllers
 
 
             //Get Data
-            var equipmentBOs = equipmentService
-                .GetAll(user.ProjectId)
-                .Where(e =>
-                        e.IsHardware
-                        && (e.HardwareKitEquipments == null
-                            || e.HardwareKitEquipments.Count() == 0
-                            || e.HardwareKitEquipments.Count(hke => hke.HardwareKit.IsCurrentRevision == true) == 0
-                           )
-                    );
+            var equipmentBOs = equipmentService.GetAll(user.ProjectId)
+                .Where(e => e.IsHardware && !e.IsAssociatedToHardwareKit && !e.IsHardwareKit);
+                       
 
             var hardwareGroups = equipmentBOs
                 .GroupBy(e => new { e.ShippingTagNumber, e.Description }, (key, g) => new HardwareKitGroupModel
@@ -343,16 +337,10 @@ namespace WendtEquipmentTracking.App.Controllers
             }
 
             //Get Data
-            var equipmentBOs = equipmentService
-                .GetAll(user.ProjectId)
-                .Where(e =>
-                        e.IsHardware
-                        && (e.HardwareKitEquipments == null
-                            || e.HardwareKitEquipments.Count() == 0
-                            || e.HardwareKitEquipments.Count(hke => hke.HardwareKit.IsCurrentRevision == true) == 0
-                           )
-                    );
+            var equipmentBOs = equipmentService.GetAll(user.ProjectId)
+                .Where(e => e.IsHardware && !e.IsAssociatedToHardwareKit && !e.IsHardwareKit);
 
+            
             var hardwareGroups = equipmentBOs.Where(hg => !model.HardwareGroups.Any(mhg => mhg.ShippingTagNumber == hg.ShippingTagNumber))
                 .GroupBy(e => new { e.ShippingTagNumber, e.Description }, (key, g) => new HardwareKitGroupModel
                 {
