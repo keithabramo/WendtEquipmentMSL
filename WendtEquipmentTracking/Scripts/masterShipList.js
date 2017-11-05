@@ -1,7 +1,7 @@
 ﻿$(function () {
 
     var MasterShipList = function () {
-        $.ajaxSetup({ cache: false });
+        //$.ajaxSetup({ cache: false });
 
         this.editsMade = false;
         this.editQueue = [];
@@ -58,62 +58,62 @@
 
 
             //edits made
-            $('.table').on('change', "> tbody > tr input, > tbody > tr select, > tbody > tr textarea", function () {
-                $this.editsMade = true;
-            });
+            //$('.table').on('change', "> tbody > tr input, > tbody > tr select, > tbody > tr textarea", function () {
+            //    $this.editsMade = true;
+            //});
 
             //checbox ready to ship filter
             $('#readyToShipFilter').on("change", function () {
-                table.DataTable().draw();
+                editorMSL.DataTable().draw();
             });
             $('#hardwareFilter').on("change", function () {
-                table.DataTable().draw();
+                editorMSL.DataTable().draw();
             });
 
             //autofill selection after finished event
-            table.DataTable().on('autoFill', function (e, datatable, cells) {
+            //table.DataTable().on('autoFill', function (e, datatable, cells) {
 
-                var value;
-                $.each(cells, function (i, cell) {
+            //    var value;
+            //    $.each(cells, function (i, cell) {
 
-                    var index = cell[0].index;
-                    var $cell = $(table.DataTable().cell(index.row, index.column).node());
+            //        var index = cell[0].index;
+            //        var $cell = $(table.DataTable().cell(index.row, index.column).node());
 
-                    if (i === 0) {
-                        value = $cell.find("select, input, textarea").val();
-                    } else {
-                        $cell.find("select, input, textarea").val(value).attr("value", value);
+            //        if (i === 0) {
+            //            value = $cell.find("select, input, textarea").val();
+            //        } else {
+            //            $cell.find("select, input, textarea").val(value).attr("value", value);
 
-                        var $clone = $cell.clone();
-                        $clone.find("textarea").val(value).text(value);
-                        table.DataTable().cell($cell).data(value).invalidate();
-                        $(table.DataTable().cell(index.row, index.column).node()).html($clone.html());
-                        $(table.DataTable().cell(index.row, index.column).node()).find("select").val(value);
+            //            var $clone = $cell.clone();
+            //            $clone.find("textarea").val(value).text(value);
+            //            table.DataTable().cell($cell).data(value).invalidate();
+            //            $(table.DataTable().cell(index.row, index.column).node()).html($clone.html());
+            //            $(table.DataTable().cell(index.row, index.column).node()).find("select").val(value);
 
-                        var $row = $(table.DataTable().row(index.row).node());
+            //            var $row = $(table.DataTable().row(index.row).node());
 
-                        $this.editQueue.push($row);
-                    }
+            //            $this.editQueue.push($row);
+            //        }
 
-                });
+            //    });
 
-                $this.updateRow.call($this, $this.editQueue.pop());
-            });
+            //    $this.updateRow.call($this, $this.editQueue.pop());
+            //});
 
 
             //saving an edited row if changes were made
-            $('.table tbody').on('blur', "tr", function () {
+            //$('.table tbody').on('blur', "tr", function () {
 
-                if ($this.editsMade) {
+            //    if ($this.editsMade) {
 
-                    $this.editsMade = false;
+            //        $this.editsMade = false;
 
-                    var $row = $(this);
+            //        var $row = $(this);
 
-                    $this.updateRow.call($this, $row);
+            //        $this.updateRow.call($this, $row);
 
-                }
-            });
+            //    }
+            //});
 
             //create row
             $('.table tfoot, .createButtonContainer').on('click', ".createSubmit", function () {

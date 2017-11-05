@@ -19,81 +19,51 @@
 <table class="table table-condensed table-hover table-bordered table-styled my-datatable masterShipList">
     <thead>
         <tr class="active">
-            <th class="equipmentNameWidth">
-                @Html.DisplayNameFor(model => model.EquipmentName)
-            </th>
-            <th class="priorityWidth">
-                @Html.DisplayNameFor(model => model.Priority)
-            </th>
-            <th class="releaseDateWidth">
-                @Html.DisplayNameFor(model => model.ReleaseDate)
-            </th>
-            <th class="drawingNumberWidth">
-                @Html.DisplayNameFor(model => model.DrawingNumber)
-            </th>
-            <th class="workOrderNumberWidth">
-                @Html.DisplayNameFor(model => model.WorkOrderNumber)
-            </th>
-            <th class="quantityWidth">
-                @Html.DisplayNameFor(model => model.Quantity)
-            </th>
-            <th class="shippingTagNumberWidth">
-                @Html.DisplayNameFor(model => model.ShippingTagNumber)
-            </th>
-            <th class="descriptionWidth">
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th class="unitWeightWidth">
-                @Html.DisplayNameFor(model => model.UnitWeight)
-            </th>
-            <th class="totalWeightWidth">
-                @Html.DisplayNameFor(model => model.TotalWeight)
-            </th>
-            <th class="totalWeightShippedWidth">
-                @Html.DisplayNameFor(model => model.TotalWeightShipped)
-            </th>
-            <th class="readyToShipWidth">
-                @Html.DisplayNameFor(model => model.ReadyToShip)
-            </th>
-            <th class="shippedQuantityWidth">
-                @Html.DisplayNameFor(model => model.ShippedQuantity)
-            </th>
-            <th class="leftToShipWidth">
-                @Html.DisplayNameFor(model => model.LeftToShip)
-            </th>
-            <th class="fullyShippedWidth">
-                @Html.DisplayNameFor(model => model.FullyShipped)
-            </th>
-            <th class="shippedFromWidth">
-                @Html.DisplayNameFor(model => model.ShippedFrom)
-            </th>
-            <th class="customsValueWidth">
-                @Html.DisplayNameFor(model => model.CustomsValue)
-            </th>
-            <th class="salePriceWidth">
-                @Html.DisplayNameFor(model => model.SalePrice)
-            </th>
-            <th class="htsCodeWidth">
-                @Html.DisplayNameFor(model => model.HTSCode)
-            </th>
-            <th class="countryOfOriginWidth">
-                @Html.DisplayNameFor(model => model.CountryOfOrigin)
-            </th>
-            <th class="notesWidth">
-                @Html.DisplayNameFor(model => model.Notes)
-            </th>
+            <th>Equipment</th>
+            <th>Priority</th>
+            <th>Release
+Date</th>
+            <th>Drawing #</th>
+            <th>Work
+Order #</th>
+            <th>Qty</th>
+            <th>Ship 
+Tag #</th>
+            <th>Description</th>
+            <th>Unit
+Wt</th>
+            <th>Total
+Wt</th>
+            <th>Total Wt
+Shipped</th>
+            <th>RTS</th>
+            <th>Ship
+Qty</th>
+            <th>Left To
+Ship</th>
+            <th>Fully
+Shipped</th>
+            <th>Shipped
+From</th>
+            <th>Customs
+Value</th>
+            <th>Sale
+Price</th>
+            <th>HTS</th>
+            <th>COO</th>
+            <th>Notes</th>
             <th class="noSearch">Delete</th>
             <th class="noSearch">BOL</th>
         </tr>
     </thead>
     <tbody>
     </tbody>
-    @if (Html.UserIsInRole(UserRoles.ReadWrite))
+    @*@if (Html.UserIsInRole(UserRoles.ReadWrite))
     {
         <tfoot>
             @Html.Action("Create")
         </tfoot>
-    }
+    }*@
 </table>
 
 
@@ -110,6 +80,6 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/form")
-    @Scripts.Render("~/bundles/table")
+    @Scripts.Render("~/bundles/editor")
     @Scripts.Render("~/bundles/masterShipList")
 }

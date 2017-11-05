@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using WendtEquipmentTracking.App.Common;
 using WendtEquipmentTracking.App.Models;
 using WendtEquipmentTracking.BusinessLogic;
 using WendtEquipmentTracking.BusinessLogic.Api;
@@ -404,6 +405,111 @@ namespace WendtEquipmentTracking.App.Controllers
 
                 return model;
             }
+        }
+
+
+
+        //
+        // GET: api/EquipmentApi/Editor
+        [HttpGet]
+        [HttpPost]
+        public DtResponse Editor()
+        {
+            var user = userService.GetCurrentUser();
+            var equipmentModels = new List<EquipmentModel>();
+
+
+            if (user != null)
+            {
+                var project = projectService.GetById(user.ProjectId);
+
+                var httpData = DatatableHelpers.HttpData();
+                Dictionary<string, object> data = httpData["data"] as Dictionary<string, object>;
+
+                var equipments = new List<EquipmentBO>();
+                foreach (string equipmentId in data.Keys)
+                {
+                    var row = data[equipmentId];
+                    var equipmentProperties = row as Dictionary<string, object>;
+
+                    var equipment = new EquipmentBO();
+
+                    equipment.EquipmentId = Convert.ToInt32(equipmentProperties["EquipmentId"]);
+                    equipment.CustomsValue = equipmentProperties["CustomsValue"].ToString().ToNullable<double>();
+                    equipment.FullyShipped = equipmentProperties["FullyShipped"].ToString() == "true" ? true : false;
+                    equipment.LeftToShip = equipmentProperties["LeftToShip"].ToString().ToNullable<double>();
+                    equipment.Priority = Convert.ToInt32(equipmentProperties["Priority"]);
+                    equipment.ProjectId = user.ProjectId;
+                    equipment.Quantity = equipmentProperties["Quantity"].ToString().ToNullable<int>();
+                    equipment.ReadyToShip = equipmentProperties["ReadyToShip"].ToString().ToNullable<int>();
+                    equipment.ReleaseDate = Convert.ToDateTime(equipmentProperties["ReleaseDate"]);
+                    equipment.SalePrice = equipmentProperties["SalePrice"].ToString().ToNullable<double>();
+                    equipment.ShippedQuantity = equipmentProperties["ShippedQuantity"].ToString().ToNullable<int>();
+                    equipment.TotalWeight = equipmentProperties["TotalWeight"].ToString().ToNullable<double>();
+                    equipment.TotalWeightShipped = equipmentProperties["TotalWeightShipped"].ToString().ToNullable<double>();
+                    equipment.UnitWeight = equipmentProperties["UnitWeight"].ToString().ToNullable<double>();
+                    equipment.CountryOfOrigin = equipmentProperties["CountryOfOrigin"].ToString();
+                    equipment.Description = equipmentProperties["Description"].ToString();
+                    equipment.DrawingNumber = equipmentProperties["DrawingNumber"].ToString();
+                    equipment.EquipmentName = equipmentProperties["EquipmentName"].ToString();
+                    equipment.HTSCode = equipmentProperties["HTSCode"].ToString();
+                    equipment.Notes = equipmentProperties["Notes"].ToString();
+                    equipment.ShippedFrom = equipmentProperties["ShippedFrom"].ToString();
+                    equipment.ShippingTagNumber = equipmentProperties["ShippingTagNumber"].ToString();
+                    equipment.WorkOrderNumber = equipmentProperties["WorkOrderNumber"].ToString();
+
+                    equipment.HasBillOfLading = equipmentProperties["HasBillOfLading"].ToString() == "true" ? true : false;
+                    equipment.HasBillOfLadingInStorage = equipmentProperties["HasBillOfLadingInStorage"].ToString() == "true" ? true : false;
+                    equipment.IsHardwareKit = equipmentProperties["IsHardwareKit"].ToString() == "true" ? true : false;
+                    equipment.IsAssociatedToHardwareKit = equipmentProperties["IsAssociatedToHardwareKit"].ToString() == "true" ? true : false;
+                    equipment.AssociatedHardwareKitNumber = equipmentProperties["AssociatedHardwareKitNumber"].ToString();
+
+                    //var equipment = equipmentProperties.ToObject<EquipmentBO>();
+
+                    equipments.Add(equipment);
+                }
+
+                equipmentService.UpdateAll(equipments);
+
+                equipmentModels = equipments.Select(x => new EquipmentModel
+                {
+                    EquipmentId = x.EquipmentId,
+                    CustomsValue = x.CustomsValue,
+                    FullyShipped = x.FullyShipped,
+                    LeftToShip = x.LeftToShip,
+                    Priority = x.Priority,
+                    ProjectId = x.ProjectId,
+                    Quantity = x.Quantity.HasValue ? x.Quantity.Value : 0,
+                    ReadyToShip = x.ReadyToShip,
+                    ReleaseDate = x.ReleaseDate,
+                    SalePrice = x.SalePrice,
+                    ShippedQuantity = x.ShippedQuantity,
+                    TotalWeight = x.TotalWeight,
+                    TotalWeightShipped = x.TotalWeightShipped,
+                    UnitWeight = x.UnitWeight,
+                    CountryOfOrigin = x.CountryOfOrigin,
+                    Description = x.Description,
+                    DrawingNumber = x.DrawingNumber,
+                    EquipmentName = x.EquipmentName,
+                    HTSCode = x.HTSCode,
+                    Notes = x.Notes,
+                    ShippedFrom = x.ShippedFrom,
+                    ShippingTagNumber = x.ShippingTagNumber,
+                    WorkOrderNumber = x.WorkOrderNumber,
+
+                    HasBillOfLading = x.HasBillOfLading,
+                    HasBillOfLadingInStorage = x.HasBillOfLadingInStorage,
+                    IsHardwareKit = x.IsHardwareKit,
+                    IsAssociatedToHardwareKit = x.IsAssociatedToHardwareKit,
+                    AssociatedHardwareKitNumber = x.AssociatedHardwareKitNumber,
+
+                }).ToList();
+
+                equipmentModels.ForEach(x => x.SetIndicators(project.ProjectNumber, project.IsCustomsProject));
+
+            }
+
+            return new DtResponse { data = equipmentModels };
         }
     }
 }

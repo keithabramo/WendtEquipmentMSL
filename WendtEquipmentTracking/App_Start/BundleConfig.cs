@@ -25,15 +25,25 @@ namespace WendtEquipmentTracking.App
 
             bundles.Add(new ScriptBundle("~/bundles/editor").Include(
                         "~/Scripts/datatablesAndEditor.min.js",
-                        "~/Scripts/jquery.floatThead.js",
-                        "~/Scripts/editor.js"));
+                        "~/Scripts/jquery.floatThead.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
+
+
+
+
             bundles.Add(new ScriptBundle("~/bundles/masterShipList").Include(
-                       "~/Scripts/mslRender.js",
+                        //"~/Scripts/mslRender.js",
+                        "~/Scripts/editorMSL.js",
                        "~/Scripts/masterShipList.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/workOrderPrices").Include(
+                        "~/Scripts/editorWorkOrderPrice.js"));
+
+
+
 
             bundles.Add(new ScriptBundle("~/bundles/hardwareKit").Include(
                        "~/Scripts/hardwareKit.js"));
@@ -50,8 +60,14 @@ namespace WendtEquipmentTracking.App
             bundles.Add(new ScriptBundle("~/bundles/project").Include(
                        "~/Scripts/project.js"));
 
+
+
+
             bundles.Add(new ScriptBundle("~/bundles/dropzone").Include(
                      "~/Scripts/dropzone/dropzone.js"));
+
+
+
 
             bundles.Add(new StyleBundle("~/Content/css")
                 .IncludeDirectory("~/Content/themes/base", "*.css")

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Web;
 
@@ -7,6 +8,21 @@ namespace WendtEquipmentTracking.App.Common
 {
     public static class DatatableHelpers
     {
+        public static T? ToNullable<T>(this string s) where T : struct
+        {
+            T? result = new T?();
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(s))
+                {
+                    TypeConverter conv = TypeDescriptor.GetConverter(typeof(T));
+                    result = (T)conv.ConvertFrom(s);
+                }
+            }
+            catch { }
+            return result;
+        }
+
         public static T ToObject<T>(this Dictionary<string, object> source)
             where T : class, new()
         {

@@ -224,8 +224,11 @@ div.dataTables_wrapper .dataTables_paginate {
 }
 
     .table-styled th {
-        vertical-align: top !important;
+        vertical-align: middle !important;
+        padding: 0 18px 0 10px;
         text-align: center;
+        white-space: pre;
+        cursor: pointer;
     }
 
     .table-styled tr td {
@@ -271,13 +274,6 @@ div.dataTables_wrapper .dataTables_paginate {
 .table.masterShipList .form-control {
     text-transform: uppercase;
 } 
-
-
-.my-datatable th {
-    cursor: pointer;
-}
-
-
 
 
 
