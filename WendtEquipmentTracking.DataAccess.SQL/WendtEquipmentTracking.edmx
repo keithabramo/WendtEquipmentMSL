@@ -60,7 +60,7 @@
           <Property Name="ReadyToShip" Type="float" />
           <Property Name="ShippedQuantity" Type="float" />
           <Property Name="LeftToShip" Type="float" />
-          <Property Name="FullyShipped" Type="bit" />
+          <Property Name="FullyShipped" Type="bit" Nullable="false" />
           <Property Name="CustomsValue" Type="float" />
           <Property Name="SalePrice" Type="float" />
           <Property Name="Notes" Type="nvarchar" MaxLength="255" />
@@ -420,7 +420,7 @@ warning 6013: The table/view 'WendtEquipmentTracking.dbo.HardwareCommercialCode2
             <End Role="Project" EntitySet="Projects" />
             <End Role="WorkOrderPrice" EntitySet="WorkOrderPrices" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="BillOfLading">
           <Key>
             <PropertyRef Name="BillOfLadingId" />
@@ -480,7 +480,7 @@ warning 6013: The table/view 'WendtEquipmentTracking.dbo.HardwareCommercialCode2
           <Property Name="ReadyToShip" Type="Double" />
           <Property Name="ShippedQuantity" Type="Double" />
           <Property Name="LeftToShip" Type="Double" />
-          <Property Name="FullyShipped" Type="Boolean" />
+          <Property Name="FullyShipped" Type="Boolean" Nullable="false" />
           <Property Name="CustomsValue" Type="Double" />
           <Property Name="SalePrice" Type="Double" />
           <Property Name="Notes" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
@@ -926,7 +926,7 @@ warning 6013: The table/view 'WendtEquipmentTracking.dbo.HardwareCommercialCode2
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

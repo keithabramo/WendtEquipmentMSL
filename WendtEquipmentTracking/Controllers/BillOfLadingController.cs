@@ -103,8 +103,8 @@ namespace WendtEquipmentTracking.App.Controllers
                         ShippingTagNumber = e.Equipment.ShippingTagNumber,
                         WorkOrderNumber = e.Equipment.WorkOrderNumber,
                         ReadyToShip = e.Equipment.ReadyToShip,
-                        LeftToShip = e.Equipment.LeftToShip,
-                        ShippedQuantity = e.Equipment.ShippedQuantity,
+                        LeftToShip = e.Equipment.LeftToShip.ToString(),
+                        ShippedQuantity = e.Equipment.ShippedQuantity.ToString(),
                         Quantity = e.Equipment.Quantity.HasValue ? e.Equipment.Quantity.Value : 0,
                         ShippedFrom = e.Equipment.ShippedFrom,
                         HTSCode = e.Equipment.HTSCode,
@@ -358,7 +358,7 @@ namespace WendtEquipmentTracking.App.Controllers
             //Get Data
             var equipmentBOs = equipmentService.GetAll(user.ProjectId).Where(e => e.ReadyToShip != null
                                                                     && e.ReadyToShip > 0
-                                                                    && !(e.FullyShipped ?? false)
+                                                                    && !e.FullyShipped
                                                                     && !e.IsHardware).ToList();
 
             var equipmentModels = equipmentBOs.Select(x => new EquipmentModel
@@ -366,16 +366,16 @@ namespace WendtEquipmentTracking.App.Controllers
                 EquipmentId = x.EquipmentId,
                 CustomsValue = x.CustomsValue,
                 FullyShipped = x.FullyShipped,
-                LeftToShip = x.LeftToShip,
+                LeftToShip = x.LeftToShip.ToString(),
                 Priority = x.Priority,
                 ProjectId = x.ProjectId,
                 Quantity = x.Quantity.HasValue ? x.Quantity.Value : 0,
                 ReadyToShip = x.ReadyToShip,
                 ReleaseDate = x.ReleaseDate,
                 SalePrice = x.SalePrice,
-                ShippedQuantity = x.ShippedQuantity,
-                TotalWeight = x.TotalWeight,
-                TotalWeightShipped = x.TotalWeightShipped,
+                ShippedQuantity = x.ShippedQuantity.ToString(),
+                TotalWeight = x.TotalWeight.ToString(),
+                TotalWeightShipped = x.TotalWeightShipped.ToString(),
                 UnitWeight = x.UnitWeight,
                 CountryOfOrigin = (x.CountryOfOrigin ?? string.Empty).ToUpperInvariant(),
                 Description = (x.Description ?? string.Empty).ToUpperInvariant(),
@@ -431,7 +431,7 @@ namespace WendtEquipmentTracking.App.Controllers
             //Get Data
             var equipmentBOs = equipmentService.GetAll(user.ProjectId).Where(e => e.ReadyToShip != null
                                                                     && e.ReadyToShip > 0
-                                                                    && !(e.FullyShipped ?? false)
+                                                                    && !e.FullyShipped
                                                                     && !e.IsHardware).ToList();
 
             var equipmentModels = equipmentBOs.Select(x => new EquipmentModel
@@ -439,16 +439,16 @@ namespace WendtEquipmentTracking.App.Controllers
                 EquipmentId = x.EquipmentId,
                 CustomsValue = x.CustomsValue,
                 FullyShipped = x.FullyShipped,
-                LeftToShip = x.LeftToShip,
+                LeftToShip = x.LeftToShip.ToString(),
                 Priority = x.Priority,
                 ProjectId = x.ProjectId,
                 Quantity = x.Quantity.HasValue ? x.Quantity.Value : 0,
                 ReadyToShip = x.ReadyToShip,
                 ReleaseDate = x.ReleaseDate,
                 SalePrice = x.SalePrice,
-                ShippedQuantity = x.ShippedQuantity,
-                TotalWeight = x.TotalWeight,
-                TotalWeightShipped = x.TotalWeightShipped,
+                ShippedQuantity = x.ShippedQuantity.ToString(),
+                TotalWeight = x.TotalWeight.ToString(),
+                TotalWeightShipped = x.TotalWeightShipped.ToString(),
                 UnitWeight = x.UnitWeight,
                 CountryOfOrigin = (x.CountryOfOrigin ?? string.Empty).ToUpperInvariant(),
                 Description = (x.Description ?? string.Empty).ToUpperInvariant(),

@@ -33,7 +33,11 @@ namespace WendtEquipmentTracking.App.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
+            var prioritiesBOs = priorityService.GetAll(user.ProjectId);
+            var priorities = prioritiesBOs.Select(p => p.PriorityNumber).OrderBy(p => p).ToList();
+
             ViewBag.ProjectNumber = projectService.GetById(user.ProjectId).ProjectNumber;
+            ViewBag.Priorities = priorities;
 
             return View();
         }
@@ -61,53 +65,40 @@ namespace WendtEquipmentTracking.App.Controllers
             });
         }
 
-        //
-        // GET: /Equipment/Template
-        [ChildActionOnly]
-        public ActionResult Template()
+       
+
+
+        //GET Equipment/BOLsAssociatedToEquipment/5
+        [HttpGet]
+        public ActionResult BOLsAssociatedToEquipment(int id)
         {
-            var user = userService.GetCurrentUser();
+            var equipment = equipmentService.GetById(id);
 
-            IEnumerable<int> priorities = new List<int>();
-            if (user != null)
+            var model = equipment.BillOfLadingEquipments.Select(x => new BillOfLadingEquipmentModel
             {
-                var prioritiesBOs = priorityService.GetAll(user.ProjectId);
-
-                priorities = prioritiesBOs.Select(p => p.PriorityNumber).OrderBy(p => p).ToList();
-            }
-
-
-            return PartialView(new EquipmentModel
-            {
-                Priorities = priorities
+                BillOfLadingEquipmentId = x.BillOfLadingEquipmentId,
+                BillOfLadingId = x.BillOfLadingId,
+                EquipmentId = x.EquipmentId,
+                Quantity = x.Quantity,
+                ShippedFrom = x.ShippedFrom,
+                BillOfLading = new BillOfLadingModel
+                {
+                    BillOfLadingId = x.BillOfLading.BillOfLadingId,
+                    BillOfLadingNumber = x.BillOfLading.BillOfLadingNumber,
+                    Carrier = x.BillOfLading.Carrier,
+                    DateShipped = x.BillOfLading.DateShipped,
+                    FreightTerms = x.BillOfLading.FreightTerms,
+                    IsCurrentRevision = x.BillOfLading.IsCurrentRevision,
+                    ProjectId = x.BillOfLading.ProjectId,
+                    Revision = x.BillOfLading.Revision,
+                    ToStorage = x.BillOfLading.ToStorage,
+                    TrailerNumber = x.BillOfLading.TrailerNumber
+                },
             });
+
+            return PartialView(model);
         }
 
-
-
-        // POST: Equipment/Delete/5
-        //[HttpPost]
-        //public ActionResult Delete(int id, EquipmentModel model)
-        //{
-        //    try
-        //    {
-        //        var equipment = equipmentService.GetById(id);
-
-        //        if (equipment == null)
-        //        {
-        //            return HttpNotFound();
-        //        }
-
-        //        equipmentService.Delete(id);
-
-        //        return RedirectToAction("Index");
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        HandleError("There was an error while attempting to delete this equipment", e);
-
-        //        return View(model);
-        //    }
-        //}
+        
     }
 }

@@ -63,11 +63,11 @@ namespace WendtEquipmentTracking.App.Models
 
 
         [DisplayName("Total Wt")]
-        public double? TotalWeight { get; set; }
+        public string TotalWeight { get; set; }
 
 
         [DisplayName("Total Wt Shipped")]
-        public double? TotalWeightShipped { get; set; }
+        public string TotalWeightShipped { get; set; }
 
 
         [DisplayName("RTS")]
@@ -75,15 +75,15 @@ namespace WendtEquipmentTracking.App.Models
 
 
         [DisplayName("Ship Qty")]
-        public double? ShippedQuantity { get; set; }
+        public string ShippedQuantity { get; set; }
 
 
         [DisplayName("Left To Ship")]
-        public double? LeftToShip { get; set; }
+        public string LeftToShip { get; set; }
 
 
         [DisplayName("Fully Shipped")]
-        public bool? FullyShipped { get; set; }
+        public bool FullyShipped { get; set; }
 
 
         [DisplayName("Customs Value")]
@@ -98,22 +98,42 @@ namespace WendtEquipmentTracking.App.Models
 
         [DisplayName("Customs Value")]
         [DataType(DataType.Currency)]
-
-        public double CustomsValueText
+        public string CustomsValueText
         {
             get
             {
-                return CustomsValue.HasValue ? CustomsValue.Value : 0;
+                return CustomsValue.HasValue ? CustomsValue.Value.ToString() : string.Empty;
             }
         }
+
         [DisplayName("Sale Price")]
         [DataType(DataType.Currency)]
 
-        public double SalePriceText
+        public string SalePriceText
         {
             get
             {
-                return SalePrice.HasValue ? SalePrice.Value : 0;
+                return SalePrice.HasValue ? SalePrice.Value.ToString() : string.Empty;
+            }
+        }
+
+        [DisplayName("Unit Wt")]
+        [DataType(DataType.Currency)]
+        public string UnitWeightText
+        {
+            get
+            {
+                return UnitWeight.HasValue ? UnitWeight.Value.ToString() : string.Empty;
+            }
+        }
+
+        [DisplayName("RTS")]
+        [DataType(DataType.Currency)]
+        public string ReadyToShipText
+        {
+            get
+            {
+                return ReadyToShip.HasValue ? ReadyToShip.Value.ToString() : string.Empty;
             }
         }
 
@@ -137,18 +157,7 @@ namespace WendtEquipmentTracking.App.Models
         {
             get
             {
-                if (!FullyShipped.HasValue)
-                {
-                    return "NA";
-                }
-                else if (FullyShipped.Value == true)
-                {
-                    return "YES";
-                }
-                else
-                {
-                    return "NO";
-                }
+                return FullyShipped ? "YES" : "NO";
             }
         }
 
@@ -203,39 +212,39 @@ namespace WendtEquipmentTracking.App.Models
             }
 
             //ship qty
-            if (ShippedQuantity > Quantity)
+            if (ShippedQuantity.ToNullable<double>() > Quantity)
             {
                 Indicators.ShippedQtyColor = IndicatorsModel.Colors.Red.ToString();
             }
 
             //left to ship
-            if (ShippedQuantity > Quantity)
+            if (ShippedQuantity.ToNullable<double>() > Quantity)
             {
                 Indicators.LeftToShipColor = IndicatorsModel.Colors.Red.ToString();
             }
 
             //fully shipped
-            if (ShippedQuantity > Quantity)
+            if (ShippedQuantity.ToNullable<double>() > Quantity)
             {
                 Indicators.FullyShippedColor = IndicatorsModel.Colors.Fuchsia.ToString();
             }
-            else if (FullyShipped.HasValue && FullyShipped.Value == false)
+            else if (!FullyShipped)
             {
                 Indicators.FullyShippedColor = IndicatorsModel.Colors.Pink.ToString();
             }
-            else if (!FullyShipped.HasValue || FullyShipped.Value == true)
+            else if (FullyShipped)
             {
                 Indicators.FullyShippedColor = IndicatorsModel.Colors.Purple.ToString();
             }
 
             //customs value
-            if (isCustomsProject && !(FullyShipped.HasValue && FullyShipped.Value == true) && !EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase) && (!CustomsValue.HasValue || CustomsValue.Value <= 0))
+            if (isCustomsProject && !FullyShipped && !EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase) && (!CustomsValue.HasValue || CustomsValue.Value <= 0))
             {
                 Indicators.CustomsValueColor = IndicatorsModel.Colors.Red.ToString();
             }
 
             //sales price
-            if (isCustomsProject && !(FullyShipped.HasValue && FullyShipped.Value == true) && !EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase) && (!SalePrice.HasValue || SalePrice.Value <= 0))
+            if (isCustomsProject && !FullyShipped && !EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase) && (!SalePrice.HasValue || SalePrice.Value <= 0))
             {
                 Indicators.SalePriceColor = IndicatorsModel.Colors.Red.ToString();
             }

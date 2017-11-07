@@ -63,6 +63,7 @@
             //    $(".dt-autofill-handle").style("top", $(".dt-autofill-handle").top() + 12 + "px");
             //    $("td.focus").removeClass("focus");
             //});
+
             var keyCodes = [];
 
             for (var i = 8; i <= 222; i++) {

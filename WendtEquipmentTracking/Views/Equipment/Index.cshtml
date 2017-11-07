@@ -58,27 +58,25 @@ Price</th>
     </thead>
     <tbody>
     </tbody>
-    @*@if (Html.UserIsInRole(UserRoles.ReadWrite))
+    @if (Html.UserIsInRole(UserRoles.ReadWrite))
     {
         <tfoot>
             @Html.Action("Create")
         </tfoot>
-    }*@
+    }
 </table>
 
-
-@*<div class="hidden">
-    @foreach (var item in Model.Where(m => m.BillOfLadingEquipments.Count() > 0).ToList())
-    {
-        <div id="@(item.EquipmentId)">
-            @Html.Partial("BOLsAssociatedToEquipment", item.BillOfLadingEquipments)
-        </div>
-    }
-
-    @Html.Action("Template")
-</div>*@
-
 @section Scripts {
+    <script type="text/javascript">
+
+        var priorities = [];
+
+        @foreach (var priority in ViewBag.Priorities)
+        {
+            @:priorities.push("@priority");
+        }
+
+    </script>
     @Scripts.Render("~/bundles/form")
     @Scripts.Render("~/bundles/editor")
     @Scripts.Render("~/bundles/masterShipList")

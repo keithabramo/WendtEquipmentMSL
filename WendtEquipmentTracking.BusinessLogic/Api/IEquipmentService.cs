@@ -6,7 +6,7 @@ namespace WendtEquipmentTracking.BusinessLogic.Api
     public interface IEquipmentService
     {
         int Save(EquipmentBO equipmentBO);
-        void SaveAll(IEnumerable<EquipmentBO> equipmentBO);
+        IEnumerable<int> SaveAll(IEnumerable<EquipmentBO> equipmentBO);
 
         void Update(EquipmentBO equipmentBO);
 
@@ -15,6 +15,9 @@ namespace WendtEquipmentTracking.BusinessLogic.Api
         void Delete(int id);
 
         IEnumerable<EquipmentBO> GetAll(int projectId);
+        IEnumerable<EquipmentBO> GetForDuplicateCheck(int projectId);
+
+        IEnumerable<EquipmentBO> GetByIds(IEnumerable<int> ids);
         IEnumerable<EquipmentBO> GetByBillOfLadingId(int billOfLadingId);
         IEnumerable<EquipmentBO> GetHardwareByShippingTagNumberAndDescription(int projectId, string shipTagNumber, string description);
         IEnumerable<EquipmentBO> GetHardwareByShippingTagNumberAndDescription(int projectId, string shipTagNumber, string description, int? hardwareKitId);

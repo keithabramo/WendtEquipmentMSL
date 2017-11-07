@@ -73,7 +73,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                 IsCurrentRevision = x.IsCurrentRevision,
                 ProjectId = x.ProjectId,
                 Revision = x.Revision,
-                HardwareKitEquipments = x.HardwareKitEquipments.Select(e => new HardwareKitEquipmentBO
+                HardwareKitEquipments = x.HardwareKitEquipments.Where(e => !e.Equipment.IsDeleted).Select(e => new HardwareKitEquipmentBO
                 {
                     EquipmentId = e.EquipmentId,
                     HardwareKitEquipmentId = e.HardwareKitEquipmentId,
@@ -122,7 +122,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                 IsCurrentRevision = x.IsCurrentRevision,
                 ProjectId = x.ProjectId,
                 Revision = x.Revision,
-                HardwareKitEquipments = x.HardwareKitEquipments.Select(e => new HardwareKitEquipmentBO
+                HardwareKitEquipments = x.HardwareKitEquipments.Where(e => !e.Equipment.IsDeleted).Select(e => new HardwareKitEquipmentBO
                 {
                     EquipmentId = e.EquipmentId,
                     HardwareKitEquipmentId = e.HardwareKitEquipmentId,

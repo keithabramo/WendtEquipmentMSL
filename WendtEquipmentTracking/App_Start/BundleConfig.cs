@@ -24,6 +24,7 @@ namespace WendtEquipmentTracking.App
                         "~/Scripts/table.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/editor").Include(
+                        "~/Scripts/moment.min.js",
                         "~/Scripts/datatablesAndEditor.min.js",
                         "~/Scripts/jquery.floatThead.js"));
 

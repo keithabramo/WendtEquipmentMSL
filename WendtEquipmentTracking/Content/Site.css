@@ -267,6 +267,16 @@ div.dataTables_wrapper .dataTables_paginate {
         cursor: pointer;
     }
 
+    .table-styled tfoot td {
+        padding: 0 !important;
+    }
+
+    .table-styled tfoot td .form-control {
+        height: 37px;
+        border-radius: 0;
+        font-size: 10px;
+    }
+
 .table.masterShipList tbody td {
     text-transform: uppercase;
 } 

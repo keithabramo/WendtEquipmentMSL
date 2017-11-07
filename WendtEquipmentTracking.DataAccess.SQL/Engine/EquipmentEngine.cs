@@ -68,10 +68,8 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
                 equipment.CreatedBy = ActiveDirectoryHelper.CurrentUserUsername();
                 equipment.ModifiedDate = now;
                 equipment.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
-
+                this.repository.Insert(equipment);
             }
-
-            this.repository.InsertAll(equipments);
 
         }
 

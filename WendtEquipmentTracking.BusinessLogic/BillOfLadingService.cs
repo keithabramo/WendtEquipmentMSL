@@ -160,7 +160,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                 Revision = x.Revision,
                 ToStorage = x.ToStorage,
                 TrailerNumber = x.TrailerNumber,
-                BillOfLadingEquipments = x.BillOfLadingEquipments.Select(e => new BillOfLadingEquipmentBO
+                BillOfLadingEquipments = x.BillOfLadingEquipments.Where(e => !e.Equipment.IsDeleted).Select(e => new BillOfLadingEquipmentBO
                 {
                     BillOfLadingEquipmentId = e.BillOfLadingEquipmentId,
                     BillOfLadingId = e.BillOfLadingId,
@@ -190,7 +190,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                 Revision = billOfLading.Revision,
                 ToStorage = billOfLading.ToStorage,
                 TrailerNumber = billOfLading.TrailerNumber,
-                BillOfLadingEquipments = billOfLading.BillOfLadingEquipments.Select(e => new BillOfLadingEquipmentBO
+                BillOfLadingEquipments = billOfLading.BillOfLadingEquipments.Where(e => !e.Equipment.IsDeleted).Select(e => new BillOfLadingEquipmentBO
                 {
                     BillOfLadingEquipmentId = e.BillOfLadingEquipmentId,
                     BillOfLadingId = e.BillOfLadingId,
@@ -219,7 +219,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                 Revision = x.Revision,
                 ToStorage = x.ToStorage,
                 TrailerNumber = x.TrailerNumber,
-                BillOfLadingEquipments = x.BillOfLadingEquipments.Select(e => new BillOfLadingEquipmentBO
+                BillOfLadingEquipments = x.BillOfLadingEquipments.Where(e => !e.Equipment.IsDeleted).Select(e => new BillOfLadingEquipmentBO
                 {
                     BillOfLadingEquipmentId = e.BillOfLadingEquipmentId,
                     BillOfLadingId = e.BillOfLadingId,
@@ -248,7 +248,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                 Revision = x.Revision,
                 ToStorage = x.ToStorage,
                 TrailerNumber = x.TrailerNumber,
-                BillOfLadingEquipments = x.BillOfLadingEquipments.Select(e => new BillOfLadingEquipmentBO
+                BillOfLadingEquipments = x.BillOfLadingEquipments.Where(e => !e.Equipment.IsDeleted).Select(e => new BillOfLadingEquipmentBO
                 {
                     BillOfLadingEquipmentId = e.BillOfLadingEquipmentId,
                     BillOfLadingId = e.BillOfLadingId,

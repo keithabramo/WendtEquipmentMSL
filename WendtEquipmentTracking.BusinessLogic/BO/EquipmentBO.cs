@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace WendtEquipmentTracking.BusinessLogic.BO
 {
@@ -21,7 +22,7 @@ namespace WendtEquipmentTracking.BusinessLogic.BO
         public double? ReadyToShip { get; set; }
         public double? ShippedQuantity { get; set; }
         public double? LeftToShip { get; set; }
-        public bool? FullyShipped { get; set; }
+        public bool FullyShipped { get; set; }
         public double? CustomsValue { get; set; }
         public double? SalePrice { get; set; }
         public string Notes { get; set; }
@@ -37,7 +38,7 @@ namespace WendtEquipmentTracking.BusinessLogic.BO
         public string AssociatedHardwareKitNumber { get; set; }
 
         //public HardwareKitBO HardwareKit { get; set; }
-        //public IEnumerable<BillOfLadingEquipmentBO> BillOfLadingEquipments { get; set; }
+        public IEnumerable<BillOfLadingEquipmentBO> BillOfLadingEquipments { get; set; }
         //public IEnumerable<HardwareKitEquipmentBO> HardwareKitEquipments { get; set; }
     }
 }

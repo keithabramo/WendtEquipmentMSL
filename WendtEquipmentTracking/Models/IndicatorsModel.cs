@@ -21,10 +21,6 @@
         public string FullyShippedColor { get; set; }
         public string CustomsValueColor { get; set; }
         public string SalePriceColor { get; set; }
-        public string CountyOfOriginColor { get; set; }
         public string WorkOrderNumberColor { get; set; }
-        public string BillOfLadingNumberColor { get; set; }
-        public string DateShippedNumberColor { get; set; }
-        public string ShippedFromColor { get; set; }
     }
 }
