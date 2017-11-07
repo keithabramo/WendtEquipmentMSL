@@ -163,13 +163,13 @@
 
                     $($this.dataTable.cell(row.index(), 0).node()).attr("class", data.Indicators.EquipmentNameColor);
                     $($this.dataTable.cell(row.index(), 4).node()).attr("class", data.Indicators.WorkOrderNumberColor);
-                    $($this.dataTable.cell(row.index(), 8).node()).attr("class", data.Indicators.UnitWeightColor);
-                    $($this.dataTable.cell(row.index(), 11).node()).attr("class", data.Indicators.ReadyToShipColor);
-                    $($this.dataTable.cell(row.index(), 12).node()).attr("class", "active " + data.Indicators.ShippedQtyColor);
-                    $($this.dataTable.cell(row.index(), 13).node()).attr("class", "active " + data.Indicators.LeftToShipColor);
+                    $($this.dataTable.cell(row.index(), 8).node()).attr("class", "text-right " + data.Indicators.UnitWeightColor);
+                    $($this.dataTable.cell(row.index(), 11).node()).attr("class", "text-right " + data.Indicators.ReadyToShipColor);
+                    $($this.dataTable.cell(row.index(), 12).node()).attr("class", "text-right active " + data.Indicators.ShippedQtyColor);
+                    $($this.dataTable.cell(row.index(), 13).node()).attr("class", "text-right active " + data.Indicators.LeftToShipColor);
                     $($this.dataTable.cell(row.index(), 14).node()).attr("class", "active " + data.Indicators.FullyShippedColor);
-                    $($this.dataTable.cell(row.index(), 16).node()).attr("class", "active " + data.Indicators.CustomsValueColor);
-                    $($this.dataTable.cell(row.index(), 17).node()).attr("class", "active " + data.Indicators.SalePriceColor);
+                    $($this.dataTable.cell(row.index(), 16).node()).attr("class", "text-right active " + data.Indicators.CustomsValueColor);
+                    $($this.dataTable.cell(row.index(), 17).node()).attr("class", "text-right active " + data.Indicators.SalePriceColor);
 
 
                
@@ -330,49 +330,50 @@
                             $(cell).addClass(rowData.Indicators.WorkOrderNumberColor);
                         }
                     },
-                    { data: "Quantity", "targets": 5 },
+                    { data: "Quantity", "targets": 5, className: "text-right" },
                     { data: "ShippingTagNumber", "targets": 6 },
                     { data: "Description", "targets": 7 },
                     {
-                        data: "UnitWeightText", "targets": 8,
+                        data: "UnitWeightText", "targets": 8, className: "text-right",
                         createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                             $(cell).addClass(rowData.Indicators.UnitWeightColor);
                         }
                     },
-                    { data: "TotalWeight", "targets": 9, className: "active" },
-                    { data: "TotalWeightShipped", "targets": 10, className: "active" },
+                    { data: "TotalWeight", "targets": 9, className: "active text-right" },
+                    { data: "TotalWeightShipped", "targets": 10, className: "active text-right" },
                     {
-                        data: "ReadyToShipText", "targets": 11,
+                        data: "ReadyToShipText", "targets": 11, className: "text-right",
                         createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                             $(cell).addClass(rowData.Indicators.ReadyToShipColor);
                         }
                     },
                     {
-                        data: "ShippedQuantity", "targets": 12, className: "active",
+                        data: "ShippedQuantity", "targets": 12, className: "active text-right",
                         createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                             $(cell).addClass(rowData.Indicators.ShippedQtyColor);
                         }
                     },
                     {
-                        data: "LeftToShip", "targets": 13, className: "active",
+                        data: "LeftToShip", "targets": 13, className: "active text-right",
                         createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                             $(cell).addClass(rowData.Indicators.LeftToShipColor);
                         }
                     },
-                    { data: "FullyShippedText", "targets": 14, className: "active",
+                    {
+                        data: "FullyShippedText", "targets": 14, className: "active",
                         createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                             $(cell).addClass(rowData.Indicators.FullyShippedColor);
                         }
                      },
                     { data: "ShippedFrom", "targets": 15 },
                     {
-                        data: "CustomsValueText", "targets": 16, className: "active",
+                        data: "CustomsValueText", "targets": 16, className: "active text-right",
                         createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                             $(cell).addClass(rowData.Indicators.CustomsValueColor);
                         }
                     },
                     {
-                        data: "SalePriceText", "targets": 17, className: "active",
+                        data: "SalePriceText", "targets": 17, className: "active text-right",
                         createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                             $(cell).addClass(rowData.Indicators.SalePriceColor);
                         }
@@ -399,7 +400,7 @@
                 ],
                 dom: "<'row'<'col-sm-5 text-left custom'f><'col-sm-3 text-center'i><'col-sm-4 text-right'l>>" +
                                          "<'row'<'col-sm-12'tr>>" +
-                                         "<'row'<'col-sm-2 text-left createButtonContainer'><'col-sm-10 text-center'p>>"
+                                         "<'row bottom-section'<'col-sm-2 text-left createButtonContainer'><'col-sm-10 text-center'p>>"
             };
 
             this.dataTable = $(".table.my-datatable").DataTable(mslSettings);

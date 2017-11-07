@@ -212,7 +212,9 @@ div.dataTables_wrapper .dataTables_paginate {
     text-align: inherit;
 }
 
-
+div.dataTables_wrapper .bottom-section {
+    padding: 15px 0;
+}
 
 
 
