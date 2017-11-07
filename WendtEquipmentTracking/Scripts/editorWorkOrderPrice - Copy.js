@@ -1,12 +1,20 @@
 ﻿$(function () {
 
-    var Editor = function () {
+    var EditorWorkOrderPrice = function () {
 
-        this.datatable;
+        this.dataTable;
         this.editor;
+
+        this.DataTable = function () {
+            return this.dataTable;
+        };
 
         this.initStyles = function () {
             var $this = this;
+
+
+            this.initEditor();
+            this.initDatatable();
         }
 
         this.initEvents = function () {
@@ -16,16 +24,18 @@
                 $this.editor
                     .title('Delete row')
                     .buttons('Confirm delete')
-                    .message('Are you sure you want to delete this record?')
+                    .message('Are you sure you want to delete this equipment record?')
                     .remove($(this).closest("tr"));
             });
 
-            this.datatable.columns().every(function () {
+            this.dataTable.columns().every(function () {
                 var column = this;
 
                 var $input = $("thead tr").eq(0).find("th").eq(this.index()).find("input");
 
+                //var timeout = 0;
                 $input.on('keyup change input search', function () {
+                    //clearTimeout(timeout);
                     var searchInput = this;
 
                     if ($(this).closest("thead").length > 0) {
@@ -34,18 +44,51 @@
                         $this.index = -1;
                     }
 
+                    //timeout = setTimeout(function () {
+
                     if (column.search() !== searchInput.value) {
                         column.search(searchInput.value).draw();
                     }
+                    //}, 1000);
+
+
                 });
             });
 
         }
 
-        this.initEditor = function (settings) {
-
-            var editorSettings = $.extend(true, {
+        this.initEditor = function () {
+            this.editor = new $.fn.dataTable.Editor({
+                ajax: {
+                    url: ROOT_URL + "api/WorkOrderPriceApi/Editor",
+                    dataSrc: ""
+                },
                 table: '.table.my-datatable',
+                idSrc: 'WorkOrderPriceId',
+                fields: [
+                    {
+                        label: "Work Order Price Id",
+                        name: "WorkOrderPriceId"
+                    }, {
+                        label: "Project Id",
+                        name: "ProjectId"
+                    }, {
+                        label: "Work Order Number",
+                        name: "WorkOrderNumber"
+                    }, {
+                        label: "Sales+Soft Costs",
+                        name: "CostPrice"
+                    }, {
+                        label: "Sale Price",
+                        name: "SalePrice"
+                    }, {
+                        label: "Released %",
+                        name: "ReleasedPercent"
+                    }, {
+                        label: "Shipped %",
+                        name: "ShippedPercent"
+                    }
+                ],
                 formOptions: {
                     inline: {
                         onReturn: "submit",
@@ -57,12 +100,10 @@
                         submit: "allIfChanged"
                     }
                 }
-            }, settings)
-
-            this.editor = new $.fn.dataTable.Editor(editorSettings);
+            });
         }
 
-        this.initDatatable = function (settings) {
+        this.initDatatable = function () {
             var $this = this;
             var keyCodes = [];
 
@@ -72,19 +113,32 @@
                 }
             }
 
-            var datatableSettings = $.extend(true, {
+            this.dataTable = $(".table.my-datatable").DataTable({
                 lengthMenu: [[100, 500, -1], [100, 500, "All"]],
                 pageLength: 100,
                 deferRender: true,
                 fixedHeader: true,
+                ajax: {
+                    url: ROOT_URL + "api/WorkOrderPriceApi/Table",
+                    dataSrc: ""
+                },
+                rowId: 'WorkOrderPriceId',
                 keys: {
-                    editor: this.editor,
+                    editor: editor,
                     keys: keyCodes,
                     editOnFocus: true
                 },
                 autoFill: {
-                    editor: this.editor
+                    editor: editor
                 },
+
+                columns: [
+                    { data: "WorkOrderNumber" },
+                    { data: "CostPrice" },
+                    { data: "SalePrice" },
+                    { data: "ReleasedPercent" },
+                    { data: "ShippedPercent" }
+                ],
                 drawCallback: function () {
                     $(".dataTables_filter input, .dataTables_length select").addClass("form-control input-sm");
 
@@ -97,20 +151,15 @@
                     }
 
                 },
-                dom: "<'row'<'col-sm-5 text-left custom'f><'col-sm-3 text-center'i><'col-sm-4 text-right'l>>" +
+                dom: "<'row'<'col-sm-4 text-left custom'f><'col-sm-4 text-center'i><'col-sm-4 text-right'l>>" +
                      "<'row'<'col-sm-12'tr>>" +
                      "<'row bottom-section'<'col-sm-12 text-center'p>>"
 
-            }, settings);
-
-            this.datatable = $(".table.my-datatable").DataTable(datatableSettings);
+            });
 
 
             delete $.fn.dataTable.AutoFill.actions.fillHorizontal;
             delete $.fn.dataTable.AutoFill.actions.increment;
-
-            this.initStyles();
-            this.initEvents();
         }
 
         this.createColumnFilters = function () {
@@ -128,15 +177,16 @@
                     }
                 });
 
-                $searchHeader.find("th").attr("tabindex", "-1").removeClass("sorting sorting_desc sorting_asc");
+                $searchHeader.find("th").removeClass("sorting sorting_desc sorting_asc");
 
                 $(".table.my-datatable thead").prepend($searchHeader);
             }
         };
 
-        
+        this.initStyles();
+        this.initEvents();
     }
 
-    editorMain = new Editor();
+    editorWorkOrderPrice = new EditorWorkOrderPrice();
 
 });

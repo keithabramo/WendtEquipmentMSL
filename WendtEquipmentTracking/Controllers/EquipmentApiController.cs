@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Web.Http;
 using WendtEquipmentTracking.App.Common;
@@ -16,13 +15,6 @@ namespace WendtEquipmentTracking.App.Controllers
         private IEquipmentService equipmentService;
         private IProjectService projectService;
         private IUserService userService;
-
-        private enum EditorActions
-        {
-            create,
-            edit,
-            remove
-        }
 
         public EquipmentApiController()
         {
@@ -176,20 +168,8 @@ namespace WendtEquipmentTracking.App.Controllers
                 equipments = equipmentService.GetByIds(equipmentIds).ToList();
 
 
-                var stopwatch = new Stopwatch();
-                stopwatch.Start();
-
                 //check all duplicates
                 var equipmentBOs = equipmentService.GetForDuplicateCheck(user.ProjectId);
-
-                stopwatch.Stop();
-                // Get the elapsed time as a TimeSpan value.
-                TimeSpan ts = stopwatch.Elapsed;
-
-                string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
-                ts.Hours, ts.Minutes, ts.Seconds,
-                ts.Milliseconds / 10);
-
                 equipmentModels = equipments.Select(x => new EquipmentModel
                 {
                     EquipmentId = x.EquipmentId,

@@ -156,6 +156,7 @@
     <Compile Include="Common\DatatableHelpers.cs" />
     <Compile Include="Common\DtRequest.cs" />
     <Compile Include="Common\DtResponse.cs" />
+    <Compile Include="Common\EditorActions.cs" />
     <Compile Include="Common\StatusMessage.cs" />
     <Compile Include="Common\HtmlHelperExtensions.cs" />
     <Compile Include="Common\ActionNav.cs" />
@@ -285,7 +286,10 @@
     <Content Include="Scripts\dropzone\dropzone.min.css" />
     <Content Include="Scripts\dropzone\dropzone.min.js" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
+    <Content Include="Scripts\editorMSL - Copy.js" />
     <Content Include="Scripts\editorMSL.js" />
+    <Content Include="Scripts\editor.js" />
+    <Content Include="Scripts\editorWorkOrderPrice - Copy.js" />
     <Content Include="Scripts\editorWorkOrderPrice.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
@@ -298,7 +302,6 @@
     <Content Include="Scripts\project.js" />
     <Content Include="Scripts\jquery.floatThead.js" />
     <Content Include="Scripts\mslRender.js" />
-    <Content Include="Scripts\editor.js" />
     <Content Include="Scripts\workOrderPrice.js" />
     <Content Include="Scripts\import.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />

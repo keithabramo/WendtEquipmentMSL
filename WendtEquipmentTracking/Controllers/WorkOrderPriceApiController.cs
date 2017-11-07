@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using WendtEquipmentTracking.App.Common;
@@ -13,11 +14,13 @@ namespace WendtEquipmentTracking.App.Controllers
     {
         private IWorkOrderPriceService workOrderPriceService;
         private IUserService userService;
+        private IProjectService projectService;
 
         public WorkOrderPriceApiController()
         {
             workOrderPriceService = new WorkOrderPriceService();
             userService = new UserService();
+            projectService = new ProjectService();
         }
 
         //
@@ -77,32 +80,64 @@ namespace WendtEquipmentTracking.App.Controllers
         [HttpPost]
         public DtResponse Editor()
         {
-            var httpData = DatatableHelpers.HttpData();
-            Dictionary<string, object> data = httpData["data"] as Dictionary<string, object>;
+            var user = userService.GetCurrentUser();
+            var workOrderPriceModels = new List<WorkOrderPriceModel>();
 
-            var workOrderPrices = new List<WorkOrderPriceBO>();
-            foreach (string workOrderPriceId in data.Keys)
+            if (user != null)
             {
-                var row = data[workOrderPriceId];
-                var workOrderPriceProperties = row as Dictionary<string, object>;
+                var project = projectService.GetById(user.ProjectId);
 
-                var workOrderPrice = workOrderPriceProperties.ToObject<WorkOrderPriceBO>();
+                var httpData = DatatableHelpers.HttpData();
+                Dictionary<string, object> data = httpData["data"] as Dictionary<string, object>;
+                var action = httpData["action"];
 
-                workOrderPrices.Add(workOrderPrice);
+
+                var workOrderPrices = new List<WorkOrderPriceBO>();
+                foreach (string workOrderPriceId in data.Keys)
+                {
+                    var row = data[workOrderPriceId];
+                    var workOrderPriceProperties = row as Dictionary<string, object>;
+
+                    WorkOrderPriceBO workOrderPrice = new WorkOrderPriceBO();
+
+                    workOrderPrice.WorkOrderPriceId = !string.IsNullOrWhiteSpace(workOrderPriceProperties["WorkOrderPriceId"].ToString()) ? Convert.ToInt32(workOrderPriceProperties["WorkOrderPriceId"]) : 0;
+                    workOrderPrice.CostPrice = !string.IsNullOrWhiteSpace(workOrderPriceProperties["CostPrice"].ToString()) ? Convert.ToDouble(workOrderPriceProperties["CostPrice"]) : 0;
+                    workOrderPrice.ProjectId = user.ProjectId;
+                    workOrderPrice.ReleasedPercent = !string.IsNullOrWhiteSpace(workOrderPriceProperties["ReleasedPercent"].ToString()) ? Convert.ToDouble(workOrderPriceProperties["ReleasedPercent"]) : 0;
+                    workOrderPrice.SalePrice = !string.IsNullOrWhiteSpace(workOrderPriceProperties["SalePrice"].ToString()) ? Convert.ToDouble(workOrderPriceProperties["SalePrice"]) : 0;
+                    workOrderPrice.ShippedPercent = !string.IsNullOrWhiteSpace(workOrderPriceProperties["ShippedPercent"].ToString()) ? Convert.ToDouble(workOrderPriceProperties["ShippedPercent"]) : 0;
+                    workOrderPrice.WorkOrderNumber = workOrderPriceProperties["WorkOrderNumber"].ToString();
+
+
+                    workOrderPrices.Add(workOrderPrice);
+                }
+
+
+                if (action.Equals(EditorActions.edit.ToString()))
+                {
+                    workOrderPriceService.UpdateAll(workOrderPrices);
+                }
+                else if (action.Equals(EditorActions.create.ToString()))
+                {
+                    workOrderPriceService.SaveAll(workOrderPrices);
+                }
+                else if (action.Equals(EditorActions.remove.ToString()))
+                {
+                    workOrderPriceService.Delete(workOrderPrices.FirstOrDefault().WorkOrderPriceId);
+                }
+
+
+                workOrderPriceModels = workOrderPrices.Select(x => new WorkOrderPriceModel
+                {
+                    CostPrice = x.CostPrice,
+                    ProjectId = x.ProjectId,
+                    ReleasedPercent = x.ReleasedPercent,
+                    SalePrice = x.SalePrice,
+                    ShippedPercent = x.ShippedPercent,
+                    WorkOrderNumber = x.WorkOrderNumber,
+                    WorkOrderPriceId = x.WorkOrderPriceId
+                }).ToList();
             }
-
-            workOrderPriceService.UpdateAll(workOrderPrices);
-
-            var workOrderPriceModels = workOrderPrices.Select(x => new WorkOrderPriceModel
-            {
-                CostPrice = x.CostPrice,
-                ProjectId = x.ProjectId,
-                ReleasedPercent = x.ReleasedPercent,
-                SalePrice = x.SalePrice,
-                ShippedPercent = x.ShippedPercent,
-                WorkOrderNumber = x.WorkOrderNumber,
-                WorkOrderPriceId = x.WorkOrderPriceId
-            });
 
             return new DtResponse { data = workOrderPriceModels };
         }
