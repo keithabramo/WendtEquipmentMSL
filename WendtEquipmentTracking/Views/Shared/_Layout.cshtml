@@ -55,20 +55,9 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-12 center-block">
-                @if (!string.IsNullOrEmpty(ViewBag.StatusMessage))
+                @if (!string.IsNullOrEmpty(TempData["StatusMessage"]?.ToString()))
                 {
-                    if(ViewBag.StatusCode.ToString() == StatusCodes.Success.ToString())
-                    {
-                        <div class="alert alert-success" role="alert">@ViewBag.StatusMessage</div>
-                    }
-                    else if (ViewBag.StatusCode.ToString() == StatusCodes.Information.ToString())
-                    {
-                        <div class="alert alert-info" role="alert">@ViewBag.StatusMessage</div>
-                    }
-                    else if (ViewBag.StatusCode.ToString() == StatusCodes.Error.ToString())
-                    {
-                        <div class="alert alert-danger" role="alert">@ViewBag.StatusMessage</div>
-                    }
+                    @Html.Partial("MessagePartial")
                 }
                 @RenderBody()
             </div>

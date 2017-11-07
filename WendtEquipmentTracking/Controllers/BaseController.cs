@@ -15,32 +15,32 @@ namespace WendtEquipmentTracking.App.Controllers
 
         protected void SuccessMessage(string message)
         {
-            ViewData.SetStatusMessage(message, StatusCodes.Success);
+            TempData.SetStatusMessage(message, StatusCodes.Success);
         }
 
         protected void InformationMessage(string message)
         {
-            ViewData.SetStatusMessage(message, StatusCodes.Information);
+            TempData.SetStatusMessage(message, StatusCodes.Information);
         }
 
         protected void ErrorMessage(string message)
         {
-            ViewData.SetStatusMessage(message, StatusCodes.Error);
+            TempData.SetStatusMessage(message, StatusCodes.Error);
         }
 
 
         protected void HandleError(string clientMessage, Exception e)
         {
-            var guid = new Guid();
-            ViewData.SetStatusMessage(clientMessage + ". If this issue continues please give the following issue ID to your system administrator: " + guid, StatusCodes.Error);
+            var guid = Guid.NewGuid();
+            TempData.SetStatusMessage(clientMessage + ". If this issue continues please give the following issue ID to your system administrator: " + guid, StatusCodes.Error);
 
             logger.Error("MSL Controller Error - GUID: " + guid + " User: " + ActiveDirectoryHelper.CurrentUserUsername() + " Exception: ", e);
         }
 
         protected void HandleError(string clientMessage, ModelStateDictionary modelState)
         {
-            var guid = new Guid();
-            ViewData.SetStatusMessage(clientMessage + ". If this issue continues please give the following issue ID to your system administrator: " + guid, StatusCodes.Error);
+            var guid = Guid.NewGuid();
+            TempData.SetStatusMessage(clientMessage + ". If this issue continues please give the following issue ID to your system administrator: " + guid, StatusCodes.Error);
 
             var errors = string.Join(";", ModelState.Where(v => v.Value.Errors.Count() > 0).ToList().Select(v => v.Key + " : " + v.Value.Errors.First().ErrorMessage));
             logger.Error("Custom ModelState Errors - GUID: " + guid + " User: " + ActiveDirectoryHelper.CurrentUserUsername() + " Errors: " + errors);

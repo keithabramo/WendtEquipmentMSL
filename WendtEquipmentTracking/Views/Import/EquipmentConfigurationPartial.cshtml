@@ -1,12 +1,13 @@
 ﻿@model EquipmentImportModel
 
-@*@if (Model.Status == SuccessStatus.Error)
+@if (!string.IsNullOrEmpty(TempData["StatusMessage"]?.ToString()))
 {
-    <p class="alert-danger alert"> There was an error while trying to upload your document: @Model.Errors.FirstOrDefault().Message </p>
+    @Html.Partial("MessagePartial")
 }
 else
-{*@
-    @using (Ajax.BeginForm("ConfigureEquipment", new AjaxOptions { UpdateTargetId = "equipmentRows", InsertionMode = InsertionMode.Replace, OnComplete = "OnComplete" }))
+{
+
+    using (Ajax.BeginForm("ConfigureEquipment", new AjaxOptions { UpdateTargetId = "equipmentRows", InsertionMode = InsertionMode.Replace, OnComplete = "OnComplete" }))
     {
 
         @Html.AntiForgeryToken()
@@ -72,4 +73,4 @@ else
         </div>
     }
 
-@*}*@
+}

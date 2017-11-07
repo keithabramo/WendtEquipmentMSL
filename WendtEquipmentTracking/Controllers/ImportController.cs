@@ -86,8 +86,11 @@ namespace WendtEquipmentTracking.App.Controllers
                         ModelState.AddModelError("File", "You must specify a file.");
                     }
                 }
+                else
+                {
+                    HandleError("There was an issue while trying to load this equipment file", ModelState);
+                }
 
-                HandleError("There was an issue while trying to load this equipment file", ModelState);
 
                 return PartialView("EquipmentConfigurationPartial", equipmentImportModel);
             }
@@ -143,7 +146,7 @@ namespace WendtEquipmentTracking.App.Controllers
                         TotalWeightShipped = x.TotalWeightShipped.ToString(),
                         UnitWeight = x.UnitWeight,
                         WorkOrderNumber = x.WorkOrderNumber
-                    });
+                    }).ToList();
 
 
 
@@ -157,25 +160,26 @@ namespace WendtEquipmentTracking.App.Controllers
                     }
 
 
-                    equipmentModels.ToList().ForEach(w =>
+                    equipmentModels.ForEach(w =>
                     {
                         w.Checked = true;
                         w.Priorities = priorities;
                     });
 
+                 
                     return PartialView("ImportEquipmentPartial", equipmentModels);
 
                 }
 
                 HandleError("There was an issue while trying to setup this equipment file", ModelState);
 
-                return PartialView("EquipmentConfigurationPartial", model);
+                return PartialView("ImportEquipmentPartial", new List<EquipmentSelectionModel>());
             }
             catch (Exception e)
             {
                 HandleError("There was an error while trying to setup this equipment file", e);
 
-                return PartialView("EquipmentConfigurationPartial", model);
+                return PartialView("ImportEquipmentPartial", new List<EquipmentSelectionModel>());
             }
         }
 

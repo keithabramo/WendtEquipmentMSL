@@ -38,7 +38,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
             ViewBag.ProjectNumber = projectService.GetById(user.ProjectId).ProjectNumber;
             ViewBag.Priorities = priorities;
-
+            
             return View();
         }
 
@@ -64,9 +64,7 @@ namespace WendtEquipmentTracking.App.Controllers
                 Priorities = priorities
             });
         }
-
-       
-
+        
 
         //GET Equipment/BOLsAssociatedToEquipment/5
         [HttpGet]
@@ -98,7 +96,5 @@ namespace WendtEquipmentTracking.App.Controllers
 
             return PartialView(model);
         }
-
-        
     }
 }

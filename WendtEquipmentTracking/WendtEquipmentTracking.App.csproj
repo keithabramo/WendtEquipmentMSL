@@ -380,6 +380,7 @@
     <Content Include="Views\HardwareCommercialCode\Index.cshtml" />
     <Content Include="Views\Import\EquipmentConfigurationPartial.cshtml" />
     <Content Include="Views\WorkOrderPrice\Index.cshtml" />
+    <Content Include="Views\Shared\MessagePartial.cshtml" />
     <None Include="Web.Staging.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

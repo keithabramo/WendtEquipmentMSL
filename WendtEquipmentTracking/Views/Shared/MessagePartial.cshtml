@@ -1,0 +1,22 @@
+﻿<br />
+@if (TempData["StatusCode"].ToString() == StatusCodes.Success.ToString())
+{
+    <div class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>SUCCESS! </strong>@TempData["StatusMessage"]
+    </div>
+}
+else if (TempData["StatusCode"].ToString() == StatusCodes.Information.ToString())
+{
+    <div class="alert alert-info alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>INFO! </strong>@TempData["StatusMessage"]
+    </div>
+}
+else if (TempData["StatusCode"].ToString() == StatusCodes.Error.ToString())
+{
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>ERROR! </strong>@TempData["StatusMessage"]
+    </div>
+}

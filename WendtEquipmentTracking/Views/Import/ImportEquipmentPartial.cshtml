@@ -1,104 +1,111 @@
 ﻿@model IList<EquipmentSelectionModel>
 
-@if (Model.Count() > 0)
+@if (!string.IsNullOrEmpty(TempData["StatusMessage"]?.ToString()))
 {
-    <hr/>
-    <p>Review the records below. When you are ready, click "Import Equipment" to import.</p>
-
-    using (Html.BeginForm("SaveEquipment", "Import"))
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="form-group">
-            <table class="table table-condensed table-hover table-bordered table-styled">
-                <thead>
-                    <tr>
-                        <th class="noSearch">
-                            <input class="selectAll" type="checkbox" checked="checked" />
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model[0].EquipmentName)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model[0].Priority)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model[0].ReleaseDate)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model[0].DrawingNumber)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model[0].WorkOrderNumber)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model[0].Quantity)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model[0].ShippingTagNumber)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model[0].Description)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model[0].UnitWeight)
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @for (int i = 0; i < Model.Count(); i++)
-                    {
-                        <tr>
-                            <td>
-                                @Html.CheckBoxFor(modelItem => modelItem[i].Checked, htmlAttributes: new { @checked = "Checked" })
-                            </td>
-                            <td class="@(Model[i].EquipmentName == "DO NOT USE" ? "Red" : "")">
-                                @Html.EditorFor(modelItem => modelItem[i].EquipmentName, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(modelItem => modelItem[i].EquipmentName, "", new { @class = "text-danger" })
-                            </td>
-                            <td>
-                                @Html.DropDownListFor(modelItem => modelItem[i].Priority, new SelectList(Model[i].Priorities, Model[i].Priority), new { @class = "form-control" })
-                                @Html.ValidationMessageFor(modelItem => modelItem[i].Priority, "", new { @class = "text-danger" })
-                            </td>
-                            <td>
-                                @Html.EditorFor(modelItem => modelItem[i].ReleaseDate, new { htmlAttributes = new { @class = "form-control datePickerTable" } })
-                                @Html.ValidationMessageFor(modelItem => modelItem[i].ReleaseDate, "", new { @class = "text-danger" })
-                            </td>
-                            <td>
-                                @Html.EditorFor(modelItem => modelItem[i].DrawingNumber, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(modelItem => modelItem[i].DrawingNumber, "", new { @class = "text-danger" })
-                            </td>
-                            <td>
-                                @Html.EditorFor(modelItem => modelItem[i].WorkOrderNumber, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(modelItem => modelItem[i].WorkOrderNumber, "", new { @class = "text-danger" })
-                            </td>
-                            <td>
-                                @Html.EditorFor(modelItem => modelItem[i].Quantity, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(modelItem => modelItem[i].Quantity, "", new { @class = "text-danger" })
-                            </td>
-                            <td>
-                                @Html.EditorFor(modelItem => modelItem[i].ShippingTagNumber, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(modelItem => modelItem[i].ShippingTagNumber, "", new { @class = "text-danger" })
-                            </td>
-                            <td>
-                                @Html.EditorFor(modelItem => modelItem[i].Description, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(modelItem => modelItem[i].Description, "", new { @class = "text-danger" })
-                            </td>
-                            <td>
-                                @Html.EditorFor(modelItem => modelItem[i].UnitWeight, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(modelItem => modelItem[i].UnitWeight, "", new { @class = "text-danger" })
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-        <div class="form-group">
-            <input type="submit" value="Import Equipment" class="btn btn-primary" />
-        </div>
-    }
+    @Html.Partial("MessagePartial")
 }
 else
 {
-    <p>Sorry, no rows were found for import.</p>
+    if (Model.Count() > 0)
+    {
+        <hr/>
+        <p>Review the records below. When you are ready, click "Import Equipment" to import.</p>
+
+        using (Html.BeginForm("SaveEquipment", "Import"))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-group">
+                <table class="table table-condensed table-hover table-bordered table-styled">
+                    <thead>
+                        <tr>
+                            <th class="noSearch">
+                                <input class="selectAll" type="checkbox" checked="checked" />
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model[0].EquipmentName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model[0].Priority)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model[0].ReleaseDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model[0].DrawingNumber)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model[0].WorkOrderNumber)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model[0].Quantity)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model[0].ShippingTagNumber)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model[0].Description)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model[0].UnitWeight)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Count(); i++)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.CheckBoxFor(modelItem => modelItem[i].Checked, htmlAttributes: new { @checked = "Checked" })
+                                </td>
+                                <td class="@(Model[i].EquipmentName == "DO NOT USE" ? "Red" : "")">
+                                    @Html.EditorFor(modelItem => modelItem[i].EquipmentName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(modelItem => modelItem[i].EquipmentName, "", new { @class = "text-danger" })
+                                </td>
+                                <td>
+                                    @Html.DropDownListFor(modelItem => modelItem[i].Priority, new SelectList(Model[i].Priorities, Model[i].Priority), new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(modelItem => modelItem[i].Priority, "", new { @class = "text-danger" })
+                                </td>
+                                <td>
+                                    @Html.EditorFor(modelItem => modelItem[i].ReleaseDate, new { htmlAttributes = new { @class = "form-control datePickerTable" } })
+                                    @Html.ValidationMessageFor(modelItem => modelItem[i].ReleaseDate, "", new { @class = "text-danger" })
+                                </td>
+                                <td>
+                                    @Html.EditorFor(modelItem => modelItem[i].DrawingNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(modelItem => modelItem[i].DrawingNumber, "", new { @class = "text-danger" })
+                                </td>
+                                <td>
+                                    @Html.EditorFor(modelItem => modelItem[i].WorkOrderNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(modelItem => modelItem[i].WorkOrderNumber, "", new { @class = "text-danger" })
+                                </td>
+                                <td>
+                                    @Html.EditorFor(modelItem => modelItem[i].Quantity, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(modelItem => modelItem[i].Quantity, "", new { @class = "text-danger" })
+                                </td>
+                                <td>
+                                    @Html.EditorFor(modelItem => modelItem[i].ShippingTagNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(modelItem => modelItem[i].ShippingTagNumber, "", new { @class = "text-danger" })
+                                </td>
+                                <td>
+                                    @Html.EditorFor(modelItem => modelItem[i].Description, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(modelItem => modelItem[i].Description, "", new { @class = "text-danger" })
+                                </td>
+                                <td>
+                                    @Html.EditorFor(modelItem => modelItem[i].UnitWeight, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(modelItem => modelItem[i].UnitWeight, "", new { @class = "text-danger" })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Import Equipment" class="btn btn-primary" />
+            </div>
+        }
+    }
+    else
+    {
+        <p>Sorry, no rows were found for import.</p>
+    }
 }

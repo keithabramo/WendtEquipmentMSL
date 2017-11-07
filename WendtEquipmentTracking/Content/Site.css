@@ -231,6 +231,14 @@ div.dataTables_wrapper .dataTables_paginate {
         cursor: pointer;
     }
 
+    .table-styled.table-hover > tbody > tr:hover {
+        background-color: #f5f5ff;
+    }
+
+    /*.table-styled.table-hover > tbody > tr.disabled:hover {
+        background-color: #c2c2c2;
+    }*/
+
     .table-styled tr td {
         vertical-align: middle !important;
     }
@@ -259,6 +267,11 @@ div.dataTables_wrapper .dataTables_paginate {
         background-color: rgb(255, 51, 204) !important;
     }
 
+    .table-styled .hardwarekitLabel {
+        text-transform: capitalize;
+        white-space: nowrap;
+    }
+
     .table-styled .links a {
         white-space: nowrap;
     }
@@ -271,7 +284,11 @@ div.dataTables_wrapper .dataTables_paginate {
         padding: 0 !important;
     }
 
-    .table-styled tfoot td .form-control {
+    .table-styled > thead > tr:first-child > th {
+        padding: 0 !important;
+    }
+
+    .table-styled tfoot td .form-control, .table-styled thead th .form-control {
         height: 37px;
         border-radius: 0;
         font-size: 10px;

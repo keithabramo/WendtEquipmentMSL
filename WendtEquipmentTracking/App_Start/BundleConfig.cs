@@ -25,8 +25,9 @@ namespace WendtEquipmentTracking.App
 
             bundles.Add(new ScriptBundle("~/bundles/editor").Include(
                         "~/Scripts/moment.min.js",
-                        "~/Scripts/datatablesAndEditor.min.js",
-                        "~/Scripts/jquery.floatThead.js"));
+                        "~/Scripts/datatablesAndEditor.min.js"//,
+                        //"~/Scripts/jquery.floatThead.js"
+                        ));
 
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));

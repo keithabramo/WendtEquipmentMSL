@@ -139,11 +139,16 @@
             this.editor.on('preOpen', function (e, mode, action) {
                 var rowData = $this.dataTable.row($this.editor.modifier().row).data();
 
-                if ($.inArray($this.editor.modifier().column, $this.editableColumns) >= 0 || action === "remove") {
-                    return true;
-                } else {
-                    return false;
+                var editable = true;
+
+                if ($.inArray($this.editor.modifier().column, $this.editableColumns) < 0 && action !== "remove") {
+                    editable = false;
+                } else if (rowData.IsAssociatedToHardwareKit || rowData.IsHardwareKit) {
+                    editable = false;
                 }
+
+                return editable;
+
             });
 
             this.editor.on('postEdit', function (e, json, data) {
@@ -152,6 +157,8 @@
 
                     if (data.IsDuplicate) {
                         $(row.node()).attr("class", 'warning');
+                    } else {
+                        $(row.node()).removeClass('warning');
                     }
 
                     $($this.dataTable.cell(row.index(), 0).node()).attr("class", data.Indicators.EquipmentNameColor);
@@ -166,6 +173,34 @@
 
 
                
+            });
+
+            //search events
+            this.dataTable.columns().every(function () {
+                var column = this;
+
+                var $input = $("thead tr").eq(0).find("th").eq(this.index()).find("input");
+
+                //var timeout = 0;
+                $input.on('keyup change input search', function () {
+                    //clearTimeout(timeout);
+                    var searchInput = this;
+
+                    if ($(this).closest("thead").length > 0) {
+                        $this.index = $("thead input[type='text']").index($(this));
+                    } else {
+                        $this.index = -1;
+                    }
+
+                    //timeout = setTimeout(function () {
+
+                        if (column.search() !== searchInput.value) {
+                            column.search(searchInput.value).draw();
+                        }
+                    //}, 1000);
+
+
+                });
             });
 
 
@@ -210,7 +245,7 @@
                 formOptions: {
                     inline: {
                         onReturn: "submit",
-                        //onBlur: "submit",
+                        onBlur: "submit",
                         submit: "allIfChanged"
                     },
                     //used by autofill
@@ -222,6 +257,7 @@
         }
 
         this.initDatatable = function () {
+            var $this = this;
             var keyCodes = [];
 
             for (var i = 8; i <= 222; i++) {
@@ -238,8 +274,12 @@
                 rowId: 'EquipmentId',
                 keys: {
                     editor: this.editor,
+                    columns: this.editableColumns,
                     editOnFocus: true,
-                    keys: keyCodes,
+                    keys: keyCodes
+                },
+                autoFill: {
+                    editor: this.editor,
                     columns: this.editableColumns
                 },
                 autoWidth: false,
@@ -247,7 +287,7 @@
 
                     $(".dataTables_filter input, .dataTables_length select").addClass("form-control input-sm");
 
-
+                    $this.createColumnFilters();
 
                     if ($(".pagination li").length === 2) {
                         $(".pagination").parent().hide();
@@ -259,6 +299,9 @@
                     if (data.IsDuplicate) {
                         $(row).addClass('warning');
                     }
+                    if (data.IsAssociatedToHardwareKit || data.IsHardwareKit) {
+                        $(row).addClass('active');
+                    }
                 },
                 deferRender: true,
                 fixedHeader: true,
@@ -269,7 +312,13 @@
                     {
                         data: "EquipmentName", "targets": 0,
                         createdCell: function (cell, data, rowData, rowIndex, colIndex) {
-                            $(cell).addClass(rowData.Indicators.EquipmentNameColor);
+                            var $cell = $(cell);
+
+                            $cell.addClass(rowData.Indicators.EquipmentNameColor);
+
+                            if (rowData.IsAssociatedToHardwareKit) {
+                                $cell.append("<br><span class='text-info hardwarekitLabel'>Hardware Kit: " + rowData.AssociatedHardwareKitNumber + "</span>");
+                            }
                         }
                     },
                     { data: "Priority", "targets": 1 },
@@ -348,10 +397,6 @@
                         }
                     }
                 ],
-                autoFill: {
-                    editor: this.editor,
-                    columns: this.editableColumns
-                },
                 dom: "<'row'<'col-sm-5 text-left custom'f><'col-sm-3 text-center'i><'col-sm-4 text-right'l>>" +
                                          "<'row'<'col-sm-12'tr>>" +
                                          "<'row'<'col-sm-2 text-left createButtonContainer'><'col-sm-10 text-center'p>>"
@@ -362,6 +407,27 @@
             delete $.fn.dataTable.AutoFill.actions.fillHorizontal;
             delete $.fn.dataTable.AutoFill.actions.increment;
         }
+
+        this.createColumnFilters = function () {
+            if ($(".table.my-datatable thead tr").length === 1) {
+                var $searchHeader = $(".table.my-datatable thead tr").clone();
+
+                $searchHeader.find("th").each(function () {
+                    var title = $.trim($(this).text());
+                    var noSearch = $(this).hasClass("noSearch");
+
+                    if (title && !noSearch) {
+                        $(this).html('<input class="form-control" type="text" />');
+                    } else if (noSearch) {
+                        $(this).html("");
+                    }
+                });
+
+                $searchHeader.find("th").removeClass("sorting sorting_desc sorting_asc");
+
+                $(".table.my-datatable thead").prepend($searchHeader);
+            }
+        };
 
         this.initStyles();
         this.initEvents();
