@@ -19,6 +19,7 @@ namespace WendtEquipmentTracking.App
                         "~/Scripts/form.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/table").Include(
+                        "~/Scripts/moment.min.js",
                         "~/Scripts/datatablesAndEditor.min.js",
                         "~/Scripts/table.js"));
 
@@ -31,6 +32,10 @@ namespace WendtEquipmentTracking.App
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
+            bundles.Add(new ScriptBundle("~/bundles/dropzone").Include(
+                     "~/Scripts/dropzone/dropzone.js"));
+
+
 
 
 
@@ -38,35 +43,42 @@ namespace WendtEquipmentTracking.App
             bundles.Add(new ScriptBundle("~/bundles/masterShipList").Include(
                         "~/Scripts/editorMSL.js"
             ));
-
+            bundles.Add(new ScriptBundle("~/bundles/billOfLadingCreate").Include(
+                       "~/Scripts/editorBOLCreate.js"));
+            bundles.Add(new ScriptBundle("~/bundles/billOfLadingEdit").Include(
+                       "~/Scripts/editorBOLEdit.js"));
             bundles.Add(new ScriptBundle("~/bundles/workOrderPrices").Include(
                         "~/Scripts/editorWorkOrderPrice.js"));
 
 
-
+            bundles.Add(new ScriptBundle("~/bundles/billOfLadings").Include(
+                       "~/Scripts/tableBOL.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/hardwareKit").Include(
                        "~/Scripts/hardwareKit.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/billOfLading").Include(
-                       "~/Scripts/billOfLading.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/importEquipment").Include(
-                       "~/Scripts/importEquipmentTable.js",
-                       "~/Scripts/importEquipment.js"
-            ));
-
-            bundles.Add(new ScriptBundle("~/bundles/importWorkOrderPrice").Include(
-                       "~/Scripts/importWorkOrderPrice.js"));
-
             bundles.Add(new ScriptBundle("~/bundles/project").Include(
                        "~/Scripts/project.js"));
 
 
 
 
-            bundles.Add(new ScriptBundle("~/bundles/dropzone").Include(
-                     "~/Scripts/dropzone/dropzone.js"));
+
+
+
+
+            bundles.Add(new ScriptBundle("~/bundles/importEquipment").Include(
+                       "~/Scripts/importEquipmentTable.js",
+                       "~/Scripts/importEquipment.js"
+            ));
+            bundles.Add(new ScriptBundle("~/bundles/importWorkOrderPrice").Include(
+                       "~/Scripts/importWorkOrderPrice.js"));
+
+
+
+
+
+
+
 
 
 

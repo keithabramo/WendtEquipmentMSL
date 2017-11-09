@@ -162,6 +162,7 @@
                         $(row).addClass('danger');
                     }
                 },
+                autoWidth: false,
                 columnDefs: [
                     {
                         data: "EquipmentId",

@@ -37,7 +37,19 @@
                 data.doSubmit = $this.canSubmit;
             });
 
-            $("#save").on("click", function () {
+            editorMain.editor.on('postEdit', function (e, json, data) {
+
+                var row = editorMain.datatable.row("#" + data.WorkOrderPriceId);
+
+                if (data.IsDuplicate) {
+                    $(row.node()).attr("class", 'danger');
+                } else {
+                    $(row.node()).removeClass('danger');
+                }
+
+            });
+
+            $("#Import").on("click", function () {
 
                 $this.canSubmit = true;
 

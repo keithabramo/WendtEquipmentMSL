@@ -27,8 +27,13 @@ namespace WendtEquipmentTracking.App.Controllers
         //
         // GET: /BillOfLading/
 
-        public ActionResult Index()
+        public ActionResult Index(bool? ajaxSuccess)
         {
+            if (ajaxSuccess.HasValue && ajaxSuccess.Value)
+            {
+                SuccessMessage("Bill of Lading was successfully saved.");
+            }
+
             var user = userService.GetCurrentUser();
 
             if (user == null)
@@ -37,22 +42,7 @@ namespace WendtEquipmentTracking.App.Controllers
             }
 
 
-            var billOfLadingBOs = billOfLadingService.GetCurrentByProject(user.ProjectId);
-            var billOfLadingModels = billOfLadingBOs.Select(x => new BillOfLadingModel
-            {
-                BillOfLadingId = x.BillOfLadingId,
-                BillOfLadingNumber = x.BillOfLadingNumber,
-                Carrier = x.Carrier,
-                DateShipped = x.DateShipped,
-                FreightTerms = x.FreightTerms,
-                IsCurrentRevision = x.IsCurrentRevision,
-                ProjectId = x.ProjectId,
-                Revision = x.Revision,
-                ToStorage = x.ToStorage,
-                TrailerNumber = x.TrailerNumber
-            });
-
-            return View(billOfLadingModels);
+            return View();
         }
 
         //

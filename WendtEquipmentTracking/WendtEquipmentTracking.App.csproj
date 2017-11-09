@@ -164,6 +164,7 @@
     <Compile Include="Common\WendtAuthorizeAttribute.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\BillOfLadingApiController.cs" />
     <Compile Include="Controllers\HardwareCommercialCodeApiController.cs" />
     <Compile Include="Controllers\EquipmentApiController.cs" />
     <Compile Include="Controllers\ImportApiController.cs" />
@@ -275,7 +276,6 @@
     <None Include="Properties\PublishProfiles\ReleaseProfile.pubxml" />
     <None Include="Properties\PublishProfiles\StagingProfile.pubxml" />
     <Content Include="Images\logo.jpg" />
-    <Content Include="Scripts\billOfLading.js" />
     <Content Include="Scripts\datatablesAndEditor.min.js" />
     <Content Include="Scripts\dropzone\basic.css" />
     <Content Include="Scripts\dropzone\basic.min.css" />
@@ -286,6 +286,8 @@
     <Content Include="Scripts\dropzone\dropzone.min.css" />
     <Content Include="Scripts\dropzone\dropzone.min.js" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
+    <Content Include="Scripts\editorBOLCreate.js" />
+    <Content Include="Scripts\tableBOL.js" />
     <Content Include="Scripts\importEquipment.js" />
     <Content Include="Scripts\importEquipmentTable.js" />
     <Content Include="Scripts\table.js" />
@@ -303,7 +305,6 @@
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\project.js" />
     <Content Include="Scripts\jquery.floatThead.js" />
-    <Content Include="Scripts\importEquipmentOld.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Scripts\form.js" />
@@ -369,7 +370,6 @@
     <Content Include="Views\HardwareKit\Index.cshtml" />
     <Content Include="Views\HardwareKit\HardwareToAddToHardwareKit.cshtml" />
     <Content Include="Views\Import\ImportWorkOrderPrice.cshtml" />
-    <Content Include="Views\Equipment\Template.cshtml" />
     <Content Include="Views\Shared\NotFound.cshtml" />
     <Content Include="Views\Shared\Unauthorized.cshtml" />
     <Content Include="Views\Priority\Create.cshtml" />

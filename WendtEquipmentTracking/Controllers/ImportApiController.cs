@@ -55,10 +55,6 @@ namespace WendtEquipmentTracking.App.Controllers
                     WorkOrderNumber = x.WorkOrderNumber,
                     WorkOrderPriceId = random.Next(),
                     IsDuplicate = allWorkOrderPrices.Any(w =>
-                        w.ReleasedPercent == x.ReleasedPercent &&
-                        w.CostPrice == x.CostPrice &&
-                        w.SalePrice == x.SalePrice &&
-                        w.ShippedPercent == x.ShippedPercent &&
                        (w.WorkOrderNumber ?? string.Empty).Equals((x.WorkOrderNumber ?? string.Empty), StringComparison.InvariantCultureIgnoreCase))
                 }).ToList();
 

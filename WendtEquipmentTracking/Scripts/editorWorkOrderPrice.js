@@ -31,6 +31,18 @@
                     }
                 }
             });
+
+            editorMain.editor.on('postEdit', function (e, json, data) {
+
+                var row = editorMain.datatable.row("#" + data.WorkOrderPriceId);
+
+                if (data.IsDuplicate) {
+                    $(row.node()).attr("class", 'danger');
+                } else {
+                    $(row.node()).removeClass('danger');
+                }
+
+            });
         }
 
         this.initEditor = function () {
@@ -97,7 +109,12 @@
                         targets: [1,2],
                         render: $.fn.dataTable.render.number(',', '.', 2, '$')
                     }
-                ]
+                ],
+                createdRow: function (row, data, index) {
+                    if (data.IsDuplicate) {
+                        $(row).addClass('danger');
+                    }
+                },
             });
         }
 

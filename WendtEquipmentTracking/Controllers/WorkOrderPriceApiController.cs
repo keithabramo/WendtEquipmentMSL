@@ -66,10 +66,16 @@ namespace WendtEquipmentTracking.App.Controllers
                 SalePrice = x.SalePrice,
                 ShippedPercent = x.ShippedPercent,
                 WorkOrderNumber = x.WorkOrderNumber,
-                WorkOrderPriceId = x.WorkOrderPriceId
-            });
+                WorkOrderPriceId = x.WorkOrderPriceId,
+            }).ToList();
 
-            workOrderPriceModels = workOrderPriceModels.OrderBy(r => r.WorkOrderNumber);
+            workOrderPriceModels
+                .GroupBy(x => x.WorkOrderNumber != null ? x.WorkOrderNumber.ToUpperInvariant() : string.Empty)
+                .Where(g => g.Count() > 1)
+                .SelectMany(y => y)
+                .ToList().ForEach(e => e.IsDuplicate = true);
+
+            workOrderPriceModels = workOrderPriceModels.OrderBy(r => r.WorkOrderNumber).ToList();
 
             return workOrderPriceModels;
         }
@@ -126,7 +132,7 @@ namespace WendtEquipmentTracking.App.Controllers
                     workOrderPriceService.Delete(workOrderPrices.FirstOrDefault().WorkOrderPriceId);
                 }
 
-
+                var allWorkOrderPrices = workOrderPriceService.GetAll(user.ProjectId);
                 workOrderPriceModels = workOrderPrices.Select(x => new WorkOrderPriceModel
                 {
                     CostPrice = x.CostPrice,
@@ -135,7 +141,10 @@ namespace WendtEquipmentTracking.App.Controllers
                     SalePrice = x.SalePrice,
                     ShippedPercent = x.ShippedPercent,
                     WorkOrderNumber = x.WorkOrderNumber,
-                    WorkOrderPriceId = x.WorkOrderPriceId
+                    WorkOrderPriceId = x.WorkOrderPriceId,
+                    IsDuplicate = allWorkOrderPrices.Any(w =>
+                       w.WorkOrderPriceId != x.WorkOrderPriceId &&
+                       (w.WorkOrderNumber ?? string.Empty).Equals((x.WorkOrderNumber ?? string.Empty), StringComparison.InvariantCultureIgnoreCase))
                 }).ToList();
             }
 
