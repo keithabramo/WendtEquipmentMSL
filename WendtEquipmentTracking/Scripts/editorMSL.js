@@ -73,7 +73,7 @@
                 form.set('EquipmentName', $row.find("input[name='EquipmentName']").val());
                 form.set('Priority', $row.find("select[name='Priority']").val());
                 form.set('ReleaseDate', $row.find("input[name='ReleaseDate']").val());
-                form.set('DrawingNumber', $row.find("input[name='DrawingNumber']").val());
+                form.set('DrawingNumber', $row.find("textarea[name='DrawingNumber']").val());
                 form.set('WorkOrderNumber', $row.find("input[name='WorkOrderNumber']").val());
                 form.set('Quantity', $row.find("input[name='Quantity']").val());
                 form.set('ShippingTagNumber', $row.find("textarea[name='ShippingTagNumber']").val());
@@ -132,6 +132,7 @@
                     var quantity = this.field('Quantity');
                     var readyToShip = this.field('ReadyToShipText');
 
+                    var error = false;
                     if (action === "edit") {
 
                         if (!equipmentName.isMultiValue()) {
@@ -330,7 +331,7 @@
                         options: priorities
                     },
                     { name: "ReleaseDate", type: "datetime", format: "MM/DD/YYYY" },
-                    { name: "DrawingNumber" },
+                    { name: "DrawingNumber", type: "textarea" },
                     { name: "WorkOrderNumber" },
                     { name: "Quantity" },
                     { name: "ShippingTagNumber", type: "textarea" },

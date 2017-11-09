@@ -146,6 +146,7 @@ namespace WendtEquipmentTracking.App.Controllers
                     equipment.ShippedFrom = equipmentProperties["ShippedFrom"].ToString();
                     equipment.ShippingTagNumber = equipmentProperties["ShippingTagNumber"].ToString();
                     equipment.WorkOrderNumber = equipmentProperties["WorkOrderNumber"].ToString();
+                    equipment.IsHardware = equipment.EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase);
 
                     equipments.Add(equipment);
                 }

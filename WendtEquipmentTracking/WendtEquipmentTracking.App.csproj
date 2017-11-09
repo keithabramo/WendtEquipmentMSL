@@ -189,7 +189,6 @@
     <Compile Include="Models\BillOfLadingEquipmentModel.cs" />
     <Compile Include="Models\BillOfLadingModel.cs" />
     <Compile Include="Models\EquipmentImportModel.cs" />
-    <Compile Include="Models\EquipmentSelectionModel.cs" />
     <Compile Include="Models\IndicatorsModel.cs" />
     <Compile Include="Models\EquipmentModel.cs" />
     <Compile Include="Models\HardwareKitModel.cs" />
@@ -287,6 +286,9 @@
     <Content Include="Scripts\dropzone\dropzone.min.css" />
     <Content Include="Scripts\dropzone\dropzone.min.js" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
+    <Content Include="Scripts\importEquipment.js" />
+    <Content Include="Scripts\importEquipmentTable.js" />
+    <Content Include="Scripts\table.js" />
     <Content Include="Scripts\editorMSL.js" />
     <Content Include="Scripts\editor.js" />
     <Content Include="Scripts\importWorkOrderPrice.js" />
@@ -301,12 +303,12 @@
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\project.js" />
     <Content Include="Scripts\jquery.floatThead.js" />
-    <Content Include="Scripts\importEquipment.js" />
+    <Content Include="Scripts\importEquipmentOld.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Scripts\form.js" />
     <Content Include="Scripts\hardwareKit.js" />
-    <Content Include="Scripts\table.js" />
+    <Content Include="Scripts\tableold.js" />
     <Content Include="Scripts\masterShipList.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -352,7 +354,7 @@
     <Content Include="Views\BillOfLading\Edit.cshtml" />
     <Content Include="Views\HardwareKit\Edit.cshtml" />
     <Content Include="Views\Import\Equipment.cshtml" />
-    <Content Include="Views\Import\ImportEquipmentPartial.cshtml" />
+    <Content Include="Views\Import\EquipmentTablePartial.cshtml" />
     <Content Include="Views\Equipment\Create.cshtml" />
     <Content Include="Views\Equipment\BOLsAssociatedToEquipment.cshtml" />
     <Content Include="Views\BillOfLading\Index.cshtml" />

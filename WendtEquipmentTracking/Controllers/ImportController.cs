@@ -34,6 +34,19 @@ namespace WendtEquipmentTracking.App.Controllers
         // GET: Equipment
         public ActionResult Equipment()
         {
+            var user = userService.GetCurrentUser();
+
+            if (user == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var prioritiesBOs = priorityService.GetAll(user.ProjectId);
+            var priorities = prioritiesBOs.Select(p => p.PriorityNumber).OrderBy(p => p).ToList();
+
+            ViewBag.ProjectNumber = projectService.GetById(user.ProjectId).ProjectNumber;
+            ViewBag.Priorities = priorities;
+
             return View();
         }
 
@@ -102,149 +115,149 @@ namespace WendtEquipmentTracking.App.Controllers
         }
 
         // POST: Equipment
-        [HttpPost]
-        public ActionResult ConfigureEquipment(EquipmentImportModel model)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    var importBO = new EquipmentImportBO
-                    {
-                        DrawingNumber = model.DrawingNumber,
-                        Equipment = model.Equipment,
-                        FilePath = model.FilePath,
-                        Priority = model.Priority,
-                        QuantityMultiplier = model.QuantityMultiplier,
-                        WorkOrderNumber = model.WorkOrderNumber
-                    };
+        //[HttpPost]
+        //public ActionResult ConfigureEquipment(EquipmentImportModel model)
+        //{
+        //    try
+        //    {
+        //        if (ModelState.IsValid)
+        //        {
+        //            var importBO = new EquipmentImportBO
+        //            {
+        //                DrawingNumber = model.DrawingNumber,
+        //                Equipment = model.Equipment,
+        //                FilePath = model.FilePath,
+        //                Priority = model.Priority,
+        //                QuantityMultiplier = model.QuantityMultiplier,
+        //                WorkOrderNumber = model.WorkOrderNumber
+        //            };
 
-                    var equipmentBOs = importService.GetEquipmentImport(importBO);
+        //            var equipmentBOs = importService.GetEquipmentImport(importBO);
 
-                    var equipmentModels = equipmentBOs.Select(x => new EquipmentSelectionModel
-                    {
-                        CountryOfOrigin = x.CountryOfOrigin,
-                        CustomsValue = x.CustomsValue,
-                        Description = x.Description,
-                        DrawingNumber = x.DrawingNumber,
-                        EquipmentId = x.EquipmentId,
-                        EquipmentName = x.EquipmentName,
-                        FullyShipped = x.FullyShipped,
-                        HTSCode = x.HTSCode,
-                        LeftToShip = x.LeftToShip.ToString(),
-                        Notes = x.Notes,
-                        Priority = x.Priority,
-                        ProjectId = x.ProjectId,
-                        Quantity = x.Quantity.HasValue ? x.Quantity.Value : 0,
-                        ReadyToShip = x.ReadyToShip,
-                        ReleaseDate = x.ReleaseDate,
-                        SalePrice = x.SalePrice,
-                        ShippedFrom = x.ShippedFrom,
-                        ShippedQuantity = x.ShippedQuantity.ToString(),
-                        ShippingTagNumber = x.ShippingTagNumber,
-                        TotalWeight = x.TotalWeight.ToString(),
-                        TotalWeightShipped = x.TotalWeightShipped.ToString(),
-                        UnitWeight = x.UnitWeight,
-                        WorkOrderNumber = x.WorkOrderNumber
-                    }).ToList();
-
-
-
-                    var user = userService.GetCurrentUser();
-
-                    IEnumerable<int> priorities = new List<int>();
-                    if (user != null)
-                    {
-                        var priorityBOs = priorityService.GetAll(user.ProjectId);
-                        priorities = priorityBOs.Select(p => p.PriorityNumber);
-                    }
+        //            var equipmentModels = equipmentBOs.Select(x => new EquipmentSelectionModel
+        //            {
+        //                CountryOfOrigin = x.CountryOfOrigin,
+        //                CustomsValue = x.CustomsValue,
+        //                Description = x.Description,
+        //                DrawingNumber = x.DrawingNumber,
+        //                EquipmentId = x.EquipmentId,
+        //                EquipmentName = x.EquipmentName,
+        //                FullyShipped = x.FullyShipped,
+        //                HTSCode = x.HTSCode,
+        //                LeftToShip = x.LeftToShip.ToString(),
+        //                Notes = x.Notes,
+        //                Priority = x.Priority,
+        //                ProjectId = x.ProjectId,
+        //                Quantity = x.Quantity.HasValue ? x.Quantity.Value : 0,
+        //                ReadyToShip = x.ReadyToShip,
+        //                ReleaseDate = x.ReleaseDate,
+        //                SalePrice = x.SalePrice,
+        //                ShippedFrom = x.ShippedFrom,
+        //                ShippedQuantity = x.ShippedQuantity.ToString(),
+        //                ShippingTagNumber = x.ShippingTagNumber,
+        //                TotalWeight = x.TotalWeight.ToString(),
+        //                TotalWeightShipped = x.TotalWeightShipped.ToString(),
+        //                UnitWeight = x.UnitWeight,
+        //                WorkOrderNumber = x.WorkOrderNumber
+        //            }).ToList();
 
 
-                    equipmentModels.ForEach(w =>
-                    {
-                        w.Checked = true;
-                        w.Priorities = priorities;
-                    });
+
+        //            var user = userService.GetCurrentUser();
+
+        //            IEnumerable<int> priorities = new List<int>();
+        //            if (user != null)
+        //            {
+        //                var priorityBOs = priorityService.GetAll(user.ProjectId);
+        //                priorities = priorityBOs.Select(p => p.PriorityNumber);
+        //            }
 
 
-                    return PartialView("ImportEquipmentPartial", equipmentModels);
+        //            equipmentModels.ForEach(w =>
+        //            {
+        //                w.Checked = true;
+        //                w.Priorities = priorities;
+        //            });
 
-                }
 
-                HandleError("There was an issue while trying to setup this equipment file", ModelState);
+        //            return PartialView("ImportEquipmentPartial", equipmentModels);
 
-                return PartialView("ImportEquipmentPartial", new List<EquipmentSelectionModel>());
-            }
-            catch (Exception e)
-            {
-                HandleError("There was an error while trying to setup this equipment file", e);
+        //        }
 
-                return PartialView("ImportEquipmentPartial", new List<EquipmentSelectionModel>());
-            }
-        }
+        //        HandleError("There was an issue while trying to setup this equipment file", ModelState);
+
+        //        return PartialView("ImportEquipmentPartial", new List<EquipmentSelectionModel>());
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        HandleError("There was an error while trying to setup this equipment file", e);
+
+        //        return PartialView("ImportEquipmentPartial", new List<EquipmentSelectionModel>());
+        //    }
+        //}
 
         // POST: SaveEquipment
-        [HttpPost]
-        public ActionResult SaveEquipment(IEnumerable<EquipmentSelectionModel> model)
-        {
+        //[HttpPost]
+        //public ActionResult SaveEquipment(IEnumerable<EquipmentSelectionModel> model)
+        //{
 
-            var resultModel = new ImportModel();
-            try
-            {
-                var user = userService.GetCurrentUser();
+        //    var resultModel = new ImportModel();
+        //    try
+        //    {
+        //        var user = userService.GetCurrentUser();
 
-                if (user != null)
-                {
-                    model = model.Where(m => m.Checked);
-                    model.ToList().ForEach(c => c.ProjectId = user.ProjectId);
+        //        if (user != null)
+        //        {
+        //            model = model.Where(m => m.Checked);
+        //            model.ToList().ForEach(c => c.ProjectId = user.ProjectId);
 
 
 
-                    var equipmentBOs = model.Select(x => new EquipmentBO
-                    {
-                        CountryOfOrigin = x.CountryOfOrigin,
-                        CustomsValue = x.CustomsValue,
-                        Description = x.Description,
-                        DrawingNumber = x.DrawingNumber,
-                        EquipmentId = x.EquipmentId,
-                        EquipmentName = x.EquipmentName,
-                        FullyShipped = x.FullyShipped,
-                        HTSCode = x.HTSCode,
-                        Notes = x.Notes,
-                        Priority = x.Priority,
-                        ProjectId = x.ProjectId,
-                        Quantity = x.Quantity,
-                        ReadyToShip = x.ReadyToShip,
-                        ReleaseDate = x.ReleaseDate,
-                        SalePrice = x.SalePrice,
-                        ShippedFrom = x.ShippedFrom,
-                        ShippingTagNumber = x.ShippingTagNumber,
-                        UnitWeight = x.UnitWeight,
-                        WorkOrderNumber = x.WorkOrderNumber,
-                        IsHardware = x.EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase)
-                    });
-                    equipmentBOs.ToList().ForEach(e =>
-                    {
-                        e.UnitWeight = e.IsHardware ? .01 : e.UnitWeight;
-                    });
+        //            var equipmentBOs = model.Select(x => new EquipmentBO
+        //            {
+        //                CountryOfOrigin = x.CountryOfOrigin,
+        //                CustomsValue = x.CustomsValue,
+        //                Description = x.Description,
+        //                DrawingNumber = x.DrawingNumber,
+        //                EquipmentId = x.EquipmentId,
+        //                EquipmentName = x.EquipmentName,
+        //                FullyShipped = x.FullyShipped,
+        //                HTSCode = x.HTSCode,
+        //                Notes = x.Notes,
+        //                Priority = x.Priority,
+        //                ProjectId = x.ProjectId,
+        //                Quantity = x.Quantity,
+        //                ReadyToShip = x.ReadyToShip,
+        //                ReleaseDate = x.ReleaseDate,
+        //                SalePrice = x.SalePrice,
+        //                ShippedFrom = x.ShippedFrom,
+        //                ShippingTagNumber = x.ShippingTagNumber,
+        //                UnitWeight = x.UnitWeight,
+        //                WorkOrderNumber = x.WorkOrderNumber,
+        //                IsHardware = x.EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase)
+        //            });
+        //            equipmentBOs.ToList().ForEach(e =>
+        //            {
+        //                e.UnitWeight = e.IsHardware ? .01 : e.UnitWeight;
+        //            });
 
-                    equipmentService.SaveAll(equipmentBOs);
+        //            equipmentService.SaveAll(equipmentBOs);
 
-                    SuccessMessage("Equipment Import was successful");
-                    return RedirectToAction("Index", "Home");
-                }
+        //            SuccessMessage("Equipment Import was successful");
+        //            return RedirectToAction("Index", "Home");
+        //        }
 
-                HandleError("There was an issue while Importing this equipment", ModelState);
+        //        HandleError("There was an issue while Importing this equipment", ModelState);
 
-                return View("Equipment");
-            }
-            catch (Exception e)
-            {
-                HandleError("There was an issue while Importing this equipment", e);
+        //        return View("Equipment");
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        HandleError("There was an issue while Importing this equipment", e);
 
-                return View("Equipment");
-            }
-        }
+        //        return View("Equipment");
+        //    }
+        //}
 
 
 

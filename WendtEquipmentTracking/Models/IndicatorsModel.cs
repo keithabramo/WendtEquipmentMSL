@@ -10,7 +10,8 @@
             Green,
             Purple,
             Pink,
-            Fuchsia
+            Fuchsia,
+            LightBlue
         }
 
         public string EquipmentNameColor { get; set; }

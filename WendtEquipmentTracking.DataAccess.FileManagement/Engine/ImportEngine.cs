@@ -26,9 +26,11 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement
 
         public IEnumerable<WorkOrderPriceRow> GetWorkOrderPrices(string filePath)
         {
-            var excelHelper = new ExcelDataReaderHelper(filePath);
-
-            var workOrderPriceRecords = ImportHelper.GetWorkOrderPrices(excelHelper);
+            IEnumerable<WorkOrderPriceRow> workOrderPriceRecords = new List<WorkOrderPriceRow>();
+            using (var excelHelper = new ExcelDataReaderHelper(filePath))
+            {
+                workOrderPriceRecords = ImportHelper.GetWorkOrderPrices(excelHelper);
+            }
 
             return workOrderPriceRecords;
         }

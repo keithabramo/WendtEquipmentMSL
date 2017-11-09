@@ -13,17 +13,27 @@
 }
 
 <div id="equipmentConfiguration">
-
 </div>
 
 
-<div id="equipmentRows">
-
+<div id="equipmentRows" class="collapse">
+    @Html.Partial("EquipmentTablePartial")
 </div>
 
 @section Scripts {
+    <script type="text/javascript">
+
+            var priorities = [];
+
+            @foreach (var priority in ViewBag.Priorities)
+            {
+                @:priorities.push("@priority");
+            }
+
+    </script>
     @Scripts.Render("~/bundles/dropzone")
     @Scripts.Render("~/bundles/form")
+    @Scripts.Render("~/bundles/editor")
     @Scripts.Render("~/bundles/importEquipment")
 
     @Styles.Render("~/Content/dropzone")

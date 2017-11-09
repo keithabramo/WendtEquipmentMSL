@@ -197,17 +197,20 @@ namespace WendtEquipmentTracking.App.Models
             if (ReadyToShip > 0)
             {
                 if (HasBillOfLadingInStorage)
-                //if (BillOfLadingEquipments.Any(be => be != null && be.BillOfLading.ToStorage && be.BillOfLading.IsCurrentRevision))
                 {
                     Indicators.ReadyToShipColor = IndicatorsModel.Colors.Green.ToString();
                 }
-                else if (ReadyToShip > Quantity)
+                else if (ReadyToShip == Convert.ToInt32(LeftToShip))
+                {
+                    Indicators.ReadyToShipColor = IndicatorsModel.Colors.Yellow.ToString();
+                }
+                else if (ReadyToShip > Convert.ToInt32(LeftToShip))
                 {
                     Indicators.ReadyToShipColor = IndicatorsModel.Colors.Pink.ToString();
                 }
                 else
                 {
-                    Indicators.ReadyToShipColor = IndicatorsModel.Colors.Yellow.ToString();
+                    Indicators.ReadyToShipColor = IndicatorsModel.Colors.LightBlue.ToString();
                 }
             }
 

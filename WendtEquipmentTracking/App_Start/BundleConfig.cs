@@ -20,7 +20,6 @@ namespace WendtEquipmentTracking.App
 
             bundles.Add(new ScriptBundle("~/bundles/table").Include(
                         "~/Scripts/datatablesAndEditor.min.js",
-                        "~/Scripts/jquery.floatThead.js",
                         "~/Scripts/table.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/editor").Include(
@@ -37,8 +36,7 @@ namespace WendtEquipmentTracking.App
 
 
             bundles.Add(new ScriptBundle("~/bundles/masterShipList").Include(
-                        "~/Scripts/editorMSL.js"//,
-                                                //"~/Scripts/masterShipList.js"
+                        "~/Scripts/editorMSL.js"
             ));
 
             bundles.Add(new ScriptBundle("~/bundles/workOrderPrices").Include(
@@ -54,7 +52,9 @@ namespace WendtEquipmentTracking.App
                        "~/Scripts/billOfLading.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/importEquipment").Include(
-                       "~/Scripts/importEquipment.js"));
+                       "~/Scripts/importEquipmentTable.js",
+                       "~/Scripts/importEquipment.js"
+            ));
 
             bundles.Add(new ScriptBundle("~/bundles/importWorkOrderPrice").Include(
                        "~/Scripts/importWorkOrderPrice.js"));

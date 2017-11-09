@@ -330,6 +330,10 @@ table.dataTable tr.selected th.select-checkbox:after {
         background-color: rgb(255, 51, 204) !important;
     }
 
+    .table-styled td.LightBlue {
+        background-color: rgb(217,237,247) !important;
+    }
+
 
     .table-styled  .equipmentNameWidth  {
         min-width: 200px;
