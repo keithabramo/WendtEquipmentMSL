@@ -25,9 +25,9 @@ namespace WendtEquipmentTracking.BusinessLogic
             hardwareCommercialCodeEngine = new HardwareCommercialCodeEngine(dbContext);
         }
 
-        public string SaveEquipmentFile(byte[] file)
+        public string SaveFile(byte[] file)
         {
-            return importEngine.SaveEquipmentFile(file);
+            return importEngine.SaveFile(file);
         }
 
 
@@ -69,9 +69,9 @@ namespace WendtEquipmentTracking.BusinessLogic
             return equipmentBOs.ToList();
         }
 
-        public IEnumerable<WorkOrderPriceBO> GetWorkOrderPricesImport(byte[] file)
+        public IEnumerable<WorkOrderPriceBO> GetWorkOrderPricesImport(string filePath)
         {
-            var workOrderPriceRows = importEngine.GetWorkOrderPrices(file);
+            var workOrderPriceRows = importEngine.GetWorkOrderPrices(filePath);
 
             var workOrderPriceBOs = workOrderPriceRows.Select(x => new WorkOrderPriceBO
             {

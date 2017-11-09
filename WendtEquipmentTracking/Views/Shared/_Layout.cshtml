@@ -55,10 +55,12 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-12 center-block">
-                @if (!string.IsNullOrEmpty(TempData["StatusMessage"]?.ToString()))
-                {
-                    @Html.Partial("MessagePartial")
-                }
+                <div class="global-message">
+                    @if (!string.IsNullOrEmpty(TempData["StatusMessage"]?.ToString()))
+                    {
+                        @Html.Partial("MessagePartial")
+                    }
+                </div>
                 @RenderBody()
             </div>
         </div>

@@ -1,0 +1,90 @@
+﻿@model IList<WorkOrderPriceSelectionModel>
+
+@{
+    ViewBag.Title = "Import Selection";
+}
+
+@Html.Partial("ActionNavPartial", ActionNav.ImportWorkOrderPrice)
+
+<h4>Import Work Order Prices <br /><small>Review the records below. When you are ready, click "Import Work Order Prices" to import.</small></h4>
+
+@if (Model.Count() > 0)
+{
+
+    
+
+    using (Html.BeginForm("SaveWorkOrderPrice", "Import"))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            <table class="table table-condensed table-hover table-bordered table-styled">
+                <thead>
+                    <tr>
+                        <th class="noSearch">
+                            <input type="checkbox" checked="checked" class="selectAll" />
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model[0].WorkOrderNumber)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model[0].CostPrice)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model[0].SalePrice)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model[0].ReleasedPercent)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model[0].ShippedPercent)
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Count(); i++)
+                    {
+                        <tr>
+                            <td>
+                                @Html.CheckBoxFor(modelItem => modelItem[i].Checked, htmlAttributes: new { @checked = "checked" })
+                            </td>
+                            <td>
+                                @Html.EditorFor(modelItem => modelItem[i].WorkOrderNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(modelItem => modelItem[i].WorkOrderNumber, "", new { @class = "text-danger" })
+                            </td>
+                            <td>
+                                @Html.EditorFor(modelItem => modelItem[i].CostPrice, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(modelItem => modelItem[i].CostPrice, "", new { @class = "text-danger" })
+                            </td>
+                            <td>
+                                @Html.EditorFor(modelItem => modelItem[i].SalePrice, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(modelItem => modelItem[i].SalePrice, "", new { @class = "text-danger" })
+                            </td>
+                            <td>
+                                @Html.EditorFor(modelItem => modelItem[i].ReleasedPercent, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(modelItem => modelItem[i].ReleasedPercent, "", new { @class = "text-danger" })
+                            </td>
+                            <td>
+                                @Html.EditorFor(modelItem => modelItem[i].ShippedPercent, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(modelItem => modelItem[i].ShippedPercent, "", new { @class = "text-danger" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Import Work Order Prices" class="btn btn-primary" />
+        </div>
+    }
+}
+else
+{
+    <p>Sorry, no rows were found for import.</p>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/form")
+    @Scripts.Render("~/bundles/import")
+}

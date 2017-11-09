@@ -237,12 +237,73 @@ div.dataTables_wrapper .bottom-section {
         background-color: #f5f5ff;
     }
 
-    /*.table-styled.table-hover > tbody > tr.disabled:hover {
-        background-color: #c2c2c2;
-    }*/
+table.dataTable thead th.select-checkbox {
+    position: relative;
+}
+
+table.dataTable thead th.select-checkbox:before, table.dataTable thead th.select-checkbox:after {
+    display: block;
+    position: absolute;
+    top: 1.6em;
+    left: 50%;
+    width: 12px;
+    height: 12px;
+    box-sizing: border-box;
+}
+
+table.dataTable tbody td.select-checkbox:before, table.dataTable tbody td.select-checkbox:after {
+    top: 1.6em;
+}
+
+table.dataTable thead th.select-checkbox:before {
+    content: ' ';
+    margin-top: -6px;
+    margin-left: -6px;
+    border: 1px solid black;
+    border-radius: 3px;
+}
+
+table.dataTable tr.selected th.select-checkbox:after {
+    content: '\2714';
+    margin-top: -11px;
+    margin-left: -4px;
+    text-align: center;
+    text-shadow: 1px 1px #B0BED9, -1px -1px #B0BED9, 1px -1px #B0BED9, -1px 1px #B0BED9;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     .table-styled tr td {
         vertical-align: middle !important;
+    }
+
+    .table-styled tr td.focus {
+        padding: 0 !important;
+        outline: 2px solid #3366FF;
+    }
+
+    .table-styled tr td.focus input, .table-styled tr td.focus select {
+        border: 1px solid #ccc !important;
+        min-height: 32px;
+        width: 100%;
+    }
+
+    .table-styled tr td div.DTE_Field_Type_select div.DTE_Field_Input {
+        padding: 0;
     }
 
     .table-styled td.Red {
@@ -269,6 +330,94 @@ div.dataTables_wrapper .bottom-section {
         background-color: rgb(255, 51, 204) !important;
     }
 
+
+    .table-styled  .equipmentNameWidth  {
+        min-width: 200px;
+    }
+
+    .table-styled  .priorityWidth  {
+        min-width: 20px;
+    }
+
+    .table-styled  .releaseDateWidth  {
+        min-width: 70px;
+    }
+
+    .table-styled  .drawingNumberWidth  {
+        min-width: 100px;
+    }
+
+    .table-styled  .workOrderNumberWidth  {
+        min-width: 100px;
+    }
+
+    .table-styled  .quantityWidth  {
+        min-width: 20px;
+    }
+
+    .table-styled  .shippingTagNumberWidth  {
+        min-width: 120px;
+    }
+
+    .table-styled  .descriptionWidth  {
+        min-width: 300px;
+    }
+
+    .table-styled  .unitWeightWidth  {
+        min-width: 20px;
+    }
+
+    .table-styled  .totalWeightWidth  {
+        min-width: 20px;
+    }
+
+    .table-styled  .totalWeightShippedWidth  {
+        min-width: 20px;
+    }
+
+    .table-styled  .readyToShipWidth  {
+        min-width: 20px;
+    }
+
+    .table-styled  .shippedQuantityWidth  {
+        min-width: 20px;
+    }
+
+    .table-styled  .leftToShipWidth  {
+        min-width: 20px;
+    }
+
+    .table-styled  .fullyShippedWidth  {
+        min-width: 20px;
+    }
+
+    .table-styled  .shippedFromWidth  {
+        min-width: 100px;
+    }
+
+    .table-styled  .customsValueWidth  {
+        min-width: 20px;
+    }
+
+    .table-styled  .salePriceWidth  {
+        min-width: 20px;
+    }
+
+    .table-styled .htsCodeWidth  {
+        min-width: 100px;
+    }
+
+    .table-styled .countryOfOriginWidth  {
+        min-width: 100px;
+    }
+
+    .table-styled .notesWidth  {
+        min-width: 200px;
+    }
+
+
+
+
     .table-styled .hardwarekitLabel {
         text-transform: capitalize;
         white-space: nowrap;
@@ -283,6 +432,7 @@ div.dataTables_wrapper .bottom-section {
     }
 
     .table-styled tfoot td {
+        vertical-align: top !important;
         padding: 0 !important;
     }
 

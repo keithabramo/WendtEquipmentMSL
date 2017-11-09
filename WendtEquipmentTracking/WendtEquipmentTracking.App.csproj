@@ -166,6 +166,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HardwareCommercialCodeApiController.cs" />
     <Compile Include="Controllers\EquipmentApiController.cs" />
+    <Compile Include="Controllers\ImportApiController.cs" />
     <Compile Include="Controllers\WorkOrderPriceApiController.cs" />
     <Compile Include="Controllers\PriorityController.cs" />
     <Compile Include="Controllers\HardwareCommercialCodeController.cs" />
@@ -181,13 +182,13 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\EditorModel.cs" />
+    <Compile Include="Models\WorkOrderPriceImportModel.cs" />
     <Compile Include="Models\HardwareCommercialCodeModel.cs" />
     <Compile Include="Models\HardwareKitGroupModel.cs" />
     <Compile Include="Models\HardwareKitEquipmentModel.cs" />
     <Compile Include="Models\BillOfLadingEquipmentModel.cs" />
     <Compile Include="Models\BillOfLadingModel.cs" />
     <Compile Include="Models\EquipmentImportModel.cs" />
-    <Compile Include="Models\WorkOrderPriceSelectionModel.cs" />
     <Compile Include="Models\EquipmentSelectionModel.cs" />
     <Compile Include="Models\IndicatorsModel.cs" />
     <Compile Include="Models\EquipmentModel.cs" />
@@ -286,10 +287,9 @@
     <Content Include="Scripts\dropzone\dropzone.min.css" />
     <Content Include="Scripts\dropzone\dropzone.min.js" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
-    <Content Include="Scripts\editorMSL - Copy.js" />
     <Content Include="Scripts\editorMSL.js" />
     <Content Include="Scripts\editor.js" />
-    <Content Include="Scripts\editorWorkOrderPrice - Copy.js" />
+    <Content Include="Scripts\importWorkOrderPrice.js" />
     <Content Include="Scripts\editorWorkOrderPrice.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
@@ -301,9 +301,7 @@
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\project.js" />
     <Content Include="Scripts\jquery.floatThead.js" />
-    <Content Include="Scripts\mslRender.js" />
-    <Content Include="Scripts\workOrderPrice.js" />
-    <Content Include="Scripts\import.js" />
+    <Content Include="Scripts\importEquipment.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Scripts\form.js" />
@@ -369,9 +367,6 @@
     <Content Include="Views\HardwareKit\Index.cshtml" />
     <Content Include="Views\HardwareKit\HardwareToAddToHardwareKit.cshtml" />
     <Content Include="Views\Import\ImportWorkOrderPrice.cshtml" />
-    <Content Include="Views\WorkOrderPrice\Create.cshtml" />
-    <Content Include="Views\WorkOrderPrice\Edit.cshtml" />
-    <Content Include="Views\WorkOrderPrice\IndexOld.cshtml" />
     <Content Include="Views\Equipment\Template.cshtml" />
     <Content Include="Views\Shared\NotFound.cshtml" />
     <Content Include="Views\Shared\Unauthorized.cshtml" />

@@ -60,10 +60,8 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
                 priority.CreatedBy = ActiveDirectoryHelper.CurrentUserUsername();
                 priority.ModifiedDate = now;
                 priority.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
-
+                this.repository.Insert(priority);
             }
-
-            this.repository.InsertAll(prioritys);
 
         }
 

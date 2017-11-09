@@ -9,10 +9,10 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement
 {
     public class ImportEngine : IImportEngine
     {
-        public string SaveEquipmentFile(byte[] equipmentFile)
+        public string SaveFile(byte[] file)
         {
             var tempFile = Path.GetTempFileName();
-            File.WriteAllBytes(tempFile, equipmentFile);
+            File.WriteAllBytes(tempFile, file);
 
             return tempFile;
         }
@@ -24,12 +24,9 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement
             return equipmentData;
         }
 
-        public IEnumerable<WorkOrderPriceRow> GetWorkOrderPrices(byte[] importFile)
+        public IEnumerable<WorkOrderPriceRow> GetWorkOrderPrices(string filePath)
         {
-            var tempFile = Path.GetTempFileName();
-            File.WriteAllBytes(tempFile, importFile);
-
-            var excelHelper = new ExcelDataReaderHelper(tempFile);
+            var excelHelper = new ExcelDataReaderHelper(filePath);
 
             var workOrderPriceRecords = ImportHelper.GetWorkOrderPrices(excelHelper);
 

@@ -58,7 +58,7 @@ namespace WendtEquipmentTracking.App.Controllers
                             file = memoryStream.ToArray();
                         }
 
-                        var filePath = importService.SaveEquipmentFile(file);
+                        var filePath = importService.SaveFile(file);
 
                         var user = userService.GetCurrentUser();
 
@@ -166,7 +166,7 @@ namespace WendtEquipmentTracking.App.Controllers
                         w.Priorities = priorities;
                     });
 
-                 
+
                     return PartialView("ImportEquipmentPartial", equipmentModels);
 
                 }
@@ -248,6 +248,20 @@ namespace WendtEquipmentTracking.App.Controllers
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         // GET: WorkOrderPrice
         public ActionResult WorkOrderPrice()
         {
@@ -274,21 +288,10 @@ namespace WendtEquipmentTracking.App.Controllers
                             file = memoryStream.ToArray();
                         }
 
-                        var workOrderPriceBOs = importService.GetWorkOrderPricesImport(file);
+                        var filePath = importService.SaveFile(file);
 
-                        var workOrderPriceModels = workOrderPriceBOs.Select(x => new WorkOrderPriceSelectionModel
-                        {
-                            CostPrice = x.CostPrice,
-                            ProjectId = x.ProjectId,
-                            ReleasedPercent = x.ReleasedPercent,
-                            SalePrice = x.SalePrice,
-                            ShippedPercent = x.ShippedPercent,
-                            WorkOrderNumber = x.WorkOrderNumber,
-                            WorkOrderPriceId = x.WorkOrderPriceId,
-                            Checked = true
-                        });
 
-                        return View("ImportWorkOrderPrice", workOrderPriceModels);
+                        return View("ImportWorkOrderPrice", new WorkOrderPriceImportModel { FilePath = filePath });
                     }
                     else
                     {
@@ -306,48 +309,5 @@ namespace WendtEquipmentTracking.App.Controllers
                 return View(model);
             }
         }
-
-        // POST: SaveWorkOrderPrices
-        [HttpPost]
-        public ActionResult SaveWorkOrderPrice(IEnumerable<WorkOrderPriceSelectionModel> model)
-        {
-            try
-            {
-                var user = userService.GetCurrentUser();
-
-                if (user != null)
-                {
-                    model = model.Where(x => x.Checked);
-                    model.ToList().ForEach(c => c.ProjectId = user.ProjectId);
-
-                    var workOrderPriceBOs = model.Select(x => new WorkOrderPriceBO
-                    {
-                        CostPrice = x.CostPrice,
-                        ProjectId = x.ProjectId,
-                        ReleasedPercent = x.ReleasedPercent,
-                        SalePrice = x.SalePrice,
-                        ShippedPercent = x.ShippedPercent,
-                        WorkOrderNumber = x.WorkOrderNumber,
-                        WorkOrderPriceId = x.WorkOrderPriceId
-                    });
-
-                    workOrderPriceService.SaveAll(workOrderPriceBOs);
-
-                    SuccessMessage("Import successful!");
-                    return RedirectToAction("Index", "WorkOrderPrice");
-                }
-
-                HandleError("There was an issue while importing these work order prices", ModelState);
-
-                return View("ImportWorkOrderPrice", model);
-            }
-            catch (Exception e)
-            {
-                HandleError("There was an error while importing these work order prices", e);
-
-                return View("ImportWorkOrderPrice", model);
-            }
-        }
-
     }
 }

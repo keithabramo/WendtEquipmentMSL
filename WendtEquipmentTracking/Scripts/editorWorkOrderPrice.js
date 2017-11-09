@@ -12,6 +12,25 @@
         this.initEvents = function () {
             var $this = this;
 
+            editorMain.editor.on('preSubmit', function (e, data, action) {
+                if (action !== 'remove') {
+                    var workOrderNumber = this.field('WorkOrderNumber');
+
+                    // Only validate user input values - different values indicate that
+                    // the end user has not entered a value
+                    if (!workOrderNumber.isMultiValue()) {
+                        if (!workOrderNumber.val()) {
+                            workOrderNumber.error('A work order number is required');
+                        }
+                    }
+
+
+                    // If any error was reported, cancel the submission so it can be corrected
+                    if (this.inError()) {
+                        return false;
+                    }
+                }
+            });
         }
 
         this.initEditor = function () {
@@ -74,6 +93,10 @@
                             return '<a href="javascript:void(0);" class="delete">Delete</a>';
                         }
                     },
+                    {
+                        targets: [1,2],
+                        render: $.fn.dataTable.render.number(',', '.', 2, '$')
+                    }
                 ]
             });
         }

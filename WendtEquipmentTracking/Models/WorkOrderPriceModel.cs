@@ -33,5 +33,7 @@ namespace WendtEquipmentTracking.App.Models
 
         [DisplayName("Shipped %")]
         public double ShippedPercent { get; set; }
+
+        public bool IsDuplicate { get; set; }
     }
 }

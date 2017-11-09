@@ -42,7 +42,6 @@ namespace WendtEquipmentTracking.BusinessLogic
             {
                 CommodityCode = x.CommodityCode,
                 Description = x.Description,
-                HardwareCommercialCodeId = x.HardwareCommercialCodeId,
                 PartNumber = x.PartNumber
             });
 

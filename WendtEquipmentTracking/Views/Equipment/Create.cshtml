@@ -11,7 +11,7 @@
         @Html.ValidationMessageFor(modelItem => modelItem.Priority, "", new { @class = "text-danger" })
     </td>
     <td>
-        @Html.EditorFor(modelItem => modelItem.ReleaseDate, new { htmlAttributes = new { @class = "form-control datePickerTable", id = "releaseDate" + Model.EquipmentId } })
+        @Html.EditorFor(modelItem => modelItem.ReleaseDate, new { htmlAttributes = new { @class = "form-control datePickerTable", id = "releaseDate" } })
         @Html.ValidationMessageFor(modelItem => modelItem.ReleaseDate, "", new { @class = "text-danger" })
     </td>
     <td>

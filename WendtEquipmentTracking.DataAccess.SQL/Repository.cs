@@ -103,21 +103,6 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         }
 
         /// <summary>
-        /// Inserts all the specified entities
-        /// </summary>
-        /// <param name="entities">Entities to insert</param>
-        /// <exception cref="ArgumentNullException"> if <paramref name="entities"/> is null</exception>
-        public void InsertAll(IEnumerable<T> entities)
-        {
-            if (entities == null)
-            {
-                throw new ArgumentNullException("entities");
-            }
-
-            table.AddRange(entities);
-        }
-
-        /// <summary>
         /// Updates the specified entity
         /// </summary>
         /// <param name="entity">Entity to update</param>

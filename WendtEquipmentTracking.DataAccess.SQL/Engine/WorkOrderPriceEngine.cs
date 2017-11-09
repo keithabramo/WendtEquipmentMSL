@@ -60,11 +60,9 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
                 workOrderPrice.CreatedBy = ActiveDirectoryHelper.CurrentUserUsername();
                 workOrderPrice.ModifiedDate = now;
                 workOrderPrice.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
+                this.repository.Insert(workOrderPrice);
 
             }
-
-            this.repository.InsertAll(workOrderPrices);
-
         }
 
         public void UpdateWorkOrderPrice(WorkOrderPrice workOrderPrice)

@@ -5,10 +5,10 @@ namespace WendtEquipmentTracking.BusinessLogic.Api
 {
     public interface IImportService
     {
-        string SaveEquipmentFile(byte[] file);
+        string SaveFile(byte[] file);
 
         IEnumerable<EquipmentBO> GetEquipmentImport(EquipmentImportBO importBO);
 
-        IEnumerable<WorkOrderPriceBO> GetWorkOrderPricesImport(byte[] file);
+        IEnumerable<WorkOrderPriceBO> GetWorkOrderPricesImport(string filePath);
     }
 }

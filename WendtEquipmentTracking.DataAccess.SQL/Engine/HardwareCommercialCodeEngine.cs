@@ -60,11 +60,8 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
                 hardwareCommercialCode.CreatedBy = ActiveDirectoryHelper.CurrentUserUsername();
                 hardwareCommercialCode.ModifiedDate = now;
                 hardwareCommercialCode.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
-
+                this.repository.Insert(hardwareCommercialCode);
             }
-
-            this.repository.InsertAll(hardwareCommercialCodes);
-
         }
 
         public void UpdateHardwareCommercialCode(HardwareCommercialCode hardwareCommercialCode)

@@ -5,11 +5,11 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Api
 {
     public interface IImportEngine
     {
-        string SaveEquipmentFile(byte[] equipmentFile);
+        string SaveFile(byte[] equipmentFile);
 
         IEnumerable<EquipmentRow> GetEquipment(EquipmentImport import);
 
-        IEnumerable<WorkOrderPriceRow> GetWorkOrderPrices(byte[] importFile);
+        IEnumerable<WorkOrderPriceRow> GetWorkOrderPrices(string filePath);
 
     }
 }

@@ -21,14 +21,21 @@ namespace WendtEquipmentTracking.App.Controllers
         //
         // GET: /WorkOrderPrice/
 
-        public ActionResult Index()
+        public ActionResult Index(bool? ajaxSuccess)
         {
+            if (ajaxSuccess.HasValue && ajaxSuccess.Value)
+            {
+                SuccessMessage("Work order prices were successfully imported.");
+            }
+
             var user = userService.GetCurrentUser();
 
             if (user == null)
             {
                 return RedirectToAction("Index", "Home");
             }
+
+
 
             return View();
         }

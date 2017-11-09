@@ -13,7 +13,6 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         TEntity Single(Specification<TEntity> specification);
         TEntity First(Specification<TEntity> specification);
         void Insert(TEntity entity);
-        void InsertAll(IEnumerable<TEntity> entities);
         void Delete(TEntity entity);
         void Update(TEntity entity);
         int ExectuteStoredProcedure(string procedureName, List<SqlParameter> parameters);

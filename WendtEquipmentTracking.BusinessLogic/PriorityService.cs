@@ -42,7 +42,6 @@ namespace WendtEquipmentTracking.BusinessLogic
             {
                 DueDate = x.DueDate,
                 EquipmentName = x.EquipmentName,
-                PriorityId = x.PriorityId,
                 PriorityNumber = x.PriorityNumber,
                 ProjectId = x.ProjectId
             });

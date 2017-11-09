@@ -67,7 +67,6 @@ namespace WendtEquipmentTracking.BusinessLogic
 
             var equipments = equipmentBOs.Select(x => new Equipment
             {
-                EquipmentId = x.EquipmentId,
                 CustomsValue = x.CustomsValue,
                 FullyShipped = x.FullyShipped,
                 IsHardware = x.IsHardware,

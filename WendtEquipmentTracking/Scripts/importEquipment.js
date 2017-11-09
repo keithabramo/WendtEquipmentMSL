@@ -56,9 +56,6 @@ $(function () {
                             .attr("data-val-required", $(this).attr("data-val-required-temp"))
                             .attr("data-val", "true");
                     });
-
-                    
-
                 } else {
                     $(this).closest("tr").find(":input").not("[type='checkbox']").each(function () {
                         $(this)

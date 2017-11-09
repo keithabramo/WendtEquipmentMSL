@@ -48,8 +48,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                 ReleasedPercent = x.ReleasedPercent,
                 SalePrice = x.SalePrice,
                 ShippedPercent = x.ShippedPercent,
-                WorkOrderNumber = x.WorkOrderNumber,
-                WorkOrderPriceId = x.WorkOrderPriceId
+                WorkOrderNumber = x.WorkOrderNumber
             });
 
             workOrderPriceEngine.AddNewWorkOrderPrices(workOrderPrices);

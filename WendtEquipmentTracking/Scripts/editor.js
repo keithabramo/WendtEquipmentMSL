@@ -12,6 +12,21 @@
         this.initEvents = function () {
             var $this = this;
 
+            $(".table thead th.select-checkbox").on("click", function () {
+
+                if ($(this).closest("tr").hasClass("selected")) {
+                    $(this).closest("tr").removeClass("selected")
+                    $this.datatable.rows({ page: 'current' }).deselect();
+                } else {
+                    $(this).closest("tr").addClass("selected")
+                    $this.datatable.rows({ page: 'current' }).select();
+                }
+            });
+
+            $(".table tfoot, .table thead").on("click", function () {
+                $this.datatable.cell.blur();
+            });
+
             $(".table").on("click", ".delete", function () {
                 $this.editor
                     .title('Delete row')
@@ -50,11 +65,13 @@
                     inline: {
                         onReturn: "submit",
                         onBlur: "submit",
-                        submit: "allIfChanged"
+                        submit: "allIfChanged",
+                        drawType: 'page'
                     },
                     //used by autofill
                     bubble: {
-                        submit: "allIfChanged"
+                        submit: "allIfChanged",
+                        drawType: 'page'
                     }
                 }
             }, settings)
@@ -99,7 +116,8 @@
                 },
                 dom: "<'row'<'col-sm-5 text-left custom'f><'col-sm-3 text-center'i><'col-sm-4 text-right'l>>" +
                      "<'row'<'col-sm-12'tr>>" +
-                     "<'row bottom-section'<'col-sm-12 text-center'p>>"
+                     "<'row bottom-section'<'col-sm-2 text-left createButtonContainer'><'col-sm-10 text-center'p>>"
+
 
             }, settings);
 
@@ -128,7 +146,7 @@
                     }
                 });
 
-                $searchHeader.find("th").attr("tabindex", "-1").removeClass("sorting sorting_desc sorting_asc");
+                $searchHeader.find("th").attr("tabindex", "-1").removeClass("sorting sorting_desc sorting_asc select-checkbox");
 
                 $(".table.my-datatable thead").prepend($searchHeader);
             }
