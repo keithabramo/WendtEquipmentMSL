@@ -79,7 +79,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                     HardwareKitEquipmentId = e.HardwareKitEquipmentId,
                     HardwareKitId = e.HardwareKitId,
                     QuantityToShip = e.QuantityToShip
-                })
+                }).ToList()
             });
 
 
@@ -104,7 +104,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                     HardwareKitEquipmentId = e.HardwareKitEquipmentId,
                     HardwareKitId = e.HardwareKitId,
                     QuantityToShip = e.QuantityToShip
-                })
+                }).ToList()
             };
 
             return hardwareKitBO;
@@ -128,7 +128,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                     HardwareKitEquipmentId = e.HardwareKitEquipmentId,
                     HardwareKitId = e.HardwareKitId,
                     QuantityToShip = e.QuantityToShip
-                })
+                }).ToList()
             });
 
             return hardwareKitBOs.ToList();

@@ -320,7 +320,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                         ToStorage = x.BillOfLading.ToStorage,
                         TrailerNumber = x.BillOfLading.TrailerNumber
                     },
-                })
+                }).ToList()
             };
 
             return equipmentBO;

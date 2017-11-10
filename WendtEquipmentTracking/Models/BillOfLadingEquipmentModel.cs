@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 
 namespace WendtEquipmentTracking.App.Models
 {
@@ -9,7 +8,6 @@ namespace WendtEquipmentTracking.App.Models
         public int BillOfLadingId { get; set; }
         public int EquipmentId { get; set; }
 
-        public bool Checked { get; set; }
 
         [DisplayName("Qty Shipped with this BOL")]
         public double Quantity { get; set; }

@@ -1,11 +1,8 @@
-﻿
-using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
 using WendtEquipmentTracking.App.Models;
 using WendtEquipmentTracking.BusinessLogic;
 using WendtEquipmentTracking.BusinessLogic.Api;
-using WendtEquipmentTracking.BusinessLogic.BO;
 
 namespace WendtEquipmentTracking.App.Controllers
 {
@@ -48,62 +45,20 @@ namespace WendtEquipmentTracking.App.Controllers
         //
         // GET: /BillOfLading/Details/5
 
-        public ActionResult Details(string billOfLadingNumber)
+        public ActionResult Details(int id)
         {
-            var user = userService.GetCurrentUser();
+            var billOfLading = billOfLadingService.GetById(id);
 
-            if (user == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            var billOfLadings = billOfLadingService.GetByBillOfLadingNumber(user.ProjectId, billOfLadingNumber);
-
-            if (billOfLadings == null)
+            if (billOfLading == null)
             {
                 return HttpNotFound();
             }
 
-
-            var model = billOfLadings.Select(x => new BillOfLadingModel
+            var model = new BillOfLadingModel
             {
-                BillOfLadingId = x.BillOfLadingId,
-                BillOfLadingNumber = x.BillOfLadingNumber,
-                Carrier = x.Carrier,
-                DateShipped = x.DateShipped,
-                FreightTerms = x.FreightTerms,
-                IsCurrentRevision = x.IsCurrentRevision,
-                ProjectId = x.ProjectId,
-                Revision = x.Revision,
-                ToStorage = x.ToStorage,
-                TrailerNumber = x.TrailerNumber,
-                BillOfLadingEquipments = x.BillOfLadingEquipments.Select(e => new BillOfLadingEquipmentModel
-                {
-                    BillOfLadingEquipmentId = e.BillOfLadingEquipmentId,
-                    BillOfLadingId = e.BillOfLadingId,
-                    CountryOfOrigin = e.CountryOfOrigin,
-                    EquipmentId = e.EquipmentId,
-                    HTSCode = e.HTSCode,
-                    Quantity = e.Quantity,
-                    ShippedFrom = e.ShippedFrom,
-                    Equipment = new EquipmentModel
-                    {
-                        EquipmentName = e.Equipment.EquipmentName,
-                        Description = e.Equipment.Description,
-                        ShippingTagNumber = e.Equipment.ShippingTagNumber,
-                        WorkOrderNumber = e.Equipment.WorkOrderNumber,
-                        ReadyToShip = e.Equipment.ReadyToShip,
-                        LeftToShip = e.Equipment.LeftToShip.ToString(),
-                        ShippedQuantity = e.Equipment.ShippedQuantity.ToString(),
-                        Quantity = e.Equipment.Quantity.HasValue ? e.Equipment.Quantity.Value : 0,
-                        ShippedFrom = e.Equipment.ShippedFrom,
-                        HTSCode = e.Equipment.HTSCode,
-                        CountryOfOrigin = e.Equipment.CountryOfOrigin
-                    }
-                }).ToList()
-            });
-
-            model = model.OrderByDescending(b => b.Revision);
+                BillOfLadingId = billOfLading.BillOfLadingId,
+                BillOfLadingNumber = billOfLading.BillOfLadingNumber
+            };
 
             return View(model);
         }
@@ -140,70 +95,69 @@ namespace WendtEquipmentTracking.App.Controllers
 
         //
         // POST: /BillOfLading/Create
+        //[HttpPost]
+        //public ActionResult Create(BillOfLadingModel model)
+        //{
+        //    try
+        //    {
+        //        if (ModelState.IsValid)
+        //        {
+        //            var user = userService.GetCurrentUser();
 
-        [HttpPost]
-        public ActionResult Create(BillOfLadingModel model)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    var user = userService.GetCurrentUser();
+        //            if (user != null)
+        //            {
 
-                    if (user != null)
-                    {
+        //                model.ProjectId = user.ProjectId;
+        //                model.BillOfLadingEquipments = model.BillOfLadingEquipments.Where(be => be.Quantity > 0 && be.Checked).ToList();
 
-                        model.ProjectId = user.ProjectId;
-                        model.BillOfLadingEquipments = model.BillOfLadingEquipments.Where(be => be.Quantity > 0 && be.Checked).ToList();
-
-                        if (model.BillOfLadingEquipments.Count() != 0)
-                        {
-                            var billOfLadingBO = new BillOfLadingBO
-                            {
-                                BillOfLadingId = model.BillOfLadingId,
-                                BillOfLadingNumber = model.BillOfLadingNumber,
-                                Carrier = model.Carrier,
-                                DateShipped = model.DateShipped,
-                                FreightTerms = model.FreightTerms,
-                                IsCurrentRevision = model.IsCurrentRevision,
-                                ProjectId = model.ProjectId,
-                                Revision = model.Revision,
-                                ToStorage = model.ToStorage,
-                                TrailerNumber = model.TrailerNumber,
-                                BillOfLadingEquipments = model.BillOfLadingEquipments.Select(e => new BillOfLadingEquipmentBO
-                                {
-                                    BillOfLadingEquipmentId = e.BillOfLadingEquipmentId,
-                                    BillOfLadingId = e.BillOfLadingId,
-                                    CountryOfOrigin = e.CountryOfOrigin,
-                                    EquipmentId = e.EquipmentId,
-                                    HTSCode = e.HTSCode,
-                                    Quantity = e.Quantity,
-                                    ShippedFrom = e.ShippedFrom
-                                })
-                            };
-
-
-                            billOfLadingService.Save(billOfLadingBO);
-
-                            return RedirectToAction("Index");
-                        }
-                        ErrorMessage("You must select at least one equipment item to associate with this BOL");
+        //                if (model.BillOfLadingEquipments.Count() != 0)
+        //                {
+        //                    var billOfLadingBO = new BillOfLadingBO
+        //                    {
+        //                        BillOfLadingId = model.BillOfLadingId,
+        //                        BillOfLadingNumber = model.BillOfLadingNumber,
+        //                        Carrier = model.Carrier,
+        //                        DateShipped = model.DateShipped,
+        //                        FreightTerms = model.FreightTerms,
+        //                        IsCurrentRevision = model.IsCurrentRevision,
+        //                        ProjectId = model.ProjectId,
+        //                        Revision = model.Revision,
+        //                        ToStorage = model.ToStorage,
+        //                        TrailerNumber = model.TrailerNumber,
+        //                        BillOfLadingEquipments = model.BillOfLadingEquipments.Select(e => new BillOfLadingEquipmentBO
+        //                        {
+        //                            BillOfLadingEquipmentId = e.BillOfLadingEquipmentId,
+        //                            BillOfLadingId = e.BillOfLadingId,
+        //                            CountryOfOrigin = e.CountryOfOrigin,
+        //                            EquipmentId = e.EquipmentId,
+        //                            HTSCode = e.HTSCode,
+        //                            Quantity = e.Quantity,
+        //                            ShippedFrom = e.ShippedFrom
+        //                        })
+        //                    };
 
 
-                    }
-                }
+        //                    billOfLadingService.Save(billOfLadingBO);
 
-                HandleError("There was an error saving your Bill Of Lading", ModelState);
+        //                    return RedirectToAction("Index");
+        //                }
+        //                ErrorMessage("You must select at least one equipment item to associate with this BOL");
 
-                return View(model);
-            }
-            catch (Exception e)
-            {
-                HandleError("There was an error saving your Bill Of Lading", e);
 
-                return View(model);
-            }
-        }
+        //            }
+        //        }
+
+        //        HandleError("There was an error saving your Bill Of Lading", ModelState);
+
+        //        return View(model);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        HandleError("There was an error saving your Bill Of Lading", e);
+
+        //        return View(model);
+        //    }
+        //}
 
         //
         // GET: /BillOfLading/Edit/5
@@ -228,254 +182,213 @@ namespace WendtEquipmentTracking.App.Controllers
                 Revision = billOfLading.Revision,
                 ToStorage = billOfLading.ToStorage,
                 TrailerNumber = billOfLading.TrailerNumber,
-                BillOfLadingEquipments = billOfLading.BillOfLadingEquipments.Select(e => new BillOfLadingEquipmentModel
-                {
-                    BillOfLadingEquipmentId = e.BillOfLadingEquipmentId,
-                    BillOfLadingId = e.BillOfLadingId,
-                    CountryOfOrigin = e.CountryOfOrigin,
-                    EquipmentId = e.EquipmentId,
-                    HTSCode = e.HTSCode,
-                    Quantity = e.Quantity,
-                    ShippedFrom = e.ShippedFrom,
-                    Checked = true
-                }).ToList()
+                //BillOfLadingEquipments = billOfLading.BillOfLadingEquipments.Select(e => new BillOfLadingEquipmentModel
+                //{
+                //    BillOfLadingEquipmentId = e.BillOfLadingEquipmentId,
+                //    BillOfLadingId = e.BillOfLadingId,
+                //    CountryOfOrigin = e.CountryOfOrigin,
+                //    EquipmentId = e.EquipmentId,
+                //    HTSCode = e.HTSCode,
+                //    Quantity = e.Quantity,
+                //    ShippedFrom = e.ShippedFrom,
+                //    Checked = true
+                //}).ToList()
             };
 
             return View(model);
         }
 
-        //
-        // POST: /BillOfLading/Edit/5
-
-        [HttpPost]
-        public ActionResult Edit(int id, BillOfLadingModel model)
+        //GET Equipment/BOLsAssociatedToEquipment/5
+        [HttpGet]
+        public ActionResult EquipmentAssociatedToBOL(int id)
         {
-            try
+            var billOfLading = billOfLadingService.GetById(id);
+
+            var model = billOfLading.BillOfLadingEquipments.Select(x => new BillOfLadingEquipmentModel
             {
-                if (ModelState.IsValid)
-                {
-                    var user = userService.GetCurrentUser();
-
-                    if (user != null)
-                    {
-                        model.ProjectId = user.ProjectId;
-                        model.BillOfLadingEquipments = model.BillOfLadingEquipments.Where(be => be.Quantity > 0 && be.Checked).ToList();
-
-                        if (model.BillOfLadingEquipments.Count() != 0)
-                        {
-                            var billOfLading = new BillOfLadingBO
-                            {
-                                BillOfLadingId = model.BillOfLadingId,
-                                BillOfLadingNumber = model.BillOfLadingNumber,
-                                Carrier = model.Carrier,
-                                DateShipped = model.DateShipped,
-                                FreightTerms = model.FreightTerms,
-                                IsCurrentRevision = model.IsCurrentRevision,
-                                ProjectId = model.ProjectId,
-                                Revision = model.Revision,
-                                ToStorage = model.ToStorage,
-                                TrailerNumber = model.TrailerNumber,
-                                BillOfLadingEquipments = model.BillOfLadingEquipments.Select(e => new BillOfLadingEquipmentBO
-                                {
-                                    BillOfLadingEquipmentId = e.BillOfLadingEquipmentId,
-                                    BillOfLadingId = e.BillOfLadingId,
-                                    EquipmentId = e.EquipmentId,
-                                    Quantity = e.Quantity,
-                                    ShippedFrom = e.ShippedFrom
-                                }).ToList()
-                            };
-
-                            billOfLadingService.Update(billOfLading);
-
-                            return RedirectToAction("Index");
-                        }
-
-                        SuccessMessage("You must select at least one equipment item to associate with this BOL");
-                    }
-                }
-
-                HandleError("There was an error while saving this BOL", ModelState);
-
-                return View(model);
-            }
-            catch (Exception e)
-            {
-                HandleError("An error occured while saving this Bill Of Lading", e);
-
-                return View(model);
-            }
-        }
-
-        // POST: BillOfLading/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, BillOfLadingModel model)
-        {
-            try
-            {
-                var billOfLading = billOfLadingService.GetById(id);
-
-                if (billOfLading == null)
-                {
-                    return HttpNotFound();
-                }
-
-                billOfLadingService.Delete(id);
-
-                return RedirectToAction("Index");
-            }
-            catch (Exception e)
-            {
-                HandleError("There was an error while trying to delete this Bill of Lading", e);
-                return View(model);
-            }
-        }
-
-
-        //
-        // GET: /BillOfLading/EquipmentToAddToBOL
-        [ChildActionOnly]
-        public ActionResult EquipmentToAddToBOL()
-        {
-            var user = userService.GetCurrentUser();
-
-            if (user == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            var projectBO = projectService.GetById(user.ProjectId);
-
-            //Get Data
-            var equipmentBOs = equipmentService.GetAll(user.ProjectId).Where(e => e.ReadyToShip != null
-                                                                    && e.ReadyToShip > 0
-                                                                    && !e.FullyShipped
-                                                                    && !e.IsHardware).ToList();
-
-            var equipmentModels = equipmentBOs.Select(x => new EquipmentModel
-            {
+                BillOfLadingEquipmentId = x.BillOfLadingEquipmentId,
+                BillOfLadingId = x.BillOfLadingId,
                 EquipmentId = x.EquipmentId,
-                CustomsValue = x.CustomsValue,
-                FullyShipped = x.FullyShipped,
-                LeftToShip = x.LeftToShip.ToString(),
-                Priority = x.Priority,
-                ProjectId = x.ProjectId,
-                Quantity = x.Quantity.HasValue ? x.Quantity.Value : 0,
-                ReadyToShip = x.ReadyToShip,
-                ReleaseDate = x.ReleaseDate,
-                SalePrice = x.SalePrice,
-                ShippedQuantity = x.ShippedQuantity.ToString(),
-                TotalWeight = x.TotalWeight.ToString(),
-                TotalWeightShipped = x.TotalWeightShipped.ToString(),
-                UnitWeight = x.UnitWeight,
-                CountryOfOrigin = (x.CountryOfOrigin ?? string.Empty).ToUpperInvariant(),
-                Description = (x.Description ?? string.Empty).ToUpperInvariant(),
-                DrawingNumber = (x.DrawingNumber ?? string.Empty).ToUpperInvariant(),
-                EquipmentName = (x.EquipmentName ?? string.Empty).ToUpperInvariant(),
-                HTSCode = (x.HTSCode ?? string.Empty).ToUpperInvariant(),
-                Notes = (x.Notes ?? string.Empty).ToUpperInvariant(),
-                ShippedFrom = (x.ShippedFrom ?? string.Empty).ToUpperInvariant(),
-                ShippingTagNumber = (x.ShippingTagNumber ?? string.Empty).ToUpperInvariant(),
-                WorkOrderNumber = (x.WorkOrderNumber ?? string.Empty).ToUpperInvariant()
+                Quantity = x.Quantity,
+                ShippedFrom = x.ShippedFrom,
+                Equipment = new EquipmentModel
+                {
+                    EquipmentName = x.Equipment.EquipmentName,
+                    Description = x.Equipment.Description,
+                    ShippingTagNumber = x.Equipment.ShippingTagNumber,
+                    WorkOrderNumber = x.Equipment.WorkOrderNumber,
+                    ReadyToShip = x.Equipment.ReadyToShip,
+                    LeftToShip = x.Equipment.LeftToShip.ToString(),
+                    ShippedQuantity = x.Equipment.ShippedQuantity.ToString(),
+                    Quantity = x.Equipment.Quantity.HasValue ? x.Equipment.Quantity.Value : 0,
+                    ShippedFrom = x.Equipment.ShippedFrom,
+                    HTSCode = x.Equipment.HTSCode,
+                    CountryOfOrigin = x.Equipment.CountryOfOrigin
+                },
             });
-
-            equipmentModels.ToList().ForEach(e =>
-            {
-                e.SetIndicators(projectBO.ProjectNumber, projectBO.IsCustomsProject);
-            });
-
-            //Filter and sort data
-
-            equipmentModels = equipmentModels.OrderBy(r => r.EquipmentName);
-
-            var billOfLadingEquipments = equipmentModels.Select(e => new BillOfLadingEquipmentModel
-            {
-                Equipment = e,
-                EquipmentId = e.EquipmentId,
-                HTSCode = e.HTSCode,
-                CountryOfOrigin = e.CountryOfOrigin,
-                ShippedFrom = e.ShippedFrom
-            }).ToList();
-
-            var model = new BillOfLadingModel
-            {
-                BillOfLadingEquipments = billOfLadingEquipments
-            };
 
             return PartialView(model);
         }
 
         //
+        // POST: /BillOfLading/Edit/5
+
+        //[HttpPost]
+        //public ActionResult Edit(int id, BillOfLadingModel model)
+        //{
+        //    try
+        //    {
+        //        if (ModelState.IsValid)
+        //        {
+        //            var user = userService.GetCurrentUser();
+
+        //            if (user != null)
+        //            {
+        //                model.ProjectId = user.ProjectId;
+        //                model.BillOfLadingEquipments = model.BillOfLadingEquipments.Where(be => be.Quantity > 0 && be.Checked).ToList();
+
+        //                if (model.BillOfLadingEquipments.Count() != 0)
+        //                {
+        //                    var billOfLading = new BillOfLadingBO
+        //                    {
+        //                        BillOfLadingId = model.BillOfLadingId,
+        //                        BillOfLadingNumber = model.BillOfLadingNumber,
+        //                        Carrier = model.Carrier,
+        //                        DateShipped = model.DateShipped,
+        //                        FreightTerms = model.FreightTerms,
+        //                        IsCurrentRevision = model.IsCurrentRevision,
+        //                        ProjectId = model.ProjectId,
+        //                        Revision = model.Revision,
+        //                        ToStorage = model.ToStorage,
+        //                        TrailerNumber = model.TrailerNumber,
+        //                        BillOfLadingEquipments = model.BillOfLadingEquipments.Select(e => new BillOfLadingEquipmentBO
+        //                        {
+        //                            BillOfLadingEquipmentId = e.BillOfLadingEquipmentId,
+        //                            BillOfLadingId = e.BillOfLadingId,
+        //                            EquipmentId = e.EquipmentId,
+        //                            Quantity = e.Quantity,
+        //                            ShippedFrom = e.ShippedFrom
+        //                        }).ToList()
+        //                    };
+
+        //                    billOfLadingService.Update(billOfLading);
+
+        //                    return RedirectToAction("Index");
+        //                }
+
+        //                SuccessMessage("You must select at least one equipment item to associate with this BOL");
+        //            }
+        //        }
+
+        //        HandleError("There was an error while saving this BOL", ModelState);
+
+        //        return View(model);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        HandleError("An error occured while saving this Bill Of Lading", e);
+
+        //        return View(model);
+        //    }
+        //}
+
+        // POST: BillOfLading/Delete/5
+        //[HttpPost]
+        //public ActionResult Delete(int id, BillOfLadingModel model)
+        //{
+        //    try
+        //    {
+        //        var billOfLading = billOfLadingService.GetById(id);
+
+        //        if (billOfLading == null)
+        //        {
+        //            return HttpNotFound();
+        //        }
+
+        //        billOfLadingService.Delete(id);
+
+        //        return RedirectToAction("Index");
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        HandleError("There was an error while trying to delete this Bill of Lading", e);
+        //        return View(model);
+        //    }
+        //}
+
+
+        //
         // GET: /BillOfLading/EquipmentToEditForBOL
-        [ChildActionOnly]
-        public ActionResult EquipmentToEditForBOL(BillOfLadingModel model)
-        {
-            var user = userService.GetCurrentUser();
+        //[ChildActionOnly]
+        //public ActionResult EquipmentToEditForBOL(BillOfLadingModel model)
+        //{
+        //    var user = userService.GetCurrentUser();
 
-            if (user == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
+        //    if (user == null)
+        //    {
+        //        return RedirectToAction("Index", "Home");
+        //    }
 
-            var projectBO = projectService.GetById(user.ProjectId);
+        //    var projectBO = projectService.GetById(user.ProjectId);
 
-            //Get Data
-            var equipmentBOs = equipmentService.GetAll(user.ProjectId).Where(e => e.ReadyToShip != null
-                                                                    && e.ReadyToShip > 0
-                                                                    && !e.FullyShipped
-                                                                    && !e.IsHardware).ToList();
+        //    //Get Data
+        //    var equipmentBOs = equipmentService.GetAll(user.ProjectId).Where(e => e.ReadyToShip != null
+        //                                                            && e.ReadyToShip > 0
+        //                                                            && !e.FullyShipped
+        //                                                            && !e.IsHardware).ToList();
 
-            var equipmentModels = equipmentBOs.Select(x => new EquipmentModel
-            {
-                EquipmentId = x.EquipmentId,
-                CustomsValue = x.CustomsValue,
-                FullyShipped = x.FullyShipped,
-                LeftToShip = x.LeftToShip.ToString(),
-                Priority = x.Priority,
-                ProjectId = x.ProjectId,
-                Quantity = x.Quantity.HasValue ? x.Quantity.Value : 0,
-                ReadyToShip = x.ReadyToShip,
-                ReleaseDate = x.ReleaseDate,
-                SalePrice = x.SalePrice,
-                ShippedQuantity = x.ShippedQuantity.ToString(),
-                TotalWeight = x.TotalWeight.ToString(),
-                TotalWeightShipped = x.TotalWeightShipped.ToString(),
-                UnitWeight = x.UnitWeight,
-                CountryOfOrigin = (x.CountryOfOrigin ?? string.Empty).ToUpperInvariant(),
-                Description = (x.Description ?? string.Empty).ToUpperInvariant(),
-                DrawingNumber = (x.DrawingNumber ?? string.Empty).ToUpperInvariant(),
-                EquipmentName = (x.EquipmentName ?? string.Empty).ToUpperInvariant(),
-                HTSCode = (x.HTSCode ?? string.Empty).ToUpperInvariant(),
-                Notes = (x.Notes ?? string.Empty).ToUpperInvariant(),
-                ShippedFrom = (x.ShippedFrom ?? string.Empty).ToUpperInvariant(),
-                ShippingTagNumber = (x.ShippingTagNumber ?? string.Empty).ToUpperInvariant(),
-                WorkOrderNumber = (x.WorkOrderNumber ?? string.Empty).ToUpperInvariant()
-            });
+        //    var equipmentModels = equipmentBOs.Select(x => new EquipmentModel
+        //    {
+        //        EquipmentId = x.EquipmentId,
+        //        CustomsValue = x.CustomsValue,
+        //        FullyShipped = x.FullyShipped,
+        //        LeftToShip = x.LeftToShip.ToString(),
+        //        Priority = x.Priority,
+        //        ProjectId = x.ProjectId,
+        //        Quantity = x.Quantity.HasValue ? x.Quantity.Value : 0,
+        //        ReadyToShip = x.ReadyToShip,
+        //        ReleaseDate = x.ReleaseDate,
+        //        SalePrice = x.SalePrice,
+        //        ShippedQuantity = x.ShippedQuantity.ToString(),
+        //        TotalWeight = x.TotalWeight.ToString(),
+        //        TotalWeightShipped = x.TotalWeightShipped.ToString(),
+        //        UnitWeight = x.UnitWeight,
+        //        CountryOfOrigin = (x.CountryOfOrigin ?? string.Empty).ToUpperInvariant(),
+        //        Description = (x.Description ?? string.Empty).ToUpperInvariant(),
+        //        DrawingNumber = (x.DrawingNumber ?? string.Empty).ToUpperInvariant(),
+        //        EquipmentName = (x.EquipmentName ?? string.Empty).ToUpperInvariant(),
+        //        HTSCode = (x.HTSCode ?? string.Empty).ToUpperInvariant(),
+        //        Notes = (x.Notes ?? string.Empty).ToUpperInvariant(),
+        //        ShippedFrom = (x.ShippedFrom ?? string.Empty).ToUpperInvariant(),
+        //        ShippingTagNumber = (x.ShippingTagNumber ?? string.Empty).ToUpperInvariant(),
+        //        WorkOrderNumber = (x.WorkOrderNumber ?? string.Empty).ToUpperInvariant()
+        //    });
 
-            //from database
-            var billOfLadingEquipments = equipmentModels.Select(e => new BillOfLadingEquipmentModel
-            {
-                Equipment = e,
-                EquipmentId = e.EquipmentId,
-                Quantity = model.BillOfLadingEquipments.Any(be => be.EquipmentId == e.EquipmentId) ? model.BillOfLadingEquipments.FirstOrDefault(be => be.EquipmentId == e.EquipmentId).Quantity : 0,
-                ShippedFrom = model.BillOfLadingEquipments.Any(be => be.EquipmentId == e.EquipmentId) ? model.BillOfLadingEquipments.FirstOrDefault(be => be.EquipmentId == e.EquipmentId).ShippedFrom : e.ShippedFrom,
+        //    //from database
+        //    var billOfLadingEquipments = equipmentModels.Select(e => new BillOfLadingEquipmentModel
+        //    {
+        //        Equipment = e,
+        //        EquipmentId = e.EquipmentId,
+        //        Quantity = model.BillOfLadingEquipments.Any(be => be.EquipmentId == e.EquipmentId) ? model.BillOfLadingEquipments.FirstOrDefault(be => be.EquipmentId == e.EquipmentId).Quantity : 0,
+        //        ShippedFrom = model.BillOfLadingEquipments.Any(be => be.EquipmentId == e.EquipmentId) ? model.BillOfLadingEquipments.FirstOrDefault(be => be.EquipmentId == e.EquipmentId).ShippedFrom : e.ShippedFrom,
 
-                Checked = model.BillOfLadingEquipments.Any(be => be.EquipmentId == e.EquipmentId)
-            });
+        //        Checked = model.BillOfLadingEquipments.Any(be => be.EquipmentId == e.EquipmentId)
+        //    });
 
-            //get any added to model but not found in query because ready to ship is now 0
-            var modelBOLEquipments = model.BillOfLadingEquipments.Where(be => equipmentModels == null || !equipmentModels.Any(fullbe => fullbe.EquipmentId == be.EquipmentId)).ToList();
+        //    //get any added to model but not found in query because ready to ship is now 0
+        //    var modelBOLEquipments = model.BillOfLadingEquipments.Where(be => equipmentModels == null || !equipmentModels.Any(fullbe => fullbe.EquipmentId == be.EquipmentId)).ToList();
 
-            modelBOLEquipments.AddRange(billOfLadingEquipments);
-            modelBOLEquipments.OrderByDescending(e => e.Checked ? 1 : 0).ThenBy(e => e.Equipment.EquipmentName).ToList().ForEach(e =>
-            {
-                e.Equipment.SetIndicators(projectBO.ProjectNumber, projectBO.IsCustomsProject);
-                e.HTSCode = e.Equipment.HTSCode;
-                e.CountryOfOrigin = e.Equipment.CountryOfOrigin;
-            });
+        //    modelBOLEquipments.AddRange(billOfLadingEquipments);
+        //    modelBOLEquipments.OrderByDescending(e => e.Checked ? 1 : 0).ThenBy(e => e.Equipment.EquipmentName).ToList().ForEach(e =>
+        //    {
+        //        e.Equipment.SetIndicators(projectBO.ProjectNumber, projectBO.IsCustomsProject);
+        //        e.HTSCode = e.Equipment.HTSCode;
+        //        e.CountryOfOrigin = e.Equipment.CountryOfOrigin;
+        //    });
 
-            model.BillOfLadingEquipments = modelBOLEquipments;
+        //    model.BillOfLadingEquipments = modelBOLEquipments;
 
-            return PartialView("EquipmentToAddToBOL", model);
-        }
+        //    return PartialView("EquipmentToAddToBOL", model);
+        //}
     }
 }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BillOfLadingModel>
+﻿@model BillOfLadingModel
 
 @{
     ViewBag.Title = "Details";
@@ -6,7 +6,7 @@
 
 @Html.Partial("ActionNavPartial", ActionNav.Nothing)
 
-<h4>BOL: <strong>@Html.DisplayFor(modelItem => modelItem.FirstOrDefault().BillOfLadingNumber)</strong><br /><small>Details</small></h4>
+<h4>BOL: <strong>@Html.DisplayFor(modelItem => modelItem.BillOfLadingNumber)</strong><br /><small>Details</small></h4>
 
 <div>
     <hr />
@@ -14,74 +14,23 @@
         <thead>
             <tr>
                 <th></th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Revision)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DateShipped)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FreightTerms)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Carrier)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.TrailerNumber)
-                </th>
+                <th>@Html.DisplayNameFor(model => model.Revision)</th>
+                <th>@Html.DisplayNameFor(model => model.DateShipped)</th>
+                <th>@Html.DisplayNameFor(model => model.FreightTerms)</th>
+                <th>@Html.DisplayNameFor(model => model.Carrier)</th>
+                <th>@Html.DisplayNameFor(model => model.TrailerNumber)</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
-            {
-                <tr @(item.IsCurrentRevision ? "class='info'" : "")>
-                    <td data-toggle="collapse" data-id="@(item.BillOfLadingId)" class="expand text-center"><span class="glyphicon glyphicon-plus text-primary"></span></td>
-                    <td>
-                        @if (item.IsCurrentRevision)
-                        {
-                            @("Current")
-                        }
-                        else
-                        {
-                            @Html.DisplayFor(modelItem => item.Revision);
-                        }
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DateShipped)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FreightTerms)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Carrier)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TrailerNumber)
-                    </td>
-                </tr>
-            }
+            
         </tbody>
 
     </table>
-
-
-    <div class="hidden">
-        @foreach (var item in Model)
-        {
-            if (item.BillOfLadingEquipments.Count() > 0)
-            {
-                <div id="@(item.BillOfLadingId)">
-                    @Html.Partial("EquipmentAssociatedToBOL", item.BillOfLadingEquipments)
-                </div>
-            }
-        }
-
-    </div>
 </div>
 <p>
     @if (Html.UserIsInRole(UserRoles.ReadWrite))
     {
-        @Html.ActionLink("Edit", "Edit", new { id = Model.SingleOrDefault(b => b.IsCurrentRevision).BillOfLadingId }) 
+        @Html.ActionLink("Edit", "Edit", new { id = Model.BillOfLadingId }) 
         @:|
     }
     @Html.ActionLink("Back to List", "Index")
@@ -89,6 +38,10 @@
 
 
 @section Scripts {
+    <script type="text/javascript">
+        var billOfLadingNumber = "@(Model.BillOfLadingNumber)";
+    </script>
     @Scripts.Render("~/bundles/form")
     @Scripts.Render("~/bundles/table")
+    @Scripts.Render("~/bundles/billOfLadingDetails")
 }

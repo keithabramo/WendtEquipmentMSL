@@ -127,8 +127,6 @@ namespace WendtEquipmentTracking.BusinessLogic
 
             billOfLadingEngine.UpdateBillOfLading(billOfLading);
 
-
-
             dbContext.SaveChanges();
         }
 
@@ -167,7 +165,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                     EquipmentId = e.EquipmentId,
                     Quantity = e.Quantity,
                     ShippedFrom = e.ShippedFrom
-                })
+                }).ToList()
 
             });
 
@@ -196,8 +194,40 @@ namespace WendtEquipmentTracking.BusinessLogic
                     BillOfLadingId = e.BillOfLadingId,
                     EquipmentId = e.EquipmentId,
                     Quantity = e.Quantity,
-                    ShippedFrom = e.ShippedFrom
-                })
+                    ShippedFrom = e.ShippedFrom,
+                    Equipment = new EquipmentBO
+                    {
+                        EquipmentId = e.Equipment.EquipmentId,
+                        CustomsValue = e.Equipment.CustomsValue,
+                        FullyShipped = e.Equipment.FullyShipped,
+                        IsHardware = e.Equipment.IsHardware,
+                        LeftToShip = e.Equipment.LeftToShip,
+                        Priority = e.Equipment.Priority.HasValue ? e.Equipment.Priority.Value : 0,
+                        ProjectId = e.Equipment.ProjectId,
+                        Quantity = e.Equipment.Quantity,
+                        ReadyToShip = e.Equipment.ReadyToShip,
+                        ReleaseDate = e.Equipment.ReleaseDate,
+                        SalePrice = e.Equipment.SalePrice,
+                        ShippedQuantity = e.Equipment.ShippedQuantity,
+                        TotalWeight = e.Equipment.TotalWeight,
+                        TotalWeightShipped = e.Equipment.TotalWeightShipped,
+                        UnitWeight = e.Equipment.UnitWeight,
+                        CountryOfOrigin = e.Equipment.CountryOfOrigin,
+                        Description = e.Equipment.Description,
+                        DrawingNumber = e.Equipment.DrawingNumber,
+                        EquipmentName = e.Equipment.EquipmentName,
+                        HTSCode = e.Equipment.HTSCode,
+                        Notes = e.Equipment.Notes,
+                        ShippedFrom = e.Equipment.ShippedFrom,
+                        ShippingTagNumber = e.Equipment.ShippingTagNumber,
+                        WorkOrderNumber = e.Equipment.WorkOrderNumber,
+                        HasBillOfLading = e.Equipment.BillOfLadingEquipments.Any(b => !b.IsDeleted && b.BillOfLading.IsCurrentRevision),
+                        HasBillOfLadingInStorage = e.Equipment.BillOfLadingEquipments.Any(be => !be.IsDeleted && be.BillOfLading.ToStorage && be.BillOfLading.IsCurrentRevision),
+                        IsHardwareKit = e.Equipment.HardwareKit != null,
+                        IsAssociatedToHardwareKit = e.Equipment.HardwareKitEquipments.Any(h => !h.IsDeleted && h.HardwareKit.IsCurrentRevision),
+                        AssociatedHardwareKitNumber = e.Equipment.HardwareKitEquipments.Any(h => !h.IsDeleted && h.HardwareKit.IsCurrentRevision) ? e.Equipment.HardwareKitEquipments.Where(h => h.HardwareKit.IsCurrentRevision).FirstOrDefault().HardwareKit.HardwareKitNumber : string.Empty
+                    }
+                }).ToList()
             };
 
             return billOfLadingBO;
@@ -226,7 +256,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                     EquipmentId = e.EquipmentId,
                     Quantity = e.Quantity,
                     ShippedFrom = e.ShippedFrom
-                })
+                }).ToList()
 
             });
 
@@ -255,7 +285,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                     EquipmentId = e.EquipmentId,
                     Quantity = e.Quantity,
                     ShippedFrom = e.ShippedFrom
-                })
+                }).ToList()
 
             });
 

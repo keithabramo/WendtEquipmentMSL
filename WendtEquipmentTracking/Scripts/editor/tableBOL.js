@@ -32,7 +32,7 @@
                     url: ROOT_URL + "api/BillOfLadingApi/Table",
                     dataSrc: ""
                 },
-                rowId: 'BillOfLadingID',
+                rowId: 'BillOfLadingId',
                 columns: [
                     { data: "BillOfLadingNumber" },
                     { data: "ToStorage" },

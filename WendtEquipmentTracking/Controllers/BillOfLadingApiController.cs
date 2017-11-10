@@ -56,6 +56,46 @@ namespace WendtEquipmentTracking.App.Controllers
             return billOfLadingModels;
         }
 
+        [HttpGet]
+        public IEnumerable<BillOfLadingModel> DetailsTable(string billOfLadingNumber)
+        {
+            IEnumerable<BillOfLadingModel> billOfLadingModels = new List<BillOfLadingModel>();
+
+            var user = userService.GetCurrentUser();
+
+            if (user == null)
+            {
+                return billOfLadingModels;
+            }
+
+            var billOfLadings = billOfLadingService.GetByBillOfLadingNumber(user.ProjectId, billOfLadingNumber);
+
+            if (billOfLadings == null)
+            {
+                return billOfLadingModels;
+            }
+
+
+            billOfLadingModels = billOfLadings.Select(x => new BillOfLadingModel
+            {
+                BillOfLadingId = x.BillOfLadingId,
+                BillOfLadingNumber = x.BillOfLadingNumber,
+                Carrier = x.Carrier,
+                DateShipped = x.DateShipped,
+                FreightTerms = x.FreightTerms,
+                IsCurrentRevision = x.IsCurrentRevision,
+                ProjectId = x.ProjectId,
+                Revision = x.Revision,
+                ToStorage = x.ToStorage,
+                TrailerNumber = x.TrailerNumber
+                
+            });
+
+            billOfLadingModels = billOfLadingModels.OrderByDescending(b => b.Revision);
+
+            return billOfLadingModels;
+        }
+
         //
         // GET: api/EquipmentApi/CreateTable
         [HttpGet]
@@ -73,7 +113,10 @@ namespace WendtEquipmentTracking.App.Controllers
             var projectBO = projectService.GetById(user.ProjectId);
 
             //Get Data
-            var equipmentBOs = equipmentService.GetAll(user.ProjectId);
+            var equipmentBOs = equipmentService.GetAll(user.ProjectId).Where(e => e.ReadyToShip != null
+                                                                                && e.ReadyToShip > 0
+                                                                                && !e.FullyShipped
+                                                                                && !e.IsHardware).ToList();
 
             billOfLadingEquipmentModels = equipmentBOs.Select(x => new BillOfLadingEquipmentModel
             {
@@ -133,6 +176,152 @@ namespace WendtEquipmentTracking.App.Controllers
 
             return billOfLadingEquipmentModels;
         }
+
+
+
+        //
+        // GET: api/EquipmentApi/EditTable
+        [HttpGet]
+        public IEnumerable<BillOfLadingEquipmentModel> EditTable(int billOfLadingId)
+        {
+            List<BillOfLadingEquipmentModel> billOfLadingEquipmentModels = new List<BillOfLadingEquipmentModel>();
+
+            var user = userService.GetCurrentUser();
+
+            if (user == null)
+            {
+                return billOfLadingEquipmentModels;
+            }
+
+            var projectBO = projectService.GetById(user.ProjectId);
+
+
+            //Get existing bill of lading information
+            var billOfLading = billOfLadingService.GetById(billOfLadingId);
+
+            billOfLadingEquipmentModels = billOfLading.BillOfLadingEquipments.Select(x => new BillOfLadingEquipmentModel
+            {
+                EquipmentId = x.EquipmentId,
+                BillOfLadingEquipmentId = x.BillOfLadingEquipmentId,
+                CountryOfOrigin = x.CountryOfOrigin,
+                HTSCode = x.HTSCode,
+                ShippedFrom = x.ShippedFrom,
+                Quantity = x.Quantity,
+                Equipment = new EquipmentModel
+                {
+                    EquipmentId = x.Equipment.EquipmentId,
+                    CustomsValue = x.Equipment.CustomsValue,
+                    FullyShipped = x.Equipment.FullyShipped,
+                    LeftToShip = x.Equipment.LeftToShip.ToString(),
+                    Priority = x.Equipment.Priority,
+                    ProjectId = x.Equipment.ProjectId,
+                    Quantity = x.Equipment.Quantity.HasValue ? x.Equipment.Quantity.Value : 0,
+                    ReadyToShip = x.Equipment.ReadyToShip,
+                    ReleaseDate = x.Equipment.ReleaseDate,
+                    SalePrice = x.Equipment.SalePrice,
+                    ShippedQuantity = x.Equipment.ShippedQuantity.ToString(),
+                    TotalWeight = x.Equipment.TotalWeight.ToString(),
+                    TotalWeightShipped = x.Equipment.TotalWeightShipped.ToString(),
+                    UnitWeight = x.Equipment.UnitWeight,
+                    CountryOfOrigin = (x.Equipment.CountryOfOrigin ?? string.Empty).ToUpperInvariant(),
+                    Description = (x.Equipment.Description ?? string.Empty).ToUpperInvariant(),
+                    DrawingNumber = (x.Equipment.DrawingNumber ?? string.Empty).ToUpperInvariant(),
+                    EquipmentName = (x.Equipment.EquipmentName ?? string.Empty).ToUpperInvariant(),
+                    HTSCode = (x.Equipment.HTSCode ?? string.Empty).ToUpperInvariant(),
+                    Notes = (x.Equipment.Notes ?? string.Empty).ToUpperInvariant(),
+                    ShippedFrom = (x.Equipment.ShippedFrom ?? string.Empty).ToUpperInvariant(),
+                    ShippingTagNumber = (x.Equipment.ShippingTagNumber ?? string.Empty).ToUpperInvariant(),
+                    WorkOrderNumber = (x.Equipment.WorkOrderNumber ?? string.Empty).ToUpperInvariant(),
+
+                    HasBillOfLading = x.Equipment.HasBillOfLading,
+                    HasBillOfLadingInStorage = x.Equipment.HasBillOfLadingInStorage,
+                    IsHardwareKit = x.Equipment.IsHardwareKit,
+                    IsAssociatedToHardwareKit = x.Equipment.IsAssociatedToHardwareKit,
+                    AssociatedHardwareKitNumber = x.Equipment.AssociatedHardwareKitNumber
+                }
+            }).ToList();
+
+
+
+
+            //Get all not added equipments
+            var nonAddedEquipmentBOs = equipmentService.GetAll(user.ProjectId).Where(e => e.ReadyToShip != null
+                                                                                && e.ReadyToShip > 0
+                                                                                && !e.FullyShipped
+                                                                                && !e.IsHardware
+                                                                                && !billOfLading.BillOfLadingEquipments.Select(x => x.EquipmentId).Contains(e.EquipmentId)
+                                                                                ).ToList();
+
+            billOfLadingEquipmentModels.AddRange(nonAddedEquipmentBOs.Select(x => new BillOfLadingEquipmentModel
+            {
+                EquipmentId = x.EquipmentId,
+                CountryOfOrigin = x.CountryOfOrigin,
+                HTSCode = x.HTSCode,
+                ShippedFrom = x.ShippedFrom,
+                Equipment = new EquipmentModel
+                {
+                    EquipmentId = x.EquipmentId,
+                    CustomsValue = x.CustomsValue,
+                    FullyShipped = x.FullyShipped,
+                    LeftToShip = x.LeftToShip.ToString(),
+                    Priority = x.Priority,
+                    ProjectId = x.ProjectId,
+                    Quantity = x.Quantity.HasValue ? x.Quantity.Value : 0,
+                    ReadyToShip = x.ReadyToShip,
+                    ReleaseDate = x.ReleaseDate,
+                    SalePrice = x.SalePrice,
+                    ShippedQuantity = x.ShippedQuantity.ToString(),
+                    TotalWeight = x.TotalWeight.ToString(),
+                    TotalWeightShipped = x.TotalWeightShipped.ToString(),
+                    UnitWeight = x.UnitWeight,
+                    CountryOfOrigin = (x.CountryOfOrigin ?? string.Empty).ToUpperInvariant(),
+                    Description = (x.Description ?? string.Empty).ToUpperInvariant(),
+                    DrawingNumber = (x.DrawingNumber ?? string.Empty).ToUpperInvariant(),
+                    EquipmentName = (x.EquipmentName ?? string.Empty).ToUpperInvariant(),
+                    HTSCode = (x.HTSCode ?? string.Empty).ToUpperInvariant(),
+                    Notes = (x.Notes ?? string.Empty).ToUpperInvariant(),
+                    ShippedFrom = (x.ShippedFrom ?? string.Empty).ToUpperInvariant(),
+                    ShippingTagNumber = (x.ShippingTagNumber ?? string.Empty).ToUpperInvariant(),
+                    WorkOrderNumber = (x.WorkOrderNumber ?? string.Empty).ToUpperInvariant(),
+
+                    HasBillOfLading = x.HasBillOfLading,
+                    HasBillOfLadingInStorage = x.HasBillOfLadingInStorage,
+                    IsHardwareKit = x.IsHardwareKit,
+                    IsAssociatedToHardwareKit = x.IsAssociatedToHardwareKit,
+                    AssociatedHardwareKitNumber = x.AssociatedHardwareKitNumber
+                }
+            }));
+
+            billOfLadingEquipmentModels.ForEach(x =>
+            {
+                x.Equipment.SetIndicators(projectBO.ProjectNumber, projectBO.IsCustomsProject);
+            });
+
+            billOfLadingEquipmentModels
+                .GroupBy(x => new
+                {
+                    DrawingNumber = x.Equipment.DrawingNumber != null ? x.Equipment.DrawingNumber.ToUpperInvariant() : string.Empty,
+                    WorkOrderNumber = x.Equipment.WorkOrderNumber != null ? x.Equipment.WorkOrderNumber.ToUpperInvariant() : string.Empty,
+                    Quantity = x.Quantity,
+                    ShippingTagNumber = x.Equipment.ShippingTagNumber != null ? x.Equipment.ShippingTagNumber.ToUpperInvariant() : string.Empty,
+                    Description = x.Equipment.Description != null ? x.Equipment.Description.ToUpperInvariant() : string.Empty
+                })
+                .Where(g => g.Count() > 1)
+                .SelectMany(y => y)
+                .ToList().ForEach(e => e.Equipment.IsDuplicate = true);
+
+
+            return billOfLadingEquipmentModels;
+        }
+
+
+
+
+
+
+
+
+
 
         //
         // GET: api/EquipmentApi/Editor
@@ -282,6 +471,37 @@ namespace WendtEquipmentTracking.App.Controllers
             }
 
             return new DtResponse { data = billOfLadingEquipmentModels };
+        }
+
+        public DtResponse Delete()
+        {
+            var user = userService.GetCurrentUser();
+
+
+            if (user != null)
+            {
+                var project = projectService.GetById(user.ProjectId);
+
+                var httpData = DatatableHelpers.HttpData();
+                Dictionary<string, object> data = httpData["data"] as Dictionary<string, object>;
+
+                var billOfLadings = new List<int>();
+                foreach (var billOfLadingIdString in data.Keys)
+                {
+
+                    var billOfLadingId = !string.IsNullOrEmpty(billOfLadingIdString) ? Convert.ToInt32(billOfLadingIdString) : 0;
+                    if (billOfLadingId != 0)
+                    {
+                        billOfLadings.Add(billOfLadingId);
+                    }
+                }
+
+                billOfLadingService.Delete(billOfLadings.FirstOrDefault());
+
+
+            }
+
+            return new DtResponse { };
         }
 
     }
