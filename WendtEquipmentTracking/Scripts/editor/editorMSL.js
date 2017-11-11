@@ -319,6 +319,17 @@
                 $(editorMain.datatable.cell(row.index(), 16).node()).attr("class", "text-right active " + data.Indicators.CustomsValueColor);
                 $(editorMain.datatable.cell(row.index(), 17).node()).attr("class", "text-right active " + data.Indicators.SalePriceColor);
             });
+
+            $(".table").on("mousedown", "td.focus", function (e) {
+
+                setTimeout(function () {
+                    if ($(".dt-autofill-select").length) {
+                        editorMain.datatable.cell.blur();
+                    }
+                }, 100);
+                
+                
+            });
         }
 
         this.initEditor = function () {
