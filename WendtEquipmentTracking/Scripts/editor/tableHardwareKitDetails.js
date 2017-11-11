@@ -1,6 +1,6 @@
 ﻿$(function () {
 
-    var TableBOLDetails = function () {
+    var TableHardwareKitDetails = function () {
 
         this.initStyles = function () {
             var $this = this;
@@ -25,7 +25,7 @@
                 else {
                     // Open this row
                     $.get({
-                        url: ROOT_URL + "BillOfLading/EquipmentAssociatedToBOL/",
+                        url: ROOT_URL + "HardwareKit/HardwareAssociatedToHardwareKit/",
                         data: { id: datatableRow.id() },
                         success: function (response) {
                             datatableRow.child(response).show();
@@ -48,10 +48,10 @@
 
             tableMain.initEditor({
                 ajax: {
-                    url: ROOT_URL + "api/BillOfLadingApi/Delete",
+                    url: ROOT_URL + "api/HardwareKitApi/Delete",
                     dataSrc: ""
                 },
-                idSrc: 'BillOfLadingId'
+                idSrc: 'HardwareKitId'
             });
         }
 
@@ -60,21 +60,18 @@
            
             tableMain.initDatatable({
                 ajax: {
-                    url: ROOT_URL + "api/BillOfLadingApi/DetailsTable",
+                    url: ROOT_URL + "api/HardwareKitApi/DetailsTable",
                     dataSrc: "",
                     data: {
-                        billOfLadingNumber: billOfLadingNumber
+                        hardwareKitNumber: hardwareKitNumber
                     }
                 },
-                rowId: 'BillOfLadingId',
+                rowId: 'HardwareKitId',
                 order: [[1, 'desc']],
                 columns: [
-                    { data: "BillOfLadingId" },
+                    { data: "HardwareKitId" },
                     { data: "Revision" },
-                    { data: "DateShipped" },
-                    { data: "FreightTerms" },
-                    { data: "Carrier" },
-                    { data: "TrailerNumber" }
+                    { data: "ExtraQuantityPercentage" }
                 ],
                 columnDefs: [
                     {
@@ -90,12 +87,6 @@
                         render: function (data, type, row, meta) {
                             return row.IsCurrentRevision ? "Current" : row.Revision;
                         }
-                    },
-                    {
-                        "targets": 2,
-                        render: function (data, type, row, meta) {
-                            return row.DateShipped ? moment(row.DateShipped).format("DD/MM/YYYY") : '';
-                        }
                     }
                 ]
             });
@@ -105,6 +96,6 @@
         this.initEvents();
     }
 
-    tableBOLDetails = new TableBOLDetails();
+    tableHardwareKitDetails = new TableHardwareKitDetails();
 
 });

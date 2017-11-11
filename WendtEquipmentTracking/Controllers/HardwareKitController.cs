@@ -1,12 +1,9 @@
-﻿
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Web.Mvc;
 using WendtEquipmentTracking.App.Models;
 using WendtEquipmentTracking.BusinessLogic;
 using WendtEquipmentTracking.BusinessLogic.Api;
-using WendtEquipmentTracking.BusinessLogic.BO;
 
 namespace WendtEquipmentTracking.App.Controllers
 {
@@ -30,8 +27,13 @@ namespace WendtEquipmentTracking.App.Controllers
         //
         // GET: /HardwareKit/
 
-        public ActionResult Index()
+        public ActionResult Index(bool? ajaxSuccess)
         {
+            if (ajaxSuccess.HasValue && ajaxSuccess.Value)
+            {
+                SuccessMessage("Hardware Kit was successfully saved.");
+            }
+
             var user = userService.GetCurrentUser();
 
             if (user == null)
@@ -39,26 +41,13 @@ namespace WendtEquipmentTracking.App.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-
-            var hardwareKitBOs = hardwareKitService.GetAll(user.ProjectId).Where(hk => hk.IsCurrentRevision).ToList();
-
-            var hardwareKitModels = hardwareKitBOs.Select(x => new HardwareKitModel
-            {
-                ExtraQuantityPercentage = x.ExtraQuantityPercentage,
-                HardwareKitId = x.HardwareKitId,
-                HardwareKitNumber = x.HardwareKitNumber,
-                IsCurrentRevision = x.IsCurrentRevision,
-                ProjectId = x.ProjectId,
-                Revision = x.Revision
-            });
-
-            return View(hardwareKitModels);
+            return View();
         }
 
         //
         // GET: /HardwareKit/Details/5
 
-        public ActionResult Details(string hardwareKitNumber)
+        public ActionResult Details(int id)
         {
             var user = userService.GetCurrentUser();
 
@@ -67,42 +56,56 @@ namespace WendtEquipmentTracking.App.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            var hardwareKitBOs = hardwareKitService.GetByHardwareKitNumber(user.ProjectId, hardwareKitNumber);
+            var hardwareKit = hardwareKitService.GetById(id);
 
-            if (hardwareKitBOs == null)
+            if (hardwareKit == null)
             {
                 return HttpNotFound();
             }
 
-            var model = new List<HardwareKitModel>();
-
-            foreach (var hardwareKitBO in hardwareKitBOs)
+            var model = new HardwareKitModel
             {
-                var hardwareGroupModels = hardwareKitBO.HardwareKitEquipments
-                .GroupBy(e => new { e.Equipment.ShippingTagNumber, e.Equipment.Description }, (key, g) => new HardwareKitGroupModel
-                {
-                    ShippingTagNumber = key.ShippingTagNumber,
-                    Description = key.Description,
-                    Quantity = g.Sum(e => e.Equipment.Quantity.HasValue ? e.Equipment.Quantity.Value : 0),
-                    QuantityToShip = (int)Math.Ceiling(g.Sum(e => e.QuantityToShip))
-                }).ToList();
-
-                var hardwareKitModel = new HardwareKitModel
-                {
-                    ExtraQuantityPercentage = hardwareKitBO.ExtraQuantityPercentage,
-                    HardwareKitId = hardwareKitBO.HardwareKitId,
-                    HardwareKitNumber = hardwareKitBO.HardwareKitNumber,
-                    IsCurrentRevision = hardwareKitBO.IsCurrentRevision,
-                    ProjectId = hardwareKitBO.ProjectId,
-                    Revision = hardwareKitBO.Revision,
-                    HardwareGroups = hardwareGroupModels
-                };
-
-                model.Add(hardwareKitModel);
-            }
+                HardwareKitId = hardwareKit.HardwareKitId,
+                HardwareKitNumber = hardwareKit.HardwareKitNumber
+            };
 
 
-            model = model.OrderByDescending(h => h.Revision).ToList();
+            //var hardwareKitBOs = hardwareKitService.GetByHardwareKitNumber(user.ProjectId, hardwareKitNumber);
+
+            //if (hardwareKitBOs == null)
+            //{
+            //    return HttpNotFound();
+            //}
+
+            //var model = new List<HardwareKitModel>();
+
+            //foreach (var hardwareKitBO in hardwareKitBOs)
+            //{
+            //    var hardwareGroupModels = hardwareKitBO.HardwareKitEquipments
+            //    .GroupBy(e => new { e.Equipment.ShippingTagNumber, e.Equipment.Description }, (key, g) => new HardwareKitGroupModel
+            //    {
+            //        ShippingTagNumber = key.ShippingTagNumber,
+            //        Description = key.Description,
+            //        Quantity = g.Sum(e => e.Equipment.Quantity.HasValue ? e.Equipment.Quantity.Value : 0),
+            //        QuantityToShip = (int)Math.Ceiling(g.Sum(e => e.QuantityToShip))
+            //    }).ToList();
+
+            //    var hardwareKitModel = new HardwareKitModel
+            //    {
+            //        ExtraQuantityPercentage = hardwareKitBO.ExtraQuantityPercentage,
+            //        HardwareKitId = hardwareKitBO.HardwareKitId,
+            //        HardwareKitNumber = hardwareKitBO.HardwareKitNumber,
+            //        IsCurrentRevision = hardwareKitBO.IsCurrentRevision,
+            //        ProjectId = hardwareKitBO.ProjectId,
+            //        Revision = hardwareKitBO.Revision,
+            //        HardwareGroups = hardwareGroupModels
+            //    };
+
+            //    model.Add(hardwareKitModel);
+            //}
+
+
+            //model = model.OrderByDescending(h => h.Revision).ToList();
 
             return View(model);
         }
@@ -120,57 +123,57 @@ namespace WendtEquipmentTracking.App.Controllers
         //
         // POST: /HardwareKit/Create
 
-        [HttpPost]
-        public ActionResult Create(HardwareKitModel model)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    var user = userService.GetCurrentUser();
+        //[HttpPost]
+        //public ActionResult Create(HardwareKitModel model)
+        //{
+        //    try
+        //    {
+        //        if (ModelState.IsValid)
+        //        {
+        //            var user = userService.GetCurrentUser();
 
-                    if (user != null)
-                    {
-                        model.ProjectId = user.ProjectId;
+        //            if (user != null)
+        //            {
+        //                model.ProjectId = user.ProjectId;
 
-                        var hardwareKitEquipmentsBOs = new List<HardwareKitEquipmentBO>();
-                        foreach (var hardwareGroup in model.HardwareGroups.Where(m => m.Checked).ToList())
-                        {
-                            var hardwareInWorkOrderBOs = equipmentService.GetHardwareByShippingTagNumberAndDescription(user.ProjectId, hardwareGroup.ShippingTagNumber, hardwareGroup.Description);
-                            hardwareKitEquipmentsBOs.AddRange(hardwareInWorkOrderBOs.Select(h => new HardwareKitEquipmentBO
-                            {
-                                EquipmentId = h.EquipmentId,
-                                HardwareKitId = model.HardwareKitId,
-                                QuantityToShip = h.Quantity.HasValue ? h.Quantity.Value + (h.Quantity.Value * (model.ExtraQuantityPercentage / 100)) : 0
-                            }));
-                        }
+        //                var hardwareKitEquipmentsBOs = new List<HardwareKitEquipmentBO>();
+        //                foreach (var hardwareGroup in model.HardwareGroups.Where(m => m.Checked).ToList())
+        //                {
+        //                    var hardwareInWorkOrderBOs = equipmentService.GetHardwareByShippingTagNumberAndDescription(user.ProjectId, hardwareGroup.ShippingTagNumber, hardwareGroup.Description);
+        //                    hardwareKitEquipmentsBOs.AddRange(hardwareInWorkOrderBOs.Select(h => new HardwareKitEquipmentBO
+        //                    {
+        //                        EquipmentId = h.EquipmentId,
+        //                        HardwareKitId = model.HardwareKitId,
+        //                        QuantityToShip = h.Quantity.HasValue ? h.Quantity.Value + (h.Quantity.Value * (model.ExtraQuantityPercentage / 100)) : 0
+        //                    }));
+        //                }
 
 
-                        var hardwareKitBO = new HardwareKitBO
-                        {
-                            ExtraQuantityPercentage = model.ExtraQuantityPercentage,
-                            HardwareKitId = model.HardwareKitId,
-                            HardwareKitNumber = model.HardwareKitNumber,
-                            IsCurrentRevision = model.IsCurrentRevision,
-                            ProjectId = model.ProjectId,
-                            Revision = model.Revision,
-                            HardwareKitEquipments = hardwareKitEquipmentsBOs
-                        };
+        //                var hardwareKitBO = new HardwareKitBO
+        //                {
+        //                    ExtraQuantityPercentage = model.ExtraQuantityPercentage,
+        //                    HardwareKitId = model.HardwareKitId,
+        //                    HardwareKitNumber = model.HardwareKitNumber,
+        //                    IsCurrentRevision = model.IsCurrentRevision,
+        //                    ProjectId = model.ProjectId,
+        //                    Revision = model.Revision,
+        //                    HardwareKitEquipments = hardwareKitEquipmentsBOs
+        //                };
 
-                        hardwareKitService.Save(hardwareKitBO);
+        //                hardwareKitService.Save(hardwareKitBO);
 
-                        return RedirectToAction("Index");
-                    }
-                }
+        //                return RedirectToAction("Index");
+        //            }
+        //        }
 
-                return View(model);
-            }
-            catch (Exception e)
-            {
-                HandleError("There was an error attempting to create this hardware kit", e);
-                return View(model);
-            }
-        }
+        //        return View(model);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        HandleError("There was an error attempting to create this hardware kit", e);
+        //        return View(model);
+        //    }
+        //}
 
         //
         // GET: /HardwareKit/Edit/5
@@ -183,179 +186,198 @@ namespace WendtEquipmentTracking.App.Controllers
                 return HttpNotFound();
             }
 
-            var hardwareGroupModels = hardwareKitBO.HardwareKitEquipments
-                .GroupBy(e => new { e.Equipment.ShippingTagNumber, e.Equipment.Description }, (key, g) => new HardwareKitGroupModel
-                {
-                    ShippingTagNumber = key.ShippingTagNumber,
-                    Description = key.Description,
-                    Quantity = g.Sum(e => e.Equipment.Quantity.HasValue ? e.Equipment.Quantity.Value : 0),
-                    QuantityToShip = (int)Math.Ceiling(g.Sum(e => e.QuantityToShip)),
-                    Checked = true
-                }).ToList();
+            //var hardwareGroupModels = hardwareKitBO.HardwareKitEquipments
+            //    .GroupBy(e => new { e.Equipment.ShippingTagNumber, e.Equipment.Description }, (key, g) => new HardwareKitGroupModel
+            //    {
+            //        ShippingTagNumber = key.ShippingTagNumber,
+            //        Description = key.Description,
+            //        Quantity = g.Sum(e => e.Equipment.Quantity.HasValue ? e.Equipment.Quantity.Value : 0),
+            //        QuantityToShip = (int)Math.Ceiling(g.Sum(e => e.QuantityToShip)),
+            //        Checked = true
+            //    }).ToList();
 
             var hardwareKitModel = new HardwareKitModel
             {
                 ExtraQuantityPercentage = hardwareKitBO.ExtraQuantityPercentage,
                 HardwareKitId = hardwareKitBO.HardwareKitId,
                 HardwareKitNumber = hardwareKitBO.HardwareKitNumber,
-                IsCurrentRevision = hardwareKitBO.IsCurrentRevision,
-                ProjectId = hardwareKitBO.ProjectId,
-                Revision = hardwareKitBO.Revision,
-                HardwareGroups = hardwareGroupModels
+                //IsCurrentRevision = hardwareKitBO.IsCurrentRevision,
+                //ProjectId = hardwareKitBO.ProjectId,
+                //Revision = hardwareKitBO.Revision,
+                //HardwareGroups = hardwareGroupModels
             };
 
             return View(hardwareKitModel);
         }
 
+        //GET Equipment/BOLsAssociatedToEquipment/5
+        [HttpGet]
+        public ActionResult HardwareAssociatedToHardwareKit(int id)
+        {
+            var hardwareKit = hardwareKitService.GetById(id);
+
+            var hardwareGroupModels = hardwareKit.HardwareKitEquipments
+                .GroupBy(e => new { e.Equipment.ShippingTagNumber, e.Equipment.Description }, (key, g) => new HardwareKitGroupModel
+                {
+                    ShippingTagNumber = key.ShippingTagNumber,
+                    Description = key.Description,
+                    Quantity = g.Sum(e => e.Equipment.Quantity.HasValue ? e.Equipment.Quantity.Value : 0),
+                    QuantityToShip = (int)Math.Ceiling(g.Sum(e => e.QuantityToShip))
+                }).ToList();
+
+            return PartialView(hardwareGroupModels);
+        }
+
         //
         // POST: /HardwareKit/Edit/5
 
-        [HttpPost]
-        public ActionResult Edit(int id, HardwareKitModel model)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    var user = userService.GetCurrentUser();
+        //[HttpPost]
+        //public ActionResult Edit(int id, HardwareKitModel model)
+        //{
+        //    try
+        //    {
+        //        if (ModelState.IsValid)
+        //        {
+        //            var user = userService.GetCurrentUser();
 
-                    if (user != null)
-                    {
-                        model.ProjectId = user.ProjectId;
+        //            if (user != null)
+        //            {
+        //                model.ProjectId = user.ProjectId;
 
-                        var hardwareKitEquipmentsBOs = new List<HardwareKitEquipmentBO>();
-                        foreach (var hardwareGroup in model.HardwareGroups.Where(m => m.Checked).ToList())
-                        {
-                            var hardwareInWorkOrderBOs = equipmentService.GetHardwareByShippingTagNumberAndDescription(user.ProjectId, hardwareGroup.ShippingTagNumber, hardwareGroup.Description, model.HardwareKitId);
-                            hardwareKitEquipmentsBOs.AddRange(hardwareInWorkOrderBOs.Select(h => new HardwareKitEquipmentBO
-                            {
-                                EquipmentId = h.EquipmentId,
-                                HardwareKitId = model.HardwareKitId,
-                                QuantityToShip = h.Quantity.HasValue ? h.Quantity.Value + (h.Quantity.Value * (model.ExtraQuantityPercentage / 100)) : 0
-                            }));
-                        }
+        //                var hardwareKitEquipmentsBOs = new List<HardwareKitEquipmentBO>();
+        //                foreach (var hardwareGroup in model.HardwareGroups.Where(m => m.Checked).ToList())
+        //                {
+        //                    var hardwareInWorkOrderBOs = equipmentService.GetHardwareByShippingTagNumberAndDescription(user.ProjectId, hardwareGroup.ShippingTagNumber, hardwareGroup.Description, model.HardwareKitId);
+        //                    hardwareKitEquipmentsBOs.AddRange(hardwareInWorkOrderBOs.Select(h => new HardwareKitEquipmentBO
+        //                    {
+        //                        EquipmentId = h.EquipmentId,
+        //                        HardwareKitId = model.HardwareKitId,
+        //                        QuantityToShip = h.Quantity.HasValue ? h.Quantity.Value + (h.Quantity.Value * (model.ExtraQuantityPercentage / 100)) : 0
+        //                    }));
+        //                }
 
 
-                        var hardwareKitBO = new HardwareKitBO
-                        {
-                            ExtraQuantityPercentage = model.ExtraQuantityPercentage,
-                            HardwareKitId = model.HardwareKitId,
-                            HardwareKitNumber = model.HardwareKitNumber,
-                            IsCurrentRevision = model.IsCurrentRevision,
-                            ProjectId = model.ProjectId,
-                            Revision = model.Revision,
-                            HardwareKitEquipments = hardwareKitEquipmentsBOs
-                        };
+        //                var hardwareKitBO = new HardwareKitBO
+        //                {
+        //                    ExtraQuantityPercentage = model.ExtraQuantityPercentage,
+        //                    HardwareKitId = model.HardwareKitId,
+        //                    HardwareKitNumber = model.HardwareKitNumber,
+        //                    IsCurrentRevision = model.IsCurrentRevision,
+        //                    ProjectId = model.ProjectId,
+        //                    Revision = model.Revision,
+        //                    HardwareKitEquipments = hardwareKitEquipmentsBOs
+        //                };
 
-                        hardwareKitService.Update(hardwareKitBO);
+        //                hardwareKitService.Update(hardwareKitBO);
 
-                        return RedirectToAction("Index");
-                    }
-                }
+        //                return RedirectToAction("Index");
+        //            }
+        //        }
 
-                return View(model);
-            }
-            catch (Exception e)
-            {
-                HandleError("There was an error attempting to save this hardware kit", e);
-                return View(model);
-            }
-        }
+        //        return View(model);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        HandleError("There was an error attempting to save this hardware kit", e);
+        //        return View(model);
+        //    }
+        //}
 
         // POST: HardwareKit/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, HardwareKitModel model)
-        {
-            try
-            {
-                var hardwareKit = hardwareKitService.GetById(id);
+        //[HttpPost]
+        //public ActionResult Delete(int id, HardwareKitModel model)
+        //{
+        //    try
+        //    {
+        //        var hardwareKit = hardwareKitService.GetById(id);
 
-                if (hardwareKit == null)
-                {
-                    return HttpNotFound();
-                }
+        //        if (hardwareKit == null)
+        //        {
+        //            return HttpNotFound();
+        //        }
 
-                hardwareKitService.Delete(id);
+        //        hardwareKitService.Delete(id);
 
-                return RedirectToAction("Index");
-            }
-            catch (Exception e)
-            {
-                HandleError("There was an error attempting to delete this hardware kit", e);
+        //        return RedirectToAction("Index");
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        HandleError("There was an error attempting to delete this hardware kit", e);
 
-                return View(model);
-            }
-        }
+        //        return View(model);
+        //    }
+        //}
 
         //
         // GET: /Equipment/Hardware
-        [ChildActionOnly]
-        public ActionResult HardwareToAddToHardwareKit()
-        {
-            var user = userService.GetCurrentUser();
 
-            if (user == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
+        //[ChildActionOnly]
+        //public ActionResult HardwareToAddToHardwareKit()
+        //{
+        //    var user = userService.GetCurrentUser();
+
+        //    if (user == null)
+        //    {
+        //        return RedirectToAction("Index", "Home");
+        //    }
 
 
-            //Get Data
-            var equipmentBOs = equipmentService.GetAll(user.ProjectId)
-                .Where(e => e.IsHardware && !e.IsAssociatedToHardwareKit && !e.IsHardwareKit);
-                       
+        //    //Get Data
+        //    var equipmentBOs = equipmentService.GetAll(user.ProjectId)
+        //        .Where(e => e.IsHardware && !e.IsAssociatedToHardwareKit && !e.IsHardwareKit);
 
-            var hardwareGroups = equipmentBOs
-                .GroupBy(e => new { e.ShippingTagNumber, e.Description }, (key, g) => new HardwareKitGroupModel
-                {
-                    ShippingTagNumber = key.ShippingTagNumber,
-                    Description = key.Description,
-                    Quantity = g.Sum(e => e.Quantity.HasValue ? e.Quantity.Value : 0),
-                    Checked = true
-                }).ToList();
 
-            hardwareGroups.ForEach(hg => hg.QuantityToShip = (int)Math.Ceiling(hg.Quantity + (hg.Quantity * (DEFAULT_PERCENT / 100))));
+        //    var hardwareGroups = equipmentBOs
+        //        .GroupBy(e => new { e.ShippingTagNumber, e.Description }, (key, g) => new HardwareKitGroupModel
+        //        {
+        //            ShippingTagNumber = key.ShippingTagNumber,
+        //            Description = key.Description,
+        //            Quantity = g.Sum(e => e.Quantity.HasValue ? e.Quantity.Value : 0),
+        //            Checked = true
+        //        }).ToList();
 
-            var model = new HardwareKitModel
-            {
-                HardwareGroups = hardwareGroups
-            };
+        //    hardwareGroups.ForEach(hg => hg.QuantityToShip = (int)Math.Ceiling(hg.Quantity + (hg.Quantity * (DEFAULT_PERCENT / 100))));
 
-            return PartialView(model);
-        }
+        //    var model = new HardwareKitModel
+        //    {
+        //        HardwareGroups = hardwareGroups
+        //    };
 
-        //
-        // GET: /HardwareKit/EquipmentToEditForHardwareKit
-        [ChildActionOnly]
-        public ActionResult HardwareToEditForHardwareKit(HardwareKitModel model)
-        {
-            var user = userService.GetCurrentUser();
+        //    return PartialView(model);
+        //}
 
-            if (user == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
+        ////
+        //// GET: /HardwareKit/EquipmentToEditForHardwareKit
+        //[ChildActionOnly]
+        //public ActionResult HardwareToEditForHardwareKit(HardwareKitModel model)
+        //{
+        //    var user = userService.GetCurrentUser();
 
-            //Get Data
-            var equipmentBOs = equipmentService.GetAll(user.ProjectId)
-                .Where(e => e.IsHardware && !e.IsAssociatedToHardwareKit && !e.IsHardwareKit);
+        //    if (user == null)
+        //    {
+        //        return RedirectToAction("Index", "Home");
+        //    }
 
-            
-            var hardwareGroups = equipmentBOs.Where(hg => !model.HardwareGroups.Any(mhg => mhg.ShippingTagNumber == hg.ShippingTagNumber))
-                .GroupBy(e => new { e.ShippingTagNumber, e.Description }, (key, g) => new HardwareKitGroupModel
-                {
-                    ShippingTagNumber = key.ShippingTagNumber,
-                    Description = key.Description,
-                    Quantity = g.Sum(e => e.Quantity.HasValue ? e.Quantity.Value : 0)
-                }).ToList();
+        //    //Get Data
+        //    var equipmentBOs = equipmentService.GetAll(user.ProjectId)
+        //        .Where(e => e.IsHardware && !e.IsAssociatedToHardwareKit && !e.IsHardwareKit);
 
-            var modelGroups = model.HardwareGroups.ToList();
-            modelGroups.AddRange(hardwareGroups);
 
-            model.HardwareGroups = modelGroups;
+        //    var hardwareGroups = equipmentBOs.Where(hg => !model.HardwareGroups.Any(mhg => mhg.ShippingTagNumber == hg.ShippingTagNumber))
+        //        .GroupBy(e => new { e.ShippingTagNumber, e.Description }, (key, g) => new HardwareKitGroupModel
+        //        {
+        //            ShippingTagNumber = key.ShippingTagNumber,
+        //            Description = key.Description,
+        //            Quantity = g.Sum(e => e.Quantity.HasValue ? e.Quantity.Value : 0)
+        //        }).ToList();
 
-            return PartialView("HardwareToAddToHardwareKit", model);
-        }
+        //    var modelGroups = model.HardwareGroups.ToList();
+        //    modelGroups.AddRange(hardwareGroups);
+
+        //    model.HardwareGroups = modelGroups;
+
+        //    return PartialView("HardwareToAddToHardwareKit", model);
+        //}
 
     }
 }

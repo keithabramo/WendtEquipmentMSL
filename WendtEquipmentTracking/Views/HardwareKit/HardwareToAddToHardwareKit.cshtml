@@ -1,50 +1,16 @@
-﻿@model HardwareKitModel
+﻿<Label>Select Hardware</Label>
 
-<Label>Select Hardware</Label>
-
-<table class="table table-condensed table-hover table-bordered table-styled">
+<table class="table table-condensed table-hover table-bordered table-styled my-datatable">
     <thead>
         <tr>
             <th class="noSearch">
-                <input class="selectAll" type="checkbox" checked="checked" />
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HardwareGroups[0].ShippingTagNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HardwareGroups[0].Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HardwareGroups[0].Quantity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HardwareGroups[0].QuantityToShip)
-            </th>
+            <th>Ship Tag #</th>
+            <th>Description</th>
+            <th>Qty</th>
+            <th>Qty To Ship</th>
         </tr>
     </thead>
     <tbody>
-        @for (int i = 0; i < Model.HardwareGroups.Count(); i++)
-        {
-            <tr>
-                <td>
-                    @Html.CheckBoxFor(modelItem => modelItem.HardwareGroups[i].Checked, htmlAttributes: new { @checked = "Checked" })
-                </td>
-                <td>
-                    @Html.HiddenFor(modelItem => modelItem.HardwareGroups[i].ShippingTagNumber)
-                    @Html.DisplayFor(modelItem => modelItem.HardwareGroups[i].ShippingTagNumber)
-                </td>
-                <td>
-                    @Html.HiddenFor(modelItem => modelItem.HardwareGroups[i].Description)
-                    @Html.DisplayFor(modelItem => modelItem.HardwareGroups[i].Description)
-                </td>
-                <td>
-                    @Html.HiddenFor(modelItem => modelItem.HardwareGroups[i].Quantity, new { @class = "original-quantity" })
-                    @Html.DisplayFor(modelItem => modelItem.HardwareGroups[i].Quantity)
-                </td>
-                <td>
-                    @Html.EditorFor(modelItem => modelItem.HardwareGroups[i].QuantityToShip, new { htmlAttributes = new { @class = "form-control" } })
-                </td>
-            </tr>
-        }
     </tbody>
 </table>

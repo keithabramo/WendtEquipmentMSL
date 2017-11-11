@@ -13,6 +13,8 @@ namespace WendtEquipmentTracking.BusinessLogic.Api
 
         IEnumerable<HardwareKitBO> GetAll(int projectId);
 
+        IEnumerable<HardwareKitBO> GetCurrentByProject(int projectId);
+
         HardwareKitBO GetById(int id);
 
         IEnumerable<HardwareKitBO> GetByHardwareKitNumber(int projectId, string hardwareKitNumber);

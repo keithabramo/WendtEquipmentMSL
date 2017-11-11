@@ -103,11 +103,41 @@ namespace WendtEquipmentTracking.BusinessLogic
                     EquipmentId = e.EquipmentId,
                     HardwareKitEquipmentId = e.HardwareKitEquipmentId,
                     HardwareKitId = e.HardwareKitId,
-                    QuantityToShip = e.QuantityToShip
+                    QuantityToShip = e.QuantityToShip,
+                    Equipment = new EquipmentBO
+                    {
+                        Description = e.Equipment.Description,
+                        ShippingTagNumber = e.Equipment.ShippingTagNumber,
+                        Quantity = e.Equipment.Quantity,
+                    }
                 }).ToList()
             };
 
             return hardwareKitBO;
+        }
+
+        public IEnumerable<HardwareKitBO> GetCurrentByProject(int projectId)
+        {
+            var hardwareKits = hardwareKitEngine.List(HardwareKitSpecs.ProjectId(projectId) && HardwareKitSpecs.CurrentRevision());
+
+            var hardwareKitBOs = hardwareKits.Select(x => new HardwareKitBO
+            {
+                ExtraQuantityPercentage = x.ExtraQuantityPercentage,
+                HardwareKitId = x.HardwareKitId,
+                HardwareKitNumber = x.HardwareKitNumber,
+                IsCurrentRevision = x.IsCurrentRevision,
+                ProjectId = x.ProjectId,
+                Revision = x.Revision,
+                HardwareKitEquipments = x.HardwareKitEquipments.Where(e => !e.Equipment.IsDeleted).Select(e => new HardwareKitEquipmentBO
+                {
+                    EquipmentId = e.EquipmentId,
+                    HardwareKitEquipmentId = e.HardwareKitEquipmentId,
+                    HardwareKitId = e.HardwareKitId,
+                    QuantityToShip = e.QuantityToShip
+                }).ToList()
+            });
+
+            return hardwareKitBOs.ToList();
         }
 
         public IEnumerable<HardwareKitBO> GetByHardwareKitNumber(int projectId, string hardwareKitNumber)
@@ -127,7 +157,13 @@ namespace WendtEquipmentTracking.BusinessLogic
                     EquipmentId = e.EquipmentId,
                     HardwareKitEquipmentId = e.HardwareKitEquipmentId,
                     HardwareKitId = e.HardwareKitId,
-                    QuantityToShip = e.QuantityToShip
+                    QuantityToShip = e.QuantityToShip,
+                    Equipment = new EquipmentBO
+                    {
+                        Description = e.Equipment.Description,
+                        ShippingTagNumber = e.Equipment.ShippingTagNumber,
+                        Quantity = e.Equipment.Quantity,
+                    }
                 }).ToList()
             });
 

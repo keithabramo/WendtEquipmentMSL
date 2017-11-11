@@ -164,6 +164,7 @@
     <Compile Include="Common\WendtAuthorizeAttribute.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\HardwareKitApiController.cs" />
     <Compile Include="Controllers\PriorityApiController.cs" />
     <Compile Include="Controllers\ProjectApiController.cs" />
     <Compile Include="Controllers\BillOfLadingApiController.cs" />
@@ -288,8 +289,12 @@
     <Content Include="Scripts\dropzone\dropzone.min.css" />
     <Content Include="Scripts\dropzone\dropzone.min.js" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
+    <Content Include="Scripts\editor\editorHardwareKitCreate.js" />
+    <Content Include="Scripts\editor\editorHardwareKitEdit.js" />
     <Content Include="Scripts\editor\editorBOLEdit.js" />
     <Content Include="Scripts\editor\editorBOLCreate.js" />
+    <Content Include="Scripts\editor\tableHardwareKitDetails.js" />
+    <Content Include="Scripts\editor\tableHardwareKit.js" />
     <Content Include="Scripts\editor\tablePriority.js" />
     <Content Include="Scripts\editor\tableHardwareCommercialCode.js" />
     <Content Include="Scripts\editor\tableProject.js" />
@@ -314,7 +319,6 @@
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Scripts\form.js" />
-    <Content Include="Scripts\hardwareKit.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />

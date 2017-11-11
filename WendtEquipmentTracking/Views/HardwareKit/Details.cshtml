@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HardwareKitModel>
+﻿@model HardwareKitModel
 
 @{
     ViewBag.Title = "Details";
@@ -6,7 +6,7 @@
 
 @Html.Partial("ActionNavPartial", ActionNav.Nothing)
 
-<h4>Hardware Kit: @Html.DisplayFor(model => model.FirstOrDefault().HardwareKitNumber)<br /><small>Details</small></h4>
+<h4>Hardware Kit: @Html.DisplayFor(model => model.HardwareKitNumber)<br /><small>Details</small></h4>
 
 <div>
     <hr />
@@ -14,56 +14,19 @@
         <thead>
             <tr>
                 <th></th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Revision)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ExtraQuantityPercentage)
-                </th>
+                <th>@Html.DisplayNameFor(model => model.Revision)</th>
+                <th>@Html.DisplayNameFor(model => model.ExtraQuantityPercentage)</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
-            {
-                <tr @(item.IsCurrentRevision ? "class='info'" : "")>
-                    <td data-toggle="collapse" data-id="@(item.HardwareKitId)" class="expand text-center"><span class="glyphicon glyphicon-plus text-primary"></span></td>
-                    <td>
-                        @if (item.IsCurrentRevision)
-                        {
-                            @("Current")
-                        }
-                        else
-                        {
-                            @Html.DisplayFor(modelItem => item.Revision);
-                        }
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ExtraQuantityPercentage)
-                    </td>
-                </tr>
-            }
         </tbody>
-
     </table>
-
-    <div class="hidden">
-        @foreach (var item in Model)
-        {
-            if (item.HardwareGroups.Count() > 0)
-            {
-                <div id="@(item.HardwareKitId)">
-                    @Html.Partial("HardwareAssociatedToHardwareKit", item.HardwareGroups)
-                </div>
-            }
-        }
-
-    </div>
 
 </div>
 <p>
     @if (Html.UserIsInRole(UserRoles.ReadWrite))
     {
-        @Html.ActionLink("Edit", "Edit", new { id = Model.SingleOrDefault(h => h.IsCurrentRevision).HardwareKitId })
+        @Html.ActionLink("Edit", "Edit", new { id = Model.HardwareKitId })
         @:|
     }
     @Html.ActionLink("Back to List", "Index")
@@ -71,6 +34,10 @@
 
 
 @section Scripts {
+    <script type="text/javascript">
+        var hardwareKitNumber = "@(Model.HardwareKitNumber)";
+    </script>
     @Scripts.Render("~/bundles/form")
     @Scripts.Render("~/bundles/table")
+    @Scripts.Render("~/bundles/hardwareKitDetails")
 }
