@@ -244,12 +244,16 @@ table.dataTable thead th.select-checkbox {
 table.dataTable thead th.select-checkbox:before, table.dataTable thead th.select-checkbox:after {
     display: block;
     position: absolute;
-    top: 1.6em;
     left: 50%;
     width: 12px;
     height: 12px;
     box-sizing: border-box;
 }
+
+table.dataTable thead th.select-checkbox.sorting_desc, table.dataTable thead th.select-checkbox.sorting_asc {
+    background: none !important;
+}
+
 
 table.dataTable tbody td.select-checkbox:before, table.dataTable tbody td.select-checkbox:after {
     top: 1.6em;

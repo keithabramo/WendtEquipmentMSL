@@ -161,6 +161,21 @@ namespace WendtEquipmentTracking.App.Models
             }
         }
 
+        public string IsAssociatedToHardwareKitText
+        {
+            get
+            {
+                return IsAssociatedToHardwareKit.ToString();
+            }
+        }
+
+        public string IsHardwareKitText
+        {
+            get
+            {
+                return IsHardwareKit.ToString();
+            }
+        }
 
 
         //Calculated Properties

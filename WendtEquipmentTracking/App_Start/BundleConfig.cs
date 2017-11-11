@@ -10,7 +10,9 @@ namespace WendtEquipmentTracking.App
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/jquery-ui-{version}.js",
                         "~/Scripts/bootstrap.js",
-                        "~/Scripts/respond.js"));
+                        "~/Scripts/respond.js",
+                        "~/Scripts/main.js"
+            ));
 
             bundles.Add(new ScriptBundle("~/bundles/form").Include(
                         "~/Scripts/jquery.validate*",
@@ -78,7 +80,7 @@ namespace WendtEquipmentTracking.App
             ));
             bundles.Add(new ScriptBundle("~/bundles/importWorkOrderPrice").Include(
                        "~/Scripts/editor/importWorkOrderPrice.js"));
-            
+
 
 
 

@@ -120,6 +120,7 @@
                 }
             });
 
+
             editorMain.editor.on('preSubmit', function (e, data, action) {
                 if (action !== 'remove') {
                     var equipmentName = this.field('EquipmentName');
@@ -287,6 +288,10 @@
 
             });
 
+            editorMain.datatable.on('preAutoFill', function (e, datatable, cells) {
+                datatable.cell.blur();
+            });
+
             editorMain.editor.on('postCreate', function (e, json, data) {
 
                 var $createRow = $("tfoot tr");
@@ -349,7 +354,9 @@
                     { name: "HTSCode" },
                     { name: "CountryOfOrigin" },
                     { name: "Notes", type: "textarea" },
-                    { name: "EquipmentId", type: "readonly" }
+                    { name: "EquipmentId", type: "readonly" },
+                    { name: "IsHardwareKitText", type: "readonly" },
+                    { name: "IsAssociatedToHardwareKitText", type: "readonly" }
                 ]
             });
         }

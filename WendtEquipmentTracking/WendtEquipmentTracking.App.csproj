@@ -295,6 +295,7 @@
     <Content Include="Scripts\editor\editorBOLCreate.js" />
     <Content Include="Scripts\editor\tableHardwareKitDetails.js" />
     <Content Include="Scripts\editor\tableHardwareKit.js" />
+    <Content Include="Scripts\main.js" />
     <Content Include="Scripts\editor\tablePriority.js" />
     <Content Include="Scripts\editor\tableHardwareCommercialCode.js" />
     <Content Include="Scripts\editor\tableProject.js" />

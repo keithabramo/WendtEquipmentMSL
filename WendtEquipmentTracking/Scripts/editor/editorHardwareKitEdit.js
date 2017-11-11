@@ -72,19 +72,29 @@
                 if ($("#HardwareKitForm").valid()) {
                     $this.canSubmit = true;
 
-                    editorMain.editor.edit(
-                        editorMain.datatable.rows({ selected: true }).indexes(), false
-                    ).submit(function () {
-                        $this.canSubmit = false;
+                    var selectedRows = editorMain.datatable.rows({ selected: true }).indexes();
+                        if (selectedRows.length) {
+                            editorMain.editor.edit(
+                                selectedRows, false
+                        ).submit(function () {
+                            $this.canSubmit = false;
+                            $("#Save").button("reset");
+                            location.href = ROOT_URL + "HardwareKit/?ajaxSuccess=true"
+                        }, function () {
+                            $this.canSubmit = false;
+                            $("#Save").button("reset");
+
+                            main.error("There was an error whill trying to save this hardware kit");
+                        });
+                    } else {
                         $("#Save").button("reset");
-                        location.href = ROOT_URL + "HardwareKit/?ajaxSuccess=true"
-                    }, function () {
-                        $this.canSubmit = false;
-                        $("#Save").button("reset");
-                        $(".global-message").html('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>ERROR! </strong>There was an error whill trying to save this hardware kit</div>');
-                    });
+
+                        main.error("You must select at least one record");
+                    }
                 } else {
                     $("#Save").button("reset");
+
+                    main.error("Please address the validation errors before saving");
                 }
             });
 
@@ -120,11 +130,11 @@
                     }
                 },
                 rowId: 'HardwareKitGroupId',
-                order: [[1, 'desc']],
+                order: [[0, 'desc'], [1, 'desc']],
                 autoWidth: false,
                 columnDefs: [
                     {
-                        data: "HardwareKitGroupId",
+                        data: null,
                         orderable: false,
                         className: 'select-checkbox',
                         targets: 0,

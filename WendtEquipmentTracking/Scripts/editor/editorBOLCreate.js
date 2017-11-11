@@ -87,19 +87,30 @@
                 if ($("#BOLForm").valid()) {
                     $this.canSubmit = true;
 
-                    editorMain.editor.edit(
-                        editorMain.datatable.rows({ selected: true }).indexes(), false
-                    ).submit(function () {
-                        $this.canSubmit = false;
+                    var selectedRows = editorMain.datatable.rows({ selected: true }).indexes();
+                    if (selectedRows.length) {
+                        editorMain.editor.edit(
+                            selectedRows, false
+                        ).submit(function () {
+                            $this.canSubmit = false;
+                            $("#Save").button("reset");
+
+                            location.href = ROOT_URL + "BillOfLading/?ajaxSuccess=true"
+                        }, function () {
+                            $this.canSubmit = false;
+                            $("#Save").button("reset");
+
+                            main.error("There was an error whill trying to save this bill of lading");
+                        });
+                    } else {
                         $("#Save").button("reset");
-                        location.href = ROOT_URL + "BillOfLading/?ajaxSuccess=true"
-                    }, function () {
-                        $this.canSubmit = false;
-                        $("#Save").button("reset");
-                        $(".global-message").html('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>ERROR! </strong>There was an error whill trying to save this bill of lading</div>');
-                    });
+
+                        main.error("You must select at least one equipment record");
+                    }
                 } else {
                     $("#Save").button("reset");
+
+                    main.error("Please address the validation errors before saving");
                 }
             });
         }

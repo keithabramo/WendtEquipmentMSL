@@ -147,6 +147,8 @@ namespace WendtEquipmentTracking.App.Controllers
                     equipment.ShippingTagNumber = equipmentProperties["ShippingTagNumber"].ToString();
                     equipment.WorkOrderNumber = equipmentProperties["WorkOrderNumber"].ToString();
                     equipment.IsHardware = equipment.EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase);
+                    equipment.IsHardwareKit = equipmentProperties["IsHardwareKitText"].ToString() == "True" ? true : false;
+                    equipment.IsAssociatedToHardwareKit = equipmentProperties["IsAssociatedToHardwareKitText"].ToString() == "True" ? true : false;
 
                     equipments.Add(equipment);
                 }
@@ -154,7 +156,9 @@ namespace WendtEquipmentTracking.App.Controllers
                 IEnumerable<int> equipmentIds = new List<int>();
                 if (action.Equals(EditorActions.edit.ToString()))
                 {
-                    equipmentService.UpdateAll(equipments);
+                    //only update updatable rows
+                    equipmentService.UpdateAll(equipments.Where(x => !x.IsAssociatedToHardwareKit && !x.IsHardwareKit).ToList());
+                    //return all rows so editor does not remove any from the ui
                     equipmentIds = equipments.Select(x => x.EquipmentId);
                 }
                 else if (action.Equals(EditorActions.create.ToString()))
