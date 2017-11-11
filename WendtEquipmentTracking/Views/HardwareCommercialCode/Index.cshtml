@@ -18,34 +18,22 @@
 <table class="table table-condensed table-hover table-bordered table-styled my-datatable hardwareCommercialCodeTable">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.PartNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CommodityCode)
-            </th>
-                <th></th>
+            <th>@Html.DisplayNameFor(model => model.PartNumber)</th>
+            <th>@Html.DisplayNameFor(model => model.Description)</th>
+            <th>@Html.DisplayNameFor(model => model.CommodityCode)</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
     </tbody>
 </table>
 
-@if (Html.UserIsInRole(UserRoles.ReadWrite))
-{
-    <div class="template hidden">
-        <div class="deleteColumn">
-            @Html.ActionLink("Edit", "Edit") |
-            @Ajax.ActionLink("Delete", "Delete", new AjaxOptions { Confirm = "Are you sure you want to delete this hardware \\ commercial code record?", OnSuccess = "DeleteSuccess", HttpMethod = "POST" })
-        </div>@* Delete *@
-    </div>
-}
-
 
 @section Scripts {
+    <script type="text/javascript">
+            var canReadWrite = "@(Html.UserIsInRole(UserRoles.ReadWrite) ? "true" : "false")";
+    </script>
     @Scripts.Render("~/bundles/form")
     @Scripts.Render("~/bundles/table")
+    @Scripts.Render("~/bundles/hardwareCommercialCodes")
 }

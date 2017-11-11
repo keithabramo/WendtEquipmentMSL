@@ -88,7 +88,7 @@ namespace WendtEquipmentTracking.App.Controllers
                 Revision = x.Revision,
                 ToStorage = x.ToStorage,
                 TrailerNumber = x.TrailerNumber
-                
+
             });
 
             billOfLadingModels = billOfLadingModels.OrderByDescending(b => b.Revision);
@@ -473,6 +473,8 @@ namespace WendtEquipmentTracking.App.Controllers
             return new DtResponse { data = billOfLadingEquipmentModels };
         }
 
+        [HttpGet]
+        [HttpPost]
         public DtResponse Delete()
         {
             var user = userService.GetCurrentUser();
@@ -480,8 +482,6 @@ namespace WendtEquipmentTracking.App.Controllers
 
             if (user != null)
             {
-                var project = projectService.GetById(user.ProjectId);
-
                 var httpData = DatatableHelpers.HttpData();
                 Dictionary<string, object> data = httpData["data"] as Dictionary<string, object>;
 

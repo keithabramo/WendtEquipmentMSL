@@ -1,6 +1,5 @@
 ﻿
 using System;
-using System.Linq;
 using System.Web.Mvc;
 using WendtEquipmentTracking.App.Models;
 using WendtEquipmentTracking.BusinessLogic;
@@ -35,45 +34,9 @@ namespace WendtEquipmentTracking.App.Controllers
             }
 
 
-            var priorityBOs = priorityService.GetAll(user.ProjectId).ToList();
-
-            var priorityModels = priorityBOs.Select(x => new PriorityModel
-            {
-                DueDate = x.DueDate,
-                EquipmentName = x.EquipmentName,
-                PriorityId = x.PriorityId,
-                PriorityNumber = x.PriorityNumber,
-                ProjectId = x.ProjectId
-            });
-
-            priorityModels = priorityModels.OrderBy(r => r.PriorityNumber);
-
-            return View(priorityModels);
+            return View();
         }
 
-        //
-        // GET: /Priority/Details/5
-
-        public ActionResult Details(int id)
-        {
-            var priority = priorityService.GetById(id);
-
-            if (priority == null)
-            {
-                return HttpNotFound();
-            }
-
-            var model = new PriorityModel
-            {
-                DueDate = priority.DueDate,
-                EquipmentName = priority.EquipmentName,
-                PriorityId = priority.PriorityId,
-                PriorityNumber = priority.PriorityNumber,
-                ProjectId = priority.ProjectId
-            };
-
-            return View(model);
-        }
 
         //
         // GET: /Priority/Create
@@ -192,52 +155,7 @@ namespace WendtEquipmentTracking.App.Controllers
         }
 
 
-        // GET: Priority/Delete/5
-        public ActionResult Delete(int id)
-        {
-            var priority = priorityService.GetById(id);
 
-            if (priority == null)
-            {
-                return HttpNotFound();
-            }
-
-            var model = new PriorityModel
-            {
-                DueDate = priority.DueDate,
-                EquipmentName = priority.EquipmentName,
-                PriorityId = priority.PriorityId,
-                PriorityNumber = priority.PriorityNumber,
-                ProjectId = priority.ProjectId
-            };
-
-            return View(model);
-        }
-
-        // POST: Priority/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, PriorityModel model)
-        {
-            try
-            {
-                var priority = priorityService.GetById(id);
-
-                if (priority == null)
-                {
-                    return HttpNotFound();
-                }
-
-                priorityService.Delete(id);
-
-                return RedirectToAction("Index");
-            }
-            catch (Exception e)
-            {
-                HandleError("There was an issue attempting to delete this priority", e);
-
-                return View(model);
-            }
-        }
 
     }
 }

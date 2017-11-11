@@ -164,6 +164,8 @@
     <Compile Include="Common\WendtAuthorizeAttribute.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\PriorityApiController.cs" />
+    <Compile Include="Controllers\ProjectApiController.cs" />
     <Compile Include="Controllers\BillOfLadingApiController.cs" />
     <Compile Include="Controllers\HardwareCommercialCodeApiController.cs" />
     <Compile Include="Controllers\EquipmentApiController.cs" />
@@ -288,6 +290,9 @@
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\editor\editorBOLEdit.js" />
     <Content Include="Scripts\editor\editorBOLCreate.js" />
+    <Content Include="Scripts\editor\tablePriority.js" />
+    <Content Include="Scripts\editor\tableHardwareCommercialCode.js" />
+    <Content Include="Scripts\editor\tableProject.js" />
     <Content Include="Scripts\editor\tableBOLDetails.js" />
     <Content Include="Scripts\editor\tableBOL.js" />
     <Content Include="Scripts\editor\importEquipment.js" />
@@ -305,7 +310,6 @@
     <Content Include="Scripts\moment-with-locales.min.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
-    <Content Include="Scripts\project.js" />
     <Content Include="Scripts\jquery.floatThead.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />

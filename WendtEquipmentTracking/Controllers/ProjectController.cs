@@ -25,34 +25,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
         public ViewResult Index()
         {
-            //Get Data
-            var projectBOs = projectService.GetAll();
-
-            var model = projectBOs.Select(x => new ProjectModel
-            {
-                FreightTerms = x.FreightTerms,
-                IncludeSoftCosts = x.IncludeSoftCosts,
-                IsCustomsProject = x.IsCustomsProject,
-                ProjectId = x.ProjectId,
-                ProjectNumber = x.ProjectNumber,
-                ShipToAddress = x.ShipToAddress,
-                ShipToBroker = x.ShipToBroker,
-                ShipToBrokerEmail = x.ShipToBrokerEmail,
-                ShipToBrokerPhoneFax = x.ShipToBrokerPhoneFax,
-                ShipToCompany = x.ShipToCompany,
-                ShipToContact1 = x.ShipToContact1,
-                ShipToContact1Email = x.ShipToContact1Email,
-                ShipToContact1PhoneFax = x.ShipToContact1PhoneFax,
-                ShipToContact2 = x.ShipToContact2,
-                ShipToContact2Email = x.ShipToContact2Email,
-                ShipToContact2PhoneFax = x.ShipToContact2PhoneFax,
-                ShipToCSZ = x.ShipToCSZ
-            });
-
-            //Filter and sort data
-            model = model.OrderBy(r => r.ProjectNumber);
-
-            return View(model);
+            return View();
         }
 
         //

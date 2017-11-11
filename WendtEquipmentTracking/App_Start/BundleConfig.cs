@@ -55,20 +55,12 @@ namespace WendtEquipmentTracking.App
                        "~/Scripts/editor/tableBOL.js"));
             bundles.Add(new ScriptBundle("~/bundles/billOfLadingDetails").Include(
                        "~/Scripts/editor/tableBOLDetails.js"));
-
-
-
-            bundles.Add(new ScriptBundle("~/bundles/hardwareKit").Include(
-                       "~/Scripts/hardwareKit.js"));
-            bundles.Add(new ScriptBundle("~/bundles/project").Include(
-                       "~/Scripts/project.js"));
-
-
-
-
-
-
-
+            bundles.Add(new ScriptBundle("~/bundles/projects").Include(
+                       "~/Scripts/editor/tableProject.js"));
+            bundles.Add(new ScriptBundle("~/bundles/hardwareCommercialCodes").Include(
+                       "~/Scripts/editor/tableHardwareCommercialCode.js"));
+            bundles.Add(new ScriptBundle("~/bundles/priorities").Include(
+                       "~/Scripts/editor/tablePriority.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/importEquipment").Include(
                        "~/Scripts/editor/importEquipmentTable.js",
@@ -76,6 +68,22 @@ namespace WendtEquipmentTracking.App
             ));
             bundles.Add(new ScriptBundle("~/bundles/importWorkOrderPrice").Include(
                        "~/Scripts/editor/importWorkOrderPrice.js"));
+
+
+
+
+            bundles.Add(new ScriptBundle("~/bundles/hardwareKit").Include(
+                       "~/Scripts/hardwareKit.js"));
+
+
+
+
+
+
+
+
+
+
 
 
 

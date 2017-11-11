@@ -62,6 +62,24 @@
                     $(row.node()).removeClass('warning');
                 }
 
+                if (data.Quantity > 0) {
+                    row.select();
+                } else {
+                    row.deselect();
+                }
+
+            });
+
+            editorMain.datatable.on('select', function (e, dt, type, indexes) {
+                if (type === 'row') {
+                    $.each(indexes, function () {
+
+                        if (dt.cell(this, 1).data() === 0) {
+                            var leftToShip = dt.cell(this, 13).data();
+                            dt.cell(this, 1).data(leftToShip);
+                        }
+                    });
+                }
             });
 
             $("#Save").on("click", function () {
@@ -84,31 +102,6 @@
                     $("#Save").button("reset");
                 }
             });
-
-            //Update these events
-            //$("table").on('change', '.quantity', function () {
-            //    var check = $(this).val() && parseInt($(this).val(), 10) > 0;
-
-            //    if (check) {
-            //        $(this).closest("tr").find("input[type='checkbox']").prop("checked", true);
-            //    } else {
-            //        $(this).closest("tr").find("input[type='checkbox']").removeAttr("checked").prop("checked", false);
-            //    }
-            //});
-
-            //$("table").on('change', 'tbody input[type="checkbox"]', function () {
-            //    var checked = $(this).is(":checked");
-
-            //    if (checked) {
-            //        var readyToShipVal = $(this).closest("tr").find(".originalReadyToShip").val();
-            //        var $quantity = $(this).closest("tr").find(".quantity");
-
-            //        if (!$quantity.val() || $quantity.val() === "0") {
-            //            $quantity.val(readyToShipVal);
-            //        }
-
-            //    }
-            //});
         }
 
         this.initEditor = function () {
