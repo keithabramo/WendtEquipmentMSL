@@ -172,7 +172,7 @@ namespace WendtEquipmentTracking.App.Controllers
         }
 
         // GET: ValidProjectNumber
-        public ActionResult ValidProjectNumber(string projectNumber, int? projectId)
+        public ActionResult ValidProjectNumber(double projectNumber, int? projectId)
         {
             var projectBOs = projectService.GetAll();
 

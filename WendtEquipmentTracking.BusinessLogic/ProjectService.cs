@@ -28,6 +28,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                 FreightTerms = projectBO.FreightTerms,
                 IncludeSoftCosts = projectBO.IncludeSoftCosts,
                 IsCustomsProject = projectBO.IsCustomsProject,
+                IsCompleted = projectBO.IsCompleted,
                 ProjectId = projectBO.ProjectId,
                 ProjectNumber = projectBO.ProjectNumber,
                 ShipToAddress = projectBO.ShipToAddress,
@@ -57,6 +58,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                 FreightTerms = x.FreightTerms,
                 IncludeSoftCosts = x.IncludeSoftCosts,
                 IsCustomsProject = x.IsCustomsProject,
+                IsCompleted = x.IsCompleted,
                 ProjectId = x.ProjectId,
                 ProjectNumber = x.ProjectNumber,
                 ShipToAddress = x.ShipToAddress,
@@ -82,7 +84,8 @@ namespace WendtEquipmentTracking.BusinessLogic
             var projectBOs = projects.Select(p => new ProjectBO
             {
                 ProjectId = p.ProjectId,
-                ProjectNumber = p.ProjectNumber
+                ProjectNumber = p.ProjectNumber,
+                ShipToCompany = p.ShipToCompany
             });
 
             return projectBOs.ToList();
@@ -97,6 +100,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                 FreightTerms = project.FreightTerms,
                 IncludeSoftCosts = project.IncludeSoftCosts,
                 IsCustomsProject = project.IsCustomsProject,
+                IsCompleted = project.IsCompleted,
                 ProjectId = project.ProjectId,
                 ProjectNumber = project.ProjectNumber,
                 ShipToAddress = project.ShipToAddress,
@@ -136,6 +140,7 @@ namespace WendtEquipmentTracking.BusinessLogic
             oldProject.ShipToCSZ = projectBO.ShipToCSZ;
             oldProject.IsCustomsProject = projectBO.IsCustomsProject;
             oldProject.IncludeSoftCosts = projectBO.IncludeSoftCosts;
+            oldProject.IsCompleted = projectBO.IsCompleted;
 
             projectEngine.UpdateProject(oldProject);
 

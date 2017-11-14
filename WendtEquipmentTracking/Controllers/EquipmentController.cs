@@ -40,8 +40,9 @@ namespace WendtEquipmentTracking.App.Controllers
 
             var prioritiesBOs = priorityService.GetAll(user.ProjectId);
             var priorities = prioritiesBOs.Select(p => p.PriorityNumber).OrderBy(p => p).ToList();
+            var project = projectService.GetById(user.ProjectId);
 
-            ViewBag.ProjectNumber = projectService.GetById(user.ProjectId).ProjectNumber;
+            ViewBag.ProjectNumber = project.ProjectNumber + (!string.IsNullOrWhiteSpace(project.ShipToCompany) ? ": " + project.ShipToCompany : "");
             ViewBag.Priorities = priorities;
 
             return View();
@@ -66,7 +67,9 @@ namespace WendtEquipmentTracking.App.Controllers
 
             return PartialView(new EquipmentModel
             {
-                Priorities = priorities
+                Priorities = priorities,
+                ShippedFrom = "WENDT",
+                ReadyToShip = 0
             });
         }
 

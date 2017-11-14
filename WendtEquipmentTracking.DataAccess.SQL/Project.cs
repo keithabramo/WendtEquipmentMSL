@@ -25,7 +25,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         }
     
         public int ProjectId { get; set; }
-        public string ProjectNumber { get; set; }
+        public double ProjectNumber { get; set; }
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
@@ -45,6 +45,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         public string ShipToBrokerEmail { get; set; }
         public bool IsCustomsProject { get; set; }
         public bool IncludeSoftCosts { get; set; }
+        public bool IsCompleted { get; set; }
         public bool IsDeleted { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

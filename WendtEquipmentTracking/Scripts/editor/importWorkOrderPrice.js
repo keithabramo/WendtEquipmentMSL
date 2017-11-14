@@ -16,24 +16,6 @@
 
 
             editorMain.editor.on('preSubmit', function (e, data, action) {
-                if (action !== 'remove') {
-                    var workOrderNumber = this.field('WorkOrderNumber');
-
-                    // Only validate user input values - different values indicate that
-                    // the end user has not entered a value
-                    if (!workOrderNumber.isMultiValue()) {
-                        if (!workOrderNumber.val()) {
-                            workOrderNumber.error('A work order number is required');
-                        }
-                    }
-
-                   
-                    // If any error was reported, cancel the submission so it can be corrected
-                    if (this.inError()) {
-                        return false;
-                    }
-                }
-
                 data.doSubmit = $this.canSubmit;
             });
 
@@ -42,27 +24,50 @@
                 var row = editorMain.datatable.row("#" + data.WorkOrderPriceId);
 
                 if (data.IsDuplicate) {
-                    $(row.node()).attr("class", 'danger');
+                    $(row.node()).attr("class", 'warning');
                 } else {
-                    $(row.node()).removeClass('danger');
+                    $(row.node()).removeClass('warning');
                 }
 
             });
 
+            editorMain.datatable.on('autoFill', function (e, datatable, cells) {
+                $this.validationErrors();
+            });
+
+            editorMain.editor.on('submitComplete', function () {
+                $this.validationErrors();
+            });
+
             $("#Import").on("click", function () {
 
-                $this.canSubmit = true;
+                if (!$this.validationErrors()) {
+                    $this.canSubmit = true;
 
-                editorMain.editor.edit(
-                    editorMain.datatable.rows({ selected: true }).indexes(), false
-                ).submit(function () {
-                    $this.canSubmit = false;
-                    location.href = ROOT_URL + "WorkOrderPrice/?ajaxSuccess=true"
-                }, function () {
-                    $this.canSubmit = false;
-                    $(".global-message").html('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>ERROR! </strong>There was an error whill trying to import</div>');
-                });
-                
+                    editorMain.editor.edit(
+                        editorMain.datatable.rows({ selected: true }).indexes(), false
+                    ).submit(function () {
+                        $this.canSubmit = false;
+                        location.href = ROOT_URL + "WorkOrderPrice/?ajaxSuccess=true"
+                    }, function () {
+                        $this.canSubmit = false;
+                        main.error("There was an error whill trying to import");
+                    });
+                } else {
+                    main.error("Please address all rows with validation errors before importing.")
+                }
+            });
+
+            editorMain.datatable.on('select', function (e, dt, type, indexes) {
+                if (type === 'row') {
+                    $this.validationErrors();
+                }
+            });
+
+            editorMain.datatable.on('deselect', function (e, dt, type, indexes) {
+                if (type === 'row') {
+                    $this.clearValidation();
+                }
             });
         }
 
@@ -108,7 +113,7 @@
                 rowId: 'WorkOrderPriceId',
                 createdRow: function (row, data, index) {
                     if (data.IsDuplicate) {
-                        $(row).addClass('danger');
+                        $(row).addClass('warning');
                     }
                 },
                 columnDefs: [
@@ -141,7 +146,55 @@
             });
         }
 
+        this.validationErrors = function () {
+            var $this = this;
 
+            var errors = false;
+
+            editorMain.datatable.rows({ selected: true }).every(function (rowIdx, tableLoop, rowLoop) {
+                var error = false;
+                var data = this.data();
+
+                var workOrderNumber = data.WorkOrderNumber;
+
+
+                if (!workOrderNumber) {
+                    error = true;
+                    $this.addError(rowIdx, 1);
+                } else {
+                    $this.removeError(rowIdx, 1);
+                }
+
+
+                if (error) {
+                    $(this.node()).addClass("danger");
+                    errors = true;
+                } else {
+                    $(this.node()).removeClass("danger");
+                }
+            });
+
+            return errors;
+        }
+
+
+        this.clearValidation = function () {
+            var $this = this;
+
+            editorMain.datatable.rows({ selected: false }).every(function (rowIdx, tableLoop, rowLoop) {
+
+                $this.removeError(rowIdx, 1);
+                $(this.node()).removeClass("danger");
+            });
+        }
+
+        this.addError = function (row, column) {
+            $(editorMain.datatable.cell(row, column).node()).addClass("Red");
+        }
+
+        this.removeError = function (row, column) {
+            $(editorMain.datatable.cell(row, column).node()).removeClass("Red");
+        }
 
 
         this.initStyles();

@@ -44,6 +44,10 @@
                 });
             });
 
+            this.datatable.on('preAutoFill', function (e, datatable, cells) {
+                datatable.cell.blur();
+            });
+
         }
 
         this.initEditor = function (settings) {

@@ -5,10 +5,10 @@ namespace WendtEquipmentTracking.BusinessLogic.Api
 {
     public interface IEquipmentService
     {
-        int Save(EquipmentBO equipmentBO);
+        //int Save(EquipmentBO equipmentBO);
         IEnumerable<int> SaveAll(IEnumerable<EquipmentBO> equipmentBO);
 
-        void Update(EquipmentBO equipmentBO);
+        //void Update(EquipmentBO equipmentBO);
 
         void UpdateAll(IEnumerable<EquipmentBO> equipmentBO);
 

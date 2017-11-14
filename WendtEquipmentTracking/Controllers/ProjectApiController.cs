@@ -38,6 +38,7 @@ namespace WendtEquipmentTracking.App.Controllers
                 FreightTerms = x.FreightTerms,
                 IncludeSoftCosts = x.IncludeSoftCosts,
                 IsCustomsProject = x.IsCustomsProject,
+                IsCompleted = x.IsCompleted,
                 ProjectId = x.ProjectId,
                 ProjectNumber = x.ProjectNumber,
                 ShipToAddress = x.ShipToAddress,

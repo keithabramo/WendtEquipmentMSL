@@ -16,96 +16,47 @@
 
 
             editorMain.editor.on('preSubmit', function (e, data, action) {
-                if (action !== 'remove') {
-                    var equipmentName = this.field('EquipmentName');
-                    var releaseDate = this.field('ReleaseDate');
-                    var drawingNumber = this.field('DrawingNumber');
-                    var workOrderNumber = this.field('WorkOrderNumber');
-                    var shippingTagNumber = this.field('ShippingTagNumber');
-                    var description = this.field('Description');
-                    var unitWeight = this.field('UnitWeightText');
-                    var quantity = this.field('Quantity');
-                    var readyToShip = this.field('ReadyToShipText');
+                data.doSubmit = $this.canSubmit;
+            });
 
-                    if (action === "edit") {
+            editorMain.datatable.on('autoFill', function (e, datatable, cells) {
+                $this.validationErrors();
+            });
 
-                        if (!equipmentName.isMultiValue()) {
-                            if (!equipmentName.val()) {
-                                equipmentName.error('The equipment field is required');
-                            }
-                        }
-
-                        if (!releaseDate.isMultiValue()) {
-                            if (!releaseDate.val()) {
-                                releaseDate.error('The release date field is required');
-                            } else if (!moment(releaseDate.val(), 'MM/DD/YYYY', true).isValid()) {
-                                releaseDate.error('The release date must be in the format mm/dd/yyyy');
-                            }
-                        }
-
-                        if (!drawingNumber.isMultiValue()) {
-                            if (!drawingNumber.val()) {
-                                drawingNumber.error('The drawing # field is required');
-                            }
-                        }
-
-                        if (!workOrderNumber.isMultiValue()) {
-                            if (!workOrderNumber.val()) {
-                                workOrderNumber.error('The work order # field is required');
-                            }
-                        }
-
-                        if (!shippingTagNumber.isMultiValue()) {
-                            if (!shippingTagNumber.val()) {
-                                shippingTagNumber.error('The ship tag # field is required');
-                            }
-                        }
-
-                        if (!description.isMultiValue()) {
-                            if (!description.val()) {
-                                description.error('The description field is required');
-                            }
-                        }
-
-                        if (!unitWeight.isMultiValue()) {
-                            if (!unitWeight.val()) {
-                                unitWeight.error('The unit weight field is required');
-                            } else if (isNaN(unitWeight.val())) {
-                                unitWeight.error('The unit weight is not a valid number');
-                            }
-                        }
-
-                        if (!quantity.isMultiValue()) {
-                            if (!quantity.val()) {
-                                quantity.error('The quantity field is required');
-                            } else if (isNaN(quantity.val())) {
-                                quantity.error('The quantity is not a valid number');
-                            }
-                        }
-
-                        if (this.inError()) {
-                            return false;
-                        }
-                    }
-
-                    data.doSubmit = $this.canSubmit;
-                }
+            editorMain.editor.on('submitComplete', function () {
+                $this.validationErrors();
             });
 
             $("#import").on("click", function () {
 
-                $this.canSubmit = true;
+                if (!$this.validationErrors()) {
+                    $this.canSubmit = true;
 
-                editorMain.editor.edit(
-                    editorMain.datatable.rows({ selected: true }).indexes(), false
-                ).submit(function () {
-                    $this.canSubmit = false;
-                    location.href = ROOT_URL + "Equipment/?ajaxSuccess=true"
-                }, function () {
-                    $this.canSubmit = false;
-                    $(".global-message").html('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>ERROR! </strong>There was an error whill trying to import</div>');
-                });
+                    editorMain.editor.edit(
+                        editorMain.datatable.rows({ selected: true }).indexes(), false
+                    ).submit(function () {
+                        $this.canSubmit = false;
+                        location.href = ROOT_URL + "Equipment/?ajaxSuccess=true"
+                    }, function () {
+                        $this.canSubmit = false;
+                        main.error("There was an error whill trying to import");
+                    });
+                } else {
+                    main.error("Please address all rows with validation errors before importing.")
+                }
 
+            });
+
+            editorMain.datatable.on('select', function (e, dt, type, indexes) {
+                if (type === 'row') {
+                    $this.validationErrors();
+                }
+            });
+
+            editorMain.datatable.on('deselect', function (e, dt, type, indexes) {
+                if (type === 'row') {
+                    $this.clearValidation();
+                }
             });
         }
 
@@ -231,8 +182,125 @@
             });
         }
 
+        this.validationErrors = function () {
+            var $this = this;
+
+            var errors = false;
+
+            editorMain.datatable.rows({ selected: true }).every(function (rowIdx, tableLoop, rowLoop) {
+                var error = false;
+                var data = this.data();
+
+                var equipmentName = data.EquipmentName;
+                var releaseDate = data.ReleaseDate;
+                var drawingNumber = data.DrawingNumber;
+                var workOrderNumber = data.WorkOrderNumber;
+                var shippingTagNumber = data.ShippingTagNumber;
+                var description = data.Description;
+                var unitWeight = data.UnitWeightText;
+                var quantity = data.Quantity;
+
+                if (!equipmentName) {
+                    error = true;
+                    $this.addError(rowIdx, 1);
+                } else {
+                    $this.removeError(rowIdx, 1);
+                }
+
+                if (!releaseDate) {
+                    error = true;
+                    $this.addError(rowIdx, 3);
+                } else if (!moment(releaseDate, 'MM/DD/YYYY', true).isValid()) {
+                    error = true;
+                    $this.addError(rowIdx, 3);
+                } else {
+                    $this.removeError(rowIdx, 3);
+                }
+
+                if (!drawingNumber) {
+                    error = true;
+                    $this.addError(rowIdx, 4);
+                } else {
+                    $this.removeError(rowIdx, 4);
+                }
+
+                if (!workOrderNumber) {
+                    error = true;
+                    $this.addError(rowIdx, 5);
+                } else {
+                    $this.removeError(rowIdx, 5);
+                }
+
+                if (!shippingTagNumber) {
+                    error = true;
+                    $this.addError(rowIdx, 7);
+                } else {
+                    $this.removeError(rowIdx, 7);
+                }
+
+                if (!description) {
+                    error = true;
+                    $this.addError(rowIdx, 8);
+                } else {
+                    $this.removeError(rowIdx, 8);
+                }
+
+                if (!unitWeight) {
+                    error = true;
+                    $this.addError(rowIdx, 9);
+                } else if (isNaN(unitWeight)) {
+                    error = true;
+                    $this.addError(rowIdx, 9);
+                } else {
+                    $this.removeError(rowIdx, 9);
+                }
+
+                if (!quantity) {
+                    error = true;
+                    $this.addError(rowIdx, 6);
+                } else if (isNaN(quantity)) {
+                    error = true;
+                    $this.addError(rowIdx, 6);
+                } else {
+                    $this.removeError(rowIdx, 6);
+                }
+
+                if (error) {
+                    $(this.node()).addClass("danger");
+                    errors = true;
+                } else {
+                    $(this.node()).removeClass("danger");
+                }
+            });
+
+            return errors;
+        }
 
 
+        this.clearValidation = function () {
+            var $this = this;
+
+            editorMain.datatable.rows({ selected: false }).every(function (rowIdx, tableLoop, rowLoop) {
+                
+                $this.removeError(rowIdx, 1);
+                $this.removeError(rowIdx, 3);
+                $this.removeError(rowIdx, 4);
+                $this.removeError(rowIdx, 5);
+                $this.removeError(rowIdx, 7);
+                $this.removeError(rowIdx, 8);
+                $this.removeError(rowIdx, 9);
+                $this.removeError(rowIdx, 6);
+                $(this.node()).removeClass("danger");
+            });
+        }
+
+        this.addError = function (row, column) {
+            $(editorMain.datatable.cell(row, column).node()).addClass("Red");
+        }
+
+        this.removeError = function (row, column) {
+            $(editorMain.datatable.cell(row, column).node()).removeClass("Red");
+        }
 
         this.initStyles();
         this.initEvents();

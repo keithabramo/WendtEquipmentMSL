@@ -146,7 +146,7 @@ namespace WendtEquipmentTracking.App.Controllers
                     HTSCode = x.Equipment.HTSCode,
                     CountryOfOrigin = x.Equipment.CountryOfOrigin
                 },
-            });
+            }).OrderBy(x => x.Equipment.ShippingTagNumber);
 
             return PartialView(model);
         }

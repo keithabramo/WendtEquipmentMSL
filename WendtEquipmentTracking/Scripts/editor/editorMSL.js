@@ -48,8 +48,21 @@
                 }
             );
 
+            $.fn.dataTable.ext.search.push(
+                function (settings, data, dataIndex) {
+                    var errorFilter = $('#errorFilter').is(":checked");
+
+                    if (!errorFilter) {
+                        return true;
+                    } else {
+                        return data[23] == "True";
+                    }
+                }
+            );
+
             $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="readyToShipFilter" /> Work In Progress</label>');
             $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="hardwareFilter" /> Hide Hardware</label>');
+            $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="errorFilter" />Show Me All Rows With Errors</label>');
             $("div.createButtonContainer").append('<input type="button" value="Create" class="btn btn-sm btn-primary createSubmit" />');
 
         }
@@ -62,6 +75,10 @@
             });
 
             $('#hardwareFilter').on("change", function () {
+                editorMain.datatable.draw();
+            });
+
+            $('#errorFilter').on("change", function () {
                 editorMain.datatable.draw();
             });
 
@@ -275,12 +292,17 @@
 
             editorMain.editor.on('preOpen', function (e, mode, action) {
                 var rowData = editorMain.datatable.row(editorMain.editor.modifier().row).data();
+                var columnIndex = editorMain.editor.modifier().column;
 
                 var editable = true;
 
+                if (rowData.IsAssociatedToHardwareKit || (rowData.FullyShippedText == "YES" && rowData.Quantity != 0)) {
+                    editable = false;
+                }
+
                 if ($.inArray(editorMain.editor.modifier().column, $this.editableColumns) < 0 && action !== "remove") {
                     editable = false;
-                } else if (rowData.IsAssociatedToHardwareKit || rowData.IsHardwareKit) {
+                } else if ((rowData.IsAssociatedToHardwareKit || rowData.IsHardwareKit) && (columnIndex == 0 || columnIndex == 5)) {
                     editable = false;
                 }
 
@@ -295,8 +317,11 @@
             editorMain.editor.on('postCreate', function (e, json, data) {
 
                 var $createRow = $("tfoot tr");
+
                 $createRow.find(":input").val("");
                 $createRow.find("select").prop('selectedIndex', 0);
+                $createRow.find("#ReadyToShip").val("0");
+                $createRow.find("#ShippedFrom").val("WENDT");
             });
 
             editorMain.editor.on('postEdit', function (e, json, data) {
@@ -307,6 +332,14 @@
                     $(row.node()).attr("class", 'warning');
                 } else {
                     $(row.node()).removeClass('warning');
+                }
+
+
+
+                if (data.IsAssociatedToHardwareKit || (data.FullyShippedText == "YES" && data.Quantity != 0)) {
+                    $(row.node()).addClass('active');
+                } else {
+                    $(row.node()).removeClass('active');
                 }
 
                 $(editorMain.datatable.cell(row.index(), 0).node()).attr("class", data.Indicators.EquipmentNameColor);
@@ -367,7 +400,8 @@
                     { name: "Notes", type: "textarea" },
                     { name: "EquipmentId", type: "readonly" },
                     { name: "IsHardwareKitText", type: "readonly" },
-                    { name: "IsAssociatedToHardwareKitText", type: "readonly" }
+                    { name: "IsAssociatedToHardwareKitText", type: "readonly" },
+                    { name: "HasErrorsText", type: "readonly" }
                 ]
             });
         }
@@ -393,8 +427,14 @@
                     if (data.IsDuplicate) {
                         $(row).addClass('warning');
                     }
-                    if (data.IsAssociatedToHardwareKit || data.IsHardwareKit) {
+
+                    if (data.IsAssociatedToHardwareKit || (data.FullyShippedText == "YES" && data.Quantity != 0)) {
                         $(row).addClass('active');
+                    }
+
+                    if (data.IsHardwareKit) {
+                        $(editorMain.datatable.cell(index, 0).node()).addClass("active");
+                        $(editorMain.datatable.cell(index, 5).node()).addClass("active");
                     }
                 },
                 order: [[2, 'desc']],
@@ -523,6 +563,11 @@
                         render: function (datadata, type, row, meta) {
                             return row.HasBillOfLading ? '<span class="expand glyphicon glyphicon-plus text-primary"></span>' : '';
                         }
+                    },
+                    {
+                        data: "HasErrorsText",
+                        "targets": 23,
+                        visible: false
                     }
                 ]
             });

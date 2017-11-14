@@ -20,16 +20,19 @@ namespace WendtEquipmentTracking.App
                         "~/Scripts/jquery.inputmask.js",
                         "~/Scripts/form.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/table").Include(
+            bundles.Add(new ScriptBundle("~/bundles/table")
+                .Include(
                         "~/Scripts/moment.min.js",
-                        "~/Scripts/editor/datatablesAndEditor.min.js",
-                        "~/Scripts/editor/table.js"));
+                        "~/Scripts/editor/datatablesAndEditor.js",
+                        "~/Scripts/editor/table.js"
+                ));
 
-            bundles.Add(new ScriptBundle("~/bundles/editor").Include(
+            bundles.Add(new ScriptBundle("~/bundles/editor")
+                .Include(
                         "~/Scripts/moment.min.js",
-                        "~/Scripts/editor/datatablesAndEditor.min.js",
+                        "~/Scripts/editor/datatablesAndEditor.js",
                         "~/Scripts/editor/editor.js"
-                        ));
+                ));
 
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
@@ -105,7 +108,7 @@ namespace WendtEquipmentTracking.App
                 .IncludeDirectory("~/Content/themes/base", "*.css")
                 .Include(
                     "~/Content/bootstrap.css",
-                    "~/Content/datatablesAndEditor.min.css",
+                    "~/Content/datatablesAndEditor.css",
                     "~/Content/Site.css"
                 ));
 

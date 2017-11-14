@@ -55,6 +55,10 @@
                 });
             });
 
+            this.datatable.on('preAutoFill', function (e, datatable, cells) {
+                datatable.cell.blur();
+            });
+
         }
 
         this.initEditor = function (settings) {
@@ -107,10 +111,10 @@
 
                     $this.createColumnFilters();
 
-                    if ($(".pagination li").length === 2) {
-                        $(".pagination").parent().hide();
+                    if ($(".paginate_button").length === 2) {
+                        $(".dataTables_paginate").hide();
                     } else {
-                        $(".pagination").parent().show();
+                        $(".dataTables_paginate").show();
                     }
 
                 },

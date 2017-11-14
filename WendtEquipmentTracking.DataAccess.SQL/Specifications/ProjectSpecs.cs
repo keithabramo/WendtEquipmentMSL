@@ -14,5 +14,10 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Specifications
         {
             return new IsDeletedSpecification();
         }
+
+        public static Specification<Project> IsCompleted()
+        {
+            return new IsCompletedSpecification();
+        }
     }
 }

@@ -11,7 +11,7 @@ using System.Data.Entity.Infrastructure.MappingViews;
 
 [assembly: DbMappingViewCacheTypeAttribute(
     typeof(WendtEquipmentTracking.DataAccess.SQL.WendtEquipmentTrackingEntities),
-    typeof(Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySetsf1c16aa94c418822514cb869cb34c63908e96537b05b3a0378225845bab52a35))]
+    typeof(Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets344023cf551acd14767cac0f07276a78a4a92f9d51424fb1d09a3bab0c07d976))]
 
 namespace Edm_EntityMappingGeneratedViews
 {
@@ -23,14 +23,14 @@ namespace Edm_EntityMappingGeneratedViews
     /// Implements a mapping view cache.
     /// </summary>
     [GeneratedCode("Entity Framework Power Tools", "0.9.0.0")]
-    internal sealed class ViewsForBaseEntitySetsf1c16aa94c418822514cb869cb34c63908e96537b05b3a0378225845bab52a35 : DbMappingViewCache
+    internal sealed class ViewsForBaseEntitySets344023cf551acd14767cac0f07276a78a4a92f9d51424fb1d09a3bab0c07d976 : DbMappingViewCache
     {
         /// <summary>
         /// Gets a hash value computed over the mapping closure.
         /// </summary>
         public override string MappingHashValue
         {
-            get { return "f1c16aa94c418822514cb869cb34c63908e96537b05b3a0378225845bab52a35"; }
+            get { return "344023cf551acd14767cac0f07276a78a4a92f9d51424fb1d09a3bab0c07d976"; }
         }
 
         /// <summary>
@@ -331,7 +331,7 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing Project
-        [WendtEquipmentTracking.DataAccess.SQL.Model.Store.Project](T1.Project_ProjectId, T1.Project_ProjectNumber, T1.Project_CreatedBy, T1.Project_CreatedDate, T1.Project_ModifiedBy, T1.Project_ModifiedDate, T1.Project_FreightTerms, T1.Project_ShipToCompany, T1.Project_ShipToAddress, T1.Project_ShipToCSZ, T1.Project_ShipToContact1, T1.Project_ShipToContact1PhoneFax, T1.Project_ShipToContact1Email, T1.Project_ShipToContact2, T1.Project_ShipToContact2PhoneFax, T1.Project_ShipToContact2Email, T1.Project_ShipToBroker, T1.Project_ShipToBrokerPhoneFax, T1.Project_ShipToBrokerEmail, T1.Project_IsCustomsProject, T1.Project_IncludeSoftCosts, T1.Project_IsDeleted)
+        [WendtEquipmentTracking.DataAccess.SQL.Model.Store.Project](T1.Project_ProjectId, T1.Project_ProjectNumber, T1.Project_CreatedBy, T1.Project_CreatedDate, T1.Project_ModifiedBy, T1.Project_ModifiedDate, T1.Project_FreightTerms, T1.Project_ShipToCompany, T1.Project_ShipToAddress, T1.Project_ShipToCSZ, T1.Project_ShipToContact1, T1.Project_ShipToContact1PhoneFax, T1.Project_ShipToContact1Email, T1.Project_ShipToContact2, T1.Project_ShipToContact2PhoneFax, T1.Project_ShipToContact2Email, T1.Project_ShipToBroker, T1.Project_ShipToBrokerPhoneFax, T1.Project_ShipToBrokerEmail, T1.Project_IsCustomsProject, T1.Project_IncludeSoftCosts, T1.Project_IsCompleted, T1.Project_IsDeleted)
     FROM (
         SELECT 
             T.ProjectId AS Project_ProjectId, 
@@ -355,6 +355,7 @@ namespace Edm_EntityMappingGeneratedViews
             T.ShipToBrokerEmail AS Project_ShipToBrokerEmail, 
             T.IsCustomsProject AS Project_IsCustomsProject, 
             T.IncludeSoftCosts AS Project_IncludeSoftCosts, 
+            T.IsCompleted AS Project_IsCompleted, 
             T.IsDeleted AS Project_IsDeleted, 
             True AS _from0
         FROM WendtEquipmentTrackingEntities.Projects AS T
@@ -571,7 +572,7 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing Projects
-        [WendtEquipmentTracking.DataAccess.SQL.Model.Project](T1.Project_ProjectId, T1.Project_ProjectNumber, T1.Project_CreatedBy, T1.Project_CreatedDate, T1.Project_ModifiedBy, T1.Project_ModifiedDate, T1.Project_FreightTerms, T1.Project_ShipToCompany, T1.Project_ShipToAddress, T1.Project_ShipToCSZ, T1.Project_ShipToContact1, T1.Project_ShipToContact1PhoneFax, T1.Project_ShipToContact1Email, T1.Project_ShipToContact2, T1.Project_ShipToContact2PhoneFax, T1.Project_ShipToContact2Email, T1.Project_ShipToBroker, T1.Project_ShipToBrokerPhoneFax, T1.Project_ShipToBrokerEmail, T1.Project_IsCustomsProject, T1.Project_IncludeSoftCosts, T1.Project_IsDeleted)
+        [WendtEquipmentTracking.DataAccess.SQL.Model.Project](T1.Project_ProjectId, T1.Project_ProjectNumber, T1.Project_CreatedBy, T1.Project_CreatedDate, T1.Project_ModifiedBy, T1.Project_ModifiedDate, T1.Project_FreightTerms, T1.Project_ShipToCompany, T1.Project_ShipToAddress, T1.Project_ShipToCSZ, T1.Project_ShipToContact1, T1.Project_ShipToContact1PhoneFax, T1.Project_ShipToContact1Email, T1.Project_ShipToContact2, T1.Project_ShipToContact2PhoneFax, T1.Project_ShipToContact2Email, T1.Project_ShipToBroker, T1.Project_ShipToBrokerPhoneFax, T1.Project_ShipToBrokerEmail, T1.Project_IsCustomsProject, T1.Project_IncludeSoftCosts, T1.Project_IsCompleted, T1.Project_IsDeleted)
     FROM (
         SELECT 
             T.ProjectId AS Project_ProjectId, 
@@ -595,6 +596,7 @@ namespace Edm_EntityMappingGeneratedViews
             T.ShipToBrokerEmail AS Project_ShipToBrokerEmail, 
             T.IsCustomsProject AS Project_IsCustomsProject, 
             T.IncludeSoftCosts AS Project_IncludeSoftCosts, 
+            T.IsCompleted AS Project_IsCompleted, 
             T.IsDeleted AS Project_IsDeleted, 
             True AS _from0
         FROM WendtEquipmentTrackingDataAccessSQLModelStoreContainer.Project AS T

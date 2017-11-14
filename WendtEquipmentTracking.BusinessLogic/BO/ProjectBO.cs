@@ -3,7 +3,7 @@
     public class ProjectBO
     {
         public int ProjectId { get; set; }
-        public string ProjectNumber { get; set; }
+        public double ProjectNumber { get; set; }
         public string FreightTerms { get; set; }
         public string ShipToCompany { get; set; }
         public string ShipToAddress { get; set; }
@@ -19,5 +19,6 @@
         public string ShipToBrokerEmail { get; set; }
         public bool IsCustomsProject { get; set; }
         public bool IncludeSoftCosts { get; set; }
+        public bool IsCompleted { get; set; }
     }
 }

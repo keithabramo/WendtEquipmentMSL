@@ -55,17 +55,22 @@
 
             });
 
-            //$("input[name='ExtraQuantityPercentage']").on("change", function () {
-            //    var newPercent = parseInt($(this).val(), 10);
+            $("input[name='ExtraQuantityPercentage']").on("change", function () {
+                var newPercent = parseInt($(this).val(), 10);
 
-            //    $(".table .text-box").each(function () {
-            //        var originalQuantity = parseInt($(this).closest("tr").find(".original-quantity").val(), 10);
+                var rows = editorMain.datatable.rows();
 
-            //        var newValue = originalQuantity + (newPercent * originalQuantity) / 100;
+                editorMain.datatable.rows().every(function (rowIdx, tableLoop, rowLoop) {
+                    var data = this.data();
 
-            //        $(this).val(Math.ceil(newValue));
-            //    });
-            //});
+                    var originalQuantity = data.Quantity;
+                    var newValue = originalQuantity + (newPercent * originalQuantity) / 100;
+
+                    editorMain.datatable.cell(rowIdx, 4).data(Math.ceil(newValue));
+
+                    // ... do something with data(), or this.node(), etc
+                });
+            });
 
             $("#Save").on("click", function () {
 
@@ -113,6 +118,7 @@
                     { name: "ShippingTagNumber" },
                     { name: "Description" },
                     { name: "Quantity" },
+                    { name: "OriginalQuantity" },
                     { name: "QuantityToShip" }
                 ]
             });
@@ -130,7 +136,7 @@
                     }
                 },
                 rowId: 'HardwareKitGroupId',
-                order: [[1, 'desc']],
+                order: [[1, 'asc']],
                 autoWidth: false,
                 columnDefs: [
                     {

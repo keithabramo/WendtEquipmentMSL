@@ -37,9 +37,9 @@
                 var row = editorMain.datatable.row("#" + data.WorkOrderPriceId);
 
                 if (data.IsDuplicate) {
-                    $(row.node()).attr("class", 'danger');
+                    $(row.node()).attr("class", 'warning');
                 } else {
-                    $(row.node()).removeClass('danger');
+                    $(row.node()).removeClass('warning');
                 }
 
             });
@@ -112,7 +112,7 @@
                 ],
                 createdRow: function (row, data, index) {
                     if (data.IsDuplicate) {
-                        $(row).addClass('danger');
+                        $(row).addClass('warning');
                     }
                 },
             });

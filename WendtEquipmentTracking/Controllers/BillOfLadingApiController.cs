@@ -165,9 +165,7 @@ namespace WendtEquipmentTracking.App.Controllers
                 {
                     DrawingNumber = x.Equipment.DrawingNumber != null ? x.Equipment.DrawingNumber.ToUpperInvariant() : string.Empty,
                     WorkOrderNumber = x.Equipment.WorkOrderNumber != null ? x.Equipment.WorkOrderNumber.ToUpperInvariant() : string.Empty,
-                    Quantity = x.Quantity,
                     ShippingTagNumber = x.Equipment.ShippingTagNumber != null ? x.Equipment.ShippingTagNumber.ToUpperInvariant() : string.Empty,
-                    Description = x.Equipment.Description != null ? x.Equipment.Description.ToUpperInvariant() : string.Empty
                 })
                 .Where(g => g.Count() > 1)
                 .SelectMany(y => y)
@@ -302,9 +300,7 @@ namespace WendtEquipmentTracking.App.Controllers
                 {
                     DrawingNumber = x.Equipment.DrawingNumber != null ? x.Equipment.DrawingNumber.ToUpperInvariant() : string.Empty,
                     WorkOrderNumber = x.Equipment.WorkOrderNumber != null ? x.Equipment.WorkOrderNumber.ToUpperInvariant() : string.Empty,
-                    Quantity = x.Quantity,
                     ShippingTagNumber = x.Equipment.ShippingTagNumber != null ? x.Equipment.ShippingTagNumber.ToUpperInvariant() : string.Empty,
-                    Description = x.Equipment.Description != null ? x.Equipment.Description.ToUpperInvariant() : string.Empty
                 })
                 .Where(g => g.Count() > 1)
                 .SelectMany(y => y)
@@ -458,9 +454,7 @@ namespace WendtEquipmentTracking.App.Controllers
                            e.EquipmentId != x.Equipment.EquipmentId &&
                            (e.DrawingNumber ?? string.Empty).Equals((x.Equipment.DrawingNumber ?? string.Empty), StringComparison.InvariantCultureIgnoreCase) &&
                            (e.WorkOrderNumber ?? string.Empty).Equals((x.Equipment.WorkOrderNumber ?? string.Empty), StringComparison.InvariantCultureIgnoreCase) &&
-                           e.Quantity == x.Equipment.Quantity &&
-                           (e.ShippingTagNumber ?? string.Empty).Equals((x.Equipment.ShippingTagNumber ?? string.Empty), StringComparison.InvariantCultureIgnoreCase) &&
-                           (e.Description ?? string.Empty).Equals((x.Equipment.Description ?? string.Empty), StringComparison.InvariantCultureIgnoreCase))
+                           (e.ShippingTagNumber ?? string.Empty).Equals((x.Equipment.ShippingTagNumber ?? string.Empty), StringComparison.InvariantCultureIgnoreCase))
                     }
                 }).ToList();
 

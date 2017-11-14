@@ -17,7 +17,7 @@ namespace WendtEquipmentTracking.App.Controllers
         private IProjectService projectService;
         private IUserService userService;
 
-        private const float DEFAULT_PERCENT = 10;
+        private const double DEFAULT_PERCENT = 10;
 
 
         public HardwareKitApiController()

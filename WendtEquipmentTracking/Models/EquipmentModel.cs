@@ -31,7 +31,7 @@ namespace WendtEquipmentTracking.App.Models
         [Required]
         public DateTime? ReleaseDate { get; set; }
 
-
+        [DataType(DataType.MultilineText)]
         [DisplayName("Drawing #")]
         [Required]
         public string DrawingNumber { get; set; }
@@ -177,6 +177,14 @@ namespace WendtEquipmentTracking.App.Models
             }
         }
 
+        public string HasErrorsText
+        {
+            get
+            {
+                return HasErrors.ToString();
+            }
+        }
+
 
         //Calculated Properties
         public bool HasBillOfLading { get; set; }
@@ -185,6 +193,7 @@ namespace WendtEquipmentTracking.App.Models
         public bool IsAssociatedToHardwareKit { get; set; }
         public string AssociatedHardwareKitNumber { get; set; }
         public bool IsDuplicate { get; set; }
+        public bool HasErrors { get; set; }
 
 
 
@@ -192,24 +201,26 @@ namespace WendtEquipmentTracking.App.Models
 
         public IndicatorsModel Indicators { get; set; }
 
-        public void SetIndicators(string projectNumber, bool isCustomsProject)
+        public void SetIndicators(double projectNumber, bool isCustomsProject)
         {
             Indicators = new IndicatorsModel();
 
             //equipment
             if (EquipmentName.Equals("DO NOT USE", StringComparison.InvariantCultureIgnoreCase))
             {
+                HasErrors = true;
                 Indicators.EquipmentNameColor = IndicatorsModel.Colors.Red.ToString();
             }
 
             //unit weight
             if ((UnitWeight == null || UnitWeight <= 0) && !EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase))
             {
+                HasErrors = true;
                 Indicators.UnitWeightColor = IndicatorsModel.Colors.Red.ToString();
             }
 
             //ready to ship does not have a clean way to check for red
-            if (ReadyToShip > 0)
+            if (ReadyToShip.HasValue)
             {
                 if (HasBillOfLadingInStorage)
                 {
@@ -221,6 +232,7 @@ namespace WendtEquipmentTracking.App.Models
                 }
                 else if (ReadyToShip > Convert.ToInt32(LeftToShip))
                 {
+                    HasErrors = true;
                     Indicators.ReadyToShipColor = IndicatorsModel.Colors.Pink.ToString();
                 }
                 else
@@ -232,18 +244,21 @@ namespace WendtEquipmentTracking.App.Models
             //ship qty
             if (ShippedQuantity.ToNullable<double>() > Quantity)
             {
+                HasErrors = true;
                 Indicators.ShippedQtyColor = IndicatorsModel.Colors.Red.ToString();
             }
 
             //left to ship
             if (ShippedQuantity.ToNullable<double>() > Quantity)
             {
+                HasErrors = true;
                 Indicators.LeftToShipColor = IndicatorsModel.Colors.Red.ToString();
             }
 
             //fully shipped
             if (ShippedQuantity.ToNullable<double>() > Quantity)
             {
+                HasErrors = true;
                 Indicators.FullyShippedColor = IndicatorsModel.Colors.Fuchsia.ToString();
             }
             else if (!FullyShipped)
@@ -258,18 +273,21 @@ namespace WendtEquipmentTracking.App.Models
             //customs value
             if (isCustomsProject && !FullyShipped && !EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase) && (!CustomsValue.HasValue || CustomsValue.Value <= 0))
             {
+                HasErrors = true;
                 Indicators.CustomsValueColor = IndicatorsModel.Colors.Red.ToString();
             }
 
             //sales price
             if (isCustomsProject && !FullyShipped && !EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase) && (!SalePrice.HasValue || SalePrice.Value <= 0))
             {
+                HasErrors = true;
                 Indicators.SalePriceColor = IndicatorsModel.Colors.Red.ToString();
             }
 
             //sales order
-            if (string.IsNullOrEmpty(WorkOrderNumber) || !WorkOrderNumber.StartsWith(projectNumber.Trim()))
+            if (string.IsNullOrEmpty(WorkOrderNumber) || !WorkOrderNumber.StartsWith(projectNumber.ToString()))
             {
+                HasErrors = true;
                 Indicators.WorkOrderNumberColor = IndicatorsModel.Colors.Yellow.ToString();
             }
         }

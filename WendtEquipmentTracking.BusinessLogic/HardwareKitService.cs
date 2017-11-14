@@ -16,6 +16,8 @@ namespace WendtEquipmentTracking.BusinessLogic
         private WendtEquipmentTrackingEntities dbContext;
         private IHardwareKitEngine hardwareKitEngine;
         private IEquipmentEngine equipmentEngine;
+        private IProjectEngine projectEngine;
+        private IPriorityEngine priorityEngine;
 
 
         public HardwareKitService()
@@ -23,6 +25,8 @@ namespace WendtEquipmentTracking.BusinessLogic
             dbContext = new WendtEquipmentTrackingEntities();
             hardwareKitEngine = new HardwareKitEngine(dbContext);
             equipmentEngine = new EquipmentEngine(dbContext);
+            projectEngine = new ProjectEngine(dbContext);
+            priorityEngine = new PriorityEngine(dbContext);
         }
 
         public void Save(HardwareKitBO hardwareKitBO)
@@ -48,10 +52,17 @@ namespace WendtEquipmentTracking.BusinessLogic
 
             dbContext.SaveChanges();
 
+            var project = projectEngine.Get(ProjectSpecs.Id(hardwareKitBO.ProjectId));
+            var priority = priorityEngine.ListAll().FirstOrDefault();
+
             var equipment = new Equipment();
             equipment.HardwareKitId = hardwareKit.HardwareKitId;
             equipment.EquipmentName = "Hardware Kit " + hardwareKitBO.HardwareKitNumber;
             equipment.Description = "Misc";
+            equipment.DrawingNumber = project.ProjectNumber.ToString();
+            equipment.Priority = priority.PriorityNumber;
+            equipment.ShippingTagNumber = hardwareKitBO.HardwareKitNumber;
+            equipment.UnitWeight = 1;
             equipment.ProjectId = hardwareKitBO.ProjectId;
             equipment.Quantity = 1; //hardwareKitBO.HardwareKitEquipments.Sum(hke => hke.Quantity);
             equipment.ReleaseDate = DateTime.Now;

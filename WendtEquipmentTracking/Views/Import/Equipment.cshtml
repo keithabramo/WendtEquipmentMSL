@@ -6,6 +6,9 @@
 
 @Html.Partial("ActionNavPartial", ActionNav.ImportEquipment)
 
+<h2 class="text-center col-sm-4 center-block"><strong>@ViewBag.ProjectNumber</strong></h2>
+
+
 <h4>Import Equipment <br /><small>Drag and drop the excel document you would like to import.</small></h4>
 
 @using (Html.BeginForm("SelectEquipmentFile", "Import", FormMethod.Post, new { enctype = "multipart/form-data", @class = "dropzone", id="myDropzone" }))

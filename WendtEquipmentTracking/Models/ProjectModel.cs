@@ -11,7 +11,7 @@ namespace WendtEquipmentTracking.App.Models
         [DisplayName("Project Number")]
         [Required]
         [Remote("ValidProjectNumber", "Validate", AdditionalFields = "ProjectId", ErrorMessage = "This project number already exists")]
-        public string ProjectNumber { get; set; }
+        public double ProjectNumber { get; set; }
 
         [DisplayName("Freight Terms")]
         public string FreightTerms { get; set; }
@@ -57,5 +57,8 @@ namespace WendtEquipmentTracking.App.Models
 
         [DisplayName("Include Soft Costs on Commercial Invoice?")]
         public bool IncludeSoftCosts { get; set; }
+
+        [DisplayName("Is Completed?")]
+        public bool IsCompleted { get; set; }
     }
 }

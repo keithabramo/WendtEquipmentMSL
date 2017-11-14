@@ -130,7 +130,7 @@
                     }
                 },
                 rowId: 'HardwareKitGroupId',
-                order: [[0, 'desc'], [1, 'desc']],
+                order: [[0, 'desc'], [1, 'asc']],
                 autoWidth: false,
                 columnDefs: [
                     {

@@ -1,13 +1,13 @@
-﻿@model ProjectNavModel
+﻿@model IEnumerable<SelectListItem>
 
 @if (Model != null)
 {
 <li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@Html.DisplayFor(model => model.CurrentProject.ProjectNumber) <span class="caret"></span></a>
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@(Model.SingleOrDefault(x => x.Selected).Text.IndexOf(":") != -1 ? Model.SingleOrDefault(x => x.Selected).Text.Substring(0, Model.SingleOrDefault(x => x.Selected).Text.IndexOf(":")) : Model.SingleOrDefault(x => x.Selected).Text) <span class="caret"></span></a>
     <ul class="dropdown-menu">
         @if (Html.UserIsInRole(UserRoles.ReadWrite))
         {
-            <li>@Html.ActionLink("Configure Project", "Edit", new { id = Model.CurrentProject.ProjectId })</li>
+            <li>@Html.ActionLink("Configure Project", "Edit", new { id = Model.SingleOrDefault(x => x.Selected).Value })</li>
             <li role="separator" class="divider"></li>
         }
         <li class="dropdown-header">Choose another project</li>
@@ -17,7 +17,7 @@
                 @Html.AntiForgeryToken()
                 
                 <div class="input-group input-group-sm">
-                    @Html.DropDownList("ProjectId", new SelectList(Model.Projects, "ProjectId", "ProjectNumber", Model.CurrentProject.ProjectId), "Choose a different project...", new { @class = "form-control" })
+                    @Html.DropDownList("ProjectId",  new SelectList(Model, "Value", "Text"), "Choose a different project...", new { @class = "form-control" })
                     <span class="input-group-btn">
                         <button class="btn btn-primary" type="submit">Go!</button>
                     </span>

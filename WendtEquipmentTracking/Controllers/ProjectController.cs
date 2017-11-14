@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using WendtEquipmentTracking.App.Models;
@@ -45,6 +46,7 @@ namespace WendtEquipmentTracking.App.Controllers
                 FreightTerms = project.FreightTerms,
                 IncludeSoftCosts = project.IncludeSoftCosts,
                 IsCustomsProject = project.IsCustomsProject,
+                IsCompleted = project.IsCompleted,
                 ProjectId = project.ProjectId,
                 ProjectNumber = project.ProjectNumber,
                 ShipToAddress = project.ShipToAddress,
@@ -88,6 +90,7 @@ namespace WendtEquipmentTracking.App.Controllers
                         FreightTerms = model.FreightTerms,
                         IncludeSoftCosts = model.IncludeSoftCosts,
                         IsCustomsProject = model.IsCustomsProject,
+                        IsCompleted = model.IsCompleted,
                         ProjectId = model.ProjectId,
                         ProjectNumber = model.ProjectNumber,
                         ShipToAddress = model.ShipToAddress,
@@ -138,6 +141,7 @@ namespace WendtEquipmentTracking.App.Controllers
                 FreightTerms = project.FreightTerms,
                 IncludeSoftCosts = project.IncludeSoftCosts,
                 IsCustomsProject = project.IsCustomsProject,
+                IsCompleted = project.IsCompleted,
                 ProjectId = project.ProjectId,
                 ProjectNumber = project.ProjectNumber,
                 ShipToAddress = project.ShipToAddress,
@@ -172,6 +176,7 @@ namespace WendtEquipmentTracking.App.Controllers
                         FreightTerms = model.FreightTerms,
                         IncludeSoftCosts = model.IncludeSoftCosts,
                         IsCustomsProject = model.IsCustomsProject,
+                        IsCompleted = model.IsCompleted,
                         ProjectId = model.ProjectId,
                         ProjectNumber = model.ProjectNumber,
                         ShipToAddress = model.ShipToAddress,
@@ -207,37 +212,33 @@ namespace WendtEquipmentTracking.App.Controllers
         {
             try
             {
+                var model = new List<SelectListItem>();
                 var user = userService.GetCurrentUser();
 
                 if (user != null)
                 {
-
-                    var projectBOs = projectService.GetAllForNavigation();
-                    var projectModels = projectBOs.Select(x => new ProjectModel
-                    {
-                        ProjectId = x.ProjectId,
-                        ProjectNumber = x.ProjectNumber
-                    });
-                    var currentProjectModel = projectModels.SingleOrDefault(p => p.ProjectId == user.ProjectId);
-
-                    var model = new ProjectNavModel();
-
                     try
                     {
-                        model = new ProjectNavModel
+                        var projectBOs = projectService.GetAllForNavigation().OrderByDescending(p => p.ProjectNumber);
+                        model = projectBOs.Select(x => new SelectListItem
                         {
-                            CurrentProject = currentProjectModel,
-                            Projects = projectModels.OrderBy(p => Convert.ToInt32(p.ProjectNumber))
-                        };
+                            Value = x.ProjectId.ToString(),
+                            Text = x.ProjectNumber + (!string.IsNullOrWhiteSpace(x.ShipToCompany) ? ": " + x.ShipToCompany : ""),
+                            Selected = user.ProjectId == x.ProjectId
+                        }).ToList();
+
                     }
                     catch (Exception e)
                     {
                         HandleError("There was an error attempting to load this list of projects due to projects numbers containing text", e);
-                        model = new ProjectNavModel
+                        var projectBOs = projectService.GetAllForNavigation().OrderByDescending(p => p.ProjectNumber);
+                        model = projectBOs.Select(x => new SelectListItem
                         {
-                            CurrentProject = currentProjectModel,
-                            Projects = projectModels.OrderBy(p => p.ProjectNumber)
-                        };
+                            Value = x.ProjectId.ToString(),
+                            Text = x.ProjectNumber + (!string.IsNullOrWhiteSpace(x.ShipToCompany) ? ": " + x.ShipToCompany : ""),
+                            Selected = user.ProjectId == x.ProjectId
+                        }).ToList();
+
                     }
 
                     return PartialView(model);

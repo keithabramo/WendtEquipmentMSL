@@ -42,8 +42,9 @@ namespace WendtEquipmentTracking.App.Controllers
 
             var prioritiesBOs = priorityService.GetAll(user.ProjectId);
             var priorities = prioritiesBOs.Select(p => p.PriorityNumber).OrderBy(p => p).ToList();
+            var project = projectService.GetById(user.ProjectId);
 
-            ViewBag.ProjectNumber = projectService.GetById(user.ProjectId).ProjectNumber;
+            ViewBag.ProjectNumber = project.ProjectNumber + (!string.IsNullOrWhiteSpace(project.ShipToCompany) ? ": " + project.ShipToCompany : "");
             ViewBag.Priorities = priorities;
 
             return View();
@@ -74,7 +75,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
                         var user = userService.GetCurrentUser();
 
-                        string projectNumber = string.Empty;
+                        double projectNumber = 0;
                         IEnumerable<int> priorities = new List<int>();
                         if (user != null)
                         {
@@ -82,12 +83,12 @@ namespace WendtEquipmentTracking.App.Controllers
                             var priorityBOs = priorityService.GetAll(user.ProjectId);
 
                             projectNumber = projectBO.ProjectNumber;
-                            priorities = priorityBOs.Select(p => p.PriorityNumber);
+                            priorities = priorityBOs.Select(p => p.PriorityNumber).OrderBy(p => p).ToList();
                         }
 
                         equipmentImportModel.Priorities = priorities;
                         equipmentImportModel.QuantityMultiplier = 1;
-                        equipmentImportModel.WorkOrderNumber = projectNumber;
+                        equipmentImportModel.WorkOrderNumber = projectNumber == 0 ? string.Empty : projectNumber.ToString();
                         equipmentImportModel.DrawingNumber = Path.GetFileNameWithoutExtension(model.File.FileName);
                         equipmentImportModel.FilePath = filePath;
 

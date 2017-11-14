@@ -21,46 +21,46 @@ namespace WendtEquipmentTracking.BusinessLogic
             equipmentEngine = new EquipmentEngine(dbContext);
         }
 
-        public int Save(EquipmentBO equipmentBO)
-        {
-            var equipment = new Equipment
-            {
-                EquipmentId = equipmentBO.EquipmentId,
-                CustomsValue = equipmentBO.CustomsValue,
-                FullyShipped = equipmentBO.FullyShipped,
-                IsHardware = equipmentBO.IsHardware,
-                LeftToShip = equipmentBO.LeftToShip,
-                Priority = equipmentBO.Priority,
-                ProjectId = equipmentBO.ProjectId,
-                Quantity = equipmentBO.Quantity,
-                ReadyToShip = equipmentBO.ReadyToShip,
-                ReleaseDate = equipmentBO.ReleaseDate,
-                SalePrice = equipmentBO.SalePrice,
-                ShippedQuantity = equipmentBO.ShippedQuantity,
-                TotalWeight = equipmentBO.TotalWeight,
-                TotalWeightShipped = equipmentBO.TotalWeightShipped,
-                UnitWeight = equipmentBO.UnitWeight.HasValue ? equipmentBO.IsHardware ? .01 : (double?)Math.Round(equipmentBO.UnitWeight.Value, 2, MidpointRounding.AwayFromZero) : null,
-                CountryOfOrigin = (equipmentBO.CountryOfOrigin ?? string.Empty).ToUpperInvariant(),
-                Description = (equipmentBO.Description ?? string.Empty).ToUpperInvariant(),
-                DrawingNumber = (equipmentBO.DrawingNumber ?? string.Empty).ToUpperInvariant(),
-                EquipmentName = (equipmentBO.EquipmentName ?? string.Empty).ToUpperInvariant(),
-                HTSCode = (equipmentBO.HTSCode ?? string.Empty).ToUpperInvariant(),
-                Notes = (equipmentBO.Notes ?? string.Empty).ToUpperInvariant(),
-                ShippedFrom = (equipmentBO.ShippedFrom ?? string.Empty).ToUpperInvariant(),
-                ShippingTagNumber = (equipmentBO.ShippingTagNumber ?? string.Empty).ToUpperInvariant(),
-                WorkOrderNumber = (equipmentBO.WorkOrderNumber ?? string.Empty).ToUpperInvariant()
-            };
+        //public int Save(EquipmentBO equipmentBO)
+        //{
+        //    var equipment = new Equipment
+        //    {
+        //        EquipmentId = equipmentBO.EquipmentId,
+        //        CustomsValue = equipmentBO.CustomsValue,
+        //        FullyShipped = equipmentBO.FullyShipped,
+        //        IsHardware = equipmentBO.IsHardware,
+        //        LeftToShip = equipmentBO.LeftToShip,
+        //        Priority = equipmentBO.Priority,
+        //        ProjectId = equipmentBO.ProjectId,
+        //        Quantity = equipmentBO.Quantity,
+        //        ReadyToShip = equipmentBO.ReadyToShip,
+        //        ReleaseDate = equipmentBO.ReleaseDate,
+        //        SalePrice = equipmentBO.SalePrice,
+        //        ShippedQuantity = equipmentBO.ShippedQuantity,
+        //        TotalWeight = equipmentBO.TotalWeight,
+        //        TotalWeightShipped = equipmentBO.TotalWeightShipped,
+        //        UnitWeight = equipmentBO.UnitWeight.HasValue ? equipmentBO.IsHardware ? .01 : (double?)Math.Round(equipmentBO.UnitWeight.Value, 2, MidpointRounding.AwayFromZero) : null,
+        //        CountryOfOrigin = (equipmentBO.CountryOfOrigin ?? string.Empty).ToUpperInvariant(),
+        //        Description = (equipmentBO.Description ?? string.Empty).ToUpperInvariant(),
+        //        DrawingNumber = (equipmentBO.DrawingNumber ?? string.Empty).ToUpperInvariant(),
+        //        EquipmentName = (equipmentBO.EquipmentName ?? string.Empty).ToUpperInvariant(),
+        //        HTSCode = (equipmentBO.HTSCode ?? string.Empty).ToUpperInvariant(),
+        //        Notes = (equipmentBO.Notes ?? string.Empty).ToUpperInvariant(),
+        //        ShippedFrom = (equipmentBO.ShippedFrom ?? string.Empty).ToUpperInvariant(),
+        //        ShippingTagNumber = (equipmentBO.ShippingTagNumber ?? string.Empty).ToUpperInvariant(),
+        //        WorkOrderNumber = (equipmentBO.WorkOrderNumber ?? string.Empty).ToUpperInvariant()
+        //    };
 
-            equipmentEngine.AddNewEquipment(equipment);
+        //    equipmentEngine.AddNewEquipment(equipment);
 
-            dbContext.SaveChanges();
+        //    dbContext.SaveChanges();
 
-            //this will dispose and reinstantiate a new context so we get the latest updates
-            //needed for ajax call of create equipment not getting the newest data from trigger update
-            equipmentEngine.SetDBContext(new WendtEquipmentTrackingEntities());
+        //    //this will dispose and reinstantiate a new context so we get the latest updates
+        //    //needed for ajax call of create equipment not getting the newest data from trigger update
+        //    equipmentEngine.SetDBContext(new WendtEquipmentTrackingEntities());
 
-            return equipment.EquipmentId;
-        }
+        //    return equipment.EquipmentId;
+        //}
 
         public IEnumerable<int> SaveAll(IEnumerable<EquipmentBO> equipmentBOs)
         {
@@ -97,46 +97,46 @@ namespace WendtEquipmentTracking.BusinessLogic
 
             dbContext.SaveChanges();
 
-            return equipments.Select(x => x.EquipmentId);
+            return equipments.Select(x => x.EquipmentId).ToList();
         }
 
-        public void Update(EquipmentBO alteredEquipmentBO)
-        {
-            var oldEquipment = equipmentEngine.Get(EquipmentSpecs.Id(alteredEquipmentBO.EquipmentId));
+        //public void Update(EquipmentBO alteredEquipmentBO)
+        //{
+        //    var oldEquipment = equipmentEngine.Get(EquipmentSpecs.Id(alteredEquipmentBO.EquipmentId));
 
-            //oldEquipment.EquipmentId = alteredEquipmentBO.EquipmentId;
-            oldEquipment.CustomsValue = alteredEquipmentBO.CustomsValue;
-            //oldEquipment.FullyShipped = alteredEquipmentBO.FullyShipped;
-            oldEquipment.IsHardware = alteredEquipmentBO.IsHardware;
-            //oldEquipment.LeftToShip = alteredEquipmentBO.LeftToShip;
-            oldEquipment.Priority = alteredEquipmentBO.Priority;
-            //oldEquipment.ProjectId = alteredEquipmentBO.ProjectId;
-            oldEquipment.Quantity = alteredEquipmentBO.Quantity;
-            oldEquipment.ReadyToShip = alteredEquipmentBO.ReadyToShip;
-            oldEquipment.ReleaseDate = alteredEquipmentBO.ReleaseDate;
-            oldEquipment.SalePrice = alteredEquipmentBO.SalePrice;
-            //oldEquipment.ShippedQuantity = alteredEquipmentBO.ShippedQuantity;
-            //oldEquipment.TotalWeight = alteredEquipmentBO.TotalWeight;
-            //oldEquipment.TotalWeightShipped = alteredEquipmentBO.TotalWeightShipped;
-            oldEquipment.UnitWeight = alteredEquipmentBO.UnitWeight.HasValue ? alteredEquipmentBO.IsHardware ? .01 : (double?)Math.Round(alteredEquipmentBO.UnitWeight.Value, 2, MidpointRounding.AwayFromZero) : null;
-            oldEquipment.CountryOfOrigin = (alteredEquipmentBO.CountryOfOrigin ?? string.Empty).ToUpperInvariant();
-            oldEquipment.Description = (alteredEquipmentBO.Description ?? string.Empty).ToUpperInvariant();
-            oldEquipment.DrawingNumber = (alteredEquipmentBO.DrawingNumber ?? string.Empty).ToUpperInvariant();
-            oldEquipment.EquipmentName = (alteredEquipmentBO.EquipmentName ?? string.Empty).ToUpperInvariant();
-            oldEquipment.HTSCode = (alteredEquipmentBO.HTSCode ?? string.Empty).ToUpperInvariant();
-            oldEquipment.Notes = (alteredEquipmentBO.Notes ?? string.Empty).ToUpperInvariant();
-            oldEquipment.ShippedFrom = (alteredEquipmentBO.ShippedFrom ?? string.Empty).ToUpperInvariant();
-            oldEquipment.ShippingTagNumber = (alteredEquipmentBO.ShippingTagNumber ?? string.Empty).ToUpperInvariant();
-            oldEquipment.WorkOrderNumber = (alteredEquipmentBO.WorkOrderNumber ?? string.Empty).ToUpperInvariant();
+        //    //oldEquipment.EquipmentId = alteredEquipmentBO.EquipmentId;
+        //    oldEquipment.CustomsValue = alteredEquipmentBO.CustomsValue;
+        //    //oldEquipment.FullyShipped = alteredEquipmentBO.FullyShipped;
+        //    oldEquipment.IsHardware = alteredEquipmentBO.IsHardware;
+        //    //oldEquipment.LeftToShip = alteredEquipmentBO.LeftToShip;
+        //    oldEquipment.Priority = alteredEquipmentBO.Priority;
+        //    //oldEquipment.ProjectId = alteredEquipmentBO.ProjectId;
+        //    oldEquipment.Quantity = alteredEquipmentBO.Quantity;
+        //    oldEquipment.ReadyToShip = alteredEquipmentBO.ReadyToShip;
+        //    oldEquipment.ReleaseDate = alteredEquipmentBO.ReleaseDate;
+        //    oldEquipment.SalePrice = alteredEquipmentBO.SalePrice;
+        //    //oldEquipment.ShippedQuantity = alteredEquipmentBO.ShippedQuantity;
+        //    //oldEquipment.TotalWeight = alteredEquipmentBO.TotalWeight;
+        //    //oldEquipment.TotalWeightShipped = alteredEquipmentBO.TotalWeightShipped;
+        //    oldEquipment.UnitWeight = alteredEquipmentBO.UnitWeight.HasValue ? alteredEquipmentBO.IsHardware ? .01 : (double?)Math.Round(alteredEquipmentBO.UnitWeight.Value, 2, MidpointRounding.AwayFromZero) : null;
+        //    oldEquipment.CountryOfOrigin = (alteredEquipmentBO.CountryOfOrigin ?? string.Empty).ToUpperInvariant();
+        //    oldEquipment.Description = (alteredEquipmentBO.Description ?? string.Empty).ToUpperInvariant();
+        //    oldEquipment.DrawingNumber = (alteredEquipmentBO.DrawingNumber ?? string.Empty).ToUpperInvariant();
+        //    oldEquipment.EquipmentName = (alteredEquipmentBO.EquipmentName ?? string.Empty).ToUpperInvariant();
+        //    oldEquipment.HTSCode = (alteredEquipmentBO.HTSCode ?? string.Empty).ToUpperInvariant();
+        //    oldEquipment.Notes = (alteredEquipmentBO.Notes ?? string.Empty).ToUpperInvariant();
+        //    oldEquipment.ShippedFrom = (alteredEquipmentBO.ShippedFrom ?? string.Empty).ToUpperInvariant();
+        //    oldEquipment.ShippingTagNumber = (alteredEquipmentBO.ShippingTagNumber ?? string.Empty).ToUpperInvariant();
+        //    oldEquipment.WorkOrderNumber = (alteredEquipmentBO.WorkOrderNumber ?? string.Empty).ToUpperInvariant();
 
-            equipmentEngine.UpdateEquipment(oldEquipment);
+        //    equipmentEngine.UpdateEquipment(oldEquipment);
 
-            dbContext.SaveChanges();
+        //    dbContext.SaveChanges();
 
-            //this will dispose and reinstantiate a new context so we get the latest updates
-            //needed for ajax call of edit equipment not getting the newest data from trigger update
-            equipmentEngine.SetDBContext(new WendtEquipmentTrackingEntities());
-        }
+        //    //this will dispose and reinstantiate a new context so we get the latest updates
+        //    //needed for ajax call of edit equipment not getting the newest data from trigger update
+        //    equipmentEngine.SetDBContext(new WendtEquipmentTrackingEntities());
+        //}
 
         public void UpdateAll(IEnumerable<EquipmentBO> equipmentBOs)
         {
@@ -149,6 +149,8 @@ namespace WendtEquipmentTracking.BusinessLogic
 
                 if (equipmentBO != null)
                 {
+                    //NOTE: we don't update the quantity or equipment name of a hardware kit record so we have code to check for that
+
                     //oldEquipment.EquipmentId = equipmentBO.EquipmentId;
                     oldEquipment.CustomsValue = equipmentBO.CustomsValue;
                     //oldEquipment.FullyShipped = equipmentBO.FullyShipped;
@@ -156,7 +158,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                     //oldEquipment.LeftToShip = equipmentBO.LeftToShip;
                     oldEquipment.Priority = equipmentBO.Priority;
                     //oldEquipment.ProjectId = equipmentBO.ProjectId;
-                    oldEquipment.Quantity = equipmentBO.Quantity;
+                    oldEquipment.Quantity = equipmentBO.IsHardwareKit ? oldEquipment.Quantity : equipmentBO.Quantity;
                     oldEquipment.ReadyToShip = equipmentBO.ReadyToShip;
                     oldEquipment.ReleaseDate = equipmentBO.ReleaseDate;
                     oldEquipment.SalePrice = equipmentBO.SalePrice;
@@ -167,7 +169,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                     oldEquipment.CountryOfOrigin = (equipmentBO.CountryOfOrigin ?? string.Empty).ToUpperInvariant();
                     oldEquipment.Description = (equipmentBO.Description ?? string.Empty).ToUpperInvariant();
                     oldEquipment.DrawingNumber = (equipmentBO.DrawingNumber ?? string.Empty).ToUpperInvariant();
-                    oldEquipment.EquipmentName = (equipmentBO.EquipmentName ?? string.Empty).ToUpperInvariant();
+                    oldEquipment.EquipmentName = equipmentBO.IsHardwareKit ? oldEquipment.EquipmentName : (equipmentBO.EquipmentName ?? string.Empty).ToUpperInvariant();
                     oldEquipment.HTSCode = (equipmentBO.HTSCode ?? string.Empty).ToUpperInvariant();
                     oldEquipment.Notes = (equipmentBO.Notes ?? string.Empty).ToUpperInvariant();
                     oldEquipment.ShippedFrom = (equipmentBO.ShippedFrom ?? string.Empty).ToUpperInvariant();

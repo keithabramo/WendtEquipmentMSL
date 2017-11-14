@@ -23,18 +23,18 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         public IQueryable<Project> ListAll()
         {
-            return this.repository.Find(!ProjectSpecs.IsDeleted());
+            return this.repository.Find(!ProjectSpecs.IsDeleted() && !ProjectSpecs.IsCompleted());
         }
 
 
         public Project Get(Specification<Project> specification)
         {
-            return this.repository.Single(!ProjectSpecs.IsDeleted() && specification);
+            return this.repository.Single(!ProjectSpecs.IsDeleted() && !ProjectSpecs.IsCompleted() && specification);
         }
 
         public IQueryable<Project> List(Specification<Project> specification)
         {
-            return this.repository.Find(!ProjectSpecs.IsDeleted() && specification);
+            return this.repository.Find(!ProjectSpecs.IsDeleted() && !ProjectSpecs.IsCompleted() && specification);
         }
 
         public void AddNewProject(Project project)

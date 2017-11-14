@@ -85,9 +85,7 @@ namespace WendtEquipmentTracking.App.Controllers
                 {
                     DrawingNumber = x.DrawingNumber != null ? x.DrawingNumber.ToUpperInvariant() : string.Empty,
                     WorkOrderNumber = x.WorkOrderNumber != null ? x.WorkOrderNumber.ToUpperInvariant() : string.Empty,
-                    Quantity = x.Quantity,
                     ShippingTagNumber = x.ShippingTagNumber != null ? x.ShippingTagNumber.ToUpperInvariant() : string.Empty,
-                    Description = x.Description != null ? x.Description.ToUpperInvariant() : string.Empty
                 })
                 .Where(g => g.Count() > 1)
                 .SelectMany(y => y)
@@ -157,7 +155,7 @@ namespace WendtEquipmentTracking.App.Controllers
                 if (action.Equals(EditorActions.edit.ToString()))
                 {
                     //only update updatable rows
-                    equipmentService.UpdateAll(equipments.Where(x => !x.IsAssociatedToHardwareKit && !x.IsHardwareKit).ToList());
+                    equipmentService.UpdateAll(equipments.Where(x => !x.IsAssociatedToHardwareKit && !x.FullyShipped).ToList());
                     //return all rows so editor does not remove any from the ui
                     equipmentIds = equipments.Select(x => x.EquipmentId);
                 }
@@ -210,9 +208,7 @@ namespace WendtEquipmentTracking.App.Controllers
                        e.EquipmentId != x.EquipmentId &&
                        (e.DrawingNumber ?? string.Empty).Equals((x.DrawingNumber ?? string.Empty), StringComparison.InvariantCultureIgnoreCase) &&
                        (e.WorkOrderNumber ?? string.Empty).Equals((x.WorkOrderNumber ?? string.Empty), StringComparison.InvariantCultureIgnoreCase) &&
-                       e.Quantity == x.Quantity &&
-                       (e.ShippingTagNumber ?? string.Empty).Equals((x.ShippingTagNumber ?? string.Empty), StringComparison.InvariantCultureIgnoreCase) &&
-                       (e.Description ?? string.Empty).Equals((x.Description ?? string.Empty), StringComparison.InvariantCultureIgnoreCase))
+                       (e.ShippingTagNumber ?? string.Empty).Equals((x.ShippingTagNumber ?? string.Empty), StringComparison.InvariantCultureIgnoreCase))
 
                 }).ToList();
 

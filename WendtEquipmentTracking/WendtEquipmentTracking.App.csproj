@@ -219,8 +219,7 @@
     <Content Include="Content\DataTables-1.10.16\images\sort_both.png" />
     <Content Include="Content\DataTables-1.10.16\images\sort_desc.png" />
     <Content Include="Content\DataTables-1.10.16\images\sort_desc_disabled.png" />
-    <Content Include="Content\datatablesAndEditor.min.css" />
-    <Content Include="Content\SiteOld.css" />
+    <Content Include="Content\datatablesAndEditor.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -279,7 +278,6 @@
     <None Include="Properties\PublishProfiles\ReleaseProfile.pubxml" />
     <None Include="Properties\PublishProfiles\StagingProfile.pubxml" />
     <Content Include="Images\logo.jpg" />
-    <Content Include="Scripts\editor\datatablesAndEditor.min.js" />
     <Content Include="Scripts\dropzone\basic.css" />
     <Content Include="Scripts\dropzone\basic.min.css" />
     <Content Include="Scripts\dropzone\dropzone-amd-module.js" />
@@ -289,6 +287,7 @@
     <Content Include="Scripts\dropzone\dropzone.min.css" />
     <Content Include="Scripts\dropzone\dropzone.min.js" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
+    <Content Include="Scripts\editor\datatablesAndEditor.js" />
     <Content Include="Scripts\editor\editorHardwareKitCreate.js" />
     <Content Include="Scripts\editor\editorHardwareKitEdit.js" />
     <Content Include="Scripts\editor\editorBOLEdit.js" />

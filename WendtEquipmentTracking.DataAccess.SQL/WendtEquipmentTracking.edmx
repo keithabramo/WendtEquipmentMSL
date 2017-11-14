@@ -85,14 +85,6 @@
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'WendtEquipmentTracking.dbo.HardwareCommercialCode2' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="HardwareCommercialCode2">
-          <Property Name="Part #" Type="nvarchar" MaxLength="255" />
-          <Property Name="Description" Type="nvarchar" MaxLength="255" />
-          <Property Name="Commodity Code" Type="nvarchar" MaxLength="255" />
-          <Property Name="Verify if ok to use or not" Type="nvarchar" MaxLength="255" />
-        </EntityType>-->
         <EntityType Name="HardwareKit">
           <Key>
             <PropertyRef Name="HardwareKitId" />
@@ -139,7 +131,7 @@ warning 6013: The table/view 'WendtEquipmentTracking.dbo.HardwareCommercialCode2
             <PropertyRef Name="ProjectId" />
           </Key>
           <Property Name="ProjectId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ProjectNumber" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="ProjectNumber" Type="float" Nullable="false" />
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="ModifiedBy" Type="nvarchar" MaxLength="255" />
@@ -159,6 +151,7 @@ warning 6013: The table/view 'WendtEquipmentTracking.dbo.HardwareCommercialCode2
           <Property Name="ShipToBrokerEmail" Type="nvarchar" MaxLength="255" />
           <Property Name="IsCustomsProject" Type="bit" Nullable="false" />
           <Property Name="IncludeSoftCosts" Type="bit" Nullable="false" />
+          <Property Name="IsCompleted" Type="bit" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
@@ -561,7 +554,7 @@ warning 6013: The table/view 'WendtEquipmentTracking.dbo.HardwareCommercialCode2
             <PropertyRef Name="ProjectId" />
           </Key>
           <Property Name="ProjectId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProjectNumber" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectNumber" Type="Double" Nullable="false" />
           <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
@@ -581,6 +574,7 @@ warning 6013: The table/view 'WendtEquipmentTracking.dbo.HardwareCommercialCode2
           <Property Name="ShipToBrokerEmail" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="IsCustomsProject" Type="Boolean" Nullable="false" />
           <Property Name="IncludeSoftCosts" Type="Boolean" Nullable="false" />
+          <Property Name="IsCompleted" Type="Boolean" Nullable="false" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="BillOfLadings" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_BillOfLanding_Project" FromRole="Project" ToRole="BillOfLading" />
           <NavigationProperty Name="Equipments" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_Equipment_Project" FromRole="Project" ToRole="Equipment" />
@@ -874,6 +868,7 @@ warning 6013: The table/view 'WendtEquipmentTracking.dbo.HardwareCommercialCode2
             <EntityTypeMapping TypeName="WendtEquipmentTracking.DataAccess.SQL.Model.Project">
               <MappingFragment StoreEntitySet="Project">
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
                 <ScalarProperty Name="IncludeSoftCosts" ColumnName="IncludeSoftCosts" />
                 <ScalarProperty Name="IsCustomsProject" ColumnName="IsCustomsProject" />
                 <ScalarProperty Name="ShipToBrokerEmail" ColumnName="ShipToBrokerEmail" />

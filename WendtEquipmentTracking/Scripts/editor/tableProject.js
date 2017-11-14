@@ -38,22 +38,22 @@
                     { data: "FreightTerms", targets: 1 },
                     { data: "ShipToCompany", targets: 2,
                         render: function (data, type, row, meta) {
-                            return row.ShipToCompany ? row.ShipToCompany + "<br/>" + row.ShipToAddress + "<br/>" + row.ShipToCSZ : '';
+                            return row.ShipToCompany ? row.ShipToCompany + "<br/>" + (row.ShipToAddress || '') + "<br/>" + (row.ShipToCSZ || '') : '';
                         } 
                     },
                     { data: "ShipToContact1", targets: 3,
                         render: function (data, type, row, meta) {
-                            return row.ShipToContact1 ? row.ShipToContact1 + "<br/>" + row.ShipToContact1PhoneFax + "<br/>" + row.ShipToContact1Email : '';
+                            return row.ShipToContact1 ? row.ShipToContact1 + "<br/>" + (row.ShipToContact1PhoneFax || '') + "<br/>" + (row.ShipToContact1Email || '') : '';
                         } 
                     },
                     { data: "ShipToContact2", targets: 3,
                         render: function (data, type, row, meta) {
-                            return row.ShipToContact2 ? row.ShipToContact2 + "<br/>" + row.ShipToContact2PhoneFax + "<br/>" + row.ShipToContact2Email : '';
+                            return row.ShipToContact2 ? row.ShipToContact2 + "<br/>" + (row.ShipToContact2PhoneFax || '') + "<br/>" + (row.ShipToContact2Email || '') : '';
                         } 
                     },
                     { data: "ShipToBroker", targets: 4,
                         render: function (data, type, row, meta) {
-                            return row.ShipToBroker ? row.ShipToBroker + "<br/>" + row.ShipToBrokerPhoneFax + "<br/>" + row.ShipToBrokerEmail : '';
+                            return row.ShipToBroker ? row.ShipToBroker + "<br/>" + (row.ShipToBrokerPhoneFax || '') + "<br/>" + (row.ShipToBrokerEmail || '') : '';
                         } 
                     },
                     { data: "ShipToBrokerEmail", targets: 5 },
@@ -68,7 +68,13 @@
                         } 
                     },
                     {
-                        "targets": 8,
+                        data: "IsCompleted", targets: 8,
+                        render: function (data, type, row, meta) {
+                            return row.IsCompleted ? "Yes" : "No";
+                        }
+                    },
+                    {
+                        "targets": 9,
                         searchable: false,
                         sortable: false,
                         render: function (data, type, row, meta) {

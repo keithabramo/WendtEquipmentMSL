@@ -216,6 +216,10 @@ div.dataTables_wrapper .bottom-section {
     padding: 15px 0;
 }
 
+.checkbox-inline + .checkbox-inline + .checkbox-inline {
+    margin-left: 0; 
+}
+
 
 
 
@@ -458,7 +462,7 @@ table.dataTable tr.selected th.select-checkbox:after {
     text-transform: uppercase;
 } 
 
-.table.masterShipList .form-control {
+.table.masterShipList input, .table.masterShipList textarea, .table.masterShipList select {
     text-transform: uppercase;
 } 
 

@@ -127,6 +127,7 @@
     <Compile Include="Specifications\Equipments\IdsSpecification.cs" />
     <Compile Include="Specifications\HardwareKits\IsDeleted.cs" />
     <Compile Include="Specifications\Priorities\ProjectIdSpecification.cs" />
+    <Compile Include="Specifications\Projects\IsCompleted.cs" />
     <Compile Include="Specifications\Projects\IsDeleted.cs" />
     <Compile Include="Specifications\Users\UsernameSpecification.cs" />
     <Compile Include="Specifications\UserSpecs.cs" />
