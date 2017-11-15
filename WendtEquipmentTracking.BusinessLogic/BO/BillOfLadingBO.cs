@@ -15,6 +15,7 @@ namespace WendtEquipmentTracking.BusinessLogic.BO
         public string Carrier { get; set; }
         public string TrailerNumber { get; set; }
         public bool ToStorage { get; set; }
+        public bool IsLocked { get; set; }
 
         public IEnumerable<BillOfLadingEquipmentBO> BillOfLadingEquipments { get; set; }
     }

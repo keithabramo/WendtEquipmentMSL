@@ -100,6 +100,14 @@ namespace WendtEquipmentTracking.App.Controllers
             {
                 return HttpNotFound();
             }
+            if (billOfLading.IsLocked)
+            {
+                InformationMessage("The Bill of Lading you are trying to edit is currently locked.");
+                return RedirectToAction("Index");
+
+
+            }
+
 
             var model = new BillOfLadingModel
             {

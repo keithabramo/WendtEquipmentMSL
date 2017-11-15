@@ -23,6 +23,7 @@
           <Property Name="TrailerNumber" Type="nvarchar" MaxLength="255" />
           <Property Name="Carrier" Type="nvarchar" MaxLength="255" />
           <Property Name="FreightTerms" Type="nvarchar" MaxLength="1000" />
+          <Property Name="IsLocked" Type="bit" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="BillOfLadingEquipment">
@@ -85,6 +86,14 @@
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'WendtEquipmentTracking.dbo.HardwareCommercialCode2' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="HardwareCommercialCode2">
+          <Property Name="Part #" Type="nvarchar" MaxLength="255" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
+          <Property Name="Commodity Code" Type="nvarchar" MaxLength="255" />
+          <Property Name="Verify if ok to use or not" Type="nvarchar" MaxLength="255" />
+        </EntityType>-->
         <EntityType Name="HardwareKit">
           <Key>
             <PropertyRef Name="HardwareKitId" />
@@ -432,6 +441,7 @@
           <Property Name="TrailerNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Carrier" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="FreightTerms" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="IsLocked" Type="Boolean" Nullable="false" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="BillOfLadingEquipments" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_BillOfLadingEquipment_BillOfLading" FromRole="BillOfLading" ToRole="BillOfLadingEquipment" />
           <NavigationProperty Name="Project" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_BillOfLanding_Project" FromRole="BillOfLading" ToRole="Project" />
@@ -740,6 +750,7 @@
             <EntityTypeMapping TypeName="WendtEquipmentTracking.DataAccess.SQL.Model.BillOfLading">
               <MappingFragment StoreEntitySet="BillOfLading">
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsLocked" ColumnName="IsLocked" />
                 <ScalarProperty Name="FreightTerms" ColumnName="FreightTerms" />
                 <ScalarProperty Name="Carrier" ColumnName="Carrier" />
                 <ScalarProperty Name="TrailerNumber" ColumnName="TrailerNumber" />

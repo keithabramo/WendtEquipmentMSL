@@ -292,6 +292,7 @@
     <Content Include="Scripts\editor\editorHardwareKitEdit.js" />
     <Content Include="Scripts\editor\editorBOLEdit.js" />
     <Content Include="Scripts\editor\editorBOLCreate.js" />
+    <Content Include="Scripts\editor\timer.js" />
     <Content Include="Scripts\editor\tableHardwareKitDetails.js" />
     <Content Include="Scripts\editor\tableHardwareKit.js" />
     <Content Include="Scripts\main.js" />

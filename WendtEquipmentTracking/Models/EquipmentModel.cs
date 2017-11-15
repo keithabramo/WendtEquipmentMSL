@@ -220,7 +220,7 @@ namespace WendtEquipmentTracking.App.Models
             }
 
             //ready to ship does not have a clean way to check for red
-            if (ReadyToShip.HasValue)
+            if (ReadyToShip.HasValue && ReadyToShip.Value != 0 && !FullyShipped)
             {
                 if (HasBillOfLadingInStorage)
                 {

@@ -18,5 +18,9 @@ namespace WendtEquipmentTracking.BusinessLogic.Api
         IEnumerable<BillOfLadingBO> GetByBillOfLadingNumber(int projectId, string billOfLadingNumber);
         IEnumerable<BillOfLadingBO> GetCurrentByProject(int projectId);
 
+        void Lock(int billOfLading);
+
+        void Unlock(int billOfLading);
+
     }
 }

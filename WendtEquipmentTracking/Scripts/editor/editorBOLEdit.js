@@ -8,15 +8,22 @@
         this.initStyles = function () {
             var $this = this;
 
+            
             $.validator.unobtrusive.parse('#BOLForm');
 
+            this.lock();
 
             this.initEditor();
             this.initDatatable();
+            
         }
 
         this.initEvents = function () {
             var $this = this;
+
+            window.addEventListener("beforeunload", function (event) {
+                $this.unlock();
+            });
 
             editorMain.editor.on('preSubmit', function (e, data, action) {
                 if (action !== 'remove') {
@@ -312,6 +319,14 @@
                     columns: [1, 17, 20, 21]
                 }
             });
+        }
+
+        this.lock = function () {
+            $.get(ROOT_URL + "Api/BillOfLadingApi/Lock", { id: $("#BillOfLadingId").val() });
+        }
+
+        this.unlock = function () {
+            $.get(ROOT_URL + "Api/BillOfLadingApi/Unlock", { id: $("#BillOfLadingId").val() });
         }
 
         this.initStyles();

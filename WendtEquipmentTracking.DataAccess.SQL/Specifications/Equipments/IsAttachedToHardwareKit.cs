@@ -10,7 +10,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Specifications.Equipments
 
         public override Expression<Func<Equipment, bool>> IsSatisfiedBy()
         {
-            return e => e.HardwareKitEquipments.Any(hke => hke.HardwareKit.IsCurrentRevision);
+            return e => e.HardwareKitEquipments.Any(hke => !hke.HardwareKit.IsDeleted && hke.HardwareKit.IsCurrentRevision);
         }
     }
 }

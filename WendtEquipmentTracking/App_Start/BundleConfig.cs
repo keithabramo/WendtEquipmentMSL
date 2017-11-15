@@ -46,6 +46,7 @@ namespace WendtEquipmentTracking.App
 
 
             bundles.Add(new ScriptBundle("~/bundles/masterShipList").Include(
+                        "~/Scripts/editor/timer.js",
                         "~/Scripts/editor/editorMSL.js"
             ));
             bundles.Add(new ScriptBundle("~/bundles/billOfLadingCreate").Include(

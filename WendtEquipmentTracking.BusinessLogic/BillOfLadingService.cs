@@ -188,6 +188,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                 Revision = billOfLading.Revision,
                 ToStorage = billOfLading.ToStorage,
                 TrailerNumber = billOfLading.TrailerNumber,
+                IsLocked = billOfLading.IsLocked,
                 BillOfLadingEquipments = billOfLading.BillOfLadingEquipments.Where(e => !e.Equipment.IsDeleted).Select(e => new BillOfLadingEquipmentBO
                 {
                     BillOfLadingEquipmentId = e.BillOfLadingEquipmentId,
@@ -290,6 +291,26 @@ namespace WendtEquipmentTracking.BusinessLogic
             });
 
             return billOfLadingBOs.ToList();
+        }
+
+        public void Lock(int id)
+        {
+            var oldBillOfLading = billOfLadingEngine.Get(BillOfLadingSpecs.Id(id));
+            oldBillOfLading.IsLocked = true;
+
+            billOfLadingEngine.UpdateBillOfLading(oldBillOfLading);
+
+            dbContext.SaveChanges();
+        }
+
+        public void Unlock(int id)
+        {
+            var oldBillOfLading = billOfLadingEngine.Get(BillOfLadingSpecs.Id(id));
+            oldBillOfLading.IsLocked = false;
+
+            billOfLadingEngine.UpdateBillOfLading(oldBillOfLading);
+
+            dbContext.SaveChanges();
         }
 
     }

@@ -13,11 +13,13 @@ namespace WendtEquipmentTracking.BusinessLogic
     {
         private WendtEquipmentTrackingEntities dbContext;
         private IPriorityEngine priorityEngine;
+        private IEquipmentEngine equipmentEngine;
 
         public PriorityService()
         {
             dbContext = new WendtEquipmentTrackingEntities();
             priorityEngine = new PriorityEngine(dbContext);
+            equipmentEngine = new EquipmentEngine(dbContext);
         }
 
         public void Save(PriorityBO priorityBO)
@@ -86,11 +88,22 @@ namespace WendtEquipmentTracking.BusinessLogic
         public void Update(PriorityBO priorityBO)
         {
             var oldPriority = priorityEngine.Get(PrioritySpecs.Id(priorityBO.PriorityId));
+            var oldPriorityNumber = oldPriority.PriorityNumber;
+
             oldPriority.DueDate = priorityBO.DueDate;
             oldPriority.EquipmentName = priorityBO.EquipmentName;
             oldPriority.PriorityNumber = priorityBO.PriorityNumber;
 
             priorityEngine.UpdatePriority(oldPriority);
+
+
+            var equipments = equipmentEngine.List(EquipmentSpecs.ProjectId(priorityBO.ProjectId) && EquipmentSpecs.Priority(oldPriorityNumber)).ToList();
+            foreach (var equipment in equipments)
+            {
+                equipment.Priority = priorityBO.PriorityNumber;
+                equipmentEngine.UpdateEquipment(equipment);
+            }
+
 
             dbContext.SaveChanges();
         }

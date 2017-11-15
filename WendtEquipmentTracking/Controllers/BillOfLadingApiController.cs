@@ -310,14 +310,25 @@ namespace WendtEquipmentTracking.App.Controllers
             return billOfLadingEquipmentModels;
         }
 
+        [HttpGet]
+        public void Lock(int id)
+        {
+            billOfLadingService.Lock(id);
+        }
 
+        [HttpGet]
+        public void Unlock(int id)
+        {
+            billOfLadingService.Unlock(id);
+        }
 
+        [HttpGet]
+        public bool IsLocked(int id)
+        {
+            var billOfLading = billOfLadingService.GetById(id);
 
-
-
-
-
-
+            return billOfLading.IsLocked;
+        }
 
         //
         // GET: api/EquipmentApi/Editor
