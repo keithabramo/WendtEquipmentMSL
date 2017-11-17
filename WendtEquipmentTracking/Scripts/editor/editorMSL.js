@@ -2,7 +2,7 @@
 
     var EditorMSL = function () {
 
-        this.editableColumns = [0, 1, 2, 3, 4, 5, 6, 7, 8, 11, 15, 18, 19, 20];
+        this.editableColumns = [1, 2, 3, 4,5, 6, 7, 8, 9, 12, 16, 19, 20, 21];
 
 
         this.initStyles = function () {
@@ -90,7 +90,7 @@
 
                 var form = editorMain.editor.create(false);
                 form.set('EquipmentName', $row.find("input[name='EquipmentName']").val());
-                form.set('Priority', $row.find("select[name='Priority']").val());
+                form.set('PriorityNumber', $row.find("select[name='PriorityNumber']").val());
                 form.set('ReleaseDate', $row.find("input[name='ReleaseDate']").val());
                 form.set('DrawingNumber', $row.find("textarea[name='DrawingNumber']").val());
                 form.set('WorkOrderNumber', $row.find("input[name='WorkOrderNumber']").val());
@@ -137,6 +137,30 @@
                 } else {
                     $icon.removeClass("glyphicon-minus").addClass("glyphicon-plus");
                 }
+            });
+
+            $('.table.my-datatable').on('click', ".copy", function () {
+
+                var $row = $(this).closest('tr');
+                var $createRow = $(".table.my-datatable tfoot tr");
+                var rowData = editorMain.datatable.row($row).data();
+
+                $createRow.find("input[name='EquipmentName']").val(rowData.EquipmentName);
+                $createRow.find("select[name='PriorityNumber']").val(rowData.PriorityNumber);
+                $createRow.find("input[name='ReleaseDate']").val(rowData.ReleaseDate);
+                $createRow.find("textarea[name='DrawingNumber']").val(rowData.DrawingNumber);
+                $createRow.find("input[name='WorkOrderNumber']").val(rowData.WorkOrderNumber);
+                $createRow.find("input[name='Quantity']").val(rowData.Quantity);
+                $createRow.find("textarea[name='ShippingTagNumber']").val(rowData.ShippingTagNumber);
+                $createRow.find("textarea[name='Description']").val(rowData.Description);
+                $createRow.find("input[name='UnitWeight']").val(rowData.UnitWeightText);
+                $createRow.find("input[name='ReadyToShip']").val(rowData.ReadyToShipText);
+                $createRow.find("input[name='ShippedFrom']").val(rowData.ShippedFrom);
+                $createRow.find("input[name='HTSCode']").val(rowData.HTSCode);
+                $createRow.find("input[name='CountryOfOrigin']").val(rowData.CountryOfOrigin);
+                $createRow.find("textarea[name='Notes']").val(rowData.Notes);
+
+                window.scrollTo(0, document.body.scrollHeight);
             });
 
 
@@ -377,7 +401,7 @@
                 fields: [
                     { name: "EquipmentName" },
                     {
-                        name: "Priority",
+                        name: "PriorityNumber",
                         type: "select",
                         options: priorities
                     },
@@ -439,10 +463,18 @@
                         $(editorMain.datatable.cell(index, 5).node()).addClass("active");
                     }
                 },
-                order: [[2, 'desc']],
+                order: [[3, 'desc']],
                 columnDefs: [
                     {
-                        data: "EquipmentName", "targets": 0,
+                        "targets": 0,
+                        searchable: false,
+                        sortable: false,
+                        render: function (datadata, type, row, meta) {
+                            return '<span class="copy glyphicon glyphicon-duplicate text-primary"></span>';
+                        }
+                    },
+                    {
+                        data: "EquipmentName", "targets": 1,
                         createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                             var $cell = $(cell);
 
@@ -455,103 +487,103 @@
                         className: "equipmentNameWidth"
                     },
                     {
-                        data: "Priority", "targets": 1,
+                        data: "PriorityNumber", "targets": 2,
                         className: "priorityWidth"
                     },
                     {
-                        data: "ReleaseDate", "targets": 2,
+                        data: "ReleaseDate", "targets": 3,
                         className: "releaseDateWidth"
                     },
                     {
-                        data: "DrawingNumber", "targets": 3,
+                        data: "DrawingNumber", "targets": 4,
                         className: "drawingNumberWidth"
                     },
                     {
-                        data: "WorkOrderNumber", "targets": 4,
+                        data: "WorkOrderNumber", "targets": 5,
                         createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                             $(cell).addClass(rowData.Indicators.WorkOrderNumberColor);
                         },
                         className: "workOrderNumberWidth"
                     },
                     {
-                        data: "Quantity", "targets": 5, className: "text-right quantityWidth"
+                        data: "Quantity", "targets": 6, className: "text-right quantityWidth"
                     },
                     {
-                        data: "ShippingTagNumber", "targets": 6,
+                        data: "ShippingTagNumber", "targets": 7,
                         className: "shippingTagNumberWidth"
                     },
                     {
-                        data: "Description", "targets": 7,
+                        data: "Description", "targets": 8,
                         className: "descriptionWidth"
                     },
                     {
-                        data: "UnitWeightText", "targets": 8, className: "text-right unitWeightWidth",
+                        data: "UnitWeightText", "targets": 9, className: "text-right unitWeightWidth",
                         createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                             $(cell).addClass(rowData.Indicators.UnitWeightColor);
                         }
                     },
                     {
-                        data: "TotalWeight", "targets": 9, className: "active text-right totalWeightWidth"
+                        data: "TotalWeight", "targets": 10, className: "active text-right totalWeightWidth"
                     },
                     {
-                        data: "TotalWeightShipped", "targets": 10, className: "active text-right totalWeightShippedWidth"
+                        data: "TotalWeightShipped", "targets": 11, className: "active text-right totalWeightShippedWidth"
                     },
                     {
-                        data: "ReadyToShipText", "targets": 11, className: "text-right readyToShipWidth",
+                        data: "ReadyToShipText", "targets": 12, className: "text-right readyToShipWidth",
                         createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                             $(cell).addClass(rowData.Indicators.ReadyToShipColor);
                         }
                     },
                     {
-                        data: "ShippedQuantity", "targets": 12, className: "active text-right shippedQuantityWidth",
+                        data: "ShippedQuantity", "targets": 13, className: "active text-right shippedQuantityWidth",
                         createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                             $(cell).addClass(rowData.Indicators.ShippedQtyColor);
                         }
                     },
                     {
-                        data: "LeftToShip", "targets": 13, className: "active text-right leftToShipWidth",
+                        data: "LeftToShip", "targets": 14, className: "active text-right leftToShipWidth",
                         createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                             $(cell).addClass(rowData.Indicators.LeftToShipColor);
                         }
                     },
                     {
-                        data: "FullyShippedText", "targets": 14, className: "active fullyShippedWidth",
+                        data: "FullyShippedText", "targets": 15, className: "active fullyShippedWidth",
                         createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                             $(cell).addClass(rowData.Indicators.FullyShippedColor);
                         }
                     },
                     {
-                        data: "ShippedFrom", "targets": 15,
+                        data: "ShippedFrom", "targets": 16,
                         className: "shippedFromWidth"
                     },
                     {
-                        data: "CustomsValueText", "targets": 16, className: "active text-right customsValueWidth",
+                        data: "CustomsValueText", "targets": 17, className: "active text-right customsValueWidth",
                         createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                             $(cell).addClass(rowData.Indicators.CustomsValueColor);
                         },
                         render: $.fn.dataTable.render.number(',', '.', 2, '$')
                     },
                     {
-                        data: "SalePriceText", "targets": 17, className: "active text-right salePriceWidth",
+                        data: "SalePriceText", "targets": 18, className: "active text-right salePriceWidth",
                         createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                             $(cell).addClass(rowData.Indicators.SalePriceColor);
                         },
                         render: $.fn.dataTable.render.number(',', '.', 2, '$')
                     },
                     {
-                        data: "HTSCode", "targets": 18,
+                        data: "HTSCode", "targets": 19,
                         className: "htsCodeWidth"
                     },
                     {
-                        data: "CountryOfOrigin", "targets": 19,
+                        data: "CountryOfOrigin", "targets": 20,
                         className: "countryOfOriginWidth"
                     },
                     {
-                        data: "Notes", "targets": 20,
+                        data: "Notes", "targets": 21,
                         className: "notesWidth"
                     },
                     {
-                        "targets": 21,
+                        "targets": 22,
                         searchable: false,
                         sortable: false,
                         render: function (data, type, row, meta) {
@@ -559,7 +591,7 @@
                         }
                     },
                     {
-                        "targets": 22,
+                        "targets": 23,
                         searchable: false,
                         sortable: false,
                         render: function (datadata, type, row, meta) {
@@ -568,7 +600,9 @@
                     },
                     {
                         data: "HasErrorsText",
-                        "targets": 23,
+                        "targets": 24,
+                        searchable: false,
+                        sortable: false,
                         visible: false
                     }
                 ]

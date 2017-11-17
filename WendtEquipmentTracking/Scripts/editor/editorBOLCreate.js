@@ -127,7 +127,7 @@
                     { name: "BillOfLadingEquipmentId" },
                     { name: "Quantity" },
                     { name: "Equipment.EquipmentName" },
-                    { name: "Equipment.Priority" },
+                    { name: "Equipment.PriorityNumber" },
                     { name: "Equipment.ReleaseDate" },
                     { name: "Equipment.DrawingNumber" },
                     { name: "Equipment.WorkOrderNumber" },
@@ -191,7 +191,7 @@
                         className: "equipmentNameWidth active"
                     },
                     {
-                        data: "Equipment.Priority", "targets": 3,
+                        data: "Equipment.PriorityNumber", "targets": 3,
                         className: "priorityWidth active"
                     },
                     {

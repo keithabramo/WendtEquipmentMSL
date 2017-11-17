@@ -60,7 +60,7 @@ namespace WendtEquipmentTracking.BusinessLogic
             equipment.EquipmentName = "Hardware Kit " + hardwareKitBO.HardwareKitNumber;
             equipment.Description = "Misc";
             equipment.WorkOrderNumber = project.ProjectNumber.ToString();
-            equipment.Priority = priority.PriorityNumber;
+            equipment.PriorityId = priority.PriorityId;
             equipment.ShippingTagNumber = hardwareKitBO.HardwareKitNumber;
             equipment.DrawingNumber = hardwareKitBO.HardwareKitNumber;
             equipment.UnitWeight = 1;

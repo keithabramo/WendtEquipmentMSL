@@ -15,12 +15,14 @@ namespace WendtEquipmentTracking.App.Controllers
         private IEquipmentService equipmentService;
         private IProjectService projectService;
         private IUserService userService;
+        private IPriorityService priorityService;
 
         public EquipmentApiController()
         {
             equipmentService = new EquipmentService();
             projectService = new ProjectService();
             userService = new UserService();
+            priorityService = new PriorityService();
         }
 
         //
@@ -48,7 +50,7 @@ namespace WendtEquipmentTracking.App.Controllers
                 CustomsValue = x.CustomsValue,
                 FullyShipped = x.FullyShipped,
                 LeftToShip = x.LeftToShip.ToString(),
-                Priority = x.Priority,
+                PriorityNumber = x.Priority != null ? (int?)x.Priority.PriorityNumber : null,
                 ProjectId = x.ProjectId,
                 Quantity = x.Quantity.HasValue ? x.Quantity.Value : 0,
                 ReadyToShip = x.ReadyToShip,
@@ -108,6 +110,7 @@ namespace WendtEquipmentTracking.App.Controllers
             if (user != null)
             {
                 var project = projectService.GetById(user.ProjectId);
+                var priorities = priorityService.GetAll(user.ProjectId);
 
                 var httpData = DatatableHelpers.HttpData();
                 Dictionary<string, object> data = httpData["data"] as Dictionary<string, object>;
@@ -125,7 +128,6 @@ namespace WendtEquipmentTracking.App.Controllers
                     equipment.CustomsValue = equipmentProperties["CustomsValueText"].ToString().ToNullable<double>();
                     equipment.FullyShipped = equipmentProperties["FullyShippedText"].ToString() == "YES" ? true : false;
                     equipment.LeftToShip = equipmentProperties["LeftToShip"].ToString().ToNullable<double>();
-                    equipment.Priority = Convert.ToInt32(equipmentProperties["Priority"]);
                     equipment.ProjectId = user.ProjectId;
                     equipment.Quantity = equipmentProperties["Quantity"].ToString().ToNullable<int>();
                     equipment.ReadyToShip = equipmentProperties["ReadyToShipText"].ToString().ToNullable<int>();
@@ -147,6 +149,13 @@ namespace WendtEquipmentTracking.App.Controllers
                     equipment.IsHardware = equipment.EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase);
                     equipment.IsHardwareKit = equipmentProperties["IsHardwareKitText"].ToString() == "True" ? true : false;
                     equipment.IsAssociatedToHardwareKit = equipmentProperties["IsAssociatedToHardwareKitText"].ToString() == "True" ? true : false;
+
+                    var priorityNumber = equipment.PriorityId = Convert.ToInt32(equipmentProperties["PriorityNumber"]);
+                    var priority = priorities.FirstOrDefault(x => x.PriorityNumber == priorityNumber);
+                    if (priority != null)
+                    {
+                        equipment.PriorityId = priority.PriorityId;
+                    }
 
                     equipments.Add(equipment);
                 }
@@ -179,7 +188,6 @@ namespace WendtEquipmentTracking.App.Controllers
                     CustomsValue = x.CustomsValue,
                     FullyShipped = x.FullyShipped,
                     LeftToShip = x.LeftToShip.ToString(),
-                    Priority = x.Priority,
                     ProjectId = x.ProjectId,
                     Quantity = x.Quantity.HasValue ? x.Quantity.Value : 0,
                     ReadyToShip = x.ReadyToShip,
@@ -198,6 +206,8 @@ namespace WendtEquipmentTracking.App.Controllers
                     ShippedFrom = x.ShippedFrom,
                     ShippingTagNumber = x.ShippingTagNumber,
                     WorkOrderNumber = x.WorkOrderNumber,
+
+                    PriorityNumber = x.Priority != null ? (int?)x.Priority.PriorityNumber : null,
 
                     HasBillOfLading = x.HasBillOfLading,
                     HasBillOfLadingInStorage = x.HasBillOfLadingInStorage,

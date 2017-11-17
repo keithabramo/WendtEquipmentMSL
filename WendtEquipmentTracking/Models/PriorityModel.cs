@@ -16,10 +16,18 @@ namespace WendtEquipmentTracking.App.Models
         [Range(Int32.MinValue, 99, ErrorMessage = "Priority Number cannot exceed 99")]
         public int PriorityNumber { get; set; }
 
-        [DisplayName("Date")]
+        [DisplayName("Start Date")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         [Required]
         public DateTime DueDate { get; set; }
+
+        [DisplayName("End Date")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        public DateTime? EndDate { get; set; }
+
+        [DisplayName("Contractual Ship Date")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        public DateTime? ContractualShipDate { get; set; }
 
         [DisplayName("Equipment")]
         [Required]

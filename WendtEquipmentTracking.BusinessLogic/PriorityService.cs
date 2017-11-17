@@ -27,6 +27,8 @@ namespace WendtEquipmentTracking.BusinessLogic
             var priority = new Priority
             {
                 DueDate = priorityBO.DueDate,
+                EndDate = priorityBO.EndDate,
+                ContractualShipDate = priorityBO.ContractualShipDate,
                 EquipmentName = priorityBO.EquipmentName,
                 PriorityId = priorityBO.PriorityId,
                 PriorityNumber = priorityBO.PriorityNumber,
@@ -43,6 +45,8 @@ namespace WendtEquipmentTracking.BusinessLogic
             var prioritys = priorityBOs.Select(x => new Priority
             {
                 DueDate = x.DueDate,
+                EndDate = x.EndDate,
+                ContractualShipDate = x.ContractualShipDate,
                 EquipmentName = x.EquipmentName,
                 PriorityNumber = x.PriorityNumber,
                 ProjectId = x.ProjectId
@@ -60,6 +64,8 @@ namespace WendtEquipmentTracking.BusinessLogic
             var priorityBOs = prioritys.Select(x => new PriorityBO
             {
                 DueDate = x.DueDate,
+                EndDate = x.EndDate,
+                ContractualShipDate = x.ContractualShipDate,
                 EquipmentName = x.EquipmentName,
                 PriorityId = x.PriorityId,
                 PriorityNumber = x.PriorityNumber,
@@ -76,6 +82,8 @@ namespace WendtEquipmentTracking.BusinessLogic
             var priorityBO = new PriorityBO
             {
                 DueDate = priority.DueDate,
+                EndDate = priority.EndDate,
+                ContractualShipDate = priority.ContractualShipDate,
                 EquipmentName = priority.EquipmentName,
                 PriorityId = priority.PriorityId,
                 PriorityNumber = priority.PriorityNumber,
@@ -91,18 +99,12 @@ namespace WendtEquipmentTracking.BusinessLogic
             var oldPriorityNumber = oldPriority.PriorityNumber;
 
             oldPriority.DueDate = priorityBO.DueDate;
+            oldPriority.EndDate = priorityBO.EndDate;
+            oldPriority.ContractualShipDate = priorityBO.ContractualShipDate;
             oldPriority.EquipmentName = priorityBO.EquipmentName;
             oldPriority.PriorityNumber = priorityBO.PriorityNumber;
 
             priorityEngine.UpdatePriority(oldPriority);
-
-
-            var equipments = equipmentEngine.List(EquipmentSpecs.ProjectId(priorityBO.ProjectId) && EquipmentSpecs.Priority(oldPriorityNumber)).ToList();
-            foreach (var equipment in equipments)
-            {
-                equipment.Priority = priorityBO.PriorityNumber;
-                equipmentEngine.UpdateEquipment(equipment);
-            }
 
 
             dbContext.SaveChanges();

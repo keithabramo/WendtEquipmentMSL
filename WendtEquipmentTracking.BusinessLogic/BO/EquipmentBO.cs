@@ -9,7 +9,7 @@ namespace WendtEquipmentTracking.BusinessLogic.BO
         public int ProjectId { get; set; }
         public string EquipmentName { get; set; }
         public bool IsHardware { get; set; }
-        public int Priority { get; set; }
+        public int? PriorityId { get; set; }
         public DateTime? ReleaseDate { get; set; }
         public string DrawingNumber { get; set; }
         public string WorkOrderNumber { get; set; }
@@ -37,8 +37,7 @@ namespace WendtEquipmentTracking.BusinessLogic.BO
         public bool IsAssociatedToHardwareKit { get; set; }
         public string AssociatedHardwareKitNumber { get; set; }
 
-        //public HardwareKitBO HardwareKit { get; set; }
+        public PriorityBO Priority { get; set; }
         public IEnumerable<BillOfLadingEquipmentBO> BillOfLadingEquipments { get; set; }
-        //public IEnumerable<HardwareKitEquipmentBO> HardwareKitEquipments { get; set; }
     }
 }

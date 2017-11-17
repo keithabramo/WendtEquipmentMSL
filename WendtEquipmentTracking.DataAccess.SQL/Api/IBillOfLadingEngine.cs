@@ -16,6 +16,9 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Api
 
         void DeleteBillOfLading(BillOfLading billOfLading);
 
+        void UpdateBillOfLadingLock(BillOfLading billOfLading);
+
+
         void SetDBContext(WendtEquipmentTrackingEntities dbContext);
     }
 }

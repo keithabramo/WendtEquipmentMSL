@@ -102,10 +102,8 @@ namespace WendtEquipmentTracking.App.Controllers
             }
             if (billOfLading.IsLocked)
             {
-                InformationMessage("The Bill of Lading you are trying to edit is currently locked.");
+                InformationMessage("The Bill of Lading you are trying to edit is currently locked by " + billOfLading.LockedBy);
                 return RedirectToAction("Index");
-
-
             }
 
 
@@ -121,7 +119,6 @@ namespace WendtEquipmentTracking.App.Controllers
                 Revision = billOfLading.Revision,
                 ToStorage = billOfLading.ToStorage,
                 TrailerNumber = billOfLading.TrailerNumber
-
             };
 
             return View(model);

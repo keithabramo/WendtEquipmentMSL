@@ -14,10 +14,18 @@ namespace WendtEquipmentTracking.DataAccess.SQL
     
     public partial class Priority
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Priority()
+        {
+            this.Equipments = new HashSet<Equipment>();
+        }
+    
         public int PriorityId { get; set; }
         public int ProjectId { get; set; }
         public int PriorityNumber { get; set; }
         public System.DateTime DueDate { get; set; }
+        public Nullable<System.DateTime> EndDate { get; set; }
+        public Nullable<System.DateTime> ContractualShipDate { get; set; }
         public string EquipmentName { get; set; }
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
@@ -25,6 +33,8 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public bool IsDeleted { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Equipment> Equipments { get; set; }
         public virtual Project Project { get; set; }
     }
 }

@@ -65,6 +65,8 @@ namespace WendtEquipmentTracking.App.Controllers
                         var priorityBO = new PriorityBO
                         {
                             DueDate = model.DueDate,
+                            EndDate = model.EndDate,
+                            ContractualShipDate = model.ContractualShipDate,
                             EquipmentName = model.EquipmentName,
                             PriorityId = model.PriorityId.HasValue ? model.PriorityId.Value : 0,
                             PriorityNumber = model.PriorityNumber,
@@ -102,6 +104,8 @@ namespace WendtEquipmentTracking.App.Controllers
             var model = new PriorityModel
             {
                 DueDate = priority.DueDate,
+                EndDate = priority.EndDate,
+                ContractualShipDate = priority.ContractualShipDate,
                 EquipmentName = priority.EquipmentName,
                 PriorityId = priority.PriorityId,
                 PriorityNumber = priority.PriorityNumber,
@@ -131,6 +135,8 @@ namespace WendtEquipmentTracking.App.Controllers
                         var priorityBO = new PriorityBO
                         {
                             DueDate = model.DueDate,
+                            EndDate = model.EndDate,
+                            ContractualShipDate = model.ContractualShipDate,
                             EquipmentName = model.EquipmentName,
                             PriorityId = model.PriorityId.HasValue ? model.PriorityId.Value : 0,
                             PriorityNumber = model.PriorityNumber,

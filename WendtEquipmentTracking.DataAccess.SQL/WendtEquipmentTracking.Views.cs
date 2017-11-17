@@ -11,7 +11,7 @@ using System.Data.Entity.Infrastructure.MappingViews;
 
 [assembly: DbMappingViewCacheTypeAttribute(
     typeof(WendtEquipmentTracking.DataAccess.SQL.WendtEquipmentTrackingEntities),
-    typeof(Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets4ca885bcd4b51a5d6ee4e0d30af32d3ebac37f9690d3e2361acb5bd87653472d))]
+    typeof(Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySetse49bd180005dba09dcd9cd7bfda28b5c7f34cf996e7a6a026cef3b9744128d99))]
 
 namespace Edm_EntityMappingGeneratedViews
 {
@@ -23,14 +23,14 @@ namespace Edm_EntityMappingGeneratedViews
     /// Implements a mapping view cache.
     /// </summary>
     [GeneratedCode("Entity Framework Power Tools", "0.9.0.0")]
-    internal sealed class ViewsForBaseEntitySets4ca885bcd4b51a5d6ee4e0d30af32d3ebac37f9690d3e2361acb5bd87653472d : DbMappingViewCache
+    internal sealed class ViewsForBaseEntitySetse49bd180005dba09dcd9cd7bfda28b5c7f34cf996e7a6a026cef3b9744128d99 : DbMappingViewCache
     {
         /// <summary>
         /// Gets a hash value computed over the mapping closure.
         /// </summary>
         public override string MappingHashValue
         {
-            get { return "4ca885bcd4b51a5d6ee4e0d30af32d3ebac37f9690d3e2361acb5bd87653472d"; }
+            get { return "e49bd180005dba09dcd9cd7bfda28b5c7f34cf996e7a6a026cef3b9744128d99"; }
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing BillOfLading
-        [WendtEquipmentTracking.DataAccess.SQL.Model.Store.BillOfLading](T1.BillOfLading_BillOfLadingId, T1.BillOfLading_ProjectId, T1.BillOfLading_Revision, T1.BillOfLading_IsCurrentRevision, T1.BillOfLading_CreatedBy, T1.BillOfLading_CreatedDate, T1.BillOfLading_ModifiedBy, T1.BillOfLading_ModifiedDate, T1.BillOfLading_BillOfLadingNumber, T1.BillOfLading_DateShipped, T1.BillOfLading_ToStorage, T1.BillOfLading_TrailerNumber, T1.BillOfLading_Carrier, T1.BillOfLading_FreightTerms, T1.BillOfLading_IsLocked, T1.BillOfLading_IsDeleted)
+        [WendtEquipmentTracking.DataAccess.SQL.Model.Store.BillOfLading](T1.BillOfLading_BillOfLadingId, T1.BillOfLading_ProjectId, T1.BillOfLading_Revision, T1.BillOfLading_IsCurrentRevision, T1.BillOfLading_CreatedBy, T1.BillOfLading_CreatedDate, T1.BillOfLading_ModifiedBy, T1.BillOfLading_ModifiedDate, T1.BillOfLading_BillOfLadingNumber, T1.BillOfLading_DateShipped, T1.BillOfLading_ToStorage, T1.BillOfLading_TrailerNumber, T1.BillOfLading_Carrier, T1.BillOfLading_FreightTerms, T1.BillOfLading_IsLocked, T1.BillOfLading_LockedDate, T1.BillOfLading_LockedBy, T1.BillOfLading_IsDeleted)
     FROM (
         SELECT 
             T.BillOfLadingId AS BillOfLading_BillOfLadingId, 
@@ -176,6 +176,8 @@ namespace Edm_EntityMappingGeneratedViews
             T.Carrier AS BillOfLading_Carrier, 
             T.FreightTerms AS BillOfLading_FreightTerms, 
             T.IsLocked AS BillOfLading_IsLocked, 
+            T.LockedDate AS BillOfLading_LockedDate, 
+            T.LockedBy AS BillOfLading_LockedBy, 
             T.IsDeleted AS BillOfLading_IsDeleted, 
             True AS _from0
         FROM WendtEquipmentTrackingEntities.BillOfLadings AS T
@@ -212,13 +214,13 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing Equipment
-        [WendtEquipmentTracking.DataAccess.SQL.Model.Store.Equipment](T1.Equipment_EquipmentId, T1.Equipment_ProjectId, T1.Equipment_EquipmentName, T1.Equipment_Priority, T1.Equipment_CreatedBy, T1.Equipment_CreatedDate, T1.Equipment_ModifiedBy, T1.Equipment_ModifiedDate, T1.Equipment_ReleaseDate, T1.Equipment_DrawingNumber, T1.Equipment_WorkOrderNumber, T1.Equipment_Quantity, T1.Equipment_ShippingTagNumber, T1.Equipment_Description, T1.Equipment_UnitWeight, T1.Equipment_TotalWeight, T1.Equipment_TotalWeightShipped, T1.Equipment_ReadyToShip, T1.Equipment_ShippedQuantity, T1.Equipment_LeftToShip, T1.Equipment_FullyShipped, T1.Equipment_CustomsValue, T1.Equipment_SalePrice, T1.Equipment_Notes, T1.Equipment_ShippedFrom, T1.Equipment_HTSCode, T1.Equipment_CountryOfOrigin, T1.Equipment_IsHardware, T1.Equipment_IsDeleted, T1.Equipment_HardwareKitId)
+        [WendtEquipmentTracking.DataAccess.SQL.Model.Store.Equipment](T1.Equipment_EquipmentId, T1.Equipment_ProjectId, T1.Equipment_EquipmentName, T1.Equipment_PriorityId, T1.Equipment_CreatedBy, T1.Equipment_CreatedDate, T1.Equipment_ModifiedBy, T1.Equipment_ModifiedDate, T1.Equipment_ReleaseDate, T1.Equipment_DrawingNumber, T1.Equipment_WorkOrderNumber, T1.Equipment_Quantity, T1.Equipment_ShippingTagNumber, T1.Equipment_Description, T1.Equipment_UnitWeight, T1.Equipment_TotalWeight, T1.Equipment_TotalWeightShipped, T1.Equipment_ReadyToShip, T1.Equipment_ShippedQuantity, T1.Equipment_LeftToShip, T1.Equipment_FullyShipped, T1.Equipment_CustomsValue, T1.Equipment_SalePrice, T1.Equipment_Notes, T1.Equipment_ShippedFrom, T1.Equipment_HTSCode, T1.Equipment_CountryOfOrigin, T1.Equipment_IsHardware, T1.Equipment_IsDeleted, T1.Equipment_HardwareKitId)
     FROM (
         SELECT 
             T.EquipmentId AS Equipment_EquipmentId, 
             T.ProjectId AS Equipment_ProjectId, 
             T.EquipmentName AS Equipment_EquipmentName, 
-            T.Priority AS Equipment_Priority, 
+            T.PriorityId AS Equipment_PriorityId, 
             T.CreatedBy AS Equipment_CreatedBy, 
             T.CreatedDate AS Equipment_CreatedDate, 
             T.ModifiedBy AS Equipment_ModifiedBy, 
@@ -306,13 +308,15 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing Priority
-        [WendtEquipmentTracking.DataAccess.SQL.Model.Store.Priority](T1.Priority_PriorityId, T1.Priority_ProjectId, T1.Priority_PriorityNumber, T1.Priority_DueDate, T1.Priority_EquipmentName, T1.Priority_CreatedBy, T1.Priority_CreatedDate, T1.Priority_ModifiedBy, T1.Priority_ModifiedDate, T1.Priority_IsDeleted)
+        [WendtEquipmentTracking.DataAccess.SQL.Model.Store.Priority](T1.Priority_PriorityId, T1.Priority_ProjectId, T1.Priority_PriorityNumber, T1.Priority_DueDate, T1.Priority_EndDate, T1.Priority_ContractualShipDate, T1.Priority_EquipmentName, T1.Priority_CreatedBy, T1.Priority_CreatedDate, T1.Priority_ModifiedBy, T1.Priority_ModifiedDate, T1.Priority_IsDeleted)
     FROM (
         SELECT 
             T.PriorityId AS Priority_PriorityId, 
             T.ProjectId AS Priority_ProjectId, 
             T.PriorityNumber AS Priority_PriorityNumber, 
             T.DueDate AS Priority_DueDate, 
+            T.EndDate AS Priority_EndDate, 
+            T.ContractualShipDate AS Priority_ContractualShipDate, 
             T.EquipmentName AS Priority_EquipmentName, 
             T.CreatedBy AS Priority_CreatedBy, 
             T.CreatedDate AS Priority_CreatedDate, 
@@ -400,7 +404,7 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing BillOfLadings
-        [WendtEquipmentTracking.DataAccess.SQL.Model.BillOfLading](T1.BillOfLading_BillOfLadingId, T1.BillOfLading_ProjectId, T1.BillOfLading_Revision, T1.BillOfLading_IsCurrentRevision, T1.BillOfLading_CreatedBy, T1.BillOfLading_CreatedDate, T1.BillOfLading_ModifiedBy, T1.BillOfLading_ModifiedDate, T1.BillOfLading_BillOfLadingNumber, T1.BillOfLading_DateShipped, T1.BillOfLading_ToStorage, T1.BillOfLading_TrailerNumber, T1.BillOfLading_Carrier, T1.BillOfLading_FreightTerms, T1.BillOfLading_IsLocked, T1.BillOfLading_IsDeleted)
+        [WendtEquipmentTracking.DataAccess.SQL.Model.BillOfLading](T1.BillOfLading_BillOfLadingId, T1.BillOfLading_ProjectId, T1.BillOfLading_Revision, T1.BillOfLading_IsCurrentRevision, T1.BillOfLading_CreatedBy, T1.BillOfLading_CreatedDate, T1.BillOfLading_ModifiedBy, T1.BillOfLading_ModifiedDate, T1.BillOfLading_BillOfLadingNumber, T1.BillOfLading_DateShipped, T1.BillOfLading_ToStorage, T1.BillOfLading_TrailerNumber, T1.BillOfLading_Carrier, T1.BillOfLading_FreightTerms, T1.BillOfLading_IsLocked, T1.BillOfLading_LockedDate, T1.BillOfLading_LockedBy, T1.BillOfLading_IsDeleted)
     FROM (
         SELECT 
             T.BillOfLadingId AS BillOfLading_BillOfLadingId, 
@@ -418,6 +422,8 @@ namespace Edm_EntityMappingGeneratedViews
             T.Carrier AS BillOfLading_Carrier, 
             T.FreightTerms AS BillOfLading_FreightTerms, 
             T.IsLocked AS BillOfLading_IsLocked, 
+            T.LockedDate AS BillOfLading_LockedDate, 
+            T.LockedBy AS BillOfLading_LockedBy, 
             T.IsDeleted AS BillOfLading_IsDeleted, 
             True AS _from0
         FROM WendtEquipmentTrackingDataAccessSQLModelStoreContainer.BillOfLading AS T
@@ -454,13 +460,13 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing Equipments
-        [WendtEquipmentTracking.DataAccess.SQL.Model.Equipment](T1.Equipment_EquipmentId, T1.Equipment_ProjectId, T1.Equipment_EquipmentName, T1.Equipment_Priority, T1.Equipment_CreatedBy, T1.Equipment_CreatedDate, T1.Equipment_ModifiedBy, T1.Equipment_ModifiedDate, T1.Equipment_ReleaseDate, T1.Equipment_DrawingNumber, T1.Equipment_WorkOrderNumber, T1.Equipment_Quantity, T1.Equipment_ShippingTagNumber, T1.Equipment_Description, T1.Equipment_UnitWeight, T1.Equipment_TotalWeight, T1.Equipment_TotalWeightShipped, T1.Equipment_ReadyToShip, T1.Equipment_ShippedQuantity, T1.Equipment_LeftToShip, T1.Equipment_FullyShipped, T1.Equipment_CustomsValue, T1.Equipment_SalePrice, T1.Equipment_Notes, T1.Equipment_ShippedFrom, T1.Equipment_HTSCode, T1.Equipment_CountryOfOrigin, T1.Equipment_IsHardware, T1.Equipment_IsDeleted, T1.Equipment_HardwareKitId)
+        [WendtEquipmentTracking.DataAccess.SQL.Model.Equipment](T1.Equipment_EquipmentId, T1.Equipment_ProjectId, T1.Equipment_EquipmentName, T1.Equipment_PriorityId, T1.Equipment_CreatedBy, T1.Equipment_CreatedDate, T1.Equipment_ModifiedBy, T1.Equipment_ModifiedDate, T1.Equipment_ReleaseDate, T1.Equipment_DrawingNumber, T1.Equipment_WorkOrderNumber, T1.Equipment_Quantity, T1.Equipment_ShippingTagNumber, T1.Equipment_Description, T1.Equipment_UnitWeight, T1.Equipment_TotalWeight, T1.Equipment_TotalWeightShipped, T1.Equipment_ReadyToShip, T1.Equipment_ShippedQuantity, T1.Equipment_LeftToShip, T1.Equipment_FullyShipped, T1.Equipment_CustomsValue, T1.Equipment_SalePrice, T1.Equipment_Notes, T1.Equipment_ShippedFrom, T1.Equipment_HTSCode, T1.Equipment_CountryOfOrigin, T1.Equipment_IsHardware, T1.Equipment_IsDeleted, T1.Equipment_HardwareKitId)
     FROM (
         SELECT 
             T.EquipmentId AS Equipment_EquipmentId, 
             T.ProjectId AS Equipment_ProjectId, 
             T.EquipmentName AS Equipment_EquipmentName, 
-            T.Priority AS Equipment_Priority, 
+            T.PriorityId AS Equipment_PriorityId, 
             T.CreatedBy AS Equipment_CreatedBy, 
             T.CreatedDate AS Equipment_CreatedDate, 
             T.ModifiedBy AS Equipment_ModifiedBy, 
@@ -548,13 +554,15 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing Priorities
-        [WendtEquipmentTracking.DataAccess.SQL.Model.Priority](T1.Priority_PriorityId, T1.Priority_ProjectId, T1.Priority_PriorityNumber, T1.Priority_DueDate, T1.Priority_EquipmentName, T1.Priority_CreatedBy, T1.Priority_CreatedDate, T1.Priority_ModifiedBy, T1.Priority_ModifiedDate, T1.Priority_IsDeleted)
+        [WendtEquipmentTracking.DataAccess.SQL.Model.Priority](T1.Priority_PriorityId, T1.Priority_ProjectId, T1.Priority_PriorityNumber, T1.Priority_DueDate, T1.Priority_EndDate, T1.Priority_ContractualShipDate, T1.Priority_EquipmentName, T1.Priority_CreatedBy, T1.Priority_CreatedDate, T1.Priority_ModifiedBy, T1.Priority_ModifiedDate, T1.Priority_IsDeleted)
     FROM (
         SELECT 
             T.PriorityId AS Priority_PriorityId, 
             T.ProjectId AS Priority_ProjectId, 
             T.PriorityNumber AS Priority_PriorityNumber, 
             T.DueDate AS Priority_DueDate, 
+            T.EndDate AS Priority_EndDate, 
+            T.ContractualShipDate AS Priority_ContractualShipDate, 
             T.EquipmentName AS Priority_EquipmentName, 
             T.CreatedBy AS Priority_CreatedBy, 
             T.CreatedDate AS Priority_CreatedDate, 

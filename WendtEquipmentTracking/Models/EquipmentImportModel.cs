@@ -6,7 +6,12 @@ namespace WendtEquipmentTracking.App.Models
 {
     public class EquipmentImportModel : BaseModel
     {
+        //contains drawing number and temp file path joined with a + and split into a dictionary
+        public List<string> FilePaths { get; set; }
+
+        //used to post back to client and join toghether in hidden input
         public string FilePath { get; set; }
+        public string DrawingNumber { get; set; }
 
         [DisplayName("Equipment")]
         [Required]
@@ -14,11 +19,9 @@ namespace WendtEquipmentTracking.App.Models
 
         [DisplayName("Priority")]
         [Required]
-        public int Priority { get; set; }
+        public int PriorityId { get; set; }
 
-        [DisplayName("Drawing #")]
-        [Required]
-        public string DrawingNumber { get; set; }
+
 
         [DisplayName("Work Order #")]
         [Required]
@@ -28,6 +31,6 @@ namespace WendtEquipmentTracking.App.Models
         [Required]
         public int QuantityMultiplier { get; set; }
 
-        public IEnumerable<int> Priorities { get; set; }
+        public IEnumerable<PriorityModel> Priorities { get; set; }
     }
 }

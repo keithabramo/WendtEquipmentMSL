@@ -93,6 +93,10 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         public void DeleteWorkOrderPrice(WorkOrderPrice workOrderPrice)
         {
+            var now = DateTime.Now;
+
+            workOrderPrice.ModifiedDate = now;
+            workOrderPrice.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
             workOrderPrice.IsDeleted = true;
 
             this.repository.Update(workOrderPrice);

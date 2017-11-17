@@ -23,7 +23,7 @@ namespace WendtEquipmentTracking.App.Models
 
         [DisplayName("Priority")]
         [Required]
-        public int Priority { get; set; }
+        public int? PriorityNumber { get; set; }
 
         [JsonConverter(typeof(CustomDateTimeConverter))]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
@@ -86,7 +86,7 @@ namespace WendtEquipmentTracking.App.Models
         public bool FullyShipped { get; set; }
 
 
-        [DisplayName("Customs Value")]
+        [DisplayName("Sales+Soft Costs")]
         [DataType(DataType.Currency)]
         public double? CustomsValue { get; set; }
 
@@ -96,7 +96,7 @@ namespace WendtEquipmentTracking.App.Models
         public double? SalePrice { get; set; }
 
 
-        [DisplayName("Customs Value")]
+        [DisplayName("Sales+Soft Costs")]
         [DataType(DataType.Currency)]
         public string CustomsValueText
         {

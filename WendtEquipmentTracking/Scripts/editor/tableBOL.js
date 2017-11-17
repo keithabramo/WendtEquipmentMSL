@@ -53,7 +53,7 @@
                     {
                         "targets": 2,
                         render: function (data, type, row, meta) {
-                            return row.DateShipped ? moment(row.DateShipped).format("DD/MM/YYYY") : '';
+                            return row.DateShipped ? moment(row.DateShipped).format("MM/DD/YYYY") : '';
                         }
                     },
                     {

@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using WendtEquipmentTracking.App.Models;
 using WendtEquipmentTracking.BusinessLogic;
 using WendtEquipmentTracking.BusinessLogic.Api;
+using WendtEquipmentTracking.BusinessLogic.BO;
 
 namespace WendtEquipmentTracking.App.Controllers
 {
@@ -41,7 +42,7 @@ namespace WendtEquipmentTracking.App.Controllers
             }
 
             var prioritiesBOs = priorityService.GetAll(user.ProjectId);
-            var priorities = prioritiesBOs.Select(p => p.PriorityNumber).OrderBy(p => p).ToList();
+            var priorities = prioritiesBOs.Select(x => x.PriorityNumber).OrderBy(p => p).ToList();
             var project = projectService.GetById(user.ProjectId);
 
             ViewBag.ProjectNumber = project.ProjectNumber + (!string.IsNullOrWhiteSpace(project.ShipToCompany) ? ": " + project.ShipToCompany : "");
@@ -52,66 +53,88 @@ namespace WendtEquipmentTracking.App.Controllers
 
         // POST: Equipment
         [HttpPost]
-        public ActionResult SelectEquipmentFile(ImportModel model)
+        public JsonResult SelectEquipmentFile(ImportModel model)
         {
             var equipmentImportModel = new EquipmentImportModel();
 
             try
             {
-
-                if (ModelState.IsValid)
+                if (model.File != null)
                 {
-
-                    if (model.File != null)
+                    byte[] file = null;
+                    using (var memoryStream = new MemoryStream())
                     {
-                        byte[] file = null;
-                        using (var memoryStream = new MemoryStream())
-                        {
-                            model.File.InputStream.CopyTo(memoryStream);
-                            file = memoryStream.ToArray();
-                        }
-
-                        var filePath = importService.SaveFile(file);
-
-                        var user = userService.GetCurrentUser();
-
-                        double projectNumber = 0;
-                        IEnumerable<int> priorities = new List<int>();
-                        if (user != null)
-                        {
-                            var projectBO = projectService.GetById(user.ProjectId);
-                            var priorityBOs = priorityService.GetAll(user.ProjectId);
-
-                            projectNumber = projectBO.ProjectNumber;
-                            priorities = priorityBOs.Select(p => p.PriorityNumber).OrderBy(p => p).ToList();
-                        }
-
-                        equipmentImportModel.Priorities = priorities;
-                        equipmentImportModel.QuantityMultiplier = 1;
-                        equipmentImportModel.WorkOrderNumber = projectNumber == 0 ? string.Empty : projectNumber.ToString();
-                        equipmentImportModel.DrawingNumber = Path.GetFileNameWithoutExtension(model.File.FileName);
-                        equipmentImportModel.FilePath = filePath;
-
-                        return PartialView("EquipmentConfigurationPartial", equipmentImportModel);
+                        model.File.InputStream.CopyTo(memoryStream);
+                        file = memoryStream.ToArray();
                     }
-                    else
+
+                    var filePath = importService.SaveFile(file);
+
+                    var user = userService.GetCurrentUser();
+                    var priority = priorityService.GetAll(user.ProjectId).FirstOrDefault();
+
+                    //check to see if the file is in correct format
+                    try
                     {
-                        ModelState.AddModelError("File", "You must specify a file.");
+                        var importBO = new EquipmentImportBO
+                        {
+                            //DrawingNumber = string.Empty,
+                            Equipment = string.Empty,
+                            FilePaths = new Dictionary<string, string>() { { "", filePath } },
+                            PriorityId = priority.PriorityId,
+                            QuantityMultiplier = 1,
+                            WorkOrderNumber = string.Empty
+                        };
+
+                        importService.GetEquipmentImport(importBO);
                     }
+                    catch (Exception e)
+                    {
+                        return Json(new { Error = "The file does not conform to the expected format. Please make sure all column headers are spelled correctly and in the first row of the spreadsheet. Details: " + e.Message });
+                    }
+
+                    equipmentImportModel.DrawingNumber = Path.GetFileNameWithoutExtension(model.File.FileName);
+                    equipmentImportModel.FilePath = filePath;
+
+                    return Json(equipmentImportModel);
                 }
                 else
                 {
-                    HandleError("There was an issue while trying to load this equipment file", ModelState);
+                    return Json(new { Error = "You must specify a file." });
                 }
-
-
-                return PartialView("EquipmentConfigurationPartial", equipmentImportModel);
             }
             catch (Exception e)
             {
-                HandleError("There was an error while trying to load this equipment file", e);
-                return PartialView("EquipmentConfigurationPartial", equipmentImportModel);
+                HandleError("There was an error", e);
+                return Json(new { Error = "There was an error while trying to load this equipment file." });
             }
+        }
+
+        public ActionResult EquipmentConfigurationPartial()
+        {
+            var user = userService.GetCurrentUser();
+
+            double projectNumber = 0;
+            IEnumerable<PriorityModel> priorities = new List<PriorityModel>();
+            if (user != null)
+            {
+                var projectBO = projectService.GetById(user.ProjectId);
+                var priorityBOs = priorityService.GetAll(user.ProjectId);
+
+                projectNumber = projectBO.ProjectNumber;
+                priorities = priorityBOs.Select(x => new PriorityModel
+                {
+                    PriorityId = x.PriorityId,
+                    PriorityNumber = x.PriorityNumber
+                }).OrderBy(p => p.PriorityNumber).ToList();
+            }
+
+            var equipmentImportModel = new EquipmentImportModel();
+            equipmentImportModel.Priorities = priorities;
+            equipmentImportModel.QuantityMultiplier = 1;
+            equipmentImportModel.WorkOrderNumber = projectNumber == 0 ? string.Empty : projectNumber.ToString();
+
+            return PartialView(equipmentImportModel);
         }
 
         public ActionResult WorkOrderPrice()

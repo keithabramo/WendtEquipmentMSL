@@ -3,7 +3,7 @@
     var EditorBOL = function () {
 
         this.canSubmit = false;
-
+        this.lockInterval;
 
         this.initStyles = function () {
             var $this = this;
@@ -12,6 +12,8 @@
             $.validator.unobtrusive.parse('#BOLForm');
 
             this.lock();
+
+            this.lockInterval = setInterval(this.lock, 30 * 1000); //run every 30 seconds
 
             this.initEditor();
             this.initDatatable();
@@ -22,7 +24,7 @@
             var $this = this;
 
             window.addEventListener("beforeunload", function (event) {
-                $this.unlock();
+                $this.unlock.call($this);
             });
 
             editorMain.editor.on('preSubmit', function (e, data, action) {
@@ -135,7 +137,7 @@
                     { name: "BillOfLadingEquipmentId" },
                     { name: "Quantity" },
                     { name: "Equipment.EquipmentName" },
-                    { name: "Equipment.Priority" },
+                    { name: "Equipment.PriorityNumber" },
                     { name: "Equipment.ReleaseDate" },
                     { name: "Equipment.DrawingNumber" },
                     { name: "Equipment.WorkOrderNumber" },
@@ -202,7 +204,7 @@
                         className: "equipmentNameWidth active"
                     },
                     {
-                        data: "Equipment.Priority", "targets": 3,
+                        data: "Equipment.PriorityNumber", "targets": 3,
                         className: "priorityWidth active"
                     },
                     {
@@ -326,6 +328,7 @@
         }
 
         this.unlock = function () {
+            clearInterval(this.lockInterval);
             $.get(ROOT_URL + "Api/BillOfLadingApi/Unlock", { id: $("#BillOfLadingId").val() });
         }
 

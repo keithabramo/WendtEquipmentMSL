@@ -46,6 +46,8 @@ namespace WendtEquipmentTracking.App.Controllers
                 PriorityNumber = x.PriorityNumber,
                 PriorityId = x.PriorityId,
                 DueDate = x.DueDate,
+                EndDate = x.EndDate,
+                ContractualShipDate = x.ContractualShipDate,
                 EquipmentName = x.EquipmentName
             });
 

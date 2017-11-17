@@ -77,6 +77,10 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         public void DeleteHardwareCommercialCode(HardwareCommercialCode hardwareCommercialCode)
         {
+            var now = DateTime.Now;
+
+            hardwareCommercialCode.ModifiedDate = now;
+            hardwareCommercialCode.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
             hardwareCommercialCode.IsDeleted = true;
 
             this.repository.Update(hardwareCommercialCode);

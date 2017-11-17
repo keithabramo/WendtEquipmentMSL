@@ -24,7 +24,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         public int EquipmentId { get; set; }
         public int ProjectId { get; set; }
         public string EquipmentName { get; set; }
-        public Nullable<int> Priority { get; set; }
+        public Nullable<int> PriorityId { get; set; }
         public string CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public string ModifiedBy { get; set; }
@@ -55,6 +55,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BillOfLadingEquipment> BillOfLadingEquipments { get; set; }
         public virtual HardwareKit HardwareKit { get; set; }
+        public virtual Priority Priority { get; set; }
         public virtual Project Project { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HardwareKitEquipment> HardwareKitEquipments { get; set; }

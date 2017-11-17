@@ -195,7 +195,7 @@ div.dataTables_wrapper div.dataTables_filter input, div.dataTables_wrapper div.d
 div.dataTables_wrapper .dataTables_filter {
     text-align: inherit;
     float: left;
-    margin-right: 10px;
+    margin-right: 12px;
 }
 
 div.dataTables_wrapper .dataTables_info {
@@ -226,12 +226,12 @@ div.dataTables_wrapper .bottom-section {
 
 /* all tables */
 .table-styled {
-    font-size: 10px;
+    font-size: 12px;
 }
 
     .table-styled th {
         vertical-align: middle !important;
-        padding: 0 18px 0 10px;
+        padding: 0 18px 0 10px !important;
         text-align: center;
         white-space: pre;
         cursor: pointer;
@@ -439,7 +439,7 @@ table.dataTable tr.selected th.select-checkbox:after {
         white-space: nowrap;
     }
 
-    .table-styled .expand {
+    .table-styled .expand, .table-styled .copy, .table-styled .select-checkbox {
         cursor: pointer;
     }
 
@@ -455,7 +455,7 @@ table.dataTable tr.selected th.select-checkbox:after {
     .table-styled tfoot td .form-control, .table-styled thead th .form-control {
         height: 37px;
         border-radius: 0;
-        font-size: 10px;
+        font-size: 12px;
     }
 
 .table.masterShipList tbody td {

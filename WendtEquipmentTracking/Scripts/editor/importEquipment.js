@@ -5,37 +5,48 @@ $(function () {
     var ImportEquipment = function () {
 
         this.equipmentTable;
+        this.dropzone;
 
         this.initStyles = function () {
             var $this = this;
 
             Dropzone.options.myDropzone = {
-                maxFiles: 1,
                 acceptedFiles: ".xls, .xlsx, .xlsm",
+                addRemoveLinks: true,
                 error: function (file) {
                     if (!file.accepted) {
                         this.removeFile(file);
-                    }
+                        main.error("File type not supported. Accepted file types includ; .xls, .xlsx, .xlsm");
+                    } 
                 },
                 success: function (file, response) {
-                    $("#equipmentConfiguration").html(response);
-                    $.validator.unobtrusive.parse('#equipmentConfiguration')
-                    $("[type='submit']").button("reset");
+                    if (!response.Error) {
+                        $("#equipmentConfiguration")
+                            .append($("<input>")
+                                        .attr("data-fileid", file.name)
+                                        .attr("name", "FilePath")
+                                        .attr("type", "hidden")
+                                        .val(response.DrawingNumber + "+" + response.FilePath));
 
-                    form.initStyles();
-                    form.initEvents();
-                },
-                maxfilesexceeded: function (file) {
-                    this.removeAllFiles();
-                    this.addFile(file);
+                    }
+                    else {
+                        this.removeFile(file);
+                        main.error(response.Error);
+                    }
                 }
             };
 
-            $('#myDropzone').dropzone();
+            this.dropzone = new Dropzone("#myDropzone");
         }
 
         this.initEvents = function () {
             var $this = this;
+
+
+
+            this.dropzone.on("removedfile", function (file) {
+                $("#equipmentConfiguration").find("input[data-fileid='" + file.name + "']").remove();
+            });
 
             $(document).on("submit", "#equipmentConfigurationForm", function (e) {
                 e.preventDefault();

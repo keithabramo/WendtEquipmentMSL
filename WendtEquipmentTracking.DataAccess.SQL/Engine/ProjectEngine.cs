@@ -63,6 +63,10 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         public void DeleteProject(Project project)
         {
+            var now = DateTime.Now;
+
+            project.ModifiedDate = now;
+            project.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
             project.IsDeleted = true;
             project.BillOfLadings.ToList().ForEach(ble => ble.IsDeleted = true);
             project.Equipments.ToList().ForEach(ble => ble.IsDeleted = true);

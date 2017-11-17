@@ -78,6 +78,10 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         public void DeletePriority(Priority priority)
         {
+            var now = DateTime.Now;
+
+            priority.ModifiedDate = now;
+            priority.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
             priority.IsDeleted = true;
 
             this.repository.Update(priority);

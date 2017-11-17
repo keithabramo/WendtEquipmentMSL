@@ -127,7 +127,7 @@ namespace WendtEquipmentTracking.App.Controllers
                     CustomsValue = x.CustomsValue,
                     FullyShipped = x.FullyShipped,
                     LeftToShip = x.LeftToShip.ToString(),
-                    Priority = x.Priority,
+                    PriorityNumber = x.Priority != null ? (int?)x.Priority.PriorityNumber : null,
                     ProjectId = x.ProjectId,
                     Quantity = x.Quantity.HasValue ? x.Quantity.Value : 0,
                     ReadyToShip = x.ReadyToShip,
@@ -211,7 +211,7 @@ namespace WendtEquipmentTracking.App.Controllers
                     CustomsValue = x.Equipment.CustomsValue,
                     FullyShipped = x.Equipment.FullyShipped,
                     LeftToShip = x.Equipment.LeftToShip.ToString(),
-                    Priority = x.Equipment.Priority,
+                    PriorityNumber = x.Equipment.Priority != null ? (int?)x.Equipment.Priority.PriorityNumber : null,
                     ProjectId = x.Equipment.ProjectId,
                     Quantity = x.Equipment.Quantity.HasValue ? x.Equipment.Quantity.Value : 0,
                     ReadyToShip = x.Equipment.ReadyToShip,
@@ -262,7 +262,7 @@ namespace WendtEquipmentTracking.App.Controllers
                     CustomsValue = x.CustomsValue,
                     FullyShipped = x.FullyShipped,
                     LeftToShip = x.LeftToShip.ToString(),
-                    Priority = x.Priority,
+                    PriorityNumber = x.Priority != null ? (int?)x.Priority.PriorityNumber : null,
                     ProjectId = x.ProjectId,
                     Quantity = x.Quantity.HasValue ? x.Quantity.Value : 0,
                     ReadyToShip = x.ReadyToShip,
@@ -361,7 +361,7 @@ namespace WendtEquipmentTracking.App.Controllers
                     equipment.CustomsValue = equipmentProperties["CustomsValueText"].ToString().ToNullable<double>();
                     equipment.FullyShipped = equipmentProperties["FullyShippedText"].ToString() == "YES" ? true : false;
                     equipment.LeftToShip = equipmentProperties["LeftToShip"].ToString().ToNullable<double>();
-                    equipment.Priority = Convert.ToInt32(equipmentProperties["Priority"]);
+                    equipment.PriorityId = Convert.ToInt32(equipmentProperties["PriorityId"]);
                     equipment.ProjectId = user.ProjectId;
                     equipment.Quantity = equipmentProperties["Quantity"].ToString().ToNullable<int>();
                     equipment.ReadyToShip = equipmentProperties["ReadyToShipText"].ToString().ToNullable<int>();
@@ -436,7 +436,7 @@ namespace WendtEquipmentTracking.App.Controllers
                         CustomsValue = x.Equipment.CustomsValue,
                         FullyShipped = x.Equipment.FullyShipped,
                         LeftToShip = x.Equipment.LeftToShip.ToString(),
-                        Priority = x.Equipment.Priority,
+                        PriorityNumber = x.Equipment.Priority != null ? (int?)x.Equipment.Priority.PriorityNumber : null,
                         ProjectId = x.Equipment.ProjectId,
                         Quantity = x.Equipment.Quantity.HasValue ? x.Equipment.Quantity.Value : 0,
                         ReadyToShip = x.Equipment.ReadyToShip,

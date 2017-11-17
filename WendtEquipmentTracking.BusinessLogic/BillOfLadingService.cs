@@ -189,6 +189,8 @@ namespace WendtEquipmentTracking.BusinessLogic
                 ToStorage = billOfLading.ToStorage,
                 TrailerNumber = billOfLading.TrailerNumber,
                 IsLocked = billOfLading.IsLocked,
+                LockedBy = billOfLading.LockedBy,
+                LockedDate = billOfLading.LockedDate,
                 BillOfLadingEquipments = billOfLading.BillOfLadingEquipments.Where(e => !e.Equipment.IsDeleted).Select(e => new BillOfLadingEquipmentBO
                 {
                     BillOfLadingEquipmentId = e.BillOfLadingEquipmentId,
@@ -203,7 +205,12 @@ namespace WendtEquipmentTracking.BusinessLogic
                         FullyShipped = e.Equipment.FullyShipped,
                         IsHardware = e.Equipment.IsHardware,
                         LeftToShip = e.Equipment.LeftToShip,
-                        Priority = e.Equipment.Priority.HasValue ? e.Equipment.Priority.Value : 0,
+                        PriorityId = e.Equipment.Priority != null && !e.Equipment.Priority.IsDeleted ? e.Equipment.PriorityId : null,
+                        Priority = e.Equipment.Priority != null && !e.Equipment.Priority.IsDeleted ? new PriorityBO
+                        {
+                            PriorityId = e.Equipment.Priority.PriorityId,
+                            PriorityNumber = e.Equipment.Priority.PriorityNumber
+                        } : null,
                         ProjectId = e.Equipment.ProjectId,
                         Quantity = e.Equipment.Quantity,
                         ReadyToShip = e.Equipment.ReadyToShip,
@@ -298,7 +305,7 @@ namespace WendtEquipmentTracking.BusinessLogic
             var oldBillOfLading = billOfLadingEngine.Get(BillOfLadingSpecs.Id(id));
             oldBillOfLading.IsLocked = true;
 
-            billOfLadingEngine.UpdateBillOfLading(oldBillOfLading);
+            billOfLadingEngine.UpdateBillOfLadingLock(oldBillOfLading);
 
             dbContext.SaveChanges();
         }
@@ -308,7 +315,7 @@ namespace WendtEquipmentTracking.BusinessLogic
             var oldBillOfLading = billOfLadingEngine.Get(BillOfLadingSpecs.Id(id));
             oldBillOfLading.IsLocked = false;
 
-            billOfLadingEngine.UpdateBillOfLading(oldBillOfLading);
+            billOfLadingEngine.UpdateBillOfLadingLock(oldBillOfLading);
 
             dbContext.SaveChanges();
         }

@@ -104,7 +104,12 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         public void DeleteEquipment(Equipment equipment)
         {
+            var now = DateTime.Now;
+
+
             equipment.IsDeleted = true;
+            equipment.ModifiedDate = now;
+            equipment.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
             equipment.BillOfLadingEquipments.ToList().ForEach(ble => ble.IsDeleted = true);
             equipment.HardwareKitEquipments.ToList().ForEach(ble => ble.IsDeleted = true);
 

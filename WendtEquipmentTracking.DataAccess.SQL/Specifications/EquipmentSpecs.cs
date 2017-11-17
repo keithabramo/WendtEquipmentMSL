@@ -56,9 +56,9 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Specifications
             return new HardwareKitIdSpecification(hardwareKitId);
         }
 
-        public static Specification<Equipment> Priority(int priority)
+        public static Specification<Equipment> PriorityId(int priorityId)
         {
-            return new PrioritySpecification(priority);
+            return new PriorityIdSpecification(priorityId);
         }
 
     }

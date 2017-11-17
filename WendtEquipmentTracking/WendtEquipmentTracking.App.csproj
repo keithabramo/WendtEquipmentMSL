@@ -186,6 +186,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\EditorModel.cs" />
+    <Compile Include="Models\IDisctionary.cs" />
     <Compile Include="Models\WorkOrderPriceImportModel.cs" />
     <Compile Include="Models\HardwareCommercialCodeModel.cs" />
     <Compile Include="Models\HardwareKitGroupModel.cs" />

@@ -17,12 +17,16 @@ namespace WendtEquipmentTracking.BusinessLogic
         private WendtEquipmentTrackingEntities dbContext;
         private IImportEngine importEngine;
         private IHardwareCommercialCodeEngine hardwareCommercialCodeEngine;
+        private IUserEngine userEngine;
+        private IPriorityEngine priorityEngine;
 
         public ImportService()
         {
             dbContext = new WendtEquipmentTrackingEntities();
             importEngine = new ImportEngine();
             hardwareCommercialCodeEngine = new HardwareCommercialCodeEngine(dbContext);
+            userEngine = new UserEngine(dbContext);
+            priorityEngine = new PriorityEngine(dbContext);
         }
 
         public string SaveFile(byte[] file)
@@ -37,28 +41,30 @@ namespace WendtEquipmentTracking.BusinessLogic
 
             var import = new EquipmentImport
             {
-                DrawingNumber = importBO.DrawingNumber,
+                //DrawingNumber = importBO.DrawingNumber,
                 Equipment = importBO.Equipment,
-                FilePath = importBO.FilePath,
+                FilePaths = importBO.FilePaths,
                 hardwareCommercialCodes = hardwareCommercialCodes.Select(x => new HardwareCommercialCodeImport
                 {
                     CommodityCode = x.CommodityCode,
                     Description = x.Description,
                     PartNumber = x.PartNumber
                 }).ToList(),
-                Priority = importBO.Priority,
+                PriorityId = importBO.PriorityId,
+
                 QuantityMultiplier = importBO.QuantityMultiplier,
                 WorkOrderNumber = importBO.WorkOrderNumber,
             };
 
             var equipmentRows = importEngine.GetEquipment(import);
 
+
             var equipmentBOs = equipmentRows.Select(x => new EquipmentBO
             {
                 Description = x.Description,
                 DrawingNumber = x.DrawingNumber,
                 EquipmentName = x.EquipmentName,
-                Priority = x.Priority,
+                PriorityId = x.PriorityId,
                 Quantity = x.Quantity,
                 ReleaseDate = x.ReleaseDate,
                 ShippingTagNumber = x.ShippingTagNumber,

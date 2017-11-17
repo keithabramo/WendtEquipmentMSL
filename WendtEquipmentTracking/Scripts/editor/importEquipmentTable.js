@@ -73,7 +73,7 @@
                     { name: "EquipmentId", type: "readonly" },
                     { name: "EquipmentName" },
                     {
-                        name: "Priority",
+                        name: "PriorityNumber",
                         type: "select",
                         options: priorities
                     },
@@ -94,13 +94,19 @@
             editorMain.initDatatable({
                 ajax: {
                     url: ROOT_URL + "api/ImportApi/GetEquipmentFromImport",
+                    type: "POST",
                     dataSrc: "",
                     data: function () {
+
+                        var filePaths = $("input[name='FilePath']").map(function () {
+                            return $(this).val();
+                        }).get();
+
                         return {
-                            DrawingNumber: $("#DrawingNumber").val(),
+                            //DrawingNumber: $("#DrawingNumber").val(),
                             Equipment: $("#Equipment").val(),
-                            FilePath: $("#FilePath").val(),
-                            Priority: $("#Priority").val(),
+                            FilePaths: filePaths,
+                            PriorityId: $("#PriorityId").val(),
                             QuantityMultiplier: $("#QuantityMultiplier").val(),
                             WorkOrderNumber: $("#WorkOrderNumber").val()
                         }
@@ -132,7 +138,7 @@
                         className: "equipmentNameWidth"
                     },
                     {
-                        data: "Priority", "targets": 2,
+                        data: "PriorityNumber", "targets": 2,
                         className: "priorityWidth"
                     },
                     {

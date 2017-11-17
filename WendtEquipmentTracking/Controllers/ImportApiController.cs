@@ -128,43 +128,55 @@ namespace WendtEquipmentTracking.App.Controllers
         }
 
 
+
+
+
+
+
+
         [HttpGet]
         [HttpPost]
-        public IEnumerable<EquipmentModel> GetEquipmentFromImport([FromUri] EquipmentImportModel model)
+        public IEnumerable<EquipmentModel> GetEquipmentFromImport(EquipmentImportModel model)
         {
             List<EquipmentModel> equipmentModels = new List<EquipmentModel>();
             try
             {
-                var importBO = new EquipmentImportBO
-                {
-                    DrawingNumber = model.DrawingNumber,
-                    Equipment = model.Equipment,
-                    FilePath = model.FilePath,
-                    Priority = model.Priority,
-                    QuantityMultiplier = model.QuantityMultiplier,
-                    WorkOrderNumber = model.WorkOrderNumber
-                };
-
-                var equipmentBOs = importService.GetEquipmentImport(importBO);
-
-                var random = new Random();
-                equipmentModels = equipmentBOs.Select(x => new EquipmentModel
+                var user = userService.GetCurrentUser();
+                if (user != null)
                 {
 
-                    Description = x.Description.Trim(),
-                    DrawingNumber = x.DrawingNumber,
-                    EquipmentId = random.Next(),
-                    EquipmentName = x.EquipmentName,
-                    Priority = x.Priority,
-                    ProjectId = x.ProjectId,
-                    Quantity = x.Quantity.HasValue ? x.Quantity.Value : 0,
-                    ReleaseDate = x.ReleaseDate,
-                    ShippingTagNumber = x.ShippingTagNumber,
-                    UnitWeight = x.UnitWeight,
-                    WorkOrderNumber = x.WorkOrderNumber
-                }).ToList();
+                    var importBO = new EquipmentImportBO
+                    {
+                        //DrawingNumber = model.DrawingNumber,
+                        Equipment = model.Equipment,
+                        FilePaths = model.FilePaths.ToDictionary(x => x.Split('+')[0], x => x.Split('+')[1]),
+                        PriorityId = model.PriorityId,
+                        QuantityMultiplier = model.QuantityMultiplier,
+                        WorkOrderNumber = model.WorkOrderNumber
+                    };
+
+                    var equipmentBOs = importService.GetEquipmentImport(importBO);
+                    var priorities = priorityService.GetAll(user.ProjectId);
 
 
+                    var random = new Random();
+                    equipmentModels = equipmentBOs.Select(x => new EquipmentModel
+                    {
+
+                        Description = x.Description.Trim(),
+                        DrawingNumber = x.DrawingNumber,
+                        EquipmentId = random.Next(),
+                        EquipmentName = x.EquipmentName,
+                        PriorityNumber = x.PriorityId != null ? (int?)priorities.FirstOrDefault().PriorityNumber : null,
+                        ProjectId = x.ProjectId,
+                        Quantity = x.Quantity.HasValue ? x.Quantity.Value : 0,
+                        ReleaseDate = x.ReleaseDate,
+                        ShippingTagNumber = x.ShippingTagNumber,
+                        UnitWeight = x.UnitWeight,
+                        WorkOrderNumber = x.WorkOrderNumber
+                    }).ToList();
+
+                }
                 return equipmentModels;
             }
             catch (Exception e)
@@ -186,6 +198,8 @@ namespace WendtEquipmentTracking.App.Controllers
             if (user != null)
             {
                 var project = projectService.GetById(user.ProjectId);
+                var priorities = priorityService.GetAll(user.ProjectId);
+
 
                 var httpData = DatatableHelpers.HttpData();
 
@@ -200,7 +214,6 @@ namespace WendtEquipmentTracking.App.Controllers
                     EquipmentBO equipment = new EquipmentBO();
 
                     equipment.EquipmentId = !string.IsNullOrWhiteSpace(equipmentProperties["EquipmentId"].ToString()) ? Convert.ToInt32(equipmentProperties["EquipmentId"]) : 0;
-                    equipment.Priority = Convert.ToInt32(equipmentProperties["Priority"]);
                     equipment.ProjectId = user.ProjectId;
                     equipment.Quantity = equipmentProperties["Quantity"].ToString().ToNullable<int>();
                     equipment.ReleaseDate = !string.IsNullOrWhiteSpace(equipmentProperties["ReleaseDate"].ToString()) ? (DateTime?)Convert.ToDateTime(equipmentProperties["ReleaseDate"]) : null;
@@ -216,6 +229,13 @@ namespace WendtEquipmentTracking.App.Controllers
                     equipment.ReadyToShip = 0;
                     equipment.ShippedFrom = "Wendt";
 
+                    var priorityNumber = equipment.PriorityId = Convert.ToInt32(equipmentProperties["PriorityNumber"]);
+                    var priority = priorities.FirstOrDefault(x => x.PriorityNumber == priorityNumber);
+                    if (priority != null)
+                    {
+                        equipment.PriorityId = priority.PriorityId;
+                    }
+
                     equipments.Add(equipment);
                 }
 
@@ -228,7 +248,7 @@ namespace WendtEquipmentTracking.App.Controllers
                 equipmentModels = equipments.Select(x => new EquipmentModel
                 {
                     EquipmentId = x.EquipmentId,
-                    Priority = x.Priority,
+                    PriorityNumber = x.Priority != null ? (int?)x.Priority.PriorityNumber : null,
                     ProjectId = x.ProjectId,
                     Quantity = x.Quantity.HasValue ? x.Quantity.Value : 0,
                     ReleaseDate = x.ReleaseDate,

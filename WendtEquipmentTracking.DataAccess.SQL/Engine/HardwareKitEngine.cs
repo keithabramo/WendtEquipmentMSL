@@ -76,6 +76,10 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         public void DeleteHardwareKit(HardwareKit hardwareKit)
         {
+            var now = DateTime.Now;
+
+            hardwareKit.ModifiedDate = now;
+            hardwareKit.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
             hardwareKit.IsDeleted = true;
             hardwareKit.HardwareKitEquipments.ToList().ForEach(ble => ble.IsDeleted = true);
             hardwareKit.Equipments.ToList().ForEach(ble => ble.IsDeleted = true);

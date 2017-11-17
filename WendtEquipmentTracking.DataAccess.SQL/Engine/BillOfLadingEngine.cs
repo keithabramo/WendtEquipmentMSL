@@ -76,9 +76,33 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         }
 
+
+        public void UpdateBillOfLadingLock(BillOfLading billOfLading)
+        {
+            var now = DateTime.Now;
+
+            if (billOfLading.IsLocked)
+            {
+                billOfLading.LockedDate = now;
+                billOfLading.LockedBy = ActiveDirectoryHelper.CurrentUserUsername();
+            }
+            else
+            {
+                billOfLading.LockedDate = null;
+                billOfLading.LockedBy = null;
+            }
+
+            repository.Update(billOfLading);
+
+        }
+
         public void DeleteBillOfLading(BillOfLading billOfLading)
         {
+            var now = DateTime.Now;
+
             billOfLading.IsDeleted = true;
+            billOfLading.ModifiedDate = now;
+            billOfLading.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
             billOfLading.BillOfLadingEquipments.ToList().ForEach(ble => ble.IsDeleted = true);
 
             this.repository.Update(billOfLading);

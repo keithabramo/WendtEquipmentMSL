@@ -16,27 +16,24 @@ else
                         <tr>
                             <td>Equipment</td>
                             <td class="warning">
-                                @Html.HiddenFor(model => model.FilePath)
                                 @Html.EditorFor(model => model.Equipment, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.Equipment, "", new { @class = "text-danger" })
-
-
                             </td>
                         </tr>
                         <tr>
                             <td>Priority</td>
                             <td class="warning">
-                                @Html.DropDownListFor(model => model.Priority, new SelectList(Model.Priorities), new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.Priority, "", new { @class = "text-danger" })
+                                @Html.DropDownListFor(model => model.PriorityId, new SelectList(Model.Priorities, "PriorityId", "PriorityNumber"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.PriorityId, "", new { @class = "text-danger" })
                             </td>
                         </tr>
-                        <tr>
+                        @*<tr>
                             <td>Drawing</td>
                             <td class="warning">
                                 @Html.EditorFor(model => model.DrawingNumber, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.DrawingNumber, "", new { @class = "text-danger" })
                             </td>
-                        </tr>
+                        </tr>*@
                         <tr>
                             <td>WO #</td>
                             <td class="warning">

@@ -36,12 +36,32 @@
                 columns: [
                     { data: "PriorityNumber" },
                     { data: "DueDate" },
+                    { data: "EndDate" },
+                    { data: "ContractualShipDate" },
                     { data: "EquipmentName" },
                     { data: "PriorityId" }
                 ],
                 columnDefs: [
                     {
+                        "targets": 1,
+                        render: function (data, type, row, meta) {
+                            return row.DueDate ? moment(row.DueDate).format("MM/DD/YYYY") : '';
+                        }
+                    },
+                    {
+                        "targets": 2,
+                        render: function (data, type, row, meta) {
+                            return row.EndDate ? moment(row.EndDate).format("MM/DD/YYYY") : '';
+                        }
+                    },
+                    {
                         "targets": 3,
+                        render: function (data, type, row, meta) {
+                            return row.ContractualShipDate ? moment(row.ContractualShipDate).format("MM/DD/YYYY") : '';
+                        }
+                    },
+                    {
+                        "targets": 5,
                         searchable: false,
                         sortable: false,
                         render: function (data, type, row, meta) {

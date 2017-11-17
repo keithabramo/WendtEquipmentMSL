@@ -1,14 +1,14 @@
 ﻿@model EquipmentModel
 
 <tr class="info">
-    
+    <td></td>
     <td>
         @Html.EditorFor(modelItem => modelItem.EquipmentName, new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(modelItem => modelItem.EquipmentName, "", new { @class = "text-danger" })
     </td>
     <td>
-        @Html.DropDownListFor(modelItem => modelItem.Priority, new SelectList(Model.Priorities), new { @class = "form-control" })
-        @Html.ValidationMessageFor(modelItem => modelItem.Priority, "", new { @class = "text-danger" })
+        @Html.DropDownListFor(modelItem => modelItem.PriorityNumber, new SelectList(Model.Priorities), new { @class = "form-control" })
+        @Html.ValidationMessageFor(modelItem => modelItem.PriorityNumber, "", new { @class = "text-danger" })
     </td>
     <td>
         @Html.EditorFor(modelItem => modelItem.ReleaseDate, new { htmlAttributes = new { @class = "form-control datePickerTable", id = "releaseDate" } })
