@@ -71,7 +71,7 @@ namespace WendtEquipmentTracking.App.Models
 
 
         [DisplayName("RTS")]
-        public double? ReadyToShip { get; set; }
+        public double ReadyToShip { get; set; }
 
 
         [DisplayName("Ship Qty")]
@@ -124,16 +124,6 @@ namespace WendtEquipmentTracking.App.Models
             get
             {
                 return UnitWeight.HasValue ? UnitWeight.Value.ToString() : string.Empty;
-            }
-        }
-
-        [DisplayName("RTS")]
-        [DataType(DataType.Currency)]
-        public string ReadyToShipText
-        {
-            get
-            {
-                return ReadyToShip.HasValue ? ReadyToShip.Value.ToString() : string.Empty;
             }
         }
 
@@ -220,7 +210,7 @@ namespace WendtEquipmentTracking.App.Models
             }
 
             //ready to ship does not have a clean way to check for red
-            if (ReadyToShip.HasValue && ReadyToShip.Value != 0 && !FullyShipped)
+            if (ReadyToShip != 0 && !FullyShipped)
             {
                 if (HasBillOfLadingInStorage)
                 {

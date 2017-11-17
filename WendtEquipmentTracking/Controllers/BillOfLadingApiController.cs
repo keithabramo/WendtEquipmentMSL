@@ -364,7 +364,7 @@ namespace WendtEquipmentTracking.App.Controllers
                     equipment.PriorityId = Convert.ToInt32(equipmentProperties["PriorityId"]);
                     equipment.ProjectId = user.ProjectId;
                     equipment.Quantity = equipmentProperties["Quantity"].ToString().ToNullable<int>();
-                    equipment.ReadyToShip = equipmentProperties["ReadyToShipText"].ToString().ToNullable<int>();
+                    equipment.ReadyToShip = Convert.ToDouble(equipmentProperties["ReadyToShip"].ToString());
                     equipment.ReleaseDate = !string.IsNullOrWhiteSpace(equipmentProperties["ReleaseDate"].ToString()) ? (DateTime?)Convert.ToDateTime(equipmentProperties["ReleaseDate"]) : null;
                     equipment.SalePrice = equipmentProperties["SalePriceText"].ToString().ToNullable<double>();
                     equipment.ShippedQuantity = equipmentProperties["ShippedQuantity"].ToString().ToNullable<int>();

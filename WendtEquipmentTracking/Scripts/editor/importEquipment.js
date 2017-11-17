@@ -46,6 +46,9 @@ $(function () {
 
             this.dropzone.on("removedfile", function (file) {
                 $("#equipmentConfiguration").find("input[data-fileid='" + file.name + "']").remove();
+                if ($this.editorMain.datatable.rows().any()) {
+                    $("#equipmentConfigurationForm").submit();
+                }
             });
 
             $(document).on("submit", "#equipmentConfigurationForm", function (e) {

@@ -19,7 +19,7 @@ namespace WendtEquipmentTracking.BusinessLogic.BO
         public double? UnitWeight { get; set; }
         public double? TotalWeight { get; set; }
         public double? TotalWeightShipped { get; set; }
-        public double? ReadyToShip { get; set; }
+        public double ReadyToShip { get; set; }
         public double? ShippedQuantity { get; set; }
         public double? LeftToShip { get; set; }
         public bool FullyShipped { get; set; }

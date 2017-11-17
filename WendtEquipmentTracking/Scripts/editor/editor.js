@@ -118,9 +118,9 @@
                     }
 
                 },
-                dom: "<'row'<'col-sm-5 text-left custom'f><'col-sm-3 text-center'i><'col-sm-4 text-right'l>>" +
+                dom: "<'row'<'col-sm-5 text-left custom'f><'col-sm-5'i><'col-sm-2 text-right'l>>" +
                      "<'row'<'col-sm-12'tr>>" +
-                     "<'row bottom-section'<'col-sm-2 text-left createButtonContainer'><'col-sm-10 text-center'p>>"
+                     "<'row bottom-section'<'col-sm-2 text-left createButtonContainer'><'col-sm-5 text-center'i><'col-sm-5 text-right'p>>"
 
 
             }, settings);

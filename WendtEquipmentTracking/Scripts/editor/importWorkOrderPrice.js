@@ -40,21 +40,27 @@
             });
 
             $("#Import").on("click", function () {
+                var selectedRows = editorMain.datatable.rows({ selected: true }).indexes();
+                if (selectedRows.length) {
+                    if (!$this.validationErrors()) {
+                        $this.canSubmit = true;
 
-                if (!$this.validationErrors()) {
-                    $this.canSubmit = true;
-
-                    editorMain.editor.edit(
-                        editorMain.datatable.rows({ selected: true }).indexes(), false
-                    ).submit(function () {
-                        $this.canSubmit = false;
-                        location.href = ROOT_URL + "WorkOrderPrice/?ajaxSuccess=true"
-                    }, function () {
-                        $this.canSubmit = false;
-                        main.error("There was an error whill trying to import");
-                    });
+                        editorMain.editor.edit(
+                            editorMain.datatable.rows({ selected: true }).indexes(), false
+                        ).submit(function () {
+                            $this.canSubmit = false;
+                            location.href = ROOT_URL + "WorkOrderPrice/?ajaxSuccess=true"
+                        }, function () {
+                            $this.canSubmit = false;
+                            main.error("There was an error whill trying to import");
+                        });
+                    } else {
+                        main.error("Please address all rows with validation errors before importing.")
+                    }
                 } else {
-                    main.error("Please address all rows with validation errors before importing.")
+                    $("#Import").button("reset");
+
+                    main.error("You must select at least one record");
                 }
             });
 

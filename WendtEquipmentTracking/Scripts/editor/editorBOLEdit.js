@@ -17,7 +17,6 @@
 
             this.initEditor();
             this.initDatatable();
-            
         }
 
         this.initEvents = function () {
@@ -82,12 +81,19 @@
             editorMain.datatable.on('select', function (e, dt, type, indexes) {
                 if (type === 'row') {
                     $.each(indexes, function () {
-
-                        if(dt.cell(this, 1).data() === 0) {
+                        if (dt.cell(this, 1).data() === 0) {
                             var leftToShip = dt.cell(this, 13).data();
                             dt.cell(this, 1).data(leftToShip);
                         }
                     });
+
+                    $this.updateSelectedDisplay();
+                }
+            });
+
+            editorMain.datatable.on('deselect', function (e, dt, type, indexes) {
+                if (type === 'row') {
+                    $this.updateSelectedDisplay();
                 }
             });
 
@@ -147,7 +153,7 @@
                     { name: "Equipment.UnitWeightText" },
                     { name: "Equipment.TotalWeight" },
                     { name: "Equipment.TotalWeightShipped" },
-                    { name: "Equipment.ReadyToShipText" },
+                    { name: "Equipment.ReadyToShip" },
                     { name: "Equipment.ShippedQuantity" },
                     { name: "Equipment.LeftToShip" },
                     { name: "Equipment.FullyShippedText" },
@@ -246,7 +252,7 @@
                         data: "Equipment.TotalWeightShipped", "targets": 12, className: "active text-right totalWeightShippedWidth"
                     },
                     {
-                        data: "Equipment.ReadyToShipText", "targets": 13, className: "text-right readyToShipWidth active",
+                        data: "Equipment.ReadyToShip", "targets": 13, className: "text-right readyToShipWidth active",
                         createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                             $(cell).addClass(rowData.Equipment.Indicators.ReadyToShipColor);
                         }
@@ -300,6 +306,9 @@
                         className: "notesWidth active"
                     }
                 ],
+                initComplete: function(settings, json) {
+                    $this.updateSelectedDisplay();
+                },
                 createdRow: function (row, data, index) {
                     if (data.IsDuplicate) {
                         $(row).addClass('warning');
@@ -321,6 +330,17 @@
                     columns: [1, 17, 20, 21]
                 }
             });
+        }
+
+        this.updateSelectedDisplay = function () {
+            var quantity = 0;
+            var selectedRows = editorMain.datatable.rows({ selected: true })
+                .every(function (rowIdx, tableLoop, rowLoop) {
+                    var data = this.data();
+                    quantity += data.Quantity;
+                });
+
+            $(".select-info .select-item").eq(1).html("- Quantity: " + quantity);
         }
 
         this.lock = function () {

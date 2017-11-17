@@ -60,7 +60,7 @@
           <Property Name="UnitWeight" Type="float" />
           <Property Name="TotalWeight" Type="float" />
           <Property Name="TotalWeightShipped" Type="float" />
-          <Property Name="ReadyToShip" Type="float" />
+          <Property Name="ReadyToShip" Type="float" Nullable="false" />
           <Property Name="ShippedQuantity" Type="float" />
           <Property Name="LeftToShip" Type="float" />
           <Property Name="FullyShipped" Type="bit" Nullable="false" />
@@ -506,7 +506,7 @@ warning 6013: The table/view 'WendtEquipmentTracking.dbo.HardwareCommercialCode2
           <Property Name="UnitWeight" Type="Double" />
           <Property Name="TotalWeight" Type="Double" />
           <Property Name="TotalWeightShipped" Type="Double" />
-          <Property Name="ReadyToShip" Type="Double" />
+          <Property Name="ReadyToShip" Type="Double" Nullable="false" />
           <Property Name="ShippedQuantity" Type="Double" />
           <Property Name="LeftToShip" Type="Double" />
           <Property Name="FullyShipped" Type="Boolean" Nullable="false" />

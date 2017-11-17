@@ -38,7 +38,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         public Nullable<double> UnitWeight { get; set; }
         public Nullable<double> TotalWeight { get; set; }
         public Nullable<double> TotalWeightShipped { get; set; }
-        public Nullable<double> ReadyToShip { get; set; }
+        public double ReadyToShip { get; set; }
         public Nullable<double> ShippedQuantity { get; set; }
         public Nullable<double> LeftToShip { get; set; }
         public bool FullyShipped { get; set; }

@@ -216,6 +216,10 @@ div.dataTables_wrapper .bottom-section {
     padding: 15px 0;
 }
 
+.dataTables_info {
+    line-height: 25px;
+}
+
 .checkbox-inline + .checkbox-inline + .checkbox-inline {
     margin-left: 0; 
 }
@@ -231,7 +235,7 @@ div.dataTables_wrapper .bottom-section {
 
     .table-styled th {
         vertical-align: middle !important;
-        padding: 0 18px 0 10px !important;
+        padding: 5px 18px 5px 10px !important;
         text-align: center;
         white-space: pre;
         cursor: pointer;

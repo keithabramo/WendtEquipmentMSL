@@ -20,10 +20,10 @@
                     if (!filterReadyToShip) {
                         return true;
                     } else {
-                        var leftToShip = data[13];
+                        var leftToShip = data[14];
                         var isAssociatedToHardwareKit = data[25];
 
-                        if (leftToShip && parseInt(leftToShip, 10) > 0 && !isAssociatedToHardwareKit) {
+                        if (leftToShip && parseInt(leftToShip, 10) > 0 && isAssociatedToHardwareKit != "YES") {
                             return true;
                         }
                     }
@@ -39,7 +39,7 @@
                     if (!hardwareFilter) {
                         return true;
                     } else {
-                        var equipment = data[0];
+                        var equipment = data[1];
 
                         if (equipment.toLowerCase() !== "hardware") {
                             return true;
@@ -57,7 +57,7 @@
                     if (!errorFilter) {
                         return true;
                     } else {
-                        return data[23] == "True";
+                        return data[24] == "True";
                     }
                 }
             );
@@ -98,7 +98,7 @@
                 form.set('ShippingTagNumber', $row.find("textarea[name='ShippingTagNumber']").val());
                 form.set('Description', $row.find("textarea[name='Description']").val());
                 form.set('UnitWeightText', $row.find("input[name='UnitWeight']").val());
-                form.set('ReadyToShipText', $row.find("input[name='ReadyToShip']").val());
+                form.set('ReadyToShip', $row.find("input[name='ReadyToShip']").val());
                 form.set('ShippedFrom', $row.find("input[name='ShippedFrom']").val());
                 form.set('HTSCode', $row.find("input[name='HTSCode']").val());
                 form.set('CountryOfOrigin', $row.find("input[name='CountryOfOrigin']").val());
@@ -154,7 +154,7 @@
                 $createRow.find("textarea[name='ShippingTagNumber']").val(rowData.ShippingTagNumber);
                 $createRow.find("textarea[name='Description']").val(rowData.Description);
                 $createRow.find("input[name='UnitWeight']").val(rowData.UnitWeightText);
-                $createRow.find("input[name='ReadyToShip']").val(rowData.ReadyToShipText);
+                $createRow.find("input[name='ReadyToShip']").val(rowData.ReadyToShip);
                 $createRow.find("input[name='ShippedFrom']").val(rowData.ShippedFrom);
                 $createRow.find("input[name='HTSCode']").val(rowData.HTSCode);
                 $createRow.find("input[name='CountryOfOrigin']").val(rowData.CountryOfOrigin);
@@ -174,7 +174,7 @@
                     var description = this.field('Description');
                     var unitWeight = this.field('UnitWeightText');
                     var quantity = this.field('Quantity');
-                    var readyToShip = this.field('ReadyToShipText');
+                    var readyToShip = this.field('ReadyToShip');
 
                     var error = false;
                     if (action === "edit") {
@@ -414,7 +414,7 @@
                     { name: "UnitWeightText" },
                     { name: "TotalWeight", type: "readonly" },
                     { name: "TotalWeightShipped", type: "readonly" },
-                    { name: "ReadyToShipText" },
+                    { name: "ReadyToShip" },
                     { name: "ShippedQuantity", type: "readonly" },
                     { name: "LeftToShip", type: "readonly" },
                     { name: "FullyShippedText", type: "readonly" },
@@ -470,7 +470,7 @@
                         searchable: false,
                         sortable: false,
                         render: function (datadata, type, row, meta) {
-                            return '<span class="copy glyphicon glyphicon-duplicate text-primary"></span>';
+                            return '<span title="Copy Row" class="copy glyphicon glyphicon-duplicate text-primary"></span>';
                         }
                     },
                     {
@@ -529,7 +529,7 @@
                         data: "TotalWeightShipped", "targets": 11, className: "active text-right totalWeightShippedWidth"
                     },
                     {
-                        data: "ReadyToShipText", "targets": 12, className: "text-right readyToShipWidth",
+                        data: "ReadyToShip", "targets": 12, className: "text-right readyToShipWidth",
                         createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                             $(cell).addClass(rowData.Indicators.ReadyToShipColor);
                         }
@@ -601,7 +601,12 @@
                     {
                         data: "HasErrorsText",
                         "targets": 24,
-                        searchable: false,
+                        sortable: false,
+                        visible: false
+                    },
+                    {
+                        data: "IsAssociatedToHardwareKitText",
+                        "targets": 25,
                         sortable: false,
                         visible: false
                     }
