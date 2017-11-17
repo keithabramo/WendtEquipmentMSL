@@ -144,43 +144,52 @@ namespace WendtEquipmentTracking.App.Controllers
             return View(model);
         }
 
-        // POST: WorkOrderPrice
+
+
+
+        // POST: Equipment
         [HttpPost]
-        public ActionResult WorkOrderPrice(ImportModel model)
+        public JsonResult SelectWorkOrderPriceFile(ImportModel model)
         {
+            var workOrderPriceImportModel = new WorkOrderPriceImportModel();
+
             try
             {
-                if (ModelState.IsValid)
+                if (model.File != null)
                 {
-
-                    if (model.File != null)
+                    byte[] file = null;
+                    using (var memoryStream = new MemoryStream())
                     {
-                        byte[] file = null;
-                        using (var memoryStream = new MemoryStream())
-                        {
-                            model.File.InputStream.CopyTo(memoryStream);
-                            file = memoryStream.ToArray();
-                        }
-
-                        var filePath = importService.SaveFile(file);
-
-
-                        return View("ImportWorkOrderPrice", new WorkOrderPriceImportModel { FilePath = filePath });
+                        model.File.InputStream.CopyTo(memoryStream);
+                        file = memoryStream.ToArray();
                     }
-                    else
+
+                    var filePath = importService.SaveFile(file);
+
+
+                    //check to see if the file is in correct format
+                    try
                     {
-                        ModelState.AddModelError("File", "You must specify a file.");
+                        var importBOs = importService.GetWorkOrderPricesImport(filePath);
                     }
+                    catch (Exception e)
+                    {
+                        return Json(new { Error = "The file does not conform to the expected format. Please make sure all column headers are spelled correctly and in the first row of the spreadsheet. Details: " + e.Message });
+                    }
+
+                    workOrderPriceImportModel.FilePath = filePath;
+
+                    return Json(workOrderPriceImportModel);
                 }
-
-                HandleError("There was an issue while loading this file", ModelState);
-
-                return View(model);
+                else
+                {
+                    return Json(new { Error = "You must specify a file." });
+                }
             }
             catch (Exception e)
             {
-                HandleError("There was an error while loading this file", e);
-                return View(model);
+                HandleError("There was an error", e);
+                return Json(new { Error = "There was an error while trying to load this file." });
             }
         }
     }

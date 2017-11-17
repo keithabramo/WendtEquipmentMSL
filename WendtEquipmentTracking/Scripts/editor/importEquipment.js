@@ -46,8 +46,8 @@ $(function () {
 
             this.dropzone.on("removedfile", function (file) {
                 $("#equipmentConfiguration").find("input[data-fileid='" + file.name + "']").remove();
-                if ($this.editorMain.datatable.rows().any()) {
-                    $("#equipmentConfigurationForm").submit();
+                if ($this.equipmentTable) {
+                    editorMain.datatable.ajax.reload();
                 }
             });
 
@@ -78,12 +78,3 @@ $(function () {
     new ImportEquipment();
 
 });
-
-function OnComplete() {
-
-
-    $("[type='submit']").button("reset");
-    $.validator.unobtrusive.parse('#equipmentConfiguration')
-    form.initStyles();
-    form.initEvents();
-}

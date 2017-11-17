@@ -40,13 +40,17 @@
                             location.href = ROOT_URL + "Equipment/?ajaxSuccess=true"
                         }, function () {
                             $this.canSubmit = false;
+                            $("#import").button("reset");
+
                             main.error("There was an error whill trying to import");
                         });
                     } else {
+                        $("#import").button("reset");
+
                         main.error("Please address all rows with validation errors before importing.")
                     }
                 } else {
-                    $("#Import").button("reset");
+                    $("#import").button("reset");
 
                     main.error("You must select at least one record");
                 }

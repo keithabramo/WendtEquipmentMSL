@@ -10,30 +10,20 @@
 
 <div class="alert alert-info"><p><a href="~/Files/WorkOrderPriceTemplate.xlsx" target="_blank" class="alert-link">Click Here</a> to download the template file needed for importing work order prices</p></div>
 
-
-@using (Html.BeginForm("WorkOrderPrice", "Import", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("SelectWorkOrderPriceFile", "Import", FormMethod.Post, new { enctype = "multipart/form-data", @class = "dropzone", id = "myDropzone" }))
 {
-    @Html.AntiForgeryToken()
-
-    <div class="form">
-        <hr />
-
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.File)
-                    @Html.TextBoxFor(model => model.File, new { @class = "form-control", type = "file" })
-                    @Html.ValidationMessageFor(model => model.File, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="form-group">
-                    <input type="submit" value="Continue" class="btn btn-primary" />
-                </div>
-            </div>
-        </div>
-    </div>
 }
 
+<input type="hidden" id="FilePath" />
+<div id="workOrderPriceRows" class="collapse">
+    @Html.Partial("WorkOrderPriceTablePartial")
+</div>
+
 @section Scripts {
+    @Styles.Render("~/Content/dropzone")
+
+    @Scripts.Render("~/bundles/dropzone")
     @Scripts.Render("~/bundles/form")
+    @Scripts.Render("~/bundles/editor")
+    @Scripts.Render("~/bundles/importWorkOrderPrice")
 }

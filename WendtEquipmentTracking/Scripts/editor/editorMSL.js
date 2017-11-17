@@ -368,15 +368,15 @@
                     $(row.node()).removeClass('active');
                 }
 
-                $(editorMain.datatable.cell(row.index(), 0).node()).attr("class", data.Indicators.EquipmentNameColor);
-                $(editorMain.datatable.cell(row.index(), 4).node()).attr("class", data.Indicators.WorkOrderNumberColor);
-                $(editorMain.datatable.cell(row.index(), 8).node()).attr("class", "text-right " + data.Indicators.UnitWeightColor);
-                $(editorMain.datatable.cell(row.index(), 11).node()).attr("class", "text-right " + data.Indicators.ReadyToShipColor);
-                $(editorMain.datatable.cell(row.index(), 12).node()).attr("class", "text-right active " + data.Indicators.ShippedQtyColor);
-                $(editorMain.datatable.cell(row.index(), 13).node()).attr("class", "text-right active " + data.Indicators.LeftToShipColor);
-                $(editorMain.datatable.cell(row.index(), 14).node()).attr("class", "active " + data.Indicators.FullyShippedColor);
-                $(editorMain.datatable.cell(row.index(), 16).node()).attr("class", "text-right active " + data.Indicators.CustomsValueColor);
-                $(editorMain.datatable.cell(row.index(), 17).node()).attr("class", "text-right active " + data.Indicators.SalePriceColor);
+                $(editorMain.datatable.cell(row.index(), 1).node()).attr("class", data.Indicators.EquipmentNameColor);
+                $(editorMain.datatable.cell(row.index(), 5).node()).attr("class", data.Indicators.WorkOrderNumberColor);
+                $(editorMain.datatable.cell(row.index(), 9).node()).attr("class", "text-right " + data.Indicators.UnitWeightColor);
+                $(editorMain.datatable.cell(row.index(), 12).node()).attr("class", "text-right " + data.Indicators.ReadyToShipColor);
+                $(editorMain.datatable.cell(row.index(), 13).node()).attr("class", "text-right active " + data.Indicators.ShippedQtyColor);
+                $(editorMain.datatable.cell(row.index(), 14).node()).attr("class", "text-right active " + data.Indicators.LeftToShipColor);
+                $(editorMain.datatable.cell(row.index(), 15).node()).attr("class", "active " + data.Indicators.FullyShippedColor);
+                $(editorMain.datatable.cell(row.index(), 17).node()).attr("class", "text-right active " + data.Indicators.CustomsValueColor);
+                $(editorMain.datatable.cell(row.index(), 18).node()).attr("class", "text-right active " + data.Indicators.SalePriceColor);
             });
 
             $(".table").on("mousedown", "td.focus", function (e) {

@@ -137,8 +137,8 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Helper
                 WorkOrderNumber = rowValues[0].ToString(),
                 CostPrice = Convert.ToDouble(rowValues[1].ToString().Replace("$", "").Replace(",", "")),
                 SalePrice = Convert.ToDouble(rowValues[2].ToString().Replace("$", "").Replace(",", "")),
-                ReleasedPercent = Convert.ToDouble(rowValues[3].ToString().Replace("%", "")),
-                ShippedPercent = Convert.ToDouble(rowValues[4].ToString().Replace("%", ""))
+                ReleasedPercent = Convert.ToDouble(rowValues[3].ToString().Replace("%", "")) * 100, //percent columns come back as decimals between 0 - 1
+                ShippedPercent = Convert.ToDouble(rowValues[4].ToString().Replace("%", "")) * 100 //percent columns come back as decimals between 0 - 1
             }).ToList();
 
             return records;

@@ -293,6 +293,7 @@
     <Content Include="Scripts\editor\editorHardwareKitEdit.js" />
     <Content Include="Scripts\editor\editorBOLEdit.js" />
     <Content Include="Scripts\editor\editorBOLCreate.js" />
+    <Content Include="Scripts\editor\importWorkOrderPriceTable.js" />
     <Content Include="Scripts\editor\timer.js" />
     <Content Include="Scripts\editor\tableHardwareKitDetails.js" />
     <Content Include="Scripts\editor\tableHardwareKit.js" />
@@ -379,7 +380,7 @@
     <Content Include="Views\HardwareKit\HardwareAssociatedToHardwareKit.cshtml" />
     <Content Include="Views\HardwareKit\Index.cshtml" />
     <Content Include="Views\HardwareKit\HardwareToAddToHardwareKit.cshtml" />
-    <Content Include="Views\Import\ImportWorkOrderPrice.cshtml" />
+    <Content Include="Views\Import\WorkOrderPriceTablePartial.cshtml" />
     <Content Include="Views\Shared\NotFound.cshtml" />
     <Content Include="Views\Shared\Unauthorized.cshtml" />
     <Content Include="Views\Priority\Create.cshtml" />
