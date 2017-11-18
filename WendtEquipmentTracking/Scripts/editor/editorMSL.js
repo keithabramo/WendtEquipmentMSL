@@ -463,7 +463,7 @@
                         $(editorMain.datatable.cell(index, 5).node()).addClass("active");
                     }
                 },
-                order: [[3, 'desc']],
+                order: [[3, 'desc'], [26, 'desc']],
                 columnDefs: [
                     {
                         "targets": 0,
@@ -608,6 +608,12 @@
                         data: "IsAssociatedToHardwareKitText",
                         "targets": 25,
                         sortable: false,
+                        visible: false
+                    },
+                    {
+                        data: "EquipmentId",
+                        "targets": 26,
+                        searchable: false,
                         visible: false
                     }
                 ]
