@@ -5,7 +5,8 @@
     
     @if (Html.UserIsInRole(UserRoles.ReadWrite))
     {
-        @Html.ActionLink("Import Equipment", "Equipment", "Import", null, new { @class = "btn " + (Model == ActionNav.ImportEquipment ? "btn-secondary" : "btn-primary") })
+        @Html.ActionLink("Import Drawing Files", "Equipment", "Import", null, new { @class = "btn " + (Model == ActionNav.ImportEquipment ? "btn-secondary" : "btn-primary") })
+        @Html.ActionLink("Import Equipment", "RawEquipment", "Import", null, new { @class = "btn " + (Model == ActionNav.ImportRawEquipment ? "btn-secondary" : "btn-primary") })
         @Html.ActionLink("Create BOL", "Create", "BillOfLading", null, new { @class = "btn " + (Model == ActionNav.CreateBOL ? "btn-secondary" : "btn-primary") })
         @Html.ActionLink("Create Hardware Kit", "Create", "HardwareKit", null, new { @class = "btn " + (Model == ActionNav.CreateHardwareKit ? "btn-secondary" : "btn-primary") })
         @Html.ActionLink("Import Work Order Prices", "WorkOrderPrice", "Import", null, new { @class = "btn " + (Model == ActionNav.ImportWorkOrderPrice ? "btn-secondary" : "btn-primary") })

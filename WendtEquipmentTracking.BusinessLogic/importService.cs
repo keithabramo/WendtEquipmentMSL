@@ -90,5 +90,30 @@ namespace WendtEquipmentTracking.BusinessLogic
 
             return workOrderPriceBOs.ToList();
         }
+
+        public IEnumerable<EquipmentBO> GetRawEquipmentImport(string filePath)
+        {
+            var equipmentRows = importEngine.GetRawEquipment(filePath);
+
+            var equipmentBOs = equipmentRows.Select(x => new EquipmentBO
+            {
+                Description = x.Description,
+                DrawingNumber = x.DrawingNumber,
+                EquipmentName = x.EquipmentName,
+                Priority = new PriorityBO { PriorityNumber = x.PriorityNumber },
+                Quantity = x.Quantity,
+                ReleaseDate = x.ReleaseDate,
+                ShippingTagNumber = x.ShippingTagNumber,
+                UnitWeight = x.UnitWeight,
+                WorkOrderNumber = x.WorkOrderNumber,
+                CountryOfOrigin = x.CountryOfOrigin,
+                HTSCode = x.HTSCode,
+                Notes = x.Notes,
+                ReadyToShip = x.ReadyToShip,
+                ShippedFrom = x.ShippedFrom
+            });
+
+            return equipmentBOs.ToList();
+        }
     }
 }

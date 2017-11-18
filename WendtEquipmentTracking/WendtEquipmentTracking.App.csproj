@@ -187,6 +187,7 @@
     </Compile>
     <Compile Include="Models\EditorModel.cs" />
     <Compile Include="Models\IDisctionary.cs" />
+    <Compile Include="Models\RawEquipmentImportModel.cs" />
     <Compile Include="Models\WorkOrderPriceImportModel.cs" />
     <Compile Include="Models\HardwareCommercialCodeModel.cs" />
     <Compile Include="Models\HardwareKitGroupModel.cs" />
@@ -276,6 +277,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Files\WorkOrderPriceTemplate.xlsx" />
     <Compile Include="Models\PriorityModel.cs" />
+    <Content Include="Files\RawEquipmentTemplate.xlsx" />
     <None Include="Properties\PublishProfiles\ReleaseProfile.pubxml" />
     <None Include="Properties\PublishProfiles\StagingProfile.pubxml" />
     <Content Include="Images\logo.jpg" />
@@ -293,6 +295,8 @@
     <Content Include="Scripts\editor\editorHardwareKitEdit.js" />
     <Content Include="Scripts\editor\editorBOLEdit.js" />
     <Content Include="Scripts\editor\editorBOLCreate.js" />
+    <Content Include="Scripts\editor\importRawEquipment.js" />
+    <Content Include="Scripts\editor\importRawEquipmentTable.js" />
     <Content Include="Scripts\editor\importWorkOrderPriceTable.js" />
     <Content Include="Scripts\editor\timer.js" />
     <Content Include="Scripts\editor\tableHardwareKitDetails.js" />
@@ -392,6 +396,8 @@
     <Content Include="Views\Import\EquipmentConfigurationPartial.cshtml" />
     <Content Include="Views\WorkOrderPrice\Index.cshtml" />
     <Content Include="Views\Shared\MessagePartial.cshtml" />
+    <Content Include="Views\Import\RawEquipment.cshtml" />
+    <Content Include="Views\Import\RawEquipmentTablePartial.cshtml" />
     <None Include="Web.Staging.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

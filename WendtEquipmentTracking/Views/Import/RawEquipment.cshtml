@@ -1,0 +1,42 @@
+﻿@model ImportModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@Html.Partial("ActionNavPartial", ActionNav.ImportRawEquipment)
+
+<h2 class="text-center col-sm-4 center-block"><strong>@ViewBag.ProjectNumber</strong></h2>
+
+<h4>Import Equipment <br /><small>Select the excel document containing the equipment you would like to import.</small></h4>
+
+<div class="alert alert-info"><p><a href="~/Files/RawEquipmentTemplate.xlsx" target="_blank" class="alert-link">Click Here</a> to download the template file needed for importing equipment</p></div>
+
+@using (Html.BeginForm("SelectRawEquipmentFile", "Import", FormMethod.Post, new { enctype = "multipart/form-data", @class = "dropzone", id = "myDropzone" }))
+{
+}
+
+<input type="hidden" id="FilePath" />
+<div id="rawEquipmentRows" class="collapse">
+    @Html.Partial("RawEquipmentTablePartial")
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+
+        var priorities = [];
+
+        @foreach (var priority in ViewBag.Priorities)
+        {
+            @:priorities.push(@priority);
+        }
+
+    </script>
+
+    @Styles.Render("~/Content/dropzone")
+
+    @Scripts.Render("~/bundles/dropzone")
+    @Scripts.Render("~/bundles/form")
+    @Scripts.Render("~/bundles/editor")
+    @Scripts.Render("~/bundles/importRawEquipment")
+}

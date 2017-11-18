@@ -35,6 +35,16 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement
             return workOrderPriceRecords;
         }
 
+        public IEnumerable<RawEquipmentRow> GetRawEquipment(string filePath)
+        {
+            IEnumerable<RawEquipmentRow> equipmentRecords = new List<RawEquipmentRow>();
+            using (var excelHelper = new ExcelDataReaderHelper(filePath))
+            {
+                equipmentRecords = ImportHelper.GetRawEquipment(excelHelper);
+            }
+
+            return equipmentRecords;
+        }
 
 
 

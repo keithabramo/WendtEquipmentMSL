@@ -19,6 +19,13 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Helper
                     RowStart = 2,
                     NumberOfColumns = 5
                 }
+            },
+            { "Raw Equipment", new ExcelDataLocation
+                {
+                    ColumnStart = 1,
+                    RowStart = 2,
+                    NumberOfColumns = 14
+                }
             }
         };
 
@@ -106,6 +113,12 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Helper
                             unitWeightNumber = .01;
                         }
 
+                        //round up to .01 for 0 unit weights
+                        if (unitWeightNumber == 0)
+                        {
+                            unitWeightNumber = .01;
+                        }
+
                         var equipmentRecord = new EquipmentRow
                         {
                             EquipmentName = equipmentName,
@@ -140,6 +153,85 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Helper
                 ReleasedPercent = Convert.ToDouble(rowValues[3].ToString().Replace("%", "")) * 100, //percent columns come back as decimals between 0 - 1
                 ShippedPercent = Convert.ToDouble(rowValues[4].ToString().Replace("%", "")) * 100 //percent columns come back as decimals between 0 - 1
             }).ToList();
+
+            return records;
+        }
+
+        public static IEnumerable<RawEquipmentRow> GetRawEquipment(ExcelDataReaderHelper excelHelper)
+        {
+            var dataLocation = dataLocations["Raw Equipment"];
+
+            object[][] values = excelHelper.GetRangeCells(0, dataLocation.ColumnStart, dataLocation.RowStart, dataLocation.NumberOfColumns);
+
+            var records = new List<RawEquipmentRow>();
+            foreach (var rowValues in values.Where(r => r[0] != null))
+            {
+                var equipmentName = rowValues[0].ToString();
+                var priorityNumberString = rowValues[1].ToString();
+                var releaseDateString = rowValues[2].ToString();
+                var drawingNumber = rowValues[3].ToString();
+                var workOrderNumber = rowValues[4].ToString();
+                var quantityString = rowValues[5].ToString();
+                var shippingTagNumber = rowValues[6].ToString();
+                var description = rowValues[7].ToString();
+                var unitWeightString = rowValues[8].ToString();
+                var readyToShipString = rowValues[9].ToString();
+                var shippedFrom = rowValues[10].ToString();
+                var htsCode = rowValues[11].ToString();
+                var countryOfOrigin = rowValues[12].ToString();
+                var notes = rowValues[13].ToString();
+
+                int priorityNumber = 0;
+                if (!Int32.TryParse(priorityNumberString, out priorityNumber))
+                {
+                    priorityNumber = 0;
+                }
+
+                DateTime releaseDate = DateTime.Now;
+                if (!DateTime.TryParse(releaseDateString, out releaseDate))
+                {
+                    releaseDate = DateTime.Now;
+                }
+
+                int quantity = 0;
+                if (!Int32.TryParse(quantityString, out quantity))
+                {
+                    quantity = 0;
+                }
+
+                double unitWeight = 0;
+                if (!Double.TryParse(unitWeightString, out unitWeight))
+                {
+                    unitWeight = 0;
+                }
+
+                int readyToShip = 0;
+                if (!Int32.TryParse(readyToShipString, out readyToShip))
+                {
+                    readyToShip = 0;
+                }
+
+
+                var record = new RawEquipmentRow
+                {
+                    EquipmentName = equipmentName,
+                    PriorityNumber = priorityNumber,
+                    ReleaseDate = releaseDate,
+                    DrawingNumber = drawingNumber,
+                    WorkOrderNumber = workOrderNumber,
+                    Quantity = quantity,
+                    ShippingTagNumber = shippingTagNumber,
+                    Description = description,
+                    UnitWeight = unitWeight,
+                    ReadyToShip = readyToShip,
+                    ShippedFrom = shippedFrom,
+                    HTSCode = htsCode,
+                    CountryOfOrigin = countryOfOrigin,
+                    Notes = notes,
+                };
+
+                records.Add(record);
+            }
 
             return records;
         }

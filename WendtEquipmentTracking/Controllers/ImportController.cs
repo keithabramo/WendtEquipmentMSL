@@ -137,15 +137,13 @@ namespace WendtEquipmentTracking.App.Controllers
             return PartialView(equipmentImportModel);
         }
 
+
+
+
         public ActionResult WorkOrderPrice()
         {
-            var model = new ImportModel();
-
-            return View(model);
+            return View();
         }
-
-
-
 
         // POST: Equipment
         [HttpPost]
@@ -180,6 +178,73 @@ namespace WendtEquipmentTracking.App.Controllers
                     workOrderPriceImportModel.FilePath = filePath;
 
                     return Json(workOrderPriceImportModel);
+                }
+                else
+                {
+                    return Json(new { Error = "You must specify a file." });
+                }
+            }
+            catch (Exception e)
+            {
+                HandleError("There was an error", e);
+                return Json(new { Error = "There was an error while trying to load this file." });
+            }
+        }
+
+
+
+        public ActionResult RawEquipment()
+        {
+            var user = userService.GetCurrentUser();
+
+            if (user == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var prioritiesBOs = priorityService.GetAll(user.ProjectId);
+            var priorities = prioritiesBOs.Select(x => x.PriorityNumber).OrderBy(p => p).ToList();
+            var project = projectService.GetById(user.ProjectId);
+
+            ViewBag.ProjectNumber = project.ProjectNumber + (!string.IsNullOrWhiteSpace(project.ShipToCompany) ? ": " + project.ShipToCompany : "");
+            ViewBag.Priorities = priorities;
+
+            return View();
+        }
+
+        // POST: Equipment
+        [HttpPost]
+        public JsonResult SelectRawEquipmentFile(ImportModel model)
+        {
+            var rawEquipmentImportModel = new RawEquipmentImportModel();
+
+            try
+            {
+                if (model.File != null)
+                {
+                    byte[] file = null;
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        model.File.InputStream.CopyTo(memoryStream);
+                        file = memoryStream.ToArray();
+                    }
+
+                    var filePath = importService.SaveFile(file);
+
+
+                    //check to see if the file is in correct format
+                    try
+                    {
+                        var importBOs = importService.GetRawEquipmentImport(filePath);
+                    }
+                    catch (Exception e)
+                    {
+                        return Json(new { Error = "The file does not conform to the expected format. Please make sure all column headers are spelled correctly and in the first row of the spreadsheet. Details: " + e.Message });
+                    }
+
+                    rawEquipmentImportModel.FilePath = filePath;
+
+                    return Json(rawEquipmentImportModel);
                 }
                 else
                 {
