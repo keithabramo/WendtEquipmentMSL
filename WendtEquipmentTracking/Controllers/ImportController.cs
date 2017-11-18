@@ -106,7 +106,7 @@ namespace WendtEquipmentTracking.App.Controllers
             catch (Exception e)
             {
                 HandleError("There was an error", e);
-                return Json(new { Error = "There was an error while trying to load this equipment file." });
+                return Json(new { Error = "There was an error while trying to load this drawing file." });
             }
         }
 
