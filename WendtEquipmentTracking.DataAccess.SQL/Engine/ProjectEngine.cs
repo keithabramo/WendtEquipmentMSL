@@ -77,6 +77,44 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         }
 
+        public IQueryable<Project> ListRaw(Specification<Project> specification)
+        {
+            return this.repository.Find(specification);
+        }
+
+        public Project GetRaw(Specification<Project> specification)
+        {
+            return this.repository.Single(specification);
+        }
+
+        public void UndeleteProject(Project project)
+        {
+            var now = DateTime.Now;
+
+            project.ModifiedDate = now;
+            project.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
+            project.IsDeleted = false;
+            project.BillOfLadings.ToList().ForEach(ble => ble.IsDeleted = false);
+            project.Equipments.ToList().ForEach(ble => ble.IsDeleted = false);
+            project.HardwareKits.ToList().ForEach(ble => ble.IsDeleted = false);
+            project.WorkOrderPrices.ToList().ForEach(ble => ble.IsDeleted = false);
+
+            this.repository.Update(project);
+
+        }
+
+        public void UncompleteProject(Project project)
+        {
+            var now = DateTime.Now;
+
+            project.ModifiedDate = now;
+            project.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
+            project.IsCompleted = false;
+
+            this.repository.Update(project);
+
+        }
+
         public void SetDBContext(WendtEquipmentTrackingEntities dbContext)
         {
             this.repository.Dispose();

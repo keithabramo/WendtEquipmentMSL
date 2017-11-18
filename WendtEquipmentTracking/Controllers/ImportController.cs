@@ -142,6 +142,13 @@ namespace WendtEquipmentTracking.App.Controllers
 
         public ActionResult WorkOrderPrice()
         {
+            var user = userService.GetCurrentUser();
+
+            if (user == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             return View();
         }
 

@@ -12,11 +12,13 @@ namespace WendtEquipmentTracking.BusinessLogic
     {
         private WendtEquipmentTrackingEntities dbContext;
         private IUserEngine userEngine;
+        private IProjectEngine projectEngine;
 
         public UserService()
         {
             dbContext = new WendtEquipmentTrackingEntities();
             userEngine = new UserEngine(dbContext);
+            projectEngine = new ProjectEngine(dbContext);
         }
 
         public void Save(int projectId)
@@ -42,11 +44,18 @@ namespace WendtEquipmentTracking.BusinessLogic
 
             if (user != null)
             {
-                userBO = new UserBO
+                if (projectEngine.Get(ProjectSpecs.Id(user.ProjectId)) == null)
                 {
-                    ProjectId = user.ProjectId,
-                    UserName = user.UserName
-                };
+                    this.Delete();
+                }
+                else
+                {
+                    userBO = new UserBO
+                    {
+                        ProjectId = user.ProjectId,
+                        UserName = user.UserName
+                    };
+                }
             }
 
             return userBO;

@@ -10,12 +10,10 @@ namespace WendtEquipmentTracking.App.Controllers
     public class ProjectApiController : BaseApiController
     {
         private IProjectService projectService;
-        private IUserService userService;
 
         public ProjectApiController()
         {
             projectService = new ProjectService();
-            userService = new UserService();
         }
 
 
@@ -23,13 +21,6 @@ namespace WendtEquipmentTracking.App.Controllers
         public IEnumerable<ProjectModel> Table()
         {
             IEnumerable<ProjectModel> projectModels = new List<ProjectModel>();
-
-            var user = userService.GetCurrentUser();
-
-            if (user == null)
-            {
-                return projectModels;
-            }
 
             var projectBOs = projectService.GetAll();
 

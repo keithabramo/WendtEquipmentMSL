@@ -80,6 +80,13 @@ namespace WendtEquipmentTracking.App.Controllers
 
         public ActionResult Create()
         {
+            var user = userService.GetCurrentUser();
+
+            if (user == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             var percent = 10;
 
             return View(new HardwareKitModel { ExtraQuantityPercentage = percent });

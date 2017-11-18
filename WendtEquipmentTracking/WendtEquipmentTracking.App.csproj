@@ -166,11 +166,13 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HardwareKitApiController.cs" />
     <Compile Include="Controllers\PriorityApiController.cs" />
+    <Compile Include="Controllers\AdminApiController.cs" />
     <Compile Include="Controllers\ProjectApiController.cs" />
     <Compile Include="Controllers\BillOfLadingApiController.cs" />
     <Compile Include="Controllers\HardwareCommercialCodeApiController.cs" />
     <Compile Include="Controllers\EquipmentApiController.cs" />
     <Compile Include="Controllers\ImportApiController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\WorkOrderPriceApiController.cs" />
     <Compile Include="Controllers\PriorityController.cs" />
     <Compile Include="Controllers\HardwareCommercialCodeController.cs" />
@@ -298,6 +300,7 @@
     <Content Include="Scripts\editor\importRawEquipment.js" />
     <Content Include="Scripts\editor\importRawEquipmentTable.js" />
     <Content Include="Scripts\editor\importWorkOrderPriceTable.js" />
+    <Content Include="Scripts\editor\tableAdmin.js" />
     <Content Include="Scripts\editor\timer.js" />
     <Content Include="Scripts\editor\tableHardwareKitDetails.js" />
     <Content Include="Scripts\editor\tableHardwareKit.js" />
@@ -398,6 +401,7 @@
     <Content Include="Views\Shared\MessagePartial.cshtml" />
     <Content Include="Views\Import\RawEquipment.cshtml" />
     <Content Include="Views\Import\RawEquipmentTablePartial.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
     <None Include="Web.Staging.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
