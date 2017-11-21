@@ -587,7 +587,7 @@
                         searchable: false,
                         sortable: false,
                         render: function (data, type, row, meta) {
-                            return '<a href="javascript:void(0);" class="delete">Delete</a>';
+                            return !row.HasBillOfLading && !row.IsAssociatedToHardwareKit ? '<a href="javascript:void(0);" class="delete">Delete</a>' : '';
                         }
                     },
                     {
