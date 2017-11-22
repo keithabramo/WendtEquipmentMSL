@@ -1,4 +1,5 @@
-﻿using WendtEquipmentTracking.DataAccess.SQL.Specifications.Priorities;
+﻿using System.Collections.Generic;
+using WendtEquipmentTracking.DataAccess.SQL.Specifications.Priorities;
 
 namespace WendtEquipmentTracking.DataAccess.SQL.Specifications
 {
@@ -8,6 +9,11 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Specifications
         public static Specification<Priority> Id(int id)
         {
             return new IdSpecification(id);
+        }
+
+        public static Specification<Priority> Ids(IEnumerable<int> ids)
+        {
+            return new IdsSpecification(ids);
         }
 
         public static Specification<Priority> IsDeleted()

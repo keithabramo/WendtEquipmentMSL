@@ -17,6 +17,8 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Api
 
         void UpdatePriority(Priority priority);
 
+        void UpdatePriorities(IQueryable<Priority> priorities);
+
         void DeletePriority(Priority priority);
 
         void SetDBContext(WendtEquipmentTrackingEntities dbContext);

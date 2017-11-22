@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using WendtEquipmentTracking.App.Common;
 
 namespace WendtEquipmentTracking.App.Models
 {
@@ -17,15 +19,18 @@ namespace WendtEquipmentTracking.App.Models
         public int PriorityNumber { get; set; }
 
         [DisplayName("Start Date")]
+        [JsonConverter(typeof(CustomDateTimeConverter))]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         [Required]
         public DateTime DueDate { get; set; }
 
         [DisplayName("End Date")]
+        [JsonConverter(typeof(CustomDateTimeConverter))]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime? EndDate { get; set; }
 
         [DisplayName("Contractual Ship Date")]
+        [JsonConverter(typeof(CustomDateTimeConverter))]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime? ContractualShipDate { get; set; }
 

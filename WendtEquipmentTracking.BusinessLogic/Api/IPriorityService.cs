@@ -11,6 +11,8 @@ namespace WendtEquipmentTracking.BusinessLogic.Api
 
         void Update(PriorityBO priorityBO);
 
+        void UpdateAll(IEnumerable<PriorityBO> priorityBOs);
+
         void Delete(int id);
 
         IEnumerable<PriorityBO> GetAll(int projectId);

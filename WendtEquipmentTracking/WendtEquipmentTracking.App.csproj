@@ -305,7 +305,7 @@
     <Content Include="Scripts\editor\tableHardwareKitDetails.js" />
     <Content Include="Scripts\editor\tableHardwareKit.js" />
     <Content Include="Scripts\main.js" />
-    <Content Include="Scripts\editor\tablePriority.js" />
+    <Content Include="Scripts\editor\editorPriority.js" />
     <Content Include="Scripts\editor\tableHardwareCommercialCode.js" />
     <Content Include="Scripts\editor\tableProject.js" />
     <Content Include="Scripts\editor\tableBOLDetails.js" />
@@ -350,6 +350,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Views\Priority\Create.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -390,8 +391,6 @@
     <Content Include="Views\Import\WorkOrderPriceTablePartial.cshtml" />
     <Content Include="Views\Shared\NotFound.cshtml" />
     <Content Include="Views\Shared\Unauthorized.cshtml" />
-    <Content Include="Views\Priority\Create.cshtml" />
-    <Content Include="Views\Priority\Edit.cshtml" />
     <Content Include="Views\Priority\Index.cshtml" />
     <Content Include="Views\HardwareCommercialCode\Create.cshtml" />
     <Content Include="Views\HardwareCommercialCode\Edit.cshtml" />

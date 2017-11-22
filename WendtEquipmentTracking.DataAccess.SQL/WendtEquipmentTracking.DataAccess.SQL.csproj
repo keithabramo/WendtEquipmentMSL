@@ -127,6 +127,7 @@
     <Compile Include="Specifications\Equipments\BillOfLadingId.cs" />
     <Compile Include="Specifications\Equipments\IdsSpecification.cs" />
     <Compile Include="Specifications\HardwareKits\IsDeleted.cs" />
+    <Compile Include="Specifications\Priorities\IdsSpecification.cs" />
     <Compile Include="Specifications\Priorities\ProjectIdSpecification.cs" />
     <Compile Include="Specifications\Projects\IsCompleted.cs" />
     <Compile Include="Specifications\Projects\IsDeleted.cs" />

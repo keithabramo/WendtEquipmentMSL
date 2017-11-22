@@ -76,7 +76,7 @@ namespace WendtEquipmentTracking.App
             bundles.Add(new ScriptBundle("~/bundles/hardwareCommercialCodes").Include(
                        "~/Scripts/editor/tableHardwareCommercialCode.js"));
             bundles.Add(new ScriptBundle("~/bundles/priorities").Include(
-                       "~/Scripts/editor/tablePriority.js"));
+                       "~/Scripts/editor/editorPriority.js"));
             bundles.Add(new ScriptBundle("~/bundles/admin").Include(
                        "~/Scripts/editor/tableAdmin.js"));
 

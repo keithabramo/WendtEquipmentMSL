@@ -110,6 +110,33 @@ namespace WendtEquipmentTracking.BusinessLogic
             dbContext.SaveChanges();
         }
 
+        public void UpdateAll(IEnumerable<PriorityBO> priorityBOs)
+        {
+            //Performance Issue?
+            var oldPriorities = priorityEngine.List(PrioritySpecs.Ids(priorityBOs.Select(x => x.PriorityId)));
+
+            foreach (var oldPriority in oldPriorities)
+            {
+                var priorityBO = priorityBOs.FirstOrDefault(x => x.PriorityId == oldPriority.PriorityId);
+
+                if (priorityBO != null)
+                {
+                    oldPriority.DueDate = priorityBO.DueDate;
+                    oldPriority.EndDate = priorityBO.EndDate;
+                    oldPriority.ContractualShipDate = priorityBO.ContractualShipDate;
+                    oldPriority.EquipmentName = priorityBO.EquipmentName;
+                    oldPriority.PriorityNumber = priorityBO.PriorityNumber;
+                }
+
+
+            }
+
+            priorityEngine.UpdatePriorities(oldPriorities);
+
+            dbContext.SaveChanges();
+        }
+
+
         public void Delete(int id)
         {
             var priority = priorityEngine.Get(PrioritySpecs.Id(id));

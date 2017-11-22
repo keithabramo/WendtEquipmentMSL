@@ -76,6 +76,19 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         }
 
+        public void UpdatePriorities(IQueryable<Priority> priorities)
+        {
+            var now = DateTime.Now;
+
+            foreach (var priority in priorities)
+            {
+                priority.ModifiedDate = now;
+                priority.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
+
+                this.repository.Update(priority);
+            }
+        }
+
         public void DeletePriority(Priority priority)
         {
             var now = DateTime.Now;
