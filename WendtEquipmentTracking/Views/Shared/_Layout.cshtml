@@ -44,8 +44,27 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         @Html.Action("ProjectNavPartial", "Project", true)
-                        <li>
-                            <strong class="navbar-text">@Html.CurrentUsername()</strong>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><strong class="navbar-text">@Html.CurrentUsername()</strong> <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li class="dropdown-header">Change table font size:</li>
+                                <li>
+                                    <form class="navbar-form">
+                                        <select class="form-control fontSize input-sm">
+                                            <option value="10">10</option>
+                                            <option value="12" selected>12</option>
+                                            <option value="13">13</option>
+                                            <option value="14">14</option>
+                                            <option value="15">15</option>
+                                            <option value="16">16</option>
+                                            <option value="17">17</option>
+                                            <option value="18">18</option>
+                                            <option value="19">19</option>
+                                            <option value="20">20</option>
+                                        </select>
+                                    </form>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </div>

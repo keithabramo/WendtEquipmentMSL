@@ -203,7 +203,7 @@
                     },
                     {
                         data: "Equipment.ReleaseDate", "targets": 4,
-                        className: "releaseDateWidth active"
+                        className: "dateWidth active"
                     },
                     {
                         data: "Equipment.DrawingNumber", "targets": 5,
@@ -321,7 +321,9 @@
                     quantity += data.Quantity;
                 });
 
-            $(".select-info .select-item").eq(1).html("- Quantity: " + quantity);
+            $(".select-info").each(function () {
+                $(this).find(".select-item").eq(1).html("- Quantity: " + quantity);
+            });
         }
 
         this.initStyles();

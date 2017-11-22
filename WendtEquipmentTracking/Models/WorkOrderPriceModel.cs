@@ -9,7 +9,7 @@ namespace WendtEquipmentTracking.App.Models
         public int WorkOrderPriceId { get; set; }
         public int ProjectId { get; set; }
 
-        [DisplayName("Work Order Number")]
+        [DisplayName("Work Order #")]
         [Remote("ValidWorkOrderNumber", "Validate", AdditionalFields = "WorkOrderPriceId", ErrorMessage = "This work order price number already exists")]
         [Required]
         public string WorkOrderNumber { get; set; }

@@ -314,7 +314,8 @@ namespace WendtEquipmentTracking.App.Controllers
                         ReleaseDate = x.ReleaseDate,
                         ShippingTagNumber = x.ShippingTagNumber,
                         UnitWeight = x.UnitWeight,
-                        WorkOrderNumber = x.WorkOrderNumber
+                        WorkOrderNumber = x.WorkOrderNumber,
+                        ShippedFrom = "WENDT" //Default to this and allow them to change
                     }).ToList();
 
                 }
@@ -365,11 +366,8 @@ namespace WendtEquipmentTracking.App.Controllers
                     equipment.ShippingTagNumber = equipmentProperties["ShippingTagNumber"].ToString();
                     equipment.WorkOrderNumber = equipmentProperties["WorkOrderNumber"].ToString();
                     equipment.IsHardware = equipment.EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase);
-
-                    ///Defaults requested in Rev.3
-                    equipment.ReadyToShip = 0;
-                    equipment.ShippedFrom = "Wendt";
-
+                    equipment.ShippedFrom = equipmentProperties["ShippedFrom"].ToString();
+                    
                     var priorityNumber = equipment.PriorityId = Convert.ToInt32(equipmentProperties["PriorityNumber"]);
                     var priority = priorities.FirstOrDefault(x => x.PriorityNumber == priorityNumber);
                     if (priority != null)
@@ -399,6 +397,7 @@ namespace WendtEquipmentTracking.App.Controllers
                     EquipmentName = x.EquipmentName,
                     ShippingTagNumber = x.ShippingTagNumber,
                     WorkOrderNumber = x.WorkOrderNumber,
+                    ShippedFrom = x.ShippedFrom
                 }).ToList();
             }
 

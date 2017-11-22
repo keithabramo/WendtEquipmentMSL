@@ -93,7 +93,8 @@
                     { name: "Quantity" },
                     { name: "ShippingTagNumber", type: "textarea" },
                     { name: "Description", type: "textarea" },
-                    { name: "UnitWeightText" }
+                    { name: "UnitWeightText" },
+                    { name: "ShippedFrom" }
                 ]
             });
         }
@@ -153,7 +154,7 @@
                     },
                     {
                         data: "ReleaseDate", "targets": 3,
-                        className: "releaseDateWidth"
+                        className: "dateWidth"
                     },
                     {
                         data: "DrawingNumber", "targets": 4,
@@ -182,6 +183,10 @@
                         createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                             $(cell).addClass(rowData.Indicators.UnitWeightColor);
                         }
+                    },
+                    {
+                        data: "ShippedFrom", "targets": 10,
+                        className: "shippedFromWidth"
                     }
                 ],
                 select: {

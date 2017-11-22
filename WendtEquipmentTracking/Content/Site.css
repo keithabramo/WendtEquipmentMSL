@@ -229,21 +229,7 @@ div.dataTables_wrapper .bottom-section {
 
 
 /* all tables */
-.table-styled {
-    font-size: 12px;
-}
 
-    .table-styled th {
-        vertical-align: middle !important;
-        padding: 5px 18px 5px 10px !important;
-        text-align: center;
-        white-space: pre;
-        cursor: pointer;
-    }
-
-    .table-styled.table-hover > tbody > tr:hover {
-        background-color: #f5f5ff;
-    }
 
 table.dataTable thead th.select-checkbox {
     position: relative;
@@ -260,11 +246,6 @@ table.dataTable thead th.select-checkbox:before, table.dataTable thead th.select
 
 table.dataTable thead th.select-checkbox.sorting_desc, table.dataTable thead th.select-checkbox.sorting_asc {
     background: none !important;
-}
-
-
-table.dataTable tbody td.select-checkbox:before, table.dataTable tbody td.select-checkbox:after {
-    top: 1.6em;
 }
 
 table.dataTable thead th.select-checkbox:before {
@@ -293,11 +274,28 @@ table.dataTable tr.selected th.select-checkbox:after {
 
 
 
+.table-styled {
+    font-size: 12px;
+}
+
+    .table-styled th {
+        vertical-align: middle !important;
+        padding: 5px 18px 5px 10px !important;
+        text-align: center;
+        white-space: pre;
+        cursor: pointer;
+        font-size: 10px;
+    }
+
+    .table-styled.table-hover > tbody > tr:hover {
+        background-color: #f5f5ff;
+    }
 
 
 
-
-
+    .table-styled td {
+        line-height: 1 !important;
+    }
 
     .table-styled tr td {
         vertical-align: middle !important;
@@ -353,10 +351,12 @@ table.dataTable tr.selected th.select-checkbox:after {
 
     .table-styled  .priorityWidth  {
         min-width: 20px;
+        width: 20px;
     }
 
-    .table-styled  .releaseDateWidth  {
+    .table-styled  .dateWidth  {
         min-width: 70px;
+        width: 70px !important;
     }
 
     .table-styled  .drawingNumberWidth  {

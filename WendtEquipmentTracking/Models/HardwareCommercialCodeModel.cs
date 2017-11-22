@@ -6,7 +6,7 @@ namespace WendtEquipmentTracking.App.Models
     {
         public int HardwareCommercialCodeId { get; set; }
 
-        [DisplayName("Part Number")]
+        [DisplayName("Part #")]
         public string PartNumber { get; set; }
 
         [DisplayName("Description")]

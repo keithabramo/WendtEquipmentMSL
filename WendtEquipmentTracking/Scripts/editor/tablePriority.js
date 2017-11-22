@@ -43,19 +43,22 @@
                 ],
                 columnDefs: [
                     {
-                        "targets": 1,
+                        "targets": 0, className: "priorityWidth"
+                    },
+                    {
+                        "targets": 1, className: "dateWidth",
                         render: function (data, type, row, meta) {
                             return row.DueDate ? moment(row.DueDate).format("MM/DD/YYYY") : '';
                         }
                     },
                     {
-                        "targets": 2,
+                        "targets": 2, className: "dateWidth",
                         render: function (data, type, row, meta) {
                             return row.EndDate ? moment(row.EndDate).format("MM/DD/YYYY") : '';
                         }
                     },
                     {
-                        "targets": 3,
+                        "targets": 3, className: "dateWidth",
                         render: function (data, type, row, meta) {
                             return row.ContractualShipDate ? moment(row.ContractualShipDate).format("MM/DD/YYYY") : '';
                         }

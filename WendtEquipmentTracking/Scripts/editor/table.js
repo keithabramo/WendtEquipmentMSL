@@ -81,7 +81,7 @@
                 },
                 dom: "<'row'<'col-sm-5 text-left custom'f><'col-sm-5'i><'col-sm-2 text-right'l>>" +
                      "<'row'<'col-sm-12'tr>>" +
-                     "<'row bottom-section'<'col-sm-2 text-left createButtonContainer'><'col-sm-5 text-center'i><'col-sm-5 text-right'p>>"
+                     "<'row bottom-section'<'col-sm-2 text-left createButtonContainer'><'col-sm-5 text-right'i><'col-sm-5 text-right'p>>"
 
 
             }, settings);

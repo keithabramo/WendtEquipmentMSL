@@ -492,7 +492,7 @@
                     },
                     {
                         data: "ReleaseDate", "targets": 3,
-                        className: "releaseDateWidth"
+                        className: "dateWidth"
                     },
                     {
                         data: "DrawingNumber", "targets": 4,

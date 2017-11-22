@@ -17,7 +17,7 @@ namespace WendtEquipmentTracking.App.Models
         [Required]
         public string Equipment { get; set; }
 
-        [DisplayName("Priority")]
+        [DisplayName("Prty")]
         [Required]
         public int PriorityId { get; set; }
 

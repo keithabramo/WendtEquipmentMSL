@@ -10,7 +10,7 @@ namespace WendtEquipmentTracking.App.Models
         public int? PriorityId { get; set; }
         public int ProjectId { get; set; }
 
-        [DisplayName("Priority")]
+        [DisplayName("Prty")]
         [Remote("ValidPriorityNumber", "Validate", AdditionalFields = "PriorityId", ErrorMessage = "This priority number already exists")]
         [Required]
         [Range(Int32.MinValue, 99, ErrorMessage = "Priority Number cannot exceed 99")]

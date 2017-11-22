@@ -21,7 +21,7 @@ else
                             </td>
                         </tr>
                         <tr>
-                            <td>Priority</td>
+                            <td>Prty</td>
                             <td class="warning">
                                 @Html.DropDownListFor(model => model.PriorityId, new SelectList(Model.Priorities, "PriorityId", "PriorityNumber"), new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.PriorityId, "", new { @class = "text-danger" })

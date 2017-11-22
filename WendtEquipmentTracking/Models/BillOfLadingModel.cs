@@ -23,7 +23,7 @@ namespace WendtEquipmentTracking.App.Models
         public string BillOfLadingNumber { get; set; }
 
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
-        [DisplayName("Date Shipped")]
+        [DisplayName("Shipped")]
         [Required]
         public DateTime? DateShipped { get; set; }
 

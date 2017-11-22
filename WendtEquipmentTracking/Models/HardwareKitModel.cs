@@ -16,12 +16,12 @@ namespace WendtEquipmentTracking.App.Models
         [DisplayName("Revision")]
         public int Revision { get; set; }
 
-        [DisplayName("Hardware Kit Number")]
+        [DisplayName("Hardware Kit #")]
         [Remote("ValidHardwareKitNumber", "Validate", AdditionalFields = "HardwareKitId", ErrorMessage = "This hardware kit number already exists")]
         [Required]
         public string HardwareKitNumber { get; set; }
 
-        [DisplayName("Extra Quantity %")]
+        [DisplayName("Extra Qty %")]
         [Required]
         public double ExtraQuantityPercentage { get; set; }
 

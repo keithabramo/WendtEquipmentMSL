@@ -21,13 +21,13 @@ namespace WendtEquipmentTracking.App.Models
         [Required]
         public string EquipmentName { get; set; }
 
-        [DisplayName("Priority")]
+        [DisplayName("Prty")]
         [Required]
         public int? PriorityNumber { get; set; }
 
         [JsonConverter(typeof(CustomDateTimeConverter))]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
-        [DisplayName("Release Date")]
+        [DisplayName("Released")]
         [Required]
         public DateTime? ReleaseDate { get; set; }
 

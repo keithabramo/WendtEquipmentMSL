@@ -8,7 +8,7 @@ namespace WendtEquipmentTracking.App.Models
     {
         public int ProjectId { get; set; }
 
-        [DisplayName("Project Number")]
+        [DisplayName("Project #")]
         [Required]
         [Remote("ValidProjectNumber", "Validate", AdditionalFields = "ProjectId", ErrorMessage = "This project number already exists")]
         public double ProjectNumber { get; set; }
