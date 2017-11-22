@@ -167,15 +167,15 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Helper
             foreach (var rowValues in values.Where(r => r[0] != null))
             {
                 var equipmentName = rowValues[0].ToString();
-                var priorityNumberString = rowValues[1].ToString();
-                var releaseDateString = rowValues[2].ToString();
+                var priorityNumberString = rowValues[1] != null ? rowValues[1].ToString() : "";
+                var releaseDateString = rowValues[2] != null ? rowValues[2].ToString() : "";
                 var drawingNumber = rowValues[3].ToString();
                 var workOrderNumber = rowValues[4].ToString();
-                var quantityString = rowValues[5].ToString();
+                var quantityString = rowValues[5] != null ? rowValues[5].ToString() : "";
                 var shippingTagNumber = rowValues[6].ToString();
                 var description = rowValues[7].ToString();
-                var unitWeightString = rowValues[8].ToString();
-                var readyToShipString = rowValues[9].ToString();
+                var unitWeightString = rowValues[8] != null ? rowValues[8].ToString() : "";
+                var readyToShipString = rowValues[9] != null ? rowValues[9].ToString() : "";
                 var shippedFrom = rowValues[10].ToString();
                 var htsCode = rowValues[11].ToString();
                 var countryOfOrigin = rowValues[12].ToString();
