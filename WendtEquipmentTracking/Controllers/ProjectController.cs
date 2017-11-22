@@ -24,8 +24,15 @@ namespace WendtEquipmentTracking.App.Controllers
         //
         // GET: /Project/
 
-        public ViewResult Index()
+        public ActionResult Index()
         {
+            var user = userService.GetCurrentUser();
+
+            if (user == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             return View();
         }
 
@@ -34,6 +41,13 @@ namespace WendtEquipmentTracking.App.Controllers
 
         public ActionResult Details(int id)
         {
+            var user = userService.GetCurrentUser();
+
+            if (user == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             var project = projectService.GetById(id);
 
             if (project == null)
@@ -72,6 +86,13 @@ namespace WendtEquipmentTracking.App.Controllers
 
         public ActionResult Create()
         {
+            var user = userService.GetCurrentUser();
+
+            if (user == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             return View();
         }
 
@@ -130,6 +151,13 @@ namespace WendtEquipmentTracking.App.Controllers
 
         public ActionResult Edit(int id)
         {
+            var user = userService.GetCurrentUser();
+
+            if (user == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             var project = projectService.GetById(id);
             if (project == null)
             {

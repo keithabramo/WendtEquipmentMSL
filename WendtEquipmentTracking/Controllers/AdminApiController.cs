@@ -80,7 +80,7 @@ namespace WendtEquipmentTracking.App.Controllers
                     var equipmentProperties = row as Dictionary<string, object>;
 
                     var projectId = !string.IsNullOrEmpty(projectIdString) ? Convert.ToInt32(projectIdString) : 0;
-                    var isCompleted = equipmentProperties["IsCompleted"].ToString() == "True";
+                    var isCompleted = equipmentProperties["IsCompleted"].ToString() == "true";
 
                     if (projectId != 0)
                     {

@@ -11,10 +11,13 @@ namespace WendtEquipmentTracking.App.Controllers
     public class HardwareCommercialCodeController : BaseController
     {
         private IHardwareCommercialCodeService hardwareCommercialCodeService;
+        private IUserService userService;
+
 
         public HardwareCommercialCodeController()
         {
             hardwareCommercialCodeService = new HardwareCommercialCodeService();
+            userService = new UserService();
         }
 
         //
@@ -22,6 +25,13 @@ namespace WendtEquipmentTracking.App.Controllers
 
         public ActionResult Index()
         {
+            var user = userService.GetCurrentUser();
+
+            if (user == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             return View();
         }
 
@@ -31,6 +41,13 @@ namespace WendtEquipmentTracking.App.Controllers
 
         public ActionResult Create()
         {
+            var user = userService.GetCurrentUser();
+
+            if (user == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             return View();
         }
 
@@ -73,6 +90,13 @@ namespace WendtEquipmentTracking.App.Controllers
 
         public ActionResult Edit(int id)
         {
+            var user = userService.GetCurrentUser();
+
+            if (user == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             var hardwareCommercialCode = hardwareCommercialCodeService.GetById(id);
             if (hardwareCommercialCode == null)
             {

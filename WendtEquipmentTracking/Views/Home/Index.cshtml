@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ProjectModel>
+﻿@model IEnumerable<SelectListItem>
 
 @{
     ViewBag.Title = "Home Page";
@@ -14,7 +14,7 @@
 
     <div class="form-group col-md-4">
         <div class="input-group">
-            @Html.DropDownList("ProjectId", new SelectList(Model, "ProjectId", "ProjectNumber"), "Select Project...", new { @class = "form-control" })
+            @Html.DropDownList("ProjectId", new SelectList(Model, "Value", "Text"), "Select Project...", new { @class = "form-control" })
             <span class="input-group-btn">
                 <button class="btn btn-primary" type="submit">Go!</button>
             </span>

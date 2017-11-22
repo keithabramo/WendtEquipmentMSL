@@ -1,11 +1,9 @@
 ﻿
 using DevTrends.MvcDonutCaching;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using WendtEquipmentTracking.App.Common;
-using WendtEquipmentTracking.App.Models;
 using WendtEquipmentTracking.BusinessLogic;
 using WendtEquipmentTracking.BusinessLogic.Api;
 using WendtEquipmentTracking.Common;
@@ -37,14 +35,16 @@ namespace WendtEquipmentTracking.App.Controllers
             {
                 clearProjectNavCache();
 
-                var projectBOs = projectService.GetAllForNavigation();
+                var projectBOs = projectService.GetAllForNavigation().OrderByDescending(p => p.ProjectNumber);
 
-                var model = projectBOs.Select(x => new ProjectModel {
-                    ProjectId = x.ProjectId,
-                    ProjectNumber = x.ProjectNumber
-                });
+                var projects = projectBOs.Select(x => new SelectListItem
+                {
+                    Value = x.ProjectId.ToString(),
+                    Text = x.ProjectNumber + (!string.IsNullOrWhiteSpace(x.ShipToCompany) ? ": " + x.ShipToCompany : "")
+                }).ToList();
 
-                return View(model);
+
+                return View(projects);
             }
         }
 
