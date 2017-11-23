@@ -226,6 +226,7 @@ namespace WendtEquipmentTracking.App.Controllers
                     equipment.HTSCode = equipmentProperties["HTSCode"].ToString();
                     equipment.Notes = equipmentProperties["Notes"].ToString();
                     equipment.ReadyToShip = Convert.ToDouble(equipmentProperties["ReadyToShip"].ToString());
+                    equipment.Order = !string.IsNullOrWhiteSpace(equipmentProperties["Order"].ToString()) ? Convert.ToInt32(equipmentProperties["Order"]) : 0;
 
 
                     var priorityNumber = equipment.PriorityId = Convert.ToInt32(equipmentProperties["PriorityNumber"]);
@@ -241,7 +242,7 @@ namespace WendtEquipmentTracking.App.Controllers
                 var doSubmit = httpData["doSubmit"];
                 if (doSubmit.ToString() == "true")
                 {
-                    equipmentService.SaveAll(equipments);
+                    equipmentService.SaveAll(equipments.OrderByDescending(x => x.Order));
                 }
 
                 equipmentModels = equipments.Select(x => new EquipmentModel
@@ -367,7 +368,8 @@ namespace WendtEquipmentTracking.App.Controllers
                     equipment.WorkOrderNumber = equipmentProperties["WorkOrderNumber"].ToString();
                     equipment.IsHardware = equipment.EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase);
                     equipment.ShippedFrom = equipmentProperties["ShippedFrom"].ToString();
-                    
+                    equipment.Order = !string.IsNullOrWhiteSpace(equipmentProperties["Order"].ToString()) ? Convert.ToInt32(equipmentProperties["Order"]) : 0;
+
                     var priorityNumber = equipment.PriorityId = Convert.ToInt32(equipmentProperties["PriorityNumber"]);
                     var priority = priorities.FirstOrDefault(x => x.PriorityNumber == priorityNumber);
                     if (priority != null)
@@ -381,7 +383,7 @@ namespace WendtEquipmentTracking.App.Controllers
                 var doSubmit = httpData["doSubmit"];
                 if (doSubmit.ToString() == "true")
                 {
-                    equipmentService.SaveAll(equipments);
+                    equipmentService.SaveAll(equipments.OrderByDescending(x => x.Order));
                 }
 
                 equipmentModels = equipments.Select(x => new EquipmentModel

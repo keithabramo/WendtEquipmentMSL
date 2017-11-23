@@ -16,6 +16,8 @@ namespace WendtEquipmentTracking.App.Controllers
         private IBillOfLadingService billOfLadingService;
         private IProjectService projectService;
         private IUserService userService;
+        private IPriorityService priorityService;
+
 
         public BillOfLadingApiController()
         {
@@ -23,6 +25,7 @@ namespace WendtEquipmentTracking.App.Controllers
             projectService = new ProjectService();
             userService = new UserService();
             billOfLadingService = new BillOfLadingService();
+            priorityService = new PriorityService();
         }
 
 
@@ -343,6 +346,7 @@ namespace WendtEquipmentTracking.App.Controllers
             if (user != null)
             {
                 var project = projectService.GetById(user.ProjectId);
+                var priorities = priorityService.GetAll(user.ProjectId);
 
                 var httpData = DatatableHelpers.HttpData();
                 Dictionary<string, object> data = httpData["data"] as Dictionary<string, object>;
@@ -361,7 +365,6 @@ namespace WendtEquipmentTracking.App.Controllers
                     equipment.CustomsValue = equipmentProperties["CustomsValueText"].ToString().ToNullable<double>();
                     equipment.FullyShipped = equipmentProperties["FullyShippedText"].ToString() == "YES" ? true : false;
                     equipment.LeftToShip = equipmentProperties["LeftToShip"].ToString().ToNullable<double>();
-                    equipment.PriorityId = Convert.ToInt32(equipmentProperties["PriorityId"]);
                     equipment.ProjectId = user.ProjectId;
                     equipment.Quantity = equipmentProperties["Quantity"].ToString().ToNullable<int>();
                     equipment.ReadyToShip = Convert.ToDouble(equipmentProperties["ReadyToShip"].ToString());
@@ -382,6 +385,18 @@ namespace WendtEquipmentTracking.App.Controllers
                     equipment.WorkOrderNumber = equipmentProperties["WorkOrderNumber"].ToString();
                     equipment.IsHardware = equipment.EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase);
 
+                    var priorityNumber = equipment.PriorityId = Convert.ToInt32(equipmentProperties["PriorityNumber"]);
+                    var priority = priorities.FirstOrDefault(x => x.PriorityNumber == priorityNumber);
+                    if (priority != null)
+                    {
+                        equipment.PriorityId = priority.PriorityId;
+                        equipment.Priority = new PriorityBO
+                        {
+                            PriorityId = priority.PriorityId,
+                            PriorityNumber = priority.PriorityNumber
+                        };
+                    }
+
                     var billOfLadingEquipmentBO = new BillOfLadingEquipmentBO();
                     billOfLadingEquipmentBO.Equipment = equipment;
                     billOfLadingEquipmentBO.EquipmentId = equipment.EquipmentId;
@@ -390,6 +405,9 @@ namespace WendtEquipmentTracking.App.Controllers
                     billOfLadingEquipmentBO.ShippedFrom = equipment.ShippedFrom;
                     billOfLadingEquipmentBO.Quantity = Convert.ToInt32(billOfLadingEquipmentProperties["Quantity"].ToString());
                     billOfLadingEquipmentBO.BillOfLadingEquipmentId = !string.IsNullOrEmpty(billOfLadingEquipmentProperties["BillOfLadingEquipmentId"].ToString()) ? Convert.ToInt32(billOfLadingEquipmentProperties["BillOfLadingEquipmentId"].ToString()) : 0;
+
+
+
 
                     billOfLadingEquipments.Add(billOfLadingEquipmentBO);
                 }

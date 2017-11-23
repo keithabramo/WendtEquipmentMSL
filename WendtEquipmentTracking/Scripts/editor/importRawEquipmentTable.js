@@ -16,6 +16,16 @@
 
 
             editorMain.editor.on('preSubmit', function (e, data, action) {
+
+                if ($this.canSubmit) {
+                    $.each(data.data, function (i, rowData) {
+                        var row = editorMain.datatable.row("#" + rowData.EquipmentId);
+
+                        var rowNumber = editorMain.datatable.rows({ order: 'applied' }).nodes().indexOf(row.node());
+                        rowData.Order = rowNumber;
+                    });
+                }
+
                 data.doSubmit = $this.canSubmit;
             });
 
@@ -97,7 +107,8 @@
                     { name: "ShippedFrom" },
                     { name: "HTSCode" },
                     { name: "CountryOfOrigin" },
-                    { name: "Notes" }
+                    { name: "Notes" },
+                    { name: "Order" }
                 ]
             });
         }
