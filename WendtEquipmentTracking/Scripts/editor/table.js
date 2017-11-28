@@ -16,7 +16,7 @@
                 $this.datatable.cell.blur();
             });
 
-            $(".table").on("click", ".delete", function () {
+            $(document).on("click", ".table .delete", function () {
                 $this.editor
                     .title('Delete row')
                     .buttons('Confirm delete')

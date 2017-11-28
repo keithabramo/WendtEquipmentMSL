@@ -317,19 +317,22 @@
             });
 
             editorMain.editor.on('preOpen', function (e, mode, action) {
-                var rowData = editorMain.datatable.row(editorMain.editor.modifier().row).data();
-                var columnIndex = editorMain.editor.modifier().column;
-
+                
                 var editable = true;
 
-                if (rowData.IsAssociatedToHardwareKit || (rowData.FullyShippedText == "YES" && rowData.Quantity != 0)) {
-                    editable = false;
-                }
+                if (action !== "remove") {
 
-                if ($.inArray(editorMain.editor.modifier().column, $this.editableColumns) < 0 && action !== "remove") {
-                    editable = false;
-                } else if ((rowData.IsAssociatedToHardwareKit || rowData.IsHardwareKit) && (columnIndex == 0 || columnIndex == 5)) {
-                    editable = false;
+                    var rowData = editorMain.datatable.row(editorMain.editor.modifier().row).data();
+                    var columnIndex = editorMain.editor.modifier().column;
+
+                    if (rowData.IsAssociatedToHardwareKit || (rowData.FullyShippedText == "YES" && rowData.Quantity != 0)) {
+                        editable = false;
+                    }
+                    else if ($.inArray(editorMain.editor.modifier().column, $this.editableColumns) < 0) {
+                        editable = false;
+                    } else if ((rowData.IsAssociatedToHardwareKit || rowData.IsHardwareKit) && (columnIndex == 0 || columnIndex == 5)) {
+                        editable = false;
+                    }
                 }
 
                 return editable;
