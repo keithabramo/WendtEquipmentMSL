@@ -128,6 +128,10 @@
                 },
                 order: [[2, 'desc']],
                 rowId: 'EquipmentId',
+                initComplete: function (settings, json) {
+                    editorMain.datatable.rows().select();
+                    $(".table thead th.select-checkbox").closest("tr").addClass("selected");
+                },
                 columnDefs: [
                     {
                         data: "EquipmentId",
@@ -150,7 +154,7 @@
                         className: "priorityWidth"
                     },
                     {
-                        data: "ReleaseDate", "targets": 3,
+                        data: "ReleaseDate", "targets": 3, type: "date",
                         className: "dateWidth"
                     },
                     {

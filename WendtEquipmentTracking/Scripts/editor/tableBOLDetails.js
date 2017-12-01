@@ -92,7 +92,7 @@
                         }
                     },
                     {
-                        "targets": 2,
+                        "targets": 2, type: "date",
                         render: function (data, type, row, meta) {
                             return row.DateShipped ? moment(row.DateShipped).format("MM/DD/YYYY") : '';
                         }

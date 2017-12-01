@@ -23,7 +23,10 @@ $(function () {
                         $("#FilePath").val(response.FilePath);
 
                         if ($this.rawEquipmentTable) {
-                            editorMain.datatable.ajax.reload();
+                            editorMain.datatable.ajax.reload(function () {
+                                editorMain.datatable.rows().select();
+                                $(".table thead th.select-checkbox").closest("tr").addClass("selected");
+                            });
                         } else {
 
                             $this.rawEquipmentTable = new ImportRawEquipmentTable();

@@ -57,7 +57,10 @@ $(function () {
                 if ($(this).valid()) {
 
                     if ($this.equipmentTable) {
-                        editorMain.datatable.ajax.reload();
+                        editorMain.datatable.ajax.reload(function () {
+                            editorMain.datatable.rows().select();
+                            $(".table thead th.select-checkbox").closest("tr").addClass("selected");
+                        });
                     } else {
 
                         $this.equipmentTable = new ImportEquipmentTable();

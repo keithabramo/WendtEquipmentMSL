@@ -494,7 +494,7 @@
                         className: "priorityWidth"
                     },
                     {
-                        data: "ReleaseDate", "targets": 3,
+                        data: "ReleaseDate", "targets": 3, type: "date",
                         className: "dateWidth"
                     },
                     {

@@ -166,7 +166,7 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Helper
             var records = new List<RawEquipmentRow>();
             foreach (var rowValues in values.Where(r => r[0] != null))
             {
-                var equipmentName = rowValues[0].ToString();
+                var equipmentName = rowValues[0] != null ? rowValues[0].ToString() : "";
                 var priorityNumberString = rowValues[1] != null ? rowValues[1].ToString() : "";
                 var releaseDateString = rowValues[2] != null ? rowValues[2].ToString() : "";
                 var drawingNumber = rowValues[3].ToString();
@@ -176,10 +176,10 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Helper
                 var description = rowValues[7].ToString();
                 var unitWeightString = rowValues[8] != null ? rowValues[8].ToString() : "";
                 var readyToShipString = rowValues[9] != null ? rowValues[9].ToString() : "";
-                var shippedFrom = rowValues[10].ToString();
-                var htsCode = rowValues[11].ToString();
-                var countryOfOrigin = rowValues[12].ToString();
-                var notes = rowValues[13].ToString();
+                var shippedFrom = rowValues[10] != null ? rowValues[10].ToString() : "";
+                var htsCode = rowValues[11] != null ? rowValues[11].ToString() : "";
+                var countryOfOrigin = rowValues[12] != null ? rowValues[12].ToString() : "";
+                var notes = rowValues[13] != null ? rowValues[13].ToString() : "";
 
                 int priorityNumber = 0;
                 if (!Int32.TryParse(priorityNumberString, out priorityNumber))

@@ -31,12 +31,12 @@
             var $forms = $("form");
 
 
-            $("[type='submit']").on("click", function () {
+            $("[type='submit'], input#Save[type='button']").on("click", function () {
                     $(this).button("loading");
             });
 
             $forms.on('invalid-form.validate', function () {
-                $("[type='submit']").button("reset");
+                $("[type='submit'], input#Save[type='button']").button("reset");
                 $this.invalid = true;
             });
         }

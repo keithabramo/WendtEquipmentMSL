@@ -150,7 +150,7 @@
                     }
                 });
 
-                $searchHeader.find("th").attr("tabindex", "-1").removeClass("sorting sorting_desc sorting_asc select-checkbox");
+                $searchHeader.find("th").attr("tabindex", "-1").removeClass("sorting sorting_desc sorting_asc select-checkbox dateWidth");
 
                 $(".table.my-datatable thead").prepend($searchHeader);
             }

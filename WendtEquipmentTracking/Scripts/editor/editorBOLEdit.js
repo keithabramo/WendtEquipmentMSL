@@ -144,7 +144,7 @@
                     { name: "Quantity" },
                     { name: "Equipment.EquipmentName" },
                     { name: "Equipment.PriorityNumber" },
-                    { name: "Equipment.ReleaseDate" },
+                    { name: "Equipment.ReleaseDate", type: "datetime", format: "MM/DD/YYYY" },
                     { name: "Equipment.DrawingNumber" },
                     { name: "Equipment.WorkOrderNumber" },
                     { name: "Equipment.Quantity" },
@@ -214,7 +214,7 @@
                         className: "priorityWidth active"
                     },
                     {
-                        data: "Equipment.ReleaseDate", "targets": 4,
+                        data: "Equipment.ReleaseDate", "targets": 4, type: "date",
                         className: "dateWidth active"
                     },
                     {
