@@ -280,6 +280,13 @@ namespace WendtEquipmentTracking.App.Models
                 HasErrors = true;
                 Indicators.WorkOrderNumberColor = IndicatorsModel.Colors.Yellow.ToString();
             }
+
+            //Priority
+            if (!PriorityNumber.HasValue)
+            {
+                HasErrors = true;
+                Indicators.PriorityColor = IndicatorsModel.Colors.Pink.ToString();
+            }
         }
     }
 }

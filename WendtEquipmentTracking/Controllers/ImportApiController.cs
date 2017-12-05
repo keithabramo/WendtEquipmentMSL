@@ -157,7 +157,7 @@ namespace WendtEquipmentTracking.App.Controllers
                 {
 
                     EquipmentId = random.Next(),
-                    PriorityNumber = x.PriorityId != null ? (int?)priorities.FirstOrDefault().PriorityNumber : null,
+                    PriorityNumber = x.PriorityNumber,
                     ProjectId = user.ProjectId,
                     Quantity = x.Quantity.HasValue ? x.Quantity.Value : 0,
                     ReadyToShip = x.ReadyToShip,
@@ -229,7 +229,7 @@ namespace WendtEquipmentTracking.App.Controllers
                     equipment.Order = !string.IsNullOrWhiteSpace(equipmentProperties["Order"].ToString()) ? Convert.ToInt32(equipmentProperties["Order"]) : 0;
 
 
-                    var priorityNumber = equipment.PriorityId = Convert.ToInt32(equipmentProperties["PriorityNumber"]);
+                    var priorityNumber = equipmentProperties["PriorityNumber"].ToString().ToNullable<int>();
                     var priority = priorities.FirstOrDefault(x => x.PriorityNumber == priorityNumber);
                     if (priority != null)
                     {

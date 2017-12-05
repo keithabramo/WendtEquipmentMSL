@@ -264,6 +264,10 @@ table.dataTable tr.selected th.select-checkbox:after {
     text-shadow: 1px 1px #B0BED9, -1px -1px #B0BED9, 1px -1px #B0BED9, -1px 1px #B0BED9;
 }
 
+table.dataTable tbody tr.selected td {
+    background-color: #B0BED9 !important;
+}
+
 
 
 

@@ -100,7 +100,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                 Description = x.Description,
                 DrawingNumber = x.DrawingNumber,
                 EquipmentName = x.EquipmentName,
-                Priority = new PriorityBO { PriorityNumber = x.PriorityNumber },
+                PriorityNumber = x.PriorityNumber,
                 Quantity = x.Quantity,
                 ReleaseDate = x.ReleaseDate,
                 ShippingTagNumber = x.ShippingTagNumber,

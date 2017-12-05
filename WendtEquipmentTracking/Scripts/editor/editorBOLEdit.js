@@ -211,6 +211,11 @@
                     },
                     {
                         data: "Equipment.PriorityNumber", "targets": 3,
+                        createdCell: function (cell, data, rowData, rowIndex, colIndex) {
+                            var $cell = $(cell);
+
+                            $cell.addClass(rowData.Equipment.Indicators.PriorityColor);
+                        },
                         className: "priorityWidth active"
                     },
                     {

@@ -166,6 +166,9 @@
                     },
                     {
                         data: "PriorityNumber", "targets": 2,
+                        createdCell: function (cell, data, rowData, rowIndex, colIndex) {
+                            $(cell).addClass(rowData.Indicators.PriorityColor);
+                        },
                         className: "priorityWidth"
                     },
                     {

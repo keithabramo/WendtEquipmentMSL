@@ -5,7 +5,7 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Domain
     public class RawEquipmentRow
     {
         public string EquipmentName { get; set; }
-        public int PriorityNumber { get; set; }
+        public int? PriorityNumber { get; set; }
         public DateTime ReleaseDate { get; set; }
         public string DrawingNumber { get; set; }
         public string WorkOrderNumber { get; set; }

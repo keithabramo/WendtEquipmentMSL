@@ -39,6 +39,8 @@ namespace WendtEquipmentTracking.BusinessLogic.BO
 
         //used to order items correctly during import
         public int Order { get; set; }
+        public int? PriorityNumber { get; set; }
+
 
         public PriorityBO Priority { get; set; }
         public IEnumerable<BillOfLadingEquipmentBO> BillOfLadingEquipments { get; set; }

@@ -94,7 +94,9 @@
                     {
                         name: "PriorityNumber",
                         type: "select",
-                        options: priorities
+                        options: priorities,
+                        placeholderDisabled: false,
+                        placeholder: ""
                     },
                     { name: "ReleaseDate", type: "datetime", format: "MM/DD/YYYY" },
                     { name: "DrawingNumber", type: "textarea" },
@@ -151,6 +153,9 @@
                     },
                     {
                         data: "PriorityNumber", "targets": 2,
+                        createdCell: function (cell, data, rowData, rowIndex, colIndex) {
+                            $(cell).addClass(rowData.Indicators.PriorityColor);
+                        },
                         className: "priorityWidth"
                     },
                     {
@@ -232,6 +237,7 @@
                 var data = this.data();
 
                 var equipmentName = data.EquipmentName;
+                var priorityNumber = data.PriorityNumber;
                 var releaseDate = data.ReleaseDate;
                 var drawingNumber = data.DrawingNumber;
                 var workOrderNumber = data.WorkOrderNumber;
@@ -247,6 +253,13 @@
                 } else {
                     $this.removeError(rowIdx, 1);
                 }
+
+                //if (!priorityNumber) {
+                //    error = true;
+                //    $this.addError(rowIdx, 2);
+                //} else {
+                //    $this.removeError(rowIdx, 2);
+                //}
 
                 if (!releaseDate) {
                     error = true;

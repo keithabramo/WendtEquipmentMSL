@@ -23,5 +23,6 @@
         public string CustomsValueColor { get; set; }
         public string SalePriceColor { get; set; }
         public string WorkOrderNumberColor { get; set; }
+        public string PriorityColor { get; set; }
     }
 }

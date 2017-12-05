@@ -64,7 +64,9 @@
 
             $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="readyToShipFilter" /> Work In Progress</label>');
             $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="hardwareFilter" /> Hide Hardware</label>');
-            $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="errorFilter" />Show Me All Rows With Errors</label>');
+            $("div.custom").append('<br/>');
+            $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="errorFilter" />Rows With Errors</label>');
+            $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="showCheckboxes"> Delete Multiple Rows &nbsp;</label><button id="deleteRecords" class="btn btn-primary btn-xs btn-disabled" disabled="disabled" type="button">Delete</button>');
             $("div.createButtonContainer").append('<input type="button" value="Create" class="btn btn-sm btn-primary createSubmit" />');
 
         }
@@ -330,7 +332,7 @@
                     }
                     else if ($.inArray(editorMain.editor.modifier().column, $this.editableColumns) < 0) {
                         editable = false;
-                    } else if ((rowData.IsAssociatedToHardwareKit || rowData.IsHardwareKit) && (columnIndex == 0 || columnIndex == 5)) {
+                    } else if ((rowData.IsAssociatedToHardwareKit || rowData.IsHardwareKit) && (columnIndex == 1 || columnIndex == 6)) {
                         editable = false;
                     }
                 }
@@ -371,15 +373,16 @@
                     $(row.node()).removeClass('active');
                 }
 
-                $(editorMain.datatable.cell(row.index(), 1).node()).attr("class", data.Indicators.EquipmentNameColor);
-                $(editorMain.datatable.cell(row.index(), 5).node()).attr("class", data.Indicators.WorkOrderNumberColor);
-                $(editorMain.datatable.cell(row.index(), 9).node()).attr("class", "text-right " + data.Indicators.UnitWeightColor);
-                $(editorMain.datatable.cell(row.index(), 12).node()).attr("class", "text-right " + data.Indicators.ReadyToShipColor);
-                $(editorMain.datatable.cell(row.index(), 13).node()).attr("class", "text-right active " + data.Indicators.ShippedQtyColor);
-                $(editorMain.datatable.cell(row.index(), 14).node()).attr("class", "text-right active " + data.Indicators.LeftToShipColor);
-                $(editorMain.datatable.cell(row.index(), 15).node()).attr("class", "active " + data.Indicators.FullyShippedColor);
-                $(editorMain.datatable.cell(row.index(), 17).node()).attr("class", "text-right active " + data.Indicators.CustomsValueColor);
-                $(editorMain.datatable.cell(row.index(), 18).node()).attr("class", "text-right active " + data.Indicators.SalePriceColor);
+                $(editorMain.datatable.cell(row.index(), 2).node()).attr("class", data.Indicators.EquipmentNameColor);
+                $(editorMain.datatable.cell(row.index(), 3).node()).attr("class", data.Indicators.PriorityColor);
+                $(editorMain.datatable.cell(row.index(), 6).node()).attr("class", data.Indicators.WorkOrderNumberColor);
+                $(editorMain.datatable.cell(row.index(), 10).node()).attr("class", "text-right " + data.Indicators.UnitWeightColor);
+                $(editorMain.datatable.cell(row.index(), 13).node()).attr("class", "text-right " + data.Indicators.ReadyToShipColor);
+                $(editorMain.datatable.cell(row.index(), 14).node()).attr("class", "text-right active " + data.Indicators.ShippedQtyColor);
+                $(editorMain.datatable.cell(row.index(), 15).node()).attr("class", "text-right active " + data.Indicators.LeftToShipColor);
+                $(editorMain.datatable.cell(row.index(), 16).node()).attr("class", "active " + data.Indicators.FullyShippedColor);
+                $(editorMain.datatable.cell(row.index(), 18).node()).attr("class", "text-right active " + data.Indicators.CustomsValueColor);
+                $(editorMain.datatable.cell(row.index(), 19).node()).attr("class", "text-right active " + data.Indicators.SalePriceColor);
             });
 
             $(".table").on("mousedown", "td.focus", function (e) {
@@ -392,6 +395,49 @@
                 
                 
             });
+
+            $("#deleteRecords").on("click", function () {
+                var selectedRows = editorMain.datatable.rows({ selected: true }).indexes();
+                if (selectedRows.length) {
+
+                    editorMain.editor
+                        .title('Delete records')
+                        .buttons('Confirm delete')
+                        .message('Are you sure you want to delete these records?')
+                        .remove(selectedRows);
+
+                } else {
+                    $("#deleteRecords").button("reset");
+
+                    main.error("You must select at least one equipment record");
+                }
+            });
+
+            $("#showCheckboxes").on("click", function () {
+                var show = $(this).is(":checked");
+
+                editorMain.datatable.column(0).visible(show);
+                if (show) {
+                    $(".table thead tr:first th:first").show();
+                    $("#deleteRecords").removeAttr("disabled");
+                }
+                else {
+                    $(".table thead tr:first th:first").hide();
+                    $("#deleteRecords").attr("disabled", "disabled");
+
+                    editorMain.datatable.rows({ selected: true }).deselect();
+                    $(".table thead th.select-checkbox").closest("tr").removeClass("selected");
+                }
+            });
+
+            //$(".table thead th.select-checkbox").on("click", function () {
+
+            //    if ($(this).closest("tr").hasClass("selected")) {
+            //        editorMain.datatable.rows({ page: 'current' }).select();
+            //    } else {
+            //        editorMain.datatable.rows({ page: 'current' }).deselect();
+            //    }
+            //});
         }
 
         this.initEditor = function () {
@@ -406,7 +452,9 @@
                     {
                         name: "PriorityNumber",
                         type: "select",
-                        options: priorities
+                        options: priorities,
+                        placeholderDisabled: false,
+                        placeholder: ""
                     },
                     { name: "ReleaseDate", type: "datetime", format: "MM/DD/YYYY" },
                     { name: "DrawingNumber", type: "textarea" },
@@ -452,6 +500,10 @@
                     columns: this.editableColumns
                 },
                 autoWidth: false,
+                initComplete: function (settings, json) {
+                    editorMain.datatable.column(0).visible(false);
+                    $(".table tr:first th:first").hide();
+                },
                 createdRow: function (row, data, index) {
                     if (data.IsDuplicate) {
                         $(row).addClass('warning');
@@ -466,10 +518,22 @@
                         $(editorMain.datatable.cell(index, 5).node()).addClass("active");
                     }
                 },
-                order: [[3, 'desc'], [26, 'desc']],
+                order: [[4, 'desc'], [27, 'desc']],
+                select: {
+                    style: 'multi',
+                    selector: 'td:first-child'
+                },
                 columnDefs: [
                     {
-                        "targets": 0,
+                        orderable: false,
+                        className: 'select-checkbox',
+                        targets: 0,
+                        render: function () {
+                            return "<span></span>"
+                        }
+                    },
+                    {
+                        "targets": 1,
                         searchable: false,
                         sortable: false,
                         render: function (datadata, type, row, meta) {
@@ -477,7 +541,7 @@
                         }
                     },
                     {
-                        data: "EquipmentName", "targets": 1,
+                        data: "EquipmentName", "targets": 2,
                         createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                             var $cell = $(cell);
 
@@ -490,103 +554,108 @@
                         className: "equipmentNameWidth"
                     },
                     {
-                        data: "PriorityNumber", "targets": 2,
+                        data: "PriorityNumber", "targets": 3,
+                        createdCell: function (cell, data, rowData, rowIndex, colIndex) {
+                            var $cell = $(cell);
+
+                            $cell.addClass(rowData.Indicators.PriorityColor);
+                        },
                         className: "priorityWidth"
                     },
                     {
-                        data: "ReleaseDate", "targets": 3, type: "date",
+                        data: "ReleaseDate", "targets": 4, type: "date",
                         className: "dateWidth"
                     },
                     {
-                        data: "DrawingNumber", "targets": 4,
+                        data: "DrawingNumber", "targets": 5,
                         className: "drawingNumberWidth"
                     },
                     {
-                        data: "WorkOrderNumber", "targets": 5,
+                        data: "WorkOrderNumber", "targets": 6,
                         createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                             $(cell).addClass(rowData.Indicators.WorkOrderNumberColor);
                         },
                         className: "workOrderNumberWidth"
                     },
                     {
-                        data: "Quantity", "targets": 6, className: "text-right quantityWidth"
+                        data: "Quantity", "targets": 7, className: "text-right quantityWidth"
                     },
                     {
-                        data: "ShippingTagNumber", "targets": 7,
+                        data: "ShippingTagNumber", "targets": 8,
                         className: "shippingTagNumberWidth"
                     },
                     {
-                        data: "Description", "targets": 8,
+                        data: "Description", "targets": 9,
                         className: "descriptionWidth"
                     },
                     {
-                        data: "UnitWeightText", "targets": 9, className: "text-right unitWeightWidth",
+                        data: "UnitWeightText", "targets": 10, className: "text-right unitWeightWidth",
                         createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                             $(cell).addClass(rowData.Indicators.UnitWeightColor);
                         }
                     },
                     {
-                        data: "TotalWeight", "targets": 10, className: "active text-right totalWeightWidth"
+                        data: "TotalWeight", "targets": 11, className: "active text-right totalWeightWidth"
                     },
                     {
-                        data: "TotalWeightShipped", "targets": 11, className: "active text-right totalWeightShippedWidth"
+                        data: "TotalWeightShipped", "targets": 12, className: "active text-right totalWeightShippedWidth"
                     },
                     {
-                        data: "ReadyToShip", "targets": 12, className: "text-right readyToShipWidth",
+                        data: "ReadyToShip", "targets": 13, className: "text-right readyToShipWidth",
                         createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                             $(cell).addClass(rowData.Indicators.ReadyToShipColor);
                         }
                     },
                     {
-                        data: "ShippedQuantity", "targets": 13, className: "active text-right shippedQuantityWidth",
+                        data: "ShippedQuantity", "targets": 14, className: "active text-right shippedQuantityWidth",
                         createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                             $(cell).addClass(rowData.Indicators.ShippedQtyColor);
                         }
                     },
                     {
-                        data: "LeftToShip", "targets": 14, className: "active text-right leftToShipWidth",
+                        data: "LeftToShip", "targets": 15, className: "active text-right leftToShipWidth",
                         createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                             $(cell).addClass(rowData.Indicators.LeftToShipColor);
                         }
                     },
                     {
-                        data: "FullyShippedText", "targets": 15, className: "active fullyShippedWidth",
+                        data: "FullyShippedText", "targets": 16, className: "active fullyShippedWidth",
                         createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                             $(cell).addClass(rowData.Indicators.FullyShippedColor);
                         }
                     },
                     {
-                        data: "ShippedFrom", "targets": 16,
+                        data: "ShippedFrom", "targets": 17,
                         className: "shippedFromWidth"
                     },
                     {
-                        data: "CustomsValueText", "targets": 17, className: "active text-right customsValueWidth",
+                        data: "CustomsValueText", "targets": 18, className: "active text-right customsValueWidth",
                         createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                             $(cell).addClass(rowData.Indicators.CustomsValueColor);
                         },
                         render: $.fn.dataTable.render.number(',', '.', 2, '$')
                     },
                     {
-                        data: "SalePriceText", "targets": 18, className: "active text-right salePriceWidth",
+                        data: "SalePriceText", "targets": 19, className: "active text-right salePriceWidth",
                         createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                             $(cell).addClass(rowData.Indicators.SalePriceColor);
                         },
                         render: $.fn.dataTable.render.number(',', '.', 2, '$')
                     },
                     {
-                        data: "HTSCode", "targets": 19,
+                        data: "HTSCode", "targets": 20,
                         className: "htsCodeWidth"
                     },
                     {
-                        data: "CountryOfOrigin", "targets": 20,
+                        data: "CountryOfOrigin", "targets": 21,
                         className: "countryOfOriginWidth"
                     },
                     {
-                        data: "Notes", "targets": 21,
+                        data: "Notes", "targets": 22,
                         className: "notesWidth"
                     },
                     {
-                        "targets": 22,
+                        "targets": 23,
                         searchable: false,
                         sortable: false,
                         render: function (data, type, row, meta) {
@@ -594,7 +663,7 @@
                         }
                     },
                     {
-                        "targets": 23,
+                        "targets": 24,
                         searchable: false,
                         sortable: false,
                         render: function (datadata, type, row, meta) {
@@ -603,19 +672,19 @@
                     },
                     {
                         data: "HasErrorsText",
-                        "targets": 24,
-                        sortable: false,
-                        visible: false
-                    },
-                    {
-                        data: "IsAssociatedToHardwareKitText",
                         "targets": 25,
                         sortable: false,
                         visible: false
                     },
                     {
-                        data: "EquipmentId",
+                        data: "IsAssociatedToHardwareKitText",
                         "targets": 26,
+                        sortable: false,
+                        visible: false
+                    },
+                    {
+                        data: "EquipmentId",
+                        "targets": 27,
                         searchable: false,
                         visible: false
                     }
