@@ -2,7 +2,8 @@
 
     var EditorMSL = function () {
 
-        this.editableColumns = [1, 2, 3, 4,5, 6, 7, 8, 9, 12, 16, 19, 20, 21];
+        //this.editableColumns = [1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 16, 19, 20, 21];
+        this.editableColumns = [2, 3, 4, 5, 6, 7, 8, 9, 10, 13, 17, 20, 21, 22];
 
 
         this.initStyles = function () {
@@ -66,7 +67,7 @@
             $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="hardwareFilter" /> Hide Hardware</label>');
             $("div.custom").append('<br/>');
             $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="errorFilter" />Rows With Errors</label>');
-            $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="showCheckboxes"> Delete Multiple Rows &nbsp;</label><button id="deleteRecords" class="btn btn-primary btn-xs btn-disabled" disabled="disabled" type="button">Delete</button>');
+            //$("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="showCheckboxes"> Delete Multiple Rows &nbsp;</label><button id="deleteRecords" class="btn btn-primary btn-xs btn-disabled" disabled="disabled" type="button">Delete</button>');
             $("div.createButtonContainer").append('<input type="button" value="Create" class="btn btn-sm btn-primary createSubmit" />');
 
         }
@@ -519,10 +520,10 @@
                     }
                 },
                 order: [[4, 'desc'], [27, 'desc']],
-                select: {
-                    style: 'multi',
-                    selector: 'td:first-child'
-                },
+                //select: {
+                //    style: 'multi',
+                //    selector: 'td:first-child'
+                //},
                 columnDefs: [
                     {
                         orderable: false,
