@@ -145,14 +145,59 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Helper
             var dataLocation = dataLocations["Work Order Prices"];
 
             object[][] values = excelHelper.GetRangeCells(0, dataLocation.ColumnStart, dataLocation.RowStart, dataLocation.NumberOfColumns);
-            var records = values.Where(r => r[0] != null).Select(rowValues => new WorkOrderPriceRow
+            
+            var records = new List<WorkOrderPriceRow>();
+            foreach (var rowValues in values.Where(r => r[0] != null))
             {
-                WorkOrderNumber = rowValues[0].ToString(),
-                CostPrice = Convert.ToDouble(rowValues[1].ToString().Replace("$", "").Replace(",", "")),
-                SalePrice = Convert.ToDouble(rowValues[2].ToString().Replace("$", "").Replace(",", "")),
-                ReleasedPercent = Convert.ToDouble(rowValues[3].ToString().Replace("%", "")) * 100, //percent columns come back as decimals between 0 - 1
-                ShippedPercent = Convert.ToDouble(rowValues[4].ToString().Replace("%", "")) * 100 //percent columns come back as decimals between 0 - 1
-            }).ToList();
+                var workOrderNumber = rowValues[0] != null ? rowValues[0].ToString() : "";
+                var costPriceString = rowValues[1] != null ? rowValues[1].ToString().Replace("$", "").Replace(",", "") : "";
+                var salePriceString = rowValues[2] != null ? rowValues[2].ToString().Replace("$", "").Replace(",", "") : "";
+                var releasedPercentString = rowValues[3] != null ? rowValues[3].ToString().Replace("%", "") : ""; //percent columns come back as decimals between 0 - 1
+                var shippedPercentString = rowValues[4] != null ? rowValues[4].ToString().Replace("%", "") : ""; //percent columns come back as decimals between 0 - 1
+
+
+
+                double costPrice = 0;
+                if (!Double.TryParse(costPriceString, out costPrice))
+                {
+                    costPrice = 0;
+                }
+
+                double salePrice = 0;
+                if (!Double.TryParse(salePriceString, out salePrice))
+                {
+                    salePrice = 0;
+                }
+
+                double releasedPercent = 0;
+                if (!Double.TryParse(releasedPercentString, out releasedPercent))
+                {
+                    releasedPercent = 0;
+                }
+                releasedPercent = releasedPercent * 100;
+
+                double shippedPercent = 0;
+                if (!Double.TryParse(shippedPercentString, out shippedPercent))
+                {
+                    shippedPercent = 0;
+                }
+                shippedPercent = shippedPercent * 100;
+
+
+
+                var record = new WorkOrderPriceRow
+                {
+                    WorkOrderNumber = workOrderNumber,
+                    CostPrice = costPrice,
+                    SalePrice = salePrice,
+                    ReleasedPercent = releasedPercent, //percent columns come back as decimals between 0 - 1
+                    ShippedPercent = shippedPercent //percent columns come back as decimals between 0 - 1
+                };
+
+                records.Add(record);
+            }
+
+            
 
             return records;
         }

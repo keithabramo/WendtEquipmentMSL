@@ -466,6 +466,10 @@ table.dataTable tbody tr.selected td {
         font-size: 12px;
     }
 
+    .table-styled tfoot td select.form-control{
+        padding: 6px;
+    }
+
 .table.masterShipList tbody td {
     text-transform: uppercase;
 } 

@@ -16,7 +16,14 @@
                 var fontSize = $(this).val();
 
                 if (fontSize && !isNaN(fontSize)) {
-                    $this.fontStyle.text(".table-styled tbody td {font-size: " + fontSize + "px !important;}");
+                    $this.fontStyle.text(".table-styled tbody td, .table-styled thead th, .table-styled thead th input.form-control {font-size: " + fontSize + "px !important;}");
+
+                    if (editorMain) {
+                        editorMain.datatable.columns.adjust();
+                    }
+                    if (tableMain) {
+                        tableMain.datatable.columns.adjust();
+                    }
                 }
             });
             

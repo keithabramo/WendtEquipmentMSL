@@ -8,7 +8,7 @@
         @Html.ValidationMessageFor(modelItem => modelItem.EquipmentName, "", new { @class = "text-danger" })
     </td>
     <td>
-        @Html.DropDownListFor(modelItem => modelItem.PriorityNumber, new SelectList(Model.Priorities), new { @class = "form-control" })
+        @Html.DropDownListFor(modelItem => modelItem.PriorityNumber, new SelectList(Model.Priorities, Model.Priorities.First()), new { @class = "form-control" })
         @Html.ValidationMessageFor(modelItem => modelItem.PriorityNumber, "", new { @class = "text-danger" })
     </td>
     <td>

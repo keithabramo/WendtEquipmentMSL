@@ -21,8 +21,8 @@
                     if (!filterReadyToShip) {
                         return true;
                     } else {
-                        var leftToShip = data[14];
-                        var isAssociatedToHardwareKit = data[25];
+                        var leftToShip = data[15];
+                        var isAssociatedToHardwareKit = data[26];
 
                         if (leftToShip && parseInt(leftToShip, 10) > 0 && isAssociatedToHardwareKit != "YES") {
                             return true;
@@ -40,7 +40,7 @@
                     if (!hardwareFilter) {
                         return true;
                     } else {
-                        var equipment = data[1];
+                        var equipment = data[2];
 
                         if (equipment.toLowerCase() !== "hardware") {
                             return true;
@@ -58,7 +58,7 @@
                     if (!errorFilter) {
                         return true;
                     } else {
-                        return data[24] == "True";
+                        return data[25] == "True";
                     }
                 }
             );
@@ -150,7 +150,7 @@
 
                 $createRow.find("input[name='EquipmentName']").val(rowData.EquipmentName);
                 $createRow.find("select[name='PriorityNumber']").val(rowData.PriorityNumber);
-                $createRow.find("input[name='ReleaseDate']").val(rowData.ReleaseDate);
+                $createRow.find("input[name='ReleaseDate']").val(moment().format("MM/DD/YYYY"));
                 $createRow.find("textarea[name='DrawingNumber']").val(rowData.DrawingNumber);
                 $createRow.find("input[name='WorkOrderNumber']").val(rowData.WorkOrderNumber);
                 $createRow.find("input[name='Quantity']").val(rowData.Quantity);
