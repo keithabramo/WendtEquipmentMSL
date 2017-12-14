@@ -309,7 +309,7 @@ namespace WendtEquipmentTracking.App.Controllers
                         DrawingNumber = x.DrawingNumber,
                         EquipmentId = random.Next(),
                         EquipmentName = x.EquipmentName,
-                        PriorityNumber = x.PriorityId != null ? (int?)priorities.FirstOrDefault().PriorityNumber : null,
+                        PriorityNumber = x.PriorityId != null ? (int?)priorities.FirstOrDefault(p => p.PriorityId == x.PriorityId).PriorityNumber : null,
                         ProjectId = x.ProjectId,
                         Quantity = x.Quantity.HasValue ? x.Quantity.Value : 0,
                         ReleaseDate = x.ReleaseDate,
