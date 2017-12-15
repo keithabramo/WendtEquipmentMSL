@@ -89,6 +89,10 @@
                 }
             });
 
+            editorMain.datatable.on("draw", function () {
+                $this.updateSelectedDisplay();
+            });
+
             $("#Save").on("click", function () {
 
                 if ($("#BOLForm").valid()) {
@@ -326,9 +330,16 @@
                     quantity += data.Quantity;
                 });
 
-            $(".select-info").each(function () {
-                $(this).find(".select-item").eq(1).html("- Quantity: " + quantity);
-            });
+            if ($(".select-info").length) {
+                $(".select-info").each(function () {
+                    $(this).find(".select-item").eq(1).html("- Quantity: " + quantity);
+                });
+            }
+            //else {
+            //    $(".dataTables_info").each(function () {
+            //        $(this).text($(this).text() + " 0 rows selected");
+            //    });
+            //}
         }
 
         this.initStyles();

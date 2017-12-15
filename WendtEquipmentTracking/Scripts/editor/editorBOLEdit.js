@@ -78,6 +78,10 @@
 
             });
 
+            editorMain.datatable.on("draw", function () {
+                $this.updateSelectedDisplay();
+            });
+
             editorMain.datatable.on('select', function (e, dt, type, indexes) {
                 if (type === 'row') {
                     $.each(indexes, function () {
@@ -180,7 +184,7 @@
                     }
                 },
                 rowId: 'Equipment.EquipmentId',
-                order: [[0, 'desc'], [4, 'desc']],
+                order: [[1, 'desc'], [4, 'desc']],
                 autoWidth: false,
                 columnDefs: [
                     {
@@ -311,16 +315,22 @@
                         className: "notesWidth active"
                     }
                 ],
-                initComplete: function(settings, json) {
-                    $this.updateSelectedDisplay();
+                initComplete: function (settings, json) {
+
+                    var selectedRows = editorMain.datatable.rows()
+                        .every(function (rowIdx, tableLoop, rowLoop) {
+                            var data = this.data();
+                            if (data.BillOfLadingEquipmentId > 0) {
+                                editorMain.datatable.row(rowIdx).select();
+                            }
+                        });
+
                 },
                 createdRow: function (row, data, index) {
                     if (data.IsDuplicate) {
                         $(row).addClass('warning');
                     }
-                    if (data.BillOfLadingEquipmentId > 0) {
-                        editorMain.datatable.row(row).select();
-                    }
+                    
 
                 },
                 select: {
@@ -345,9 +355,16 @@
                     quantity += data.Quantity;
                 });
 
-            $(".select-info").each(function () {
-                $(this).find(".select-item").eq(1).html("- Quantity: " + quantity);
-            });
+            if ($(".select-info").length) {
+                $(".select-info").each(function () {
+                    $(this).find(".select-item").eq(1).html("- Quantity: " + quantity);
+                });
+            }
+            //else {
+            //    $(".dataTables_info").each(function () {
+            //        $(this).text($(this).text() + " 0 rows selected");
+            //    });
+            //}
         }
 
         this.lock = function () {
