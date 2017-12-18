@@ -81,7 +81,7 @@ namespace WendtEquipmentTracking.App.Controllers
                             //DrawingNumber = string.Empty,
                             Equipment = string.Empty,
                             FilePaths = new Dictionary<string, string>() { { "", filePath } },
-                            PriorityId = priority.PriorityId,
+                            PriorityId = priority != null ? (int?)priority.PriorityId : null,
                             QuantityMultiplier = 1,
                             WorkOrderNumber = string.Empty
                         };

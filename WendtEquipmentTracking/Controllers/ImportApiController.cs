@@ -370,7 +370,7 @@ namespace WendtEquipmentTracking.App.Controllers
                     equipment.ShippedFrom = equipmentProperties["ShippedFrom"].ToString();
                     equipment.Order = !string.IsNullOrWhiteSpace(equipmentProperties["Order"].ToString()) ? Convert.ToInt32(equipmentProperties["Order"]) : 0;
 
-                    var priorityNumber = equipment.PriorityId = Convert.ToInt32(equipmentProperties["PriorityNumber"]);
+                    var priorityNumber = equipmentProperties["PriorityNumber"].ToString().ToNullable<int>();
                     var priority = priorities.FirstOrDefault(x => x.PriorityNumber == priorityNumber);
                     if (priority != null)
                     {
