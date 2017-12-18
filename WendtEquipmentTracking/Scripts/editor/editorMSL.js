@@ -55,10 +55,17 @@
                 function (settings, data, dataIndex) {
                     var errorFilter = $('#errorFilter').is(":checked");
 
+                    var fullyShippedText = data[16];
+                    var isAssociatedToHardwareKitText = data[26];
+                    var isDuplicateText = data[28];
+                    var quantity = data[7];
+                    var hasErrorsText = data[25];
+
+
                     if (!errorFilter) {
                         return true;
                     } else {
-                        return data[25] == "True";
+                        return hasErrorsText == "True" || isAssociatedToHardwareKitText == "True" || isDuplicateText == "True" || (fullyShippedText == "YES" && quantity != 0);
                     }
                 }
             );
@@ -688,7 +695,13 @@
                         "targets": 27,
                         searchable: false,
                         visible: false
-                    }
+                    },
+                    {
+                        data: "IsDuplicateText",
+                        "targets": 28,
+                        sortable: false,
+                        visible: false
+                    },
                 ]
             });
         }

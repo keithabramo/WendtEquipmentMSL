@@ -175,6 +175,14 @@ namespace WendtEquipmentTracking.App.Models
             }
         }
 
+        public string IsDuplicateText
+        {
+            get
+            {
+                return IsDuplicate.ToString();
+            }
+        }
+
 
         //Calculated Properties
         public bool HasBillOfLading { get; set; }

@@ -385,7 +385,7 @@ namespace WendtEquipmentTracking.App.Controllers
                     equipment.WorkOrderNumber = equipmentProperties["WorkOrderNumber"].ToString();
                     equipment.IsHardware = equipment.EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase);
 
-                    var priorityNumber = equipment.PriorityId = Convert.ToInt32(equipmentProperties["PriorityNumber"]);
+                    var priorityNumber = equipmentProperties["PriorityNumber"].ToString().ToNullable<int>();
                     var priority = priorities.FirstOrDefault(x => x.PriorityNumber == priorityNumber);
                     if (priority != null)
                     {
