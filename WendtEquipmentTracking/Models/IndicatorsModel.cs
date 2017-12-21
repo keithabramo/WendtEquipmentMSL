@@ -24,5 +24,7 @@
         public string SalePriceColor { get; set; }
         public string WorkOrderNumberColor { get; set; }
         public string PriorityColor { get; set; }
+        public string DrawingNumberColor { get; set; }
+        public string ShippingTagNumberColor { get; set; }
     }
 }

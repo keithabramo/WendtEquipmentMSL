@@ -35,7 +35,7 @@ namespace WendtEquipmentTracking.App.Controllers
             {
                 clearProjectNavCache();
 
-                var projectBOs = projectService.GetAllForNavigation().OrderByDescending(p => p.ProjectNumber);
+                var projectBOs = projectService.GetAllForNavigation().OrderBy(p => p.ProjectNumber);
 
                 var projects = projectBOs.Select(x => new SelectListItem
                 {

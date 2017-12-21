@@ -248,7 +248,7 @@ namespace WendtEquipmentTracking.App.Controllers
                 {
                     try
                     {
-                        var projectBOs = projectService.GetAllForNavigation().OrderByDescending(p => p.ProjectNumber);
+                        var projectBOs = projectService.GetAllForNavigation().OrderBy(p => p.ProjectNumber);
                         projects = projectBOs.Select(x => new SelectListItem
                         {
                             Value = x.ProjectId.ToString(),
@@ -270,7 +270,7 @@ namespace WendtEquipmentTracking.App.Controllers
                     catch (Exception e)
                     {
                         HandleError("There was an error attempting to load this list of projects due to projects numbers containing text", e);
-                        var projectBOs = projectService.GetAllForNavigation().OrderByDescending(p => p.ProjectNumber);
+                        var projectBOs = projectService.GetAllForNavigation().OrderBy(p => p.ProjectNumber);
                         projects = projectBOs.Select(x => new SelectListItem
                         {
                             Value = x.ProjectId.ToString(),

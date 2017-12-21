@@ -320,31 +320,35 @@ table.dataTable tbody tr.selected td {
         padding: 0;
     }
 
-    .table-styled td.Red {
+    table.dataTable.table-styled tbody tr td.Error {
         background-color: rgb(255, 0, 102) !important;
     }
 
-    .table-styled td.Yellow {
+    table.dataTable.table-styled tbody td.Red {
+        background-color: rgb(255, 0, 102) !important;
+    }
+
+    table.dataTable.table-styled td.Yellow {
         background-color: rgb(255, 255, 0) !important;
     }
 
-    .table-styled td.Green {
+    table.dataTable.table-styled td.Green {
         background-color: rgb(146, 208, 80) !important;
     }
 
-    .table-styled td.Purple {
+    table.dataTable.table-styled td.Purple {
         background-color: rgb(204, 192, 218) !important;
     }
 
-    .table-styled td.Pink {
+    table.dataTable.table-styled td.Pink {
         background-color: rgb(255, 199, 206) !important;
     }
 
-    .table-styled td.Fuchsia {
+    table.dataTable.table-styled td.Fuchsia {
         background-color: rgb(255, 51, 204) !important;
     }
 
-    .table-styled td.LightBlue {
+    table.dataTable.table-styled td.LightBlue {
         background-color: rgb(217,237,247) !important;
     }
 

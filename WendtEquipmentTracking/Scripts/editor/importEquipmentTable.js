@@ -30,6 +30,20 @@
                 data.doSubmit = $this.canSubmit;
             });
 
+            editorMain.editor.on('postEdit', function (e, json, data) {
+
+                var row = editorMain.datatable.row("#" + data.EquipmentId);
+
+                
+
+                $(editorMain.datatable.cell(row.index(), 1).node()).attr("class", data.Indicators.EquipmentNameColor);
+                $(editorMain.datatable.cell(row.index(), 2).node()).attr("class", data.Indicators.PriorityColor);
+                $(editorMain.datatable.cell(row.index(), 4).node()).attr("class", data.Indicators.DrawingNumberColor);
+                $(editorMain.datatable.cell(row.index(), 5).node()).attr("class", data.Indicators.WorkOrderNumberColor);
+                $(editorMain.datatable.cell(row.index(), 7).node()).attr("class", data.Indicators.ShippingTagNumberColor);
+                $(editorMain.datatable.cell(row.index(), 9).node()).attr("class", "text-right " + data.Indicators.UnitWeightColor);
+            });
+
             editorMain.datatable.on('autoFill', function (e, datatable, cells) {
                 $this.validationErrors();
             });
@@ -96,7 +110,9 @@
                     {
                         name: "PriorityNumber",
                         type: "select",
-                        options: priorities
+                        options: priorities,
+                        placeholderDisabled: false,
+                        placeholder: ""
                     },
                     { name: "ReleaseDate", type: "datetime", format: "MM/DD/YYYY" },
                     { name: "DrawingNumber", type: "textarea" },
@@ -177,7 +193,10 @@
                     },
                     {
                         data: "DrawingNumber", "targets": 4,
-                        className: "drawingNumberWidth"
+                        className: "drawingNumberWidth",
+                        createdCell: function (cell, data, rowData, rowIndex, colIndex) {
+                            $(cell).addClass(rowData.Indicators.DrawingNumberColor);
+                        },
                     },
                     {
                         data: "WorkOrderNumber", "targets": 5,
@@ -191,7 +210,10 @@
                     },
                     {
                         data: "ShippingTagNumber", "targets": 7,
-                        className: "shippingTagNumberWidth"
+                        className: "shippingTagNumberWidth",
+                        createdCell: function (cell, data, rowData, rowIndex, colIndex) {
+                            $(cell).addClass(rowData.Indicators.ShippingTagNumberColor);
+                        },
                     },
                     {
                         data: "Description", "targets": 8,
@@ -335,11 +357,11 @@
         }
 
         this.addError = function (row, column) {
-            $(editorMain.datatable.cell(row, column).node()).addClass("Red");
+            $(editorMain.datatable.cell(row, column).node()).addClass("Error");
         }
 
         this.removeError = function (row, column) {
-            $(editorMain.datatable.cell(row, column).node()).removeClass("Red");
+            $(editorMain.datatable.cell(row, column).node()).removeClass("Error");
         }
 
         this.initStyles();

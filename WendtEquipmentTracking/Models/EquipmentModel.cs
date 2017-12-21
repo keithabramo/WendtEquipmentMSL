@@ -295,6 +295,18 @@ namespace WendtEquipmentTracking.App.Models
                 HasErrors = true;
                 Indicators.PriorityColor = IndicatorsModel.Colors.Pink.ToString();
             }
+
+            if (DrawingNumber.Equals("UPDATE NEEDED", StringComparison.InvariantCultureIgnoreCase))
+            {
+                HasErrors = true;
+                Indicators.DrawingNumberColor = IndicatorsModel.Colors.Pink.ToString();
+            }
+
+            if (ShippingTagNumber.Equals("UPDATE NEEDED", StringComparison.InvariantCultureIgnoreCase))
+            {
+                HasErrors = true;
+                Indicators.ShippingTagNumberColor = IndicatorsModel.Colors.Pink.ToString();
+            }
         }
     }
 }

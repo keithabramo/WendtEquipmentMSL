@@ -150,7 +150,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
                 var equipmentBOs = importService.GetRawEquipmentImport(filePath);
                 var priorities = priorityService.GetAll(user.ProjectId);
-
+                var project = projectService.GetById(user.ProjectId);
 
                 var random = new Random();
                 equipmentModels = equipmentBOs.Select(x => new EquipmentModel
@@ -173,6 +173,8 @@ namespace WendtEquipmentTracking.App.Controllers
                     ShippingTagNumber = (x.ShippingTagNumber ?? string.Empty).ToUpperInvariant(),
                     WorkOrderNumber = (x.WorkOrderNumber ?? string.Empty).ToUpperInvariant()
                 }).ToList();
+
+                equipmentModels.ForEach(x => x.SetIndicators(project.ProjectNumber, project.IsCustomsProject));
 
                 return equipmentModels;
 
@@ -264,6 +266,8 @@ namespace WendtEquipmentTracking.App.Controllers
                     HTSCode = x.HTSCode,
                     Notes = x.Notes,
                 }).ToList();
+
+                equipmentModels.ForEach(x => x.SetIndicators(project.ProjectNumber, project.IsCustomsProject));
             }
 
             return new DtResponse { data = equipmentModels };
@@ -318,7 +322,6 @@ namespace WendtEquipmentTracking.App.Controllers
                         WorkOrderNumber = x.WorkOrderNumber,
                         ShippedFrom = "WENDT" //Default to this and allow them to change
                     }).ToList();
-
                 }
                 return equipmentModels;
             }
@@ -401,7 +404,11 @@ namespace WendtEquipmentTracking.App.Controllers
                     WorkOrderNumber = x.WorkOrderNumber,
                     ShippedFrom = x.ShippedFrom
                 }).ToList();
+
+                equipmentModels.ForEach(x => x.SetIndicators(project.ProjectNumber, project.IsCustomsProject));
             }
+
+
 
             return new DtResponse { data = equipmentModels };
 

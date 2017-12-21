@@ -3,7 +3,7 @@
     var EditorMSL = function () {
 
         //this.editableColumns = [1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 16, 19, 20, 21];
-        this.editableColumns = [2, 3, 4, 5, 6, 7, 8, 9, 10, 13, 17, 20, 21, 22];
+        this.editableColumns = [2, 3, 4, 5, 6, 7, 8, 9, 10, 13, 17, 18, 21, 22];
 
 
         this.initStyles = function () {
@@ -55,17 +55,14 @@
                 function (settings, data, dataIndex) {
                     var errorFilter = $('#errorFilter').is(":checked");
 
-                    var fullyShippedText = data[16];
-                    var isAssociatedToHardwareKitText = data[26];
                     var isDuplicateText = data[28];
-                    var quantity = data[7];
                     var hasErrorsText = data[25];
 
 
                     if (!errorFilter) {
                         return true;
                     } else {
-                        return hasErrorsText == "True" || isAssociatedToHardwareKitText == "True" || isDuplicateText == "True" || (fullyShippedText == "YES" && quantity != 0);
+                        return hasErrorsText == "True" || isDuplicateText == "True";
                     }
                 }
             );
@@ -340,7 +337,7 @@
                     }
                     else if ($.inArray(editorMain.editor.modifier().column, $this.editableColumns) < 0) {
                         editable = false;
-                    } else if ((rowData.IsAssociatedToHardwareKit || rowData.IsHardwareKit) && (columnIndex == 1 || columnIndex == 6)) {
+                    } else if (rowData.IsHardwareKit && columnIndex == 2) {
                         editable = false;
                     }
                 }
@@ -383,14 +380,16 @@
 
                 $(editorMain.datatable.cell(row.index(), 2).node()).attr("class", data.Indicators.EquipmentNameColor);
                 $(editorMain.datatable.cell(row.index(), 3).node()).attr("class", data.Indicators.PriorityColor);
+                $(editorMain.datatable.cell(row.index(), 5).node()).attr("class", data.Indicators.DrawingNumberColor);
                 $(editorMain.datatable.cell(row.index(), 6).node()).attr("class", data.Indicators.WorkOrderNumberColor);
+                $(editorMain.datatable.cell(row.index(), 8).node()).attr("class", data.Indicators.ShippingTagNumberColor);
                 $(editorMain.datatable.cell(row.index(), 10).node()).attr("class", "text-right " + data.Indicators.UnitWeightColor);
                 $(editorMain.datatable.cell(row.index(), 13).node()).attr("class", "text-right " + data.Indicators.ReadyToShipColor);
                 $(editorMain.datatable.cell(row.index(), 14).node()).attr("class", "text-right active " + data.Indicators.ShippedQtyColor);
                 $(editorMain.datatable.cell(row.index(), 15).node()).attr("class", "text-right active " + data.Indicators.LeftToShipColor);
                 $(editorMain.datatable.cell(row.index(), 16).node()).attr("class", "active " + data.Indicators.FullyShippedColor);
-                $(editorMain.datatable.cell(row.index(), 18).node()).attr("class", "text-right active " + data.Indicators.CustomsValueColor);
-                $(editorMain.datatable.cell(row.index(), 19).node()).attr("class", "text-right active " + data.Indicators.SalePriceColor);
+                $(editorMain.datatable.cell(row.index(), 19).node()).attr("class", "text-right active " + data.Indicators.CustomsValueColor);
+                $(editorMain.datatable.cell(row.index(), 20).node()).attr("class", "text-right active " + data.Indicators.SalePriceColor);
             });
 
             $(".table").on("mousedown", "td.focus", function (e) {
@@ -478,11 +477,11 @@
                     { name: "LeftToShip", type: "readonly" },
                     { name: "FullyShippedText", type: "readonly" },
                     { name: "ShippedFrom" },
+                    { name: "Notes", type: "textarea" },
                     { name: "CustomsValueText" },
                     { name: "SalePriceText" },
                     { name: "HTSCode" },
                     { name: "CountryOfOrigin" },
-                    { name: "Notes", type: "textarea" },
                     { name: "EquipmentId", type: "readonly" },
                     { name: "IsHardwareKitText", type: "readonly" },
                     { name: "IsAssociatedToHardwareKitText", type: "readonly" },
@@ -522,8 +521,8 @@
                     }
 
                     if (data.IsHardwareKit) {
-                        $(editorMain.datatable.cell(index, 0).node()).addClass("active");
-                        $(editorMain.datatable.cell(index, 5).node()).addClass("active");
+                        $(editorMain.datatable.cell(index, 2).node()).addClass("active");
+                        //$(editorMain.datatable.cell(index, 5).node()).addClass("active");
                     }
                 },
                 order: [[4, 'desc'], [27, 'desc']],
@@ -576,7 +575,10 @@
                     },
                     {
                         data: "DrawingNumber", "targets": 5,
-                        className: "drawingNumberWidth"
+                        className: "drawingNumberWidth",
+                        createdCell: function (cell, data, rowData, rowIndex, colIndex) {
+                            $(cell).addClass(rowData.Indicators.DrawingNumberColor);
+                        }
                     },
                     {
                         data: "WorkOrderNumber", "targets": 6,
@@ -590,7 +592,10 @@
                     },
                     {
                         data: "ShippingTagNumber", "targets": 8,
-                        className: "shippingTagNumberWidth"
+                        className: "shippingTagNumberWidth",
+                        createdCell: function (cell, data, rowData, rowIndex, colIndex) {
+                            $(cell).addClass(rowData.Indicators.ShippingTagNumberColor);
+                        }
                     },
                     {
                         data: "Description", "targets": 9,
@@ -637,30 +642,30 @@
                         className: "shippedFromWidth"
                     },
                     {
-                        data: "CustomsValueText", "targets": 18, className: "active text-right customsValueWidth",
+                        data: "Notes", "targets": 18,
+                        className: "notesWidth"
+                    },
+                    {
+                        data: "CustomsValueText", "targets": 19, className: "active text-right customsValueWidth",
                         createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                             $(cell).addClass(rowData.Indicators.CustomsValueColor);
                         },
                         render: $.fn.dataTable.render.number(',', '.', 2, '$')
                     },
                     {
-                        data: "SalePriceText", "targets": 19, className: "active text-right salePriceWidth",
+                        data: "SalePriceText", "targets": 20, className: "active text-right salePriceWidth",
                         createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                             $(cell).addClass(rowData.Indicators.SalePriceColor);
                         },
                         render: $.fn.dataTable.render.number(',', '.', 2, '$')
                     },
                     {
-                        data: "HTSCode", "targets": 20,
+                        data: "HTSCode", "targets": 21,
                         className: "htsCodeWidth"
                     },
                     {
-                        data: "CountryOfOrigin", "targets": 21,
+                        data: "CountryOfOrigin", "targets": 22,
                         className: "countryOfOriginWidth"
-                    },
-                    {
-                        data: "Notes", "targets": 22,
-                        className: "notesWidth"
                     },
                     {
                         "targets": 23,
