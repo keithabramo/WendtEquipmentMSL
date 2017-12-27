@@ -132,6 +132,17 @@
                 rowId: 'HardwareKitGroupId',
                 order: [[0, 'desc'], [1, 'asc']],
                 autoWidth: false,
+                initComplete: function (settings, json) {
+
+                    var selectedRows = editorMain.datatable.rows()
+                        .every(function (rowIdx, tableLoop, rowLoop) {
+                            var data = this.data();
+                            if (data.HardwareKitId > 0) {
+                                editorMain.datatable.row(rowIdx).select();
+                            }
+                        });
+
+                },
                 columnDefs: [
                     {
                         data: null,

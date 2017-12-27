@@ -227,6 +227,7 @@ namespace WendtEquipmentTracking.App.Controllers
                     equipment.ShippedFrom = equipmentProperties["ShippedFrom"].ToString();
                     equipment.HTSCode = equipmentProperties["HTSCode"].ToString();
                     equipment.Notes = equipmentProperties["Notes"].ToString();
+                    equipment.IsHardware = equipment.EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase);
                     equipment.ReadyToShip = Convert.ToDouble(equipmentProperties["ReadyToShip"].ToString());
                     equipment.Order = !string.IsNullOrWhiteSpace(equipmentProperties["Order"].ToString()) ? Convert.ToInt32(equipmentProperties["Order"]) : 0;
 

@@ -39,7 +39,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                 ShippedQuantity = x.ShippedQuantity,
                 TotalWeight = x.TotalWeight,
                 TotalWeightShipped = x.TotalWeightShipped,
-                UnitWeight = x.UnitWeight.HasValue ? x.IsHardware ? .01 : (double?)Math.Round(x.UnitWeight.Value, 2, MidpointRounding.AwayFromZero) : null,
+                UnitWeight = x.IsHardware ? .01 : x.UnitWeight.HasValue ? (double?)Math.Round(x.UnitWeight.Value, 2, MidpointRounding.AwayFromZero) : null,
                 CountryOfOrigin = (x.CountryOfOrigin ?? string.Empty).ToUpperInvariant(),
                 Description = (x.Description ?? string.Empty).ToUpperInvariant(),
                 DrawingNumber = (x.DrawingNumber ?? string.Empty).ToUpperInvariant(),
@@ -86,7 +86,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                     //oldEquipment.ShippedQuantity = equipmentBO.ShippedQuantity;
                     //oldEquipment.TotalWeight = equipmentBO.TotalWeight;
                     //oldEquipment.TotalWeightShipped = equipmentBO.TotalWeightShipped;
-                    oldEquipment.UnitWeight = equipmentBO.UnitWeight.HasValue ? (double?)Math.Round(equipmentBO.UnitWeight.Value, 2, MidpointRounding.AwayFromZero) : null;
+                    oldEquipment.UnitWeight = equipmentBO.IsHardware ? .01 : equipmentBO.UnitWeight.HasValue ? (double?)Math.Round(equipmentBO.UnitWeight.Value, 2, MidpointRounding.AwayFromZero) : null;
                     oldEquipment.CountryOfOrigin = (equipmentBO.CountryOfOrigin ?? string.Empty).ToUpperInvariant();
                     oldEquipment.Description = (equipmentBO.Description ?? string.Empty).ToUpperInvariant();
                     oldEquipment.DrawingNumber = (equipmentBO.DrawingNumber ?? string.Empty).ToUpperInvariant();

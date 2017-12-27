@@ -63,7 +63,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             hardwareKit.ModifiedDate = now;
             hardwareKit.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
 
-            var currentHardwareKit = this.Get(HardwareKitSpecs.CurrentRevision() && HardwareKitSpecs.HardwareKitNumber(hardwareKit.HardwareKitNumber));
+            var currentHardwareKit = this.Get(HardwareKitSpecs.ProjectId(hardwareKit.ProjectId) && HardwareKitSpecs.CurrentRevision() && HardwareKitSpecs.HardwareKitNumber(hardwareKit.HardwareKitNumber));
             currentHardwareKit.IsCurrentRevision = false;
 
             hardwareKit.Revision = currentHardwareKit.Revision + 1;

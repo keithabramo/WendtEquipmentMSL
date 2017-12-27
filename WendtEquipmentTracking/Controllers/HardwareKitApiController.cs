@@ -167,7 +167,8 @@ namespace WendtEquipmentTracking.App.Controllers
                     ShippingTagNumber = key.ShippingTagNumber,
                     Description = key.Description,
                     Quantity = g.Sum(e => e.Equipment.Quantity.HasValue ? e.Equipment.Quantity.Value : 0),
-                    QuantityToShip = (int)Math.Ceiling(g.Sum(e => e.QuantityToShip))
+                    QuantityToShip = (int)Math.Ceiling(g.Sum(e => e.QuantityToShip)),
+                    HardwareKitId = hardwareKit.HardwareKitId
                 }).ToList();
 
 
@@ -249,12 +250,23 @@ namespace WendtEquipmentTracking.App.Controllers
                     var hardwareKitEquipmentsBOs = new List<HardwareKitEquipmentBO>();
                     foreach (var hardwareGroup in hardwareKitGroupModels)
                     {
-                        var hardwareInWorkOrderBOs = equipmentService.GetHardwareByShippingTagNumberAndDescription(user.ProjectId, hardwareGroup.ShippingTagNumber, hardwareGroup.Description);
+                        var extraGroupPercentage = ((hardwareGroup.QuantityToShip - hardwareGroup.Quantity) / hardwareGroup.Quantity) * 100;
+
+                        IEnumerable<EquipmentBO> hardwareInWorkOrderBOs = new List<EquipmentBO>();
+                        if(hardwareKitId > 0)
+                        {
+                            hardwareInWorkOrderBOs = equipmentService.GetHardwareByShippingTagNumberAndDescription(user.ProjectId, hardwareGroup.ShippingTagNumber, hardwareGroup.Description, hardwareKitId);
+                        }
+                        else
+                        {
+                            hardwareInWorkOrderBOs = equipmentService.GetHardwareByShippingTagNumberAndDescription(user.ProjectId, hardwareGroup.ShippingTagNumber, hardwareGroup.Description);
+                        }
+
                         hardwareKitEquipmentsBOs.AddRange(hardwareInWorkOrderBOs.Select(h => new HardwareKitEquipmentBO
                         {
                             EquipmentId = h.EquipmentId,
                             HardwareKitId = hardwareKitId,
-                            QuantityToShip = h.Quantity.HasValue ? h.Quantity.Value + (h.Quantity.Value * (extraQuantityPercentage / 100)) : 0
+                            QuantityToShip = h.Quantity.HasValue ? h.Quantity.Value + (h.Quantity.Value * (extraGroupPercentage / 100)) : 0
                         }));
                     }
 
