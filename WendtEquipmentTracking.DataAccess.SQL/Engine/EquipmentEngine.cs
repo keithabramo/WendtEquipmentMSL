@@ -26,6 +26,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
         public IQueryable<Equipment> ListAll()
         {
             return this.repository.Find(!EquipmentSpecs.IsDeleted())
+                .Include(x => x.Priority)
                 .Include(x => x.BillOfLadingEquipments)
                 .Include(x => x.BillOfLadingEquipments.Select(ble => ble.BillOfLading))
                 .Include(x => x.HardwareKitEquipments)
@@ -40,6 +41,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
         public IQueryable<Equipment> List(Specification<Equipment> specification)
         {
             return this.repository.Find(!EquipmentSpecs.IsDeleted() && specification)
+                .Include(x => x.Priority)
                 .Include(x => x.BillOfLadingEquipments)
                 .Include(x => x.BillOfLadingEquipments.Select(ble => ble.BillOfLading))
                 .Include(x => x.HardwareKitEquipments)

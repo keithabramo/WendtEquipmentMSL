@@ -155,7 +155,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                 HasBillOfLadingInStorage = x.BillOfLadingEquipments.Any(be => !be.IsDeleted && be.BillOfLading.ToStorage && be.BillOfLading.IsCurrentRevision),
                 IsHardwareKit = x.HardwareKit != null,
                 IsAssociatedToHardwareKit = x.HardwareKitEquipments.Any(h => !h.IsDeleted && h.HardwareKit.IsCurrentRevision),
-                AssociatedHardwareKitNumber = x.HardwareKitEquipments.Any(h => !h.IsDeleted && h.HardwareKit.IsCurrentRevision) ? x.HardwareKitEquipments.Where(h => h.HardwareKit.IsCurrentRevision).FirstOrDefault().HardwareKit.HardwareKitNumber : string.Empty
+                AssociatedHardwareKitNumber = x.HardwareKitEquipments.Any(h => !h.IsDeleted && h.HardwareKit.IsCurrentRevision) ? x.HardwareKitEquipments.Where(h => !h.IsDeleted && h.HardwareKit.IsCurrentRevision).FirstOrDefault().HardwareKit.HardwareKitNumber : string.Empty
             });
 
 
@@ -304,7 +304,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                 HasBillOfLadingInStorage = x.BillOfLadingEquipments.Any(be => !be.IsDeleted && be.BillOfLading.ToStorage && be.BillOfLading.IsCurrentRevision),
                 IsHardwareKit = x.HardwareKit != null,
                 IsAssociatedToHardwareKit = x.HardwareKitEquipments.Any(h => !h.IsDeleted && h.HardwareKit.IsCurrentRevision),
-                AssociatedHardwareKitNumber = x.HardwareKitEquipments.Any(h => !h.IsDeleted && h.HardwareKit.IsCurrentRevision) ? x.HardwareKitEquipments.Where(h => h.HardwareKit.IsCurrentRevision).FirstOrDefault().HardwareKit.HardwareKitNumber : string.Empty
+                AssociatedHardwareKitNumber = x.HardwareKitEquipments.Any(h => !h.IsDeleted && h.HardwareKit.IsCurrentRevision) ? x.HardwareKitEquipments.Where(h => !h.IsDeleted && h.HardwareKit.IsCurrentRevision).FirstOrDefault().HardwareKit.HardwareKitNumber : string.Empty
             });
 
             return equipmentBOs.ToList();
@@ -350,7 +350,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                 HasBillOfLadingInStorage = x.BillOfLadingEquipments.Any(be => !be.IsDeleted && be.BillOfLading.ToStorage && be.BillOfLading.IsCurrentRevision),
                 IsHardwareKit = x.HardwareKit != null,
                 IsAssociatedToHardwareKit = x.HardwareKitEquipments.Any(h => !h.IsDeleted && h.HardwareKit.IsCurrentRevision),
-                AssociatedHardwareKitNumber = x.HardwareKitEquipments.Any(h => !h.IsDeleted && h.HardwareKit.IsCurrentRevision) ? x.HardwareKitEquipments.Where(h => h.HardwareKit.IsCurrentRevision).FirstOrDefault().HardwareKit.HardwareKitNumber : string.Empty
+                AssociatedHardwareKitNumber = x.HardwareKitEquipments.Any(h => !h.IsDeleted && h.HardwareKit.IsCurrentRevision) ? x.HardwareKitEquipments.Where(h => !h.IsDeleted && h.HardwareKit.IsCurrentRevision).FirstOrDefault().HardwareKit.HardwareKitNumber : string.Empty
             });
 
             return equipmentBOs.ToList();
@@ -404,11 +404,11 @@ namespace WendtEquipmentTracking.BusinessLogic
                 ShippingTagNumber = x.ShippingTagNumber,
                 WorkOrderNumber = x.WorkOrderNumber,
 
-                HasBillOfLading = x.BillOfLadingEquipments.Any(b => b.BillOfLading.IsCurrentRevision),
-                HasBillOfLadingInStorage = x.BillOfLadingEquipments.Any(be => be.BillOfLading.ToStorage && be.BillOfLading.IsCurrentRevision),
+                HasBillOfLading = x.BillOfLadingEquipments.Any(b => !b.BillOfLading.IsDeleted && b.BillOfLading.IsCurrentRevision),
+                HasBillOfLadingInStorage = x.BillOfLadingEquipments.Any(be => !be.BillOfLading.IsDeleted && be.BillOfLading.ToStorage && be.BillOfLading.IsCurrentRevision),
                 IsHardwareKit = x.HardwareKit != null,
                 IsAssociatedToHardwareKit = x.HardwareKitEquipments.Any(h => h.HardwareKit.IsCurrentRevision),
-                AssociatedHardwareKitNumber = x.HardwareKitEquipments.Any(h => h.HardwareKit.IsCurrentRevision) ? x.HardwareKitEquipments.Where(h => h.HardwareKit.IsCurrentRevision).FirstOrDefault().HardwareKit.HardwareKitNumber : string.Empty
+                AssociatedHardwareKitNumber = x.HardwareKitEquipments.Any(h => h.HardwareKit.IsCurrentRevision) ? x.HardwareKitEquipments.Where(h => !h.IsDeleted && h.HardwareKit.IsCurrentRevision).FirstOrDefault().HardwareKit.HardwareKitNumber : string.Empty
             });
 
             return equipmentBOs.ToList();
