@@ -63,10 +63,10 @@ namespace WendtEquipmentTracking.App.Controllers
                 {
                     var hardwareCommercialCodeBO = new HardwareCommercialCodeBO
                     {
-                        CommodityCode = model.CommodityCode,
-                        Description = model.Description,
+                        CommodityCode = model.CommodityCode.ToUpperInvariant(),
+                        Description = model.Description.ToUpperInvariant(),
                         HardwareCommercialCodeId = model.HardwareCommercialCodeId,
-                        PartNumber = model.PartNumber
+                        PartNumber = model.PartNumber.ToUpperInvariant()
                     };
 
                     hardwareCommercialCodeService.Save(hardwareCommercialCodeBO);
@@ -126,10 +126,10 @@ namespace WendtEquipmentTracking.App.Controllers
                 {
                     var hardwareCommercialCodeBO = new HardwareCommercialCodeBO
                     {
-                        CommodityCode = model.CommodityCode,
-                        Description = model.Description,
+                        CommodityCode = model.CommodityCode.ToUpperInvariant(),
+                        Description = model.Description.ToUpperInvariant(),
                         HardwareCommercialCodeId = model.HardwareCommercialCodeId,
-                        PartNumber = model.PartNumber
+                        PartNumber = model.PartNumber.ToUpperInvariant()
                     };
 
                     hardwareCommercialCodeService.Update(hardwareCommercialCodeBO);

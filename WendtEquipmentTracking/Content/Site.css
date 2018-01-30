@@ -8,6 +8,10 @@ body {
     margin-bottom: 60px;
 }
 
+textarea {
+    resize: none;
+}
+
 .footer {
     left: 0;
     position: absolute;
@@ -475,6 +479,14 @@ table.dataTable tbody tr.selected td {
     }
 
 .table.masterShipList tbody td {
+    text-transform: uppercase;
+} 
+
+.table.hardwareCommercialCodeTable tbody tr td:not(:last-child) {
+    text-transform: uppercase;
+} 
+
+.table.hardwareCommercialCodeTable input, .table.hardwareCommercialCodeTable textarea, .table.hardwareCommercialCodeTable select {
     text-transform: uppercase;
 } 
 
