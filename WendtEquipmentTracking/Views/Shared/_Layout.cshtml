@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title Master Ship List</title>
+    @Styles.Render("~/Content/themes/base/jqueryui")
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
@@ -17,7 +18,7 @@
 
 </head>
 <body>
-    <div class="navbar navbar-inverse ">
+    <div class="navbar navbar-inverse development">
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -27,8 +28,8 @@
                 </button>
                 <a class="navbar-brand vertical-bar-right" href="@Url.Action("Index", "Home")">
                     <span><img src="~/Images/logo.jpg" alt="logo"/></span>
-                    Equipment Listing
-                    @*Equipment Listing - DEVELOPMENT*@
+                    @*Equipment Listing*@
+                    Equipment Listing - DEVELOPMENT
                 </a>
             </div>
             @if (!Html.UserIsInRole(UserRoles.None))

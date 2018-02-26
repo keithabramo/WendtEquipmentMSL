@@ -110,11 +110,11 @@ namespace WendtEquipmentTracking.App
 
 
 
-
+            bundles.Add(new StyleBundle("~/Content/themes/base/jqueryui")
+                .IncludeDirectory("~/Content/themes/base", "*.css"));
 
 
             bundles.Add(new StyleBundle("~/Content/css")
-                .IncludeDirectory("~/Content/themes/base", "*.css")
                 .Include(
                     "~/Content/bootstrap.css",
                     "~/Content/datatablesAndEditor.css",
