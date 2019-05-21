@@ -83,6 +83,10 @@
                 editorMain.datatable.draw();
             });
 
+            //$('#test').on("click", function () {
+            //    $this.test();
+            //});
+
             $('#hardwareFilter').on("change", function () {
                 editorMain.datatable.draw();
             });
@@ -713,6 +717,31 @@
 
         this.initStyles();
         this.initEvents();
+
+        //this.test = function () {
+        //    var emailTo = 'keith.abramo@gmail.com';
+        //    var emailSubject = 'project number';
+
+        //    //var emlContent = "data:message/rfc822 eml;charset=utf-8,";
+        //    var emlContent = 'To: ' + emailTo + '\n';
+        //    emlContent += 'Subject: ' + emailSubject + '\n';
+        //    emlContent += 'X-Unsent: 1' + '\n';
+        //    emlContent += 'Content-Type: text/html' + '\n';
+        //    emlContent += '' + '\n';
+        //    emlContent += '<html><body>Test message with <b>bold</b> text.</body></html>';
+
+        //    var encodedUri = encodeURI(emlContent); //encode spaces etc like a url
+        //    var a = document.createElement('a'); //make a link in document
+        //    var linkText = document.createTextNode("fileLink");
+        //    a.appendChild(linkText);
+        //    a.href = encodedUri;
+        //    a.id = 'fileLink';
+        //    a.download = 'filename.mht';
+        //    //a.download = 'filename.eml';
+        //    a.style = "display:none;"; //hidden link
+        //    document.body.appendChild(a);
+        //    document.getElementById('fileLink').click(); //click the link
+        //}
         
     }
 

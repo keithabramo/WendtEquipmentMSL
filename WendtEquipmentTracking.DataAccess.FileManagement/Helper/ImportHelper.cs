@@ -213,7 +213,7 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Helper
             {
                 var equipmentName = rowValues[0] != null ? rowValues[0].ToString() : "";
                 var priorityNumberString = rowValues[1] != null ? rowValues[1].ToString() : "";
-                //var releaseDateString = rowValues[2] != null ? rowValues[2].ToString() : "";
+                var releaseDateString = rowValues[2] != null ? rowValues[2].ToString() : "";
                 var drawingNumber = rowValues[3].ToString();
                 var workOrderNumber = rowValues[4].ToString();
                 var quantityString = rowValues[5] != null ? rowValues[5].ToString() : "";
@@ -241,10 +241,10 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Helper
                 }
 
                 DateTime releaseDate = DateTime.Now;
-                //if (!DateTime.TryParse(releaseDateString, out releaseDate))
-                //{
-                //    releaseDate = DateTime.Now;
-                //}
+                if (!DateTime.TryParse(releaseDateString, out releaseDate))
+                {
+                    releaseDate = DateTime.Now;
+                }
 
                 int quantity = 0;
                 if (!Int32.TryParse(quantityString, out quantity))

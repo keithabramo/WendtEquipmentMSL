@@ -14,9 +14,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WendtEquipmentTracking.DataAccess.FileManagement", "WendtEquipmentTracking.DataAccess.FileManagement\WendtEquipmentTracking.DataAccess.FileManagement.csproj", "{9CB5AEA5-6786-497A-B67C-4F38CCA59456}"
 EndProject
 Global
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
