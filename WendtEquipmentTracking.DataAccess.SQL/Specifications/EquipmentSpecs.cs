@@ -51,6 +51,14 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Specifications
             return new ProjectIdSpecification(projectId);
         }
 
+        // Checks if this equipment is one of the hardware kit equipments
+        public static Specification<Equipment> IsAssociatedToHardwareKit(int hardwareKitId)
+        {
+            return new IsAssociatedToHardwareKitSpecification(hardwareKitId);
+        }
+
+        // Checks if this equipment is the actual hardware kit equipment record 
+        // Where equipment.hardwarekitid points to the hardware kit record itself
         public static Specification<Equipment> HardwareKitId(int hardwareKitId)
         {
             return new HardwareKitIdSpecification(hardwareKitId);

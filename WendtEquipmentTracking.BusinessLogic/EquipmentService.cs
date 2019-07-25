@@ -363,10 +363,11 @@ namespace WendtEquipmentTracking.BusinessLogic
 
         public IEnumerable<EquipmentBO> GetHardwareByShippingTagNumberAndDescription(int projectId, string shippingTagNumber, string description, int? hardwareKitId)
         {
+            //Is either not attached to a current hardware kit or it is attached to the hardware kit of the id passed in
             var hardwareKitSpec = !EquipmentSpecs.IsAttachedToHardwareKit();
             if (hardwareKitId.HasValue)
             {
-                hardwareKitSpec = hardwareKitSpec || EquipmentSpecs.HardwareKitId(hardwareKitId.Value);
+                hardwareKitSpec = hardwareKitSpec || EquipmentSpecs.IsAssociatedToHardwareKit(hardwareKitId.Value);
             }
 
 

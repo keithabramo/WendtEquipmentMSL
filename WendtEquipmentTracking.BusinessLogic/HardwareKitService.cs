@@ -205,7 +205,7 @@ namespace WendtEquipmentTracking.BusinessLogic
 
             dbContext.SaveChanges();
 
-
+            //Get the equipment record created for this hardware kit and update it with the new hardware kit edits
             var equipment = equipmentEngine.Get(EquipmentSpecs.HardwareKitId(hardwareKitBO.HardwareKitId));
 
             if (equipment != null)
