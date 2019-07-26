@@ -52,7 +52,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
             var exists = billOfLadingService.GetCurrentByProject(user.ProjectId).Any(b =>
                                                                           b.BillOfLadingId != billOfLadingId
-                                                                          && b.BillOfLadingNumber == billOfLadingNumber);
+                                                                          && b.BillOfLadingNumber.Equals(billOfLadingNumber, System.StringComparison.InvariantCultureIgnoreCase));
 
             return Json(!exists, JsonRequestBehavior.AllowGet);
         }
@@ -112,7 +112,7 @@ namespace WendtEquipmentTracking.App.Controllers
             }
 
             var exists = workOrderPriceService.GetAll(user.ProjectId).Any(b => b.WorkOrderPriceId != workOrderPriceId
-                                                                 && b.WorkOrderNumber == workOrderNumber);
+                                                                 && b.WorkOrderNumber.Equals(workOrderNumber, System.StringComparison.InvariantCultureIgnoreCase));
 
             return Json(!exists, JsonRequestBehavior.AllowGet);
         }
@@ -141,7 +141,7 @@ namespace WendtEquipmentTracking.App.Controllers
                         return Json(true, JsonRequestBehavior.AllowGet);
                     }
 
-                    var exists = workOrderPriceService.GetAll(user.ProjectId).Any(b => b.WorkOrderNumber == workOrderNumber);
+                    var exists = workOrderPriceService.GetAll(user.ProjectId).Any(b => b.WorkOrderNumber.Equals(workOrderNumber, System.StringComparison.InvariantCultureIgnoreCase));
 
                     return Json(!exists, JsonRequestBehavior.AllowGet);
                 }
@@ -166,7 +166,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
             var exists = hardwareKitService.GetAll(user.ProjectId).Any(b => b.IsCurrentRevision
                                                               && b.HardwareKitId != hardwareKitId
-                                                              && b.HardwareKitNumber == hardwareKitNumber);
+                                                              && b.HardwareKitNumber.Equals(hardwareKitNumber, System.StringComparison.InvariantCultureIgnoreCase));
 
             return Json(!exists, JsonRequestBehavior.AllowGet);
         }
