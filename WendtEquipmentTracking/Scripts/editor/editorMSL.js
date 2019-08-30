@@ -24,7 +24,7 @@
                         var leftToShip = data[15];
                         var isAssociatedToHardwareKit = data[26];
 
-                        if (leftToShip && parseInt(leftToShip, 10) > 0 && isAssociatedToHardwareKit != "YES") {
+                        if (leftToShip && parseInt(leftToShip, 10) > 0 && isAssociatedToHardwareKit != "True") {
                             return true;
                         }
                     }
