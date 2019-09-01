@@ -4,10 +4,10 @@
  *
  * To rebuild or modify this file with the latest versions of the included
  * software please visit:
- *   https://datatables.net/download/#dt/jszip-2.5.0/pdfmake-0.1.32/dt-1.10.16/e-1.6.5/af-2.2.2/b-1.4.2/b-flash-1.4.2/b-html5-1.4.2/b-print-1.4.2/fh-3.1.3/kt-2.3.2/sl-1.2.3
+ *   https://datatables.net/download/#dt/jszip-2.5.0/pdfmake-0.1.36/dt-1.10.18/e-1.9.0/af-2.3.3/b-1.5.6/b-flash-1.5.6/b-html5-1.5.6/b-print-1.5.6/fh-3.1.4/kt-2.5.0/sl-1.3.0
  *
  * Included libraries:
- *   JSZip 2.5.0, pdfmake 0.1.32, DataTables 1.10.16, Editor 1.6.5, AutoFill 2.2.2, Buttons 1.4.2, Flash export 1.4.2, HTML5 export 1.4.2, Print view 1.4.2, FixedHeader 3.1.3, KeyTable 2.3.2, Select 1.2.3
+ *   JSZip 2.5.0, pdfmake 0.1.36, DataTables 1.10.18, Editor 1.9.0, AutoFill 2.3.3, Buttons 1.5.6, Flash export 1.5.6, HTML5 export 1.5.6, Print view 1.5.6, FixedHeader 3.1.4, KeyTable 2.5.0, Select 1.3.0
  */
 
 /*
@@ -55,19 +55,19 @@ table.dataTable thead .sorting_desc_disabled {
   background-position: center right;
 }
 table.dataTable thead .sorting {
-  background-image: url("DataTables-1.10.16/images/sort_both.png");
+  background-image: url("DataTables-1.10.18/images/sort_both.png");
 }
 table.dataTable thead .sorting_asc {
-  background-image: url("DataTables-1.10.16/images/sort_asc.png");
+  background-image: url("DataTables-1.10.18/images/sort_asc.png");
 }
 table.dataTable thead .sorting_desc {
-  background-image: url("DataTables-1.10.16/images/sort_desc.png");
+  background-image: url("DataTables-1.10.18/images/sort_desc.png");
 }
 table.dataTable thead .sorting_asc_disabled {
-  background-image: url("DataTables-1.10.16/images/sort_asc_disabled.png");
+  background-image: url("DataTables-1.10.18/images/sort_asc_disabled.png");
 }
 table.dataTable thead .sorting_desc_disabled {
-  background-image: url("DataTables-1.10.16/images/sort_desc_disabled.png");
+  background-image: url("DataTables-1.10.18/images/sort_desc_disabled.png");
 }
 table.dataTable tbody tr {
   background-color: #ffffff;
@@ -467,31 +467,31 @@ div.DTE div.DTE_Header {
   position: absolute;
   top: 0;
   left: 0;
-  height: 50px;
+  height: 52px;
   width: 100%;
-  background-color: #f3f3f3;
-  border-bottom: 1px solid #ddd;
+  background-color: #e8e9eb;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
   padding: 16px 10px 2px 16px;
   font-size: 1.3em;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+div.DTE div.DTE_Body {
+  position: relative;
+}
 div.DTE div.DTE_Footer {
   position: absolute;
   bottom: 0;
   left: 0;
-  height: 50px;
+  height: 52px;
   width: 100%;
-  background-color: #f3f3f3;
-  border-top: 1px solid #ddd;
+  background-color: #e8e9eb;
+  border-top: 1px solid rgba(0, 0, 0, 0.15);
   padding: 10px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-}
-div.DTE div.DTE_Body {
-  position: relative;
 }
 div.DTE div.DTE_Form_Info {
   margin-bottom: 0.5em;
@@ -513,33 +513,33 @@ div.DTE div.DTE_Form_Buttons button {
   text-align: center;
   display: block;
   margin-top: 0;
-  padding: 5px 15px;
+  padding: 0.5em 1em;
   cursor: pointer;
   float: right;
   margin-left: 0.75em;
+  color: inherit;
   font-size: 14px;
-  text-shadow: 0 1px 0 white;
   border: 1px solid #999;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  -ms-border-radius: 4px;
-  -o-border-radius: 4px;
-  border-radius: 4px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px;
   -webkit-box-shadow: 1px 1px 3px #ccc;
   -moz-box-shadow: 1px 1px 3px #ccc;
   box-shadow: 1px 1px 3px #ccc;
-  background-color: #f9f9f9 100%;
+  background-color: #dcdcdc;
   /* Fallback */
-  background-image: -webkit-linear-gradient(top, #ffffff 0%, #eee 65%, #f9f9f9 100%);
+  background-image: -webkit-linear-gradient(top, #ffffff 0%, #dcdcdc 100%);
   /* Chrome 10+, Saf5.1+, iOS 5+ */
-  background-image: -moz-linear-gradient(top, #ffffff 0%, #eee 65%, #f9f9f9 100%);
+  background-image: -moz-linear-gradient(top, #ffffff 0%, #dcdcdc 100%);
   /* FF3.6 */
-  background-image: -ms-linear-gradient(top, #ffffff 0%, #eee 65%, #f9f9f9 100%);
+  background-image: -ms-linear-gradient(top, #ffffff 0%, #dcdcdc 100%);
   /* IE10 */
-  background-image: -o-linear-gradient(top, #ffffff 0%, #eee 65%, #f9f9f9 100%);
+  background-image: -o-linear-gradient(top, #ffffff 0%, #dcdcdc 100%);
   /* Opera 11.10+ */
-  background-image: linear-gradient(to bottom, #ffffff 0%, #eee 65%, #f9f9f9 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#ffffff', EndColorStr='#f9f9f9');
+  background-image: linear-gradient(to bottom, #ffffff 0%, #dcdcdc 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#ffffff', EndColorStr='#dcdcdc');
 }
 div.DTE button.btn:hover,
 div.DTE div.DTE_Form_Buttons button:hover {
@@ -547,18 +547,18 @@ div.DTE div.DTE_Form_Buttons button:hover {
   -webkit-box-shadow: 1px 1px 3px #999;
   -moz-box-shadow: 1px 1px 3px #999;
   box-shadow: 1px 1px 3px #999;
-  background-color: #f4f4f4 100%;
+  background-color: #cccccc;
   /* Fallback */
-  background-image: -webkit-linear-gradient(top, #f3f3f3 0%, #dbdbdb 65%, #f4f4f4 100%);
+  background-image: -webkit-linear-gradient(top, #eaeaea 0%, #cccccc 100%);
   /* Chrome 10+, Saf5.1+, iOS 5+ */
-  background-image: -moz-linear-gradient(top, #f3f3f3 0%, #dbdbdb 65%, #f4f4f4 100%);
+  background-image: -moz-linear-gradient(top, #eaeaea 0%, #cccccc 100%);
   /* FF3.6 */
-  background-image: -ms-linear-gradient(top, #f3f3f3 0%, #dbdbdb 65%, #f4f4f4 100%);
+  background-image: -ms-linear-gradient(top, #eaeaea 0%, #cccccc 100%);
   /* IE10 */
-  background-image: -o-linear-gradient(top, #f3f3f3 0%, #dbdbdb 65%, #f4f4f4 100%);
+  background-image: -o-linear-gradient(top, #eaeaea 0%, #cccccc 100%);
   /* Opera 11.10+ */
-  background-image: linear-gradient(to bottom, #f3f3f3 0%, #dbdbdb 65%, #f4f4f4 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#f3f3f3', EndColorStr='#f4f4f4');
+  background-image: linear-gradient(to bottom, #eaeaea 0%, #cccccc 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#eaeaea', EndColorStr='#cccccc');
 }
 div.DTE button.btn:active,
 div.DTE div.DTE_Form_Buttons button:active {
@@ -570,18 +570,18 @@ div.DTE button.btn:focus,
 div.DTE div.DTE_Form_Buttons button:focus {
   border: 1px solid #426c9e;
   text-shadow: 0 1px 0 #c4def1;
-  background-color: #a3d0ef 100%;
+  background-color: #79ace9;
   /* Fallback */
-  background-image: -webkit-linear-gradient(top, #a3d0ef 0%, #79ace9 65%, #a3d0ef 100%);
+  background-image: -webkit-linear-gradient(top, #bddef4 0%, #79ace9 100%);
   /* Chrome 10+, Saf5.1+, iOS 5+ */
-  background-image: -moz-linear-gradient(top, #a3d0ef 0%, #79ace9 65%, #a3d0ef 100%);
+  background-image: -moz-linear-gradient(top, #bddef4 0%, #79ace9 100%);
   /* FF3.6 */
-  background-image: -ms-linear-gradient(top, #a3d0ef 0%, #79ace9 65%, #a3d0ef 100%);
+  background-image: -ms-linear-gradient(top, #bddef4 0%, #79ace9 100%);
   /* IE10 */
-  background-image: -o-linear-gradient(top, #a3d0ef 0%, #79ace9 65%, #a3d0ef 100%);
+  background-image: -o-linear-gradient(top, #bddef4 0%, #79ace9 100%);
   /* Opera 11.10+ */
-  background-image: linear-gradient(to bottom, #a3d0ef 0%, #79ace9 65%, #a3d0ef 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#a3d0ef', EndColorStr='#a3d0ef');
+  background-image: linear-gradient(to bottom, #bddef4 0%, #79ace9 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#bddef4', EndColorStr='#79ace9');
   outline: none;
 }
 div.DTE button.btn:focus:after,
@@ -685,7 +685,7 @@ div.DTE_Field input[type="text"],
 div.DTE_Field input[type="time"],
 div.DTE_Field input[type="url"],
 div.DTE_Field input[type="week"] {
-  padding: 6px 4px;
+  padding: 5px 4px;
   width: 100%;
 }
 div.DTE_Field label div.DTE_Label_Info {
@@ -765,11 +765,6 @@ div.DTE_Field_Type_textarea textarea {
 div.DTE_Field.DTE_Field_Type_date img {
   vertical-align: middle;
   cursor: pointer;
-  *cursor: hand;
-}
-div.DTE_Field.DTE_Field_Type_date input.jqueryui {
-  width: 87%;
-  margin-right: 6px;
 }
 
 div.DTE_Field_Type_checkbox div.DTE_Field_Input > div > div,
@@ -791,7 +786,7 @@ div.DTE_Field_Type_select div.DTE_Field_Input {
 }
 
 div.DTE_Body {
-  padding: 50px 0;
+  padding: 52px 0;
 }
 div.DTE_Body div.DTE_Body_Content {
   position: relative;
@@ -926,20 +921,17 @@ div.DTE_Bubble div.DTE_Bubble_Liner {
   width: 300px;
   margin-left: -150px;
   background-color: white;
-  box-shadow: 2px 2px 7px #555;
-  border-radius: 5px;
-  border: 2px solid #444;
+  box-shadow: 0 12px 30px 0 rgba(0, 0, 0, 0.5);
+  border-radius: 6px;
+  border: 1px solid #666;
   padding: 1em;
+  background: #fcfcfc;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
 div.DTE_Bubble div.DTE_Bubble_Liner div.DTE_Bubble_Table {
-  display: table;
   width: 100%;
-}
-div.DTE_Bubble div.DTE_Bubble_Liner div.DTE_Bubble_Table > form {
-  display: table-cell;
 }
 div.DTE_Bubble div.DTE_Bubble_Liner div.DTE_Bubble_Table > form div.DTE_Form_Content {
   padding: 0;
@@ -952,11 +944,22 @@ div.DTE_Bubble div.DTE_Bubble_Liner div.DTE_Bubble_Table > form div.DTE_Form_Con
 div.DTE_Bubble div.DTE_Bubble_Liner div.DTE_Bubble_Table > form div.DTE_Form_Content div.DTE_Field:last-child {
   margin-bottom: 0;
 }
+div.DTE_Bubble div.DTE_Bubble_Liner div.DTE_Bubble_Table > form div.DTE_Form_Content div.DTE_Field > label {
+  padding-top: 0;
+  margin-bottom: 0;
+}
+div.DTE_Bubble div.DTE_Bubble_Liner div.DTE_Bubble_Table > form div.DTE_Form_Content div.DTE_Field > div {
+  padding: 0;
+}
+div.DTE_Bubble div.DTE_Bubble_Liner div.DTE_Bubble_Table > form div.DTE_Form_Content div.DTE_Field > div input {
+  margin: 0;
+}
 div.DTE_Bubble div.DTE_Bubble_Liner div.DTE_Bubble_Table div.DTE_Form_Buttons {
-  display: table-cell;
-  vertical-align: bottom;
-  padding: 0 0 0 0.75em;
-  width: 1%;
+  text-align: right;
+  margin-top: 1em;
+}
+div.DTE_Bubble div.DTE_Bubble_Liner div.DTE_Bubble_Table div.DTE_Form_Buttons button {
+  margin-bottom: 0;
 }
 div.DTE_Bubble div.DTE_Bubble_Liner div.DTE_Header {
   border-top-left-radius: 5px;
@@ -1005,7 +1008,7 @@ div.DTE_Bubble div.DTE_Bubble_Triangle {
   width: 10px;
   top: -6px;
   background-color: white;
-  border: 2px solid #444;
+  border: 1px solid #666;
   border-top: none;
   border-right: none;
   -webkit-transform: rotate(-45deg);
@@ -1080,8 +1083,34 @@ div.DTE_Inline div.DTE_Inline_Field div.DTE_Field > label,
 div.DTE_Inline div.DTE_Inline_Buttons div.DTE_Field > label {
   display: none;
 }
-div.DTE_Inline div.DTE_Inline_Field div.DTE_Field input,
-div.DTE_Inline div.DTE_Inline_Buttons div.DTE_Field input {
+div.DTE_Inline div.DTE_Inline_Field div.DTE_Field input[type="color"],
+div.DTE_Inline div.DTE_Inline_Field div.DTE_Field input[type="date"],
+div.DTE_Inline div.DTE_Inline_Field div.DTE_Field input[type="datetime"],
+div.DTE_Inline div.DTE_Inline_Field div.DTE_Field input[type="datetime-local"],
+div.DTE_Inline div.DTE_Inline_Field div.DTE_Field input[type="email"],
+div.DTE_Inline div.DTE_Inline_Field div.DTE_Field input[type="month"],
+div.DTE_Inline div.DTE_Inline_Field div.DTE_Field input[type="number"],
+div.DTE_Inline div.DTE_Inline_Field div.DTE_Field input[type="password"],
+div.DTE_Inline div.DTE_Inline_Field div.DTE_Field input[type="search"],
+div.DTE_Inline div.DTE_Inline_Field div.DTE_Field input[type="tel"],
+div.DTE_Inline div.DTE_Inline_Field div.DTE_Field input[type="text"],
+div.DTE_Inline div.DTE_Inline_Field div.DTE_Field input[type="time"],
+div.DTE_Inline div.DTE_Inline_Field div.DTE_Field input[type="url"],
+div.DTE_Inline div.DTE_Inline_Field div.DTE_Field input[type="week"],
+div.DTE_Inline div.DTE_Inline_Buttons div.DTE_Field input[type="color"],
+div.DTE_Inline div.DTE_Inline_Buttons div.DTE_Field input[type="date"],
+div.DTE_Inline div.DTE_Inline_Buttons div.DTE_Field input[type="datetime"],
+div.DTE_Inline div.DTE_Inline_Buttons div.DTE_Field input[type="datetime-local"],
+div.DTE_Inline div.DTE_Inline_Buttons div.DTE_Field input[type="email"],
+div.DTE_Inline div.DTE_Inline_Buttons div.DTE_Field input[type="month"],
+div.DTE_Inline div.DTE_Inline_Buttons div.DTE_Field input[type="number"],
+div.DTE_Inline div.DTE_Inline_Buttons div.DTE_Field input[type="password"],
+div.DTE_Inline div.DTE_Inline_Buttons div.DTE_Field input[type="search"],
+div.DTE_Inline div.DTE_Inline_Buttons div.DTE_Field input[type="tel"],
+div.DTE_Inline div.DTE_Inline_Buttons div.DTE_Field input[type="text"],
+div.DTE_Inline div.DTE_Inline_Buttons div.DTE_Field input[type="time"],
+div.DTE_Inline div.DTE_Inline_Buttons div.DTE_Field input[type="url"],
+div.DTE_Inline div.DTE_Inline_Buttons div.DTE_Field input[type="week"] {
   width: 100%;
 }
 div.DTE_Inline div.DTE_Inline_Field div.DTE_Form_Buttons button,
@@ -1131,34 +1160,19 @@ div.DTED_Lightbox_Wrapper {
   z-index: 11;
 }
 div.DTED_Lightbox_Wrapper div.DTED_Lightbox_Container {
-  *position: absolute;
-  /* IE6 */
-  *top: 50%;
-  #position: absolute;
-  /* IE7 */
-  #top: 50%;
   display: table;
   height: 100%;
   width: 100%;
 }
 div.DTED_Lightbox_Wrapper div.DTED_Lightbox_Container div.DTED_Lightbox_Content_Wrapper {
-  *position: relative;
-  /* IE6 */
-  #position: relative;
-  /* IE7 */
   display: table-cell;
   vertical-align: middle;
   width: 100%;
 }
 div.DTED_Lightbox_Wrapper div.DTED_Lightbox_Container div.DTED_Lightbox_Content_Wrapper div.DTED_Lightbox_Content {
-  *top: -50%;
-  /* IE6 */
-  #top: -50%;
-  /* IE7 */
   position: relative;
-  border: 7px solid rgba(220, 220, 220, 0.5);
-  box-shadow: 2px 2px 10px #555;
-  border-radius: 10px;
+  box-shadow: 0 12px 30px 0 rgba(0, 0, 0, 0.5);
+  border-radius: 6px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -1166,27 +1180,26 @@ div.DTED_Lightbox_Wrapper div.DTED_Lightbox_Container div.DTED_Lightbox_Content_
 div.DTED_Lightbox_Wrapper div.DTED_Lightbox_Container div.DTED_Lightbox_Content_Wrapper div.DTED_Lightbox_Content div.DTE {
   background: white;
   border-radius: 6px;
-  box-shadow: 0 0 5px #555;
-  border: 2px solid #444;
+  border: 1px solid #666;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
 div.DTED_Lightbox_Wrapper div.DTED_Lightbox_Container div.DTED_Lightbox_Content_Wrapper div.DTED_Lightbox_Content div.DTE div.DTE_Header {
-  top: 2px;
-  left: 2px;
-  right: 2px;
+  right: 0;
   width: auto;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+div.DTED_Lightbox_Wrapper div.DTED_Lightbox_Container div.DTED_Lightbox_Content_Wrapper div.DTED_Lightbox_Content div.DTE div.DTE_Body_Content {
+  box-sizing: border-box;
+  background: #fcfcfc;
 }
 div.DTED_Lightbox_Wrapper div.DTED_Lightbox_Container div.DTED_Lightbox_Content_Wrapper div.DTED_Lightbox_Content div.DTE div.DTE_Footer {
-  bottom: 2px;
-  left: 2px;
-  right: 2px;
+  right: 0;
   width: auto;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
 }
 div.DTED_Lightbox_Wrapper div.DTED_Lightbox_Container div.DTED_Lightbox_Content_Wrapper div.DTED_Lightbox_Content div.DTED_Lightbox_Close {
   position: absolute;
@@ -1354,7 +1367,6 @@ div.DTED_Envelope_Wrapper div.DTED_Envelope_Container div.DTED_Envelope_Close {
   width: 18px;
   height: 18px;
   cursor: pointer;
-  *cursor: hand;
   z-index: 12;
   text-align: center;
   font-size: 12px;
@@ -1579,7 +1591,8 @@ div.editor-datetime {
   z-index: 2050;
   border: 1px solid #ccc;
   box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.5);
-  padding-bottom: 5px;
+  padding: 0 20px 6px 20px;
+  width: 275px;
 }
 div.editor-datetime div.editor-datetime-title {
   text-align: center;
@@ -1587,7 +1600,11 @@ div.editor-datetime div.editor-datetime-title {
 }
 div.editor-datetime table {
   border-spacing: 0;
-  margin: 6px 13px;
+  margin: 12px 0;
+  width: 100%;
+}
+div.editor-datetime table.editor-datetime-table-nospace {
+  margin-top: -12px;
 }
 div.editor-datetime table th {
   font-size: 0.8em;
@@ -1602,26 +1619,30 @@ div.editor-datetime table td {
   color: #444;
   padding: 0;
 }
-div.editor-datetime table td.day {
-  text-align: right;
+div.editor-datetime table td.selectable {
+  text-align: center;
   background: #f5f5f5;
 }
-div.editor-datetime table td.day.disabled {
+div.editor-datetime table td.selectable.disabled {
   color: #aaa;
   background: white;
 }
-div.editor-datetime table td.day.today {
+div.editor-datetime table td.selectable.disabled button:hover {
+  color: #aaa;
+  background: white;
+}
+div.editor-datetime table td.selectable.now {
   background-color: #ddd;
 }
-div.editor-datetime table td.day.today button {
+div.editor-datetime table td.selectable.now button {
   font-weight: bold;
 }
-div.editor-datetime table td.day.selected button {
+div.editor-datetime table td.selectable.selected button {
   background: #4E6CA3;
   color: white;
   border-radius: 2px;
 }
-div.editor-datetime table td.day button:hover {
+div.editor-datetime table td.selectable button:hover {
   background: #ff8000;
   color: white;
   border-radius: 2px;
@@ -1636,13 +1657,21 @@ div.editor-datetime table button {
   background: transparent;
   font-size: inherit;
   color: inherit;
-  text-align: inherit;
-  padding: 5px 9px;
+  text-align: center;
+  padding: 4px 0;
   cursor: pointer;
   margin: 0;
 }
+div.editor-datetime table button span {
+  display: inline-block;
+  min-width: 14px;
+  text-align: right;
+}
 div.editor-datetime table.weekNumber th {
   width: 12.5%;
+}
+div.editor-datetime div.editor-datetime-calendar table {
+  margin-top: 0;
 }
 div.editor-datetime div.editor-datetime-label {
   position: relative;
@@ -1671,6 +1700,9 @@ div.editor-datetime div.editor-datetime-time {
 }
 div.editor-datetime div.editor-datetime-time > span {
   vertical-align: middle;
+}
+div.editor-datetime div.editor-datetime-time th {
+  text-align: left;
 }
 div.editor-datetime div.editor-datetime-time div.editor-datetime-timeblock {
   display: inline-block;
@@ -1754,6 +1786,14 @@ div.DTE div.DTE_Processing_Indicator {
 div.DTE.processing div.DTE_Processing_Indicator {
   display: block;
 }
+div.DTE.processing div.DTE_Field div.DTE_Processing_Indicator {
+  display: none;
+}
+div.DTE div.DTE_Field div.DTE_Processing_Indicator {
+  top: 13px;
+  right: 0;
+  font-size: 8px;
+}
 div.DTE.DTE_Inline div.DTE_Processing_Indicator {
   top: 5px;
   right: 6px;
@@ -1816,7 +1856,7 @@ div.DTE div.DTE_Processing_Indicator:after {
 }
 
 
-div.dt-autofill-handle{position:absolute;height:8px;width:8px;z-index:102;box-sizing:border-box;border:1px solid #316ad1;background:linear-gradient(to bottom, #abcffb 0%, #4989de 100%)}div.dt-autofill-select{position:absolute;z-index:1001;background-color:#4989de;background-image:repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(255,255,255,0.5) 5px, rgba(255,255,255,0.5) 10px)}div.dt-autofill-select.top,div.dt-autofill-select.bottom{height:3px;margin-top:-1px}div.dt-autofill-select.left,div.dt-autofill-select.right{width:3px;margin-left:-1px}div.dt-autofill-list{position:fixed;top:50%;left:50%;width:500px;margin-left:-250px;background-color:white;border-radius:6px;box-shadow:0 0 5px #555;border:2px solid #444;z-index:11;box-sizing:border-box;padding:1.5em 2em}div.dt-autofill-list ul{display:table;margin:0;padding:0;list-style:none;width:100%}div.dt-autofill-list ul li{display:table-row}div.dt-autofill-list ul li:last-child div.dt-autofill-question,div.dt-autofill-list ul li:last-child div.dt-autofill-button{border-bottom:none}div.dt-autofill-list ul li:hover{background-color:#f6f6f6}div.dt-autofill-list div.dt-autofill-question{display:table-cell;padding:0.5em 0;border-bottom:1px solid #ccc}div.dt-autofill-list div.dt-autofill-question input[type=number]{padding:6px;width:30px;margin:-2px 0}div.dt-autofill-list div.dt-autofill-button{display:table-cell;padding:0.5em 0;border-bottom:1px solid #ccc}div.dt-autofill-list div.dt-autofill-button button{color:white;margin:0;padding:6px 12px;text-align:center;border:1px solid #2e6da4;background-color:#337ab7;border-radius:4px;cursor:pointer;vertical-align:middle}div.dt-autofill-background{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);background:radial-gradient(ellipse farthest-corner at center, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%);z-index:10}
+div.dt-autofill-handle{position:absolute;height:8px;width:8px;z-index:102;box-sizing:border-box;background:#3366ff;cursor:pointer}div.dtk-focus-alt div.dt-autofill-handle{background:#ff8b33}div.dt-autofill-select{position:absolute;z-index:1001;background-color:#4989de;background-image:repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(255,255,255,0.5) 5px, rgba(255,255,255,0.5) 10px)}div.dt-autofill-select.top,div.dt-autofill-select.bottom{height:3px;margin-top:-1px}div.dt-autofill-select.left,div.dt-autofill-select.right{width:3px;margin-left:-1px}div.dt-autofill-list{position:fixed;top:50%;left:50%;width:500px;margin-left:-250px;background-color:white;border-radius:6px;box-shadow:0 0 5px #555;border:2px solid #444;z-index:11;box-sizing:border-box;padding:1.5em 2em}div.dt-autofill-list ul{display:table;margin:0;padding:0;list-style:none;width:100%}div.dt-autofill-list ul li{display:table-row}div.dt-autofill-list ul li:last-child div.dt-autofill-question,div.dt-autofill-list ul li:last-child div.dt-autofill-button{border-bottom:none}div.dt-autofill-list ul li:hover{background-color:#f6f6f6}div.dt-autofill-list div.dt-autofill-question{display:table-cell;padding:0.5em 0;border-bottom:1px solid #ccc}div.dt-autofill-list div.dt-autofill-question input[type=number]{padding:6px;width:30px;margin:-2px 0}div.dt-autofill-list div.dt-autofill-button{display:table-cell;padding:0.5em 0;border-bottom:1px solid #ccc}div.dt-autofill-list div.dt-autofill-button button{color:white;margin:0;padding:6px 12px;text-align:center;border:1px solid #2e6da4;background-color:#337ab7;border-radius:4px;cursor:pointer;vertical-align:middle}div.dt-autofill-background{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);background:radial-gradient(ellipse farthest-corner at center, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%);z-index:10}
 
 
 @keyframes dtb-spinner {
@@ -1873,6 +1913,16 @@ div.dt-button-info > div {
   padding: 1em;
 }
 
+div.dt-button-collection-title {
+  text-align: center;
+  padding: 0.3em 0 0.5em;
+  font-size: 0.9em;
+}
+
+div.dt-button-collection-title:empty {
+  display: none;
+}
+
 button.dt-button,
 div.dt-button,
 a.dt-button {
@@ -1880,11 +1930,13 @@ a.dt-button {
   display: inline-block;
   box-sizing: border-box;
   margin-right: 0.333em;
+  margin-bottom: 0.333em;
   padding: 0.5em 1em;
   border: 1px solid #999;
   border-radius: 2px;
   cursor: pointer;
   font-size: 0.88em;
+  line-height: 1.6em;
   color: black;
   white-space: nowrap;
   overflow: hidden;
@@ -2032,7 +2084,6 @@ div.dt-button-collection {
   z-index: 2002;
   border-radius: 5px;
   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
-  z-index: 2002;
   -webkit-column-gap: 8px;
   -moz-column-gap: 8px;
   -ms-column-gap: 8px;
@@ -2045,6 +2096,7 @@ div.dt-button-collection a.dt-button {
   position: relative;
   left: 0;
   right: 0;
+  width: 100%;
   display: block;
   float: none;
   margin-bottom: 4px;
@@ -2115,6 +2167,9 @@ div.dt-button-collection.four-column {
   -ms-column-count: 4;
   -o-column-count: 4;
   column-count: 4;
+}
+div.dt-button-collection .dt-button {
+  border-radius: 0;
 }
 
 div.dt-button-background {
@@ -2196,10 +2251,14 @@ table.fixedHeader-locked {
 }
 
 
-table.dataTable th.focus,
-table.dataTable td.focus {
-  outline: 3px solid #3366FF;
-  outline-offset: -1px;
+table.dataTable tbody th.focus,
+table.dataTable tbody td.focus {
+  box-shadow: inset 0 0 1px 2px #3366ff;
+}
+
+div.dtk-focus-alt table.dataTable tbody th.focus,
+div.dtk-focus-alt table.dataTable tbody td.focus {
+  box-shadow: inset 0 0 1px 2px #ff8b33;
 }
 
 

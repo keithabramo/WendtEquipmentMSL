@@ -66,7 +66,7 @@ namespace WendtEquipmentTracking.Common
             }
 
             //Comment this in and out depending on testing locally or deploying
-            //user.Role = UserRoles.ReadWrite;
+            user.Role = UserRoles.ReadWrite;
 
             return user;
         }
