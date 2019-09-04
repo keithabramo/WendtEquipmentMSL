@@ -16,7 +16,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>WendtEquipmentTracking.App</RootNamespace>
     <AssemblyName>WendtEquipmentTracking.App</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -28,6 +28,7 @@
     </NuGetPackageImportStamp>
     <Use64BitIISExpress />
     <TypeScriptToolsVersion>3.3</TypeScriptToolsVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -78,8 +79,12 @@
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="RazorGenerator.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\RazorGenerator.Mvc.2.4.9\lib\net40\RazorGenerator.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
@@ -88,8 +93,7 @@
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
@@ -114,9 +118,7 @@
     <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
@@ -134,6 +136,10 @@
     <Reference Include="System.Web.Optimization">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.0.3\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
       <Private>True</Private>
@@ -142,6 +148,7 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Common\CookiesHelper.cs" />
@@ -341,7 +348,10 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Views\Priority\Create.cshtml" />
+    <Content Include="Views\Priority\Create.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Create.generated.cs</LastGenOutput>
+    </Content>
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -352,46 +362,166 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Equipment\Index.cshtml" />
-    <Content Include="Views\Project\Create.cshtml" />
-    <Content Include="Views\Project\Edit.cshtml" />
-    <Content Include="Views\Project\Index.cshtml" />
-    <Content Include="Views\Shared\ProjectNavPartial.cshtml" />
-    <Content Include="Views\Import\WorkOrderPrice.cshtml" />
-    <Content Include="Views\BillOfLading\Edit.cshtml" />
-    <Content Include="Views\HardwareKit\Edit.cshtml" />
-    <Content Include="Views\Import\Equipment.cshtml" />
-    <Content Include="Views\Import\EquipmentTablePartial.cshtml" />
-    <Content Include="Views\Equipment\Create.cshtml" />
-    <Content Include="Views\Equipment\BOLsAssociatedToEquipment.cshtml" />
-    <Content Include="Views\BillOfLading\Index.cshtml" />
-    <Content Include="Views\BillOfLading\Details.cshtml" />
-    <Content Include="Views\BillOfLading\EquipmentAssociatedToBOL.cshtml" />
-    <Content Include="Views\BillOfLading\Create.cshtml" />
-    <Content Include="Views\BillOfLading\EquipmentToAddToBOL.cshtml" />
-    <Content Include="Views\Shared\ActionNavPartial.cshtml" />
-    <Content Include="Views\HardwareKit\Create.cshtml" />
-    <Content Include="Views\HardwareKit\Details.cshtml" />
-    <Content Include="Views\HardwareKit\HardwareAssociatedToHardwareKit.cshtml" />
-    <Content Include="Views\HardwareKit\Index.cshtml" />
-    <Content Include="Views\HardwareKit\HardwareToAddToHardwareKit.cshtml" />
-    <Content Include="Views\Import\WorkOrderPriceTablePartial.cshtml" />
-    <Content Include="Views\Shared\NotFound.cshtml" />
-    <Content Include="Views\Shared\Unauthorized.cshtml" />
-    <Content Include="Views\Priority\Index.cshtml" />
-    <Content Include="Views\HardwareCommercialCode\Create.cshtml" />
-    <Content Include="Views\HardwareCommercialCode\Edit.cshtml" />
-    <Content Include="Views\HardwareCommercialCode\Index.cshtml" />
-    <Content Include="Views\Import\EquipmentConfigurationPartial.cshtml" />
-    <Content Include="Views\WorkOrderPrice\Index.cshtml" />
-    <Content Include="Views\Shared\MessagePartial.cshtml" />
-    <Content Include="Views\Import\RawEquipment.cshtml" />
-    <Content Include="Views\Import\RawEquipmentTablePartial.cshtml" />
-    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_ViewStart.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\Error.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Error.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\_Layout.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_Layout.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Home\Index.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Index.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Equipment\Index.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Index.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Project\Create.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Create.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Project\Edit.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Edit.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Project\Index.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Index.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\ProjectNavPartial.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ProjectNavPartial.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Import\WorkOrderPrice.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>WorkOrderPrice.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\BillOfLading\Edit.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Edit.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\HardwareKit\Edit.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Edit.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Import\Equipment.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Equipment.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Import\EquipmentTablePartial.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EquipmentTablePartial.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Equipment\Create.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Create.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Equipment\BOLsAssociatedToEquipment.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>BOLsAssociatedToEquipment.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\BillOfLading\Index.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Index.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\BillOfLading\Details.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Details.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\BillOfLading\EquipmentAssociatedToBOL.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EquipmentAssociatedToBOL.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\BillOfLading\Create.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Create.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\BillOfLading\EquipmentToAddToBOL.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EquipmentToAddToBOL.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\ActionNavPartial.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ActionNavPartial.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\HardwareKit\Create.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Create.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\HardwareKit\Details.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Details.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\HardwareKit\HardwareAssociatedToHardwareKit.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>HardwareAssociatedToHardwareKit.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\HardwareKit\Index.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Index.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\HardwareKit\HardwareToAddToHardwareKit.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>HardwareToAddToHardwareKit.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Import\WorkOrderPriceTablePartial.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>WorkOrderPriceTablePartial.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\NotFound.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>NotFound.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\Unauthorized.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Unauthorized.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Priority\Index.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Index.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\HardwareCommercialCode\Create.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Create.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\HardwareCommercialCode\Edit.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Edit.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\HardwareCommercialCode\Index.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Index.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Import\EquipmentConfigurationPartial.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EquipmentConfigurationPartial.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\WorkOrderPrice\Index.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Index.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\MessagePartial.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>MessagePartial.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Import\RawEquipment.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>RawEquipment.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Import\RawEquipmentTablePartial.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>RawEquipmentTablePartial.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Admin\Index.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Index.generated.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
     <None Include="Web.Staging.config">
@@ -465,7 +595,9 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.3.2.1\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.3.2.1\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\RazorGenerator.MsBuild.2.5.0\build\RazorGenerator.MsBuild.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\RazorGenerator.MsBuild.2.5.0\build\RazorGenerator.MsBuild.targets'))" />
   </Target>
+  <Import Project="..\packages\RazorGenerator.MsBuild.2.5.0\build\RazorGenerator.MsBuild.targets" Condition="Exists('..\packages\RazorGenerator.MsBuild.2.5.0\build\RazorGenerator.MsBuild.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

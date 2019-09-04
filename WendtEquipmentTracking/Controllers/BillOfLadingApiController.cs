@@ -116,8 +116,7 @@ namespace WendtEquipmentTracking.App.Controllers
             var projectBO = projectService.GetById(user.ProjectId);
 
             //Get Data
-            var equipmentBOs = equipmentService.GetAll(user.ProjectId).Where(e => e.ReadyToShip != null
-                                                                                && e.ReadyToShip > 0
+            var equipmentBOs = equipmentService.GetAll(user.ProjectId).Where(e => e.ReadyToShip > 0
                                                                                 && !e.FullyShipped
                                                                                 && !e.IsHardware).ToList();
 
@@ -246,8 +245,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
 
             //Get all not added equipments
-            var nonAddedEquipmentBOs = equipmentService.GetAll(user.ProjectId).Where(e => e.ReadyToShip != null
-                                                                                && e.ReadyToShip > 0
+            var nonAddedEquipmentBOs = equipmentService.GetAll(user.ProjectId).Where(e => e.ReadyToShip > 0
                                                                                 && !e.FullyShipped
                                                                                 && !e.IsHardware
                                                                                 && !billOfLading.BillOfLadingEquipments.Select(x => x.EquipmentId).Contains(e.EquipmentId)

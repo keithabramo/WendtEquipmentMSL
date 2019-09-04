@@ -9,7 +9,7 @@
 
             this.initEditor();
             this.initDatatable();
-        }
+        };
 
         this.initEvents = function () {
             var $this = this;
@@ -59,10 +59,11 @@
                         $this.canSubmit = true;
 
                         editorMain.editor.edit(
-                            editorMain.datatable.rows({ selected: true }).indexes(), false
+                            editorMain.datatable.rows({ selected: true }).indexes(),
+                            false
                         ).submit(function () {
                             $this.canSubmit = false;
-                            location.href = ROOT_URL + "Equipment/?ajaxSuccess=true"
+                            location.href = ROOT_URL + "Equipment/?ajaxSuccess=true";
                         }, function () {
                             $this.canSubmit = false;
                             $("#import").button("reset");
@@ -72,7 +73,7 @@
                     } else {
                         $("#import").button("reset");
 
-                        main.error("Please address all rows with validation errors before importing.")
+                        main.error("Please address all rows with validation errors before importing.");
                     }
                 } else {
                     $("#import").button("reset");

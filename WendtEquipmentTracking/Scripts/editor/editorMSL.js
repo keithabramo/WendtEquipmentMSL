@@ -74,7 +74,7 @@
             //$("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="showCheckboxes"> Delete Multiple Rows &nbsp;</label><button id="deleteRecords" class="btn btn-primary btn-xs btn-disabled" disabled="disabled" type="button">Delete</button>');
             $("div.createButtonContainer").append('<input type="button" value="Create" class="btn btn-sm btn-primary createSubmit" />');
 
-        }
+        };
 
         this.initEvents = function () {
             var $this = this;
@@ -250,7 +250,7 @@
                             }
                         }
 
-                        var error = this.inError();
+                        error = this.inError();
                     } else {
 
                         if (!equipmentName.val()) {
@@ -328,7 +328,7 @@
             });
 
             editorMain.editor.on('preOpen', function (e, mode, action) {
-                
+
                 var editable = true;
 
                 if (action !== "remove") {
@@ -403,8 +403,8 @@
                         editorMain.datatable.cell.blur();
                     }
                 }, 100);
-                
-                
+
+
             });
 
             $("#deleteRecords").on("click", function () {
@@ -449,7 +449,7 @@
             //        editorMain.datatable.rows({ page: 'current' }).deselect();
             //    }
             //});
-        }
+        };
 
         this.initEditor = function () {
             editorMain.initEditor({
@@ -492,7 +492,7 @@
                     { name: "HasErrorsText", type: "readonly" }
                 ]
             });
-        }
+        };
 
         this.initDatatable = function () {
             var $this = this;
@@ -540,7 +540,7 @@
                         className: 'select-checkbox',
                         targets: 0,
                         render: function () {
-                            return "<span></span>"
+                            return "<span></span>";
                         }
                     },
                     {
@@ -710,10 +710,10 @@
                         "targets": 28,
                         sortable: false,
                         visible: false
-                    },
+                    }
                 ]
             });
-        }
+        };
 
         this.initStyles();
         this.initEvents();
@@ -742,8 +742,8 @@
         //    document.body.appendChild(a);
         //    document.getElementById('fileLink').click(); //click the link
         //}
-        
-    }
+
+    };
 
     editorMSL = new EditorMSL();
 

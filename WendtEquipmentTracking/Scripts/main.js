@@ -7,7 +7,7 @@
         this.initStyle = function () {
             this.fontStyle = $("<style/>");
             this.fontStyle.appendTo('head');
-        }
+        };
 
         this.initEvents = function () {
             var $this = this;
@@ -26,7 +26,7 @@
                     }
                 }
             });
-            
+
         }
 
         this.error = function (message) {
@@ -37,7 +37,7 @@
 
         this.initStyle();
         this.initEvents();
-    }
+    };
 
     main = new Main();
 

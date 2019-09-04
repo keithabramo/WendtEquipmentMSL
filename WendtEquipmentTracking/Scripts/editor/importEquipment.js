@@ -17,16 +17,16 @@ $(function () {
                     if (!file.accepted) {
                         this.removeFile(file);
                         main.error("File type not supported. Accepted file types includ; .xls, .xlsx, .xlsm");
-                    } 
+                    }
                 },
                 success: function (file, response) {
                     if (!response.Error) {
                         $("#equipmentConfiguration")
                             .append($("<input>")
-                                        .attr("data-fileid", file.name)
-                                        .attr("name", "FilePath")
-                                        .attr("type", "hidden")
-                                        .val(response.DrawingNumber + "+" + response.FilePath));
+                                .attr("data-fileid", file.name)
+                                .attr("name", "FilePath")
+                                .attr("type", "hidden")
+                                .val(response.DrawingNumber + "+" + response.FilePath));
 
                     }
                     else {
@@ -72,11 +72,11 @@ $(function () {
                 $("[type='submit']").button("reset");
 
             });
-        }
+        };
 
         this.initStyles();
         this.initEvents();
-    }
+    };
 
     new ImportEquipment();
 
