@@ -279,6 +279,101 @@ namespace WendtEquipmentTracking.App.Controllers
 
 
 
+        // GET: GetPrioritiesFromImport/
+        [HttpGet]
+        [HttpPost]
+        public IEnumerable<PriorityModel> GetPrioritiesFromImport(string filePath)
+        {
+
+            IEnumerable<PriorityModel> model = new List<PriorityModel>();
+            try
+            {
+                var user = userService.GetCurrentUser();
+
+                var allPriorities = priorityService.GetAll(user.ProjectId);
+
+                var importBOs = importService.GetPrioritiesImport(filePath);
+                var random = new Random();
+                model = importBOs.Select(x => new PriorityModel
+                {
+                    ContractualShipDate = x.ContractualShipDate,
+                    DueDate = x.DueDate,
+                    EndDate = x.EndDate,
+                    EquipmentName = x.EquipmentName,
+                    PriorityNumber = x.PriorityNumber,
+                    PriorityId = random.Next(),
+                    IsDuplicate = allPriorities.Any(w => w.PriorityNumber == x.PriorityNumber)
+                }).ToList();
+
+                return model;
+            }
+            catch (Exception e)
+            {
+                HandleError(e);
+                return model;
+            }
+        }
+
+        //
+        // GET: api/ImportApi/PriorityEditor
+        [HttpGet]
+        [HttpPost]
+        public DtResponse PriorityEditor()
+        {
+            var user = userService.GetCurrentUser();
+            var priorityModels = new List<PriorityModel>();
+
+            if (user != null)
+            {
+                var project = projectService.GetById(user.ProjectId);
+
+                var httpData = DatatableHelpers.HttpData();
+
+
+                Dictionary<string, object> data = httpData["data"] as Dictionary<string, object>;
+
+                var priorities = new List<PriorityBO>();
+                foreach (string priorityId in data.Keys)
+                {
+                    var row = data[priorityId];
+                    var priorityProperties = row as Dictionary<string, object>;
+
+                    PriorityBO priority = new PriorityBO();
+
+                    priority.PriorityId = !string.IsNullOrWhiteSpace(priorityProperties["PriorityId"].ToString()) ? Convert.ToInt32(priorityProperties["PriorityId"]) : 0;
+                    priority.DueDate = !string.IsNullOrWhiteSpace(priorityProperties["DueDate"].ToString()) ? Convert.ToDateTime(priorityProperties["DueDate"]) : DateTime.Now;
+                    priority.EndDate = !string.IsNullOrWhiteSpace(priorityProperties["EndDate"].ToString()) ? (DateTime?)Convert.ToDateTime(priorityProperties["DueDate"]) : null;
+                    priority.ContractualShipDate = !string.IsNullOrWhiteSpace(priorityProperties["ContractualShipDate"].ToString()) ? (DateTime?)Convert.ToDateTime(priorityProperties["ContractualShipDate"]) : null;
+                    priority.EquipmentName = priorityProperties["EquipmentName"].ToString();
+                    priority.PriorityNumber = !string.IsNullOrWhiteSpace(priorityProperties["PriorityNumber"].ToString()) ? Convert.ToInt32(priorityProperties["PriorityNumber"]) : 0;
+                    priority.ProjectId = user.ProjectId;
+
+                    priorities.Add(priority);
+                }
+
+                var doSubmit = httpData["doSubmit"];
+                if (doSubmit.ToString() == "true")
+                {
+                    priorityService.SaveAll(priorities);
+                }
+
+                var allPriorities = priorityService.GetAll(user.ProjectId);
+
+                priorityModels = priorities.Select(x => new PriorityModel
+                {
+                    ContractualShipDate = x.ContractualShipDate,
+                    ProjectId = x.ProjectId,
+                    DueDate = x.DueDate,
+                    EndDate = x.EndDate,
+                    EquipmentName = x.EquipmentName,
+                    PriorityNumber = x.PriorityNumber,
+                    PriorityId = x.PriorityId,
+                    IsDuplicate = allPriorities.Any(w => w.PriorityNumber == x.PriorityNumber)
+                }).ToList();
+            }
+
+            return new DtResponse { data = priorityModels };
+        }
 
 
         [HttpGet]

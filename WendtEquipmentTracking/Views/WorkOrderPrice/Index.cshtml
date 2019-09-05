@@ -8,21 +8,27 @@
 
 <h4>Work Order Prices</h4>
 
-    <table class="table table-condensed table-hover table-bordered table-styled my-datatable">
-        <thead>
-            <tr>
-                <th>@Html.DisplayNameFor(model => model.WorkOrderNumber)</th>
-                <th>@Html.DisplayNameFor(model => model.CostPrice)</th>
-                <th>@Html.DisplayNameFor(model => model.SalePrice)</th>
-                <th>@Html.DisplayNameFor(model => model.ReleasedPercent)</th>
-                <th>@Html.DisplayNameFor(model => model.ShippedPercent)</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-           
-        </tbody>
-    </table>
+@if (Html.UserIsInRole(UserRoles.ReadWrite))
+{
+    <p>
+        @Html.ActionLink("Create New Work Order Price", "Create", null, new { @class = "btn btn-sm btn-primary" })
+    </p>
+}
+
+<table class="table table-condensed table-hover table-bordered table-styled my-datatable">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.WorkOrderNumber)</th>
+            <th>@Html.DisplayNameFor(model => model.CostPrice)</th>
+            <th>@Html.DisplayNameFor(model => model.SalePrice)</th>
+            <th>@Html.DisplayNameFor(model => model.ReleasedPercent)</th>
+            <th>@Html.DisplayNameFor(model => model.ShippedPercent)</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
 
 
 @section Scripts {

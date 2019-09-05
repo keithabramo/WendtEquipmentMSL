@@ -41,7 +41,7 @@
                         }
                     }
 
-                    
+
                     if (!dueDate.isMultiValue()) {
                         if (!dueDate.val()) {
                             dueDate.error('A start date is required');
@@ -85,9 +85,30 @@
                 idSrc: 'PriorityId',
                 fields: [
                     { name: "PriorityNumber" },
-                    { name: "DueDate", type: "datetime", format: "MM/DD/YYYY" },
-                    { name: "EndDate", type: "datetime", format: "MM/DD/YYYY" },
-                    { name: "ContractualShipDate", type: "datetime", format: "MM/DD/YYYY" },
+                    {
+                        name: "DueDate",
+                        type: "datetime",
+                        format: "MM/DD/YYYY",
+                        opts: {
+                            firstDay: 0
+                        }
+                    },
+                    {
+                        name: "EndDate",
+                        type: "datetime",
+                        format: "MM/DD/YYYY",
+                        opts: {
+                            firstDay: 0
+                        }
+                    },
+                    {
+                        name: "ContractualShipDate",
+                        type: "datetime",
+                        format: "MM/DD/YYYY",
+                        opts: {
+                            firstDay: 0
+                        }
+                    },
                     { name: "EquipmentName" },
                     { name: "PriorityId" }
                 ]
@@ -96,7 +117,7 @@
 
         this.initDatatable = function () {
             var $this = this;
-           
+
             editorMain.initDatatable({
                 ajax: {
                     url: ROOT_URL + "api/PriorityApi/Table",
@@ -112,10 +133,10 @@
                     { data: "PriorityId" }
                 ],
                 keys: {
-                    columns: [0,1, 2, 3, 4]
+                    columns: [0, 1, 2, 3, 4]
                 },
                 autoFill: {
-                    columns: [1,2,3,4]
+                    columns: [1, 2, 3, 4]
                 },
                 columnDefs: [
                     {
@@ -145,7 +166,7 @@
 
         this.initStyles();
         this.initEvents();
-    }
+    };
 
     editorPriority = new EditorPriority();
 

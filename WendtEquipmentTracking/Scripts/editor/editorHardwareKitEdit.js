@@ -79,7 +79,7 @@
                         ).submit(function () {
                             $this.canSubmit = false;
                             $("#Save").button("reset");
-                            location.href = ROOT_URL + "HardwareKit/?ajaxSuccess=true"
+                            location.href = ROOT_URL + "HardwareKit/?ajaxSuccess=true";
                         }, function () {
                             $this.canSubmit = false;
                             $("#Save").button("reset");

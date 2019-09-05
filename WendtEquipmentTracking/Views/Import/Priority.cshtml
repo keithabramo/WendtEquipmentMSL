@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+@Html.Partial("ActionNavPartial", ActionNav.ImportPriority)
+
+<h4>Import Priorities <br /><small>Select the excel document containing the priorities you would like to import.</small></h4>
+
+<div class="alert alert-info"><p><a href="~/Files/PriorityTemplate.xlsx" target="_blank" class="alert-link">Click Here</a> to download the template file needed for importing priorities</p></div>
+
+@using (Html.BeginForm("SelectPriorityFile", "Import", FormMethod.Post, new { enctype = "multipart/form-data", @class = "dropzone", id = "myDropzone" }))
+{
+}
+
+<input type="hidden" id="FilePath" />
+<div id="priorityRows" class="collapse">
+    @Html.Partial("PriorityTablePartial")
+</div>
+
+@section Scripts {
+    @Styles.Render("~/Content/dropzone")
+
+    @Scripts.Render("~/bundles/dropzone")
+    @Scripts.Render("~/bundles/form")
+    @Scripts.Render("~/bundles/editor")
+    @Scripts.Render("~/bundles/importPriority")
+}

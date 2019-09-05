@@ -106,7 +106,7 @@
                             $this.canSubmit = false;
                             $("#Save").button("reset");
 
-                            location.href = ROOT_URL + "BillOfLading/?ajaxSuccess=true"
+                            location.href = ROOT_URL + "BillOfLading/?ajaxSuccess=true";
                         }, function () {
                             $this.canSubmit = false;
                             $("#Save").button("reset");

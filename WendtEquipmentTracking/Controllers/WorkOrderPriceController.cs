@@ -1,7 +1,9 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using WendtEquipmentTracking.App.Models;
 using WendtEquipmentTracking.BusinessLogic;
 using WendtEquipmentTracking.BusinessLogic.Api;
+using WendtEquipmentTracking.BusinessLogic.BO;
 
 namespace WendtEquipmentTracking.App.Controllers
 {
@@ -73,39 +75,46 @@ namespace WendtEquipmentTracking.App.Controllers
             return View();
         }
 
-        //
-        // POST: /WorkOrderPrice/Create
-        //[HttpPost]
-        //public ActionResult Create(WorkOrderPriceModel model)
-        //{
-        //    try
-        //    {
-        //        if (ModelState.IsValid)
-        //        {
-        //            var user = userService.GetCurrentUser();
 
-        //            if (user != null)
-        //            {
-        //                model.ProjectId = user.ProjectId;
+        [HttpPost]
+        public ActionResult Create(WorkOrderPriceModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var user = userService.GetCurrentUser();
 
-        //                var workOrderPriceBO = Mapper.Map<WorkOrderPriceBO>(model);
+                    if (user != null)
+                    {
+                        model.ProjectId = user.ProjectId;
 
-        //                workOrderPriceService.Save(workOrderPriceBO);
+                        var workOrderPriceBO = new WorkOrderPriceBO
+                        {
+                            CostPrice = model.CostPrice,
+                            ReleasedPercent = model.ReleasedPercent,
+                            SalePrice = model.SalePrice,
+                            ShippedPercent = model.ShippedPercent,
+                            WorkOrderNumber = model.WorkOrderNumber,
+                            ProjectId = model.ProjectId
+                        };
 
-        //                return RedirectToAction("Index");
-        //            }
-        //        }
+                        workOrderPriceService.Save(workOrderPriceBO);
 
-        //        HandleError("There was an issue attempting to create this work order price", ModelState);
+                        return RedirectToAction("Index");
+                    }
+                }
+                HandleError("There was an issue while creating this work order price", ModelState);
 
-        //        return View(model);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        HandleError("There was an error attempting to create this work order price", e);
-        //        return View(model);
-        //    }
-        //}
+                return View(model);
+            }
+            catch (Exception e)
+            {
+                HandleError("There was an error while creating this work order price", e);
+
+                return View(model);
+            }
+        }
 
         //
         // GET: /WorkOrderPrice/Edit/5

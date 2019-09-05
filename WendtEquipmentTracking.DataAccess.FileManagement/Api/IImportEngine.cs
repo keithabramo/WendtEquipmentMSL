@@ -10,7 +10,10 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Api
         IEnumerable<EquipmentRow> GetEquipment(EquipmentImport import);
 
         IEnumerable<WorkOrderPriceRow> GetWorkOrderPrices(string filePath);
+
         IEnumerable<RawEquipmentRow> GetRawEquipment(string filePath);
+
+        IEnumerable<PriorityRow> GetPriorities(string filePath);
 
     }
 }

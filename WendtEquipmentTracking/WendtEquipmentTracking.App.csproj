@@ -190,6 +190,7 @@
     <Compile Include="Models\EditorModel.cs" />
     <Compile Include="Models\IDisctionary.cs" />
     <Compile Include="Models\RawEquipmentImportModel.cs" />
+    <Compile Include="Models\PriorityImportModel.cs" />
     <Compile Include="Models\WorkOrderPriceImportModel.cs" />
     <Compile Include="Models\HardwareCommercialCodeModel.cs" />
     <Compile Include="Models\HardwareKitGroupModel.cs" />
@@ -280,6 +281,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Files\PriorityTemplate.xlsx" />
     <None Include="Properties\PublishProfiles\ReleaseProfile.pubxml" />
     <None Include="Properties\PublishProfiles\StagingProfile.pubxml" />
     <Content Include="Images\logo.jpg" />
@@ -300,6 +302,8 @@
     <Content Include="Scripts\editor\editorBOLCreate.js" />
     <Content Include="Scripts\editor\importRawEquipment.js" />
     <Content Include="Scripts\editor\importRawEquipmentTable.js" />
+    <Content Include="Scripts\editor\importPriority.js" />
+    <Content Include="Scripts\editor\importPriorityTable.js" />
     <Content Include="Scripts\editor\importWorkOrderPriceTable.js" />
     <Content Include="Scripts\editor\tableAdmin.js" />
     <Content Include="Scripts\editor\timer.js" />
@@ -524,6 +528,15 @@
     </Content>
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+    <Content Include="Views\WorkOrderPrice\Create.cshtml" />
+    <Content Include="Views\Import\Priority.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Priority.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Import\PriorityTablePartial.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>PriorityTablePartial.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Web.Staging.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

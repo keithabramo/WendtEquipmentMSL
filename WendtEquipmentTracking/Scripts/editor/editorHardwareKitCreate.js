@@ -13,7 +13,7 @@
 
             this.initEditor();
             this.initDatatable();
-        }
+        };
 
         this.initEvents = function () {
             var $this = this;
@@ -39,7 +39,7 @@
 
                 data.doSubmit = $this.canSubmit;
                 if ($this.canSubmit) {
-                    
+
 
                     data.HardwareKitNumber = $("#HardwareKitNumber").val();
                     data.ExtraQuantityPercentage = $("#ExtraQuantityPercentage").val();
@@ -48,17 +48,8 @@
 
             });
 
-            editorMain.editor.on('postEdit', function (e, json, data) {
-
-                var row = editorMain.datatable.row("#" + data.HardwareKitGroupId);
-
-
-            });
-
             $("input[name='ExtraQuantityPercentage']").on("change", function () {
                 var newPercent = parseInt($(this).val(), 10);
-
-                var rows = editorMain.datatable.rows();
 
                 editorMain.datatable.rows().every(function (rowIdx, tableLoop, rowLoop) {
                     var data = this.data();
@@ -84,7 +75,7 @@
                         ).submit(function () {
                             $this.canSubmit = false;
                             $("#Save").button("reset");
-                            location.href = ROOT_URL + "HardwareKit/?ajaxSuccess=true"
+                            location.href = ROOT_URL + "HardwareKit/?ajaxSuccess=true";
                         }, function () {
                             $this.canSubmit = false;
                             $("#Save").button("reset");
@@ -103,7 +94,7 @@
                 }
             });
 
-        }
+        };
 
         this.initEditor = function () {
 
@@ -122,11 +113,11 @@
                     { name: "QuantityToShip" }
                 ]
             });
-        }
+        };
 
         this.initDatatable = function () {
             var $this = this;
-           
+
             editorMain.initDatatable({
                 ajax: {
                     url: ROOT_URL + "api/HardwareKitApi/CreateTable",
@@ -176,7 +167,7 @@
                     columns: [4]
                 }
             });
-        }
+        };
 
         this.initStyles();
         this.initEvents();

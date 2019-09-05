@@ -43,10 +43,6 @@
     <Reference Include="DocumentFormat.OpenXml, Version=2.9.1.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
       <HintPath>..\packages\DocumentFormat.OpenXml.2.9.1\lib\net40\DocumentFormat.OpenXml.dll</HintPath>
     </Reference>
-    <Reference Include="Excel.Helper, Version=1.0.1.0, Culture=neutral, PublicKeyToken=ab40b1b8217243eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\ExcelDataReaderHelper.1.0.3.0\lib\Excel.Helper.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="ExcelDataReader, Version=3.6.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
       <HintPath>..\packages\ExcelDataReader.3.6.0\lib\net45\ExcelDataReader.dll</HintPath>
     </Reference>
@@ -76,6 +72,7 @@
     <Compile Include="Api\IImportEngine.cs" />
     <Compile Include="Domain\RawEquipmentRow.cs" />
     <Compile Include="Domain\HardwareCommercialCodeImport.cs" />
+    <Compile Include="Domain\PriorityRow.cs" />
     <Compile Include="Domain\WorkOrderPriceRow.cs" />
     <Compile Include="Domain\EquipmentRow.cs" />
     <Compile Include="Domain\EquipmentImport.cs" />

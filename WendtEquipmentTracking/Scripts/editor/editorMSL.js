@@ -467,7 +467,14 @@
                         placeholderDisabled: false,
                         placeholder: ""
                     },
-                    { name: "ReleaseDate", type: "datetime", format: "MM/DD/YYYY" },
+                    {
+                        name: "ReleaseDate",
+                        type: "datetime",
+                        format: "MM/DD/YYYY",
+                        opts: {
+                            firstDay: 0
+                        }
+                    },
                     { name: "DrawingNumber", type: "textarea" },
                     { name: "WorkOrderNumber" },
                     { name: "Quantity" },

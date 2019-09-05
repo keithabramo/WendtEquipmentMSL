@@ -114,7 +114,7 @@
                         ).submit(function () {
                             $this.canSubmit = false;
                             $("#Save").button("reset");
-                            location.href = ROOT_URL + "BillOfLading/?ajaxSuccess=true"
+                            location.href = ROOT_URL + "BillOfLading/?ajaxSuccess=true";
                         }, function () {
                             $this.canSubmit = false;
                             $("#Save").button("reset");
@@ -148,7 +148,14 @@
                     { name: "Quantity" },
                     { name: "Equipment.EquipmentName" },
                     { name: "Equipment.PriorityNumber" },
-                    { name: "Equipment.ReleaseDate", type: "datetime", format: "MM/DD/YYYY" },
+                    {
+                        name: "Equipment.ReleaseDate",
+                        type: "datetime",
+                        format: "MM/DD/YYYY",
+                        opts: {
+                            firstDay: 0
+                        }
+                    },
                     { name: "Equipment.DrawingNumber" },
                     { name: "Equipment.WorkOrderNumber" },
                     { name: "Equipment.Quantity" },

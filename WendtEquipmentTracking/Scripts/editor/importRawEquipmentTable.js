@@ -47,7 +47,7 @@
                             editorMain.datatable.rows({ selected: true }).indexes(), false
                         ).submit(function () {
                             $this.canSubmit = false;
-                            location.href = ROOT_URL + "Equipment/?ajaxSuccess=true"
+                            location.href = ROOT_URL + "Equipment/?ajaxSuccess=true";
                         }, function () {
                             $this.canSubmit = false;
                             $("#import").button("reset");
@@ -112,7 +112,14 @@
                         placeholderDisabled: false,
                         placeholder: ""
                     },
-                    { name: "ReleaseDate", type: "datetime", format: "MM/DD/YYYY" },
+                    {
+                        name: "ReleaseDate",
+                        type: "datetime",
+                        format: "MM/DD/YYYY",
+                        opts: {
+                            firstDay: 0
+                        }
+                    },
                     { name: "DrawingNumber", type: "textarea" },
                     { name: "WorkOrderNumber" },
                     { name: "Quantity" },

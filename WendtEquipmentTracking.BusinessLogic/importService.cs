@@ -115,5 +115,21 @@ namespace WendtEquipmentTracking.BusinessLogic
 
             return equipmentBOs.ToList();
         }
+
+        public IEnumerable<PriorityBO> GetPrioritiesImport(string filePath)
+        {
+            var priorityRows = importEngine.GetPriorities(filePath);
+
+            var priorityBOs = priorityRows.Select(x => new PriorityBO
+            {
+                ContractualShipDate = x.ContractualShipDate,
+                DueDate = x.DueDate,
+                EndDate = x.EndDate,
+                EquipmentName = x.EquipmentName,
+                PriorityNumber = x.PriorityNumber
+            });
+
+            return priorityBOs.ToList();
+        }
     }
 }

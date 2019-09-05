@@ -37,5 +37,7 @@ namespace WendtEquipmentTracking.App.Models
         [DisplayName("Equipment")]
         [Required]
         public string EquipmentName { get; set; }
+
+        public bool IsDuplicate { get; set; }
     }
 }

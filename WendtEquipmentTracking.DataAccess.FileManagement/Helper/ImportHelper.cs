@@ -1,5 +1,4 @@
-﻿using Excel.Helper;
-using ExcelDataReader;
+﻿using ExcelDataReader;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -26,7 +25,14 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Helper
                     RowStart = 2,
                     NumberOfColumns = 14
                 }
-            }
+            },
+            { "Priorities", new ExcelDataLocation
+                {
+                    ColumnStart = 1,
+                    RowStart = 2,
+                    NumberOfColumns = 5
+                }
+            },
         };
 
         public static IEnumerable<EquipmentRow> GetEquipment(EquipmentImport import)
@@ -41,34 +47,10 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Helper
 
                 using (FileStream stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
                 {
-                    IExcelDataReader excelReader;
-
-                    //1. Reading Excel file
-                    if (Path.GetExtension(filePath).ToUpper() == ".XLS")
-                    {
-                        //1.1 Reading from a binary Excel file ('97-2003 format; *.xls)
-                        excelReader = ExcelReaderFactory.CreateBinaryReader(stream);
-                    }
-                    else
-                    {
-                        //1.2 Reading from a OpenXml Excel file (2007 format; *.xlsx)
-                        excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream);
-                    }
-
-
-                    //2. DataSet - Create column names from first row
-                    DataSet result = excelReader.AsDataSet(new ExcelDataSetConfiguration
-                    {
-                        ConfigureDataTable = (tableReader) => new ExcelDataTableConfiguration()
-                        {
-                            // Gets or sets a value indicating whether to use a row from the 
-                            // data as column names.
-                            UseHeaderRow = true
-                        }
-                    });
+                    var table = getTableFromFile(stream);
 
                     //5. Data Reader methods
-                    foreach (DataRow row in result.Tables[0].Rows)
+                    foreach (DataRow row in table.Rows)
                     {
                         var item = row["ITEM"];
                         var quantity = row["QTY"];
@@ -140,153 +122,225 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Helper
             return records;
         }
 
-        public static IEnumerable<WorkOrderPriceRow> GetWorkOrderPrices(ExcelDataReaderHelper excelHelper)
+        public static IEnumerable<WorkOrderPriceRow> GetWorkOrderPrices(string filePath)
         {
-            var dataLocation = dataLocations["Work Order Prices"];
-
-            object[][] values = excelHelper.GetRangeCells(0, dataLocation.ColumnStart, dataLocation.RowStart, dataLocation.NumberOfColumns);
-            
             var records = new List<WorkOrderPriceRow>();
-            foreach (var rowValues in values.Where(r => r[0] != null))
+
+            using (FileStream stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
             {
-                var workOrderNumber = rowValues[0] != null ? rowValues[0].ToString() : "";
-                var costPriceString = rowValues[1] != null ? rowValues[1].ToString().Replace("$", "").Replace(",", "") : "";
-                var salePriceString = rowValues[2] != null ? rowValues[2].ToString().Replace("$", "").Replace(",", "") : "";
-                var releasedPercentString = rowValues[3] != null ? rowValues[3].ToString().Replace("%", "") : ""; //percent columns come back as decimals between 0 - 1
-                var shippedPercentString = rowValues[4] != null ? rowValues[4].ToString().Replace("%", "") : ""; //percent columns come back as decimals between 0 - 1
+                var table = getTableFromFile(stream);
 
-
-
-                double costPrice = 0;
-                if (!Double.TryParse(costPriceString, out costPrice))
+                foreach (DataRow row in table.Rows)
                 {
-                    costPrice = 0;
+                    var workOrderNumber = row[0] != null ? row[0].ToString() : "";
+                    var costPriceString = row[1] != null ? row[1].ToString().Replace("$", "").Replace(",", "") : "";
+                    var salePriceString = row[2] != null ? row[2].ToString().Replace("$", "").Replace(",", "") : "";
+                    var releasedPercentString = row[3] != null ? row[3].ToString().Replace("%", "") : ""; //percent columns come back as decimals between 0 - 1
+                    var shippedPercentString = row[4] != null ? row[4].ToString().Replace("%", "") : ""; //percent columns come back as decimals between 0 - 1
+
+                    double costPrice = 0;
+                    if (!Double.TryParse(costPriceString, out costPrice))
+                    {
+                        costPrice = 0;
+                    }
+
+                    double salePrice = 0;
+                    if (!Double.TryParse(salePriceString, out salePrice))
+                    {
+                        salePrice = 0;
+                    }
+
+                    double releasedPercent = 0;
+                    if (!Double.TryParse(releasedPercentString, out releasedPercent))
+                    {
+                        releasedPercent = 0;
+                    }
+                    releasedPercent = releasedPercent * 100;
+
+                    double shippedPercent = 0;
+                    if (!Double.TryParse(shippedPercentString, out shippedPercent))
+                    {
+                        shippedPercent = 0;
+                    }
+                    shippedPercent = shippedPercent * 100;
+
+
+
+                    var record = new WorkOrderPriceRow
+                    {
+                        WorkOrderNumber = workOrderNumber,
+                        CostPrice = costPrice,
+                        SalePrice = salePrice,
+                        ReleasedPercent = releasedPercent, //percent columns come back as decimals between 0 - 1
+                        ShippedPercent = shippedPercent //percent columns come back as decimals between 0 - 1
+                    };
+
+                    records.Add(record);
                 }
-
-                double salePrice = 0;
-                if (!Double.TryParse(salePriceString, out salePrice))
-                {
-                    salePrice = 0;
-                }
-
-                double releasedPercent = 0;
-                if (!Double.TryParse(releasedPercentString, out releasedPercent))
-                {
-                    releasedPercent = 0;
-                }
-                releasedPercent = releasedPercent * 100;
-
-                double shippedPercent = 0;
-                if (!Double.TryParse(shippedPercentString, out shippedPercent))
-                {
-                    shippedPercent = 0;
-                }
-                shippedPercent = shippedPercent * 100;
-
-
-
-                var record = new WorkOrderPriceRow
-                {
-                    WorkOrderNumber = workOrderNumber,
-                    CostPrice = costPrice,
-                    SalePrice = salePrice,
-                    ReleasedPercent = releasedPercent, //percent columns come back as decimals between 0 - 1
-                    ShippedPercent = shippedPercent //percent columns come back as decimals between 0 - 1
-                };
-
-                records.Add(record);
             }
+            return records;
+        }
 
-            
+        public static IEnumerable<RawEquipmentRow> GetRawEquipment(string filePath)
+        {
+            var records = new List<RawEquipmentRow>();
+
+            using (FileStream stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
+            {
+                var table = getTableFromFile(stream);
+
+                foreach (DataRow row in table.Rows)
+                {
+                    var equipmentName = row[0] != null ? row[0].ToString() : "";
+                    var priorityNumberString = row[1] != null ? row[1].ToString() : "";
+                    var releaseDateString = row[2] != null ? row[2].ToString() : "";
+                    var drawingNumber = row[3].ToString();
+                    var workOrderNumber = row[4].ToString();
+                    var quantityString = row[5] != null ? row[5].ToString() : "";
+                    var shippingTagNumber = row[6].ToString();
+                    var description = row[7].ToString();
+                    var unitWeightString = row[8] != null ? row[8].ToString() : "";
+                    var readyToShipString = row[9] != null ? row[9].ToString() : "";
+                    var shippedFrom = row[10] != null ? row[10].ToString() : "";
+                    var htsCode = row[11] != null ? row[11].ToString() : "";
+                    var countryOfOrigin = row[12] != null ? row[12].ToString() : "";
+                    var notes = row[13] != null ? row[13].ToString() : "";
+
+                    int? priorityNumber = null;
+                    if (!string.IsNullOrEmpty(priorityNumberString))
+                    {
+                        int priorityNumberInt = 0;
+                        if (!Int32.TryParse(priorityNumberString, out priorityNumberInt))
+                        {
+                            priorityNumber = null;
+                        }
+                        else
+                        {
+                            priorityNumber = priorityNumberInt;
+                        }
+                    }
+
+                    DateTime releaseDate = DateTime.Now;
+                    if (!DateTime.TryParse(releaseDateString, out releaseDate))
+                    {
+                        releaseDate = DateTime.Now;
+                    }
+
+                    int quantity = 0;
+                    if (!Int32.TryParse(quantityString, out quantity))
+                    {
+                        quantity = 0;
+                    }
+
+                    double unitWeight = 0;
+                    if (!Double.TryParse(unitWeightString, out unitWeight))
+                    {
+                        unitWeight = 0;
+                    }
+
+                    int readyToShip = 0;
+                    if (!Int32.TryParse(readyToShipString, out readyToShip))
+                    {
+                        readyToShip = 0;
+                    }
+
+
+                    var record = new RawEquipmentRow
+                    {
+                        EquipmentName = equipmentName,
+                        PriorityNumber = priorityNumber,
+                        ReleaseDate = releaseDate,
+                        DrawingNumber = drawingNumber,
+                        WorkOrderNumber = workOrderNumber,
+                        Quantity = quantity,
+                        ShippingTagNumber = shippingTagNumber,
+                        Description = description,
+                        UnitWeight = unitWeight,
+                        ReadyToShip = readyToShip,
+                        ShippedFrom = shippedFrom,
+                        HTSCode = htsCode,
+                        CountryOfOrigin = countryOfOrigin,
+                        Notes = notes,
+                    };
+
+                    records.Add(record);
+                }
+            }
 
             return records;
         }
 
-        public static IEnumerable<RawEquipmentRow> GetRawEquipment(ExcelDataReaderHelper excelHelper)
+        public static IEnumerable<PriorityRow> GetPriorities(string filePath)
         {
-            var dataLocation = dataLocations["Raw Equipment"];
+            var records = new List<PriorityRow>();
 
-            object[][] values = excelHelper.GetRangeCells(0, dataLocation.ColumnStart, dataLocation.RowStart, dataLocation.NumberOfColumns);
-
-            var records = new List<RawEquipmentRow>();
-            foreach (var rowValues in values.Where(r => r[0] != null))
+            using (FileStream stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
             {
-                var equipmentName = rowValues[0] != null ? rowValues[0].ToString() : "";
-                var priorityNumberString = rowValues[1] != null ? rowValues[1].ToString() : "";
-                var releaseDateString = rowValues[2] != null ? rowValues[2].ToString() : "";
-                var drawingNumber = rowValues[3].ToString();
-                var workOrderNumber = rowValues[4].ToString();
-                var quantityString = rowValues[5] != null ? rowValues[5].ToString() : "";
-                var shippingTagNumber = rowValues[6].ToString();
-                var description = rowValues[7].ToString();
-                var unitWeightString = rowValues[8] != null ? rowValues[8].ToString() : "";
-                var readyToShipString = rowValues[9] != null ? rowValues[9].ToString() : "";
-                var shippedFrom = rowValues[10] != null ? rowValues[10].ToString() : "";
-                var htsCode = rowValues[11] != null ? rowValues[11].ToString() : "";
-                var countryOfOrigin = rowValues[12] != null ? rowValues[12].ToString() : "";
-                var notes = rowValues[13] != null ? rowValues[13].ToString() : "";
+                var table = getTableFromFile(stream);
 
-                int? priorityNumber = null;
-                if (!string.IsNullOrEmpty(priorityNumberString))
+                foreach (DataRow row in table.Rows)
                 {
-                    int priorityNumberInt = 0;
-                    if (!Int32.TryParse(priorityNumberString, out priorityNumberInt))
+                    var priorityNumberString = row[0] != null ? row[0].ToString() : "";
+                    var dueDateString = row[1] != null ? row[1].ToString() : "";
+                    var endDateString = row[2] != null ? row[2].ToString() : "";
+                    var contractualShipDateString = row[3].ToString();
+                    var equipmentName = row[4].ToString();
+
+                    int priorityNumber = 0;
+                    if (!Int32.TryParse(priorityNumberString, out priorityNumber))
                     {
-                        priorityNumber = null;
+                        priorityNumber = 0;
                     }
-                    else
+
+                    DateTime dueDate = DateTime.Now;
+                    if (!DateTime.TryParse(dueDateString, out dueDate))
                     {
-                        priorityNumber = priorityNumberInt;
+                        dueDate = DateTime.Now;
                     }
+
+                    DateTime endDate = DateTime.Now;
+                    if (!DateTime.TryParse(endDateString, out endDate))
+                    {
+                        endDate = DateTime.Now;
+                    }
+
+                    DateTime contractualShipDate = DateTime.Now;
+                    if (!DateTime.TryParse(contractualShipDateString, out contractualShipDate))
+                    {
+                        contractualShipDate = DateTime.Now;
+                    }
+
+                    var record = new PriorityRow
+                    {
+                        EquipmentName = equipmentName,
+                        PriorityNumber = priorityNumber,
+                        ContractualShipDate = contractualShipDate,
+                        DueDate = dueDate,
+                        EndDate = endDate
+                    };
+
+                    records.Add(record);
                 }
-
-                DateTime releaseDate = DateTime.Now;
-                if (!DateTime.TryParse(releaseDateString, out releaseDate))
-                {
-                    releaseDate = DateTime.Now;
-                }
-
-                int quantity = 0;
-                if (!Int32.TryParse(quantityString, out quantity))
-                {
-                    quantity = 0;
-                }
-
-                double unitWeight = 0;
-                if (!Double.TryParse(unitWeightString, out unitWeight))
-                {
-                    unitWeight = 0;
-                }
-
-                int readyToShip = 0;
-                if (!Int32.TryParse(readyToShipString, out readyToShip))
-                {
-                    readyToShip = 0;
-                }
-
-
-                var record = new RawEquipmentRow
-                {
-                    EquipmentName = equipmentName,
-                    PriorityNumber = priorityNumber,
-                    ReleaseDate = releaseDate,
-                    DrawingNumber = drawingNumber,
-                    WorkOrderNumber = workOrderNumber,
-                    Quantity = quantity,
-                    ShippingTagNumber = shippingTagNumber,
-                    Description = description,
-                    UnitWeight = unitWeight,
-                    ReadyToShip = readyToShip,
-                    ShippedFrom = shippedFrom,
-                    HTSCode = htsCode,
-                    CountryOfOrigin = countryOfOrigin,
-                    Notes = notes,
-                };
-
-                records.Add(record);
             }
 
             return records;
+        }
+
+        private static DataTable getTableFromFile(FileStream stream)
+        {
+            var reader = ExcelReaderFactory.CreateReader(stream);
+
+            var conf = new ExcelDataSetConfiguration
+            {
+                ConfigureDataTable = _ => new ExcelDataTableConfiguration
+                {
+                    UseHeaderRow = true
+                }
+            };
+
+            var result = reader.AsDataSet(conf);
+
+            return result.Tables[0];
         }
 
         private class ExcelDataLocation

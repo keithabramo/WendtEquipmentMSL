@@ -1,6 +1,6 @@
 ﻿$(function () {
 
-    ImportWorkOrderPriceTable = function () {
+    ImportPriorityTable = function () {
 
         this.canSubmit = false;
 
@@ -9,7 +9,7 @@
 
             this.initEditor();
             this.initDatatable();
-        }
+        };
 
         this.initEvents = function () {
             var $this = this;
@@ -21,7 +21,7 @@
 
             editorMain.editor.on('postEdit', function (e, json, data) {
 
-                var row = editorMain.datatable.row("#" + data.WorkOrderPriceId);
+                var row = editorMain.datatable.row("#" + data.PriorityId);
 
                 if (data.IsDuplicate) {
                     $(row.node()).attr("class", 'warning');
@@ -49,7 +49,7 @@
                             editorMain.datatable.rows({ selected: true }).indexes(), false
                         ).submit(function () {
                             $this.canSubmit = false;
-                            location.href = ROOT_URL + "WorkOrderPrice/?ajaxSuccess=true";
+                            location.href = ROOT_URL + "Priority/?ajaxSuccess=true";
                         }, function () {
                             $this.canSubmit = false;
                             $("#import").button("reset");
@@ -79,50 +79,68 @@
                     $this.clearValidation();
                 }
             });
-        }
+        };
 
         this.initEditor = function () {
 
             editorMain.initEditor({
                 formOptions: {},
                 ajax: {
-                    url: ROOT_URL + "api/ImportApi/WorkOrderPriceEditor",
+                    url: ROOT_URL + "api/ImportApi/PriorityEditor",
                     dataSrc: ""
                 },
-                idSrc: 'WorkOrderPriceId',
+                idSrc: 'PriorityId',
                 fields: [
                     {
-                        name: "WorkOrderPriceId"
-                    }, {
-                        name: "WorkOrderNumber"
-                    }, {
-                        name: "CostPrice"
-                    }, {
-                        name: "SalePrice"
-                    }, {
-                        name: "ReleasedPercent"
-                    }, {
-                        name: "ShippedPercent"
-                    }
+                        name: "PriorityId"
+                    },
+                    {
+                        name: "PriorityNumber"
+                    },
+                    {
+                        name: "DueDate",
+                        type: "datetime",
+                        format: "MM/DD/YYYY",
+                        opts: {
+                            firstDay: 0
+                        }
+                    },
+                    {
+                        name: "EndDate",
+                        type: "datetime",
+                        format: "MM/DD/YYYY",
+                        opts: {
+                            firstDay: 0
+                        }
+                    },
+                    {
+                        name: "ContractualShipDate",
+                        type: "datetime",
+                        format: "MM/DD/YYYY",
+                        opts: {
+                            firstDay: 0
+                        }
+                    },
+                    { name: "EquipmentName" }
                 ]
             });
-        }
+        };
 
         this.initDatatable = function () {
             var $this = this;
-           
+
             editorMain.initDatatable({
                 ajax: {
-                    url: ROOT_URL + "api/ImportApi/GetWorkOrderPricesFromImport",
+                    url: ROOT_URL + "api/ImportApi/GetPrioritiesFromImport",
                     dataSrc: "",
                     data: function () {
                         return {
                             FilePath: $("#FilePath").val()
-                        }
+                        };
                     }
                 },
-                order: [[2, 'desc']],
-                rowId: 'WorkOrderPriceId',
+                order: [[1, 'asc']],
+                rowId: 'PriorityId',
                 createdRow: function (row, data, index) {
                     if (data.IsDuplicate) {
                         $(row).addClass('warning');
@@ -130,19 +148,19 @@
                 },
                 columnDefs: [
                     {
-                        data: "WorkOrderPriceId",
+                        data: "PriorityId",
                         orderable: false,
                         className: 'select-checkbox',
                         targets: 0,
                         render: function () {
-                            return "<span></span>"
+                            return "<span></span>";
                         }
                     },
-                    { data: "WorkOrderNumber", targets: 1 },
-                    { data: "CostPrice", targets: 2 },
-                    { data: "SalePrice", targets: 3 },
-                    { data: "ReleasedPercent", targets: 4 },
-                    { data: "ShippedPercent", targets: 5 }
+                    { data: "PriorityNumber", targets: 1 },
+                    { data: "DueDate", targets: 2 },
+                    { data: "EndDate", targets: 3 },
+                    { data: "ContractualShipDate", targets: 4 },
+                    { data: "EquipmentName", targets: 5 }
                 ],
                 select: {
                     style: 'multi',
@@ -156,7 +174,7 @@
                     columns: ":not(:first-child)"
                 }
             });
-        }
+        };
 
         this.validationErrors = function () {
             var $this = this;
@@ -167,14 +185,52 @@
                 var error = false;
                 var data = this.data();
 
-                var workOrderNumber = data.WorkOrderNumber;
+                var priorityNumber = data.PriorityNumber;
+                var dueDate = data.DueDate;
+                var endDate = data.EndDate;
+                var contractualShipDate = data.ContractualShipDate;
+                var equipmentName = data.EquipmentName;
 
 
-                if (!workOrderNumber) {
+                if (!priorityNumber) {
+                    error = true;
+                    $this.addError(rowIdx, 1);
+                } else if (!parseInt(priorityNumber, 10) || parseInt(priorityNumber, 10) > 99) {
                     error = true;
                     $this.addError(rowIdx, 1);
                 } else {
                     $this.removeError(rowIdx, 1);
+                }
+
+                if (!dueDate) {
+                    error = true;
+                    $this.addError(rowIdx, 2);
+                } else if (!moment(dueDate, 'MM/DD/YYYY', true).isValid()) {
+                    error = true;
+                    $this.addError(rowIdx, 2);
+                } else {
+                    $this.removeError(rowIdx, 2);
+                }
+
+                if (endDate && !moment(endDate, 'MM/DD/YYYY', true).isValid()) {
+                    error = true;
+                    $this.addError(rowIdx, 3);
+                } else {
+                    $this.removeError(rowIdx, 3);
+                }
+
+                if (contractualShipDate && !moment(contractualShipDate, 'MM/DD/YYYY', true).isValid()) {
+                    error = true;
+                    $this.addError(rowIdx, 4);
+                } else {
+                    $this.removeError(rowIdx, 4);
+                }
+
+                if (!equipmentName) {
+                    error = true;
+                    $this.addError(rowIdx, 5);
+                } else {
+                    $this.removeError(rowIdx, 5);
                 }
 
 
@@ -187,7 +243,7 @@
             });
 
             return errors;
-        }
+        };
 
 
         this.clearValidation = function () {
@@ -198,18 +254,18 @@
                 $this.removeError(rowIdx, 1);
                 $(this.node()).removeClass("danger");
             });
-        }
+        };
 
         this.addError = function (row, column) {
             $(editorMain.datatable.cell(row, column).node()).addClass("Red");
-        }
+        };
 
         this.removeError = function (row, column) {
             $(editorMain.datatable.cell(row, column).node()).removeClass("Red");
-        }
+        };
 
 
         this.initStyles();
         this.initEvents();
-    }
+    };
 });

@@ -1,15 +1,16 @@
 ﻿@model ActionNav
 
-<div class="btn-group" role="group" aria-label="actions">
-    @Html.ActionLink("Equipment Listing", "Index", "Home", null, new { @class = "btn " + (Model == ActionNav.MSL ? "btn-secondary" : "btn-primary") })
-    
-    @if (Html.UserIsInRole(UserRoles.ReadWrite))
-    {
-        @Html.ActionLink("Import Data", "Equipment", "Import", null, new { @class = "btn " + (Model == ActionNav.ImportEquipment ? "btn-secondary" : "btn-primary") })
-        @Html.ActionLink("Import Work Order Prices", "WorkOrderPrice", "Import", null, new { @class = "btn " + (Model == ActionNav.ImportWorkOrderPrice ? "btn-secondary" : "btn-primary") })
-        @Html.ActionLink("Create BOL", "Create", "BillOfLading", null, new { @class = "btn " + (Model == ActionNav.CreateBOL ? "btn-secondary" : "btn-primary") })
-        @Html.ActionLink("Create Hardware Kit", "Create", "HardwareKit", null, new { @class = "btn " + (Model == ActionNav.CreateHardwareKit ? "btn-secondary" : "btn-primary") })
-        @Html.ActionLink("Priorities", "Index", "Priority", null, new { @class = "btn " + (Model == ActionNav.Priorities ? "btn-secondary" : "btn-primary") })
-    }
-</div>
+    <div class="btn-group" role="group" aria-label="actions">
+        @Html.ActionLink("Equipment Listing", "Index", "Home", null, new { @class = "btn " + (Model == ActionNav.MSL ? "btn-secondary" : "btn-primary") })
+
+        @if (Html.UserIsInRole(UserRoles.ReadWrite))
+        {
+            @Html.ActionLink("Import Data", "Equipment", "Import", null, new { @class = "btn " + (Model == ActionNav.ImportEquipment ? "btn-secondary" : "btn-primary") })
+            @Html.ActionLink("Import Work Order Prices", "WorkOrderPrice", "Import", null, new { @class = "btn " + (Model == ActionNav.ImportWorkOrderPrice ? "btn-secondary" : "btn-primary") })
+            @Html.ActionLink("Import Priorities", "Priority", "Import", null, new { @class = "btn " + (Model == ActionNav.ImportPriority ? "btn-secondary" : "btn-primary") })
+            @Html.ActionLink("Create BOL", "Create", "BillOfLading", null, new { @class = "btn " + (Model == ActionNav.CreateBOL ? "btn-secondary" : "btn-primary") })
+            @Html.ActionLink("Create Hardware Kit", "Create", "HardwareKit", null, new { @class = "btn " + (Model == ActionNav.CreateHardwareKit ? "btn-secondary" : "btn-primary") })
+            @Html.ActionLink("Priorities", "Index", "Priority", null, new { @class = "btn " + (Model == ActionNav.Priorities ? "btn-secondary" : "btn-primary") })
+        }
+    </div>
 <br/><br/>

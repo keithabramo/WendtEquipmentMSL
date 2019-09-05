@@ -1,4 +1,4 @@
-﻿using Excel.Helper;
+﻿using ExcelDataReader;
 using System.Collections.Generic;
 using System.IO;
 using WendtEquipmentTracking.DataAccess.FileManagement.Api;
@@ -26,27 +26,19 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement
 
         public IEnumerable<WorkOrderPriceRow> GetWorkOrderPrices(string filePath)
         {
-            IEnumerable<WorkOrderPriceRow> workOrderPriceRecords = new List<WorkOrderPriceRow>();
-            using (var excelHelper = new ExcelDataReaderHelper(filePath))
-            {
-                workOrderPriceRecords = ImportHelper.GetWorkOrderPrices(excelHelper);
-            }
-
+            var workOrderPriceRecords = ImportHelper.GetWorkOrderPrices(filePath);
+            
             return workOrderPriceRecords;
         }
 
         public IEnumerable<RawEquipmentRow> GetRawEquipment(string filePath)
         {
-            IEnumerable<RawEquipmentRow> equipmentRecords = new List<RawEquipmentRow>();
-            using (var excelHelper = new ExcelDataReaderHelper(filePath))
-            {
-                equipmentRecords = ImportHelper.GetRawEquipment(excelHelper);
-            }
-
-            return equipmentRecords;
+            return ImportHelper.GetRawEquipment(filePath);
         }
 
-
-
+        public IEnumerable<PriorityRow> GetPriorities(string filePath)
+        {
+            return ImportHelper.GetPriorities(filePath);
+        }
     }
 }
