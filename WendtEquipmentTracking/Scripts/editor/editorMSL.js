@@ -2,9 +2,7 @@
 
     var EditorMSL = function () {
 
-        //this.editableColumns = [1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 16, 19, 20, 21];
         this.editableColumns = [2, 3, 4, 5, 6, 7, 8, 9, 10, 13, 17, 18, 21, 22];
-
 
         this.initStyles = function () {
             var $this = this;
@@ -504,6 +502,19 @@
         this.initDatatable = function () {
             var $this = this;
 
+            var hideColumns = false;
+
+            $.ajax({
+                url: ROOT_URL + "api/ProjectApi/Get/" + $("#projectId").val(),
+                async: false,
+                success: function (result) {
+                    if (result) {
+                        if (!result.IsCustomsProject && !result.IncludeSoftCosts) {
+                            hideColumns = true;
+                        }
+                    }
+                }
+            });
 
             editorMain.initDatatable({
                 ajax: {
@@ -533,14 +544,9 @@
 
                     if (data.IsHardwareKit) {
                         $(editorMain.datatable.cell(index, 2).node()).addClass("active");
-                        //$(editorMain.datatable.cell(index, 5).node()).addClass("active");
                     }
                 },
                 order: [[4, 'desc'], [27, 'desc']],
-                //select: {
-                //    style: 'multi',
-                //    selector: 'td:first-child'
-                //},
                 columnDefs: [
                     {
                         orderable: false,
@@ -661,22 +667,26 @@
                         createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                             $(cell).addClass(rowData.Indicators.CustomsValueColor);
                         },
-                        render: $.fn.dataTable.render.number(',', '.', 2, '$')
+                        render: $.fn.dataTable.render.number(',', '.', 2, '$'),
+                        visible: !hideColumns
                     },
                     {
                         data: "SalePriceText", "targets": 20, className: "active text-right salePriceWidth",
                         createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                             $(cell).addClass(rowData.Indicators.SalePriceColor);
                         },
-                        render: $.fn.dataTable.render.number(',', '.', 2, '$')
+                        render: $.fn.dataTable.render.number(',', '.', 2, '$'),
+                        visible: !hideColumns
                     },
                     {
                         data: "HTSCode", "targets": 21,
-                        className: "htsCodeWidth"
+                        className: "htsCodeWidth",
+                        visible: !hideColumns
                     },
                     {
                         data: "CountryOfOrigin", "targets": 22,
-                        className: "countryOfOriginWidth"
+                        className: "countryOfOriginWidth",
+                        visible: !hideColumns
                     },
                     {
                         "targets": 23,

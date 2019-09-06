@@ -44,6 +44,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
             ViewBag.ProjectNumber = project.ProjectNumber + (!string.IsNullOrWhiteSpace(project.ShipToCompany) ? ": " + project.ShipToCompany : "");
             ViewBag.Priorities = priorities;
+            ViewBag.ProjectId = project.ProjectId;
 
             return View();
         }
