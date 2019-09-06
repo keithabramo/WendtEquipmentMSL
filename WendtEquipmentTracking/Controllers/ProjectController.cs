@@ -87,6 +87,7 @@ namespace WendtEquipmentTracking.App.Controllers
         public ActionResult Create()
         {
             var user = userService.GetCurrentUser();
+            var projectsToCopy = projectService.GetAllForCopy();
 
             if (user == null)
             {
@@ -298,7 +299,54 @@ namespace WendtEquipmentTracking.App.Controllers
             return PartialView();
         }
 
-        [HttpPost]
+    public ActionResult ProjectCopyPartial()
+    {
+        try
+        {
+            var projects = new List<SelectListItem>();
+            var user = userService.GetCurrentUser();
+
+            if (user != null)
+            {
+                try
+                {
+                    var projectBOs = projectService.GetAllForCopy().OrderBy(p => p.ProjectNumber);
+                    projects = projectBOs.Select(x => new SelectListItem
+                    {
+                        Value = x.ProjectId.ToString(),
+                        Text = x.ProjectNumber + (!string.IsNullOrWhiteSpace(x.ShipToCompany) ? ": " + x.ShipToCompany : "")
+                    }).ToList();
+
+                }
+                catch (Exception e)
+                {
+                    HandleError("There was an error attempting to load this list of projects due to projects numbers containing text", e);
+                    var projectBOs = projectService.GetAllForNavigation().OrderBy(p => p.ProjectNumber);
+                    projects = projectBOs.Select(x => new SelectListItem
+                    {
+                        Value = x.ProjectId.ToString(),
+                        Text = x.ProjectNumber + (!string.IsNullOrWhiteSpace(x.ShipToCompany) ? ": " + x.ShipToCompany : "")
+                    }).ToList();
+                }
+
+                var model = new ProjectCopyModel
+                {
+                    Projects = projects
+                };
+
+                return PartialView(model);
+            }
+
+        }
+        catch (Exception e)
+        {
+            HandleError("There was an error attempting to load this list of projects", e);
+        }
+
+        return PartialView();
+    }
+
+    [HttpPost]
         public ActionResult ChangeProject(int ProjectId)
         {
             var user = userService.GetCurrentUser();

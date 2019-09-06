@@ -1,0 +1,10 @@
+﻿@model ProjectCopyModel
+
+<div class="row">
+    <div class="col-sm-4">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Projects)
+            @Html.DropDownListFor(model => model.Projects, new SelectList(Model.Projects, "Value", "Text"), "Copy From...", new { @class = "form-control copy-from" })
+        </div>
+    </div>
+</div>

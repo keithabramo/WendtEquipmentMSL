@@ -119,9 +119,22 @@ namespace WendtEquipmentTracking.BusinessLogic
             return projectBOs.ToList();
         }
 
+        public IEnumerable<ProjectBO> GetAllForCopy()
+        {
+            var projects = projectEngine.ListRaw(!ProjectSpecs.IsDeleted());
+            var projectBOs = projects.Select(p => new ProjectBO
+            {
+                ProjectId = p.ProjectId,
+                ProjectNumber = p.ProjectNumber,
+                ShipToCompany = p.ShipToCompany
+            });
+
+            return projectBOs.ToList();
+        }
+
         public ProjectBO GetById(int id)
         {
-            var project = projectEngine.Get(ProjectSpecs.Id(id));
+            var project = projectEngine.GetRaw(ProjectSpecs.Id(id));
 
             ProjectBO projectBO = null;
 

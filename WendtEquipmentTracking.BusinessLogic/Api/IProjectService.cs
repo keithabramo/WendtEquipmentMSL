@@ -15,7 +15,10 @@ namespace WendtEquipmentTracking.BusinessLogic.Api
 
         IEnumerable<ProjectBO> GetAllForNavigation();
 
+        IEnumerable<ProjectBO> GetAllForCopy();
+
         IEnumerable<ProjectBO> GetDeletedAndCompleted();
+
 
         ProjectBO GetById(int id);
 

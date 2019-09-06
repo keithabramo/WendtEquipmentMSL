@@ -39,7 +39,7 @@
 
                 data.doSubmit = $this.canSubmit;
                 if ($this.canSubmit) {
-                    
+
 
                     data.BillOfLadingNumber = $("#BillOfLadingNumber").val();
                     data.Carrier = $("#Carrier").val();
@@ -165,7 +165,7 @@
 
         this.initDatatable = function () {
             var $this = this;
-           
+
             editorMain.initDatatable({
                 ajax: {
                     url: ROOT_URL + "api/BillOfLadingApi/CreateTable",
@@ -340,11 +340,11 @@
             //        $(this).text($(this).text() + " 0 rows selected");
             //    });
             //}
-        }
+        };
 
         this.initStyles();
         this.initEvents();
-    }
+    };
 
     editorBOL = new EditorBOL();
 

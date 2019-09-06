@@ -37,7 +37,7 @@
                                         priorityNumber.error('This priority number already exists');
                                     }
                                 }
-                            })
+                            });
                         }
                     }
 

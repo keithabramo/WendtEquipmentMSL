@@ -7,7 +7,7 @@
 
             this.initEditor();
             this.initDatatable();
-        }
+        };
 
         this.initEvents = function () {
             var $this = this;
@@ -19,7 +19,7 @@
                     .message('Are you sure you want to revert this project?')
                     .remove($(this).closest("tr"));
             });
-        }
+        };
 
         this.initEditor = function () {
 
@@ -30,11 +30,11 @@
                 },
                 idSrc: 'ProjectId'
             });
-        }
+        };
 
         this.initDatatable = function () {
             var $this = this;
-           
+
             tableMain.initDatatable({
                 ajax: {
                     url: ROOT_URL + "api/AdminApi/ProjectTable",
@@ -48,37 +48,43 @@
                             return row.IsCompleted ? "Completed" : "Deleted";
                         }
                     },
-                    { data: "ProjectNumber", targets: 1},
-                    { data: "FreightTerms", targets: 2, className:"text-nowrap" },
-                    { data: "ShipToCompany", targets: 3,
+                    { data: "ProjectNumber", targets: 1 },
+                    { data: "FreightTerms", targets: 2, className: "text-nowrap" },
+                    {
+                        data: "ShipToCompany", targets: 3,
                         render: function (data, type, row, meta) {
                             return row.ShipToCompany ? "<span class='text-nowrap'>" + row.ShipToCompany + "</span>" + "<br/>" + "<span class='text-nowrap'>" + (row.ShipToAddress || '') + "</span>" + "<br/>" + "<span class='text-nowrap'>" + (row.ShipToCSZ || '') + "</span>" : '';
-                        } 
+                        }
                     },
-                    { data: "ShipToContact1", targets: 4,
+                    {
+                        data: "ShipToContact1", targets: 4,
                         render: function (data, type, row, meta) {
                             return row.ShipToContact1 ? "<span class='text-nowrap'>" + row.ShipToContact1 + "</span>" + "<br/>" + "<span class='text-nowrap'>" + (row.ShipToContact1PhoneFax || '') + "</span>" + "<br/>" + "<span class='text-nowrap'>" + (row.ShipToContact1Email || '') + "</span>" : '';
-                        } 
+                        }
                     },
-                    { data: "ShipToContact2", targets: 5,
+                    {
+                        data: "ShipToContact2", targets: 5,
                         render: function (data, type, row, meta) {
                             return row.ShipToContact2 ? "<span class='text-nowrap'>" + row.ShipToContact2 + "</span>" + "<br/>" + "<span class='text-nowrap'>" + (row.ShipToContact2PhoneFax || '') + "</span>" + "<br/>" + "<span class='text-nowrap'>" + (row.ShipToContact2Email || '') + "</span>" : '';
-                        } 
+                        }
                     },
-                    { data: "ShipToBroker", targets: 6,
+                    {
+                        data: "ShipToBroker", targets: 6,
                         render: function (data, type, row, meta) {
                             return row.ShipToBroker ? "<span class='text-nowrap'>" + row.ShipToBroker + "</span>" + "<br/>" + "<span class='text-nowrap'>" + (row.ShipToBrokerPhoneFax || '') + "</span>" + "<br/>" + "<span class='text-nowrap'>" + (row.ShipToBrokerEmail || '') + "</span>" : '';
-                        } 
+                        }
                     },
-                    { data: "IsCustomsProject", targets: 7,
+                    {
+                        data: "IsCustomsProject", targets: 7,
                         render: function (data, type, row, meta) {
                             return row.IsCustomsProject ? "Yes" : "No";
-                        } 
+                        }
                     },
-                    { data: "IncludeSoftCosts", targets: 8,
+                    {
+                        data: "IncludeSoftCosts", targets: 8,
                         render: function (data, type, row, meta) {
                             return row.IncludeSoftCosts ? "Yes" : "No";
-                        } 
+                        }
                     },
                     {
                         "targets": 9,
@@ -91,11 +97,11 @@
                     }
                 ]
             });
-        }
+        };
 
         this.initStyles();
         this.initEvents();
-    }
+    };
 
     tableProject = new TableProject();
 

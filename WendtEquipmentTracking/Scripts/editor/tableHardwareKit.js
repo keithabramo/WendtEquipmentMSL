@@ -7,11 +7,11 @@
 
             this.initEditor();
             this.initDatatable();
-        }
+        };
 
         this.initEvents = function () {
             var $this = this;
-        }
+        };
 
         this.initEditor = function () {
 
@@ -22,11 +22,11 @@
                 },
                 idSrc: 'HardwareKitId'
             });
-        }
+        };
 
         this.initDatatable = function () {
             var $this = this;
-           
+
             tableMain.initDatatable({
                 ajax: {
                     url: ROOT_URL + "api/HardwareKitApi/Table",
@@ -50,11 +50,11 @@
                     }
                 ]
             });
-        }
+        };
 
         this.initStyles();
         this.initEvents();
-    }
+    };
 
     tableHardwareKit = new TableHardwareKit();
 

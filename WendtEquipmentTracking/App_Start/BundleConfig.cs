@@ -98,7 +98,9 @@ namespace WendtEquipmentTracking.App
                        "~/Scripts/editor/importPriority.js"
             ));
 
-
+            bundles.Add(new ScriptBundle("~/bundles/createProject").Include(
+                       "~/Scripts/editor/createProject.js"
+            ));
 
 
 

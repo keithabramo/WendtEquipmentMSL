@@ -17,6 +17,9 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
+        @Html.Action("ProjectCopyPartial", "Project", true)
+
+
         <div class="row">
             <div class="col-sm-4">
                 <div class="form-group">
@@ -172,4 +175,5 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/form")
+    @Scripts.Render("~/bundles/createProject")
 }

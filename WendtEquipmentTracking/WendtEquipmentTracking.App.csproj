@@ -189,6 +189,7 @@
     </Compile>
     <Compile Include="Models\EditorModel.cs" />
     <Compile Include="Models\IDisctionary.cs" />
+    <Compile Include="Models\ProjectCopyModel.cs" />
     <Compile Include="Models\RawEquipmentImportModel.cs" />
     <Compile Include="Models\PriorityImportModel.cs" />
     <Compile Include="Models\WorkOrderPriceImportModel.cs" />
@@ -306,6 +307,7 @@
     <Content Include="Scripts\editor\importPriorityTable.js" />
     <Content Include="Scripts\editor\importWorkOrderPriceTable.js" />
     <Content Include="Scripts\editor\tableAdmin.js" />
+    <Content Include="Scripts\editor\createProject.js" />
     <Content Include="Scripts\editor\timer.js" />
     <Content Include="Scripts\editor\tableHardwareKitDetails.js" />
     <Content Include="Scripts\editor\tableHardwareKit.js" />
@@ -536,6 +538,10 @@
     <Content Include="Views\Import\PriorityTablePartial.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>PriorityTablePartial.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Project\ProjectCopyPartial.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ActionNavPartial.generated.cs</LastGenOutput>
     </Content>
     <None Include="Web.Staging.config">
       <DependentUpon>Web.config</DependentUpon>
