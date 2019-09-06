@@ -14,15 +14,35 @@
 
             $.fn.dataTable.ext.search.push(
                 function (settings, data, dataIndex) {
-                    var filterReadyToShip = $('#readyToShipFilter').is(":checked");
+                    var filterWorkInProgress = $('#workInProgressFilter').is(":checked");
 
-                    if (!filterReadyToShip) {
+                    if (!filterWorkInProgress) {
                         return true;
                     } else {
                         var leftToShip = data[15];
                         var isAssociatedToHardwareKit = data[26];
 
-                        if (leftToShip && parseInt(leftToShip, 10) > 0 && isAssociatedToHardwareKit != "True") {
+                        if (leftToShip && parseInt(leftToShip, 10) > 0 && isAssociatedToHardwareKit === "False") {
+                            return true;
+                        }
+                    }
+
+                    return false;
+                }
+            );
+
+            $.fn.dataTable.ext.search.push(
+                function (settings, data, dataIndex) {
+                    var filterReadyToShip = $('#readyToShipFilter').is(":checked");
+
+                    if (!filterReadyToShip) {
+                        return true;
+                    } else {
+                        var fullyShipped = data[16];
+                        var readyToShip = data[13];
+                        var isAssociatedToHardwareKit = data[26];
+
+                        if (fullyShipped === "NO" && readyToShip && parseInt(readyToShip, 10) > 0 && isAssociatedToHardwareKit === "False") {
                             return true;
                         }
                     }
@@ -65,9 +85,10 @@
                 }
             );
 
-            $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="readyToShipFilter" /> Work In Progress</label>');
-            $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="hardwareFilter" /> Hide Hardware</label>');
+            $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="readyToShipFilter" /> Ready To Shipp</label>');
+            $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="workInProgressFilter" /> Work In Progress</label>');
             $("div.custom").append('<br/>');
+            $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="hardwareFilter" /> Hide Hardware</label>');
             $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="errorFilter" />Rows With Errors</label>');
             //$("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="showCheckboxes"> Delete Multiple Rows &nbsp;</label><button id="deleteRecords" class="btn btn-primary btn-xs btn-disabled" disabled="disabled" type="button">Delete</button>');
             $("div.createButtonContainer").append('<input type="button" value="Create" class="btn btn-sm btn-primary createSubmit" />');
@@ -78,6 +99,10 @@
             var $this = this;
 
             $('#readyToShipFilter').on("change", function () {
+                editorMain.datatable.draw();
+            });
+
+            $('#workInProgressFilter').on("change", function () {
                 editorMain.datatable.draw();
             });
 
