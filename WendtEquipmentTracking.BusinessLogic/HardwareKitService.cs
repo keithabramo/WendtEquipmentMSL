@@ -61,8 +61,8 @@ namespace WendtEquipmentTracking.BusinessLogic
             equipment.Description = "FIELD HARDWARE KIT";
             equipment.WorkOrderNumber = project.ProjectNumber.ToString();
             equipment.PriorityId = priority.PriorityId;
-            equipment.ShippingTagNumber = project.ProjectNumber.ToString() + "FHK";//hardwareKitBO.HardwareKitNumber;
-            equipment.DrawingNumber = "FHK" + hardwareKit.HardwareKitNumber.ToString();//hardwareKitBO.HardwareKitNumber;
+            equipment.ShippingTagNumber = hardwareKitBO.HardwareKitNumber;//hardwareKitBO.HardwareKitNumber;
+            equipment.DrawingNumber = project.ProjectNumber.ToString() + "FHK"; //hardwareKitBO.HardwareKitNumber;
             equipment.UnitWeight = 1;
             equipment.ProjectId = hardwareKitBO.ProjectId;
             equipment.Quantity = 1; //hardwareKitBO.HardwareKitEquipments.Sum(hke => hke.Quantity);
