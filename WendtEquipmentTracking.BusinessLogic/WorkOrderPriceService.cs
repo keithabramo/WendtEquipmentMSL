@@ -49,7 +49,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                 SalePrice = x.SalePrice,
                 ShippedPercent = x.ShippedPercent,
                 WorkOrderNumber = x.WorkOrderNumber
-            });
+            }).ToList();
 
             workOrderPriceEngine.AddNewWorkOrderPrices(workOrderPrices);
 

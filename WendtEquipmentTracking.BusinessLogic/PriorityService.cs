@@ -50,7 +50,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                 EquipmentName = x.EquipmentName,
                 PriorityNumber = x.PriorityNumber,
                 ProjectId = x.ProjectId
-            });
+            }).ToList();
 
             priorityEngine.AddNewPrioritys(prioritys);
 

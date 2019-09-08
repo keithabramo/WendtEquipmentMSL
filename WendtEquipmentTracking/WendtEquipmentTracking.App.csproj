@@ -173,11 +173,13 @@
     <Compile Include="Controllers\EquipmentApiController.cs" />
     <Compile Include="Controllers\ImportApiController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\BrokerApiController.cs" />
     <Compile Include="Controllers\VendorApiController.cs" />
+    <Compile Include="Controllers\VendorController.cs" />
     <Compile Include="Controllers\WorkOrderPriceApiController.cs" />
     <Compile Include="Controllers\PriorityController.cs" />
     <Compile Include="Controllers\HardwareCommercialCodeController.cs" />
-    <Compile Include="Controllers\VendorController.cs" />
+    <Compile Include="Controllers\BrokerController.cs" />
     <Compile Include="Controllers\WorkOrderPriceController.cs" />
     <Compile Include="Controllers\HardwareKitController.cs" />
     <Compile Include="Controllers\BillOfLadingController.cs" />
@@ -194,6 +196,7 @@
     <Compile Include="Models\ProjectCopyModel.cs" />
     <Compile Include="Models\RawEquipmentImportModel.cs" />
     <Compile Include="Models\PriorityImportModel.cs" />
+    <Compile Include="Models\BrokerModel.cs" />
     <Compile Include="Models\WorkOrderPriceImportModel.cs" />
     <Compile Include="Models\HardwareCommercialCodeModel.cs" />
     <Compile Include="Models\HardwareKitGroupModel.cs" />
@@ -304,6 +307,7 @@
     <Content Include="Scripts\editor\editorHardwareKitEdit.js" />
     <Content Include="Scripts\editor\editorBOLEdit.js" />
     <Content Include="Scripts\editor\editorBOLCreate.js" />
+    <Content Include="Scripts\editor\editorBroker.js" />
     <Content Include="Scripts\editor\editorVendor.js" />
     <Content Include="Scripts\editor\importRawEquipment.js" />
     <Content Include="Scripts\editor\importRawEquipmentTable.js" />
@@ -554,6 +558,14 @@
     <Content Include="Views\Vendor\Create.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Create.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Broker\Create.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Create.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Broker\Index.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Index.generated.cs</LastGenOutput>
     </Content>
     <None Include="Web.Staging.config">
       <DependentUpon>Web.config</DependentUpon>

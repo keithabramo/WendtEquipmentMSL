@@ -63,6 +63,8 @@ namespace WendtEquipmentTracking.App
                         "~/Scripts/editor/editorWorkOrderPrice.js"));
             bundles.Add(new ScriptBundle("~/bundles/vendors").Include(
                         "~/Scripts/editor/editorVendor.js"));
+            bundles.Add(new ScriptBundle("~/bundles/brokers").Include(
+                        "~/Scripts/editor/editorBroker.js"));
 
 
             bundles.Add(new ScriptBundle("~/bundles/billOfLadings").Include(

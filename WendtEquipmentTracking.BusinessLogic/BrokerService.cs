@@ -30,7 +30,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                 Contact1 = x.Contact1,
                 Email = x.Email,
                 PhoneFax = x.PhoneFax
-            });
+            }).ToList();
 
             brokerEngine.AddNewBrokers(brokers);
 
@@ -45,6 +45,7 @@ namespace WendtEquipmentTracking.BusinessLogic
 
             var brokerBOs = brokers.Select(x => new BrokerBO
             {
+                BrokerId = x.BrokerId,
                 Name = x.Name,
                 Address = x.Address,
                 Contact1 = x.Contact1,
@@ -61,6 +62,7 @@ namespace WendtEquipmentTracking.BusinessLogic
 
             var brokerBO = new BrokerBO
             {
+                BrokerId = broker.BrokerId,
                 Name = broker.Name,
                 Address = broker.Address,
                 Contact1 = broker.Contact1,

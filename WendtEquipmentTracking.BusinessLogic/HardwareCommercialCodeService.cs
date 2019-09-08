@@ -43,7 +43,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                 CommodityCode = x.CommodityCode,
                 Description = x.Description,
                 PartNumber = x.PartNumber
-            });
+            }).ToList();
 
             hardwareCommercialCodeEngine.AddAllNewHardwareCommercialCode(hardwareCommercialCodes);
 

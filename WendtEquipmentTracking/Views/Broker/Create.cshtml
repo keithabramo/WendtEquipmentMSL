@@ -1,0 +1,26 @@
+﻿@model BrokerModel
+
+<tr class="info">
+    <td>
+        @Html.EditorFor(modelItem => modelItem.Name, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(modelItem => modelItem.Name, "", new { @class = "text-danger" })
+    </td>
+    <td>
+        @Html.EditorFor(modelItem => modelItem.Address, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(modelItem => modelItem.Address, "", new { @class = "text-danger" })
+    </td>
+    <td>
+        @Html.EditorFor(modelItem => modelItem.Contact1, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(modelItem => modelItem.Contact1, "", new { @class = "text-danger" })
+    </td>
+    <td>
+        @Html.EditorFor(modelItem => modelItem.PhoneFax, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(modelItem => modelItem.PhoneFax, "", new { @class = "text-danger" })
+    </td>
+    <td>
+        @Html.EditorFor(modelItem => modelItem.Email, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(modelItem => modelItem.Email, "", new { @class = "text-danger" })
+    </td>
+    <td></td>
+</tr>
+

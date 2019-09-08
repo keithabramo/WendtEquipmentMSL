@@ -31,7 +31,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                 Contact1 = x.Contact1,
                 Email = x.Email,
                 PhoneFax = x.PhoneFax
-            });
+            }).ToList();
 
             vendorEngine.AddNewVendors(vendors);
 
