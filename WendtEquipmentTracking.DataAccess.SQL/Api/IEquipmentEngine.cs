@@ -17,7 +17,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Api
 
         void UpdateEquipment(Equipment equipment);
 
-        void UpdateEquipments(IQueryable<Equipment> equipments);
+        void UpdateEquipments(IEnumerable<Equipment> equipments);
 
         void DeleteEquipment(Equipment equipment);
 

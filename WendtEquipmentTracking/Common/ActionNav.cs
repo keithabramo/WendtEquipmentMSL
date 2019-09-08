@@ -9,6 +9,8 @@
         CreateHardwareKit,
         ImportWorkOrderPrice,
         Priorities,
-        ImportPriority
+        ImportPriority,
+        ImportVendor,
+        ImportBroker
     }
 }

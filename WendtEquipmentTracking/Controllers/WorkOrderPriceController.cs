@@ -37,35 +37,7 @@ namespace WendtEquipmentTracking.App.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-
-
             return View();
-        }
-
-        //
-        // GET: /WorkOrderPrice/Details/5
-
-        public ActionResult Details(int id)
-        {
-            var workOrderPrice = workOrderPriceService.GetById(id);
-
-            if (workOrderPrice == null)
-            {
-                return HttpNotFound();
-            }
-
-            var model = new WorkOrderPriceModel
-            {
-                CostPrice = workOrderPrice.CostPrice,
-                ProjectId = workOrderPrice.ProjectId,
-                ReleasedPercent = workOrderPrice.ReleasedPercent,
-                SalePrice = workOrderPrice.SalePrice,
-                ShippedPercent = workOrderPrice.ShippedPercent,
-                WorkOrderNumber = workOrderPrice.WorkOrderNumber,
-                WorkOrderPriceId = workOrderPrice.WorkOrderPriceId
-            };
-
-            return View(model);
         }
 
         //
@@ -74,7 +46,6 @@ namespace WendtEquipmentTracking.App.Controllers
         {
             return View();
         }
-
 
         [HttpPost]
         public ActionResult Create(WorkOrderPriceModel model)
@@ -115,99 +86,6 @@ namespace WendtEquipmentTracking.App.Controllers
                 return View(model);
             }
         }
-
-        //
-        // GET: /WorkOrderPrice/Edit/5
-
-        //public ActionResult Edit(int id)
-        //{
-        //    var workOrderPrice = workOrderPriceService.GetById(id);
-        //    if (workOrderPrice == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-
-        //    var workOrderPriceModel = Mapper.Map<WorkOrderPriceModel>(workOrderPrice);
-
-        //    return View(workOrderPriceModel);
-        //}
-
-        ////
-        //// POST: /WorkOrderPrice/Edit/5
-
-        //[HttpPost]
-        //public ActionResult Edit(int id, WorkOrderPriceModel model)
-        //{
-        //    try
-        //    {
-        //        if (ModelState.IsValid)
-        //        {
-        //            var user = userService.GetCurrentUser();
-
-        //            if (user != null)
-        //            {
-        //                model.ProjectId = user.ProjectId;
-        //                var workOrderPrice = workOrderPriceService.GetById(id);
-
-        //                Mapper.Map<WorkOrderPriceModel, WorkOrderPriceBO>(model, workOrderPrice);
-
-        //                workOrderPriceService.Update(workOrderPrice);
-
-        //                return RedirectToAction("Index");
-        //            }
-        //        }
-
-        //        HandleError("There was an issue attempting to save this work order price", ModelState);
-
-        //        return View(model);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        HandleError("There was an error attempting to save this work order price", e);
-        //        return View(model);
-        //    }
-        //}
-
-
-        // GET: WorkOrderPrice/Delete/5
-        //public ActionResult Delete(int id)
-        //{
-        //    var workOrderPrice = workOrderPriceService.GetById(id);
-
-        //    if (workOrderPrice == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-
-        //    var model = Mapper.Map<WorkOrderPriceModel>(workOrderPrice);
-
-        //    return View(model);
-        //}
-
-        //// POST: WorkOrderPrice/Delete/5
-        //[HttpPost]
-        //public ActionResult Delete(int id, WorkOrderPriceModel model)
-        //{
-        //    try
-        //    {
-        //        var workOrderPrice = workOrderPriceService.GetById(id);
-
-        //        if (workOrderPrice == null)
-        //        {
-        //            return HttpNotFound();
-        //        }
-
-        //        workOrderPriceService.Delete(id);
-
-        //        return RedirectToAction("Index");
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        HandleError("There was an error attempting to delete this work order price", e);
-
-        //        return View(model);
-        //    }
-        //}
 
     }
 }

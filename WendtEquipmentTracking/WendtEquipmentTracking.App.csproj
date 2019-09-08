@@ -173,9 +173,11 @@
     <Compile Include="Controllers\EquipmentApiController.cs" />
     <Compile Include="Controllers\ImportApiController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\VendorApiController.cs" />
     <Compile Include="Controllers\WorkOrderPriceApiController.cs" />
     <Compile Include="Controllers\PriorityController.cs" />
     <Compile Include="Controllers\HardwareCommercialCodeController.cs" />
+    <Compile Include="Controllers\VendorController.cs" />
     <Compile Include="Controllers\WorkOrderPriceController.cs" />
     <Compile Include="Controllers\HardwareKitController.cs" />
     <Compile Include="Controllers\BillOfLadingController.cs" />
@@ -206,6 +208,7 @@
     <Compile Include="Models\ImportModel.cs" />
     <Compile Include="Models\ProjectNavModel.cs" />
     <Compile Include="Models\ProjectModel.cs" />
+    <Compile Include="Models\VendorModel.cs" />
     <Compile Include="Models\WorkOrderPriceModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -301,6 +304,7 @@
     <Content Include="Scripts\editor\editorHardwareKitEdit.js" />
     <Content Include="Scripts\editor\editorBOLEdit.js" />
     <Content Include="Scripts\editor\editorBOLCreate.js" />
+    <Content Include="Scripts\editor\editorVendor.js" />
     <Content Include="Scripts\editor\importRawEquipment.js" />
     <Content Include="Scripts\editor\importRawEquipmentTable.js" />
     <Content Include="Scripts\editor\importPriority.js" />
@@ -542,6 +546,14 @@
     <Content Include="Views\Project\ProjectCopyPartial.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>ActionNavPartial.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Vendor\Index.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Index.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Vendor\Create.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Create.generated.cs</LastGenOutput>
     </Content>
     <None Include="Web.Staging.config">
       <DependentUpon>Web.config</DependentUpon>

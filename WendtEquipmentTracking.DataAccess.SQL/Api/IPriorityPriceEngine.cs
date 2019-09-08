@@ -17,7 +17,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Api
 
         void UpdatePriority(Priority priority);
 
-        void UpdatePriorities(IQueryable<Priority> priorities);
+        void UpdatePriorities(IEnumerable<Priority> priorities);
 
         void DeletePriority(Priority priority);
 

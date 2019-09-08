@@ -86,7 +86,7 @@
                 }
             );
 
-            $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="readyToShipFilter" /> Ready To Shipp</label>');
+            $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="readyToShipFilter" /> Ready To Ship</label>');
             $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="workInProgressFilter" /> Work In Progress</label>');
             $("div.custom").append('<br/>');
             $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="hardwareFilter" /> Hide Hardware</label>');

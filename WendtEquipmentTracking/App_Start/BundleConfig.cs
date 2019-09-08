@@ -59,9 +59,10 @@ namespace WendtEquipmentTracking.App
                        "~/Scripts/editor/editorHardwareKitCreate.js"));
             bundles.Add(new ScriptBundle("~/bundles/hardwareKitEdit").Include(
                        "~/Scripts/editor/editorHardwareKitEdit.js"));
-
             bundles.Add(new ScriptBundle("~/bundles/workOrderPrices").Include(
                         "~/Scripts/editor/editorWorkOrderPrice.js"));
+            bundles.Add(new ScriptBundle("~/bundles/vendors").Include(
+                        "~/Scripts/editor/editorVendor.js"));
 
 
             bundles.Add(new ScriptBundle("~/bundles/billOfLadings").Include(

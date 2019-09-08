@@ -17,7 +17,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Api
 
         void UpdateWorkOrderPrice(WorkOrderPrice workOrderPrice);
 
-        void UpdateWorkOrderPrices(IQueryable<WorkOrderPrice> workOrderPrices);
+        void UpdateWorkOrderPrices(IEnumerable<WorkOrderPrice> workOrderPrices);
 
         void DeleteWorkOrderPrice(WorkOrderPrice workOrderPrice);
 

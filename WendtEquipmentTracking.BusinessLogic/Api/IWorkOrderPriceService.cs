@@ -7,7 +7,7 @@ namespace WendtEquipmentTracking.BusinessLogic.Api
     {
         void Save(WorkOrderPriceBO workOrderPriceBO);
 
-        void SaveAll(IEnumerable<WorkOrderPriceBO> workOrderPriceBOs);
+        IEnumerable<int> SaveAll(IEnumerable<WorkOrderPriceBO> workOrderPriceBOs);
 
         void Update(WorkOrderPriceBO workOrderPriceBO);
 
@@ -16,6 +16,8 @@ namespace WendtEquipmentTracking.BusinessLogic.Api
         void Delete(int id);
 
         IEnumerable<WorkOrderPriceBO> GetAll(int projectId);
+
+        IEnumerable<WorkOrderPriceBO> GetByIds(IEnumerable<int> ids);
 
         WorkOrderPriceBO GetById(int id);
 

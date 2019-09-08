@@ -113,7 +113,7 @@ namespace WendtEquipmentTracking.BusinessLogic
         public void UpdateAll(IEnumerable<PriorityBO> priorityBOs)
         {
             //Performance Issue?
-            var oldPriorities = priorityEngine.List(PrioritySpecs.Ids(priorityBOs.Select(x => x.PriorityId)));
+            var oldPriorities = priorityEngine.List(PrioritySpecs.Ids(priorityBOs.Select(x => x.PriorityId))).ToList();
 
             foreach (var oldPriority in oldPriorities)
             {

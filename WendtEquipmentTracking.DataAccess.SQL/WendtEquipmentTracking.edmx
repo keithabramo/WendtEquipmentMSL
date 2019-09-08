@@ -39,6 +39,22 @@
           <Property Name="ShippedFrom" Type="nvarchar" MaxLength="1000" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="Broker">
+          <Key>
+            <PropertyRef Name="BrokerId" />
+          </Key>
+          <Property Name="BrokerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Contact1" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="PhoneFax" Type="nvarchar" MaxLength="255" />
+          <Property Name="Email" Type="nvarchar" MaxLength="255" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="255" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="Equipment">
           <Key>
             <PropertyRef Name="EquipmentId" />
@@ -88,14 +104,6 @@
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'WendtEquipmentTracking.dbo.HardwareCommercialCode2' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="HardwareCommercialCode2">
-          <Property Name="Part #" Type="nvarchar" MaxLength="255" />
-          <Property Name="Description" Type="nvarchar" MaxLength="255" />
-          <Property Name="Commodity Code" Type="nvarchar" MaxLength="255" />
-          <Property Name="Verify if ok to use or not" Type="nvarchar" MaxLength="255" />
-        </EntityType>-->
         <EntityType Name="HardwareKit">
           <Key>
             <PropertyRef Name="HardwareKitId" />
@@ -174,6 +182,23 @@ warning 6013: The table/view 'WendtEquipmentTracking.dbo.HardwareCommercialCode2
           <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="ProjectId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Vendor">
+          <Key>
+            <PropertyRef Name="VendorId" />
+          </Key>
+          <Property Name="VendorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProjectId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Contact1" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="PhoneFax" Type="nvarchar" MaxLength="255" />
+          <Property Name="Email" Type="nvarchar" MaxLength="255" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="255" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="WorkOrderPrice">
           <Key>
@@ -313,6 +338,18 @@ warning 6013: The table/view 'WendtEquipmentTracking.dbo.HardwareCommercialCode2
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Vendor_Project">
+          <End Role="Project" Type="Self.Project" Multiplicity="1" />
+          <End Role="Vendor" Type="Self.Vendor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="ProjectId" />
+            </Principal>
+            <Dependent Role="Vendor">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_WorkOrderPrice_Project">
           <End Role="Project" Type="Self.Project" Multiplicity="1" />
           <End Role="WorkOrderPrice" Type="Self.WorkOrderPrice" Multiplicity="*" />
@@ -331,6 +368,7 @@ warning 6013: The table/view 'WendtEquipmentTracking.dbo.HardwareCommercialCode2
         <EntityContainer Name="WendtEquipmentTrackingDataAccessSQLModelStoreContainer">
           <EntitySet Name="BillOfLading" EntityType="Self.BillOfLading" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BillOfLadingEquipment" EntityType="Self.BillOfLadingEquipment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Broker" EntityType="Self.Broker" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Equipment" EntityType="Self.Equipment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HardwareCommercialCode" EntityType="Self.HardwareCommercialCode" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HardwareKit" EntityType="Self.HardwareKit" Schema="dbo" store:Type="Tables" />
@@ -338,6 +376,7 @@ warning 6013: The table/view 'WendtEquipmentTracking.dbo.HardwareCommercialCode2
           <EntitySet Name="Priority" EntityType="Self.Priority" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vendor" EntityType="Self.Vendor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WorkOrderPrice" EntityType="Self.WorkOrderPrice" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_BillOfLadingEquipment_BillOfLading" Association="Self.FK_BillOfLadingEquipment_BillOfLading">
             <End Role="BillOfLading" EntitySet="BillOfLading" />
@@ -379,6 +418,10 @@ warning 6013: The table/view 'WendtEquipmentTracking.dbo.HardwareCommercialCode2
             <End Role="Project" EntitySet="Project" />
             <End Role="Priority" EntitySet="Priority" />
           </AssociationSet>
+          <AssociationSet Name="FK_Vendor_Project" Association="Self.FK_Vendor_Project">
+            <End Role="Project" EntitySet="Project" />
+            <End Role="Vendor" EntitySet="Vendor" />
+          </AssociationSet>
           <AssociationSet Name="FK_WorkOrderPrice_Project" Association="Self.FK_WorkOrderPrice_Project">
             <End Role="Project" EntitySet="Project" />
             <End Role="WorkOrderPrice" EntitySet="WorkOrderPrice" />
@@ -394,6 +437,7 @@ warning 6013: The table/view 'WendtEquipmentTracking.dbo.HardwareCommercialCode2
           </FunctionImport>
           <EntitySet Name="BillOfLadings" EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.BillOfLading" />
           <EntitySet Name="BillOfLadingEquipments" EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.BillOfLadingEquipment" />
+          <EntitySet Name="Brokers" EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.Broker" />
           <EntitySet Name="Equipments" EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.Equipment" />
           <EntitySet Name="HardwareCommercialCodes" EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.HardwareCommercialCode" />
           <EntitySet Name="HardwareKits" EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.HardwareKit" />
@@ -401,6 +445,7 @@ warning 6013: The table/view 'WendtEquipmentTracking.dbo.HardwareCommercialCode2
           <EntitySet Name="Priorities" EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.Priority" />
           <EntitySet Name="Projects" EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.Project" />
           <EntitySet Name="Users" EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.User" />
+          <EntitySet Name="Vendors" EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.Vendor" />
           <EntitySet Name="WorkOrderPrices" EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.WorkOrderPrice" />
           <AssociationSet Name="FK_BillOfLadingEquipment_BillOfLading" Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_BillOfLadingEquipment_BillOfLading">
             <End Role="BillOfLading" EntitySet="BillOfLadings" />
@@ -441,6 +486,10 @@ warning 6013: The table/view 'WendtEquipmentTracking.dbo.HardwareCommercialCode2
           <AssociationSet Name="FK_Priority_Project" Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_Priority_Project">
             <End Role="Project" EntitySet="Projects" />
             <End Role="Priority" EntitySet="Priorities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vendor_Project" Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_Vendor_Project">
+            <End Role="Project" EntitySet="Projects" />
+            <End Role="Vendor" EntitySet="Vendors" />
           </AssociationSet>
           <AssociationSet Name="FK_WorkOrderPrice_Project" Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_WorkOrderPrice_Project">
             <End Role="Project" EntitySet="Projects" />
@@ -484,6 +533,22 @@ warning 6013: The table/view 'WendtEquipmentTracking.dbo.HardwareCommercialCode2
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="BillOfLading" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_BillOfLadingEquipment_BillOfLading" FromRole="BillOfLadingEquipment" ToRole="BillOfLading" />
           <NavigationProperty Name="Equipment" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_BillOfLadingEquipment_Equipment" FromRole="BillOfLadingEquipment" ToRole="Equipment" />
+        </EntityType>
+        <EntityType Name="Broker">
+          <Key>
+            <PropertyRef Name="BrokerId" />
+          </Key>
+          <Property Name="BrokerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Contact1" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneFax" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Equipment">
           <Key>
@@ -620,6 +685,7 @@ warning 6013: The table/view 'WendtEquipmentTracking.dbo.HardwareCommercialCode2
           <NavigationProperty Name="Equipments" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_Equipment_Project" FromRole="Project" ToRole="Equipment" />
           <NavigationProperty Name="HardwareKits" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_HardwareKit_Project" FromRole="Project" ToRole="HardwareKit" />
           <NavigationProperty Name="Priorities" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_Priority_Project" FromRole="Project" ToRole="Priority" />
+          <NavigationProperty Name="Vendors" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_Vendor_Project" FromRole="Project" ToRole="Vendor" />
           <NavigationProperty Name="WorkOrderPrices" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_WorkOrderPrice_Project" FromRole="Project" ToRole="WorkOrderPrice" />
         </EntityType>
         <EntityType Name="User">
@@ -629,6 +695,24 @@ warning 6013: The table/view 'WendtEquipmentTracking.dbo.HardwareCommercialCode2
           <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="ProjectId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Vendor">
+          <Key>
+            <PropertyRef Name="VendorId" />
+          </Key>
+          <Property Name="VendorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProjectId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Contact1" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneFax" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Project" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_Vendor_Project" FromRole="Vendor" ToRole="Project" />
         </EntityType>
         <EntityType Name="WorkOrderPrice">
           <Key>
@@ -769,6 +853,18 @@ warning 6013: The table/view 'WendtEquipmentTracking.dbo.HardwareCommercialCode2
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Vendor_Project">
+          <End Type="WendtEquipmentTracking.DataAccess.SQL.Model.Project" Role="Project" Multiplicity="1" />
+          <End Type="WendtEquipmentTracking.DataAccess.SQL.Model.Vendor" Role="Vendor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="ProjectId" />
+            </Principal>
+            <Dependent Role="Vendor">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_WorkOrderPrice_Project">
           <End Type="WendtEquipmentTracking.DataAccess.SQL.Model.Project" Role="Project" Multiplicity="1" />
           <End Type="WendtEquipmentTracking.DataAccess.SQL.Model.WorkOrderPrice" Role="WorkOrderPrice" Multiplicity="*" />
@@ -821,6 +917,23 @@ warning 6013: The table/view 'WendtEquipmentTracking.dbo.HardwareCommercialCode2
                 <ScalarProperty Name="EquipmentId" ColumnName="EquipmentId" />
                 <ScalarProperty Name="BillOfLadingId" ColumnName="BillOfLadingId" />
                 <ScalarProperty Name="BillOfLadingEquipmentId" ColumnName="BillOfLadingEquipmentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Brokers">
+            <EntityTypeMapping TypeName="WendtEquipmentTracking.DataAccess.SQL.Model.Broker">
+              <MappingFragment StoreEntitySet="Broker">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PhoneFax" ColumnName="PhoneFax" />
+                <ScalarProperty Name="Contact1" ColumnName="Contact1" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="BrokerId" ColumnName="BrokerId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -956,6 +1069,24 @@ warning 6013: The table/view 'WendtEquipmentTracking.dbo.HardwareCommercialCode2
                 <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vendors">
+            <EntityTypeMapping TypeName="WendtEquipmentTracking.DataAccess.SQL.Model.Vendor">
+              <MappingFragment StoreEntitySet="Vendor">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PhoneFax" ColumnName="PhoneFax" />
+                <ScalarProperty Name="Contact1" ColumnName="Contact1" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -63,6 +63,8 @@
   <ItemGroup>
     <Compile Include="Api\IPriorityPriceEngine.cs" />
     <Compile Include="Api\IHardwareCommercialCodeEngine.cs" />
+    <Compile Include="Api\IBrokerEngine.cs" />
+    <Compile Include="Api\IVendorEngine.cs" />
     <Compile Include="Api\IWorkOrderPriceEngine.cs" />
     <Compile Include="Api\IHardwareKitEngine.cs" />
     <Compile Include="Api\IBillOfLadingEngine.cs" />
@@ -74,12 +76,17 @@
     <Compile Include="BillOfLadingEquipment.cs">
       <DependentUpon>WendtEquipmentTracking.tt</DependentUpon>
     </Compile>
+    <Compile Include="Broker.cs">
+      <DependentUpon>WendtEquipmentTracking.tt</DependentUpon>
+    </Compile>
     <Compile Include="Engine\HardwareKitEngine.cs" />
     <Compile Include="Engine\BillOfLadingEngine.cs" />
     <Compile Include="Api\IUserEngine.cs" />
     <Compile Include="Engine\UserEngine.cs" />
     <Compile Include="Engine\PriorityEngine.cs" />
     <Compile Include="Engine\HardwareCommercialCodeEngine.cs" />
+    <Compile Include="Engine\BrokerEngine.cs" />
+    <Compile Include="Engine\VendorEngine.cs" />
     <Compile Include="Engine\WorkOrderPriceEngine.cs" />
     <Compile Include="Engine\ProjectEngine.cs" />
     <Compile Include="Engine\EquipmentEngine.cs" />
@@ -141,6 +148,15 @@
     <Compile Include="Specifications\HardwareCommercialCodes\IdSpecification.cs" />
     <Compile Include="Specifications\HardwareCommercialCodes\IsDeleted.cs" />
     <Compile Include="Specifications\HardwareCommercialCodeSpecs.cs" />
+    <Compile Include="Specifications\Vendors\IdSpecification.cs" />
+    <Compile Include="Specifications\Vendors\IdsSpecification.cs" />
+    <Compile Include="Specifications\Vendors\IsDeleted.cs" />
+    <Compile Include="Specifications\Vendors\ProjectIdSpecification.cs" />
+    <Compile Include="Specifications\Brokers\IdSpecification.cs" />
+    <Compile Include="Specifications\Brokers\IdsSpecification.cs" />
+    <Compile Include="Specifications\Brokers\IsDeleted.cs" />
+    <Compile Include="Specifications\VendorSpecs.cs" />
+    <Compile Include="Specifications\BrokerSpecs.cs" />
     <Compile Include="Specifications\WorkOrderPriceSpecs.cs" />
     <Compile Include="Specifications\WorkOrderPrices\IdsSpecification.cs" />
     <Compile Include="Specifications\WorkOrderPrices\IdSpecification.cs" />
@@ -156,6 +172,9 @@
     <Compile Include="Specifications\WorkOrderPrices\IsDeleted.cs" />
     <Compile Include="Specifications\WorkOrderPrices\ProjectIdSpecification.cs" />
     <Compile Include="User.cs">
+      <DependentUpon>WendtEquipmentTracking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Vendor.cs">
       <DependentUpon>WendtEquipmentTracking.tt</DependentUpon>
     </Compile>
     <Compile Include="WendtEquipmentTracking.Context.cs">

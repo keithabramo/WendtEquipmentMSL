@@ -90,7 +90,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         }
 
-        public void UpdateEquipments(IQueryable<Equipment> equipments)
+        public void UpdateEquipments(IEnumerable<Equipment> equipments)
         {
             var now = DateTime.Now;
 

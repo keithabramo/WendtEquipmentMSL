@@ -76,7 +76,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         }
 
-        public void UpdatePriorities(IQueryable<Priority> priorities)
+        public void UpdatePriorities(IEnumerable<Priority> priorities)
         {
             var now = DateTime.Now;
 

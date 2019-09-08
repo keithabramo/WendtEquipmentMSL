@@ -76,7 +76,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         }
 
-        public void UpdateWorkOrderPrices(IQueryable<WorkOrderPrice> workOrderPrices)
+        public void UpdateWorkOrderPrices(IEnumerable<WorkOrderPrice> workOrderPrices)
         {
             var now = DateTime.Now;
 

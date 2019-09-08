@@ -12,6 +12,8 @@ namespace WendtEquipmentTracking.App.Controllers
         private IBillOfLadingService billOfLadingService;
         private IHardwareKitService hardwareKitService;
         private IWorkOrderPriceService workOrderPriceService;
+        private IVendorService vendorService;
+        private IBrokerService brokerService;
         private IUserService userService;
         private IPriorityService priorityService;
 
@@ -22,6 +24,8 @@ namespace WendtEquipmentTracking.App.Controllers
             billOfLadingService = new BillOfLadingService();
             hardwareKitService = new HardwareKitService();
             workOrderPriceService = new WorkOrderPriceService();
+            vendorService = new VendorService();
+            brokerService = new BrokerService();
             userService = new UserService();
             priorityService = new PriorityService();
         }
@@ -117,40 +121,40 @@ namespace WendtEquipmentTracking.App.Controllers
             return Json(!exists, JsonRequestBehavior.AllowGet);
         }
 
-        // GET: ValidWorkOrderNumber
-        public ActionResult ValidWorkOrderNumberImport()
-        {
+        // GET: ValidWorkOrderNumberImport
+        //public ActionResult ValidWorkOrderNumberImport()
+        //{
 
-            if (Request.QueryString.AllKeys.FirstOrDefault(p => p.ToLower().Contains("workordernumber")) != null)
-            {
-                var isChecked = false;
-                if (Request.QueryString.AllKeys.FirstOrDefault(p => p.ToLower().Contains("checked")) != null)
-                {
-                    isChecked = Request.QueryString[Request.QueryString.AllKeys.First(p => p.ToLower().Contains("checked"))] == "true";
-                }
+        //    if (Request.QueryString.AllKeys.FirstOrDefault(p => p.ToLower().Contains("workordernumber")) != null)
+        //    {
+        //        var isChecked = false;
+        //        if (Request.QueryString.AllKeys.FirstOrDefault(p => p.ToLower().Contains("checked")) != null)
+        //        {
+        //            isChecked = Request.QueryString[Request.QueryString.AllKeys.First(p => p.ToLower().Contains("checked"))] == "true";
+        //        }
 
-                if (isChecked)
-                {
+        //        if (isChecked)
+        //        {
 
-                    string workOrderNumber = Request.QueryString[Request.QueryString.AllKeys.First(p => p.ToLower().Contains("workordernumber"))];
+        //            string workOrderNumber = Request.QueryString[Request.QueryString.AllKeys.First(p => p.ToLower().Contains("workordernumber"))];
 
-                    var user = userService.GetCurrentUser();
+        //            var user = userService.GetCurrentUser();
 
-                    if (user == null)
-                    {
-                        return Json(true, JsonRequestBehavior.AllowGet);
-                    }
+        //            if (user == null)
+        //            {
+        //                return Json(true, JsonRequestBehavior.AllowGet);
+        //            }
 
-                    var exists = workOrderPriceService.GetAll(user.ProjectId).Any(b => b.WorkOrderNumber.Equals(workOrderNumber, System.StringComparison.InvariantCultureIgnoreCase));
+        //            var exists = workOrderPriceService.GetAll(user.ProjectId).Any(b => b.WorkOrderNumber.Equals(workOrderNumber, System.StringComparison.InvariantCultureIgnoreCase));
 
-                    return Json(!exists, JsonRequestBehavior.AllowGet);
-                }
-            }
+        //            return Json(!exists, JsonRequestBehavior.AllowGet);
+        //        }
+        //    }
 
 
-            return Json(true, JsonRequestBehavior.AllowGet);
+        //    return Json(true, JsonRequestBehavior.AllowGet);
 
-        }
+        //}
 
         // GET: ValidHardwareKitNumber
         public ActionResult ValidHardwareKitNumber(string hardwareKitNumber, int? hardwareKitId)
@@ -197,5 +201,38 @@ namespace WendtEquipmentTracking.App.Controllers
             return Json(!exists, JsonRequestBehavior.AllowGet);
         }
 
+        // GET: ValidVendorName
+        public ActionResult ValidVendorName(string name, int? vendorId)
+        {
+
+            var user = userService.GetCurrentUser();
+
+            if (user == null)
+            {
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+
+            var exists = vendorService.GetAll(user.ProjectId).Any(b => b.VendorId != vendorId
+                                                                 && b.Name.Equals(name, System.StringComparison.InvariantCultureIgnoreCase));
+
+            return Json(!exists, JsonRequestBehavior.AllowGet);
+        }
+
+        // GET: ValidBrokerName
+        public ActionResult ValidBrokerName(string name, int? brokerId)
+        {
+
+            var user = userService.GetCurrentUser();
+
+            if (user == null)
+            {
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+
+            var exists = brokerService.GetAll().Any(b => b.BrokerId != brokerId
+                                                                 && b.Name.Equals(name, System.StringComparison.InvariantCultureIgnoreCase));
+
+            return Json(!exists, JsonRequestBehavior.AllowGet);
+        }
     }
 }

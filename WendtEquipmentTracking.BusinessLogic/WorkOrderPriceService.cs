@@ -39,7 +39,7 @@ namespace WendtEquipmentTracking.BusinessLogic
             dbContext.SaveChanges();
         }
 
-        public void SaveAll(IEnumerable<WorkOrderPriceBO> workOrderPriceBOs)
+        public IEnumerable<int> SaveAll(IEnumerable<WorkOrderPriceBO> workOrderPriceBOs)
         {
             var workOrderPrices = workOrderPriceBOs.Select(x => new WorkOrderPrice
             {
@@ -54,6 +54,9 @@ namespace WendtEquipmentTracking.BusinessLogic
             workOrderPriceEngine.AddNewWorkOrderPrices(workOrderPrices);
 
             dbContext.SaveChanges();
+
+            return workOrderPrices.Select(x => x.WorkOrderPriceId).ToList();
+
         }
 
         public IEnumerable<WorkOrderPriceBO> GetAll(int projectId)
@@ -92,6 +95,24 @@ namespace WendtEquipmentTracking.BusinessLogic
             return workOrderPriceBO;
         }
 
+        public IEnumerable<WorkOrderPriceBO> GetByIds(IEnumerable<int> ids)
+        {
+            var workOrderPrices = workOrderPriceEngine.List(WorkOrderPriceSpecs.Ids(ids));
+
+            var workOrderPriceBOs = workOrderPrices.Select(x => new WorkOrderPriceBO
+            {
+                CostPrice = x.CostPrice,
+                ProjectId = x.ProjectId,
+                ReleasedPercent = x.ReleasedPercent,
+                SalePrice = x.SalePrice,
+                ShippedPercent = x.ShippedPercent,
+                WorkOrderNumber = x.WorkOrderNumber,
+                WorkOrderPriceId = x.WorkOrderPriceId
+            });
+
+            return workOrderPriceBOs.ToList();
+        }
+
         public void Update(WorkOrderPriceBO workOrderPriceBO)
         {
             var oldWorkOrderPrice = workOrderPriceEngine.Get(WorkOrderPriceSpecs.Id(workOrderPriceBO.WorkOrderPriceId));
@@ -110,7 +131,7 @@ namespace WendtEquipmentTracking.BusinessLogic
         public void UpdateAll(IEnumerable<WorkOrderPriceBO> workOrderPriceBOs)
         {
             //Performance Issue?
-            var oldWorkOrderPrices = workOrderPriceEngine.List(WorkOrderPriceSpecs.Ids(workOrderPriceBOs.Select(x => x.WorkOrderPriceId)));
+            var oldWorkOrderPrices = workOrderPriceEngine.List(WorkOrderPriceSpecs.Ids(workOrderPriceBOs.Select(x => x.WorkOrderPriceId))).ToList();
 
             foreach (var oldWorkOrderPrice in oldWorkOrderPrices)
             {

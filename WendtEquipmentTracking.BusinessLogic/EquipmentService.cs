@@ -62,7 +62,7 @@ namespace WendtEquipmentTracking.BusinessLogic
         public void UpdateAll(IEnumerable<EquipmentBO> equipmentBOs)
         {
             //Performance Issue?
-            var oldEquipments = equipmentEngine.List(EquipmentSpecs.Ids(equipmentBOs.Select(e => e.EquipmentId)));
+            var oldEquipments = equipmentEngine.List(EquipmentSpecs.Ids(equipmentBOs.Select(e => e.EquipmentId))).ToList();
 
             foreach (var oldEquipment in oldEquipments)
             {

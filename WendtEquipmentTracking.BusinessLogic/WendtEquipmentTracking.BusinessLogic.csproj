@@ -67,6 +67,8 @@
     <Compile Include="Api\IBillOfLadingService.cs" />
     <Compile Include="Api\IPriorityService.cs" />
     <Compile Include="Api\IHardwareCommercialCodeService.cs" />
+    <Compile Include="Api\IBrokerService.cs" />
+    <Compile Include="Api\IVendorService.cs" />
     <Compile Include="Api\IWorkOrderPriceService.cs" />
     <Compile Include="Api\IProjectService.cs" />
     <Compile Include="Api\IImportService.cs" />
@@ -75,6 +77,8 @@
     <Compile Include="BO\HardwareKitEquipmentBO.cs" />
     <Compile Include="BO\PriorityBO.cs" />
     <Compile Include="BO\UserBO.cs" />
+    <Compile Include="BO\VendorBO.cs" />
+    <Compile Include="BO\BrokerBO.cs" />
     <Compile Include="BO\WorkOrderPriceBO.cs" />
     <Compile Include="HardwareKitService.cs" />
     <Compile Include="BO\BillOfLadingBO.cs" />
@@ -89,6 +93,8 @@
     <Compile Include="UserService.cs" />
     <Compile Include="PriorityService.cs" />
     <Compile Include="HardwareCommercialCodeService.cs" />
+    <Compile Include="BrokerService.cs" />
+    <Compile Include="VendorService.cs" />
     <Compile Include="WorkOrderPriceService.cs" />
     <Compile Include="ProjectService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

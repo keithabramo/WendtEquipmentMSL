@@ -118,19 +118,25 @@ namespace WendtEquipmentTracking.App.Controllers
                     workOrderPrices.Add(workOrderPrice);
                 }
 
-
+                IEnumerable<int> workOrderPriceIds = new List<int>();
                 if (action.Equals(EditorActions.edit.ToString()))
                 {
                     workOrderPriceService.UpdateAll(workOrderPrices);
+
+                    //return all rows so editor does not remove any from the ui
+                    workOrderPriceIds = workOrderPrices.Select(x => x.WorkOrderPriceId);
                 }
                 else if (action.Equals(EditorActions.create.ToString()))
                 {
-                    workOrderPriceService.SaveAll(workOrderPrices);
+                    workOrderPriceIds = workOrderPriceService.SaveAll(workOrderPrices);
                 }
                 else if (action.Equals(EditorActions.remove.ToString()))
                 {
                     workOrderPriceService.Delete(workOrderPrices.FirstOrDefault().WorkOrderPriceId);
                 }
+
+                workOrderPrices = workOrderPriceService.GetByIds(workOrderPriceIds).ToList();
+
 
                 var allWorkOrderPrices = workOrderPriceService.GetAll(user.ProjectId);
                 workOrderPriceModels = workOrderPrices.Select(x => new WorkOrderPriceModel
