@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+@Html.Partial("ActionNavPartial", ActionNav.ImportVendor)
+
+<h4>Import Vendors <br /><small>Select the excel document containing the vendors you would like to import.</small></h4>
+
+<div class="alert alert-info"><p><a href="~/Files/VendorTemplate.xlsx" target="_blank" class="alert-link">Click Here</a> to download the template file needed for importing vendors</p></div>
+
+@using (Html.BeginForm("SelectVendorFile", "Import", FormMethod.Post, new { enctype = "multipart/form-data", @class = "dropzone", id = "myDropzone" }))
+{
+}
+
+<input type="hidden" id="FilePath" />
+<div id="vendorRows" class="collapse">
+    @Html.Partial("VendorTablePartial")
+</div>
+
+@section Scripts {
+    @Styles.Render("~/Content/dropzone")
+
+    @Scripts.Render("~/bundles/dropzone")
+    @Scripts.Render("~/bundles/form")
+    @Scripts.Render("~/bundles/editor")
+    @Scripts.Render("~/bundles/importVendor")
+}

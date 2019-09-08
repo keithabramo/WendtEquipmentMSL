@@ -326,6 +326,69 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Helper
             return records;
         }
 
+        public static IEnumerable<VendorRow> GetVendors(string filePath)
+        {
+            var records = new List<VendorRow>();
+
+            using (FileStream stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
+            {
+                var table = getTableFromFile(stream);
+
+                foreach (DataRow row in table.Rows)
+                {
+                    var name = row[0] != null ? row[0].ToString() : "";
+                    var address = row[1] != null ? row[1].ToString() : "";
+                    var contact1 = row[2] != null ? row[2].ToString() : "";
+                    var phoneFax = row[3] != null ? row[3].ToString() : "";
+                    var email = row[4] != null ? row[4].ToString() : "";
+
+                    var record = new VendorRow
+                    {
+                        Name = name,
+                        PhoneFax = phoneFax,
+                        Email = email,
+                        Contact1 = contact1, 
+                        Address = address 
+                    };
+
+                    records.Add(record);
+                }
+            }
+            return records;
+        }
+
+        public static IEnumerable<BrokerRow> GetBrokers(string filePath)
+        {
+            var records = new List<BrokerRow>();
+
+            using (FileStream stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
+            {
+                var table = getTableFromFile(stream);
+
+                foreach (DataRow row in table.Rows)
+                {
+                    var name = row[0] != null ? row[0].ToString() : "";
+                    var address = row[1] != null ? row[1].ToString() : "";
+                    var contact1 = row[2] != null ? row[2].ToString() : "";
+                    var phoneFax = row[3] != null ? row[3].ToString() : "";
+                    var email = row[4] != null ? row[4].ToString() : "";
+
+                    var record = new BrokerRow
+                    {
+                        Name = name,
+                        PhoneFax = phoneFax,
+                        Email = email,
+                        Contact1 = contact1,
+                        Address = address
+                    };
+
+                    records.Add(record);
+                }
+            }
+            return records;
+        }
+
+
         private static DataTable getTableFromFile(FileStream stream)
         {
             var reader = ExcelReaderFactory.CreateReader(stream);

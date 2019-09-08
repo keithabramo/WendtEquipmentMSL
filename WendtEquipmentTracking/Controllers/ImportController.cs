@@ -138,8 +138,6 @@ namespace WendtEquipmentTracking.App.Controllers
         }
 
 
-
-
         public ActionResult WorkOrderPrice()
         {
             var user = userService.GetCurrentUser();
@@ -197,7 +195,6 @@ namespace WendtEquipmentTracking.App.Controllers
                 return Json(new { Error = "There was an error while trying to load this file." });
             }
         }
-
 
 
         public ActionResult RawEquipment()
@@ -265,6 +262,7 @@ namespace WendtEquipmentTracking.App.Controllers
             }
         }
 
+
         public ActionResult Priority()
         {
             var user = userService.GetCurrentUser();
@@ -310,6 +308,124 @@ namespace WendtEquipmentTracking.App.Controllers
                     priorityImportModel.FilePath = filePath;
 
                     return Json(priorityImportModel);
+                }
+                else
+                {
+                    return Json(new { Error = "You must specify a file." });
+                }
+            }
+            catch (Exception e)
+            {
+                HandleError("There was an error", e);
+                return Json(new { Error = "There was an error while trying to load this file." });
+            }
+        }
+
+
+        public ActionResult Vendor()
+        {
+            var user = userService.GetCurrentUser();
+
+            if (user == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View();
+        }
+
+        // POST: SelectVendorFile
+        [HttpPost]
+        public JsonResult SelectVendorFile(ImportModel model)
+        {
+            var vendorImportModel = new VendorImportModel();
+
+            try
+            {
+                if (model.File != null)
+                {
+                    byte[] file = null;
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        model.File.InputStream.CopyTo(memoryStream);
+                        file = memoryStream.ToArray();
+                    }
+
+                    var filePath = importService.SaveFile(file);
+
+
+                    //check to see if the file is in correct format
+                    try
+                    {
+                        var importBOs = importService.GetVendorsImport(filePath);
+                    }
+                    catch (Exception e)
+                    {
+                        return Json(new { Error = "The file does not conform to the expected format. Please make sure all column headers are spelled correctly and in the first row of the spreadsheet. Details: " + e.Message });
+                    }
+
+                    vendorImportModel.FilePath = filePath;
+
+                    return Json(vendorImportModel);
+                }
+                else
+                {
+                    return Json(new { Error = "You must specify a file." });
+                }
+            }
+            catch (Exception e)
+            {
+                HandleError("There was an error", e);
+                return Json(new { Error = "There was an error while trying to load this file." });
+            }
+        }
+
+
+        public ActionResult Broker()
+        {
+            var user = userService.GetCurrentUser();
+
+            if (user == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View();
+        }
+
+        // POST: SelectBrokerFile
+        [HttpPost]
+        public JsonResult SelectBrokerFile(ImportModel model)
+        {
+            var brokerImportModel = new BrokerImportModel();
+
+            try
+            {
+                if (model.File != null)
+                {
+                    byte[] file = null;
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        model.File.InputStream.CopyTo(memoryStream);
+                        file = memoryStream.ToArray();
+                    }
+
+                    var filePath = importService.SaveFile(file);
+
+
+                    //check to see if the file is in correct format
+                    try
+                    {
+                        var importBOs = importService.GetBrokersImport(filePath);
+                    }
+                    catch (Exception e)
+                    {
+                        return Json(new { Error = "The file does not conform to the expected format. Please make sure all column headers are spelled correctly and in the first row of the spreadsheet. Details: " + e.Message });
+                    }
+
+                    brokerImportModel.FilePath = filePath;
+
+                    return Json(brokerImportModel);
                 }
                 else
                 {

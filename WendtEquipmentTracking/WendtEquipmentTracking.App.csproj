@@ -197,6 +197,8 @@
     <Compile Include="Models\RawEquipmentImportModel.cs" />
     <Compile Include="Models\PriorityImportModel.cs" />
     <Compile Include="Models\BrokerModel.cs" />
+    <Compile Include="Models\BrokerImportModel.cs" />
+    <Compile Include="Models\VendorImportModel.cs" />
     <Compile Include="Models\WorkOrderPriceImportModel.cs" />
     <Compile Include="Models\HardwareCommercialCodeModel.cs" />
     <Compile Include="Models\HardwareKitGroupModel.cs" />
@@ -289,6 +291,8 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Files\PriorityTemplate.xlsx" />
+    <Content Include="Files\BrokerTemplate.xlsx" />
+    <Content Include="Files\VendorTemplate.xlsx" />
     <None Include="Properties\PublishProfiles\ReleaseProfile.pubxml" />
     <None Include="Properties\PublishProfiles\StagingProfile.pubxml" />
     <Content Include="Images\logo.jpg" />
@@ -313,6 +317,10 @@
     <Content Include="Scripts\editor\importRawEquipmentTable.js" />
     <Content Include="Scripts\editor\importPriority.js" />
     <Content Include="Scripts\editor\importPriorityTable.js" />
+    <Content Include="Scripts\editor\importBroker.js" />
+    <Content Include="Scripts\editor\importVendor.js" />
+    <Content Include="Scripts\editor\importBrokerTable.js" />
+    <Content Include="Scripts\editor\importVendorTable.js" />
     <Content Include="Scripts\editor\importWorkOrderPriceTable.js" />
     <Content Include="Scripts\editor\tableAdmin.js" />
     <Content Include="Scripts\editor\createProject.js" />
@@ -566,6 +574,22 @@
     <Content Include="Views\Broker\Index.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Index.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Import\Vendor.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>WorkOrderPrice.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Import\VendorTablePartial.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>WorkOrderPriceTablePartial.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Import\BrokerTablePartial.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>WorkOrderPriceTablePartial.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Import\Broker.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>WorkOrderPrice.generated.cs</LastGenOutput>
     </Content>
     <None Include="Web.Staging.config">
       <DependentUpon>Web.config</DependentUpon>

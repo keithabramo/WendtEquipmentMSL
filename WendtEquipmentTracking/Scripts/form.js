@@ -21,8 +21,16 @@
 
             $(".datePicker").attr("autocomplete", "off").datepicker();
 
-            $(".autocomplete").autocomplete({
+            $(".workorderprice-autocomplete").autocomplete({
                 source: "/api/WorkOrderPriceApi/Search"
+            });
+
+            $(".vendor-autocomplete").autocomplete({
+                source: "/api/VendorApi/Search"
+            });
+
+            $(".broker-autocomplete").autocomplete({
+                source: "/api/BrokerApi/Search"
             });
         };
 

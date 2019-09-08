@@ -73,6 +73,8 @@
     <Compile Include="Domain\RawEquipmentRow.cs" />
     <Compile Include="Domain\HardwareCommercialCodeImport.cs" />
     <Compile Include="Domain\PriorityRow.cs" />
+    <Compile Include="Domain\BrokerRow.cs" />
+    <Compile Include="Domain\VendorRow.cs" />
     <Compile Include="Domain\WorkOrderPriceRow.cs" />
     <Compile Include="Domain\EquipmentRow.cs" />
     <Compile Include="Domain\EquipmentImport.cs" />

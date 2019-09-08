@@ -40,5 +40,15 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement
         {
             return ImportHelper.GetPriorities(filePath);
         }
+
+        public IEnumerable<VendorRow> GetVendors(string filePath)
+        {
+            return ImportHelper.GetVendors(filePath);
+        }
+
+        public IEnumerable<BrokerRow> GetBrokers(string filePath)
+        {
+            return ImportHelper.GetBrokers(filePath);
+        }
     }
 }

@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+@Html.Partial("ActionNavPartial", ActionNav.ImportBroker)
+
+<h4>Import Brokers <br /><small>Select the excel document containing the brokers you would like to import.</small></h4>
+
+<div class="alert alert-info"><p><a href="~/Files/BrokerTemplate.xlsx" target="_blank" class="alert-link">Click Here</a> to download the template file needed for importing brokers</p></div>
+
+@using (Html.BeginForm("SelectBrokerFile", "Import", FormMethod.Post, new { enctype = "multipart/form-data", @class = "dropzone", id = "myDropzone" }))
+{
+}
+
+<input type="hidden" id="FilePath" />
+<div id="brokerRows" class="collapse">
+    @Html.Partial("BrokerTablePartial")
+</div>
+
+@section Scripts {
+    @Styles.Render("~/Content/dropzone")
+
+    @Scripts.Render("~/bundles/dropzone")
+    @Scripts.Render("~/bundles/form")
+    @Scripts.Render("~/bundles/editor")
+    @Scripts.Render("~/bundles/importBroker")
+}

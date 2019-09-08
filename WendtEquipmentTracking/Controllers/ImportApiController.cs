@@ -18,6 +18,8 @@ namespace WendtEquipmentTracking.App.Controllers
         private IPriorityService priorityService;
         private IProjectService projectService;
         private IEquipmentService equipmentService;
+        private IVendorService vendorService;
+        private IBrokerService brokerService;
 
 
         public ImportApiController()
@@ -28,6 +30,8 @@ namespace WendtEquipmentTracking.App.Controllers
             priorityService = new PriorityService();
             projectService = new ProjectService();
             equipmentService = new EquipmentService();
+            vendorService = new VendorService();
+            brokerService = new BrokerService();
         }
 
 
@@ -509,5 +513,208 @@ namespace WendtEquipmentTracking.App.Controllers
             return new DtResponse { data = equipmentModels };
 
         }
+
+
+
+
+        // GET: GetVendorsFromImport/
+        [HttpGet]
+        [HttpPost]
+        public IEnumerable<VendorModel> GetVendorsFromImport(string filePath)
+        {
+
+            IEnumerable<VendorModel> model = new List<VendorModel>();
+            try
+            {
+                var user = userService.GetCurrentUser();
+
+                var allVendors = vendorService.GetAll(user.ProjectId);
+
+                var importBOs = importService.GetVendorsImport(filePath);
+                var random = new Random();
+                model = importBOs.Select(x => new VendorModel
+                {
+                    Address = x.Address,
+                    Contact1 = x.Contact1,
+                    Email = x.Email,
+                    Name = x.Name,
+                    PhoneFax = x.PhoneFax,
+                    VendorId = random.Next(),
+                    IsDuplicate = allVendors.Any(w =>
+                       (w.Name ?? string.Empty).Equals((x.Name ?? string.Empty), StringComparison.InvariantCultureIgnoreCase))
+                }).ToList();
+
+                return model;
+
+            }
+            catch (Exception e)
+            {
+                HandleError(e);
+                return model;
+            }
+        }
+
+        //
+        // GET: api/ImportApi/VendorEditor
+        [HttpGet]
+        [HttpPost]
+        public DtResponse VendorEditor()
+        {
+            var user = userService.GetCurrentUser();
+            var vendorModels = new List<VendorModel>();
+
+            if (user != null)
+            {
+                var project = projectService.GetById(user.ProjectId);
+
+                var httpData = DatatableHelpers.HttpData();
+
+
+                Dictionary<string, object> data = httpData["data"] as Dictionary<string, object>;
+
+                var vendors = new List<VendorBO>();
+                foreach (string vendorId in data.Keys)
+                {
+                    var row = data[vendorId];
+                    var vendorProperties = row as Dictionary<string, object>;
+
+                    VendorBO vendor = new VendorBO();
+
+                    vendor.VendorId = !string.IsNullOrWhiteSpace(vendorProperties["VendorId"].ToString()) ? Convert.ToInt32(vendorProperties["VendorId"]) : 0;
+                    vendor.ProjectId = user.ProjectId;
+                    vendor.Address = vendorProperties["Address"].ToString();
+                    vendor.Contact1 = vendorProperties["Contact1"].ToString();
+                    vendor.Email = vendorProperties["Email"].ToString();
+                    vendor.PhoneFax = vendorProperties["PhoneFax"].ToString();
+                    vendor.Name = vendorProperties["Name"].ToString();
+
+
+                    vendors.Add(vendor);
+                }
+
+                var doSubmit = httpData["doSubmit"];
+                if (doSubmit.ToString() == "true")
+                {
+                    vendorService.SaveAll(vendors);
+                }
+
+                var allVendors = vendorService.GetAll(user.ProjectId);
+
+                vendorModels = vendors.Select(x => new VendorModel
+                {
+                    Address = x.Address,
+                    ProjectId = x.ProjectId,
+                    Contact1 = x.Contact1,
+                    Email = x.Email,
+                    Name = x.Name,
+                    PhoneFax = x.PhoneFax,
+                    VendorId = x.VendorId,
+                    IsDuplicate = allVendors.Any(w =>
+                       (w.Name ?? string.Empty).Equals((x.Name ?? string.Empty), StringComparison.InvariantCultureIgnoreCase))
+                }).ToList();
+            }
+
+            return new DtResponse { data = vendorModels };
+        }
+
+
+
+
+        // GET: GetBrokersFromImport/
+        [HttpGet]
+        [HttpPost]
+        public IEnumerable<BrokerModel> GetBrokersFromImport(string filePath)
+        {
+
+            IEnumerable<BrokerModel> model = new List<BrokerModel>();
+            try
+            {
+                var user = userService.GetCurrentUser();
+
+                var allBrokers = brokerService.GetAll();
+
+                var importBOs = importService.GetBrokersImport(filePath);
+                var random = new Random();
+                model = importBOs.Select(x => new BrokerModel
+                {
+                    Address = x.Address,
+                    Contact1 = x.Contact1,
+                    Email = x.Email,
+                    Name = x.Name,
+                    PhoneFax = x.PhoneFax,
+                    BrokerId = random.Next(),
+                    IsDuplicate = allBrokers.Any(w =>
+                       (w.Name ?? string.Empty).Equals((x.Name ?? string.Empty), StringComparison.InvariantCultureIgnoreCase))
+                }).ToList();
+
+                return model;
+
+            }
+            catch (Exception e)
+            {
+                HandleError(e);
+                return model;
+            }
+        }
+
+        //
+        // GET: api/ImportApi/BrokerEditor
+        [HttpGet]
+        [HttpPost]
+        public DtResponse BrokerEditor()
+        {
+            var user = userService.GetCurrentUser();
+            var brokerModels = new List<BrokerModel>();
+
+            if (user != null)
+            {
+                var httpData = DatatableHelpers.HttpData();
+
+
+                Dictionary<string, object> data = httpData["data"] as Dictionary<string, object>;
+
+                var brokers = new List<BrokerBO>();
+                foreach (string brokerId in data.Keys)
+                {
+                    var row = data[brokerId];
+                    var brokerProperties = row as Dictionary<string, object>;
+
+                    BrokerBO broker = new BrokerBO();
+
+                    broker.BrokerId = !string.IsNullOrWhiteSpace(brokerProperties["BrokerId"].ToString()) ? Convert.ToInt32(brokerProperties["BrokerId"]) : 0;
+                    broker.Address = brokerProperties["Address"].ToString();
+                    broker.Contact1 = brokerProperties["Contact1"].ToString();
+                    broker.Email = brokerProperties["Email"].ToString();
+                    broker.PhoneFax = brokerProperties["PhoneFax"].ToString();
+                    broker.Name = brokerProperties["Name"].ToString();
+
+
+                    brokers.Add(broker);
+                }
+
+                var doSubmit = httpData["doSubmit"];
+                if (doSubmit.ToString() == "true")
+                {
+                    brokerService.SaveAll(brokers);
+                }
+
+                var allBrokers = brokerService.GetAll();
+
+                brokerModels = brokers.Select(x => new BrokerModel
+                {
+                    Address = x.Address,
+                    Contact1 = x.Contact1,
+                    Email = x.Email,
+                    Name = x.Name,
+                    PhoneFax = x.PhoneFax,
+                    BrokerId = x.BrokerId,
+                    IsDuplicate = allBrokers.Any(w =>
+                       (w.Name ?? string.Empty).Equals((x.Name ?? string.Empty), StringComparison.InvariantCultureIgnoreCase))
+                }).ToList();
+            }
+
+            return new DtResponse { data = brokerModels };
+        }
+
     }
 }

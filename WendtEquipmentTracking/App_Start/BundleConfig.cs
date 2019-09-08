@@ -100,6 +100,14 @@ namespace WendtEquipmentTracking.App
                        "~/Scripts/editor/importPriorityTable.js",
                        "~/Scripts/editor/importPriority.js"
             ));
+            bundles.Add(new ScriptBundle("~/bundles/importVendor").Include(
+                       "~/Scripts/editor/importVendorTable.js",
+                       "~/Scripts/editor/importVendor.js"
+            ));
+            bundles.Add(new ScriptBundle("~/bundles/importBroker").Include(
+                       "~/Scripts/editor/importBrokerTable.js",
+                       "~/Scripts/editor/importBroker.js"
+            ));
 
             bundles.Add(new ScriptBundle("~/bundles/createProject").Include(
                        "~/Scripts/editor/createProject.js"

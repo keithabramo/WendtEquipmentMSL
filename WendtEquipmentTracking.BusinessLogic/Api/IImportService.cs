@@ -14,5 +14,9 @@ namespace WendtEquipmentTracking.BusinessLogic.Api
         IEnumerable<PriorityBO> GetPrioritiesImport(string filePath);
 
         IEnumerable<EquipmentBO> GetRawEquipmentImport(string filePath);
+
+        IEnumerable<VendorBO> GetVendorsImport(string filePath);
+
+        IEnumerable<BrokerBO> GetBrokersImport(string filePath);
     }
 }

@@ -131,5 +131,37 @@ namespace WendtEquipmentTracking.BusinessLogic
 
             return priorityBOs.ToList();
         }
+
+        public IEnumerable<VendorBO> GetVendorsImport(string filePath)
+        {
+            var vendorRows = importEngine.GetVendors(filePath);
+
+            var vendorBOs = vendorRows.Select(x => new VendorBO
+            {
+                Address = x.Address,
+                Contact1 = x.Contact1,
+                Email = x.Email,
+                Name = x.Name,
+                PhoneFax = x.PhoneFax
+            });
+
+            return vendorBOs.ToList();
+        }
+
+        public IEnumerable<BrokerBO> GetBrokersImport(string filePath)
+        {
+            var brokerRows = importEngine.GetBrokers(filePath);
+
+            var brokerBOs = brokerRows.Select(x => new BrokerBO
+            {
+                Address = x.Address,
+                Contact1 = x.Contact1,
+                Email = x.Email,
+                Name = x.Name,
+                PhoneFax = x.PhoneFax
+            });
+
+            return brokerBOs.ToList();
+        }
     }
 }

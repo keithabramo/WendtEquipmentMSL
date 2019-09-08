@@ -20,7 +20,7 @@
         @Html.ValidationMessageFor(modelItem => modelItem.DrawingNumber, "", new { @class = "text-danger" })
     </td>
     <td>
-        @Html.EditorFor(modelItem => modelItem.WorkOrderNumber, new { htmlAttributes = new { @class = "form-control autocomplete" } })
+        @Html.EditorFor(modelItem => modelItem.WorkOrderNumber, new { htmlAttributes = new { @class = "form-control workorderprice-autocomplete" } })
         @Html.ValidationMessageFor(modelItem => modelItem.WorkOrderNumber, "", new { @class = "text-danger" })
     </td>
     <td>

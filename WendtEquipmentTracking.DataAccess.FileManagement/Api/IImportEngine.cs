@@ -15,5 +15,9 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Api
 
         IEnumerable<PriorityRow> GetPriorities(string filePath);
 
+        IEnumerable<VendorRow> GetVendors(string filePath);
+
+        IEnumerable<BrokerRow> GetBrokers(string filePath);
+
     }
 }
