@@ -164,7 +164,12 @@ namespace WendtEquipmentTracking.App.Controllers
                 if (action.Equals(EditorActions.edit.ToString()))
                 {
                     //only update updatable rows
-                    equipmentService.UpdateAll(equipments.Where(x => !x.IsAssociatedToHardwareKit && !x.FullyShipped).ToList());
+                    //equipmentService.UpdateAll(equipments.Where(x => !x.IsAssociatedToHardwareKit && !x.FullyShipped).ToList());
+
+                    //this may be able to be simplified to remove the where clause.
+                    equipmentService.UpdateAll(equipments.Where(x => !x.IsAssociatedToHardwareKit).ToList());
+
+
                     //return all rows so editor does not remove any from the ui
                     equipmentIds = equipments.Select(x => x.EquipmentId);
                 }

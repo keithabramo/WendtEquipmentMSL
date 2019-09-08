@@ -3,6 +3,7 @@
     var EditorMSL = function () {
 
         this.editableColumns = [2, 3, 4, 5, 6, 7, 8, 9, 10, 13, 17, 18, 21, 22];
+        this.alwaysEditableColumns = [18, 21, 22];
 
         this.initStyles = function () {
             var $this = this;
@@ -359,13 +360,15 @@
                     var rowData = editorMain.datatable.row(editorMain.editor.modifier().row).data();
                     var columnIndex = editorMain.editor.modifier().column;
 
-                    if (rowData.IsAssociatedToHardwareKit || (rowData.FullyShippedText == "YES" && rowData.Quantity != 0)) {
-                        editable = false;
-                    }
-                    else if ($.inArray(editorMain.editor.modifier().column, $this.editableColumns) < 0) {
-                        editable = false;
-                    } else if (rowData.IsHardwareKit && columnIndex == 2) {
-                        editable = false;
+                    if ($.inArray(editorMain.editor.modifier().column, $this.alwaysEditableColumns) < 0) {
+                        if (rowData.IsAssociatedToHardwareKit || (rowData.FullyShippedText == "YES" && rowData.Quantity != 0)) {
+                            editable = false;
+                        }
+                        else if ($.inArray(editorMain.editor.modifier().column, $this.editableColumns) < 0) {
+                            editable = false;
+                        } else if (rowData.IsHardwareKit && columnIndex == 2) {
+                            editable = false;
+                        }
                     }
                 }
 
@@ -375,6 +378,28 @@
 
             editorMain.datatable.on('preAutoFill', function (e, datatable, cells) {
                 datatable.cell.blur();
+
+                // If any of these cells can't be edited, set their values back to original
+                $.each(cells, function (i, cell) {
+                    var rowIndex = cell[0].index.row;
+                    var columnIndex = cell[0].index.column;
+
+                    var rowData = editorMain.datatable.row(rowIndex).data();
+                    
+
+                    if ($.inArray(columnIndex, $this.alwaysEditableColumns) < 0) {
+                        if (rowData.IsAssociatedToHardwareKit || (rowData.FullyShippedText == "YES" && rowData.Quantity != 0)) {
+                            cell[0].set = cell[0].data;
+                        }
+                        else if ($.inArray(columnIndex, $this.editableColumns) < 0) {
+                            cell[0].set = cell[0].data;
+                        }
+                        else if (rowData.IsHardwareKit && columnIndex == 2) {
+                            cell[0].set = cell[0].data;
+                        }
+                    }
+                });
+                
             });
 
             editorMain.editor.on('postCreate', function (e, json, data) {
