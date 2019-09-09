@@ -53,7 +53,9 @@ namespace WendtEquipmentTracking.App.Controllers
                 ProjectId = x.ProjectId,
                 Revision = x.Revision,
                 ToStorage = x.ToStorage,
-                TrailerNumber = x.TrailerNumber
+                TrailerNumber = x.TrailerNumber,
+                ShippedFrom = x.ShippedFrom,
+                ShippedTo = x.ShippedTo
             });
 
             return billOfLadingModels;
@@ -90,7 +92,9 @@ namespace WendtEquipmentTracking.App.Controllers
                 ProjectId = x.ProjectId,
                 Revision = x.Revision,
                 ToStorage = x.ToStorage,
-                TrailerNumber = x.TrailerNumber
+                TrailerNumber = x.TrailerNumber,
+                ShippedFrom = x.ShippedFrom,
+                ShippedTo = x.ShippedTo
 
             });
 
@@ -422,6 +426,8 @@ namespace WendtEquipmentTracking.App.Controllers
                     billOfLading.ProjectId = user.ProjectId;
                     billOfLading.ToStorage = httpData["ToStorage"].ToString() == "true" ? true : false;
                     billOfLading.TrailerNumber = httpData["TrailerNumber"].ToString();
+                    billOfLading.ShippedFrom = httpData["ShippedFrom"].ToString();
+                    billOfLading.ShippedTo = httpData["ShippedTo"].ToString();
                     billOfLading.BillOfLadingId = !string.IsNullOrEmpty(httpData["BillOfLadingId"].ToString()) ? Convert.ToInt32(httpData["BillOfLadingId"].ToString()) : 0;
 
                     if (billOfLading.BillOfLadingId != 0)

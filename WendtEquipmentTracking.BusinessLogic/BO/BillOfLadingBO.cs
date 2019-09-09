@@ -14,6 +14,8 @@ namespace WendtEquipmentTracking.BusinessLogic.BO
         public string FreightTerms { get; set; }
         public string Carrier { get; set; }
         public string TrailerNumber { get; set; }
+        public string ShippedFrom { get; set; }
+        public string ShippedTo { get; set; }
         public bool ToStorage { get; set; }
         public bool IsLocked { get; set; }
         public DateTime? LockedDate { get; set; }

@@ -23,6 +23,8 @@
           <Property Name="TrailerNumber" Type="nvarchar" MaxLength="255" />
           <Property Name="Carrier" Type="nvarchar" MaxLength="255" />
           <Property Name="FreightTerms" Type="nvarchar" MaxLength="1000" />
+          <Property Name="ShippedFrom" Type="nvarchar" MaxLength="255" />
+          <Property Name="ShippedTo" Type="nvarchar" MaxLength="255" />
           <Property Name="IsLocked" Type="bit" Nullable="false" />
           <Property Name="LockedDate" Type="datetime" />
           <Property Name="LockedBy" Type="nvarchar" MaxLength="255" />
@@ -514,6 +516,8 @@
           <Property Name="TrailerNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Carrier" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="FreightTerms" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ShippedFrom" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ShippedTo" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="IsLocked" Type="Boolean" Nullable="false" />
           <Property Name="LockedDate" Type="DateTime" Precision="3" />
           <Property Name="LockedBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
@@ -891,6 +895,8 @@
                 <ScalarProperty Name="LockedBy" ColumnName="LockedBy" />
                 <ScalarProperty Name="LockedDate" ColumnName="LockedDate" />
                 <ScalarProperty Name="IsLocked" ColumnName="IsLocked" />
+                <ScalarProperty Name="ShippedTo" ColumnName="ShippedTo" />
+                <ScalarProperty Name="ShippedFrom" ColumnName="ShippedFrom" />
                 <ScalarProperty Name="FreightTerms" ColumnName="FreightTerms" />
                 <ScalarProperty Name="Carrier" ColumnName="Carrier" />
                 <ScalarProperty Name="TrailerNumber" ColumnName="TrailerNumber" />

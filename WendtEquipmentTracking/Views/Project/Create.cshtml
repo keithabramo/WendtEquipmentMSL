@@ -109,7 +109,7 @@
             <div class="col-sm-4">
                 <div class="form-group">
                     @Html.LabelFor(model => model.ShipToBroker)
-                    @Html.EditorFor(model => model.ShipToBroker, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.ShipToBroker, new { htmlAttributes = new { @class = "form-control broker-autocomplete" } })
                     @Html.ValidationMessageFor(model => model.ShipToBroker, "", new { @class = "text-danger" })
                 </div>
             </div>

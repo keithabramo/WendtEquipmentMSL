@@ -34,6 +34,8 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         public string TrailerNumber { get; set; }
         public string Carrier { get; set; }
         public string FreightTerms { get; set; }
+        public string ShippedFrom { get; set; }
+        public string ShippedTo { get; set; }
         public bool IsLocked { get; set; }
         public Nullable<System.DateTime> LockedDate { get; set; }
         public string LockedBy { get; set; }

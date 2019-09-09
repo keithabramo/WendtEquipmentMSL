@@ -94,6 +94,9 @@
             //$("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="showCheckboxes"> Delete Multiple Rows &nbsp;</label><button id="deleteRecords" class="btn btn-primary btn-xs btn-disabled" disabled="disabled" type="button">Delete</button>');
             $("div.createButtonContainer").append('<input type="button" value="Create" class="btn btn-sm btn-primary createSubmit" />');
 
+            $(".workorderprice-autocomplete").autocomplete({
+                source: "/api/WorkOrderPriceApi/Search"
+            });
         };
 
         this.initEvents = function () {

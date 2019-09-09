@@ -90,6 +90,23 @@ namespace WendtEquipmentTracking.BusinessLogic
             return brokerBOs.ToList();
         }
 
+        public BrokerBO GetByName(string name)
+        {
+            var broker = brokerEngine.List(BrokerSpecs.Name(name)).FirstOrDefault();
+
+            var brokerBO = new BrokerBO
+            {
+                Name = broker.Name,
+                Address = broker.Address,
+                Contact1 = broker.Contact1,
+                Email = broker.Email,
+                PhoneFax = broker.PhoneFax,
+                BrokerId = broker.BrokerId
+            };
+
+            return brokerBO;
+        }
+
         public void Update(BrokerBO brokerBO)
         {
             var oldBroker = brokerEngine.Get(BrokerSpecs.Id(brokerBO.BrokerId));

@@ -11,7 +11,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -106,7 +106,7 @@
             <div class="col-sm-4">
                 <div class="form-group">
                     @Html.LabelFor(model => model.ShipToBroker)
-                    @Html.EditorFor(model => model.ShipToBroker, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.ShipToBroker, new { htmlAttributes = new { @class = "form-control broker-autocomplete" } })
                     @Html.ValidationMessageFor(model => model.ShipToBroker, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -163,7 +163,7 @@
         <div class="row">
             <div class="col-sm-4">
                 <div class="form-group">
-                        <input type="submit" value="Save" class="btn btn-primary" /> | @Html.ActionLink("Cancel", "Index")
+                    <input type="submit" value="Save" class="btn btn-primary" /> | @Html.ActionLink("Cancel", "Index")
                 </div>
             </div>
         </div>
@@ -172,4 +172,5 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/form")
+    @Scripts.Render("~/bundles/editProject")
 }

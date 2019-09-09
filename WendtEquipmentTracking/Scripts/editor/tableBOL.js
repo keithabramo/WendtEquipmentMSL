@@ -26,7 +26,7 @@
 
         this.initDatatable = function () {
             var $this = this;
-           
+
             tableMain.initDatatable({
                 ajax: {
                     url: ROOT_URL + "api/BillOfLadingApi/Table",
@@ -35,29 +35,31 @@
                 rowId: 'BillOfLadingId',
                 columns: [
                     { data: "BillOfLadingNumber" },
-                    { data: "ToStorage" },
                     { data: "DateShipped" },
-                    { data: "FreightTerms" },
                     { data: "Carrier" },
                     { data: "TrailerNumber" },
-                    { data: "BillOfLadingId" }
+                    { data: "ShippedFrom" },
+                    { data: "ShippedTo" },
+                    { data: "FreightTerms" },
+                    { data: "BillOfLadingId" },
+                    { data: "ToStorage" },
                 ],
                 columnDefs: [
                     {
-                        "targets": 1,
+                        "targets": 8,
                         render: function (data, type, row, meta) {
                             return row.ToStorage ? "Yes" : "No";
                         }
                     },
-                    
+
                     {
-                        "targets": 2, type: "date",
+                        "targets": 1, type: "date",
                         render: function (data, type, row, meta) {
                             return row.DateShipped ? moment(row.DateShipped).format("MM/DD/YYYY") : '';
                         }
                     },
                     {
-                        "targets": 6,
+                        "targets": 7,
                         searchable: false,
                         sortable: false,
                         render: function (data, type, row, meta) {
@@ -67,7 +69,7 @@
                     }
                 ]
             });
-        }
+        };
 
         this.initStyles();
         this.initEvents();

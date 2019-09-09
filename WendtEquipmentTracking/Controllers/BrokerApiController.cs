@@ -26,7 +26,7 @@ namespace WendtEquipmentTracking.App.Controllers
         //
         // GET: api/Broker/Search
         [HttpGet]
-        public IEnumerable<string> Search(string term)
+        public IEnumerable<string> Search()
         {
             var brokers = new List<string>();
 
@@ -40,13 +40,31 @@ namespace WendtEquipmentTracking.App.Controllers
             //Get Data
             var brokerBOs = brokerService.GetAll();
 
-            brokers = brokerBOs
-                                .Where(x => x.Name.Contains(term))
-                                .Select(x => x.Name)
+            brokers = brokerBOs.Select(x => x.Name)
                                 .OrderBy(e => e)
                                 .ToList();
 
             return brokers;
+        }
+
+        //
+        // GET: api/Broker/FindByName
+        [HttpGet]
+        public BrokerModel FindByName(string name)
+        {
+            var brokerBO = brokerService.GetByName(name);
+
+            var model = new BrokerModel
+            {
+                Address = brokerBO.Address,
+                BrokerId = brokerBO.BrokerId,
+                Contact1 = brokerBO.Contact1,
+                Email = brokerBO.Email,
+                Name = brokerBO.Name,
+                PhoneFax = brokerBO.PhoneFax
+            };
+
+            return model;
         }
 
         //

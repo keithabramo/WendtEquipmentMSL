@@ -17,7 +17,7 @@ namespace WendtEquipmentTracking.BusinessLogic.Api
 
         IEnumerable<BrokerBO> GetByIds(IEnumerable<int> ids);
 
-        BrokerBO GetById(int id);
+        BrokerBO GetByName(string name);
 
     }
 }

@@ -7,7 +7,7 @@
 
             this.initEditor();
             this.initDatatable();
-        }
+        };
 
         this.initEvents = function () {
             var $this = this;
@@ -42,7 +42,7 @@
                     $icon.removeClass("glyphicon-minus").addClass("glyphicon-plus");
                 }
             });
-        }
+        };
 
         this.initEditor = function () {
 
@@ -53,11 +53,11 @@
                 },
                 idSrc: 'BillOfLadingId'
             });
-        }
+        };
 
         this.initDatatable = function () {
             var $this = this;
-           
+
             tableMain.initDatatable({
                 ajax: {
                     url: ROOT_URL + "api/BillOfLadingApi/DetailsTable",
@@ -72,9 +72,11 @@
                     { data: "BillOfLadingId" },
                     { data: "Revision" },
                     { data: "DateShipped" },
-                    { data: "FreightTerms" },
                     { data: "Carrier" },
-                    { data: "TrailerNumber" }
+                    { data: "TrailerNumber" },
+                    { data: "ShippedFrom" },
+                    { data: "ShippedTo" },
+                    { data: "FreightTerms" }
                 ],
                 columnDefs: [
                     {
@@ -99,11 +101,11 @@
                     }
                 ]
             });
-        }
+        };
 
         this.initStyles();
         this.initEvents();
-    }
+    };
 
     tableBOLDetails = new TableBOLDetails();
 

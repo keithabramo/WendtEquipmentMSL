@@ -7,64 +7,80 @@
 @Html.Partial("ActionNavPartial", ActionNav.CreateBOL)
 
 
-<form id="BOLForm">
-    <h4>Create a new BOL</h4>
-    <hr />
+    <form id="BOLForm">
+        <h4>Create a new BOL</h4>
+        <hr />
 
-    <div class="row">
-        <div class="col-sm-4">
-            <div class="form-group">
-                @Html.LabelFor(model => model.BillOfLadingNumber)
-                @Html.EditorFor(model => model.BillOfLadingNumber, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.BillOfLadingNumber, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="form-group">
-                @Html.LabelFor(model => model.DateShipped)
-                @Html.EditorFor(model => model.DateShipped, new { htmlAttributes = new { @class = "form-control datePicker" } })
-                @Html.ValidationMessageFor(model => model.DateShipped, "", new { @class = "text-danger" })
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-4">
-            <div class="form-group">
-                @Html.LabelFor(model => model.FreightTerms)
-                @Html.EditorFor(model => model.FreightTerms, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.FreightTerms, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="form-group">
-                @Html.LabelFor(model => model.Carrier)
-                @Html.EditorFor(model => model.Carrier, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Carrier, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="form-group">
-                @Html.LabelFor(model => model.TrailerNumber)
-                @Html.EditorFor(model => model.TrailerNumber, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TrailerNumber, "", new { @class = "text-danger" })
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-4">
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        @Html.EditorFor(model => model.ToStorage)
-                        @Html.DisplayNameFor(model => model.ToStorage)
+        <input type="hidden" id="projectNumber" value="@ViewBag.ProjectNumber" />
 
-                        @Html.ValidationMessageFor(model => model.ToStorage, "", new { @class = "text-danger" })
-                    </label>
+
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.BillOfLadingNumber)
+                    @Html.EditorFor(model => model.BillOfLadingNumber, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.BillOfLadingNumber, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DateShipped)
+                    @Html.EditorFor(model => model.DateShipped, new { htmlAttributes = new { @class = "form-control datePicker" } })
+                    @Html.ValidationMessageFor(model => model.DateShipped, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Carrier)
+                    @Html.EditorFor(model => model.Carrier, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Carrier, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
-    </div>
-</form>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TrailerNumber)
+                    @Html.EditorFor(model => model.TrailerNumber, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.TrailerNumber, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ShippedFrom)
+                    @Html.EditorFor(model => model.ShippedFrom, new { htmlAttributes = new { @class = "form-control shippedfrom vendor-autocomplete" } })
+                    @Html.ValidationMessageFor(model => model.ShippedFrom, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ShippedTo)
+                    @Html.EditorFor(model => model.ShippedTo, new { htmlAttributes = new { @class = "form-control shippedto vendor-autocomplete" } })
+                    @Html.ValidationMessageFor(model => model.ShippedTo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FreightTerms)
+                    @Html.EditorFor(model => model.FreightTerms, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.FreightTerms, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            @Html.EditorFor(model => model.ToStorage)
+                            @Html.DisplayNameFor(model => model.ToStorage)
+                            @Html.ValidationMessageFor(model => model.ToStorage, "", new { @class = "text-danger" })
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 <hr />
 
 <div class="row">

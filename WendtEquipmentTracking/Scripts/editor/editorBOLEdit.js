@@ -8,7 +8,7 @@
         this.initStyles = function () {
             var $this = this;
 
-            
+
             $.validator.unobtrusive.parse('#BOLForm');
 
             this.lock();
@@ -17,7 +17,31 @@
 
             this.initEditor();
             this.initDatatable();
-        }
+
+            $.ajax({
+                url: ROOT_URL + "api/VendorApi/Search/",
+                success: function (results) {
+
+                    var shippedFromResults = ["WENDT"].concat(results);
+                    var shippedToResults = [$("#projectNumber").val()].concat(results);
+
+                    $(".shippedfrom.vendor-autocomplete").autocomplete({
+                        minLength: 0,
+                        source: shippedFromResults
+                    }).focus(function () {
+                        $(this).data("uiAutocomplete").search($(this).val());
+                    });
+
+                    $(".shippedto.vendor-autocomplete").autocomplete({
+                        minLength: 0,
+                        source: shippedToResults
+                    }).focus(function () {
+                        $(this).data("uiAutocomplete").search($(this).val());
+                    });
+
+                }
+            });
+        };
 
         this.initEvents = function () {
             var $this = this;
@@ -55,6 +79,8 @@
                     data.FreightTerms = $("#FreightTerms").val();
                     data.ToStorage = $("#ToStorage").is(":checked");
                     data.TrailerNumber = $("#TrailerNumber").val();
+                    data.ShippedFrom = $("#ShippedFrom").val();
+                    data.ShippedTo = $("#ShippedTo").val();
                     data.BillOfLadingId = $("#BillOfLadingId").val() || "";
                 }
 

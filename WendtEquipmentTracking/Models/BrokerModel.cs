@@ -7,7 +7,6 @@ namespace WendtEquipmentTracking.App.Models
     public class BrokerModel
     {
         public int BrokerId { get; set; }
-        public int ProjectId { get; set; }
 
         [DisplayName("Broker")]
         [Remote("ValidBrokerName", "Validate", AdditionalFields = "BrokerId", ErrorMessage = "This broker name already exists")]

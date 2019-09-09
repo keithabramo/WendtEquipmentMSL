@@ -78,7 +78,7 @@
                         drawType: 'page'
                     }
                 }
-            }, settings)
+            }, settings);
 
             this.editor = new $.fn.dataTable.Editor(editorSettings);
         };

@@ -115,6 +115,7 @@
     <Compile Include="Specification.cs" />
     <Compile Include="Specifications\BillOfLading\ProjectIdSpecification.cs" />
     <Compile Include="Specifications\BillOfLading\IsDeleted.cs" />
+    <Compile Include="Specifications\Brokers\NameSpecification.cs" />
     <Compile Include="Specifications\Equipments\IsAssociatedToHardwareKit.cs" />
     <Compile Include="Specifications\Equipments\PriorityIdSpecification.cs" />
     <Compile Include="Specifications\Equipments\IsAttachedToHardwareKit.cs" />

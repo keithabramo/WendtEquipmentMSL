@@ -112,6 +112,9 @@ namespace WendtEquipmentTracking.App
             bundles.Add(new ScriptBundle("~/bundles/createProject").Include(
                        "~/Scripts/editor/createProject.js"
             ));
+            bundles.Add(new ScriptBundle("~/bundles/editProject").Include(
+                       "~/Scripts/editor/editProject.js"
+            ));
 
 
 

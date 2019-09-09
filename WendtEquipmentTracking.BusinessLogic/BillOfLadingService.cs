@@ -39,6 +39,8 @@ namespace WendtEquipmentTracking.BusinessLogic
                 Revision = billOfLadingBO.Revision,
                 ToStorage = billOfLadingBO.ToStorage,
                 TrailerNumber = billOfLadingBO.TrailerNumber,
+                ShippedFrom = billOfLadingBO.ShippedFrom,
+                ShippedTo = billOfLadingBO.ShippedTo,
                 BillOfLadingEquipments = billOfLadingBO.BillOfLadingEquipments.Select(e => new BillOfLadingEquipment
                 {
                     BillOfLadingEquipmentId = e.BillOfLadingEquipmentId,
@@ -78,6 +80,8 @@ namespace WendtEquipmentTracking.BusinessLogic
                 Revision = billOfLadingBO.Revision,
                 ToStorage = billOfLadingBO.ToStorage,
                 TrailerNumber = billOfLadingBO.TrailerNumber,
+                ShippedFrom = billOfLadingBO.ShippedFrom,
+                ShippedTo = billOfLadingBO.ShippedTo,
                 BillOfLadingEquipments = billOfLadingBO.BillOfLadingEquipments.Select(e => new BillOfLadingEquipment
                 {
                     BillOfLadingEquipmentId = e.BillOfLadingEquipmentId,
@@ -158,6 +162,8 @@ namespace WendtEquipmentTracking.BusinessLogic
                 Revision = x.Revision,
                 ToStorage = x.ToStorage,
                 TrailerNumber = x.TrailerNumber,
+                ShippedFrom = x.ShippedFrom,
+                ShippedTo = x.ShippedTo,
                 BillOfLadingEquipments = x.BillOfLadingEquipments.Where(e => !e.Equipment.IsDeleted).Select(e => new BillOfLadingEquipmentBO
                 {
                     BillOfLadingEquipmentId = e.BillOfLadingEquipmentId,
@@ -191,6 +197,8 @@ namespace WendtEquipmentTracking.BusinessLogic
                 IsLocked = billOfLading.IsLocked,
                 LockedBy = billOfLading.LockedBy,
                 LockedDate = billOfLading.LockedDate,
+                ShippedFrom = billOfLading.ShippedFrom,
+                ShippedTo = billOfLading.ShippedTo,
                 BillOfLadingEquipments = billOfLading.BillOfLadingEquipments.Where(e => !e.Equipment.IsDeleted).Select(e => new BillOfLadingEquipmentBO
                 {
                     BillOfLadingEquipmentId = e.BillOfLadingEquipmentId,
@@ -257,6 +265,8 @@ namespace WendtEquipmentTracking.BusinessLogic
                 Revision = x.Revision,
                 ToStorage = x.ToStorage,
                 TrailerNumber = x.TrailerNumber,
+                ShippedFrom = x.ShippedFrom,
+                ShippedTo = x.ShippedTo,
                 BillOfLadingEquipments = x.BillOfLadingEquipments.Where(e => !e.Equipment.IsDeleted).Select(e => new BillOfLadingEquipmentBO
                 {
                     BillOfLadingEquipmentId = e.BillOfLadingEquipmentId,
@@ -286,6 +296,8 @@ namespace WendtEquipmentTracking.BusinessLogic
                 Revision = x.Revision,
                 ToStorage = x.ToStorage,
                 TrailerNumber = x.TrailerNumber,
+                ShippedFrom = x.ShippedFrom,
+                ShippedTo = x.ShippedTo,
                 BillOfLadingEquipments = x.BillOfLadingEquipments.Where(e => !e.Equipment.IsDeleted).Select(e => new BillOfLadingEquipmentBO
                 {
                     BillOfLadingEquipmentId = e.BillOfLadingEquipmentId,

@@ -306,6 +306,7 @@
     <Content Include="Scripts\dropzone\dropzone.js" />
     <Content Include="Scripts\dropzone\dropzone.min.css" />
     <Content Include="Scripts\dropzone\dropzone.min.js" />
+    <Content Include="Scripts\editor\editProject.js" />
     <Content Include="Scripts\editor\datatablesAndEditor.js" />
     <Content Include="Scripts\editor\editorHardwareKitCreate.js" />
     <Content Include="Scripts\editor\editorHardwareKitEdit.js" />

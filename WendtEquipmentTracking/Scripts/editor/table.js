@@ -7,7 +7,7 @@
 
         this.initStyles = function () {
             var $this = this;
-        }
+        };
 
         this.initEvents = function () {
             var $this = this;
@@ -48,16 +48,16 @@
                 datatable.cell.blur();
             });
 
-        }
+        };
 
         this.initEditor = function (settings) {
 
             var editorSettings = $.extend(true, {
                 table: '.table.my-datatable'
-            }, settings)
+            }, settings);
 
             this.editor = new $.fn.dataTable.Editor(editorSettings);
-        }
+        };
 
         this.initDatatable = function (settings) {
             var $this = this;
@@ -80,8 +80,8 @@
 
                 },
                 dom: "<'row'<'col-sm-5 text-left custom'f><'col-sm-5'i><'col-sm-2 text-right'l>>" +
-                     "<'row'<'col-sm-12'tr>>" +
-                     "<'row bottom-section'<'col-sm-2 text-left createButtonContainer'><'col-sm-5 text-right'i><'col-sm-5 text-right'p>>"
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row bottom-section'<'col-sm-2 text-left createButtonContainer'><'col-sm-5 text-right'i><'col-sm-5 text-right'p>>"
 
 
             }, settings);
@@ -113,8 +113,8 @@
             }
         };
 
-        
-    }
+
+    };
 
     tableMain = new Table();
 

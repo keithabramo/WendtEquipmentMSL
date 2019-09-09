@@ -85,9 +85,14 @@ namespace WendtEquipmentTracking.App.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
+            var projectNumber = projectBO.ProjectNumber + (!string.IsNullOrWhiteSpace(projectBO.ShipToCompany) ? ": " + projectBO.ShipToCompany : "");
+
+            ViewBag.ProjectNumber = projectNumber;
+
             var model = new BillOfLadingModel
             {
-                FreightTerms = projectBO.FreightTerms
+                FreightTerms = projectBO.FreightTerms,
+                ShippedTo = projectNumber
             };
 
             return View(model);
@@ -106,6 +111,26 @@ namespace WendtEquipmentTracking.App.Controllers
                 return RedirectToAction("Index");
             }
 
+            var user = userService.GetCurrentUser();
+
+            if (user == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+
+            //Get Data
+            var projectBO = projectService.GetById(user.ProjectId);
+
+            if (projectBO == null)
+            {
+                userService.Delete();
+                return RedirectToAction("Index", "Home");
+            }
+
+            ViewBag.ProjectNumber = projectBO.ProjectNumber + (!string.IsNullOrWhiteSpace(projectBO.ShipToCompany) ? ": " + projectBO.ShipToCompany : "");
+
+
 
             var model = new BillOfLadingModel
             {
@@ -118,7 +143,9 @@ namespace WendtEquipmentTracking.App.Controllers
                 ProjectId = billOfLading.ProjectId,
                 Revision = billOfLading.Revision,
                 ToStorage = billOfLading.ToStorage,
-                TrailerNumber = billOfLading.TrailerNumber
+                TrailerNumber = billOfLading.TrailerNumber,
+                ShippedFrom = billOfLading.ShippedFrom,
+                ShippedTo = billOfLading.ShippedTo
             };
 
             return View(model);

@@ -26,7 +26,7 @@ namespace WendtEquipmentTracking.App.Controllers
         //
         // GET: api/Vendor/Search
         [HttpGet]
-        public IEnumerable<string> Search(string term)
+        public IEnumerable<string> Search()
         {
             var vendors = new List<string>();
 
@@ -40,9 +40,7 @@ namespace WendtEquipmentTracking.App.Controllers
             //Get Data
             var vendorBOs = vendorService.GetAll(user.ProjectId);
 
-            vendors = vendorBOs
-                                .Where(x => x.Name.Contains(term))
-                                .Select(x => x.Name)
+            vendors = vendorBOs.Select(x => x.Name)
                                 .OrderBy(e => e)
                                 .ToList();
 

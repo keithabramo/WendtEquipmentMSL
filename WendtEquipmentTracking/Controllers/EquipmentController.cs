@@ -99,7 +99,9 @@ namespace WendtEquipmentTracking.App.Controllers
                     ProjectId = x.BillOfLading.ProjectId,
                     Revision = x.BillOfLading.Revision,
                     ToStorage = x.BillOfLading.ToStorage,
-                    TrailerNumber = x.BillOfLading.TrailerNumber
+                    TrailerNumber = x.BillOfLading.TrailerNumber,
+                    ShippedFrom = x.BillOfLading.ShippedFrom,
+                    ShippedTo = x.BillOfLading.ShippedTo
                 },
             });
 

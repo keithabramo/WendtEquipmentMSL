@@ -11,7 +11,7 @@ using System.Data.Entity.Infrastructure.MappingViews;
 
 [assembly: DbMappingViewCacheTypeAttribute(
     typeof(WendtEquipmentTracking.DataAccess.SQL.WendtEquipmentTrackingEntities),
-    typeof(Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySetsda417f29f789586c4a4f3ddcbd696cc630272b728d20e86fbb8c95459b8de687))]
+    typeof(Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets8e16cd40aed84e685b130566ff2bd910b94f1c556c035eec39cd441d9ce12c1d))]
 
 namespace Edm_EntityMappingGeneratedViews
 {
@@ -23,14 +23,14 @@ namespace Edm_EntityMappingGeneratedViews
     /// Implements a mapping view cache.
     /// </summary>
     [GeneratedCode("Entity Framework 6 Power Tools", "0.9.2.0")]
-    internal sealed class ViewsForBaseEntitySetsda417f29f789586c4a4f3ddcbd696cc630272b728d20e86fbb8c95459b8de687 : DbMappingViewCache
+    internal sealed class ViewsForBaseEntitySets8e16cd40aed84e685b130566ff2bd910b94f1c556c035eec39cd441d9ce12c1d : DbMappingViewCache
     {
         /// <summary>
         /// Gets a hash value computed over the mapping closure.
         /// </summary>
         public override string MappingHashValue
         {
-            get { return "da417f29f789586c4a4f3ddcbd696cc630272b728d20e86fbb8c95459b8de687"; }
+            get { return "8e16cd40aed84e685b130566ff2bd910b94f1c556c035eec39cd441d9ce12c1d"; }
         }
 
         /// <summary>
@@ -178,7 +178,7 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing BillOfLading
-        [WendtEquipmentTracking.DataAccess.SQL.Model.Store.BillOfLading](T1.BillOfLading_BillOfLadingId, T1.BillOfLading_ProjectId, T1.BillOfLading_Revision, T1.BillOfLading_IsCurrentRevision, T1.BillOfLading_CreatedBy, T1.BillOfLading_CreatedDate, T1.BillOfLading_ModifiedBy, T1.BillOfLading_ModifiedDate, T1.BillOfLading_BillOfLadingNumber, T1.BillOfLading_DateShipped, T1.BillOfLading_ToStorage, T1.BillOfLading_TrailerNumber, T1.BillOfLading_Carrier, T1.BillOfLading_FreightTerms, T1.BillOfLading_IsLocked, T1.BillOfLading_LockedDate, T1.BillOfLading_LockedBy, T1.BillOfLading_IsDeleted)
+        [WendtEquipmentTracking.DataAccess.SQL.Model.Store.BillOfLading](T1.BillOfLading_BillOfLadingId, T1.BillOfLading_ProjectId, T1.BillOfLading_Revision, T1.BillOfLading_IsCurrentRevision, T1.BillOfLading_CreatedBy, T1.BillOfLading_CreatedDate, T1.BillOfLading_ModifiedBy, T1.BillOfLading_ModifiedDate, T1.BillOfLading_BillOfLadingNumber, T1.BillOfLading_DateShipped, T1.BillOfLading_ToStorage, T1.BillOfLading_TrailerNumber, T1.BillOfLading_Carrier, T1.BillOfLading_FreightTerms, T1.BillOfLading_ShippedFrom, T1.BillOfLading_ShippedTo, T1.BillOfLading_IsLocked, T1.BillOfLading_LockedDate, T1.BillOfLading_LockedBy, T1.BillOfLading_IsDeleted)
     FROM (
         SELECT 
             T.BillOfLadingId AS BillOfLading_BillOfLadingId, 
@@ -195,6 +195,8 @@ namespace Edm_EntityMappingGeneratedViews
             T.TrailerNumber AS BillOfLading_TrailerNumber, 
             T.Carrier AS BillOfLading_Carrier, 
             T.FreightTerms AS BillOfLading_FreightTerms, 
+            T.ShippedFrom AS BillOfLading_ShippedFrom, 
+            T.ShippedTo AS BillOfLading_ShippedTo, 
             T.IsLocked AS BillOfLading_IsLocked, 
             T.LockedDate AS BillOfLading_LockedDate, 
             T.LockedBy AS BillOfLading_LockedBy, 
@@ -452,7 +454,7 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing BillOfLadings
-        [WendtEquipmentTracking.DataAccess.SQL.Model.BillOfLading](T1.BillOfLading_BillOfLadingId, T1.BillOfLading_ProjectId, T1.BillOfLading_Revision, T1.BillOfLading_IsCurrentRevision, T1.BillOfLading_CreatedBy, T1.BillOfLading_CreatedDate, T1.BillOfLading_ModifiedBy, T1.BillOfLading_ModifiedDate, T1.BillOfLading_BillOfLadingNumber, T1.BillOfLading_DateShipped, T1.BillOfLading_ToStorage, T1.BillOfLading_TrailerNumber, T1.BillOfLading_Carrier, T1.BillOfLading_FreightTerms, T1.BillOfLading_IsLocked, T1.BillOfLading_LockedDate, T1.BillOfLading_LockedBy, T1.BillOfLading_IsDeleted)
+        [WendtEquipmentTracking.DataAccess.SQL.Model.BillOfLading](T1.BillOfLading_BillOfLadingId, T1.BillOfLading_ProjectId, T1.BillOfLading_Revision, T1.BillOfLading_IsCurrentRevision, T1.BillOfLading_CreatedBy, T1.BillOfLading_CreatedDate, T1.BillOfLading_ModifiedBy, T1.BillOfLading_ModifiedDate, T1.BillOfLading_BillOfLadingNumber, T1.BillOfLading_DateShipped, T1.BillOfLading_ToStorage, T1.BillOfLading_TrailerNumber, T1.BillOfLading_Carrier, T1.BillOfLading_FreightTerms, T1.BillOfLading_ShippedFrom, T1.BillOfLading_ShippedTo, T1.BillOfLading_IsLocked, T1.BillOfLading_LockedDate, T1.BillOfLading_LockedBy, T1.BillOfLading_IsDeleted)
     FROM (
         SELECT 
             T.BillOfLadingId AS BillOfLading_BillOfLadingId, 
@@ -469,6 +471,8 @@ namespace Edm_EntityMappingGeneratedViews
             T.TrailerNumber AS BillOfLading_TrailerNumber, 
             T.Carrier AS BillOfLading_Carrier, 
             T.FreightTerms AS BillOfLading_FreightTerms, 
+            T.ShippedFrom AS BillOfLading_ShippedFrom, 
+            T.ShippedTo AS BillOfLading_ShippedTo, 
             T.IsLocked AS BillOfLading_IsLocked, 
             T.LockedDate AS BillOfLading_LockedDate, 
             T.LockedBy AS BillOfLading_LockedBy, 
