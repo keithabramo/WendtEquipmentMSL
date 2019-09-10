@@ -26,7 +26,7 @@ namespace WendtEquipmentTracking.App.Models
         public int? PriorityNumber { get; set; }
 
         [JsonConverter(typeof(CustomDateTimeConverter))]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:M/d/yy}")]
         [DisplayName("Released")]
         [Required]
         public DateTime? ReleaseDate { get; set; }

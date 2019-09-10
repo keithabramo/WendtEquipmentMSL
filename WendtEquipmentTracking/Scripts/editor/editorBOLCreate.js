@@ -166,7 +166,7 @@
                     { name: "Quantity" },
                     { name: "Equipment.EquipmentName" },
                     { name: "Equipment.PriorityNumber" },
-                    { name: "Equipment.ReleaseDate", type: "datetime", format: "MM/DD/YYYY" },
+                    { name: "Equipment.ReleaseDate", type: "datetime", format: "M/D/YY" },
                     { name: "Equipment.DrawingNumber" },
                     { name: "Equipment.WorkOrderNumber" },
                     { name: "Equipment.Quantity" },

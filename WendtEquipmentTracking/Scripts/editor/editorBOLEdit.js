@@ -177,7 +177,7 @@
                     {
                         name: "Equipment.ReleaseDate",
                         type: "datetime",
-                        format: "MM/DD/YYYY",
+                        format: "M/D/YY",
                         opts: {
                             firstDay: 0
                         }

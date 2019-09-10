@@ -10,7 +10,7 @@ namespace WendtEquipmentTracking.App.Common
     {
         public CustomDateTimeConverter()
         {
-            base.DateTimeFormat = "MM/dd/yyyy";
+            base.DateTimeFormat = "M/d/yy";
         }
     }
 }

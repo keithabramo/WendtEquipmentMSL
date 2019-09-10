@@ -45,20 +45,20 @@
                     if (!dueDate.isMultiValue()) {
                         if (!dueDate.val()) {
                             dueDate.error('A start date is required');
-                        } else if (!moment(dueDate.val(), 'MM/DD/YYYY', true).isValid()) {
-                            dueDate.error('This date must be in the format mm/dd/yyyy');
+                        } else if (!moment(dueDate.val(), 'M/D/YY', true).isValid()) {
+                            dueDate.error('This date must be in the format m/d/yy');
                         }
                     }
 
                     if (!endDate.isMultiValue() && endDate.val()) {
-                        if (!moment(endDate.val(), 'MM/DD/YYYY', true).isValid()) {
-                            endDate.error('This date must be in the format mm/dd/yyyy');
+                        if (!moment(endDate.val(), 'M/D/YY', true).isValid()) {
+                            endDate.error('This date must be in the format m/d/yy');
                         }
                     }
 
                     if (!contractualShipDate.isMultiValue() && contractualShipDate.val()) {
-                        if (!moment(contractualShipDate.val(), 'MM/DD/YYYY', true).isValid()) {
-                            contractualShipDate.error('This date must be in the format mm/dd/yyyy');
+                        if (!moment(contractualShipDate.val(), 'M/D/YY', true).isValid()) {
+                            contractualShipDate.error('This date must be in the format m/d/yy');
                         }
                     }
 
@@ -88,7 +88,7 @@
                     {
                         name: "DueDate",
                         type: "datetime",
-                        format: "MM/DD/YYYY",
+                        format: "M/D/YY",
                         opts: {
                             firstDay: 0
                         }
@@ -96,7 +96,7 @@
                     {
                         name: "EndDate",
                         type: "datetime",
-                        format: "MM/DD/YYYY",
+                        format: "M/D/YY",
                         opts: {
                             firstDay: 0
                         }
@@ -104,7 +104,7 @@
                     {
                         name: "ContractualShipDate",
                         type: "datetime",
-                        format: "MM/DD/YYYY",
+                        format: "M/D/YY",
                         opts: {
                             firstDay: 0
                         }

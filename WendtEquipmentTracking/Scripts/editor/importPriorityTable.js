@@ -100,7 +100,7 @@
                     {
                         name: "DueDate",
                         type: "datetime",
-                        format: "MM/DD/YYYY",
+                        format: "M/D/YY",
                         opts: {
                             firstDay: 0
                         }
@@ -108,7 +108,7 @@
                     {
                         name: "EndDate",
                         type: "datetime",
-                        format: "MM/DD/YYYY",
+                        format: "M/D/YY",
                         opts: {
                             firstDay: 0
                         }
@@ -116,7 +116,7 @@
                     {
                         name: "ContractualShipDate",
                         type: "datetime",
-                        format: "MM/DD/YYYY",
+                        format: "M/D/YY",
                         opts: {
                             firstDay: 0
                         }
@@ -205,21 +205,21 @@
                 if (!dueDate) {
                     error = true;
                     $this.addError(rowIdx, 2);
-                } else if (!moment(dueDate, 'MM/DD/YYYY', true).isValid()) {
+                } else if (!moment(dueDate, 'M/D/YY', true).isValid()) {
                     error = true;
                     $this.addError(rowIdx, 2);
                 } else {
                     $this.removeError(rowIdx, 2);
                 }
 
-                if (endDate && !moment(endDate, 'MM/DD/YYYY', true).isValid()) {
+                if (endDate && !moment(endDate, 'M/D/YY', true).isValid()) {
                     error = true;
                     $this.addError(rowIdx, 3);
                 } else {
                     $this.removeError(rowIdx, 3);
                 }
 
-                if (contractualShipDate && !moment(contractualShipDate, 'MM/DD/YYYY', true).isValid()) {
+                if (contractualShipDate && !moment(contractualShipDate, 'M/D/YY', true).isValid()) {
                     error = true;
                     $this.addError(rowIdx, 4);
                 } else {

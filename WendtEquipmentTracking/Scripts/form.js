@@ -9,6 +9,7 @@
             //hack since create row is being copyed for the scrolly stuff we need to remove extra id so datepicker stops breaking
 
             $(".table .datePickerTable").datepicker({
+                dateFormat: 'm/d/y',
                 onSelect: function () {
                     // The "this" keyword refers to the input (in this case: #someinput)
                     if ($(this).closest("td").length) {
@@ -17,9 +18,11 @@
 
                     }
                 }
-            });
+            }).datepicker("setDate", new Date());
 
-            $(".datePicker").attr("autocomplete", "off").datepicker();
+            $(".datePicker").attr("autocomplete", "off").datepicker({
+                dateFormat: 'm/d/y'
+            });
 
         };
 

@@ -185,7 +185,7 @@
 
                 $createRow.find("input[name='EquipmentName']").val(rowData.EquipmentName);
                 $createRow.find("select[name='PriorityNumber']").val(rowData.PriorityNumber);
-                $createRow.find("input[name='ReleaseDate']").val(moment().format("MM/DD/YYYY"));
+                $createRow.find("input[name='ReleaseDate']").val(moment().format("M/D/YY"));
                 $createRow.find("textarea[name='DrawingNumber']").val(rowData.DrawingNumber);
                 $createRow.find("input[name='WorkOrderNumber']").val(rowData.WorkOrderNumber);
                 $createRow.find("input[name='Quantity']").val(rowData.Quantity);
@@ -226,8 +226,8 @@
                         if (!releaseDate.isMultiValue()) {
                             if (!releaseDate.val()) {
                                 releaseDate.error('The release date field is required');
-                            } else if (!moment(releaseDate.val(), 'MM/DD/YYYY', true).isValid()) {
-                                releaseDate.error('The release date must be in the format mm/dd/yyyy');
+                            } else if (!moment(releaseDate.val(), 'M/D/YY', true).isValid()) {
+                                releaseDate.error('The release date must be in the format m/d/yy');
                             }
                         }
 
@@ -290,8 +290,8 @@
                         if (!releaseDate.val()) {
                             $("#releaseDate").siblings("span").html('The release date field is required').show();
                             error = true;
-                        } else if (!moment(releaseDate.val(), 'MM/DD/YYYY', true).isValid()) {
-                            $("#releaseDate").siblings("span").html('The release date must be in the format mm/dd/yyyy').show();
+                        } else if (!moment(releaseDate.val(), 'M/D/YY', true).isValid()) {
+                            $("#releaseDate").siblings("span").html('The release date must be in the format m/d/yy').show();
                             error = true;
                         } else {
                             $("#releaseDate").siblings("span").html('').hide();
@@ -413,6 +413,7 @@
                 $createRow.find("select").prop('selectedIndex', 0);
                 $createRow.find("#ReadyToShip").val("0");
                 $createRow.find("#ShippedFrom").val("WENDT");
+                $createRow.find(".datePickerTable").datepicker("setDate", new Date());
             });
 
             editorMain.editor.on('postEdit', function (e, json, data) {
@@ -521,7 +522,7 @@
                     {
                         name: "ReleaseDate",
                         type: "datetime",
-                        format: "MM/DD/YYYY",
+                        format: "M/D/YY",
                         opts: {
                             firstDay: 0
                         }

@@ -22,7 +22,7 @@ namespace WendtEquipmentTracking.App.Models
         [Remote("ValidBOLNumber", "Validate", AdditionalFields = "BillOfLadingId", ErrorMessage = "This bill of lading number already exists")]
         public string BillOfLadingNumber { get; set; }
 
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:M/d/yy}")]
         [DisplayName("Shipped")]
         [Required]
         public DateTime? DateShipped { get; set; }

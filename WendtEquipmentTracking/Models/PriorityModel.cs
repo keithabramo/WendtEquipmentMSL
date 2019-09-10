@@ -20,18 +20,18 @@ namespace WendtEquipmentTracking.App.Models
 
         [DisplayName("Start Date")]
         [JsonConverter(typeof(CustomDateTimeConverter))]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:M/d/yy}")]
         [Required]
         public DateTime DueDate { get; set; }
 
         [DisplayName("End Date")]
         [JsonConverter(typeof(CustomDateTimeConverter))]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:M/d/yy}")]
         public DateTime? EndDate { get; set; }
 
         [DisplayName("Contractual Ship Date")]
         [JsonConverter(typeof(CustomDateTimeConverter))]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:M/d/yy}")]
         public DateTime? ContractualShipDate { get; set; }
 
         [DisplayName("Equipment")]

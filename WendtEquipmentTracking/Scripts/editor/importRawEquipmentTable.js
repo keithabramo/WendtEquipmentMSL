@@ -115,7 +115,7 @@
                     {
                         name: "ReleaseDate",
                         type: "datetime",
-                        format: "MM/DD/YYYY",
+                        format: "M/D/YY",
                         opts: {
                             firstDay: 0
                         }
@@ -291,7 +291,7 @@
                 if (!releaseDate) {
                     error = true;
                     $this.addError(rowIdx, 3);
-                } else if (!moment(releaseDate, 'MM/DD/YYYY', true).isValid()) {
+                } else if (!moment(releaseDate, 'M/D/YY', true).isValid()) {
                     error = true;
                     $this.addError(rowIdx, 3);
                 } else {
