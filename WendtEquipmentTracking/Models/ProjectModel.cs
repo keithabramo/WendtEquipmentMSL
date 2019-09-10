@@ -53,10 +53,19 @@ namespace WendtEquipmentTracking.App.Models
         [DisplayName("Ship To Broker Email")]
         public string ShipToBrokerEmail { get; set; }
 
-        [DisplayName("Is Export Project?")]
+        [DisplayName("PM")]
+        public string PM { get; set; }
+
+        [DisplayName("Receiving Hours")]
+        public string ReceivingHours { get; set; }
+
+        [DisplayName("Notes")]
+        public string Notes { get; set; }
+
+        [DisplayName("Is Export or Progress Payment?")]
         public bool IsCustomsProject { get; set; }
 
-        [DisplayName("Include Soft Costs on Commercial Invoice?")]
+        [DisplayName("Include Soft Costs on CI?")]
         public bool IncludeSoftCosts { get; set; }
 
         [DisplayName("Is Completed?")]

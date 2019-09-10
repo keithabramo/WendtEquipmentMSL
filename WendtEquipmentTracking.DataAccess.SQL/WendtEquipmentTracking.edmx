@@ -172,6 +172,9 @@
           <Property Name="ShipToBroker" Type="nvarchar" MaxLength="255" />
           <Property Name="ShipToBrokerPhoneFax" Type="nvarchar" MaxLength="50" />
           <Property Name="ShipToBrokerEmail" Type="nvarchar" MaxLength="255" />
+          <Property Name="PM" Type="nvarchar" MaxLength="255" />
+          <Property Name="ReceivingHours" Type="nvarchar" MaxLength="255" />
+          <Property Name="Notes" Type="nvarchar" MaxLength="1000" />
           <Property Name="IsCustomsProject" Type="bit" Nullable="false" />
           <Property Name="IncludeSoftCosts" Type="bit" Nullable="false" />
           <Property Name="IsCompleted" Type="bit" Nullable="false" />
@@ -681,6 +684,9 @@
           <Property Name="ShipToBroker" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="ShipToBrokerPhoneFax" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ShipToBrokerEmail" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PM" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ReceivingHours" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Notes" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="IsCustomsProject" Type="Boolean" Nullable="false" />
           <Property Name="IncludeSoftCosts" Type="Boolean" Nullable="false" />
           <Property Name="IsCompleted" Type="Boolean" Nullable="false" />
@@ -1047,6 +1053,9 @@
                 <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
                 <ScalarProperty Name="IncludeSoftCosts" ColumnName="IncludeSoftCosts" />
                 <ScalarProperty Name="IsCustomsProject" ColumnName="IsCustomsProject" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="ReceivingHours" ColumnName="ReceivingHours" />
+                <ScalarProperty Name="PM" ColumnName="PM" />
                 <ScalarProperty Name="ShipToBrokerEmail" ColumnName="ShipToBrokerEmail" />
                 <ScalarProperty Name="ShipToBrokerPhoneFax" ColumnName="ShipToBrokerPhoneFax" />
                 <ScalarProperty Name="ShipToBroker" ColumnName="ShipToBroker" />

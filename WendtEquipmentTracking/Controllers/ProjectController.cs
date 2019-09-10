@@ -74,7 +74,10 @@ namespace WendtEquipmentTracking.App.Controllers
                 ShipToContact2 = project.ShipToContact2,
                 ShipToContact2Email = project.ShipToContact2Email,
                 ShipToContact2PhoneFax = project.ShipToContact2PhoneFax,
-                ShipToCSZ = project.ShipToCSZ
+                ShipToCSZ = project.ShipToCSZ,
+                PM = project.PM,
+                ReceivingHours = project.ReceivingHours,
+                Notes = project.Notes
             };
 
 
@@ -126,7 +129,10 @@ namespace WendtEquipmentTracking.App.Controllers
                         ShipToContact2 = model.ShipToContact2,
                         ShipToContact2Email = model.ShipToContact2Email,
                         ShipToContact2PhoneFax = model.ShipToContact2PhoneFax,
-                        ShipToCSZ = model.ShipToCSZ
+                        ShipToCSZ = model.ShipToCSZ,
+                        PM = model.PM,
+                        ReceivingHours = model.ReceivingHours,
+                        Notes = model.Notes
                     };
 
 
@@ -184,7 +190,10 @@ namespace WendtEquipmentTracking.App.Controllers
                 ShipToContact2 = project.ShipToContact2,
                 ShipToContact2Email = project.ShipToContact2Email,
                 ShipToContact2PhoneFax = project.ShipToContact2PhoneFax,
-                ShipToCSZ = project.ShipToCSZ
+                ShipToCSZ = project.ShipToCSZ,
+                PM = project.PM,
+                ReceivingHours = project.ReceivingHours,
+                Notes = project.Notes
             };
 
             return View(model);
@@ -219,7 +228,10 @@ namespace WendtEquipmentTracking.App.Controllers
                         ShipToContact2 = model.ShipToContact2,
                         ShipToContact2Email = model.ShipToContact2Email,
                         ShipToContact2PhoneFax = model.ShipToContact2PhoneFax,
-                        ShipToCSZ = model.ShipToCSZ
+                        ShipToCSZ = model.ShipToCSZ,
+                        PM = model.PM,
+                        ReceivingHours = model.ReceivingHours,
+                        Notes = model.Notes
                     };
 
                     projectService.Update(projectBO);

@@ -17,6 +17,9 @@
         public string ShipToBroker { get; set; }
         public string ShipToBrokerPhoneFax { get; set; }
         public string ShipToBrokerEmail { get; set; }
+        public string PM { get; set; }
+        public string ReceivingHours { get; set; }
+        public string Notes { get; set; }
         public bool IsCustomsProject { get; set; }
         public bool IncludeSoftCosts { get; set; }
         public bool IsCompleted { get; set; }

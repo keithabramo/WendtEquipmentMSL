@@ -42,7 +42,10 @@ namespace WendtEquipmentTracking.BusinessLogic
                 ShipToContact2 = projectBO.ShipToContact2,
                 ShipToContact2Email = projectBO.ShipToContact2Email,
                 ShipToContact2PhoneFax = projectBO.ShipToContact2PhoneFax,
-                ShipToCSZ = projectBO.ShipToCSZ
+                ShipToCSZ = projectBO.ShipToCSZ,
+                PM = projectBO.PM,
+                ReceivingHours = projectBO.ReceivingHours,
+                Notes = projectBO.Notes
             };
 
             projectEngine.AddNewProject(project);
@@ -72,7 +75,10 @@ namespace WendtEquipmentTracking.BusinessLogic
                 ShipToContact2 = x.ShipToContact2,
                 ShipToContact2Email = x.ShipToContact2Email,
                 ShipToContact2PhoneFax = x.ShipToContact2PhoneFax,
-                ShipToCSZ = x.ShipToCSZ
+                ShipToCSZ = x.ShipToCSZ,
+                PM = x.PM,
+                ReceivingHours = x.ReceivingHours,
+                Notes = x.Notes
             });
 
             return projectBOs.ToList();
@@ -113,7 +119,10 @@ namespace WendtEquipmentTracking.BusinessLogic
                 ShipToContact2 = x.ShipToContact2,
                 ShipToContact2Email = x.ShipToContact2Email,
                 ShipToContact2PhoneFax = x.ShipToContact2PhoneFax,
-                ShipToCSZ = x.ShipToCSZ
+                ShipToCSZ = x.ShipToCSZ,
+                PM = x.PM,
+                ReceivingHours = x.ReceivingHours,
+                Notes = x.Notes
             });
 
             return projectBOs.ToList();
@@ -159,7 +168,10 @@ namespace WendtEquipmentTracking.BusinessLogic
                     ShipToContact2 = project.ShipToContact2,
                     ShipToContact2Email = project.ShipToContact2Email,
                     ShipToContact2PhoneFax = project.ShipToContact2PhoneFax,
-                    ShipToCSZ = project.ShipToCSZ
+                    ShipToCSZ = project.ShipToCSZ,
+                    PM = project.PM,
+                    ReceivingHours = project.ReceivingHours,
+                    Notes = project.Notes
                 };
             }
 
@@ -187,6 +199,9 @@ namespace WendtEquipmentTracking.BusinessLogic
             oldProject.IsCustomsProject = projectBO.IsCustomsProject;
             oldProject.IncludeSoftCosts = projectBO.IncludeSoftCosts;
             oldProject.IsCompleted = projectBO.IsCompleted;
+            oldProject.PM = projectBO.PM;
+            oldProject.ReceivingHours = projectBO.ReceivingHours;
+            oldProject.Notes = projectBO.Notes;
 
             projectEngine.UpdateProject(oldProject);
 

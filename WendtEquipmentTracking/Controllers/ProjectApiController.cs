@@ -43,7 +43,10 @@ namespace WendtEquipmentTracking.App.Controllers
                 ShipToContact2 = x.ShipToContact2,
                 ShipToContact2Email = x.ShipToContact2Email,
                 ShipToContact2PhoneFax = x.ShipToContact2PhoneFax,
-                ShipToCSZ = x.ShipToCSZ
+                ShipToCSZ = x.ShipToCSZ,
+                PM = x.PM,
+                ReceivingHours = x.ReceivingHours,
+                Notes = x.Notes
             });
 
             return projectModels;
@@ -73,7 +76,10 @@ namespace WendtEquipmentTracking.App.Controllers
                 ShipToContact2 = projectBO.ShipToContact2,
                 ShipToContact2Email = projectBO.ShipToContact2Email,
                 ShipToContact2PhoneFax = projectBO.ShipToContact2PhoneFax,
-                ShipToCSZ = projectBO.ShipToCSZ
+                ShipToCSZ = projectBO.ShipToCSZ,
+                PM = projectBO.PM,
+                ReceivingHours = projectBO.ReceivingHours,
+                Notes = projectBO.Notes
             };
 
             return model;
