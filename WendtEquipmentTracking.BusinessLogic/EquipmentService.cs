@@ -151,12 +151,23 @@ namespace WendtEquipmentTracking.BusinessLogic
                 ShippedFrom = x.ShippedFrom,
                 ShippingTagNumber = x.ShippingTagNumber,
                 WorkOrderNumber = x.WorkOrderNumber,
+                BillOfLadingEquipments = x.BillOfLadingEquipments
+                    .Where(y => !y.IsDeleted && y.BillOfLading.IsCurrentRevision)
+                    .Select(y => new BillOfLadingEquipmentBO
+                    {
+                        BillOfLading = new BillOfLadingBO
+                        {
+                            BillOfLadingId = y.BillOfLading.BillOfLadingId,
+                            BillOfLadingNumber = y.BillOfLading.BillOfLadingNumber,
+                            DateShipped = y.BillOfLading.DateShipped
+                        }
+                    }).ToList(),
                 HasBillOfLading = x.BillOfLadingEquipments.Any(b => !b.IsDeleted && b.BillOfLading.IsCurrentRevision),
                 HasBillOfLadingInStorage = x.BillOfLadingEquipments.Any(be => !be.IsDeleted && be.BillOfLading.ToStorage && be.BillOfLading.IsCurrentRevision),
                 IsHardwareKit = x.HardwareKit != null,
                 IsAssociatedToHardwareKit = x.HardwareKitEquipments.Any(h => !h.IsDeleted && h.HardwareKit.IsCurrentRevision),
                 AssociatedHardwareKitNumber = x.HardwareKitEquipments.Any(h => !h.IsDeleted && h.HardwareKit.IsCurrentRevision) ? x.HardwareKitEquipments.Where(h => !h.IsDeleted && h.HardwareKit.IsCurrentRevision).FirstOrDefault().HardwareKit.HardwareKitNumber : string.Empty
-            });
+            }).ToList();
 
 
             return equipmentBOs.ToList();
@@ -301,7 +312,17 @@ namespace WendtEquipmentTracking.BusinessLogic
                 ShippedFrom = x.ShippedFrom,
                 ShippingTagNumber = x.ShippingTagNumber,
                 WorkOrderNumber = x.WorkOrderNumber,
-
+                BillOfLadingEquipments = x.BillOfLadingEquipments
+                    .Where(y => !y.IsDeleted && y.BillOfLading.IsCurrentRevision)
+                    .Select(y => new BillOfLadingEquipmentBO
+                    {
+                        BillOfLading = new BillOfLadingBO
+                        {
+                            BillOfLadingId = y.BillOfLading.BillOfLadingId,
+                            BillOfLadingNumber = y.BillOfLading.BillOfLadingNumber,
+                            DateShipped = y.BillOfLading.DateShipped
+                        }
+                    }).ToList(),
                 HasBillOfLading = x.BillOfLadingEquipments.Any(b => !b.IsDeleted && b.BillOfLading.IsCurrentRevision),
                 HasBillOfLadingInStorage = x.BillOfLadingEquipments.Any(be => !be.IsDeleted && be.BillOfLading.ToStorage && be.BillOfLading.IsCurrentRevision),
                 IsHardwareKit = x.HardwareKit != null,

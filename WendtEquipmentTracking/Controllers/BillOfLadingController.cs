@@ -151,7 +151,7 @@ namespace WendtEquipmentTracking.App.Controllers
             return View(model);
         }
 
-        //GET Equipment/BOLsAssociatedToEquipment/5
+        //GET Equipment/EquipmentAssociatedToBOL/5
         [HttpGet]
         public ActionResult EquipmentAssociatedToBOL(int id)
         {

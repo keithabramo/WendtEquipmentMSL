@@ -146,37 +146,6 @@
                 editorMain.datatable.draw();
             });
 
-            //show hide child row
-            $('.table.my-datatable').on('click', ".expand", function () {
-
-                var $row = $(this).closest('tr');
-                var datatableRow = editorMain.datatable.row($row);
-
-                if (datatableRow.child.isShown()) {
-                    // This row is already open - close it
-                    datatableRow.child.hide();
-                }
-                else {
-                    // Open this row
-                    $.get({
-                        url: ROOT_URL + "Equipment/BOLsAssociatedToEquipment/",
-                        data: { id: datatableRow.id() },
-                        success: function (response) {
-                            datatableRow.child(response).show();
-                        }
-                    });
-                }
-
-
-                var $icon = $(this);
-
-                if ($icon.hasClass("glyphicon-plus")) {
-                    $icon.removeClass("glyphicon-plus").addClass("glyphicon-minus");
-                } else {
-                    $icon.removeClass("glyphicon-minus").addClass("glyphicon-plus");
-                }
-            });
-
             $('.table.my-datatable').on('click', ".copy", function () {
 
                 var $row = $(this).closest('tr');
@@ -545,6 +514,15 @@
                     { name: "SalePriceText" },
                     { name: "HTSCode" },
                     { name: "CountryOfOrigin" },
+                    { name: "BillOfLadingNumbers" },
+                    {
+                        name: "LatestBOLDateShipped",
+                        type: "datetime",
+                        format: "M/D/YY",
+                        opts: {
+                            firstDay: 0
+                        }
+                    },
                     { name: "EquipmentId", type: "readonly" },
                     { name: "IsHardwareKitText", type: "readonly" },
                     { name: "IsAssociatedToHardwareKitText", type: "readonly" },
@@ -743,21 +721,22 @@
                         visible: !hideColumns
                     },
                     {
-                        "targets": 23,
-                        searchable: false,
-                        sortable: false,
-                        render: function (data, type, row, meta) {
-                            return !row.HasBillOfLading && !row.IsAssociatedToHardwareKit ? '<a href="javascript:void(0);" class="delete">Delete</a>' : '';
-                        }
+                        data: "BillOfLadingNumbers", "targets": 23,
+                        className: "billOfLadingNumbersWidth"
                     },
                     {
-                        "targets": 24,
-                        searchable: false,
-                        sortable: false,
-                        render: function (datadata, type, row, meta) {
-                            return row.HasBillOfLading ? '<span class="expand glyphicon glyphicon-plus text-primary"></span>' : '';
-                        }
+                        data: "LatestBOLDateShipped", "targets": 24, type: "date",
+                        className: "latestBOLDateShippedWidth"
                     },
+                    //{
+                    //    "targets": 25,
+                    //    searchable: false,
+                    //    sortable: false,
+                    //    visible: false,
+                    //    render: function (data, type, row, meta) {
+                    //        return !row.HasBillOfLading && !row.IsAssociatedToHardwareKit ? '<a href="javascript:void(0);" class="delete">Delete</a>' : '';
+                    //    }
+                    //},
                     {
                         data: "HasErrorsText",
                         "targets": 25,

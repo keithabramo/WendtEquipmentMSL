@@ -31,6 +31,7 @@ namespace WendtEquipmentTracking.App.Models
         [Required]
         public DateTime? ReleaseDate { get; set; }
 
+
         [DataType(DataType.MultilineText)]
         [DisplayName("Drawing #")]
         [Required]
@@ -141,6 +142,8 @@ namespace WendtEquipmentTracking.App.Models
         [DisplayName("COO")]
         public string CountryOfOrigin { get; set; }
 
+        
+
 
         [DisplayName("Fully Shipped")]
         public string FullyShippedText
@@ -185,6 +188,14 @@ namespace WendtEquipmentTracking.App.Models
 
 
         //Calculated Properties
+
+        [DisplayName("BOL Number")]
+        public string BillOfLadingNumbers { get; set; }
+
+        [JsonConverter(typeof(CustomDateTimeConverter))]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:M/d/yy}")]
+        [DisplayName("Date Shipped")]
+        public DateTime? LatestBOLDateShipped { get; set; }
         public bool HasBillOfLading { get; set; }
         public bool HasBillOfLadingInStorage { get; set; }
         public bool IsHardwareKit { get; set; }

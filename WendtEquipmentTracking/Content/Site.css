@@ -443,7 +443,13 @@ table.dataTable tbody tr.selected td {
         min-width: 200px;
     }
 
+    .table-styled .billOfLadingNumbersWidth {
+        min-width: 100px;
+    }
 
+    .table-styled .latestBOLDateShippedWidth {
+        min-width: 70px;
+    }
 
 
     .table-styled .hardwarekitLabel {

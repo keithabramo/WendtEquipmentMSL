@@ -69,6 +69,8 @@ namespace WendtEquipmentTracking.App.Controllers
                 ShippedFrom = (x.ShippedFrom ?? string.Empty).ToUpperInvariant(),
                 ShippingTagNumber = (x.ShippingTagNumber ?? string.Empty).ToUpperInvariant(),
                 WorkOrderNumber = (x.WorkOrderNumber ?? string.Empty).ToUpperInvariant(),
+                BillOfLadingNumbers = string.Join(",", x?.BillOfLadingEquipments?.Select(y => y.BillOfLading.BillOfLadingNumber) ?? new List<string>()).ToUpperInvariant(),
+                LatestBOLDateShipped = (x.BillOfLadingEquipments?.Max(y => y.BillOfLading.DateShipped)),
 
                 HasBillOfLading = x.HasBillOfLading,
                 HasBillOfLadingInStorage = x.HasBillOfLadingInStorage,
@@ -211,7 +213,8 @@ namespace WendtEquipmentTracking.App.Controllers
                     ShippedFrom = x.ShippedFrom,
                     ShippingTagNumber = x.ShippingTagNumber,
                     WorkOrderNumber = x.WorkOrderNumber,
-
+                    BillOfLadingNumbers = string.Join(",", x?.BillOfLadingEquipments?.Select(y => y.BillOfLading.BillOfLadingNumber) ?? new List<string>()).ToUpperInvariant(),
+                    LatestBOLDateShipped = (x.BillOfLadingEquipments?.Max(y => y.BillOfLading.DateShipped)),
                     PriorityNumber = x.Priority != null ? (int?)x.Priority.PriorityNumber : null,
 
                     HasBillOfLading = x.HasBillOfLading,

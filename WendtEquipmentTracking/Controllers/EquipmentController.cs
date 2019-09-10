@@ -73,39 +73,5 @@ namespace WendtEquipmentTracking.App.Controllers
                 ReadyToShip = 0
             });
         }
-
-
-        //GET Equipment/BOLsAssociatedToEquipment/5
-        [HttpGet]
-        public ActionResult BOLsAssociatedToEquipment(int id)
-        {
-            var equipment = equipmentService.GetById(id);
-
-            var model = equipment.BillOfLadingEquipments.Select(x => new BillOfLadingEquipmentModel
-            {
-                BillOfLadingEquipmentId = x.BillOfLadingEquipmentId,
-                BillOfLadingId = x.BillOfLadingId,
-                EquipmentId = x.EquipmentId,
-                Quantity = x.Quantity,
-                ShippedFrom = x.ShippedFrom,
-                BillOfLading = new BillOfLadingModel
-                {
-                    BillOfLadingId = x.BillOfLading.BillOfLadingId,
-                    BillOfLadingNumber = x.BillOfLading.BillOfLadingNumber,
-                    Carrier = x.BillOfLading.Carrier,
-                    DateShipped = x.BillOfLading.DateShipped,
-                    FreightTerms = x.BillOfLading.FreightTerms,
-                    IsCurrentRevision = x.BillOfLading.IsCurrentRevision,
-                    ProjectId = x.BillOfLading.ProjectId,
-                    Revision = x.BillOfLading.Revision,
-                    ToStorage = x.BillOfLading.ToStorage,
-                    TrailerNumber = x.BillOfLading.TrailerNumber,
-                    ShippedFrom = x.BillOfLading.ShippedFrom,
-                    ShippedTo = x.BillOfLading.ShippedTo
-                },
-            });
-
-            return PartialView(model);
-        }
     }
 }

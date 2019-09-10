@@ -115,7 +115,7 @@ namespace WendtEquipmentTracking.App.Controllers
             return View(hardwareKitModel);
         }
 
-        //GET Equipment/BOLsAssociatedToEquipment/5
+        //GET Equipment/HardwareAssociatedToHardwareKit/5
         [HttpGet]
         public ActionResult HardwareAssociatedToHardwareKit(int id)
         {
