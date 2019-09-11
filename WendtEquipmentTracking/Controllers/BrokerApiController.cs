@@ -106,8 +106,6 @@ namespace WendtEquipmentTracking.App.Controllers
 
             if (user != null)
             {
-                var project = projectService.GetById(user.ProjectId);
-
                 var httpData = DatatableHelpers.HttpData();
                 Dictionary<string, object> data = httpData["data"] as Dictionary<string, object>;
                 var action = httpData["action"];

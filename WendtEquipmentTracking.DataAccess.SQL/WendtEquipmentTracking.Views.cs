@@ -11,7 +11,7 @@ using System.Data.Entity.Infrastructure.MappingViews;
 
 [assembly: DbMappingViewCacheTypeAttribute(
     typeof(WendtEquipmentTracking.DataAccess.SQL.WendtEquipmentTrackingEntities),
-    typeof(Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets1f726f0056202a4709f507239c5f3e01644d685506b401e7eed2ef5c2bf07406))]
+    typeof(Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets556f414d9192430562ec6a6052c5511a6985bfe45096c1d430ab44c6d16b499c))]
 
 namespace Edm_EntityMappingGeneratedViews
 {
@@ -23,14 +23,14 @@ namespace Edm_EntityMappingGeneratedViews
     /// Implements a mapping view cache.
     /// </summary>
     [GeneratedCode("Entity Framework 6 Power Tools", "0.9.2.0")]
-    internal sealed class ViewsForBaseEntitySets1f726f0056202a4709f507239c5f3e01644d685506b401e7eed2ef5c2bf07406 : DbMappingViewCache
+    internal sealed class ViewsForBaseEntitySets556f414d9192430562ec6a6052c5511a6985bfe45096c1d430ab44c6d16b499c : DbMappingViewCache
     {
         /// <summary>
         /// Gets a hash value computed over the mapping closure.
         /// </summary>
         public override string MappingHashValue
         {
-            get { return "1f726f0056202a4709f507239c5f3e01644d685506b401e7eed2ef5c2bf07406"; }
+            get { return "556f414d9192430562ec6a6052c5511a6985bfe45096c1d430ab44c6d16b499c"; }
         }
 
         /// <summary>
@@ -82,89 +82,99 @@ namespace Edm_EntityMappingGeneratedViews
                 return GetView6();
             }
 
-            if (extentName == "WendtEquipmentTrackingDataAccessSQLModelStoreContainer.Vendor")
+            if (extentName == "WendtEquipmentTrackingDataAccessSQLModelStoreContainer.TruckingSchedule")
             {
                 return GetView7();
             }
 
-            if (extentName == "WendtEquipmentTrackingDataAccessSQLModelStoreContainer.WorkOrderPrice")
+            if (extentName == "WendtEquipmentTrackingDataAccessSQLModelStoreContainer.Vendor")
             {
                 return GetView8();
             }
 
-            if (extentName == "WendtEquipmentTrackingEntities.BillOfLadings")
+            if (extentName == "WendtEquipmentTrackingDataAccessSQLModelStoreContainer.WorkOrderPrice")
             {
                 return GetView9();
             }
 
-            if (extentName == "WendtEquipmentTrackingEntities.BillOfLadingEquipments")
+            if (extentName == "WendtEquipmentTrackingEntities.BillOfLadings")
             {
                 return GetView10();
             }
 
-            if (extentName == "WendtEquipmentTrackingEntities.Equipments")
+            if (extentName == "WendtEquipmentTrackingEntities.BillOfLadingEquipments")
             {
                 return GetView11();
             }
 
-            if (extentName == "WendtEquipmentTrackingEntities.HardwareKits")
+            if (extentName == "WendtEquipmentTrackingEntities.Equipments")
             {
                 return GetView12();
             }
 
-            if (extentName == "WendtEquipmentTrackingEntities.HardwareKitEquipments")
+            if (extentName == "WendtEquipmentTrackingEntities.HardwareKits")
             {
                 return GetView13();
             }
 
-            if (extentName == "WendtEquipmentTrackingEntities.Priorities")
+            if (extentName == "WendtEquipmentTrackingEntities.HardwareKitEquipments")
             {
                 return GetView14();
             }
 
-            if (extentName == "WendtEquipmentTrackingEntities.Projects")
+            if (extentName == "WendtEquipmentTrackingEntities.Priorities")
             {
                 return GetView15();
             }
 
-            if (extentName == "WendtEquipmentTrackingEntities.Vendors")
+            if (extentName == "WendtEquipmentTrackingEntities.Projects")
             {
                 return GetView16();
             }
 
-            if (extentName == "WendtEquipmentTrackingEntities.WorkOrderPrices")
+            if (extentName == "WendtEquipmentTrackingEntities.TruckingSchedules")
             {
                 return GetView17();
             }
 
-            if (extentName == "WendtEquipmentTrackingDataAccessSQLModelStoreContainer.Broker")
+            if (extentName == "WendtEquipmentTrackingEntities.Vendors")
             {
                 return GetView18();
             }
 
-            if (extentName == "WendtEquipmentTrackingEntities.Brokers")
+            if (extentName == "WendtEquipmentTrackingEntities.WorkOrderPrices")
             {
                 return GetView19();
             }
 
-            if (extentName == "WendtEquipmentTrackingDataAccessSQLModelStoreContainer.HardwareCommercialCode")
+            if (extentName == "WendtEquipmentTrackingDataAccessSQLModelStoreContainer.Broker")
             {
                 return GetView20();
             }
 
-            if (extentName == "WendtEquipmentTrackingEntities.HardwareCommercialCodes")
+            if (extentName == "WendtEquipmentTrackingEntities.Brokers")
             {
                 return GetView21();
             }
 
-            if (extentName == "WendtEquipmentTrackingDataAccessSQLModelStoreContainer.User")
+            if (extentName == "WendtEquipmentTrackingDataAccessSQLModelStoreContainer.HardwareCommercialCode")
             {
                 return GetView22();
             }
 
-            if (extentName == "WendtEquipmentTrackingEntities.Users")
+            if (extentName == "WendtEquipmentTrackingEntities.HardwareCommercialCodes")
             {
                 return GetView23();
+            }
+
+            if (extentName == "WendtEquipmentTrackingDataAccessSQLModelStoreContainer.User")
+            {
+                return GetView24();
+            }
+
+            if (extentName == "WendtEquipmentTrackingEntities.Users")
+            {
+                return GetView25();
             }
 
             return null;
@@ -393,10 +403,47 @@ namespace Edm_EntityMappingGeneratedViews
         }
 
         /// <summary>
-        /// Gets the view for WendtEquipmentTrackingDataAccessSQLModelStoreContainer.Vendor.
+        /// Gets the view for WendtEquipmentTrackingDataAccessSQLModelStoreContainer.TruckingSchedule.
         /// </summary>
         /// <returns>The mapping view.</returns>
         private static DbMappingView GetView7()
+        {
+            return new DbMappingView(@"
+    SELECT VALUE -- Constructing TruckingSchedule
+        [WendtEquipmentTracking.DataAccess.SQL.Model.Store.TruckingSchedule](T1.TruckingSchedule_TruckingScheduleId, T1.TruckingSchedule_RequestDate, T1.TruckingSchedule_ProjectId, T1.TruckingSchedule_WorkOrder, T1.TruckingSchedule_PurchaseOrder, T1.TruckingSchedule_RequestedBy, T1.TruckingSchedule_ShipFrom, T1.TruckingSchedule_ShipTo, T1.TruckingSchedule_Description, T1.TruckingSchedule_NumPieces, T1.TruckingSchedule_Dimensions, T1.TruckingSchedule_Weight, T1.TruckingSchedule_Carrier, T1.TruckingSchedule_PickUpDate, T1.TruckingSchedule_Comments, T1.TruckingSchedule_Status, T1.TruckingSchedule_CreatedBy, T1.TruckingSchedule_CreatedDate, T1.TruckingSchedule_ModifiedBy, T1.TruckingSchedule_ModifiedDate, T1.TruckingSchedule_IsDeleted)
+    FROM (
+        SELECT 
+            T.TruckingScheduleId AS TruckingSchedule_TruckingScheduleId, 
+            T.RequestDate AS TruckingSchedule_RequestDate, 
+            T.ProjectId AS TruckingSchedule_ProjectId, 
+            T.WorkOrder AS TruckingSchedule_WorkOrder, 
+            T.PurchaseOrder AS TruckingSchedule_PurchaseOrder, 
+            T.RequestedBy AS TruckingSchedule_RequestedBy, 
+            T.ShipFrom AS TruckingSchedule_ShipFrom, 
+            T.ShipTo AS TruckingSchedule_ShipTo, 
+            T.Description AS TruckingSchedule_Description, 
+            T.NumPieces AS TruckingSchedule_NumPieces, 
+            T.Dimensions AS TruckingSchedule_Dimensions, 
+            T.Weight AS TruckingSchedule_Weight, 
+            T.Carrier AS TruckingSchedule_Carrier, 
+            T.PickUpDate AS TruckingSchedule_PickUpDate, 
+            T.Comments AS TruckingSchedule_Comments, 
+            T.Status AS TruckingSchedule_Status, 
+            T.CreatedBy AS TruckingSchedule_CreatedBy, 
+            T.CreatedDate AS TruckingSchedule_CreatedDate, 
+            T.ModifiedBy AS TruckingSchedule_ModifiedBy, 
+            T.ModifiedDate AS TruckingSchedule_ModifiedDate, 
+            T.IsDeleted AS TruckingSchedule_IsDeleted, 
+            True AS _from0
+        FROM WendtEquipmentTrackingEntities.TruckingSchedules AS T
+    ) AS T1");
+        }
+
+        /// <summary>
+        /// Gets the view for WendtEquipmentTrackingDataAccessSQLModelStoreContainer.Vendor.
+        /// </summary>
+        /// <returns>The mapping view.</returns>
+        private static DbMappingView GetView8()
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing Vendor
@@ -424,7 +471,7 @@ namespace Edm_EntityMappingGeneratedViews
         /// Gets the view for WendtEquipmentTrackingDataAccessSQLModelStoreContainer.WorkOrderPrice.
         /// </summary>
         /// <returns>The mapping view.</returns>
-        private static DbMappingView GetView8()
+        private static DbMappingView GetView9()
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing WorkOrderPrice
@@ -453,7 +500,7 @@ namespace Edm_EntityMappingGeneratedViews
         /// Gets the view for WendtEquipmentTrackingEntities.BillOfLadings.
         /// </summary>
         /// <returns>The mapping view.</returns>
-        private static DbMappingView GetView9()
+        private static DbMappingView GetView10()
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing BillOfLadings
@@ -489,7 +536,7 @@ namespace Edm_EntityMappingGeneratedViews
         /// Gets the view for WendtEquipmentTrackingEntities.BillOfLadingEquipments.
         /// </summary>
         /// <returns>The mapping view.</returns>
-        private static DbMappingView GetView10()
+        private static DbMappingView GetView11()
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing BillOfLadingEquipments
@@ -511,7 +558,7 @@ namespace Edm_EntityMappingGeneratedViews
         /// Gets the view for WendtEquipmentTrackingEntities.Equipments.
         /// </summary>
         /// <returns>The mapping view.</returns>
-        private static DbMappingView GetView11()
+        private static DbMappingView GetView12()
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing Equipments
@@ -557,7 +604,7 @@ namespace Edm_EntityMappingGeneratedViews
         /// Gets the view for WendtEquipmentTrackingEntities.HardwareKits.
         /// </summary>
         /// <returns>The mapping view.</returns>
-        private static DbMappingView GetView12()
+        private static DbMappingView GetView13()
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing HardwareKits
@@ -584,7 +631,7 @@ namespace Edm_EntityMappingGeneratedViews
         /// Gets the view for WendtEquipmentTrackingEntities.HardwareKitEquipments.
         /// </summary>
         /// <returns>The mapping view.</returns>
-        private static DbMappingView GetView13()
+        private static DbMappingView GetView14()
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing HardwareKitEquipments
@@ -605,7 +652,7 @@ namespace Edm_EntityMappingGeneratedViews
         /// Gets the view for WendtEquipmentTrackingEntities.Priorities.
         /// </summary>
         /// <returns>The mapping view.</returns>
-        private static DbMappingView GetView14()
+        private static DbMappingView GetView15()
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing Priorities
@@ -633,7 +680,7 @@ namespace Edm_EntityMappingGeneratedViews
         /// Gets the view for WendtEquipmentTrackingEntities.Projects.
         /// </summary>
         /// <returns>The mapping view.</returns>
-        private static DbMappingView GetView15()
+        private static DbMappingView GetView16()
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing Projects
@@ -672,10 +719,47 @@ namespace Edm_EntityMappingGeneratedViews
         }
 
         /// <summary>
+        /// Gets the view for WendtEquipmentTrackingEntities.TruckingSchedules.
+        /// </summary>
+        /// <returns>The mapping view.</returns>
+        private static DbMappingView GetView17()
+        {
+            return new DbMappingView(@"
+    SELECT VALUE -- Constructing TruckingSchedules
+        [WendtEquipmentTracking.DataAccess.SQL.Model.TruckingSchedule](T1.TruckingSchedule_TruckingScheduleId, T1.TruckingSchedule_RequestDate, T1.TruckingSchedule_ProjectId, T1.TruckingSchedule_WorkOrder, T1.TruckingSchedule_PurchaseOrder, T1.TruckingSchedule_RequestedBy, T1.TruckingSchedule_ShipFrom, T1.TruckingSchedule_ShipTo, T1.TruckingSchedule_Description, T1.TruckingSchedule_NumPieces, T1.TruckingSchedule_Dimensions, T1.TruckingSchedule_Weight, T1.TruckingSchedule_Carrier, T1.TruckingSchedule_PickUpDate, T1.TruckingSchedule_Comments, T1.TruckingSchedule_Status, T1.TruckingSchedule_CreatedBy, T1.TruckingSchedule_CreatedDate, T1.TruckingSchedule_ModifiedBy, T1.TruckingSchedule_ModifiedDate, T1.TruckingSchedule_IsDeleted)
+    FROM (
+        SELECT 
+            T.TruckingScheduleId AS TruckingSchedule_TruckingScheduleId, 
+            T.RequestDate AS TruckingSchedule_RequestDate, 
+            T.ProjectId AS TruckingSchedule_ProjectId, 
+            T.WorkOrder AS TruckingSchedule_WorkOrder, 
+            T.PurchaseOrder AS TruckingSchedule_PurchaseOrder, 
+            T.RequestedBy AS TruckingSchedule_RequestedBy, 
+            T.ShipFrom AS TruckingSchedule_ShipFrom, 
+            T.ShipTo AS TruckingSchedule_ShipTo, 
+            T.Description AS TruckingSchedule_Description, 
+            T.NumPieces AS TruckingSchedule_NumPieces, 
+            T.Dimensions AS TruckingSchedule_Dimensions, 
+            T.Weight AS TruckingSchedule_Weight, 
+            T.Carrier AS TruckingSchedule_Carrier, 
+            T.PickUpDate AS TruckingSchedule_PickUpDate, 
+            T.Comments AS TruckingSchedule_Comments, 
+            T.Status AS TruckingSchedule_Status, 
+            T.CreatedBy AS TruckingSchedule_CreatedBy, 
+            T.CreatedDate AS TruckingSchedule_CreatedDate, 
+            T.ModifiedBy AS TruckingSchedule_ModifiedBy, 
+            T.ModifiedDate AS TruckingSchedule_ModifiedDate, 
+            T.IsDeleted AS TruckingSchedule_IsDeleted, 
+            True AS _from0
+        FROM WendtEquipmentTrackingDataAccessSQLModelStoreContainer.TruckingSchedule AS T
+    ) AS T1");
+        }
+
+        /// <summary>
         /// Gets the view for WendtEquipmentTrackingEntities.Vendors.
         /// </summary>
         /// <returns>The mapping view.</returns>
-        private static DbMappingView GetView16()
+        private static DbMappingView GetView18()
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing Vendors
@@ -703,7 +787,7 @@ namespace Edm_EntityMappingGeneratedViews
         /// Gets the view for WendtEquipmentTrackingEntities.WorkOrderPrices.
         /// </summary>
         /// <returns>The mapping view.</returns>
-        private static DbMappingView GetView17()
+        private static DbMappingView GetView19()
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing WorkOrderPrices
@@ -732,7 +816,7 @@ namespace Edm_EntityMappingGeneratedViews
         /// Gets the view for WendtEquipmentTrackingDataAccessSQLModelStoreContainer.Broker.
         /// </summary>
         /// <returns>The mapping view.</returns>
-        private static DbMappingView GetView18()
+        private static DbMappingView GetView20()
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing Broker
@@ -759,7 +843,7 @@ namespace Edm_EntityMappingGeneratedViews
         /// Gets the view for WendtEquipmentTrackingEntities.Brokers.
         /// </summary>
         /// <returns>The mapping view.</returns>
-        private static DbMappingView GetView19()
+        private static DbMappingView GetView21()
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing Brokers
@@ -786,7 +870,7 @@ namespace Edm_EntityMappingGeneratedViews
         /// Gets the view for WendtEquipmentTrackingDataAccessSQLModelStoreContainer.HardwareCommercialCode.
         /// </summary>
         /// <returns>The mapping view.</returns>
-        private static DbMappingView GetView20()
+        private static DbMappingView GetView22()
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing HardwareCommercialCode
@@ -811,7 +895,7 @@ namespace Edm_EntityMappingGeneratedViews
         /// Gets the view for WendtEquipmentTrackingEntities.HardwareCommercialCodes.
         /// </summary>
         /// <returns>The mapping view.</returns>
-        private static DbMappingView GetView21()
+        private static DbMappingView GetView23()
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing HardwareCommercialCodes
@@ -836,7 +920,7 @@ namespace Edm_EntityMappingGeneratedViews
         /// Gets the view for WendtEquipmentTrackingDataAccessSQLModelStoreContainer.User.
         /// </summary>
         /// <returns>The mapping view.</returns>
-        private static DbMappingView GetView22()
+        private static DbMappingView GetView24()
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing User
@@ -855,7 +939,7 @@ namespace Edm_EntityMappingGeneratedViews
         /// Gets the view for WendtEquipmentTrackingEntities.Users.
         /// </summary>
         /// <returns>The mapping view.</returns>
-        private static DbMappingView GetView23()
+        private static DbMappingView GetView25()
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing Users

@@ -56,23 +56,6 @@ namespace WendtEquipmentTracking.BusinessLogic
             return brokerBOs.ToList();
         }
 
-        public BrokerBO GetById(int id)
-        {
-            var broker = brokerEngine.Get(BrokerSpecs.Id(id));
-
-            var brokerBO = new BrokerBO
-            {
-                BrokerId = broker.BrokerId,
-                Name = broker.Name,
-                Address = broker.Address,
-                Contact1 = broker.Contact1,
-                Email = broker.Email,
-                PhoneFax = broker.PhoneFax
-            };
-
-            return brokerBO;
-        }
-
         public IEnumerable<BrokerBO> GetByIds(IEnumerable<int> ids)
         {
             var brokers = brokerEngine.List(BrokerSpecs.Ids(ids));

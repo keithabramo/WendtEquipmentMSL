@@ -1,0 +1,66 @@
+﻿@model TruckingScheduleModel
+
+    <tr class="info">
+        <td></td>
+        <td>
+            @Html.EditorFor(modelItem => modelItem.RequestDate, new { htmlAttributes = new { @class = "form-control datePickerTable" } })
+            @Html.ValidationMessageFor(modelItem => modelItem.RequestDate, "", new { @class = "text-danger" })
+        </td>
+        <td>
+            @Html.EditorFor(modelItem => modelItem.ProjectNumber, new { htmlAttributes = new { @class = "form-control", id = "releaseDate" } })
+            @Html.ValidationMessageFor(modelItem => modelItem.ProjectNumber, "", new { @class = "text-danger" })
+        </td>
+        <td>
+            @Html.EditorFor(modelItem => modelItem.WorkOrder, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(modelItem => modelItem.WorkOrder, "", new { @class = "text-danger" })
+        </td>
+        <td>
+            @Html.EditorFor(modelItem => modelItem.PurchaseOrder, new { htmlAttributes = new { @class = "form-control workorderprice-autocomplete" } })
+            @Html.ValidationMessageFor(modelItem => modelItem.PurchaseOrder, "", new { @class = "text-danger" })
+        </td>
+        <td>
+            @Html.EditorFor(modelItem => modelItem.RequestedBy, new { htmlAttributes = new { @class = "form-control text-right" } })
+            @Html.ValidationMessageFor(modelItem => modelItem.RequestedBy, "", new { @class = "text-danger" })
+        </td>
+        <td>
+            @Html.EditorFor(modelItem => modelItem.ShipFrom, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(modelItem => modelItem.ShipFrom, "", new { @class = "text-danger" })
+        </td>
+        <td>
+            @Html.EditorFor(modelItem => modelItem.ShipTo, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(modelItem => modelItem.ShipTo, "", new { @class = "text-danger" })
+        </td>
+        <td>
+            @Html.EditorFor(modelItem => modelItem.Description, new { htmlAttributes = new { @class = "form-control text-right" } })
+            @Html.ValidationMessageFor(modelItem => modelItem.Description, "", new { @class = "text-danger" })
+        </td>
+        <td>
+            @Html.EditorFor(modelItem => modelItem.NumPieces, new { htmlAttributes = new { @class = "form-control text-right" } })
+            @Html.ValidationMessageFor(modelItem => modelItem.NumPieces, "", new { @class = "text-danger" })
+        </td>
+        <td>
+            @Html.EditorFor(modelItem => modelItem.Dimensions, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(modelItem => modelItem.Dimensions, "", new { @class = "text-danger" })
+        </td>
+        <td>
+            @Html.EditorFor(modelItem => modelItem.Weight, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(modelItem => modelItem.Weight, "", new { @class = "text-danger" })
+        </td>
+        <td>
+            @Html.EditorFor(modelItem => modelItem.Carrier, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(modelItem => modelItem.Carrier, "", new { @class = "text-danger" })
+        </td>
+        <td>
+            @Html.EditorFor(modelItem => modelItem.PickUpDate, new { htmlAttributes = new { @class = "form-control datePickerTable" } })
+            @Html.ValidationMessageFor(modelItem => modelItem.PickUpDate, "", new { @class = "text-danger" })
+        </td>
+        <td>
+            @Html.EditorFor(modelItem => modelItem.Comments, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(modelItem => modelItem.PickUpDate, "", new { @class = "text-danger" })
+        </td>
+        <td>
+            @Html.EditorFor(modelItem => modelItem.Status, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(modelItem => modelItem.PickUpDate, "", new { @class = "text-danger" })
+        </td>
+    </tr>
+

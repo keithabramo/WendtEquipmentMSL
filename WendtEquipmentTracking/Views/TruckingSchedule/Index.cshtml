@@ -1,0 +1,52 @@
+﻿@model IEnumerable<TruckingScheduleModel>
+
+@{
+    ViewBag.Title = "";
+}
+
+@Html.Partial("ActionNavPartial", ActionNav.Nothing)
+
+<h4>Trucking Schedules</h4>
+
+<table class="table table-condensed table-hover table-bordered table-styled my-datatable">
+    <thead>
+        <tr class="active">
+            <th></th>
+            <th>Requested By</th>
+            <th>Project #</th>
+            <th>Work 
+Order</th>
+            <th>Purchase 
+Order</th>
+            <th>Requested
+By</th>
+            <th>Ship
+From</th>
+            <th>Ship
+To</th>
+            <th>Description</th>
+            <th># Pieces</th>
+            <th>Dimensions</th>
+            <th>Weight</th>
+            <th>Carrier</th>
+            <th>Pick-Up
+Date</th>
+            <th>Comments</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+    @if (Html.UserIsInRole(UserRoles.ReadWrite))
+    {
+        <tfoot>
+            @Html.Action("Create")
+        </tfoot>
+    }
+</table>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/form")
+    @Scripts.Render("~/bundles/editor")
+    @Scripts.Render("~/bundles/truckingSchedules")
+}

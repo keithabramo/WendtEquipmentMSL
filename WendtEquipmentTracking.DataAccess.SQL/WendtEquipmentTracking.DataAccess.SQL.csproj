@@ -61,6 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\ITruckingScheduleEngine.cs" />
     <Compile Include="Api\IPriorityPriceEngine.cs" />
     <Compile Include="Api\IHardwareCommercialCodeEngine.cs" />
     <Compile Include="Api\IBrokerEngine.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="Broker.cs">
       <DependentUpon>WendtEquipmentTracking.tt</DependentUpon>
     </Compile>
+    <Compile Include="Engine\TruckingScheduleEngine.cs" />
     <Compile Include="Engine\HardwareKitEngine.cs" />
     <Compile Include="Engine\BillOfLadingEngine.cs" />
     <Compile Include="Api\IUserEngine.cs" />
@@ -115,6 +117,10 @@
     <Compile Include="Specification.cs" />
     <Compile Include="Specifications\BillOfLading\ProjectIdSpecification.cs" />
     <Compile Include="Specifications\BillOfLading\IsDeleted.cs" />
+    <Compile Include="Specifications\TruckingScheduleSpecs.cs" />
+    <Compile Include="Specifications\TruckingSchedules\IdSpecification.cs" />
+    <Compile Include="Specifications\TruckingSchedules\IdsSpecification.cs" />
+    <Compile Include="Specifications\TruckingSchedules\IsDeleted.cs" />
     <Compile Include="Specifications\Brokers\NameSpecification.cs" />
     <Compile Include="Specifications\Equipments\IsAssociatedToHardwareKit.cs" />
     <Compile Include="Specifications\Equipments\PriorityIdSpecification.cs" />
@@ -172,6 +178,9 @@
     <Compile Include="Specifications\Equipments\IdSpecification.cs" />
     <Compile Include="Specifications\WorkOrderPrices\IsDeleted.cs" />
     <Compile Include="Specifications\WorkOrderPrices\ProjectIdSpecification.cs" />
+    <Compile Include="TruckingSchedule.cs">
+      <DependentUpon>WendtEquipmentTracking.tt</DependentUpon>
+    </Compile>
     <Compile Include="User.cs">
       <DependentUpon>WendtEquipmentTracking.tt</DependentUpon>
     </Compile>

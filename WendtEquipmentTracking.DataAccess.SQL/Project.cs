@@ -21,6 +21,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL
             this.Equipments = new HashSet<Equipment>();
             this.HardwareKits = new HashSet<HardwareKit>();
             this.Priorities = new HashSet<Priority>();
+            this.TruckingSchedules = new HashSet<TruckingSchedule>();
             this.Vendors = new HashSet<Vendor>();
             this.WorkOrderPrices = new HashSet<WorkOrderPrice>();
         }
@@ -60,6 +61,8 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         public virtual ICollection<HardwareKit> HardwareKits { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Priority> Priorities { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TruckingSchedule> TruckingSchedules { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Vendor> Vendors { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

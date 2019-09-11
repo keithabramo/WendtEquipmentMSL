@@ -180,6 +180,32 @@
           <Property Name="IsCompleted" Type="bit" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="TruckingSchedule">
+          <Key>
+            <PropertyRef Name="TruckingScheduleId" />
+          </Key>
+          <Property Name="TruckingScheduleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RequestDate" Type="datetime" />
+          <Property Name="ProjectId" Type="int" Nullable="false" />
+          <Property Name="WorkOrder" Type="nvarchar" MaxLength="255" />
+          <Property Name="PurchaseOrder" Type="nvarchar" MaxLength="255" />
+          <Property Name="RequestedBy" Type="nvarchar" MaxLength="255" />
+          <Property Name="ShipFrom" Type="nvarchar" MaxLength="255" />
+          <Property Name="ShipTo" Type="nvarchar" MaxLength="255" />
+          <Property Name="Description" Type="nvarchar" MaxLength="1000" />
+          <Property Name="NumPieces" Type="float" />
+          <Property Name="Dimensions" Type="nvarchar" MaxLength="255" />
+          <Property Name="Weight" Type="float" />
+          <Property Name="Carrier" Type="nvarchar" MaxLength="255" />
+          <Property Name="PickUpDate" Type="datetime" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Status" Type="nvarchar" MaxLength="255" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="255" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="UserId" />
@@ -343,6 +369,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TruckingSchedule_Project">
+          <End Role="Project" Type="Self.Project" Multiplicity="1" />
+          <End Role="TruckingSchedule" Type="Self.TruckingSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="ProjectId" />
+            </Principal>
+            <Dependent Role="TruckingSchedule">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Vendor_Project">
           <End Role="Project" Type="Self.Project" Multiplicity="1" />
           <End Role="Vendor" Type="Self.Vendor" Multiplicity="*" />
@@ -380,6 +418,7 @@
           <EntitySet Name="HardwareKitEquipment" EntityType="Self.HardwareKitEquipment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Priority" EntityType="Self.Priority" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TruckingSchedule" EntityType="Self.TruckingSchedule" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Vendor" EntityType="Self.Vendor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WorkOrderPrice" EntityType="Self.WorkOrderPrice" Schema="dbo" store:Type="Tables" />
@@ -423,6 +462,10 @@
             <End Role="Project" EntitySet="Project" />
             <End Role="Priority" EntitySet="Priority" />
           </AssociationSet>
+          <AssociationSet Name="FK_TruckingSchedule_Project" Association="Self.FK_TruckingSchedule_Project">
+            <End Role="Project" EntitySet="Project" />
+            <End Role="TruckingSchedule" EntitySet="TruckingSchedule" />
+          </AssociationSet>
           <AssociationSet Name="FK_Vendor_Project" Association="Self.FK_Vendor_Project">
             <End Role="Project" EntitySet="Project" />
             <End Role="Vendor" EntitySet="Vendor" />
@@ -449,6 +492,7 @@
           <EntitySet Name="HardwareKitEquipments" EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.HardwareKitEquipment" />
           <EntitySet Name="Priorities" EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.Priority" />
           <EntitySet Name="Projects" EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.Project" />
+          <EntitySet Name="TruckingSchedules" EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.TruckingSchedule" />
           <EntitySet Name="Users" EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.User" />
           <EntitySet Name="Vendors" EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.Vendor" />
           <EntitySet Name="WorkOrderPrices" EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.WorkOrderPrice" />
@@ -491,6 +535,10 @@
           <AssociationSet Name="FK_Priority_Project" Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_Priority_Project">
             <End Role="Project" EntitySet="Projects" />
             <End Role="Priority" EntitySet="Priorities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TruckingSchedule_Project" Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_TruckingSchedule_Project">
+            <End Role="Project" EntitySet="Projects" />
+            <End Role="TruckingSchedule" EntitySet="TruckingSchedules" />
           </AssociationSet>
           <AssociationSet Name="FK_Vendor_Project" Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_Vendor_Project">
             <End Role="Project" EntitySet="Projects" />
@@ -695,8 +743,36 @@
           <NavigationProperty Name="Equipments" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_Equipment_Project" FromRole="Project" ToRole="Equipment" />
           <NavigationProperty Name="HardwareKits" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_HardwareKit_Project" FromRole="Project" ToRole="HardwareKit" />
           <NavigationProperty Name="Priorities" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_Priority_Project" FromRole="Project" ToRole="Priority" />
+          <NavigationProperty Name="TruckingSchedules" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_TruckingSchedule_Project" FromRole="Project" ToRole="TruckingSchedule" />
           <NavigationProperty Name="Vendors" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_Vendor_Project" FromRole="Project" ToRole="Vendor" />
           <NavigationProperty Name="WorkOrderPrices" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_WorkOrderPrice_Project" FromRole="Project" ToRole="WorkOrderPrice" />
+        </EntityType>
+        <EntityType Name="TruckingSchedule">
+          <Key>
+            <PropertyRef Name="TruckingScheduleId" />
+          </Key>
+          <Property Name="TruckingScheduleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RequestDate" Type="DateTime" Precision="3" />
+          <Property Name="ProjectId" Type="Int32" Nullable="false" />
+          <Property Name="WorkOrder" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PurchaseOrder" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="RequestedBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ShipFrom" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ShipTo" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="NumPieces" Type="Double" />
+          <Property Name="Dimensions" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Weight" Type="Double" />
+          <Property Name="Carrier" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PickUpDate" Type="DateTime" Precision="3" />
+          <Property Name="Comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Project" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_TruckingSchedule_Project" FromRole="TruckingSchedule" ToRole="Project" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -859,6 +935,18 @@
               <PropertyRef Name="ProjectId" />
             </Principal>
             <Dependent Role="Priority">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TruckingSchedule_Project">
+          <End Type="WendtEquipmentTracking.DataAccess.SQL.Model.Project" Role="Project" Multiplicity="1" />
+          <End Type="WendtEquipmentTracking.DataAccess.SQL.Model.TruckingSchedule" Role="TruckingSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="ProjectId" />
+            </Principal>
+            <Dependent Role="TruckingSchedule">
               <PropertyRef Name="ProjectId" />
             </Dependent>
           </ReferentialConstraint>
@@ -1075,6 +1163,33 @@
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="ProjectNumber" ColumnName="ProjectNumber" />
                 <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TruckingSchedules">
+            <EntityTypeMapping TypeName="WendtEquipmentTracking.DataAccess.SQL.Model.TruckingSchedule">
+              <MappingFragment StoreEntitySet="TruckingSchedule">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="PickUpDate" ColumnName="PickUpDate" />
+                <ScalarProperty Name="Carrier" ColumnName="Carrier" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Dimensions" ColumnName="Dimensions" />
+                <ScalarProperty Name="NumPieces" ColumnName="NumPieces" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ShipTo" ColumnName="ShipTo" />
+                <ScalarProperty Name="ShipFrom" ColumnName="ShipFrom" />
+                <ScalarProperty Name="RequestedBy" ColumnName="RequestedBy" />
+                <ScalarProperty Name="PurchaseOrder" ColumnName="PurchaseOrder" />
+                <ScalarProperty Name="WorkOrder" ColumnName="WorkOrder" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
+                <ScalarProperty Name="TruckingScheduleId" ColumnName="TruckingScheduleId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

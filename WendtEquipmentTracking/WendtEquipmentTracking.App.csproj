@@ -164,6 +164,8 @@
     <Compile Include="Common\WendtAuthorizeAttribute.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\TruckingScheduleApiController.cs" />
+    <Compile Include="Controllers\TruckingScheduleController.cs" />
     <Compile Include="Controllers\HardwareKitApiController.cs" />
     <Compile Include="Controllers\PriorityApiController.cs" />
     <Compile Include="Controllers\AdminApiController.cs" />
@@ -198,6 +200,7 @@
     <Compile Include="Models\PriorityImportModel.cs" />
     <Compile Include="Models\BrokerModel.cs" />
     <Compile Include="Models\BrokerImportModel.cs" />
+    <Compile Include="Models\TruckingScheduleModel.cs" />
     <Compile Include="Models\VendorImportModel.cs" />
     <Compile Include="Models\WorkOrderPriceImportModel.cs" />
     <Compile Include="Models\HardwareCommercialCodeModel.cs" />
@@ -445,10 +448,6 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Create.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\Equipment\BOLsAssociatedToEquipment.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>BOLsAssociatedToEquipment.generated.cs</LastGenOutput>
-    </Content>
     <Content Include="Views\BillOfLading\Index.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Index.generated.cs</LastGenOutput>
@@ -591,6 +590,14 @@
     <Content Include="Views\Import\Broker.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>WorkOrderPrice.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\TruckingSchedule\Create.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Create.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\TruckingSchedule\Index.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Index.generated.cs</LastGenOutput>
     </Content>
     <None Include="Web.Staging.config">
       <DependentUpon>Web.config</DependentUpon>

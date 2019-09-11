@@ -63,6 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\ITruckingScheduleService.cs" />
     <Compile Include="Api\IHardwareKitService.cs" />
     <Compile Include="Api\IBillOfLadingService.cs" />
     <Compile Include="Api\IPriorityService.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Api\IProjectService.cs" />
     <Compile Include="Api\IImportService.cs" />
     <Compile Include="Api\IEquipmentService.cs" />
+    <Compile Include="BO\TruckingScheduleBO.cs" />
     <Compile Include="BO\HardwareCommercialCodeBO.cs" />
     <Compile Include="BO\HardwareKitEquipmentBO.cs" />
     <Compile Include="BO\PriorityBO.cs" />
@@ -80,6 +82,7 @@
     <Compile Include="BO\VendorBO.cs" />
     <Compile Include="BO\BrokerBO.cs" />
     <Compile Include="BO\WorkOrderPriceBO.cs" />
+    <Compile Include="TruckingScheduleService.cs" />
     <Compile Include="HardwareKitService.cs" />
     <Compile Include="BO\BillOfLadingBO.cs" />
     <Compile Include="BO\BillOfLadingEquipmentBO.cs" />

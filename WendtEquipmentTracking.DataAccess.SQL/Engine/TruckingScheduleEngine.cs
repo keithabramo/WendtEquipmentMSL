@@ -9,36 +9,38 @@ using WendtEquipmentTracking.DataAccess.SQL.Specifications;
 namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 {
 
-    public class BrokerEngine : IBrokerEngine
+    public class TruckingScheduleEngine : ITruckingScheduleEngine
     {
-        private IRepository<Broker> repository = null;
+        private IRepository<TruckingSchedule> repository = null;
 
-        public BrokerEngine(WendtEquipmentTrackingEntities dbContext)
+        public TruckingScheduleEngine(WendtEquipmentTrackingEntities dbContext)
         {
-            this.repository = new Repository<Broker>(dbContext);
+            this.repository = new Repository<TruckingSchedule>(dbContext);
         }
 
-        public BrokerEngine(Repository<Broker> repository)
+        public TruckingScheduleEngine(Repository<TruckingSchedule> repository)
         {
             this.repository = repository;
         }
 
-        public IQueryable<Broker> ListAll()
+        public IQueryable<TruckingSchedule> ListAll()
         {
-            return this.repository.Find(!BrokerSpecs.IsDeleted());
+            return this.repository.Find(!TruckingScheduleSpecs.IsDeleted())
+                .Include(x => x.Project);
         }
 
-        public Broker Get(Specification<Broker> specification)
+        public TruckingSchedule Get(Specification<TruckingSchedule> specification)
         {
-            return this.repository.Single(!BrokerSpecs.IsDeleted() && specification);
+            return this.repository.Single(!TruckingScheduleSpecs.IsDeleted() && specification);
         }
 
-        public IQueryable<Broker> List(Specification<Broker> specification)
+        public IQueryable<TruckingSchedule> List(Specification<TruckingSchedule> specification)
         {
-            return this.repository.Find(!BrokerSpecs.IsDeleted() && specification);
+            return this.repository.Find(!TruckingScheduleSpecs.IsDeleted() && specification)
+                .Include(x => x.Project);
         }
 
-        public void AddNewBroker(Broker broker)
+        public void AddNewTruckingSchedule(TruckingSchedule broker)
         {
             var now = DateTime.Now;
 
@@ -51,7 +53,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         }
 
-        public void AddNewBrokers(IEnumerable<Broker> brokers)
+        public void AddNewTruckingSchedules(IEnumerable<TruckingSchedule> brokers)
         {
             var now = DateTime.Now;
 
@@ -66,7 +68,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             }
         }
 
-        public void UpdateBroker(Broker broker)
+        public void UpdateTruckingSchedule(TruckingSchedule broker)
         {
             var now = DateTime.Now;
 
@@ -77,7 +79,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         }
 
-        public void UpdateBrokers(IEnumerable<Broker> brokers)
+        public void UpdateTruckingSchedules(IEnumerable<TruckingSchedule> brokers)
         {
             var now = DateTime.Now;
 
@@ -92,7 +94,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         }
 
-        public void DeleteBroker(Broker broker)
+        public void DeleteTruckingSchedule(TruckingSchedule broker)
         {
             var now = DateTime.Now;
 
@@ -107,7 +109,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
         public void SetDBContext(WendtEquipmentTrackingEntities dbContext)
         {
             this.repository.Dispose();
-            this.repository = new Repository<Broker>(dbContext);
+            this.repository = new Repository<TruckingSchedule>(dbContext);
         }
     }
 }

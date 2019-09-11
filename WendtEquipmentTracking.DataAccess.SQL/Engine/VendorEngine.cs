@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using WendtEquipmentTracking.Common;
 using WendtEquipmentTracking.DataAccess.SQL.Api;
@@ -24,7 +25,8 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         public IQueryable<Vendor> ListAll()
         {
-            return this.repository.Find(!VendorSpecs.IsDeleted());
+            return this.repository.Find(!VendorSpecs.IsDeleted())
+                .Include(x => x.Project);
         }
 
         public Vendor Get(Specification<Vendor> specification)
@@ -34,7 +36,8 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         public IQueryable<Vendor> List(Specification<Vendor> specification)
         {
-            return this.repository.Find(!VendorSpecs.IsDeleted() && specification);
+            return this.repository.Find(!VendorSpecs.IsDeleted() && specification)
+                .Include(x => x.Project);
         }
 
         public void AddNewVendor(Vendor vendor)
