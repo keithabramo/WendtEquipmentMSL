@@ -1,7 +1,7 @@
 ﻿namespace WendtEquipmentTracking.DataAccess.FileManagement.Domain
 {
 
-    public class HardwareCommercialCodeImport
+    public class HardwareCommercialCodeRow
     {
         public string PartNumber { get; set; }
         public string Description { get; set; }

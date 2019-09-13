@@ -71,7 +71,7 @@
   <ItemGroup>
     <Compile Include="Api\IImportEngine.cs" />
     <Compile Include="Domain\RawEquipmentRow.cs" />
-    <Compile Include="Domain\HardwareCommercialCodeImport.cs" />
+    <Compile Include="Domain\HardwareCommercialCodeRow.cs" />
     <Compile Include="Domain\PriorityRow.cs" />
     <Compile Include="Domain\BrokerRow.cs" />
     <Compile Include="Domain\VendorRow.cs" />

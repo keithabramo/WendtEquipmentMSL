@@ -108,6 +108,10 @@ namespace WendtEquipmentTracking.App
                        "~/Scripts/editor/importBrokerTable.js",
                        "~/Scripts/editor/importBroker.js"
             ));
+            bundles.Add(new ScriptBundle("~/bundles/importHardwareCommercialCode").Include(
+                       "~/Scripts/editor/importHardwareCommercialCodeTable.js",
+                       "~/Scripts/editor/importHardwareCommercialCode.js"
+            ));
 
             bundles.Add(new ScriptBundle("~/bundles/createProject").Include(
                        "~/Scripts/editor/createProject.js"

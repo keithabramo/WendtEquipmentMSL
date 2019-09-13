@@ -11,6 +11,6 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Domain
         public string WorkOrderNumber { get; set; }
         public int QuantityMultiplier { get; set; }
 
-        public IEnumerable<HardwareCommercialCodeImport> hardwareCommercialCodes { get; set; }
+        public IEnumerable<HardwareCommercialCodeRow> hardwareCommercialCodes { get; set; }
     }
 }

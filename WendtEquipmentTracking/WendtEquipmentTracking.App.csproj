@@ -193,6 +193,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\HardwareCommercialCodeImportModel.cs" />
     <Compile Include="Models\EditorModel.cs" />
     <Compile Include="Models\IDisctionary.cs" />
     <Compile Include="Models\ProjectCopyModel.cs" />
@@ -317,6 +318,8 @@
     <Content Include="Scripts\editor\editorBOLCreate.js" />
     <Content Include="Scripts\editor\editorBroker.js" />
     <Content Include="Scripts\editor\editorVendor.js" />
+    <Content Include="Scripts\editor\importHardwareCommercialCode.js" />
+    <Content Include="Scripts\editor\importHardwareCommercialCodeTable.js" />
     <Content Include="Scripts\editor\importRawEquipment.js" />
     <Content Include="Scripts\editor\importRawEquipmentTable.js" />
     <Content Include="Scripts\editor\importPriority.js" />
@@ -598,6 +601,14 @@
     <Content Include="Views\TruckingSchedule\Index.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Index.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Import\HardwareCommercialCode.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>WorkOrderPrice.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Import\HardwareCommercialCodeTablePartial.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>WorkOrderPriceTablePartial.generated.cs</LastGenOutput>
     </Content>
     <None Include="Web.Staging.config">
       <DependentUpon>Web.config</DependentUpon>

@@ -10,31 +10,6 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Helper
 {
     public static class ImportHelper
     {
-        private static IDictionary<string, ExcelDataLocation> dataLocations = new Dictionary<string, ExcelDataLocation>
-        {
-            { "Work Order Prices", new ExcelDataLocation
-                {
-                    ColumnStart = 1,
-                    RowStart = 2,
-                    NumberOfColumns = 5
-                }
-            },
-            { "Raw Equipment", new ExcelDataLocation
-                {
-                    ColumnStart = 1,
-                    RowStart = 2,
-                    NumberOfColumns = 14
-                }
-            },
-            { "Priorities", new ExcelDataLocation
-                {
-                    ColumnStart = 1,
-                    RowStart = 2,
-                    NumberOfColumns = 5
-                }
-            },
-        };
-
         public static IEnumerable<EquipmentRow> GetEquipment(EquipmentImport import)
         {
             IList<EquipmentRow> records = new List<EquipmentRow>();
@@ -388,6 +363,33 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Helper
             return records;
         }
 
+        public static IEnumerable<HardwareCommercialCodeRow> GetHardwareCommercialCodes(string filePath)
+        {
+            var records = new List<HardwareCommercialCodeRow>();
+
+            using (FileStream stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
+            {
+                var table = getTableFromFile(stream);
+
+                foreach (DataRow row in table.Rows)
+                {
+                    var partNumber = row[0] != null ? row[0].ToString() : "";
+                    var description = row[1] != null ? row[1].ToString() : "";
+                    var commodityCode = row[2] != null ? row[2].ToString() : "";
+
+                    var record = new HardwareCommercialCodeRow
+                    {
+                        PartNumber = partNumber,
+                        Description = description,
+                        CommodityCode = commodityCode
+                    };
+
+                    records.Add(record);
+                }
+            }
+            return records;
+        }
+
 
         private static DataTable getTableFromFile(FileStream stream)
         {
@@ -406,12 +408,6 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Helper
             return result.Tables[0];
         }
 
-        private class ExcelDataLocation
-        {
-            public int ColumnStart { get; set; }
-            public int RowStart { get; set; }
-            public int NumberOfColumns { get; set; }
-        }
     }
 
 

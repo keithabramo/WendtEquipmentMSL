@@ -50,5 +50,10 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement
         {
             return ImportHelper.GetBrokers(filePath);
         }
+
+        public IEnumerable<HardwareCommercialCodeRow> GetHardwareCommercialCodes(string filePath)
+        {
+            return ImportHelper.GetHardwareCommercialCodes(filePath);
+        }
     }
 }

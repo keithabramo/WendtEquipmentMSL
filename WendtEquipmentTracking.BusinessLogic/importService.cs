@@ -44,7 +44,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                 //DrawingNumber = importBO.DrawingNumber,
                 Equipment = importBO.Equipment,
                 FilePaths = importBO.FilePaths,
-                hardwareCommercialCodes = hardwareCommercialCodes.Select(x => new HardwareCommercialCodeImport
+                hardwareCommercialCodes = hardwareCommercialCodes.Select(x => new HardwareCommercialCodeRow
                 {
                     CommodityCode = x.CommodityCode,
                     Description = x.Description,
@@ -162,6 +162,20 @@ namespace WendtEquipmentTracking.BusinessLogic
             });
 
             return brokerBOs.ToList();
+        }
+
+        public IEnumerable<HardwareCommercialCodeBO> GetHardwareCommercialCodesImport(string filePath)
+        {
+            var hardwareCommercialCodeRows = importEngine.GetHardwareCommercialCodes(filePath);
+
+            var hardwareCommercialCodeBOs = hardwareCommercialCodeRows.Select(x => new HardwareCommercialCodeBO
+            {
+                PartNumber = x.PartNumber,
+                Description = x.Description,
+                CommodityCode = x.CommodityCode
+            });
+
+            return hardwareCommercialCodeBOs.ToList();
         }
     }
 }

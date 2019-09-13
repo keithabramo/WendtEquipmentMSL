@@ -19,5 +19,7 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Api
 
         IEnumerable<BrokerRow> GetBrokers(string filePath);
 
+        IEnumerable<HardwareCommercialCodeRow> GetHardwareCommercialCodes(string filePath);
+
     }
 }

@@ -127,7 +127,29 @@ textarea {
     .btn-secondary .badge {
         color: #EEBA52;
         background-color: #FFFFFF;
+        color: #FFFFFF;
     }
+
+.btn-group ul.dropdown-menu {
+    padding: 0;
+}
+
+.btn-group.active.open ul.dropdown-menu a.dropdown-primary,
+.btn-group.open ul.dropdown-menu a.dropdown-primary {
+    color: #FFFFFF;
+    background-color: #337ab7;
+}
+
+.btn-group.active.open ul.dropdown-menu a.dropdown-secondary,
+.btn-group.open ul.dropdown-menu a.dropdown-secondary,
+.btn-group.active.open ul.dropdown-menu a:hover,
+.btn-group.open ul.dropdown-menu a:hover {
+    color: #FFFFFF;
+    background-color: #dda942;
+    border-color: #DDA942;
+}
+
+.btn-group .dropdown-menu a {}
 
 .vertical-bar-left {
     padding-left: 10px;

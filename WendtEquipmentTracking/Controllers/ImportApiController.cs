@@ -20,6 +20,7 @@ namespace WendtEquipmentTracking.App.Controllers
         private IEquipmentService equipmentService;
         private IVendorService vendorService;
         private IBrokerService brokerService;
+        private IHardwareCommercialCodeService hardwareCommercialCodeService;
 
 
         public ImportApiController()
@@ -32,6 +33,7 @@ namespace WendtEquipmentTracking.App.Controllers
             equipmentService = new EquipmentService();
             vendorService = new VendorService();
             brokerService = new BrokerService();
+            hardwareCommercialCodeService = new HardwareCommercialCodeService();
         }
 
 
@@ -716,5 +718,96 @@ namespace WendtEquipmentTracking.App.Controllers
             return new DtResponse { data = brokerModels };
         }
 
+        // GET: GetHardwareCommercialCodesFromImport/
+        [HttpGet]
+        [HttpPost]
+        public IEnumerable<HardwareCommercialCodeModel> GetHardwareCommercialCodesFromImport(string filePath)
+        {
+
+            IEnumerable<HardwareCommercialCodeModel> model = new List<HardwareCommercialCodeModel>();
+            try
+            {
+                var user = userService.GetCurrentUser();
+
+                var allHardwareCommercialCodes = hardwareCommercialCodeService.GetAll();
+
+                var importBOs = importService.GetHardwareCommercialCodesImport(filePath);
+                var random = new Random();
+                model = importBOs.Select(x => new HardwareCommercialCodeModel
+                {
+                    PartNumber = x.PartNumber,
+                    CommodityCode = x.CommodityCode,
+                    Description = x.Description,
+                    HardwareCommercialCodeId = random.Next(),
+                    IsDuplicate = allHardwareCommercialCodes.Any(w =>
+                       (w.PartNumber ?? string.Empty).Equals((x.PartNumber ?? string.Empty), StringComparison.InvariantCultureIgnoreCase))
+                })
+                .Where(x => !x.IsDuplicate) //Requirement for rev 4 is to "ignore duplicates"
+                .ToList();
+
+                return model;
+
+            }
+            catch (Exception e)
+            {
+                HandleError(e);
+                return model;
+            }
+        }
+
+        //
+        // GET: api/ImportApi/HardwareCommercialCodeEditor
+        [HttpGet]
+        [HttpPost]
+        public DtResponse HardwareCommercialCodeEditor()
+        {
+            var user = userService.GetCurrentUser();
+            var hardwareCommercialCodeModels = new List<HardwareCommercialCodeModel>();
+
+            if (user != null)
+            {
+                var httpData = DatatableHelpers.HttpData();
+
+
+                Dictionary<string, object> data = httpData["data"] as Dictionary<string, object>;
+
+                var hardwareCommercialCodes = new List<HardwareCommercialCodeBO>();
+                foreach (string hardwareCommercialCodeId in data.Keys)
+                {
+                    var row = data[hardwareCommercialCodeId];
+                    var hardwareCommercialCodeProperties = row as Dictionary<string, object>;
+
+                    HardwareCommercialCodeBO hardwareCommercialCode = new HardwareCommercialCodeBO();
+
+                    hardwareCommercialCode.HardwareCommercialCodeId = !string.IsNullOrWhiteSpace(hardwareCommercialCodeProperties["HardwareCommercialCodeId"].ToString()) ? Convert.ToInt32(hardwareCommercialCodeProperties["HardwareCommercialCodeId"]) : 0;
+                    hardwareCommercialCode.PartNumber = hardwareCommercialCodeProperties["PartNumber"].ToString();
+                    hardwareCommercialCode.Description = hardwareCommercialCodeProperties["Description"].ToString();
+                    hardwareCommercialCode.CommodityCode = hardwareCommercialCodeProperties["CommodityCode"].ToString();
+
+
+                    hardwareCommercialCodes.Add(hardwareCommercialCode);
+                }
+
+                var doSubmit = httpData["doSubmit"];
+                if (doSubmit.ToString() == "true")
+                {
+                    hardwareCommercialCodeService.SaveAll(hardwareCommercialCodes);
+                }
+
+                var allHardwareCommercialCodes = hardwareCommercialCodeService.GetAll();
+
+                hardwareCommercialCodeModels = hardwareCommercialCodes.Select(x => new HardwareCommercialCodeModel
+                {
+                    PartNumber = x.PartNumber,
+                    CommodityCode = x.CommodityCode,
+                    Description = x.Description,
+                    HardwareCommercialCodeId = x.HardwareCommercialCodeId,
+                    IsDuplicate = allHardwareCommercialCodes.Any(w =>
+                       (w.PartNumber ?? string.Empty).Equals((x.PartNumber ?? string.Empty), StringComparison.InvariantCultureIgnoreCase))
+                }).ToList();
+            }
+
+            return new DtResponse { data = hardwareCommercialCodeModels };
+        }
     }
 }

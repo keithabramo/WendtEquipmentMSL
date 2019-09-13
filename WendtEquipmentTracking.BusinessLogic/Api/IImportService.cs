@@ -18,5 +18,7 @@ namespace WendtEquipmentTracking.BusinessLogic.Api
         IEnumerable<VendorBO> GetVendorsImport(string filePath);
 
         IEnumerable<BrokerBO> GetBrokersImport(string filePath);
+
+        IEnumerable<HardwareCommercialCodeBO> GetHardwareCommercialCodesImport(string filePath);
     }
 }

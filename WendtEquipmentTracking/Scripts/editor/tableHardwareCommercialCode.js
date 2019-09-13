@@ -7,11 +7,11 @@
 
             this.initEditor();
             this.initDatatable();
-        }
+        };
 
         this.initEvents = function () {
             var $this = this;
-        }
+        };
 
         this.initEditor = function () {
 
@@ -22,11 +22,11 @@
                 },
                 idSrc: 'HardwareCommercialCodeId'
             });
-        }
+        };
 
         this.initDatatable = function () {
             var $this = this;
-           
+
             tableMain.initDatatable({
                 ajax: {
                     url: ROOT_URL + "api/HardwareCommercialCodeApi/Table",
@@ -51,11 +51,11 @@
                     }
                 ]
             });
-        }
+        };
 
         this.initStyles();
         this.initEvents();
-    }
+    };
 
     tableHardwareCommercialCode = new TableHardwareCommercialCode();
 
