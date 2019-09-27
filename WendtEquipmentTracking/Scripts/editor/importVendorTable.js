@@ -121,7 +121,7 @@
                         };
                     }
                 },
-                order: [[2, 'desc']],
+                order: [[1, 'asc']],
                 rowId: 'VendorId',
                 createdRow: function (row, data, index) {
                     if (data.IsDuplicate) {

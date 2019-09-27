@@ -22,6 +22,8 @@ namespace WendtEquipmentTracking.BusinessLogic.Api
 
         ProjectBO GetById(int id);
 
+        ProjectBO GetByProjectNumber(double projectNumber);
+
         void Undelete(int id);
 
         void Uncomplete(int id);

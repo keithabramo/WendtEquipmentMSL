@@ -14,8 +14,14 @@ namespace WendtEquipmentTracking.DataAccess.SQL
     
     public partial class Vendor
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Vendor()
+        {
+            this.TruckingSchedules = new HashSet<TruckingSchedule>();
+            this.TruckingSchedules1 = new HashSet<TruckingSchedule>();
+        }
+    
         public int VendorId { get; set; }
-        public int ProjectId { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
         public string Contact1 { get; set; }
@@ -27,6 +33,9 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public bool IsDeleted { get; set; }
     
-        public virtual Project Project { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TruckingSchedule> TruckingSchedules { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TruckingSchedule> TruckingSchedules1 { get; set; }
     }
 }

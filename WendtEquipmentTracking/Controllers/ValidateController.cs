@@ -212,7 +212,7 @@ namespace WendtEquipmentTracking.App.Controllers
                 return Json(true, JsonRequestBehavior.AllowGet);
             }
 
-            var exists = vendorService.GetAll(user.ProjectId).Any(b => b.VendorId != vendorId
+            var exists = vendorService.GetAll().Any(b => b.VendorId != vendorId
                                                                  && b.Name.Equals(name, System.StringComparison.InvariantCultureIgnoreCase));
 
             return Json(!exists, JsonRequestBehavior.AllowGet);

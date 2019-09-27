@@ -25,8 +25,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         public IQueryable<Vendor> ListAll()
         {
-            return this.repository.Find(!VendorSpecs.IsDeleted())
-                .Include(x => x.Project);
+            return this.repository.Find(!VendorSpecs.IsDeleted());
         }
 
         public Vendor Get(Specification<Vendor> specification)
@@ -36,8 +35,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
 
         public IQueryable<Vendor> List(Specification<Vendor> specification)
         {
-            return this.repository.Find(!VendorSpecs.IsDeleted() && specification)
-                .Include(x => x.Project);
+            return this.repository.Find(!VendorSpecs.IsDeleted() && specification);
         }
 
         public void AddNewVendor(Vendor vendor)

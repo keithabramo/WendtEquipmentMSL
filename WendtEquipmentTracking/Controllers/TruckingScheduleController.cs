@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Web.Mvc;
 using WendtEquipmentTracking.BusinessLogic;
 using WendtEquipmentTracking.BusinessLogic.Api;
 
@@ -9,12 +10,14 @@ namespace WendtEquipmentTracking.App.Controllers
         private ITruckingScheduleService truckingScheduleService;
         private IProjectService projectService;
         private IUserService userService;
+        private IVendorService vendorService;
 
         public TruckingScheduleController()
         {
             truckingScheduleService = new TruckingScheduleService();
             projectService = new ProjectService();
             userService = new UserService();
+            vendorService = new VendorService();
         }
 
         //
@@ -33,6 +36,12 @@ namespace WendtEquipmentTracking.App.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+
+
+            var vendorBOs = vendorService.GetAll();
+            var vendors = vendorBOs.Select(x => x.Name).OrderBy(p => p).ToList();
+
+            ViewBag.Vendors = vendors;
 
             return View();
         }

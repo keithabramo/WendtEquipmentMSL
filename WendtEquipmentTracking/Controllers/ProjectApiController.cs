@@ -84,5 +84,38 @@ namespace WendtEquipmentTracking.App.Controllers
 
             return model;
         }
+
+        [HttpGet]
+        public ProjectModel FindByProjectNumber(double id)
+        {
+            var projectBO = projectService.GetByProjectNumber(id);
+
+            var model = new ProjectModel
+            {
+                FreightTerms = projectBO.FreightTerms,
+                IncludeSoftCosts = projectBO.IncludeSoftCosts,
+                IsCustomsProject = projectBO.IsCustomsProject,
+                IsCompleted = projectBO.IsCompleted,
+                ProjectId = projectBO.ProjectId,
+                ProjectNumber = projectBO.ProjectNumber,
+                ShipToAddress = projectBO.ShipToAddress,
+                ShipToBroker = projectBO.ShipToBroker,
+                ShipToBrokerEmail = projectBO.ShipToBrokerEmail,
+                ShipToBrokerPhoneFax = projectBO.ShipToBrokerPhoneFax,
+                ShipToCompany = projectBO.ShipToCompany,
+                ShipToContact1 = projectBO.ShipToContact1,
+                ShipToContact1Email = projectBO.ShipToContact1Email,
+                ShipToContact1PhoneFax = projectBO.ShipToContact1PhoneFax,
+                ShipToContact2 = projectBO.ShipToContact2,
+                ShipToContact2Email = projectBO.ShipToContact2Email,
+                ShipToContact2PhoneFax = projectBO.ShipToContact2PhoneFax,
+                ShipToCSZ = projectBO.ShipToCSZ,
+                PM = projectBO.PM,
+                ReceivingHours = projectBO.ReceivingHours,
+                Notes = projectBO.Notes
+            };
+
+            return model;
+        }
     }
 }

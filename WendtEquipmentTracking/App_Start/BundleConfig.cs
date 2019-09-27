@@ -32,6 +32,7 @@ namespace WendtEquipmentTracking.App
                 .Include(
                         "~/Scripts/moment.min.js",
                         "~/Scripts/editor/datatablesAndEditor.js",
+                        "~/Scripts/editor/editor.Autocomplete.Plugin.js",
                         "~/Scripts/editor/editor.js"
                 ));
 
@@ -65,6 +66,8 @@ namespace WendtEquipmentTracking.App
                         "~/Scripts/editor/editorVendor.js"));
             bundles.Add(new ScriptBundle("~/bundles/brokers").Include(
                         "~/Scripts/editor/editorBroker.js"));
+            bundles.Add(new ScriptBundle("~/bundles/truckingSchedules").Include(
+                        "~/Scripts/editor/editorTruckingSchedule.js"));
 
 
             bundles.Add(new ScriptBundle("~/bundles/billOfLadings").Include(

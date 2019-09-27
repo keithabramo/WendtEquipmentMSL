@@ -14,25 +14,38 @@
             <th></th>
             <th>Requested By</th>
             <th>Project #</th>
-            <th>Work 
-Order</th>
-            <th>Purchase 
-Order</th>
-            <th>Requested
-By</th>
-            <th>Ship
-From</th>
-            <th>Ship
-To</th>
+            <th>
+                Work
+                Order
+            </th>
+            <th>
+                Purchase
+                Order
+            </th>
+            <th>
+                Requested
+                By
+            </th>
+            <th>
+                Ship
+                From
+            </th>
+            <th>
+                Ship
+                To
+            </th>
             <th>Description</th>
             <th># Pieces</th>
             <th>Dimensions</th>
             <th>Weight</th>
             <th>Carrier</th>
-            <th>Pick-Up
-Date</th>
+            <th>
+                Pick-Up
+                Date
+            </th>
             <th>Comments</th>
             <th>Status</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -46,6 +59,17 @@ Date</th>
 </table>
 
 @section Scripts {
+    <script type="text/javascript">
+
+        var vendors = [];
+
+        @foreach (var vendor in ViewBag.Vendors)
+        {
+            @:vendors.push("@vendor");
+        }
+
+    </script>
+
     @Scripts.Render("~/bundles/form")
     @Scripts.Render("~/bundles/editor")
     @Scripts.Render("~/bundles/truckingSchedules")

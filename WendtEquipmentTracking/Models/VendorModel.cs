@@ -7,7 +7,6 @@ namespace WendtEquipmentTracking.App.Models
     public class VendorModel
     {
         public int VendorId { get; set; }
-        public int ProjectId { get; set; }
 
         [DisplayName("Vendor")]
         [Remote("ValidVendorName", "Validate", AdditionalFields = "VendorId", ErrorMessage = "This vendor name already exists")]

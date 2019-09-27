@@ -15,12 +15,14 @@ namespace WendtEquipmentTracking.App.Controllers
         private ITruckingScheduleService truckingScheduleService;
         private IUserService userService;
         private IProjectService projectService;
+        private IVendorService vendorService;
 
         public TruckingScheduleApiController()
         {
             truckingScheduleService = new TruckingScheduleService();
             userService = new UserService();
             projectService = new ProjectService();
+            vendorService = new VendorService();
         }
 
         //
@@ -40,8 +42,8 @@ namespace WendtEquipmentTracking.App.Controllers
                 PickUpDate = x.PickUpDate,
                 ProjectNumber = x.Project != null ? (double?)x.Project.ProjectNumber : null,
                 PurchaseOrder = x.PurchaseOrder,
-                ShipFrom = x.ShipFrom,
-                ShipTo = x.ShipTo,
+                ShipFrom = x.ShipFromVendor != null ? x.ShipFromVendor.Name : null,
+                ShipTo = x.ShipToVendor != null ? x.ShipToVendor.Name : null,
                 Status = x.Status,
                 TruckingScheduleId = x.TruckingScheduleId,
                 Weight = x.Weight,
@@ -67,6 +69,7 @@ namespace WendtEquipmentTracking.App.Controllers
             if (user != null)
             {
                 var projects = projectService.GetAll();
+                var vendors = vendorService.GetAll();
 
                 var httpData = DatatableHelpers.HttpData();
                 Dictionary<string, object> data = httpData["data"] as Dictionary<string, object>;
@@ -86,8 +89,6 @@ namespace WendtEquipmentTracking.App.Controllers
                     truckingSchedule.Description = truckingScheduleProperties["Description"].ToString();
                     truckingSchedule.Dimensions = truckingScheduleProperties["Dimensions"].ToString();
                     truckingSchedule.PurchaseOrder = truckingScheduleProperties["PurchaseOrder"].ToString();
-                    truckingSchedule.ShipFrom = truckingScheduleProperties["ShipFrom"].ToString();
-                    truckingSchedule.ShipTo = truckingScheduleProperties["ShipTo"].ToString();
                     truckingSchedule.Status = truckingScheduleProperties["Status"].ToString();
                     truckingSchedule.RequestedBy = truckingScheduleProperties["RequestedBy"].ToString();
                     truckingSchedule.WorkOrder = truckingScheduleProperties["WorkOrder"].ToString();
@@ -95,6 +96,20 @@ namespace WendtEquipmentTracking.App.Controllers
                     truckingSchedule.NumPieces = truckingScheduleProperties["NumPiecesText"].ToString().ToNullable<double>();
                     truckingSchedule.PickUpDate = !string.IsNullOrWhiteSpace(truckingScheduleProperties["PickUpDate"].ToString()) ? (DateTime?)Convert.ToDateTime(truckingScheduleProperties["PickUpDate"]) : null;
                     truckingSchedule.RequestDate = !string.IsNullOrWhiteSpace(truckingScheduleProperties["RequestDate"].ToString()) ? (DateTime?)Convert.ToDateTime(truckingScheduleProperties["RequestDate"]) : null;
+
+                    var shipFromText = truckingScheduleProperties["ShipFrom"].ToString();
+                    var shipFromVendor = vendors.FirstOrDefault(x => x.Name == shipFromText);
+                    if (shipFromVendor != null)
+                    {
+                        truckingSchedule.ShipFromVendorId = shipFromVendor.VendorId;
+                    }
+
+                    var shipToText = truckingScheduleProperties["ShipTo"].ToString();
+                    var shipToVendor = vendors.FirstOrDefault(x => x.Name == shipToText);
+                    if (shipToVendor != null)
+                    {
+                        truckingSchedule.ShipToVendorId = shipToVendor.VendorId;
+                    }
 
                     var projectNumber = !string.IsNullOrWhiteSpace(truckingScheduleProperties["ProjectNumber"].ToString()) ? Convert.ToDouble(truckingScheduleProperties["ProjectNumber"]) : 0;
                     var project = projects.FirstOrDefault(x => x.ProjectNumber == projectNumber);
@@ -136,8 +151,8 @@ namespace WendtEquipmentTracking.App.Controllers
                     NumPieces = x.NumPieces,
                     PickUpDate = x.PickUpDate,
                     PurchaseOrder = x.PurchaseOrder,
-                    ShipFrom = x.ShipFrom,
-                    ShipTo = x.ShipTo,
+                    ShipFrom = x.ShipFromVendor != null ? x.ShipFromVendor.Name : null,
+                    ShipTo = x.ShipToVendor != null ? x.ShipToVendor.Name : null,
                     Status = x.Status,
                     TruckingScheduleId = x.TruckingScheduleId,
                     Weight = x.Weight,

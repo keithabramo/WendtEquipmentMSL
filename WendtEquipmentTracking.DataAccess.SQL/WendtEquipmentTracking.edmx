@@ -186,12 +186,12 @@
           </Key>
           <Property Name="TruckingScheduleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RequestDate" Type="datetime" />
-          <Property Name="ProjectId" Type="int" Nullable="false" />
+          <Property Name="ProjectId" Type="int" />
           <Property Name="WorkOrder" Type="nvarchar" MaxLength="255" />
           <Property Name="PurchaseOrder" Type="nvarchar" MaxLength="255" />
           <Property Name="RequestedBy" Type="nvarchar" MaxLength="255" />
-          <Property Name="ShipFrom" Type="nvarchar" MaxLength="255" />
-          <Property Name="ShipTo" Type="nvarchar" MaxLength="255" />
+          <Property Name="ShipFromVendorId" Type="int" />
+          <Property Name="ShipToVendorId" Type="int" />
           <Property Name="Description" Type="nvarchar" MaxLength="1000" />
           <Property Name="NumPieces" Type="float" />
           <Property Name="Dimensions" Type="nvarchar" MaxLength="255" />
@@ -219,7 +219,6 @@
             <PropertyRef Name="VendorId" />
           </Key>
           <Property Name="VendorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ProjectId" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="Address" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="Contact1" Type="nvarchar" MaxLength="255" Nullable="false" />
@@ -370,7 +369,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TruckingSchedule_Project">
-          <End Role="Project" Type="Self.Project" Multiplicity="1" />
+          <End Role="Project" Type="Self.Project" Multiplicity="0..1" />
           <End Role="TruckingSchedule" Type="Self.TruckingSchedule" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Project">
@@ -381,15 +380,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Vendor_Project">
-          <End Role="Project" Type="Self.Project" Multiplicity="1" />
-          <End Role="Vendor" Type="Self.Vendor" Multiplicity="*" />
+        <Association Name="FK_TruckingSchedule_ShippedFromVendor">
+          <End Role="Vendor" Type="Self.Vendor" Multiplicity="0..1" />
+          <End Role="TruckingSchedule" Type="Self.TruckingSchedule" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Project">
-              <PropertyRef Name="ProjectId" />
+            <Principal Role="Vendor">
+              <PropertyRef Name="VendorId" />
             </Principal>
-            <Dependent Role="Vendor">
-              <PropertyRef Name="ProjectId" />
+            <Dependent Role="TruckingSchedule">
+              <PropertyRef Name="ShipFromVendorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TruckingSchedule_ShippedToVendor">
+          <End Role="Vendor" Type="Self.Vendor" Multiplicity="0..1" />
+          <End Role="TruckingSchedule" Type="Self.TruckingSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendor">
+              <PropertyRef Name="VendorId" />
+            </Principal>
+            <Dependent Role="TruckingSchedule">
+              <PropertyRef Name="ShipToVendorId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -466,9 +477,13 @@
             <End Role="Project" EntitySet="Project" />
             <End Role="TruckingSchedule" EntitySet="TruckingSchedule" />
           </AssociationSet>
-          <AssociationSet Name="FK_Vendor_Project" Association="Self.FK_Vendor_Project">
-            <End Role="Project" EntitySet="Project" />
+          <AssociationSet Name="FK_TruckingSchedule_ShippedFromVendor" Association="Self.FK_TruckingSchedule_ShippedFromVendor">
             <End Role="Vendor" EntitySet="Vendor" />
+            <End Role="TruckingSchedule" EntitySet="TruckingSchedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TruckingSchedule_ShippedToVendor" Association="Self.FK_TruckingSchedule_ShippedToVendor">
+            <End Role="Vendor" EntitySet="Vendor" />
+            <End Role="TruckingSchedule" EntitySet="TruckingSchedule" />
           </AssociationSet>
           <AssociationSet Name="FK_WorkOrderPrice_Project" Association="Self.FK_WorkOrderPrice_Project">
             <End Role="Project" EntitySet="Project" />
@@ -540,13 +555,17 @@
             <End Role="Project" EntitySet="Projects" />
             <End Role="TruckingSchedule" EntitySet="TruckingSchedules" />
           </AssociationSet>
-          <AssociationSet Name="FK_Vendor_Project" Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_Vendor_Project">
-            <End Role="Project" EntitySet="Projects" />
-            <End Role="Vendor" EntitySet="Vendors" />
-          </AssociationSet>
           <AssociationSet Name="FK_WorkOrderPrice_Project" Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_WorkOrderPrice_Project">
             <End Role="Project" EntitySet="Projects" />
             <End Role="WorkOrderPrice" EntitySet="WorkOrderPrices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TruckingSchedule_ShippedFromVendor" Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_TruckingSchedule_ShippedFromVendor">
+            <End Role="Vendor" EntitySet="Vendors" />
+            <End Role="TruckingSchedule" EntitySet="TruckingSchedules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TruckingSchedule_ShippedToVendor" Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_TruckingSchedule_ShippedToVendor">
+            <End Role="Vendor" EntitySet="Vendors" />
+            <End Role="TruckingSchedule" EntitySet="TruckingSchedules" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="BillOfLading">
@@ -744,7 +763,6 @@
           <NavigationProperty Name="HardwareKits" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_HardwareKit_Project" FromRole="Project" ToRole="HardwareKit" />
           <NavigationProperty Name="Priorities" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_Priority_Project" FromRole="Project" ToRole="Priority" />
           <NavigationProperty Name="TruckingSchedules" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_TruckingSchedule_Project" FromRole="Project" ToRole="TruckingSchedule" />
-          <NavigationProperty Name="Vendors" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_Vendor_Project" FromRole="Project" ToRole="Vendor" />
           <NavigationProperty Name="WorkOrderPrices" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_WorkOrderPrice_Project" FromRole="Project" ToRole="WorkOrderPrice" />
         </EntityType>
         <EntityType Name="TruckingSchedule">
@@ -753,12 +771,12 @@
           </Key>
           <Property Name="TruckingScheduleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RequestDate" Type="DateTime" Precision="3" />
-          <Property Name="ProjectId" Type="Int32" Nullable="false" />
+          <Property Name="ProjectId" Type="Int32" />
           <Property Name="WorkOrder" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="PurchaseOrder" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="RequestedBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="ShipFrom" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="ShipTo" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ShipFromVendorId" Type="Int32" />
+          <Property Name="ShipToVendorId" Type="Int32" />
           <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="NumPieces" Type="Double" />
           <Property Name="Dimensions" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
@@ -773,6 +791,8 @@
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Project" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_TruckingSchedule_Project" FromRole="TruckingSchedule" ToRole="Project" />
+          <NavigationProperty Name="Vendor" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_TruckingSchedule_ShippedFromVendor" FromRole="TruckingSchedule" ToRole="Vendor" />
+          <NavigationProperty Name="Vendor1" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_TruckingSchedule_ShippedToVendor" FromRole="TruckingSchedule" ToRole="Vendor" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -787,7 +807,6 @@
             <PropertyRef Name="VendorId" />
           </Key>
           <Property Name="VendorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProjectId" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Address" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Contact1" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
@@ -798,7 +817,8 @@
           <Property Name="ModifiedBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Project" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_Vendor_Project" FromRole="Vendor" ToRole="Project" />
+          <NavigationProperty Name="TruckingSchedules" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_TruckingSchedule_ShippedFromVendor" FromRole="Vendor" ToRole="TruckingSchedule" />
+          <NavigationProperty Name="TruckingSchedules1" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_TruckingSchedule_ShippedToVendor" FromRole="Vendor" ToRole="TruckingSchedule" />
         </EntityType>
         <EntityType Name="WorkOrderPrice">
           <Key>
@@ -940,25 +960,13 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TruckingSchedule_Project">
-          <End Type="WendtEquipmentTracking.DataAccess.SQL.Model.Project" Role="Project" Multiplicity="1" />
+          <End Type="WendtEquipmentTracking.DataAccess.SQL.Model.Project" Role="Project" Multiplicity="0..1" />
           <End Type="WendtEquipmentTracking.DataAccess.SQL.Model.TruckingSchedule" Role="TruckingSchedule" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Project">
               <PropertyRef Name="ProjectId" />
             </Principal>
             <Dependent Role="TruckingSchedule">
-              <PropertyRef Name="ProjectId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Vendor_Project">
-          <End Type="WendtEquipmentTracking.DataAccess.SQL.Model.Project" Role="Project" Multiplicity="1" />
-          <End Type="WendtEquipmentTracking.DataAccess.SQL.Model.Vendor" Role="Vendor" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Project">
-              <PropertyRef Name="ProjectId" />
-            </Principal>
-            <Dependent Role="Vendor">
               <PropertyRef Name="ProjectId" />
             </Dependent>
           </ReferentialConstraint>
@@ -972,6 +980,30 @@
             </Principal>
             <Dependent Role="WorkOrderPrice">
               <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TruckingSchedule_ShippedFromVendor">
+          <End Type="WendtEquipmentTracking.DataAccess.SQL.Model.Vendor" Role="Vendor" Multiplicity="0..1" />
+          <End Type="WendtEquipmentTracking.DataAccess.SQL.Model.TruckingSchedule" Role="TruckingSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendor">
+              <PropertyRef Name="VendorId" />
+            </Principal>
+            <Dependent Role="TruckingSchedule">
+              <PropertyRef Name="ShipFromVendorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TruckingSchedule_ShippedToVendor">
+          <End Type="WendtEquipmentTracking.DataAccess.SQL.Model.Vendor" Role="Vendor" Multiplicity="0..1" />
+          <End Type="WendtEquipmentTracking.DataAccess.SQL.Model.TruckingSchedule" Role="TruckingSchedule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendor">
+              <PropertyRef Name="VendorId" />
+            </Principal>
+            <Dependent Role="TruckingSchedule">
+              <PropertyRef Name="ShipToVendorId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1182,8 +1214,8 @@
                 <ScalarProperty Name="Dimensions" ColumnName="Dimensions" />
                 <ScalarProperty Name="NumPieces" ColumnName="NumPieces" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="ShipTo" ColumnName="ShipTo" />
-                <ScalarProperty Name="ShipFrom" ColumnName="ShipFrom" />
+                <ScalarProperty Name="ShipToVendorId" ColumnName="ShipToVendorId" />
+                <ScalarProperty Name="ShipFromVendorId" ColumnName="ShipFromVendorId" />
                 <ScalarProperty Name="RequestedBy" ColumnName="RequestedBy" />
                 <ScalarProperty Name="PurchaseOrder" ColumnName="PurchaseOrder" />
                 <ScalarProperty Name="WorkOrder" ColumnName="WorkOrder" />
@@ -1215,7 +1247,6 @@
                 <ScalarProperty Name="Contact1" ColumnName="Contact1" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
                 <ScalarProperty Name="VendorId" ColumnName="VendorId" />
               </MappingFragment>
             </EntityTypeMapping>

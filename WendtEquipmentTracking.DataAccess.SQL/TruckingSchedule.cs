@@ -16,12 +16,12 @@ namespace WendtEquipmentTracking.DataAccess.SQL
     {
         public int TruckingScheduleId { get; set; }
         public Nullable<System.DateTime> RequestDate { get; set; }
-        public int ProjectId { get; set; }
+        public Nullable<int> ProjectId { get; set; }
         public string WorkOrder { get; set; }
         public string PurchaseOrder { get; set; }
         public string RequestedBy { get; set; }
-        public string ShipFrom { get; set; }
-        public string ShipTo { get; set; }
+        public Nullable<int> ShipFromVendorId { get; set; }
+        public Nullable<int> ShipToVendorId { get; set; }
         public string Description { get; set; }
         public Nullable<double> NumPieces { get; set; }
         public string Dimensions { get; set; }
@@ -37,5 +37,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         public bool IsDeleted { get; set; }
     
         public virtual Project Project { get; set; }
+        public virtual Vendor Vendor { get; set; }
+        public virtual Vendor Vendor1 { get; set; }
     }
 }

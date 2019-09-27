@@ -528,9 +528,7 @@ namespace WendtEquipmentTracking.App.Controllers
             IEnumerable<VendorModel> model = new List<VendorModel>();
             try
             {
-                var user = userService.GetCurrentUser();
-
-                var allVendors = vendorService.GetAll(user.ProjectId);
+                var allVendors = vendorService.GetAll();
 
                 var importBOs = importService.GetVendorsImport(filePath);
                 var random = new Random();
@@ -567,10 +565,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
             if (user != null)
             {
-                var project = projectService.GetById(user.ProjectId);
-
                 var httpData = DatatableHelpers.HttpData();
-
 
                 Dictionary<string, object> data = httpData["data"] as Dictionary<string, object>;
 
@@ -583,7 +578,6 @@ namespace WendtEquipmentTracking.App.Controllers
                     VendorBO vendor = new VendorBO();
 
                     vendor.VendorId = !string.IsNullOrWhiteSpace(vendorProperties["VendorId"].ToString()) ? Convert.ToInt32(vendorProperties["VendorId"]) : 0;
-                    vendor.ProjectId = user.ProjectId;
                     vendor.Address = vendorProperties["Address"].ToString();
                     vendor.Contact1 = vendorProperties["Contact1"].ToString();
                     vendor.Email = vendorProperties["Email"].ToString();
@@ -600,12 +594,11 @@ namespace WendtEquipmentTracking.App.Controllers
                     vendorService.SaveAll(vendors);
                 }
 
-                var allVendors = vendorService.GetAll(user.ProjectId);
+                var allVendors = vendorService.GetAll();
 
                 vendorModels = vendors.Select(x => new VendorModel
                 {
                     Address = x.Address,
-                    ProjectId = x.ProjectId,
                     Contact1 = x.Contact1,
                     Email = x.Email,
                     Name = x.Name,

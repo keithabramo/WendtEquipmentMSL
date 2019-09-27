@@ -38,7 +38,7 @@ namespace WendtEquipmentTracking.App.Controllers
             }
 
             //Get Data
-            var vendorBOs = vendorService.GetAll(user.ProjectId);
+            var vendorBOs = vendorService.GetAll();
 
             vendors = vendorBOs.Select(x => x.Name)
                                 .OrderBy(e => e)
@@ -54,12 +54,11 @@ namespace WendtEquipmentTracking.App.Controllers
         {
             var user = userService.GetCurrentUser();
 
-            var vendorBOs = vendorService.GetAll(user.ProjectId);
+            var vendorBOs = vendorService.GetAll();
 
             var vendorModels = vendorBOs.Select(x => new VendorModel
             {
                 Name = x.Name,
-                ProjectId = x.ProjectId,
                 Address = x.Address,
                 Contact1 = x.Contact1,
                 Email = x.Email,
@@ -89,7 +88,6 @@ namespace WendtEquipmentTracking.App.Controllers
 
             if (user != null)
             {
-                var project = projectService.GetById(user.ProjectId);
 
                 var httpData = DatatableHelpers.HttpData();
                 Dictionary<string, object> data = httpData["data"] as Dictionary<string, object>;
@@ -106,7 +104,6 @@ namespace WendtEquipmentTracking.App.Controllers
 
                     vendor.VendorId = !string.IsNullOrWhiteSpace(vendorProperties["VendorId"].ToString()) ? Convert.ToInt32(vendorProperties["VendorId"]) : 0;
                     vendor.Address = vendorProperties["Address"].ToString();
-                    vendor.ProjectId = user.ProjectId;
                     vendor.Contact1 = vendorProperties["Contact1"].ToString();
                     vendor.Email = vendorProperties["Email"].ToString();
                     vendor.Name = vendorProperties["Name"].ToString();
@@ -135,11 +132,10 @@ namespace WendtEquipmentTracking.App.Controllers
 
                 vendors = vendorService.GetByIds(vendorIds).ToList();
 
-                var allVendors = vendorService.GetAll(user.ProjectId);
+                var allVendors = vendorService.GetAll();
                 vendorModels = vendors.Select(x => new VendorModel
                 {
                     PhoneFax = x.PhoneFax,
-                    ProjectId = x.ProjectId,
                     Name = x.Name,
                     Email = x.Email,
                     Contact1 = x.Contact1,

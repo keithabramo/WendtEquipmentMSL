@@ -26,7 +26,9 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
         public IQueryable<TruckingSchedule> ListAll()
         {
             return this.repository.Find(!TruckingScheduleSpecs.IsDeleted())
-                .Include(x => x.Project);
+                .Include(x => x.Project)
+                .Include(x => x.Vendor)
+                .Include(x => x.Vendor1);
         }
 
         public TruckingSchedule Get(Specification<TruckingSchedule> specification)
@@ -37,7 +39,9 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
         public IQueryable<TruckingSchedule> List(Specification<TruckingSchedule> specification)
         {
             return this.repository.Find(!TruckingScheduleSpecs.IsDeleted() && specification)
-                .Include(x => x.Project);
+                .Include(x => x.Project)
+                .Include(x => x.Vendor)
+                .Include(x => x.Vendor1);
         }
 
         public void AddNewTruckingSchedule(TruckingSchedule broker)

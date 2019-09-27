@@ -81,30 +81,21 @@
                 idSrc: 'VendorId',
                 fields: [
                     {
-                        label: "Vendor Id",
                         name: "VendorId"
                     }, {
-                        label: "Project Id",
-                        name: "ProjectId"
-                    }, {
-                        label: "Vendor",
                         name: "Name"
                     }, {
-                        label: "Address",
                         name: "Address"
                     }, {
-                        label: "Contact 1",
                         name: "Contact1"
                     }, {
-                        label: "Phone/Fax",
                         name: "PhoneFax"
                     }, {
-                        label: "Email",
                         name: "Email"
                     }
                 ]
             });
-        }
+        };
 
         this.initDatatable = function () {
             var $this = this;

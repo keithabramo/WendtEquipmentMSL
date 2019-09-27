@@ -26,7 +26,6 @@ namespace WendtEquipmentTracking.BusinessLogic
             var vendors = vendorBOs.Select(x => new Vendor
             {
                 Name = x.Name,
-                ProjectId = x.ProjectId,
                 Address = x.Address,
                 Contact1 = x.Contact1,
                 Email = x.Email,
@@ -41,14 +40,13 @@ namespace WendtEquipmentTracking.BusinessLogic
 
         }
 
-        public IEnumerable<VendorBO> GetAll(int projectId)
+        public IEnumerable<VendorBO> GetAll()
         {
-            var vendors = vendorEngine.List(VendorSpecs.ProjectId(projectId));
+            var vendors = vendorEngine.ListAll();
 
             var vendorBOs = vendors.Select(x => new VendorBO
             {
                 Name = x.Name,
-                ProjectId = x.ProjectId,
                 Address = x.Address,
                 Contact1 = x.Contact1,
                 Email = x.Email,
@@ -66,7 +64,6 @@ namespace WendtEquipmentTracking.BusinessLogic
             var vendorBO = new VendorBO
             {
                 Name = vendor.Name,
-                ProjectId = vendor.ProjectId,
                 Address = vendor.Address,
                 Contact1 = vendor.Contact1,
                 Email = vendor.Email,
@@ -84,7 +81,6 @@ namespace WendtEquipmentTracking.BusinessLogic
             var vendorBOs = vendors.Select(x => new VendorBO
             {
                 Name = x.Name,
-                ProjectId = x.ProjectId,
                 Address = x.Address,
                 Contact1 = x.Contact1,
                 Email = x.Email,
@@ -99,7 +95,6 @@ namespace WendtEquipmentTracking.BusinessLogic
         {
             var oldVendor = vendorEngine.Get(VendorSpecs.Id(vendorBO.VendorId));
             oldVendor.Name = vendorBO.Name;
-            oldVendor.ProjectId = vendorBO.ProjectId;
             oldVendor.Address = vendorBO.Address;
             oldVendor.Contact1 = vendorBO.Contact1;
             oldVendor.Email = vendorBO.Email;
@@ -122,7 +117,6 @@ namespace WendtEquipmentTracking.BusinessLogic
                 if (vendorBO != null)
                 {
                     oldVendor.Name = vendorBO.Name;
-                    oldVendor.ProjectId = vendorBO.ProjectId;
                     oldVendor.Address = vendorBO.Address;
                     oldVendor.Contact1 = vendorBO.Contact1;
                     oldVendor.Email = vendorBO.Email;

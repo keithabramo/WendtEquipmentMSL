@@ -11,7 +11,7 @@ using System.Data.Entity.Infrastructure.MappingViews;
 
 [assembly: DbMappingViewCacheTypeAttribute(
     typeof(WendtEquipmentTracking.DataAccess.SQL.WendtEquipmentTrackingEntities),
-    typeof(Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets556f414d9192430562ec6a6052c5511a6985bfe45096c1d430ab44c6d16b499c))]
+    typeof(Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets073f4998599de1c2394ec4c5c54b436b3061bfacb2e45b951c4684dab4d8d267))]
 
 namespace Edm_EntityMappingGeneratedViews
 {
@@ -23,14 +23,14 @@ namespace Edm_EntityMappingGeneratedViews
     /// Implements a mapping view cache.
     /// </summary>
     [GeneratedCode("Entity Framework 6 Power Tools", "0.9.2.0")]
-    internal sealed class ViewsForBaseEntitySets556f414d9192430562ec6a6052c5511a6985bfe45096c1d430ab44c6d16b499c : DbMappingViewCache
+    internal sealed class ViewsForBaseEntitySets073f4998599de1c2394ec4c5c54b436b3061bfacb2e45b951c4684dab4d8d267 : DbMappingViewCache
     {
         /// <summary>
         /// Gets a hash value computed over the mapping closure.
         /// </summary>
         public override string MappingHashValue
         {
-            get { return "556f414d9192430562ec6a6052c5511a6985bfe45096c1d430ab44c6d16b499c"; }
+            get { return "073f4998599de1c2394ec4c5c54b436b3061bfacb2e45b951c4684dab4d8d267"; }
         }
 
         /// <summary>
@@ -410,7 +410,7 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing TruckingSchedule
-        [WendtEquipmentTracking.DataAccess.SQL.Model.Store.TruckingSchedule](T1.TruckingSchedule_TruckingScheduleId, T1.TruckingSchedule_RequestDate, T1.TruckingSchedule_ProjectId, T1.TruckingSchedule_WorkOrder, T1.TruckingSchedule_PurchaseOrder, T1.TruckingSchedule_RequestedBy, T1.TruckingSchedule_ShipFrom, T1.TruckingSchedule_ShipTo, T1.TruckingSchedule_Description, T1.TruckingSchedule_NumPieces, T1.TruckingSchedule_Dimensions, T1.TruckingSchedule_Weight, T1.TruckingSchedule_Carrier, T1.TruckingSchedule_PickUpDate, T1.TruckingSchedule_Comments, T1.TruckingSchedule_Status, T1.TruckingSchedule_CreatedBy, T1.TruckingSchedule_CreatedDate, T1.TruckingSchedule_ModifiedBy, T1.TruckingSchedule_ModifiedDate, T1.TruckingSchedule_IsDeleted)
+        [WendtEquipmentTracking.DataAccess.SQL.Model.Store.TruckingSchedule](T1.TruckingSchedule_TruckingScheduleId, T1.TruckingSchedule_RequestDate, T1.TruckingSchedule_ProjectId, T1.TruckingSchedule_WorkOrder, T1.TruckingSchedule_PurchaseOrder, T1.TruckingSchedule_RequestedBy, T1.TruckingSchedule_ShipFromVendorId, T1.TruckingSchedule_ShipToVendorId, T1.TruckingSchedule_Description, T1.TruckingSchedule_NumPieces, T1.TruckingSchedule_Dimensions, T1.TruckingSchedule_Weight, T1.TruckingSchedule_Carrier, T1.TruckingSchedule_PickUpDate, T1.TruckingSchedule_Comments, T1.TruckingSchedule_Status, T1.TruckingSchedule_CreatedBy, T1.TruckingSchedule_CreatedDate, T1.TruckingSchedule_ModifiedBy, T1.TruckingSchedule_ModifiedDate, T1.TruckingSchedule_IsDeleted)
     FROM (
         SELECT 
             T.TruckingScheduleId AS TruckingSchedule_TruckingScheduleId, 
@@ -419,8 +419,8 @@ namespace Edm_EntityMappingGeneratedViews
             T.WorkOrder AS TruckingSchedule_WorkOrder, 
             T.PurchaseOrder AS TruckingSchedule_PurchaseOrder, 
             T.RequestedBy AS TruckingSchedule_RequestedBy, 
-            T.ShipFrom AS TruckingSchedule_ShipFrom, 
-            T.ShipTo AS TruckingSchedule_ShipTo, 
+            T.ShipFromVendorId AS TruckingSchedule_ShipFromVendorId, 
+            T.ShipToVendorId AS TruckingSchedule_ShipToVendorId, 
             T.Description AS TruckingSchedule_Description, 
             T.NumPieces AS TruckingSchedule_NumPieces, 
             T.Dimensions AS TruckingSchedule_Dimensions, 
@@ -447,11 +447,10 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing Vendor
-        [WendtEquipmentTracking.DataAccess.SQL.Model.Store.Vendor](T1.Vendor_VendorId, T1.Vendor_ProjectId, T1.Vendor_Name, T1.Vendor_Address, T1.Vendor_Contact1, T1.Vendor_PhoneFax, T1.Vendor_Email, T1.Vendor_CreatedBy, T1.Vendor_CreatedDate, T1.Vendor_ModifiedBy, T1.Vendor_ModifiedDate, T1.Vendor_IsDeleted)
+        [WendtEquipmentTracking.DataAccess.SQL.Model.Store.Vendor](T1.Vendor_VendorId, T1.Vendor_Name, T1.Vendor_Address, T1.Vendor_Contact1, T1.Vendor_PhoneFax, T1.Vendor_Email, T1.Vendor_CreatedBy, T1.Vendor_CreatedDate, T1.Vendor_ModifiedBy, T1.Vendor_ModifiedDate, T1.Vendor_IsDeleted)
     FROM (
         SELECT 
             T.VendorId AS Vendor_VendorId, 
-            T.ProjectId AS Vendor_ProjectId, 
             T.Name AS Vendor_Name, 
             T.Address AS Vendor_Address, 
             T.Contact1 AS Vendor_Contact1, 
@@ -726,7 +725,7 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing TruckingSchedules
-        [WendtEquipmentTracking.DataAccess.SQL.Model.TruckingSchedule](T1.TruckingSchedule_TruckingScheduleId, T1.TruckingSchedule_RequestDate, T1.TruckingSchedule_ProjectId, T1.TruckingSchedule_WorkOrder, T1.TruckingSchedule_PurchaseOrder, T1.TruckingSchedule_RequestedBy, T1.TruckingSchedule_ShipFrom, T1.TruckingSchedule_ShipTo, T1.TruckingSchedule_Description, T1.TruckingSchedule_NumPieces, T1.TruckingSchedule_Dimensions, T1.TruckingSchedule_Weight, T1.TruckingSchedule_Carrier, T1.TruckingSchedule_PickUpDate, T1.TruckingSchedule_Comments, T1.TruckingSchedule_Status, T1.TruckingSchedule_CreatedBy, T1.TruckingSchedule_CreatedDate, T1.TruckingSchedule_ModifiedBy, T1.TruckingSchedule_ModifiedDate, T1.TruckingSchedule_IsDeleted)
+        [WendtEquipmentTracking.DataAccess.SQL.Model.TruckingSchedule](T1.TruckingSchedule_TruckingScheduleId, T1.TruckingSchedule_RequestDate, T1.TruckingSchedule_ProjectId, T1.TruckingSchedule_WorkOrder, T1.TruckingSchedule_PurchaseOrder, T1.TruckingSchedule_RequestedBy, T1.TruckingSchedule_ShipFromVendorId, T1.TruckingSchedule_ShipToVendorId, T1.TruckingSchedule_Description, T1.TruckingSchedule_NumPieces, T1.TruckingSchedule_Dimensions, T1.TruckingSchedule_Weight, T1.TruckingSchedule_Carrier, T1.TruckingSchedule_PickUpDate, T1.TruckingSchedule_Comments, T1.TruckingSchedule_Status, T1.TruckingSchedule_CreatedBy, T1.TruckingSchedule_CreatedDate, T1.TruckingSchedule_ModifiedBy, T1.TruckingSchedule_ModifiedDate, T1.TruckingSchedule_IsDeleted)
     FROM (
         SELECT 
             T.TruckingScheduleId AS TruckingSchedule_TruckingScheduleId, 
@@ -735,8 +734,8 @@ namespace Edm_EntityMappingGeneratedViews
             T.WorkOrder AS TruckingSchedule_WorkOrder, 
             T.PurchaseOrder AS TruckingSchedule_PurchaseOrder, 
             T.RequestedBy AS TruckingSchedule_RequestedBy, 
-            T.ShipFrom AS TruckingSchedule_ShipFrom, 
-            T.ShipTo AS TruckingSchedule_ShipTo, 
+            T.ShipFromVendorId AS TruckingSchedule_ShipFromVendorId, 
+            T.ShipToVendorId AS TruckingSchedule_ShipToVendorId, 
             T.Description AS TruckingSchedule_Description, 
             T.NumPieces AS TruckingSchedule_NumPieces, 
             T.Dimensions AS TruckingSchedule_Dimensions, 
@@ -763,11 +762,10 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing Vendors
-        [WendtEquipmentTracking.DataAccess.SQL.Model.Vendor](T1.Vendor_VendorId, T1.Vendor_ProjectId, T1.Vendor_Name, T1.Vendor_Address, T1.Vendor_Contact1, T1.Vendor_PhoneFax, T1.Vendor_Email, T1.Vendor_CreatedBy, T1.Vendor_CreatedDate, T1.Vendor_ModifiedBy, T1.Vendor_ModifiedDate, T1.Vendor_IsDeleted)
+        [WendtEquipmentTracking.DataAccess.SQL.Model.Vendor](T1.Vendor_VendorId, T1.Vendor_Name, T1.Vendor_Address, T1.Vendor_Contact1, T1.Vendor_PhoneFax, T1.Vendor_Email, T1.Vendor_CreatedBy, T1.Vendor_CreatedDate, T1.Vendor_ModifiedBy, T1.Vendor_ModifiedDate, T1.Vendor_IsDeleted)
     FROM (
         SELECT 
             T.VendorId AS Vendor_VendorId, 
-            T.ProjectId AS Vendor_ProjectId, 
             T.Name AS Vendor_Name, 
             T.Address AS Vendor_Address, 
             T.Contact1 AS Vendor_Contact1, 

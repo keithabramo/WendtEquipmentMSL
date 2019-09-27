@@ -178,6 +178,43 @@ namespace WendtEquipmentTracking.BusinessLogic
             return projectBO;
         }
 
+        public ProjectBO GetByProjectNumber(double projectNumber)
+        {
+            var project = projectEngine.GetRaw(ProjectSpecs.ProjectNumber(projectNumber));
+
+            ProjectBO projectBO = null;
+
+            if (project != null)
+            {
+                projectBO = new ProjectBO
+                {
+                    FreightTerms = project.FreightTerms,
+                    IncludeSoftCosts = project.IncludeSoftCosts,
+                    IsCustomsProject = project.IsCustomsProject,
+                    IsCompleted = project.IsCompleted,
+                    ProjectId = project.ProjectId,
+                    ProjectNumber = project.ProjectNumber,
+                    ShipToAddress = project.ShipToAddress,
+                    ShipToBroker = project.ShipToBroker,
+                    ShipToBrokerEmail = project.ShipToBrokerEmail,
+                    ShipToBrokerPhoneFax = project.ShipToBrokerPhoneFax,
+                    ShipToCompany = project.ShipToCompany,
+                    ShipToContact1 = project.ShipToContact1,
+                    ShipToContact1Email = project.ShipToContact1Email,
+                    ShipToContact1PhoneFax = project.ShipToContact1PhoneFax,
+                    ShipToContact2 = project.ShipToContact2,
+                    ShipToContact2Email = project.ShipToContact2Email,
+                    ShipToContact2PhoneFax = project.ShipToContact2PhoneFax,
+                    ShipToCSZ = project.ShipToCSZ,
+                    PM = project.PM,
+                    ReceivingHours = project.ReceivingHours,
+                    Notes = project.Notes
+                };
+            }
+
+            return projectBO;
+        }
+
         public void Update(ProjectBO projectBO)
         {
             var oldProject = projectEngine.Get(ProjectSpecs.Id(projectBO.ProjectId));

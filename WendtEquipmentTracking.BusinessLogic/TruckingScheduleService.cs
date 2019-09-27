@@ -33,8 +33,8 @@ namespace WendtEquipmentTracking.BusinessLogic
                 PickUpDate = x.PickUpDate,
                 ProjectId = x.ProjectId,
                 PurchaseOrder = x.PurchaseOrder,
-                ShipFrom = x.ShipFrom,
-                ShipTo = x.ShipTo,
+                ShipFromVendorId = x.ShipFromVendorId,
+                ShipToVendorId = x.ShipToVendorId,
                 Status = x.Status,
                 TruckingScheduleId = x.TruckingScheduleId,
                 Weight = x.Weight,
@@ -64,19 +64,37 @@ namespace WendtEquipmentTracking.BusinessLogic
                 PickUpDate = x.PickUpDate,
                 ProjectId = x.ProjectId,
                 PurchaseOrder = x.PurchaseOrder,
-                ShipFrom = x.ShipFrom,
-                ShipTo = x.ShipTo,
+                ShipFromVendorId = x.ShipFromVendorId,
+                ShipToVendorId = x.ShipToVendorId,
                 Status = x.Status,
                 TruckingScheduleId = x.TruckingScheduleId,
                 Weight = x.Weight,
                 WorkOrder = x.WorkOrder,
                 RequestDate = x.RequestDate,
                 RequestedBy = x.RequestedBy,
-                Project = new ProjectBO
+                Project = x.Project != null ? new ProjectBO
                 {
                     ProjectId = x.Project.ProjectId,
                     ProjectNumber = x.Project.ProjectNumber
-                }
+                } : null,
+                ShipFromVendor = x.Vendor != null ? new VendorBO
+                {
+                    VendorId = x.Vendor.VendorId,
+                    Name = x.Vendor.Name,
+                    Address = x.Vendor.Address,
+                    Contact1 = x.Vendor.Contact1,
+                    Email = x.Vendor.Email,
+                    PhoneFax = x.Vendor.PhoneFax
+                } : null,
+                ShipToVendor = x.Vendor1 != null ? new VendorBO
+                {
+                    VendorId = x.Vendor1.VendorId,
+                    Name = x.Vendor1.Name,
+                    Address = x.Vendor1.Address,
+                    Contact1 = x.Vendor1.Contact1,
+                    Email = x.Vendor1.Email,
+                    PhoneFax = x.Vendor1.PhoneFax
+                } : null
             });
 
             return truckingScheduleBOs.ToList();
@@ -96,19 +114,37 @@ namespace WendtEquipmentTracking.BusinessLogic
                 PickUpDate = x.PickUpDate,
                 ProjectId = x.ProjectId,
                 PurchaseOrder = x.PurchaseOrder,
-                ShipFrom = x.ShipFrom,
-                ShipTo = x.ShipTo,
+                ShipFromVendorId = x.ShipFromVendorId,
+                ShipToVendorId = x.ShipToVendorId,
                 Status = x.Status,
                 TruckingScheduleId = x.TruckingScheduleId,
                 Weight = x.Weight,
                 WorkOrder = x.WorkOrder,
                 RequestDate = x.RequestDate,
                 RequestedBy = x.RequestedBy,
-                Project = new ProjectBO
+                Project = x.Project != null ? new ProjectBO
                 {
                     ProjectId = x.Project.ProjectId,
                     ProjectNumber = x.Project.ProjectNumber
-                }
+                } : null,
+                ShipFromVendor = x.Vendor != null ? new VendorBO
+                {
+                    VendorId = x.Vendor.VendorId,
+                    Name = x.Vendor.Name,
+                    Address = x.Vendor.Address,
+                    Contact1 = x.Vendor.Contact1,
+                    Email = x.Vendor.Email,
+                    PhoneFax = x.Vendor.PhoneFax
+                } : null,
+                ShipToVendor = x.Vendor1 != null ? new VendorBO
+                {
+                    VendorId = x.Vendor1.VendorId,
+                    Name = x.Vendor1.Name,
+                    Address = x.Vendor1.Address,
+                    Contact1 = x.Vendor1.Contact1,
+                    Email = x.Vendor1.Email,
+                    PhoneFax = x.Vendor1.PhoneFax
+                } : null
             });
 
             return truckingScheduleBOs.ToList();
@@ -125,8 +161,8 @@ namespace WendtEquipmentTracking.BusinessLogic
             oldTruckingSchedule.PickUpDate = truckingScheduleBO.PickUpDate;
             oldTruckingSchedule.ProjectId = truckingScheduleBO.ProjectId;
             oldTruckingSchedule.PurchaseOrder = truckingScheduleBO.PurchaseOrder;
-            oldTruckingSchedule.ShipFrom = truckingScheduleBO.ShipFrom;
-            oldTruckingSchedule.ShipTo = truckingScheduleBO.ShipTo;
+            oldTruckingSchedule.ShipFromVendorId = truckingScheduleBO.ShipFromVendorId;
+            oldTruckingSchedule.ShipToVendorId = truckingScheduleBO.ShipToVendorId;
             oldTruckingSchedule.Status = truckingScheduleBO.Status;
             oldTruckingSchedule.TruckingScheduleId = truckingScheduleBO.TruckingScheduleId;
             oldTruckingSchedule.Weight = truckingScheduleBO.Weight;
@@ -158,8 +194,8 @@ namespace WendtEquipmentTracking.BusinessLogic
                     oldTruckingSchedule.PickUpDate = truckingScheduleBO.PickUpDate;
                     oldTruckingSchedule.ProjectId = truckingScheduleBO.ProjectId;
                     oldTruckingSchedule.PurchaseOrder = truckingScheduleBO.PurchaseOrder;
-                    oldTruckingSchedule.ShipFrom = truckingScheduleBO.ShipFrom;
-                    oldTruckingSchedule.ShipTo = truckingScheduleBO.ShipTo;
+                    oldTruckingSchedule.ShipFromVendorId = truckingScheduleBO.ShipFromVendorId;
+                    oldTruckingSchedule.ShipToVendorId = truckingScheduleBO.ShipToVendorId;
                     oldTruckingSchedule.Status = truckingScheduleBO.Status;
                     oldTruckingSchedule.TruckingScheduleId = truckingScheduleBO.TruckingScheduleId;
                     oldTruckingSchedule.Weight = truckingScheduleBO.Weight;
