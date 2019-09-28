@@ -9,7 +9,7 @@ namespace WendtEquipmentTracking.BusinessLogic.Api
 
         void UpdateAll(IEnumerable<EquipmentBO> equipmentBO);
 
-        void Delete(int id);
+        void DeleteAll(IEnumerable<int> ids);
 
         IEnumerable<EquipmentBO> GetAll(int projectId);
         IEnumerable<EquipmentBO> GetForDuplicateCheck(int projectId);

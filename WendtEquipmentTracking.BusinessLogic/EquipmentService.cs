@@ -104,13 +104,13 @@ namespace WendtEquipmentTracking.BusinessLogic
             dbContext.SaveChanges();
         }
 
-        public void Delete(int id)
+        public void DeleteAll(IEnumerable<int> ids)
         {
-            var equipment = equipmentEngine.Get(EquipmentSpecs.Id(id));
+            var equipments = equipmentEngine.List(EquipmentSpecs.Ids(ids)).ToList();
 
-            if (equipment != null)
+            if (equipments != null)
             {
-                equipmentEngine.DeleteEquipment(equipment);
+                equipmentEngine.DeleteEquipments(equipments);
             }
 
             dbContext.SaveChanges();

@@ -181,7 +181,7 @@ namespace WendtEquipmentTracking.App.Controllers
                 }
                 else if (action.Equals(EditorActions.remove.ToString()))
                 {
-                    equipmentService.Delete(equipments.FirstOrDefault().EquipmentId);
+                    equipmentService.DeleteAll(equipments.Select(x => x.EquipmentId));
                 }
 
                 equipments = equipmentService.GetByIds(equipmentIds).ToList();

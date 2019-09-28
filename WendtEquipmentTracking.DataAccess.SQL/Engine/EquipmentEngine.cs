@@ -100,23 +100,21 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
                 equipment.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
                 this.repository.Update(equipment);
             }
-
-
         }
 
-        public void DeleteEquipment(Equipment equipment)
+        public void DeleteEquipments(IEnumerable<Equipment> equipments)
         {
             var now = DateTime.Now;
 
-
-            equipment.IsDeleted = true;
-            equipment.ModifiedDate = now;
-            equipment.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
-            equipment.BillOfLadingEquipments.ToList().ForEach(ble => ble.IsDeleted = true);
-            equipment.HardwareKitEquipments.ToList().ForEach(ble => ble.IsDeleted = true);
-
-            this.repository.Update(equipment);
-
+            foreach (var equipment in equipments)
+            {
+                equipment.IsDeleted = true;
+                equipment.ModifiedDate = now;
+                equipment.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
+                equipment.BillOfLadingEquipments.ToList().ForEach(ble => ble.IsDeleted = true);
+                equipment.HardwareKitEquipments.ToList().ForEach(ble => ble.IsDeleted = true);
+                this.repository.Update(equipment);
+            }
         }
 
         public void SetDBContext(WendtEquipmentTrackingEntities dbContext)

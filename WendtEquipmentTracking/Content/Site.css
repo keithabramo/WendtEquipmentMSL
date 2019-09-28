@@ -522,8 +522,9 @@ table.dataTable tbody tr.selected td {
     text-transform: uppercase;
 } 
 
-
-
+.custom-actions button {
+    margin: 5px 2px;
+}
 
 
 

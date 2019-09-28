@@ -19,7 +19,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Api
 
         void UpdateEquipments(IEnumerable<Equipment> equipments);
 
-        void DeleteEquipment(Equipment equipment);
+        void DeleteEquipments(IEnumerable<Equipment> equipments);
 
         void SetDBContext(WendtEquipmentTrackingEntities dbContext);
     }

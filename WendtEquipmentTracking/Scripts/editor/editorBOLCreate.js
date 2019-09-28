@@ -151,7 +151,7 @@
                     main.error("Please address the validation errors before saving");
                 }
             });
-        }
+        };
 
         this.initEditor = function () {
 
@@ -188,7 +188,7 @@
                     { name: "Equipment.EquipmentId" }
                 ]
             });
-        }
+        };
 
         this.initDatatable = function () {
             var $this = this;
@@ -208,7 +208,7 @@
                         className: 'select-checkbox',
                         targets: 0,
                         render: function () {
-                            return "<span></span>"
+                            return "<span></span>";
                         }
                     },
                     {
@@ -347,7 +347,7 @@
                     columns: [1, 17, 20, 21]
                 }
             });
-        }
+        };
 
         this.updateSelectedDisplay = function () {
             var quantity = 0;

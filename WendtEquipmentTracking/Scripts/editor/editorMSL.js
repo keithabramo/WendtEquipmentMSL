@@ -91,7 +91,15 @@
             $("div.custom").append('<br/>');
             $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="hardwareFilter" /> Hide Hardware</label>');
             $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="errorFilter" />Rows With Errors</label>');
-            //$("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="showCheckboxes"> Delete Multiple Rows &nbsp;</label><button id="deleteRecords" class="btn btn-primary btn-xs btn-disabled" disabled="disabled" type="button">Delete</button>');
+
+            var $customActions = $("<div class='custom-actions'></div>");
+            $customActions.append('<span>Bulk Actions:</span>');
+            $customActions.append('<button id="deleteRecords" class="btn btn-primary btn-xs btn-disabled" disabled="disabled" type="button">Delete Checked Lines</button>');
+            $customActions.append('<button id="copyToClipboard" class="btn btn-primary btn-xs btn-disabled" disabled="disabled" type="button">Copy To Clipboard</button>');
+            $customActions.append('<button id="createNewEmail" class="btn btn-primary btn-xs btn-disabled" disabled="disabled" type="button">Create New Email</button>');
+
+            $("div.custom").append($customActions);
+
             $("div.createButtonContainer").append('<input type="button" value="Create" class="btn btn-sm btn-primary createSubmit" />');
 
             $(".workorderprice-autocomplete").autocomplete({
@@ -435,7 +443,7 @@
                     editorMain.editor
                         .title('Delete records')
                         .buttons('Confirm delete')
-                        .message('Are you sure you want to delete these records?')
+                        .message('Are you sure you want to delete these ' + selectedRows.length + ' records?')
                         .remove(selectedRows);
 
                 } else {
@@ -445,31 +453,25 @@
                 }
             });
 
-            $("#showCheckboxes").on("click", function () {
-                var show = $(this).is(":checked");
+            $("#copyToClipboard").on("click", function () {
+                editorMain.datatable.buttons('.buttons-copy' ).trigger();
+            });
 
-                editorMain.datatable.column(0).visible(show);
-                if (show) {
-                    $(".table thead tr:first th:first").show();
-                    $("#deleteRecords").removeAttr("disabled");
-                }
-                else {
-                    $(".table thead tr:first th:first").hide();
-                    $("#deleteRecords").attr("disabled", "disabled");
+            $("#createNewEmail").on("click", function () {
+                $this.test();
+            });
 
-                    editorMain.datatable.rows({ selected: true }).deselect();
-                    $(".table thead th.select-checkbox").closest("tr").removeClass("selected");
+            editorMain.datatable.on('select', function (e, dt, type, indexes) {
+                if (type === 'row') {
+                    $this.updateCustomActions();
                 }
             });
 
-            //$(".table thead th.select-checkbox").on("click", function () {
-
-            //    if ($(this).closest("tr").hasClass("selected")) {
-            //        editorMain.datatable.rows({ page: 'current' }).select();
-            //    } else {
-            //        editorMain.datatable.rows({ page: 'current' }).deselect();
-            //    }
-            //});
+            editorMain.datatable.on('deselect', function (e, dt, type, indexes) {
+                if (type === 'row') {
+                    $this.updateCustomActions();
+                }
+            });
         };
 
         this.initEditor = function () {
@@ -561,10 +563,6 @@
                     columns: this.editableColumns
                 },
                 autoWidth: false,
-                initComplete: function (settings, json) {
-                    editorMain.datatable.column(0).visible(false);
-                    $(".table tr:first th:first").hide();
-                },
                 createdRow: function (row, data, index) {
                     if (data.IsDuplicate) {
                         $(row).addClass('warning');
@@ -578,10 +576,25 @@
                         $(editorMain.datatable.cell(index, 2).node()).addClass("active");
                     }
                 },
+                select: {
+                    style: 'multi',
+                    selector: 'td:first-child'
+                },
+                buttons: [
+                    {
+                        extend: 'copyHtml5',
+                        title: null,
+                        exportOptions: {
+                            columns: '.exportable'
+                        }
+                    }
+                ],
                 order: [[4, 'desc'], [27, 'desc']],
                 columnDefs: [
                     {
                         orderable: false,
+                        searchable: false,
+                        sortable: false,
                         className: 'select-checkbox',
                         targets: 0,
                         render: function () {
@@ -765,33 +778,43 @@
             });
         };
 
+        this.updateCustomActions = function () {
+            var selectedRowsCount = editorMain.datatable.rows({ selected: true }).indexes().length;
+
+            if (selectedRowsCount) {
+                $(".custom-actions button").removeAttr("disabled");
+            } else {
+                $(".custom-actions button").attr("disabled", "disabled");
+            }
+        };
+
         this.initStyles();
         this.initEvents();
 
-        //this.test = function () {
-        //    var emailTo = 'keith.abramo@gmail.com';
-        //    var emailSubject = 'project number';
+        this.test = function () {
+            var emailTo = 'keith.abramo@gmail.com';
+            var emailSubject = 'project number';
 
-        //    //var emlContent = "data:message/rfc822 eml;charset=utf-8,";
-        //    var emlContent = 'To: ' + emailTo + '\n';
-        //    emlContent += 'Subject: ' + emailSubject + '\n';
-        //    emlContent += 'X-Unsent: 1' + '\n';
-        //    emlContent += 'Content-Type: text/html' + '\n';
-        //    emlContent += '' + '\n';
-        //    emlContent += '<html><body>Test message with <b>bold</b> text.</body></html>';
+            //var emlContent = "data:message/rfc822 eml;charset=utf-8,";
+            var emlContent = 'To: ' + emailTo + '\n';
+            emlContent += 'Subject: ' + emailSubject + '\n';
+            emlContent += 'X-Unsent: 1' + '\n';
+            emlContent += 'Content-Type: text/html' + '\n';
+            emlContent += '' + '\n';
+            emlContent += '<html><body>Test message with <b>bold</b> text.</body></html>';
 
-        //    var encodedUri = encodeURI(emlContent); //encode spaces etc like a url
-        //    var a = document.createElement('a'); //make a link in document
-        //    var linkText = document.createTextNode("fileLink");
-        //    a.appendChild(linkText);
-        //    a.href = encodedUri;
-        //    a.id = 'fileLink';
-        //    a.download = 'filename.mht';
-        //    //a.download = 'filename.eml';
-        //    a.style = "display:none;"; //hidden link
-        //    document.body.appendChild(a);
-        //    document.getElementById('fileLink').click(); //click the link
-        //}
+            var encodedUri = encodeURI(emlContent); //encode spaces etc like a url
+            var a = document.createElement('a'); //make a link in document
+            var linkText = document.createTextNode("fileLink");
+            a.appendChild(linkText);
+            a.href = encodedUri;
+            a.id = 'fileLink';
+            //a.download = 'filename.mht';
+            a.download = 'filename.eml';
+            a.style = "display:none;"; //hidden link
+            document.body.appendChild(a);
+            document.getElementById('fileLink').click(); //click the link
+        }
 
     };
 
