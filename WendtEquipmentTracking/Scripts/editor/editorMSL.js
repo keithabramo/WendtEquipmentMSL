@@ -612,7 +612,10 @@
                                     $(this).text($(this).text().replace(/\s\s+/g, ' '));
                                 });
 
-                                
+                                window.close();
+
+                                $("#copyModal .modal-body").html('Loading...');
+                                $("#copyModal").modal();
 
                                 //html 2 canvas to turn into picture
                                 html2canvas(
@@ -622,16 +625,9 @@
                                     }
                                 ).then(function (canvas) {
 
-                                    //$div.remove();
+                                    $div.remove();
 
-                                    //$("#copyModal .modal-body").append(canvas);
                                     $("#copyModal .modal-body").html("<img src='" + canvas.toDataURL() + "'/>");
-
-
-                                    window.close();
-
-                                    //$("#copyModal .modal-body").html('Loading...');
-                                    $("#copyModal").modal();
 
                                 }, function (reason) {
                                     reason.message === 'WHOOPS';
