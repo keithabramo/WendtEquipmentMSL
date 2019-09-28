@@ -95,8 +95,7 @@
             var $customActions = $("<div class='custom-actions'></div>");
             $customActions.append('<span>Bulk Actions:</span>');
             $customActions.append('<button id="deleteRecords" class="btn btn-primary btn-xs btn-disabled" disabled="disabled" type="button">Delete Checked Lines</button>');
-            $customActions.append('<button id="copyToClipboard" class="btn btn-primary btn-xs btn-disabled" disabled="disabled" type="button">Copy To Clipboard</button>');
-            $customActions.append('<button id="createNewEmail" class="btn btn-primary btn-xs btn-disabled" disabled="disabled" type="button">Create New Email</button>');
+            $customActions.append('<button id="snipTable" class="btn btn-primary btn-xs btn-disabled" disabled="disabled" type="button">Snip Checked Rows For Email</button>');
 
             $("div.custom").append($customActions);
 
@@ -117,10 +116,6 @@
             $('#workInProgressFilter').on("change", function () {
                 editorMain.datatable.draw();
             });
-
-            //$('#test').on("click", function () {
-            //    $this.test();
-            //});
 
             $('#hardwareFilter').on("change", function () {
                 editorMain.datatable.draw();
@@ -437,14 +432,23 @@
             });
 
             $("#deleteRecords").on("click", function () {
-                var selectedRows = editorMain.datatable.rows({ selected: true }).indexes();
+                var selectedRows = editorMain.datatable.rows({ selected: true });
                 if (selectedRows.length) {
+
+                    var rawIndexes = selectedRows.indexes();
+
+                    var updatedIndexes = [];
+                    $.each(selectedRows.data(), function (i, row) {
+                        if (!row.HasBillOfLading && !row.IsAssociatedToHardwareKit && !row.IsHardwareKit) {
+                            updatedIndexes.push(rawIndexes[i]);
+                        }
+                    });
 
                     editorMain.editor
                         .title('Delete records')
                         .buttons('Confirm delete')
-                        .message('Are you sure you want to delete these ' + selectedRows.length + ' records?')
-                        .remove(selectedRows);
+                        .message('Are you sure you want to delete these ' + updatedIndexes.length + ' records?')
+                        .remove(updatedIndexes);
 
                 } else {
                     $("#deleteRecords").button("reset");
@@ -453,12 +457,8 @@
                 }
             });
 
-            $("#copyToClipboard").on("click", function () {
-                editorMain.datatable.buttons('.buttons-copy' ).trigger();
-            });
-
-            $("#createNewEmail").on("click", function () {
-                $this.test();
+            $("#snipTable").on("click", function () {
+                editorMain.datatable.buttons('.buttons-print' ).trigger();
             });
 
             editorMain.datatable.on('select', function (e, dt, type, indexes) {
@@ -582,11 +582,64 @@
                 },
                 buttons: [
                     {
-                        extend: 'copyHtml5',
-                        title: null,
+                        extend: 'print',
+                        title: '',
                         exportOptions: {
                             columns: '.exportable'
-                        }
+                        },
+                        customize: function (window) {
+
+                            //open mail to link
+                            var link = document.createElement('a');
+                            link.href = "mailto:?subject=" + $("#projectNumber").val() + "&body=%0D%0A%0D%0A%0D%0A%0D%0A";
+
+                            document.body.appendChild(link);
+
+                            link.click();
+
+                            setTimeout(function () {
+
+                                //get the table html and put it on the main document
+                                var tableHTML = $(window.document.body).find("table")[0].outerHTML;
+                                var $div = $("<span id='copyContainer'>").html(tableHTML);
+                                $(document.body).append($div);
+                                var $table = $("#copyContainer table");
+
+                                //clean the table a bit
+                                $table.find(".drawingNumberWidth").css("min-width", "200px");
+
+                                $table.find("th").each(function () {
+                                    $(this).text($(this).text().replace(/\s\s+/g, ' '));
+                                });
+
+                                
+
+                                //html 2 canvas to turn into picture
+                                html2canvas(
+                                    $table[0],
+                                    {
+                                        scale: 1
+                                    }
+                                ).then(function (canvas) {
+
+                                    //$div.remove();
+
+                                    //$("#copyModal .modal-body").append(canvas);
+                                    $("#copyModal .modal-body").html("<img src='" + canvas.toDataURL() + "'/>");
+
+
+                                    window.close();
+
+                                    //$("#copyModal .modal-body").html('Loading...');
+                                    $("#copyModal").modal();
+
+                                }, function (reason) {
+                                    reason.message === 'WHOOPS';
+                                });
+                            }, 500);
+                            
+                        },
+                        autoPrint: false
                     }
                 ],
                 order: [[4, 'desc'], [27, 'desc']],
@@ -782,39 +835,14 @@
             var selectedRowsCount = editorMain.datatable.rows({ selected: true }).indexes().length;
 
             if (selectedRowsCount) {
-                $(".custom-actions button").removeAttr("disabled");
+                $(".custom-actions button, .custom-actions a").removeAttr("disabled");
             } else {
-                $(".custom-actions button").attr("disabled", "disabled");
+                $(".custom-actions button, .custom-actions a").attr("disabled", "disabled");
             }
         };
 
         this.initStyles();
         this.initEvents();
-
-        this.test = function () {
-            var emailTo = 'keith.abramo@gmail.com';
-            var emailSubject = 'project number';
-
-            //var emlContent = "data:message/rfc822 eml;charset=utf-8,";
-            var emlContent = 'To: ' + emailTo + '\n';
-            emlContent += 'Subject: ' + emailSubject + '\n';
-            emlContent += 'X-Unsent: 1' + '\n';
-            emlContent += 'Content-Type: text/html' + '\n';
-            emlContent += '' + '\n';
-            emlContent += '<html><body>Test message with <b>bold</b> text.</body></html>';
-
-            var encodedUri = encodeURI(emlContent); //encode spaces etc like a url
-            var a = document.createElement('a'); //make a link in document
-            var linkText = document.createTextNode("fileLink");
-            a.appendChild(linkText);
-            a.href = encodedUri;
-            a.id = 'fileLink';
-            //a.download = 'filename.mht';
-            a.download = 'filename.eml';
-            a.style = "display:none;"; //hidden link
-            document.body.appendChild(a);
-            document.getElementById('fileLink').click(); //click the link
-        }
 
     };
 

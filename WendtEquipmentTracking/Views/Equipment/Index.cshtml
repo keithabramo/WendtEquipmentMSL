@@ -17,6 +17,7 @@
 <br/>
 
 <input type="hidden" id="projectId" value="@ViewBag.ProjectId" />
+<input type="hidden" id="projectNumber" value="@ViewBag.ProjectNumber" />
 
 <table class="table table-condensed table-hover table-bordered table-styled my-datatable masterShipList">
     <thead>
@@ -71,6 +72,23 @@ Shipped</th>
     }
 </table>
 
+<div id="copyModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Right click on the table image and select "copy" or "copy image"</h4>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 @section Scripts {
     <script type="text/javascript">
 
@@ -83,6 +101,7 @@ Shipped</th>
 
     </script>
     @Scripts.Render("~/bundles/form")
+    @Scripts.Render("~/bundles/clipboard")
     @Scripts.Render("~/bundles/editor")
     @Scripts.Render("~/bundles/masterShipList")
 }

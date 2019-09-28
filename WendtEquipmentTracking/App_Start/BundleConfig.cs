@@ -12,6 +12,7 @@ namespace WendtEquipmentTracking.App
                         "~/Scripts/jquery-ui-{version}.js",
                         "~/Scripts/bootstrap.js",
                         "~/Scripts/respond.js",
+                        "~/Scripts/es6-promise.js",
                         "~/Scripts/main.js"
             ));
 
@@ -41,6 +42,9 @@ namespace WendtEquipmentTracking.App
 
             bundles.Add(new ScriptBundle("~/bundles/dropzone").Include(
                      "~/Scripts/dropzone/dropzone.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/clipboard").Include(
+                     "~/Scripts/html2canvas.min.js"));
 
 
 
