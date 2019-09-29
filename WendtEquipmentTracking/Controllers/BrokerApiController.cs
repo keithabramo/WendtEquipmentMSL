@@ -14,38 +14,14 @@ namespace WendtEquipmentTracking.App.Controllers
     {
         private IBrokerService brokerService;
         private IUserService userService;
-        private IProjectService projectService;
 
         public BrokerApiController()
         {
             brokerService = new BrokerService();
             userService = new UserService();
-            projectService = new ProjectService();
         }
 
-        //
-        // GET: api/Broker/Search
-        [HttpGet]
-        public IEnumerable<string> Search()
-        {
-            var brokers = new List<string>();
-
-            var user = userService.GetCurrentUser();
-
-            if (user == null)
-            {
-                return brokers;
-            }
-
-            //Get Data
-            var brokerBOs = brokerService.GetAll();
-
-            brokers = brokerBOs.Select(x => x.Name)
-                                .OrderBy(e => e)
-                                .ToList();
-
-            return brokers;
-        }
+       
 
         //
         // GET: api/Broker/FindByName

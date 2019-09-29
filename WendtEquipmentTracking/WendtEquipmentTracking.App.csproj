@@ -178,6 +178,7 @@
     <Compile Include="Controllers\ImportApiController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BrokerApiController.cs" />
+    <Compile Include="Controllers\AutocompleteApiController.cs" />
     <Compile Include="Controllers\VendorApiController.cs" />
     <Compile Include="Controllers\VendorController.cs" />
     <Compile Include="Controllers\WorkOrderPriceApiController.cs" />

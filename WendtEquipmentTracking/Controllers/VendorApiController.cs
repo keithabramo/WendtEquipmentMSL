@@ -14,13 +14,11 @@ namespace WendtEquipmentTracking.App.Controllers
     {
         private IVendorService vendorService;
         private IUserService userService;
-        private IProjectService projectService;
 
         public VendorApiController()
         {
             vendorService = new VendorService();
             userService = new UserService();
-            projectService = new ProjectService();
         }
 
         //

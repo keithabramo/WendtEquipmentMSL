@@ -15,13 +15,11 @@ namespace WendtEquipmentTracking.App.Controllers
     {
         private IPriorityService priorityService;
         private IUserService userService;
-        private IProjectService projectService;
 
         public PriorityApiController()
         {
             priorityService = new PriorityService();
             userService = new UserService();
-            projectService = new ProjectService();
         }
 
         //
@@ -54,9 +52,6 @@ namespace WendtEquipmentTracking.App.Controllers
 
             return priorityModels;
         }
-
-
-
 
         [HttpGet]
         [HttpPost]

@@ -19,7 +19,7 @@
             this.initDatatable();
 
             $.ajax({
-                url: ROOT_URL + "api/VendorApi/Search/",
+                url: ROOT_URL + "api/AutocompleteApi/Vendor/",
                 success: function (results) {
 
                     var shippedFromResults = ["WENDT"].concat(results);

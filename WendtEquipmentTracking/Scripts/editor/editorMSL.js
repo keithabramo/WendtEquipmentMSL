@@ -102,7 +102,7 @@
             $("div.createButtonContainer").append('<input type="button" value="Create" class="btn btn-sm btn-primary createSubmit" />');
 
             $(".workorderprice-autocomplete").autocomplete({
-                source: "/api/WorkOrderPriceApi/Search"
+                source: "/api/AutocompleteApi/WorkOrderPrice"
             });
         };
 

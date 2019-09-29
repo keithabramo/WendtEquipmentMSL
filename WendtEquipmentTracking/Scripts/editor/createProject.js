@@ -5,7 +5,7 @@
         this.initStyles = function () {
 
             $.ajax({
-                url: ROOT_URL + "api/BrokerApi/Search/",
+                url: ROOT_URL + "api/AutocompleteApi/Broker/",
                 success: function (results) {
 
                     $(".broker-autocomplete").autocomplete({

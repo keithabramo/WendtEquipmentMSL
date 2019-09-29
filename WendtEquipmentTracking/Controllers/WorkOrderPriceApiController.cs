@@ -24,32 +24,6 @@ namespace WendtEquipmentTracking.App.Controllers
         }
 
         //
-        // GET: api/WorkOrderPrice/Search
-        [HttpGet]
-        public IEnumerable<string> Search(string term)
-        {
-            var workOrderPrices = new List<string>();
-
-            var user = userService.GetCurrentUser();
-
-            if (user == null)
-            {
-                return workOrderPrices;
-            }
-
-            //Get Data
-            var workOrderPriceBOs = workOrderPriceService.GetAll(user.ProjectId);
-
-            workOrderPrices = workOrderPriceBOs
-                                .Where(wop => wop.WorkOrderNumber.Contains(term))
-                                .Select(wop => wop.WorkOrderNumber)
-                                .OrderBy(e => e)
-                                .ToList();
-
-            return workOrderPrices;
-        }
-
-        //
         // GET: api/WorkOrderPrice/Table
         [HttpGet]
         public IEnumerable<WorkOrderPriceModel> Table()
@@ -156,8 +130,5 @@ namespace WendtEquipmentTracking.App.Controllers
 
             return new DtResponse { data = workOrderPriceModels };
         }
-
-
-
     }
 }
