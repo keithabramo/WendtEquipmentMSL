@@ -12,7 +12,8 @@
     <thead>
         <tr class="active">
             <th></th>
-            <th>Requested By</th>
+            <th>Requested
+Date</th>
             <th>Project #</th>
             <th>Work 
 Order</th>
@@ -47,13 +48,28 @@ Date</th>
 </table>
 
 @section Scripts {
+
+
     <script type="text/javascript">
 
-        var vendors = [];
+        var shipFromVendors = [{
+            value: "",
+            label: "Wendt 2555 Walden Ave, Buffalo, NY 14075"
+        }];
+
+        var shipToVendors = [];
 
         @foreach (var vendor in ViewBag.Vendors)
         {
-            @:vendors.push("@vendor");
+            @:shipFromVendors.push({ value: "@vendor.value", label: "@vendor.label" });
+            @:shipToVendors.push({ value: "@vendor.value", label: "@vendor.label" });
+        }
+
+        var projects = [];
+
+        @foreach (var project in ViewBag.Projects)
+        {
+            @:projects.push({ value: "@project.value", label: "@project.label" });
         }
 
     </script>

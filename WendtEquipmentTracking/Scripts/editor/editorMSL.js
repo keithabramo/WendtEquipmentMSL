@@ -653,7 +653,7 @@
                     {
                         "targets": 1,
                         searchable: false,
-                        sortable: false,
+                        orderable: false,
                         render: function (datadata, type, row, meta) {
                             return '<span title="Copy Row" class="copy glyphicon glyphicon-duplicate text-primary"></span>';
                         }

@@ -85,10 +85,10 @@ namespace WendtEquipmentTracking.App.Controllers
             return model;
         }
 
-        [HttpGet]
-        public ProjectModel FindByProjectNumber(double id)
+        [HttpPost]
+        public ProjectModel FindByProjectNumber([FromBody]ProjectModel project)
         {
-            var projectBO = projectService.GetByProjectNumber(id);
+            var projectBO = projectService.GetByProjectNumber(project.ProjectNumber);
 
             var model = new ProjectModel
             {

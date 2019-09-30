@@ -7,7 +7,7 @@
             @Html.ValidationMessageFor(modelItem => modelItem.RequestDate, "", new { @class = "text-danger" })
         </td>
         <td>
-            @Html.EditorFor(modelItem => modelItem.ProjectNumber, new { htmlAttributes = new { @class = "form-control", id = "releaseDate" } })
+            @Html.EditorFor(modelItem => modelItem.ProjectNumber, new { htmlAttributes = new { @class = "form-control project-autocomplete" } })
             @Html.ValidationMessageFor(modelItem => modelItem.ProjectNumber, "", new { @class = "text-danger" })
         </td>
         <td>
@@ -23,11 +23,11 @@
             @Html.ValidationMessageFor(modelItem => modelItem.RequestedBy, "", new { @class = "text-danger" })
         </td>
         <td>
-            @Html.EditorFor(modelItem => modelItem.ShipFrom, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(modelItem => modelItem.ShipFrom, new { htmlAttributes = new { @class = "form-control shipFrom-autocomplete" } })
             @Html.ValidationMessageFor(modelItem => modelItem.ShipFrom, "", new { @class = "text-danger" })
         </td>
         <td>
-            @Html.EditorFor(modelItem => modelItem.ShipTo, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(modelItem => modelItem.ShipTo, new { htmlAttributes = new { @class = "form-control shipTo-autocomplete" } })
             @Html.ValidationMessageFor(modelItem => modelItem.ShipTo, "", new { @class = "text-danger" })
         </td>
         <td>
@@ -62,5 +62,6 @@
             @Html.EditorFor(modelItem => modelItem.Status, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(modelItem => modelItem.PickUpDate, "", new { @class = "text-danger" })
         </td>
+        <td></td>
     </tr>
 

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
+using WendtEquipmentTracking.App.Models;
 using WendtEquipmentTracking.BusinessLogic;
 using WendtEquipmentTracking.BusinessLogic.Api;
 
@@ -39,9 +40,22 @@ namespace WendtEquipmentTracking.App.Controllers
 
 
             var vendorBOs = vendorService.GetAll();
-            var vendors = vendorBOs.Select(x => x.Name).OrderBy(p => p).ToList();
-
+            var vendors = vendorBOs.Select(x => new Select2Model
+            {
+                value = x.Name + " " + x.Address,
+                label = x.Name + " " + x.Address
+            }).OrderBy(p => p.label).ToList();
             ViewBag.Vendors = vendors;
+
+            var projectBOs = projectService.GetAll();
+
+            var projects = projectBOs.Select(x => new Select2Model {
+                value = x.ProjectNumber.ToString(),
+                label = x.ProjectNumber.ToString(),
+            }).OrderBy(p => p.label).ToList();
+
+            ViewBag.Projects = projects;
+
 
             return View();
         }

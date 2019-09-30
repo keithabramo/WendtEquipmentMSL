@@ -22,30 +22,6 @@ namespace WendtEquipmentTracking.App.Controllers
         }
 
         //
-        // GET: api/Vendor/Search
-        [HttpGet]
-        public IEnumerable<string> Search()
-        {
-            var vendors = new List<string>();
-
-            var user = userService.GetCurrentUser();
-
-            if (user == null)
-            {
-                return vendors;
-            }
-
-            //Get Data
-            var vendorBOs = vendorService.GetAll();
-
-            vendors = vendorBOs.Select(x => x.Name)
-                                .OrderBy(e => e)
-                                .ToList();
-
-            return vendors;
-        }
-
-        //
         // GET: api/Vendor/Table
         [HttpGet]
         public IEnumerable<VendorModel> Table()

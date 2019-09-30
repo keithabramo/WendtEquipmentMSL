@@ -42,8 +42,8 @@ namespace WendtEquipmentTracking.App.Controllers
                 PickUpDate = x.PickUpDate,
                 ProjectNumber = x.Project != null ? (double?)x.Project.ProjectNumber : null,
                 PurchaseOrder = x.PurchaseOrder,
-                ShipFrom = x.ShipFromVendor != null ? x.ShipFromVendor.Name : null,
-                ShipTo = x.ShipToVendor != null ? x.ShipToVendor.Name : null,
+                ShipFrom = getShippedFromValue(x),
+                ShipTo = getShippedToValue(x),
                 Status = x.Status,
                 TruckingScheduleId = x.TruckingScheduleId,
                 Weight = x.Weight,
@@ -98,14 +98,14 @@ namespace WendtEquipmentTracking.App.Controllers
                     truckingSchedule.RequestDate = !string.IsNullOrWhiteSpace(truckingScheduleProperties["RequestDate"].ToString()) ? (DateTime?)Convert.ToDateTime(truckingScheduleProperties["RequestDate"]) : null;
 
                     var shipFromText = truckingScheduleProperties["ShipFrom"].ToString();
-                    var shipFromVendor = vendors.FirstOrDefault(x => x.Name == shipFromText);
+                    var shipFromVendor = vendors.FirstOrDefault(x => shipFromText.Contains(x.Name));
                     if (shipFromVendor != null)
                     {
                         truckingSchedule.ShipFromVendorId = shipFromVendor.VendorId;
                     }
 
                     var shipToText = truckingScheduleProperties["ShipTo"].ToString();
-                    var shipToVendor = vendors.FirstOrDefault(x => x.Name == shipToText);
+                    var shipToVendor = vendors.FirstOrDefault(x => shipToText.Contains(x.Name));
                     if (shipToVendor != null)
                     {
                         truckingSchedule.ShipToVendorId = shipToVendor.VendorId;
@@ -151,8 +151,8 @@ namespace WendtEquipmentTracking.App.Controllers
                     NumPieces = x.NumPieces,
                     PickUpDate = x.PickUpDate,
                     PurchaseOrder = x.PurchaseOrder,
-                    ShipFrom = x.ShipFromVendor != null ? x.ShipFromVendor.Name : null,
-                    ShipTo = x.ShipToVendor != null ? x.ShipToVendor.Name : null,
+                    ShipFrom = getShippedFromValue(x),
+                    ShipTo = getShippedToValue(x),
                     Status = x.Status,
                     TruckingScheduleId = x.TruckingScheduleId,
                     Weight = x.Weight,
@@ -164,6 +164,48 @@ namespace WendtEquipmentTracking.App.Controllers
             }
 
             return new DtResponse { data = truckingScheduleModels };
+        }
+
+        public string getShippedFromValue(TruckingScheduleBO truckingScheduleBO)
+        {
+            string result = null;
+
+            if (truckingScheduleBO.ShipFromVendor != null)
+            {
+                result = truckingScheduleBO.ShipFromVendor.Name + " " + truckingScheduleBO.ShipFromVendor.Address;
+            }
+            else
+            {
+                result = "Wendt 2555 Walden Ave, Buffalo, NY 14075";
+            }
+
+            return result;
+
+        }
+
+        public string getShippedToValue(TruckingScheduleBO truckingScheduleBO)
+        {
+            string result = null;
+
+            if (truckingScheduleBO.ShipToVendor != null)
+            {
+                result = truckingScheduleBO.ShipToVendor.Name + " " + truckingScheduleBO.ShipToVendor.Address;
+            }
+            else if (truckingScheduleBO.Project != null)
+            {
+                result = (truckingScheduleBO.Project.ShipToCompany ?? "");
+                if (!string.IsNullOrEmpty(truckingScheduleBO.Project.ShipToAddress))
+                {
+                    result += " " + truckingScheduleBO.Project.ShipToAddress;
+                }
+                if (!string.IsNullOrEmpty(truckingScheduleBO.Project.ShipToCSZ))
+                {
+                    result += " " + truckingScheduleBO.Project.ShipToCSZ;
+                }
+            }
+
+            return result;
+
         }
     }
 }

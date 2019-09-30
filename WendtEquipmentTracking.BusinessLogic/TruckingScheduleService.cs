@@ -75,7 +75,10 @@ namespace WendtEquipmentTracking.BusinessLogic
                 Project = x.Project != null ? new ProjectBO
                 {
                     ProjectId = x.Project.ProjectId,
-                    ProjectNumber = x.Project.ProjectNumber
+                    ProjectNumber = x.Project.ProjectNumber,
+                    ShipToCompany = x.Project.ShipToCompany,
+                    ShipToAddress = x.Project.ShipToAddress,
+                    ShipToCSZ = x.Project.ShipToCSZ
                 } : null,
                 ShipFromVendor = x.Vendor != null ? new VendorBO
                 {
@@ -125,7 +128,10 @@ namespace WendtEquipmentTracking.BusinessLogic
                 Project = x.Project != null ? new ProjectBO
                 {
                     ProjectId = x.Project.ProjectId,
-                    ProjectNumber = x.Project.ProjectNumber
+                    ProjectNumber = x.Project.ProjectNumber,
+                    ShipToCompany = x.Project.ShipToCompany,
+                    ShipToAddress = x.Project.ShipToAddress,
+                    ShipToCSZ = x.Project.ShipToCSZ
                 } : null,
                 ShipFromVendor = x.Vendor != null ? new VendorBO
                 {
