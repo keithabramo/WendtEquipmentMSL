@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using WendtEquipmentTracking.App.Common;
@@ -78,5 +79,7 @@ namespace WendtEquipmentTracking.App.Models
                 return NumPieces.HasValue ? NumPieces.Value.ToString() : string.Empty;
             }
         }
+
+        public IEnumerable<string> Statuses;
     }
 }

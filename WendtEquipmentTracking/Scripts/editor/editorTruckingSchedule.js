@@ -10,6 +10,40 @@
             this.initEditor();
             this.initDatatable();
 
+            $.fn.dataTable.ext.search.push(
+                function (settings, data, dataIndex) {
+                    var rfpStatus = $('#RFPStatusFilter').is(":checked");
+                    var plannedStatus = $('#PlannedStatusFilter').is(":checked");
+                    var confirmedStatus = $('#ConfirmedStatusFilter').is(":checked");
+                    var hideClosedStatus = $('#HideClosedStatusFilter').is(":checked");
+
+                    if (!rfpStatus && !plannedStatus && !confirmedStatus && !hideClosedStatus) {
+                        return true;
+                    } else {
+                        var status = data[15];
+
+                        var availableStatuses = [];
+
+                        rfpStatus && availableStatuses.push("RFP");
+                        plannedStatus && availableStatuses.push("Planned");
+                        confirmedStatus && availableStatuses.push("Confirmed");
+
+                        //if none of the filters have been checked yet and hide closed is checked then add all except "closed"
+                        availableStatuses = !availableStatuses.length && hideClosedStatus ? ["RFP", "Planned", "Confirmed"] : availableStatuses;
+
+                        return availableStatuses.indexOf(status) > -1;
+                    }
+                }
+            );
+
+            $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="RFPStatusFilter" /> RFP</label>');
+            $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="PlannedStatusFilter" /> Planned</label>');
+            $("div.custom").append('<br/>');
+            $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="ConfirmedStatusFilter" /> Confirmed</label>');
+            $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="HideClosedStatusFilter" /> Hide Closed</label>');
+
+
+
             $("div.createButtonContainer").append('<input type="button" value="Create" class="btn btn-sm btn-primary createSubmit" />');
 
             $(".shipFrom-autocomplete").autocomplete({
@@ -38,6 +72,22 @@
 
         this.initEvents = function () {
             var $this = this;
+
+            $('#RFPStatusFilter').on("change", function () {
+                editorMain.datatable.draw();
+            });
+
+            $('#PlannedStatusFilter').on("change", function () {
+                editorMain.datatable.draw();
+            });
+
+            $('#ConfirmedStatusFilter').on("change", function () {
+                editorMain.datatable.draw();
+            });
+
+            $('#HideClosedStatusFilter').on("change", function () {
+                editorMain.datatable.draw();
+            });
 
             editorMain.editor.on('preSubmit', function (e, data, action) {
                 if (action !== 'remove') {
@@ -191,7 +241,6 @@
                 }
             });
 
-
             editorMain.editor.on('postEdit', function (e, json, data) {
                 var project = $this.getProject(data.ProjectNumber);
 
@@ -213,11 +262,11 @@
                 form.set('PurchaseOrder', $row.find("input[name='PurchaseOrder']").val());
                 form.set('ShipFrom', $row.find("input[name='ShipFrom']").val());
                 form.set('ShipTo', $row.find("input[name='ShipTo']").val());
-                form.set('Status', $row.find("input[name='Status']").val());
+                form.set('Status', $row.find("select[name='Status']").val());
                 form.set('RequestedBy', $row.find("input[name='RequestedBy']").val());
                 form.set('WorkOrder', $row.find("input[name='WorkOrder']").val());
-                form.set('WeightText', $row.find("input[name='WeightText']").val());
-                form.set('NumPiecesText', $row.find("input[name='NumPiecesText']").val());
+                form.set('WeightText', $row.find("input[name='Weight']").val());
+                form.set('NumPiecesText', $row.find("input[name='NumPieces']").val());
                 form.set('PickUpDate', $row.find("input[name='PickUpDate']").val());
                 form.set('RequestDate', $row.find("input[name='RequestDate']").val());
                 form.set('ProjectNumber', $row.find("input[name='ProjectNumber']").val());
@@ -262,6 +311,7 @@
                 var $createRow = $("tfoot tr");
 
                 $createRow.find(":input").val("");
+                $createRow.find("select").prop('selectedIndex', 0);
             });
 
             $(".table").on("mousedown", "td.focus", function (e) {
@@ -279,21 +329,26 @@
                 var $createRow = $(".table.my-datatable tfoot tr");
                 var rowData = editorMain.datatable.row($row).data();
 
+                $createRow.find("input[name='ProjectNumber']").val(rowData.ProjectNumber);
+
+                var project = $this.getProject(rowData.ProjectNumber);
+                var shipToResults = $this.getShipToList(project);
+                $(".shipTo-autocomplete").autocomplete("option", "source", shipToResults);
+
                 $createRow.find("input[name='Carrier']").val(rowData.Carrier);
-                $createRow.find("select[name='Comments']").val(rowData.Comments);
-                $createRow.find("select[name='Description']").val(rowData.Description);
-                $createRow.find("select[name='Dimensions']").val(rowData.Dimensions);
-                $createRow.find("select[name='PurchaseOrder']").val(rowData.PurchaseOrder);
-                $createRow.find("select[name='ShipFrom']").val(rowData.ShipFrom);
-                $createRow.find("select[name='ShipTo']").val(rowData.ShipTo);
+                $createRow.find("input[name='Comments']").val(rowData.Comments);
+                $createRow.find("input[name='Description']").val(rowData.Description);
+                $createRow.find("input[name='Dimensions']").val(rowData.Dimensions);
+                $createRow.find("input[name='PurchaseOrder']").val(rowData.PurchaseOrder);
+                $createRow.find("input[name='ShipFrom']").val(rowData.ShipFrom);
+                $createRow.find("input[name='ShipTo']").val(rowData.ShipTo)
                 $createRow.find("select[name='Status']").val(rowData.Status);
-                $createRow.find("select[name='RequestedBy']").val(rowData.RequestedBy);
-                $createRow.find("select[name='WorkOrder']").val(rowData.WorkOrder);
-                $createRow.find("select[name='WeightText']").val(rowData.WeightText);
-                $createRow.find("select[name='NumPiecesText']").val(rowData.NumPiecesText);
-                $createRow.find("select[name='PickUpDate']").val(rowData.PickUpDate);
-                $createRow.find("select[name='RequestDate']").val(rowData.RequestDate);
-                $createRow.find("select[name='ProjectNumber']").val(rowData.ProjectNumber);
+                $createRow.find("input[name='RequestedBy']").val(rowData.RequestedBy);
+                $createRow.find("input[name='WorkOrder']").val(rowData.WorkOrder);
+                $createRow.find("input[name='Weight']").val(rowData.WeightText);
+                $createRow.find("input[name='NumPieces']").val(rowData.NumPiecesText);
+                $createRow.find("input[name='PickUpDate']").val(rowData.PickUpDate);
+                $createRow.find("input[name='RequestDate']").val(rowData.RequestDate);
 
                 window.scrollTo(0, document.body.scrollHeight);
             });
@@ -364,7 +419,11 @@
                     }, {
                         name: "Comments"
                     }, {
-                        name: "Status"
+                        name: "Status",
+                        type: "select",
+                        options: statuses,
+                        placeholderDisabled: false,
+                        placeholder: ""
                     }
                 ]
             });

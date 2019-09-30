@@ -72,6 +72,13 @@ Date</th>
             @:projects.push({ value: "@project.value", label: "@project.label" });
         }
 
+        var statuses = [];
+
+        @foreach (var status in ViewBag.Statuses)
+        {
+            @:statuses.push("@status");
+        }
+
     </script>
 
     @Scripts.Render("~/bundles/form")

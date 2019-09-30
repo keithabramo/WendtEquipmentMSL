@@ -56,11 +56,11 @@
         </td>
         <td>
             @Html.EditorFor(modelItem => modelItem.Comments, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(modelItem => modelItem.PickUpDate, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(modelItem => modelItem.Comments, "", new { @class = "text-danger" })
         </td>
         <td>
-            @Html.EditorFor(modelItem => modelItem.Status, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(modelItem => modelItem.PickUpDate, "", new { @class = "text-danger" })
+            @Html.DropDownListFor(modelItem => modelItem.Status, new SelectList(Model.Statuses, Model.Statuses.FirstOrDefault()), new { @class = "form-control" })
+            @Html.ValidationMessageFor(modelItem => modelItem.Status, "", new { @class = "text-danger" })
         </td>
         <td></td>
     </tr>

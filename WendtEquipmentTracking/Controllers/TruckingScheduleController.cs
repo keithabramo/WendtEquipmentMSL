@@ -1,8 +1,10 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using WendtEquipmentTracking.App.Models;
 using WendtEquipmentTracking.BusinessLogic;
 using WendtEquipmentTracking.BusinessLogic.Api;
+using WendtEquipmentTracking.Common;
 
 namespace WendtEquipmentTracking.App.Controllers
 {
@@ -56,6 +58,14 @@ namespace WendtEquipmentTracking.App.Controllers
 
             ViewBag.Projects = projects;
 
+            var statuses = new List<string> {
+                TruckingScheduleStatuses.RFP.ToString(),
+                TruckingScheduleStatuses.Planned.ToString(),
+                TruckingScheduleStatuses.Confirmed.ToString(),
+                TruckingScheduleStatuses.Closed.ToString()
+            };
+
+            ViewBag.Statuses = statuses;
 
             return View();
         }
@@ -65,7 +75,19 @@ namespace WendtEquipmentTracking.App.Controllers
         [ChildActionOnly]
         public ActionResult Create()
         {
-            return PartialView();
+            var statuses = new List<string> {
+                TruckingScheduleStatuses.RFP.ToString(),
+                TruckingScheduleStatuses.Planned.ToString(),
+                TruckingScheduleStatuses.Confirmed.ToString(),
+                TruckingScheduleStatuses.Closed.ToString()
+            };
+
+            var model = new TruckingScheduleModel
+            {
+                Statuses = statuses
+            };
+
+            return PartialView(model);
         }
     }
 }
