@@ -1,7 +1,8 @@
 ﻿$(function () {
 
-    var Editor = function () {
+    Editor = function (selector) {
 
+        this.selector = selector || '.table.my-datatable';
         this.datatable;
         this.editor;
 
@@ -12,7 +13,7 @@
         this.initEvents = function () {
             var $this = this;
 
-            $(".table thead th.select-checkbox").on("click", function () {
+            $(this.selector).on("click", "thead th.select-checkbox", function () {
 
                 if ($(this).closest("tr").hasClass("selected")) {
                     $(this).closest("tr").removeClass("selected");
@@ -23,11 +24,11 @@
                 }
             });
 
-            $(".table tfoot, .table thead").on("click", function () {
+            $(this.selector).on("click", "tfoot, thead", function () {
                 $this.datatable.cell.blur();
             });
 
-            $(document).on("click", ".table .delete", function () {
+            $(this.selector).on("click", ".delete", function () {
                 $this.editor
                     .title('Delete row')
                     .buttons('Confirm delete')
@@ -38,13 +39,13 @@
             this.datatable.columns().every(function () {
                 var column = this;
 
-                var $input = $("thead tr").eq(0).find("th").eq(this.index()).find("input");
+                var $input = $($this.selector).find("thead tr").eq(0).find("th").eq(this.index()).find("input");
 
                 $input.on('keyup change input search', function () {
                     var searchInput = this;
 
                     if ($(this).closest("thead").length > 0) {
-                        $this.index = $("thead input[type='text']").index($(this));
+                        $this.index = $($this.selector).find("thead input[type='text']").index($(this));
                     } else {
                         $this.index = -1;
                     }
@@ -59,12 +60,16 @@
                 datatable.cell.blur();
             });
 
+            $(".fontSize").on("fontadjusted", function () {
+                $this.datatable.columns.adjust();
+            });
+
         };
 
         this.initEditor = function (settings) {
 
             var editorSettings = $.extend(true, {
-                table: '.table.my-datatable',
+                table: this.selector,
                 formOptions: {
                     inline: {
                         onReturn: "submit",
@@ -109,7 +114,7 @@
                 drawCallback: function () {
                     $(".dataTables_filter input, .dataTables_length select").addClass("form-control input-sm");
 
-                    $this.createColumnFilters();
+                    $this.createColumnFilters.apply($this);
 
                     if ($(".paginate_button").length === 2) {
                         $(".dataTables_paginate").hide();
@@ -125,7 +130,7 @@
 
             }, settings);
 
-            this.datatable = $(".table.my-datatable").DataTable(datatableSettings);
+            this.datatable = $(this.selector).DataTable(datatableSettings);
 
 
             delete $.fn.dataTable.AutoFill.actions.fillHorizontal;
@@ -136,8 +141,8 @@
         };
 
         this.createColumnFilters = function () {
-            if ($(".table.my-datatable thead tr").length === 1) {
-                var $searchHeader = $(".table.my-datatable thead tr").clone();
+            if ($(this.selector).find("thead tr").length === 1) {
+                var $searchHeader = $(this.selector).find("thead tr").clone();
 
                 $searchHeader.find("th").each(function () {
                     var title = $.trim($(this).text());
@@ -152,13 +157,8 @@
 
                 $searchHeader.find("th").attr("tabindex", "-1").removeClass("sorting sorting_desc sorting_asc select-checkbox dateWidth");
 
-                $(".table.my-datatable thead").prepend($searchHeader);
+                $(this.selector).find("thead").prepend($searchHeader);
             }
         };
-
-
     };
-
-    editorMain = new Editor();
-
 });

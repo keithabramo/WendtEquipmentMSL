@@ -17,6 +17,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public BillOfLading()
         {
+            this.BillOfLadingAttachments = new HashSet<BillOfLadingAttachment>();
             this.BillOfLadingEquipments = new HashSet<BillOfLadingEquipment>();
         }
     
@@ -41,6 +42,8 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         public string LockedBy { get; set; }
         public bool IsDeleted { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BillOfLadingAttachment> BillOfLadingAttachments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BillOfLadingEquipment> BillOfLadingEquipments { get; set; }
         public virtual Project Project { get; set; }

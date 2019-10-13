@@ -23,7 +23,7 @@ $(function () {
                         $("#FilePath").val(response.FilePath);
 
                         if ($this.workOrderPriceTable) {
-                            editorMain.datatable.ajax.reload();
+                            $this.workOrderPriceTable.editorMain.datatable.ajax.reload();
                         } else {
 
                             $this.workOrderPriceTable = new ImportWorkOrderPriceTable();

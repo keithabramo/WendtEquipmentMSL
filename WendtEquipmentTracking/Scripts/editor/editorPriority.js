@@ -2,17 +2,19 @@
 
     var EditorPriority = function () {
 
+        this.editorMain = new Editor();
+
         this.initStyles = function () {
             var $this = this;
 
             this.initEditor();
             this.initDatatable();
-        }
+        };
 
         this.initEvents = function () {
             var $this = this;
 
-            editorMain.editor.on('preSubmit', function (e, data, action) {
+            this.editorMain.editor.on('preSubmit', function (e, data, action) {
                 if (action !== 'remove') {
                     var priorityNumber = this.field('PriorityNumber');
                     var priorityId = this.field('PriorityId');
@@ -70,14 +72,14 @@
                 }
             });
 
-            editorMain.datatable.on('preAutoFill', function (e, datatable, cells) {
+            this.editorMain.datatable.on('preAutoFill', function (e, datatable, cells) {
                 datatable.cell.blur();
             });
-        }
+        };
 
         this.initEditor = function () {
 
-            editorMain.initEditor({
+            this.editorMain.initEditor({
                 ajax: {
                     url: ROOT_URL + "api/PriorityApi/Editor",
                     dataSrc: ""
@@ -113,12 +115,12 @@
                     { name: "PriorityId" }
                 ]
             });
-        }
+        };
 
         this.initDatatable = function () {
             var $this = this;
 
-            editorMain.initDatatable({
+            this.editorMain.initDatatable({
                 ajax: {
                     url: ROOT_URL + "api/PriorityApi/Table",
                     dataSrc: ""
@@ -162,7 +164,7 @@
                     }
                 ]
             });
-        }
+        };
 
         this.initStyles();
         this.initEvents();

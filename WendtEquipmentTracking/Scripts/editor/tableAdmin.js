@@ -2,6 +2,8 @@
 
     var TableProject = function () {
 
+        this.tableMain = new Table();
+
         this.initStyles = function () {
             var $this = this;
 
@@ -13,7 +15,7 @@
             var $this = this;
 
             $(".table").on("click", ".revert", function () {
-                tableMain.editor
+                $this.tableMain.editor
                     .title('Revert row')
                     .buttons('Confirm')
                     .message('Are you sure you want to revert this project?')
@@ -23,7 +25,7 @@
 
         this.initEditor = function () {
 
-            tableMain.initEditor({
+            this.tableMain.initEditor({
                 ajax: {
                     url: ROOT_URL + "api/AdminApi/ProjectEditor",
                     dataSrc: ""
@@ -35,7 +37,7 @@
         this.initDatatable = function () {
             var $this = this;
 
-            tableMain.initDatatable({
+            this.tableMain.initDatatable({
                 ajax: {
                     url: ROOT_URL + "api/AdminApi/ProjectTable",
                     dataSrc: ""

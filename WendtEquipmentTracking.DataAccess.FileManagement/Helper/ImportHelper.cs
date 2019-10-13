@@ -27,16 +27,16 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Helper
                     //5. Data Reader methods
                     foreach (DataRow row in table.Rows)
                     {
-                        var item = row["ITEM"];
+                        //var item = row["ITEM"];
                         var quantity = row["QTY"];
                         var description = row["DESCRIPTION"];
-                        var partNumber = row["PART NUMBER"];
-                        var length = row["LENGTH"];
-                        var width = row["WIDTH"];
-                        var specification = row["SPECIFICATION"];
-                        var um = row["UM"];
+                        var partNumber = row["PART NUMBER"]; //This is ship tag #
+                        //var length = row["LENGTH"];
+                        //var width = row["WIDTH"];
+                        //var specification = row["SPECIFICATION"];
+                        //var um = row["UM"];
                         var unitWeight = row["UNIT WT. (LBS)"];
-                        var totalWeight = row["TOTAL WT. (LBS)"];
+                        //var totalWeight = row["TOTAL WT. (LBS)"];
 
                         if ((quantity == null || string.IsNullOrWhiteSpace(quantity.ToString())) && (description == null || string.IsNullOrWhiteSpace(description.ToString())) && (partNumber == null || string.IsNullOrWhiteSpace(partNumber.ToString())))
                         {
@@ -82,7 +82,6 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Helper
                             PriorityId = import.PriorityId,
                             ReleaseDate = DateTime.Now,
                             DrawingNumber = drawingNumber,
-                            //DrawingNumber = import.DrawingNumber,
                             WorkOrderNumber = import.WorkOrderNumber,
                             Quantity = import.QuantityMultiplier * quantityNumber,
                             ShippingTagNumber = partNumber.ToString(),

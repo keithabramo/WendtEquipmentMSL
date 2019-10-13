@@ -23,7 +23,7 @@ $(function () {
                         $("#FilePath").val(response.FilePath);
 
                         if ($this.brokerTable) {
-                            editorMain.datatable.ajax.reload();
+                            $this.brokerTable.editorMain.datatable.ajax.reload();
                         } else {
 
                             $this.brokerTable = new ImportBrokerTable();
@@ -32,7 +32,7 @@ $(function () {
                         }
 
                     }
-                    else {
+                    else 
                         this.removeFile(file);
                         main.error(response.Error);
                     }

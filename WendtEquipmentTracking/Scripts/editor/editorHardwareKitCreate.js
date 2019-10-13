@@ -3,7 +3,7 @@
     var EditorHardwareKit = function () {
 
         this.canSubmit = false;
-
+        this.editorMain = new Editor();
 
         this.initStyles = function () {
             var $this = this;
@@ -18,7 +18,7 @@
         this.initEvents = function () {
             var $this = this;
 
-            editorMain.editor.on('preSubmit', function (e, data, action) {
+            this.editorMain.editor.on('preSubmit', function (e, data, action) {
                 if (action !== 'remove') {
                     var quantityToShip = this.field('QuantityToShip');
 
@@ -51,15 +51,14 @@
             $("input[name='ExtraQuantityPercentage']").on("change", function () {
                 var newPercent = parseInt($(this).val(), 10);
 
-                editorMain.datatable.rows().every(function (rowIdx, tableLoop, rowLoop) {
+                $this.editorMain.datatable.rows().every(function (rowIdx, tableLoop, rowLoop) {
                     var data = this.data();
 
                     var originalQuantity = data.Quantity;
                     var newValue = originalQuantity + (newPercent * originalQuantity) / 100;
 
-                    editorMain.datatable.cell(rowIdx, 4).data(Math.ceil(newValue));
+                    $this.editorMain.datatable.cell(rowIdx, 4).data(Math.ceil(newValue));
 
-                    // ... do something with data(), or this.node(), etc
                 });
             });
 
@@ -68,9 +67,9 @@
                 if ($("#HardwareKitForm").valid()) {
                     $this.canSubmit = true;
 
-                    var selectedRows = editorMain.datatable.rows({ selected: true }).indexes();
+                    var selectedRows = $this.editorMain.datatable.rows({ selected: true }).indexes();
                     if (selectedRows.length) {
-                        editorMain.editor.edit(
+                        $this.editorMain.editor.edit(
                             selectedRows, false
                         ).submit(function () {
                             $this.canSubmit = false;
@@ -98,7 +97,7 @@
 
         this.initEditor = function () {
 
-            editorMain.initEditor({
+            this.editorMain.initEditor({
                 ajax: {
                     url: ROOT_URL + "api/HardwareKitApi/Editor",
                     dataSrc: ""
@@ -118,7 +117,7 @@
         this.initDatatable = function () {
             var $this = this;
 
-            editorMain.initDatatable({
+            this.editorMain.initDatatable({
                 ajax: {
                     url: ROOT_URL + "api/HardwareKitApi/CreateTable",
                     dataSrc: "",
@@ -171,7 +170,7 @@
 
         this.initStyles();
         this.initEvents();
-    }
+    };
 
     editorHardwareKit = new EditorHardwareKit();
 

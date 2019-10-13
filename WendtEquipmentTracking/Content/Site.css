@@ -199,9 +199,14 @@ dl.dl-horizontal dd {
     overflow-y: auto;
 }
 
+.modal-body .table {
+    width: 100% !important;
+}
 
 
-
+.img-gallery .img {
+    padding: 15px;
+}
 
 
 
@@ -245,6 +250,12 @@ div.dataTables_wrapper .bottom-section {
 .dataTables_info {
     line-height: 25px;
 }
+
+.DTED.DTED_Lightbox_Wrapper {
+    z-index: 9999 !important;
+}
+
+
 
 .checkbox-inline + .checkbox-inline + .checkbox-inline {
     margin-left: 0; 

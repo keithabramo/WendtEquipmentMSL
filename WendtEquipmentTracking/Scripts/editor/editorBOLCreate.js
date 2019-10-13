@@ -3,7 +3,7 @@
     var EditorBOL = function () {
 
         this.canSubmit = false;
-
+        this.editorMain = new Editor();
 
         this.initStyles = function () {
             var $this = this;
@@ -43,7 +43,7 @@
         this.initEvents = function () {
             var $this = this;
 
-            editorMain.editor.on('preSubmit', function (e, data, action) {
+            this.editorMain.editor.on('preSubmit', function (e, data, action) {
                 if (action !== 'remove') {
                     var quantity = this.field('Quantity');
 
@@ -79,9 +79,9 @@
 
             });
 
-            editorMain.editor.on('postEdit', function (e, json, data) {
+            this.editorMain.editor.on('postEdit', function (e, json, data) {
 
-                var row = editorMain.datatable.row("#" + data.Equipment.EquipmentId);
+                var row = $this.editorMain.datatable.row("#" + data.Equipment.EquipmentId);
 
                 if (data.IsDuplicate) {
                     $(row.node()).attr("class", 'warning');
@@ -97,7 +97,7 @@
 
             });
 
-            editorMain.datatable.on('select', function (e, dt, type, indexes) {
+            this.editorMain.datatable.on('select', function (e, dt, type, indexes) {
                 if (type === 'row') {
                     $.each(indexes, function () {
                         if (dt.cell(this, 1).data() === 0) {
@@ -110,13 +110,13 @@
                 }
             });
 
-            editorMain.datatable.on('deselect', function (e, dt, type, indexes) {
+            this.editorMain.datatable.on('deselect', function (e, dt, type, indexes) {
                 if (type === 'row') {
                     $this.updateSelectedDisplay();
                 }
             });
 
-            editorMain.datatable.on("draw", function () {
+            this.editorMain.datatable.on("draw", function () {
                 $this.updateSelectedDisplay();
             });
 
@@ -125,9 +125,9 @@
                 if ($("#BOLForm").valid()) {
                     $this.canSubmit = true;
 
-                    var selectedRows = editorMain.datatable.rows({ selected: true }).indexes();
+                    var selectedRows = $this.editorMain.datatable.rows({ selected: true }).indexes();
                     if (selectedRows.length) {
-                        editorMain.editor.edit(
+                        $this.editorMain.editor.edit(
                             selectedRows, false
                         ).submit(function () {
                             $this.canSubmit = false;
@@ -154,8 +154,8 @@
         };
 
         this.initEditor = function () {
-
-            editorMain.initEditor({
+            
+            this.editorMain.initEditor({
                 ajax: {
                     url: ROOT_URL + "api/BillOfLadingApi/Editor",
                     dataSrc: ""
@@ -193,7 +193,7 @@
         this.initDatatable = function () {
             var $this = this;
 
-            editorMain.initDatatable({
+            this.editorMain.initDatatable({
                 ajax: {
                     url: ROOT_URL + "api/BillOfLadingApi/CreateTable",
                     dataSrc: ""
@@ -350,8 +350,9 @@
         };
 
         this.updateSelectedDisplay = function () {
+
             var quantity = 0;
-            var selectedRows = editorMain.datatable.rows({ selected: true })
+            this.editorMain.datatable.rows({ selected: true })
                 .every(function (rowIdx, tableLoop, rowLoop) {
                     var data = this.data();
                     quantity += data.Quantity;
@@ -362,11 +363,6 @@
                     $(this).find(".select-item").eq(1).html("- Quantity: " + quantity);
                 });
             }
-            //else {
-            //    $(".dataTables_info").each(function () {
-            //        $(this).text($(this).text() + " 0 rows selected");
-            //    });
-            //}
         };
 
         this.initStyles();

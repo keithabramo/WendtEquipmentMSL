@@ -2,17 +2,19 @@
 
     var EditorWorkOrderPrice = function () {
 
+        this.editorMain = new Editor();
+
         this.initStyles = function () {
             var $this = this;
 
             this.initEditor();
             this.initDatatable();
-        }
+        };
 
         this.initEvents = function () {
             var $this = this;
 
-            editorMain.editor.on('preSubmit', function (e, data, action) {
+            this.editorMain.editor.on('preSubmit', function (e, data, action) {
                 if (action !== 'remove') {
                     var workOrderNumber = this.field('WorkOrderNumber');
 
@@ -32,9 +34,9 @@
                 }
             });
 
-            editorMain.editor.on('postEdit', function (e, json, data) {
+            this.editorMain.editor.on('postEdit', function (e, json, data) {
 
-                var row = editorMain.datatable.row("#" + data.WorkOrderPriceId);
+                var row = $this.editorMain.datatable.row("#" + data.WorkOrderPriceId);
 
                 if (data.IsDuplicate) {
                     $(row.node()).attr("class", 'warning');
@@ -43,11 +45,11 @@
                 }
 
             });
-        }
+        };
 
         this.initEditor = function () {
 
-            editorMain.initEditor({
+            this.editorMain.initEditor({
                 ajax: {
                     url: ROOT_URL + "api/WorkOrderPriceApi/Editor",
                     dataSrc: ""
@@ -78,12 +80,12 @@
                     }
                 ]
             });
-        }
+        };
 
         this.initDatatable = function () {
             var $this = this;
-           
-            editorMain.initDatatable({
+
+            this.editorMain.initDatatable({
                 ajax: {
                     url: ROOT_URL + "api/WorkOrderPriceApi/Table",
                     dataSrc: ""
@@ -106,7 +108,7 @@
                         }
                     },
                     {
-                        targets: [1,2],
+                        targets: [1, 2],
                         render: $.fn.dataTable.render.number(',', '.', 2, '$')
                     }
                 ],
@@ -116,11 +118,11 @@
                     }
                 },
             });
-        }
+        };
 
         this.initStyles();
         this.initEvents();
-    }
+    };
 
     editorWorkOrderPrice = new EditorWorkOrderPrice();
 

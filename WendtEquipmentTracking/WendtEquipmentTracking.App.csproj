@@ -166,6 +166,8 @@
     <Compile Include="Common\WendtAuthorizeAttribute.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\EquipmentAttachmentApiController.cs" />
+    <Compile Include="Controllers\EquipmentAttachmentController.cs" />
     <Compile Include="Controllers\TruckingScheduleApiController.cs" />
     <Compile Include="Controllers\TruckingScheduleController.cs" />
     <Compile Include="Controllers\HardwareKitApiController.cs" />
@@ -196,6 +198,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\EquipmentAttachmentModel.cs" />
+    <Compile Include="Models\EquipmentAttachmentFileModel.cs" />
     <Compile Include="Models\HardwareCommercialCodeImportModel.cs" />
     <Compile Include="Models\EditorModel.cs" />
     <Compile Include="Models\ProjectCopyModel.cs" />
@@ -217,7 +221,7 @@
     <Compile Include="Models\EquipmentModel.cs" />
     <Compile Include="Models\HardwareKitModel.cs" />
     <Compile Include="Models\BaseModel.cs" />
-    <Compile Include="Models\ImportModel.cs" />
+    <Compile Include="Models\FileModel.cs" />
     <Compile Include="Models\ProjectNavModel.cs" />
     <Compile Include="Models\ProjectModel.cs" />
     <Compile Include="Models\VendorModel.cs" />
@@ -241,6 +245,7 @@
     <Content Include="Content\DataTables-1.10.18\images\sort_desc.png" />
     <Content Include="Content\DataTables-1.10.18\images\sort_desc_disabled.png" />
     <Content Include="Content\datatablesAndEditor.css" />
+    <Content Include="Content\dropzone.css" />
     <Content Include="Content\select2.min.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
@@ -307,14 +312,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\clipboard.min.js" />
-    <Content Include="Scripts\dropzone\basic.css" />
-    <Content Include="Scripts\dropzone\basic.min.css" />
-    <Content Include="Scripts\dropzone\dropzone-amd-module.js" />
-    <Content Include="Scripts\dropzone\dropzone-amd-module.min.js" />
-    <Content Include="Scripts\dropzone\dropzone.css" />
-    <Content Include="Scripts\dropzone\dropzone.js" />
-    <Content Include="Scripts\dropzone\dropzone.min.css" />
-    <Content Include="Scripts\dropzone\dropzone.min.js" />
+    <Content Include="Scripts\dropzone.js" />
     <Content Include="Scripts\editor\editor.autocomplete.js" />
     <Content Include="Scripts\editor\editor.select2.js" />
     <Content Include="Scripts\editor\editorVendor.js" />
@@ -326,6 +324,7 @@
     <Content Include="Scripts\editor\editorBOLCreate.js" />
     <Content Include="Scripts\editor\editorBroker.js" />
     <Content Include="Scripts\editor\editorTruckingSchedule.js" />
+    <Content Include="Scripts\editor\importEquipmentRevision.js" />
     <Content Include="Scripts\editor\importHardwareCommercialCode.js" />
     <Content Include="Scripts\editor\importHardwareCommercialCodeTable.js" />
     <Content Include="Scripts\editor\importRawEquipment.js" />
@@ -339,6 +338,7 @@
     <Content Include="Scripts\editor\importWorkOrderPriceTable.js" />
     <Content Include="Scripts\editor\tableAdmin.js" />
     <Content Include="Scripts\editor\createProject.js" />
+    <Content Include="Scripts\editor\tableEquipmentAttachment.js" />
     <Content Include="Scripts\editor\timer.js" />
     <Content Include="Scripts\editor\tableHardwareKitDetails.js" />
     <Content Include="Scripts\editor\tableHardwareKit.js" />
@@ -621,12 +621,33 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>WorkOrderPriceTablePartial.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\Import\EquipmentRevision.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Equipment.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Import\EquipmentRevisionConfigurationPartial.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EquipmentConfigurationPartial.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Import\EquipmentRevisionTablePartial.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EquipmentTablePartial.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\EquipmentAttachment\Index.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Create.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\EquipmentAttachment\ViewAll.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Create.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Web.Staging.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Attachments\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

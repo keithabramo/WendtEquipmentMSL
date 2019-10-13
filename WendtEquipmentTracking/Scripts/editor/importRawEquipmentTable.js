@@ -3,25 +3,26 @@
     ImportRawEquipmentTable = function () {
 
         this.canSubmit = false;
+        this.editorMain = new Editor();
 
         this.initStyles = function () {
             var $this = this;
 
             this.initEditor();
             this.initDatatable();
-        }
+        };
 
         this.initEvents = function () {
             var $this = this;
 
 
-            editorMain.editor.on('preSubmit', function (e, data, action) {
+            this.editorMain.editor.on('preSubmit', function (e, data, action) {
 
                 if ($this.canSubmit) {
                     $.each(data.data, function (i, rowData) {
-                        var row = editorMain.datatable.row("#" + rowData.EquipmentId);
+                        var row = $this.editorMain.datatable.row("#" + rowData.EquipmentId);
 
-                        var rowNumber = editorMain.datatable.rows({ order: 'applied' }).nodes().indexOf(row.node());
+                        var rowNumber = $this.editorMain.datatable.rows({ order: 'applied' }).nodes().indexOf(row.node());
                         rowData.Order = rowNumber;
                     });
                 }
@@ -29,22 +30,22 @@
                 data.doSubmit = $this.canSubmit;
             });
 
-            editorMain.datatable.on('autoFill', function (e, datatable, cells) {
+            this.editorMain.datatable.on('autoFill', function (e, datatable, cells) {
                 $this.validationErrors();
             });
 
-            editorMain.editor.on('submitComplete', function () {
+            this.editorMain.editor.on('submitComplete', function () {
                 $this.validationErrors();
             });
 
             $("#import").on("click", function () {
-                var selectedRows = editorMain.datatable.rows({ selected: true }).indexes();
+                var selectedRows = $this.editorMain.datatable.rows({ selected: true }).indexes();
                 if (selectedRows.length) {
                     if (!$this.validationErrors()) {
                         $this.canSubmit = true;
 
-                        editorMain.editor.edit(
-                            editorMain.datatable.rows({ selected: true }).indexes(), false
+                        $this.editorMain.editor.edit(
+                            $this.editorMain.datatable.rows({ selected: true }).indexes(), false
                         ).submit(function () {
                             $this.canSubmit = false;
                             location.href = ROOT_URL + "Equipment/?ajaxSuccess=true";
@@ -66,36 +67,36 @@
                 }
             });
 
-            editorMain.editor.on('postEdit', function (e, json, data) {
+            this.editorMain.editor.on('postEdit', function (e, json, data) {
 
-                var row = editorMain.datatable.row("#" + data.EquipmentId);
+                var row = $this.editorMain.datatable.row("#" + data.EquipmentId);
 
 
-                $(editorMain.datatable.cell(row.index(), 1).node()).attr("class", data.Indicators.EquipmentNameColor);
-                $(editorMain.datatable.cell(row.index(), 2).node()).attr("class", data.Indicators.PriorityColor);
-                $(editorMain.datatable.cell(row.index(), 4).node()).attr("class", data.Indicators.DrawingNumberColor);
-                $(editorMain.datatable.cell(row.index(), 5).node()).attr("class", data.Indicators.WorkOrderNumberColor);
-                $(editorMain.datatable.cell(row.index(), 7).node()).attr("class", data.Indicators.ShippingTagNumberColor);
-                $(editorMain.datatable.cell(row.index(), 9).node()).attr("class", "text-right " + data.Indicators.UnitWeightColor);
-                $(editorMain.datatable.cell(row.index(), 10).node()).attr("class", "text-right " + data.Indicators.ReadyToShipColor);
+                $($this.editorMain.datatable.cell(row.index(), 1).node()).attr("class", data.Indicators.EquipmentNameColor);
+                $($this.editorMain.datatable.cell(row.index(), 2).node()).attr("class", data.Indicators.PriorityColor);
+                $($this.editorMain.datatable.cell(row.index(), 4).node()).attr("class", data.Indicators.DrawingNumberColor);
+                $($this.editorMain.datatable.cell(row.index(), 5).node()).attr("class", data.Indicators.WorkOrderNumberColor);
+                $($this.editorMain.datatable.cell(row.index(), 7).node()).attr("class", data.Indicators.ShippingTagNumberColor);
+                $($this.editorMain.datatable.cell(row.index(), 9).node()).attr("class", "text-right " + data.Indicators.UnitWeightColor);
+                $($this.editorMain.datatable.cell(row.index(), 10).node()).attr("class", "text-right " + data.Indicators.ReadyToShipColor);
             });
 
-            editorMain.datatable.on('select', function (e, dt, type, indexes) {
+            this.editorMain.datatable.on('select', function (e, dt, type, indexes) {
                 if (type === 'row') {
                     $this.validationErrors();
                 }
             });
 
-            editorMain.datatable.on('deselect', function (e, dt, type, indexes) {
+            this.editorMain.datatable.on('deselect', function (e, dt, type, indexes) {
                 if (type === 'row') {
                     $this.clearValidation();
                 }
             });
-        }
+        };
 
         this.initEditor = function () {
 
-            editorMain.initEditor({
+            this.editorMain.initEditor({
                 formOptions: {},
                 ajax: {
                     url: ROOT_URL + "api/ImportApi/RawEquipmentEditor",
@@ -134,12 +135,12 @@
                     { name: "Order" }
                 ]
             });
-        }
+        };
 
         this.initDatatable = function () {
             var $this = this;
-           
-            editorMain.initDatatable({
+
+            this.editorMain.initDatatable({
                 ajax: {
                     url: ROOT_URL + "api/ImportApi/GetRawEquipmentFromImport",
                     dataSrc: "",
@@ -152,7 +153,7 @@
                 order: [[2, 'desc']],
                 rowId: 'EquipmentId',
                 initComplete: function (settings, json) {
-                    editorMain.datatable.rows().select();
+                    $this.editorMain.datatable.rows().select();
                     $(".table thead th.select-checkbox").closest("tr").addClass("selected");
                 },
                 columnDefs: [
@@ -252,14 +253,14 @@
                     columns: ":not(:first-child)"
                 }
             });
-        }
+        };
 
         this.validationErrors = function () {
             var $this = this;
 
             var errors = false;
 
-            editorMain.datatable.rows({ selected: true }).every(function (rowIdx, tableLoop, rowLoop) {
+            this.editorMain.datatable.rows({ selected: true }).every(function (rowIdx, tableLoop, rowLoop) {
                 var error = false;
                 var data = this.data();
 
@@ -365,13 +366,13 @@
             });
 
             return errors;
-        }
+        };
 
 
         this.clearValidation = function () {
             var $this = this;
 
-            editorMain.datatable.rows({ selected: false }).every(function (rowIdx, tableLoop, rowLoop) {
+            this.editorMain.datatable.rows({ selected: false }).every(function (rowIdx, tableLoop, rowLoop) {
 
                 $this.removeError(rowIdx, 1);
                 $this.removeError(rowIdx, 3);
@@ -384,18 +385,18 @@
                 $this.removeError(rowIdx, 10);
                 $(this.node()).removeClass("danger");
             });
-        }
+        };
 
         this.addError = function (row, column) {
-            $(editorMain.datatable.cell(row, column).node()).addClass("Error");
-        }
+            $(this.editorMain.datatable.cell(row, column).node()).addClass("Error");
+        };
 
         this.removeError = function (row, column) {
-            $(editorMain.datatable.cell(row, column).node()).removeClass("Error");
-        }
+            $(this.editorMain.datatable.cell(row, column).node()).removeClass("Error");
+        };
 
 
         this.initStyles();
         this.initEvents();
-    }
+    };
 });

@@ -519,6 +519,166 @@ namespace WendtEquipmentTracking.App.Controllers
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+        [HttpGet]
+        [HttpPost]
+        public IEnumerable<EquipmentModel> GetEquipmentRevisionFromImport(EquipmentImportModel model)
+        {
+            List<EquipmentModel> equipmentModels = new List<EquipmentModel>();
+            try
+            {
+                var user = userService.GetCurrentUser();
+                if (user != null)
+                {
+
+                    var importBO = new EquipmentImportBO
+                    {
+                        //DrawingNumber = model.DrawingNumber,
+                        Equipment = model.Equipment,
+                        FilePaths = model.FilePaths.ToDictionary(x => x.Split('+')[0], x => x.Split('+')[1]),
+                        PriorityId = model.PriorityId,
+                        QuantityMultiplier = model.QuantityMultiplier,
+                        WorkOrderNumber = model.WorkOrderNumber
+                    };
+
+                    var equipmentBOs = importService.GetEquipmentImport(importBO);
+                    var priorities = priorityService.GetAll(user.ProjectId);
+
+
+                    var random = new Random();
+                    equipmentModels = equipmentBOs.Select(x => new EquipmentModel
+                    {
+
+                        Description = x.Description.Trim(),
+                        DrawingNumber = x.DrawingNumber,
+                        EquipmentId = random.Next(),
+                        EquipmentName = x.EquipmentName,
+                        PriorityNumber = x.PriorityId != null ? (int?)priorities.FirstOrDefault(p => p.PriorityId == x.PriorityId).PriorityNumber : null,
+                        ProjectId = x.ProjectId,
+                        Quantity = x.Quantity.HasValue ? x.Quantity.Value : 0,
+                        ReleaseDate = x.ReleaseDate,
+                        ShippingTagNumber = x.ShippingTagNumber,
+                        UnitWeight = x.UnitWeight,
+                        WorkOrderNumber = x.WorkOrderNumber,
+                        ShippedFrom = "WENDT" //Default to this and allow them to change
+                    }).ToList();
+                }
+                return equipmentModels;
+            }
+            catch (Exception e)
+            {
+                HandleError(e);
+                return equipmentModels;
+            }
+        }
+
+        // Post: EquipmentRevisionEditor
+        [HttpGet]
+        [HttpPost]
+        public DtResponse EquipmentRevisionEditor()
+        {
+
+            var user = userService.GetCurrentUser();
+            var equipmentModels = new List<EquipmentModel>();
+
+            if (user != null)
+            {
+                var project = projectService.GetById(user.ProjectId);
+                var priorities = priorityService.GetAll(user.ProjectId);
+
+
+                var httpData = DatatableHelpers.HttpData();
+
+                Dictionary<string, object> data = httpData["data"] as Dictionary<string, object>;
+
+                var equipments = new List<EquipmentBO>();
+                foreach (string equipmentId in data.Keys)
+                {
+                    var row = data[equipmentId];
+                    var equipmentProperties = row as Dictionary<string, object>;
+
+                    EquipmentBO equipment = new EquipmentBO();
+
+                    equipment.EquipmentId = !string.IsNullOrWhiteSpace(equipmentProperties["EquipmentId"].ToString()) ? Convert.ToInt32(equipmentProperties["EquipmentId"]) : 0;
+                    equipment.ProjectId = user.ProjectId;
+                    equipment.Quantity = equipmentProperties["Quantity"].ToString().ToNullable<int>();
+                    equipment.ReleaseDate = !string.IsNullOrWhiteSpace(equipmentProperties["ReleaseDate"].ToString()) ? (DateTime?)Convert.ToDateTime(equipmentProperties["ReleaseDate"]) : null;
+                    equipment.UnitWeight = equipmentProperties["UnitWeightText"].ToString().ToNullable<double>();
+                    equipment.Description = equipmentProperties["Description"].ToString().Trim();
+                    equipment.DrawingNumber = equipmentProperties["DrawingNumber"].ToString();
+                    equipment.EquipmentName = equipmentProperties["EquipmentName"].ToString();
+                    equipment.ShippingTagNumber = equipmentProperties["ShippingTagNumber"].ToString();
+                    equipment.WorkOrderNumber = equipmentProperties["WorkOrderNumber"].ToString();
+                    equipment.IsHardware = equipment.EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase);
+                    equipment.ShippedFrom = equipmentProperties["ShippedFrom"].ToString();
+                    equipment.Order = !string.IsNullOrWhiteSpace(equipmentProperties["Order"].ToString()) ? Convert.ToInt32(equipmentProperties["Order"]) : 0;
+
+                    var priorityNumber = equipmentProperties["PriorityNumber"].ToString().ToNullable<int>();
+                    var priority = priorities.FirstOrDefault(x => x.PriorityNumber == priorityNumber);
+                    if (priority != null)
+                    {
+                        equipment.PriorityId = priority.PriorityId;
+                    }
+
+                    equipments.Add(equipment);
+                }
+
+                var doSubmit = httpData["doSubmit"];
+                if (doSubmit.ToString() == "true")
+                {
+                    equipmentService.SaveAll(equipments.OrderByDescending(x => x.Order));
+                }
+
+                equipmentModels = equipments.Select(x => new EquipmentModel
+                {
+                    EquipmentId = x.EquipmentId,
+                    PriorityNumber = x.PriorityId != null ? (int?)priorities.FirstOrDefault(e => e.PriorityId == x.PriorityId).PriorityNumber : null,
+                    ProjectId = x.ProjectId,
+                    Quantity = x.Quantity.HasValue ? x.Quantity.Value : 0,
+                    ReleaseDate = x.ReleaseDate,
+                    UnitWeight = x.UnitWeight,
+                    Description = x.Description,
+                    DrawingNumber = x.DrawingNumber,
+                    EquipmentName = x.EquipmentName,
+                    ShippingTagNumber = x.ShippingTagNumber,
+                    WorkOrderNumber = x.WorkOrderNumber,
+                    ShippedFrom = x.ShippedFrom
+                }).ToList();
+
+                equipmentModels.ForEach(x => x.SetIndicators(project.ProjectNumber, project.IsCustomsProject));
+            }
+
+
+
+            return new DtResponse { data = equipmentModels };
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         // GET: GetVendorsFromImport/
         [HttpGet]
         [HttpPost]

@@ -2,32 +2,34 @@
 
     var TableBOL = function () {
 
+        this.tableMain = new Table();
+
         this.initStyles = function () {
             var $this = this;
 
             this.initEditor();
             this.initDatatable();
-        }
+        };
 
         this.initEvents = function () {
             var $this = this;
-        }
+        };
 
         this.initEditor = function () {
 
-            tableMain.initEditor({
+            this.tableMain.initEditor({
                 ajax: {
                     url: ROOT_URL + "api/BillOfLadingApi/Delete",
                     dataSrc: ""
                 },
                 idSrc: 'BillOfLadingId'
             });
-        }
+        };
 
         this.initDatatable = function () {
             var $this = this;
 
-            tableMain.initDatatable({
+            this.tableMain.initDatatable({
                 ajax: {
                     url: ROOT_URL + "api/BillOfLadingApi/Table",
                     dataSrc: ""
@@ -73,7 +75,7 @@
 
         this.initStyles();
         this.initEvents();
-    }
+    };
 
     tableBOL = new TableBOL();
 

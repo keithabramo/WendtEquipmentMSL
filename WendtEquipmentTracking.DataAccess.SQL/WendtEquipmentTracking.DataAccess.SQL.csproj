@@ -62,8 +62,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\IEquipmentAttachmentEngine.cs" />
     <Compile Include="Api\ITruckingScheduleEngine.cs" />
-    <Compile Include="Api\IPriorityPriceEngine.cs" />
+    <Compile Include="Api\IPriorityEngine.cs" />
     <Compile Include="Api\IHardwareCommercialCodeEngine.cs" />
     <Compile Include="Api\IBrokerEngine.cs" />
     <Compile Include="Api\IVendorEngine.cs" />
@@ -75,12 +76,16 @@
     <Compile Include="BillOfLading.cs">
       <DependentUpon>WendtEquipmentTracking.tt</DependentUpon>
     </Compile>
+    <Compile Include="BillOfLadingAttachment.cs">
+      <DependentUpon>WendtEquipmentTracking.tt</DependentUpon>
+    </Compile>
     <Compile Include="BillOfLadingEquipment.cs">
       <DependentUpon>WendtEquipmentTracking.tt</DependentUpon>
     </Compile>
     <Compile Include="Broker.cs">
       <DependentUpon>WendtEquipmentTracking.tt</DependentUpon>
     </Compile>
+    <Compile Include="Engine\EquipmentAttachmentEngine.cs" />
     <Compile Include="Engine\TruckingScheduleEngine.cs" />
     <Compile Include="Engine\HardwareKitEngine.cs" />
     <Compile Include="Engine\BillOfLadingEngine.cs" />
@@ -94,6 +99,9 @@
     <Compile Include="Engine\ProjectEngine.cs" />
     <Compile Include="Engine\EquipmentEngine.cs" />
     <Compile Include="Equipment.cs">
+      <DependentUpon>WendtEquipmentTracking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EquipmentAttachment.cs">
       <DependentUpon>WendtEquipmentTracking.tt</DependentUpon>
     </Compile>
     <Compile Include="HardwareCommercialCode.cs">
@@ -118,6 +126,10 @@
     <Compile Include="Specification.cs" />
     <Compile Include="Specifications\BillOfLading\ProjectIdSpecification.cs" />
     <Compile Include="Specifications\BillOfLading\IsDeleted.cs" />
+    <Compile Include="Specifications\EquipmentAttachments\IdSpecification.cs" />
+    <Compile Include="Specifications\EquipmentAttachments\IsDeleted.cs" />
+    <Compile Include="Specifications\EquipmentAttachments\EquipmentIdSpecification.cs" />
+    <Compile Include="Specifications\EquipmentAttachmentSpecs.cs" />
     <Compile Include="Specifications\Projects\ProjectNumberSpecification.cs" />
     <Compile Include="Specifications\TruckingScheduleSpecs.cs" />
     <Compile Include="Specifications\TruckingSchedules\IdSpecification.cs" />

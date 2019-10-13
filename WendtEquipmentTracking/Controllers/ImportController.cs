@@ -51,9 +51,9 @@ namespace WendtEquipmentTracking.App.Controllers
             return View();
         }
 
-        // POST: Equipment
+        // POST: SelectEquipmentFile
         [HttpPost]
-        public JsonResult SelectEquipmentFile(ImportModel model)
+        public JsonResult SelectEquipmentFile(FileModel model)
         {
             var equipmentImportModel = new EquipmentImportModel();
 
@@ -138,6 +138,121 @@ namespace WendtEquipmentTracking.App.Controllers
         }
 
 
+
+
+
+        // GET: EquipmentRevision
+        public ActionResult EquipmentRevision()
+        {
+            var user = userService.GetCurrentUser();
+
+            if (user == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var prioritiesBOs = priorityService.GetAll(user.ProjectId);
+            var priorities = prioritiesBOs.Select(x => x.PriorityNumber).OrderBy(p => p).ToList();
+            var project = projectService.GetById(user.ProjectId);
+
+            ViewBag.ProjectNumber = project.ProjectNumber + (!string.IsNullOrWhiteSpace(project.ShipToCompany) ? ": " + project.ShipToCompany : "");
+            ViewBag.Priorities = priorities;
+
+            return View();
+        }
+
+        // POST: SelectEquipmentRevisionFile
+        [HttpPost]
+        public JsonResult SelectEquipmentRevisionFile(FileModel model)
+        {
+            var equipmentImportModel = new EquipmentImportModel();
+
+            try
+            {
+                if (model.File != null)
+                {
+                    byte[] file = null;
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        model.File.InputStream.CopyTo(memoryStream);
+                        file = memoryStream.ToArray();
+                    }
+
+                    var filePath = importService.SaveFile(file);
+
+                    var user = userService.GetCurrentUser();
+                    var priority = priorityService.GetAll(user.ProjectId).FirstOrDefault();
+
+                    //check to see if the file is in correct format
+                    try
+                    {
+                        var importBO = new EquipmentImportBO
+                        {
+                            //DrawingNumber = string.Empty,
+                            Equipment = string.Empty,
+                            FilePaths = new Dictionary<string, string>() { { "", filePath } },
+                            PriorityId = priority != null ? (int?)priority.PriorityId : null,
+                            QuantityMultiplier = 1,
+                            WorkOrderNumber = string.Empty
+                        };
+
+                        importService.GetEquipmentImport(importBO);
+                    }
+                    catch (Exception e)
+                    {
+                        return Json(new { Error = "The file does not conform to the expected format. Please make sure all column headers are spelled correctly and in the first row of the spreadsheet. Details: " + e.Message });
+                    }
+
+                    equipmentImportModel.DrawingNumber = Path.GetFileNameWithoutExtension(model.File.FileName);
+                    equipmentImportModel.FilePath = filePath;
+
+                    return Json(equipmentImportModel);
+                }
+                else
+                {
+                    return Json(new { Error = "You must specify a file." });
+                }
+            }
+            catch (Exception e)
+            {
+                HandleError("There was an error", e);
+                return Json(new { Error = "There was an error while trying to load this drawing file." });
+            }
+        }
+
+        public ActionResult EquipmentRevisionConfigurationPartial()
+        {
+            var user = userService.GetCurrentUser();
+
+            double projectNumber = 0;
+            IEnumerable<PriorityModel> priorities = new List<PriorityModel>();
+            if (user != null)
+            {
+                var projectBO = projectService.GetById(user.ProjectId);
+                var priorityBOs = priorityService.GetAll(user.ProjectId);
+
+                projectNumber = projectBO.ProjectNumber;
+                priorities = priorityBOs.Select(x => new PriorityModel
+                {
+                    PriorityId = x.PriorityId,
+                    PriorityNumber = x.PriorityNumber
+                }).OrderBy(p => p.PriorityNumber).ToList();
+            }
+
+            var equipmentImportModel = new EquipmentImportModel();
+            equipmentImportModel.Priorities = priorities;
+            equipmentImportModel.QuantityMultiplier = 1;
+            equipmentImportModel.WorkOrderNumber = projectNumber == 0 ? string.Empty : projectNumber.ToString();
+
+            return PartialView(equipmentImportModel);
+        }
+
+
+
+
+
+
+
         public ActionResult WorkOrderPrice()
         {
             var user = userService.GetCurrentUser();
@@ -152,7 +267,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
         // POST: Equipment
         [HttpPost]
-        public JsonResult SelectWorkOrderPriceFile(ImportModel model)
+        public JsonResult SelectWorkOrderPriceFile(FileModel model)
         {
             var workOrderPriceImportModel = new WorkOrderPriceImportModel();
 
@@ -218,7 +333,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
         // POST: Equipment
         [HttpPost]
-        public JsonResult SelectRawEquipmentFile(ImportModel model)
+        public JsonResult SelectRawEquipmentFile(FileModel model)
         {
             var rawEquipmentImportModel = new RawEquipmentImportModel();
 
@@ -277,7 +392,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
         // POST: Equipment
         [HttpPost]
-        public JsonResult SelectPriorityFile(ImportModel model)
+        public JsonResult SelectPriorityFile(FileModel model)
         {
             var priorityImportModel = new PriorityImportModel();
 
@@ -336,7 +451,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
         // POST: SelectVendorFile
         [HttpPost]
-        public JsonResult SelectVendorFile(ImportModel model)
+        public JsonResult SelectVendorFile(FileModel model)
         {
             var vendorImportModel = new VendorImportModel();
 
@@ -395,7 +510,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
         // POST: SelectBrokerFile
         [HttpPost]
-        public JsonResult SelectBrokerFile(ImportModel model)
+        public JsonResult SelectBrokerFile(FileModel model)
         {
             var brokerImportModel = new BrokerImportModel();
 
@@ -453,7 +568,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
         // POST: SelectHardwareCommercialCodeFile
         [HttpPost]
-        public JsonResult SelectHardwareCommercialCodeFile(ImportModel model)
+        public JsonResult SelectHardwareCommercialCodeFile(FileModel model)
         {
             var hardwareCommercialCodeImportModel = new HardwareCommercialCodeImportModel();
 

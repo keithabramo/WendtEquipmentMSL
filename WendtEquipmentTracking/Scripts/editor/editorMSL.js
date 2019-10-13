@@ -4,6 +4,7 @@
 
         this.editableColumns = [2, 3, 4, 5, 6, 7, 8, 9, 10, 13, 17, 18, 21, 22];
         this.alwaysEditableColumns = [18, 21, 22];
+        this.editorMain = new Editor();
 
         this.initStyles = function () {
             var $this = this;
@@ -21,7 +22,7 @@
                         return true;
                     } else {
                         var leftToShip = data[15];
-                        var isAssociatedToHardwareKit = data[26];
+                        var isAssociatedToHardwareKit = data[27];
 
                         if (leftToShip && parseInt(leftToShip, 10) > 0 && isAssociatedToHardwareKit === "False") {
                             return true;
@@ -41,7 +42,7 @@
                     } else {
                         var fullyShipped = data[16];
                         var readyToShip = data[13];
-                        var isAssociatedToHardwareKit = data[26];
+                        var isAssociatedToHardwareKit = data[27];
 
                         if (fullyShipped === "NO" && readyToShip && parseInt(readyToShip, 10) > 0 && isAssociatedToHardwareKit === "False") {
                             return true;
@@ -74,8 +75,8 @@
                 function (settings, data, dataIndex) {
                     var errorFilter = $('#errorFilter').is(":checked");
 
-                    var isDuplicateText = data[28];
-                    var hasErrorsText = data[25];
+                    var isDuplicateText = data[29];
+                    var hasErrorsText = data[26];
 
 
                     if (!errorFilter) {
@@ -110,26 +111,26 @@
             var $this = this;
 
             $('#readyToShipFilter').on("change", function () {
-                editorMain.datatable.draw();
+                $this.editorMain.datatable.draw();
             });
 
             $('#workInProgressFilter').on("change", function () {
-                editorMain.datatable.draw();
+                $this.editorMain.datatable.draw();
             });
 
             $('#hardwareFilter').on("change", function () {
-                editorMain.datatable.draw();
+                $this.editorMain.datatable.draw();
             });
 
             $('#errorFilter').on("change", function () {
-                editorMain.datatable.draw();
+                $this.editorMain.datatable.draw();
             });
 
             $(".createSubmit").on("click", function () {
 
                 var $row = $(".table tfoot tr");
 
-                var form = editorMain.editor.create(false);
+                var form = $this.editorMain.editor.create(false);
                 form.set('EquipmentName', $row.find("input[name='EquipmentName']").val());
                 form.set('PriorityNumber', $row.find("select[name='PriorityNumber']").val());
                 form.set('ReleaseDate', $row.find("input[name='ReleaseDate']").val());
@@ -146,14 +147,14 @@
                 form.set('Notes', $row.find("textarea[name='Notes']").val());
                 form.submit();
 
-                editorMain.datatable.draw();
+                $this.editorMain.datatable.draw();
             });
 
             $('.table.my-datatable').on('click', ".copy", function () {
 
                 var $row = $(this).closest('tr');
                 var $createRow = $(".table.my-datatable tfoot tr");
-                var rowData = editorMain.datatable.row($row).data();
+                var rowData = $this.editorMain.datatable.row($row).data();
 
                 $createRow.find("input[name='EquipmentName']").val(rowData.EquipmentName);
                 $createRow.find("select[name='PriorityNumber']").val(rowData.PriorityNumber);
@@ -174,7 +175,7 @@
             });
 
 
-            editorMain.editor.on('preSubmit', function (e, data, action) {
+            this.editorMain.editor.on('preSubmit', function (e, data, action) {
                 if (action !== 'remove') {
                     var equipmentName = this.field('EquipmentName');
                     var releaseDate = this.field('ReleaseDate');
@@ -326,20 +327,20 @@
                 }
             });
 
-            editorMain.editor.on('preOpen', function (e, mode, action) {
+            this.editorMain.editor.on('preOpen', function (e, mode, action) {
 
                 var editable = true;
 
                 if (action !== "remove") {
 
-                    var rowData = editorMain.datatable.row(editorMain.editor.modifier().row).data();
-                    var columnIndex = editorMain.editor.modifier().column;
+                    var rowData = $this.editorMain.datatable.row($this.editorMain.editor.modifier().row).data();
+                    var columnIndex = $this.editorMain.editor.modifier().column;
 
-                    if ($.inArray(editorMain.editor.modifier().column, $this.alwaysEditableColumns) < 0) {
+                    if ($.inArray($this.editorMain.editor.modifier().column, $this.alwaysEditableColumns) < 0) {
                         if (rowData.IsAssociatedToHardwareKit || (rowData.FullyShippedText == "YES" && rowData.Quantity != 0)) {
                             editable = false;
                         }
-                        else if ($.inArray(editorMain.editor.modifier().column, $this.editableColumns) < 0) {
+                        else if ($.inArray($this.editorMain.editor.modifier().column, $this.editableColumns) < 0) {
                             editable = false;
                         } else if (rowData.IsHardwareKit && columnIndex == 2) {
                             editable = false;
@@ -351,7 +352,7 @@
 
             });
 
-            editorMain.datatable.on('preAutoFill', function (e, datatable, cells) {
+            this.editorMain.datatable.on('preAutoFill', function (e, datatable, cells) {
                 datatable.cell.blur();
 
                 // If any of these cells can't be edited, set their values back to original
@@ -359,7 +360,7 @@
                     var rowIndex = cell[0].index.row;
                     var columnIndex = cell[0].index.column;
 
-                    var rowData = editorMain.datatable.row(rowIndex).data();
+                    var rowData = $this.editorMain.datatable.row(rowIndex).data();
                     
 
                     if ($.inArray(columnIndex, $this.alwaysEditableColumns) < 0) {
@@ -377,7 +378,7 @@
                 
             });
 
-            editorMain.editor.on('postCreate', function (e, json, data) {
+            this.editorMain.editor.on('postCreate', function (e, json, data) {
 
                 var $createRow = $("tfoot tr");
 
@@ -388,9 +389,9 @@
                 $createRow.find(".datePickerTable").datepicker("setDate", new Date());
             });
 
-            editorMain.editor.on('postEdit', function (e, json, data) {
+            this.editorMain.editor.on('postEdit', function (e, json, data) {
 
-                var row = editorMain.datatable.row("#" + data.EquipmentId);
+                var row = $this.editorMain.datatable.row("#" + data.EquipmentId);
 
                 if (data.IsDuplicate) {
                     $(row.node()).attr("class", 'warning');
@@ -406,25 +407,25 @@
                     $(row.node()).removeClass('active');
                 }
 
-                $(editorMain.datatable.cell(row.index(), 2).node()).attr("class", data.Indicators.EquipmentNameColor);
-                $(editorMain.datatable.cell(row.index(), 3).node()).attr("class", data.Indicators.PriorityColor);
-                $(editorMain.datatable.cell(row.index(), 5).node()).attr("class", data.Indicators.DrawingNumberColor);
-                $(editorMain.datatable.cell(row.index(), 6).node()).attr("class", data.Indicators.WorkOrderNumberColor);
-                $(editorMain.datatable.cell(row.index(), 8).node()).attr("class", data.Indicators.ShippingTagNumberColor);
-                $(editorMain.datatable.cell(row.index(), 10).node()).attr("class", "text-right " + data.Indicators.UnitWeightColor);
-                $(editorMain.datatable.cell(row.index(), 13).node()).attr("class", "text-right " + data.Indicators.ReadyToShipColor);
-                $(editorMain.datatable.cell(row.index(), 14).node()).attr("class", "text-right active " + data.Indicators.ShippedQtyColor);
-                $(editorMain.datatable.cell(row.index(), 15).node()).attr("class", "text-right active " + data.Indicators.LeftToShipColor);
-                $(editorMain.datatable.cell(row.index(), 16).node()).attr("class", "active " + data.Indicators.FullyShippedColor);
-                $(editorMain.datatable.cell(row.index(), 19).node()).attr("class", "text-right active " + data.Indicators.CustomsValueColor);
-                $(editorMain.datatable.cell(row.index(), 20).node()).attr("class", "text-right active " + data.Indicators.SalePriceColor);
+                $($this.editorMain.datatable.cell(row.index(), 2).node()).attr("class", data.Indicators.EquipmentNameColor);
+                $($this.editorMain.datatable.cell(row.index(), 3).node()).attr("class", data.Indicators.PriorityColor);
+                $($this.editorMain.datatable.cell(row.index(), 5).node()).attr("class", data.Indicators.DrawingNumberColor);
+                $($this.editorMain.datatable.cell(row.index(), 6).node()).attr("class", data.Indicators.WorkOrderNumberColor);
+                $($this.editorMain.datatable.cell(row.index(), 8).node()).attr("class", data.Indicators.ShippingTagNumberColor);
+                $($this.editorMain.datatable.cell(row.index(), 10).node()).attr("class", "text-right " + data.Indicators.UnitWeightColor);
+                $($this.editorMain.datatable.cell(row.index(), 13).node()).attr("class", "text-right " + data.Indicators.ReadyToShipColor);
+                $($this.editorMain.datatable.cell(row.index(), 14).node()).attr("class", "text-right active " + data.Indicators.ShippedQtyColor);
+                $($this.editorMain.datatable.cell(row.index(), 15).node()).attr("class", "text-right active " + data.Indicators.LeftToShipColor);
+                $($this.editorMain.datatable.cell(row.index(), 16).node()).attr("class", "active " + data.Indicators.FullyShippedColor);
+                $($this.editorMain.datatable.cell(row.index(), 19).node()).attr("class", "text-right active " + data.Indicators.CustomsValueColor);
+                $($this.editorMain.datatable.cell(row.index(), 20).node()).attr("class", "text-right active " + data.Indicators.SalePriceColor);
             });
 
             $(".table").on("mousedown", "td.focus", function (e) {
 
                 setTimeout(function () {
                     if ($(".dt-autofill-select").length) {
-                        editorMain.datatable.cell.blur();
+                        $this.editorMain.datatable.cell.blur();
                     }
                 }, 100);
 
@@ -432,7 +433,7 @@
             });
 
             $("#deleteRecords").on("click", function () {
-                var selectedRows = editorMain.datatable.rows({ selected: true });
+                var selectedRows = $this.editorMain.datatable.rows({ selected: true });
                 if (selectedRows.length) {
 
                     var rawIndexes = selectedRows.indexes();
@@ -444,7 +445,7 @@
                         }
                     });
 
-                    editorMain.editor
+                    $this.editorMain.editor
                         .title('Delete records')
                         .buttons('Confirm delete')
                         .message('Are you sure you want to delete these ' + updatedIndexes.length + ' records?')
@@ -458,16 +459,22 @@
             });
 
             $("#snipTable").on("click", function () {
-                editorMain.datatable.buttons('.buttons-print' ).trigger();
+                $this.editorMain.datatable.buttons('.buttons-print' ).trigger();
             });
 
-            editorMain.datatable.on('select', function (e, dt, type, indexes) {
+            $('#equipmentAttachmentModal').on('show.bs.modal', function (e) {
+                var equipmentId = $(e.relatedTarget).attr("data-equipmentid");
+
+                tableEquipmentAttachment.init(equipmentId);
+            });
+
+            this.editorMain.datatable.on('select', function (e, dt, type, indexes) {
                 if (type === 'row') {
                     $this.updateCustomActions();
                 }
             });
 
-            editorMain.datatable.on('deselect', function (e, dt, type, indexes) {
+            this.editorMain.datatable.on('deselect', function (e, dt, type, indexes) {
                 if (type === 'row') {
                     $this.updateCustomActions();
                 }
@@ -475,7 +482,7 @@
         };
 
         this.initEditor = function () {
-            editorMain.initEditor({
+            this.editorMain.initEditor({
                 ajax: {
                     url: ROOT_URL + "api/EquipmentApi/Editor",
                     dataSrc: ""
@@ -550,7 +557,7 @@
                 }
             });
 
-            editorMain.initDatatable({
+            this.editorMain.initDatatable({
                 ajax: {
                     url: ROOT_URL + "api/EquipmentApi/Table",
                     dataSrc: ""
@@ -573,7 +580,7 @@
                     }
 
                     if (data.IsHardwareKit) {
-                        $(editorMain.datatable.cell(index, 2).node()).addClass("active");
+                        $($this.editorMain.datatable.cell(index, 2).node()).addClass("active");
                     }
                 },
                 select: {
@@ -638,7 +645,7 @@
                         autoPrint: false
                     }
                 ],
-                order: [[4, 'desc'], [27, 'desc']],
+                order: [[4, 'desc'], [28, 'desc']],
                 columnDefs: [
                     {
                         orderable: false,
@@ -790,36 +797,35 @@
                         data: "LatestBOLDateShipped", "targets": 24, type: "date",
                         className: "latestBOLDateShippedWidth"
                     },
-                    //{
-                    //    "targets": 25,
-                    //    searchable: false,
-                    //    sortable: false,
-                    //    visible: false,
-                    //    render: function (data, type, row, meta) {
-                    //        return !row.HasBillOfLading && !row.IsAssociatedToHardwareKit ? '<a href="javascript:void(0);" class="delete">Delete</a>' : '';
-                    //    }
-                    //},
                     {
-                        data: "HasErrorsText",
                         "targets": 25,
-                        sortable: false,
-                        visible: false
+                        searchable: false,
+                        orderable: false,
+                        render: function (datadata, type, row, meta) {
+                            return '<a data-equipmentid="' + row.EquipmentId + '" href="javascript:void(0);" class="attachments" data-toggle="modal" data-toggle="modal" data-target="#equipmentAttachmentModal">Attachments</a>';
+                        }
                     },
                     {
-                        data: "IsAssociatedToHardwareKitText",
+                        data: "HasErrorsText",
                         "targets": 26,
                         sortable: false,
                         visible: false
                     },
                     {
-                        data: "EquipmentId",
+                        data: "IsAssociatedToHardwareKitText",
                         "targets": 27,
+                        sortable: false,
+                        visible: false
+                    },
+                    {
+                        data: "EquipmentId",
+                        "targets": 28,
                         searchable: false,
                         visible: false
                     },
                     {
                         data: "IsDuplicateText",
-                        "targets": 28,
+                        "targets": 29,
                         sortable: false,
                         visible: false
                     }
@@ -828,7 +834,7 @@
         };
 
         this.updateCustomActions = function () {
-            var selectedRowsCount = editorMain.datatable.rows({ selected: true }).indexes().length;
+            var selectedRowsCount = this.editorMain.datatable.rows({ selected: true }).indexes().length;
 
             if (selectedRowsCount) {
                 $(".custom-actions button, .custom-actions a").removeAttr("disabled");

@@ -18,12 +18,8 @@
                 if (fontSize && !isNaN(fontSize)) {
                     $this.fontStyle.text(".table-styled tbody td, .table-styled thead th, .table-styled thead th input.form-control {font-size: " + fontSize + "px !important;}");
 
-                    if (typeof editorMain !== "undefined" && editorMain) {
-                        editorMain.datatable.columns.adjust();
-                    }
-                    if (typeof tableMain !== "undefined" && tableMain) {
-                        tableMain.datatable.columns.adjust();
-                    }
+                    $(this).trigger("fontadjusted");
+
                 }
             });
 

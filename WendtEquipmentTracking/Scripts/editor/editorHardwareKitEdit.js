@@ -3,6 +3,7 @@
     var EditorHardwareKit = function () {
 
         this.canSubmit = false;
+        this.editorMain = new Editor();
 
 
         this.initStyles = function () {
@@ -13,12 +14,12 @@
 
             this.initEditor();
             this.initDatatable();
-        }
+        };
 
         this.initEvents = function () {
             var $this = this;
 
-            editorMain.editor.on('preSubmit', function (e, data, action) {
+            this.editorMain.editor.on('preSubmit', function (e, data, action) {
                 if (action !== 'remove') {
                     var quantityToShip = this.field('QuantityToShip');
 
@@ -39,7 +40,7 @@
 
                 data.doSubmit = $this.canSubmit;
                 if ($this.canSubmit) {
-                    
+
 
                     data.HardwareKitNumber = $("#HardwareKitNumber").val();
                     data.ExtraQuantityPercentage = $("#ExtraQuantityPercentage").val();
@@ -48,9 +49,9 @@
 
             });
 
-            editorMain.editor.on('postEdit', function (e, json, data) {
+            this.editorMain.editor.on('postEdit', function (e, json, data) {
 
-                var row = editorMain.datatable.row("#" + data.HardwareKitGroupId);
+                var row = $this.editorMain.datatable.row("#" + data.HardwareKitGroupId);
 
 
             });
@@ -72,10 +73,10 @@
                 if ($("#HardwareKitForm").valid()) {
                     $this.canSubmit = true;
 
-                    var selectedRows = editorMain.datatable.rows({ selected: true }).indexes();
-                        if (selectedRows.length) {
-                            editorMain.editor.edit(
-                                selectedRows, false
+                    var selectedRows = $this.editorMain.datatable.rows({ selected: true }).indexes();
+                    if (selectedRows.length) {
+                        $this.editorMain.editor.edit(
+                            selectedRows, false
                         ).submit(function () {
                             $this.canSubmit = false;
                             $("#Save").button("reset");
@@ -98,11 +99,11 @@
                 }
             });
 
-        }
+        };
 
         this.initEditor = function () {
 
-            editorMain.initEditor({
+            this.editorMain.initEditor({
                 ajax: {
                     url: ROOT_URL + "api/HardwareKitApi/Editor",
                     dataSrc: ""
@@ -116,12 +117,12 @@
                     { name: "QuantityToShip" }
                 ]
             });
-        }
+        };
 
         this.initDatatable = function () {
             var $this = this;
-           
-            editorMain.initDatatable({
+
+            this.editorMain.initDatatable({
                 ajax: {
                     url: ROOT_URL + "api/HardwareKitApi/EditTable",
                     dataSrc: "",
@@ -134,11 +135,11 @@
                 autoWidth: false,
                 initComplete: function (settings, json) {
 
-                    var selectedRows = editorMain.datatable.rows()
+                    $this.editorMain.datatable.rows()
                         .every(function (rowIdx, tableLoop, rowLoop) {
                             var data = this.data();
                             if (data.HardwareKitId > 0) {
-                                editorMain.datatable.row(rowIdx).select();
+                                $this.editorMain.datatable.row(rowIdx).select();
                             }
                         });
 
@@ -181,11 +182,11 @@
                     columns: [4]
                 }
             });
-        }
+        };
 
         this.initStyles();
         this.initEvents();
-    }
+    };
 
     editorHardwareKit = new EditorHardwareKit();
 

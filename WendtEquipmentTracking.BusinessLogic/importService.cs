@@ -1,5 +1,6 @@
 ﻿
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using WendtEquipmentTracking.BusinessLogic.Api;
 using WendtEquipmentTracking.BusinessLogic.BO;
@@ -31,7 +32,11 @@ namespace WendtEquipmentTracking.BusinessLogic
 
         public string SaveFile(byte[] file)
         {
-            return importEngine.SaveFile(file);
+            var tempFile = Path.GetTempFileName();
+
+            importEngine.SaveFile(tempFile, file);
+
+            return tempFile;
         }
 
 

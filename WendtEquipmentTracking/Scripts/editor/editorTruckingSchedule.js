@@ -3,6 +3,7 @@
     var EditorTruckingSchedule = function () {
 
         this.editableColumns = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+        this.editorMain = new Editor();
 
         this.initStyles = function () {
             var $this = this;
@@ -74,22 +75,22 @@
             var $this = this;
 
             $('#RFPStatusFilter').on("change", function () {
-                editorMain.datatable.draw();
+                $this.editorMain.datatable.draw();
             });
 
             $('#PlannedStatusFilter').on("change", function () {
-                editorMain.datatable.draw();
+                $this.editorMain.datatable.draw();
             });
 
             $('#ConfirmedStatusFilter').on("change", function () {
-                editorMain.datatable.draw();
+                $this.editorMain.datatable.draw();
             });
 
             $('#HideClosedStatusFilter').on("change", function () {
-                editorMain.datatable.draw();
+                $this.editorMain.datatable.draw();
             });
 
-            editorMain.editor.on('preSubmit', function (e, data, action) {
+            this.editorMain.editor.on('preSubmit', function (e, data, action) {
                 if (action !== 'remove') {
                     //var equipmentName = this.field('EquipmentName');
                     //var releaseDate = this.field('ReleaseDate');
@@ -241,7 +242,7 @@
                 }
             });
 
-            editorMain.editor.on('postEdit', function (e, json, data) {
+            this.editorMain.editor.on('postEdit', function (e, json, data) {
                 var project = $this.getProject(data.ProjectNumber);
 
                 var shipToResults = $this.getShipToList(project);
@@ -254,7 +255,7 @@
 
                 var $row = $(".table tfoot tr");
 
-                var form = editorMain.editor.create(false);
+                var form = $this.editorMain.editor.create(false);
                 form.set('Carrier', $row.find("input[name='Carrier']").val());
                 form.set('Comments', $row.find("input[name='Comments']").val());
                 form.set('Description', $row.find("input[name='Description']").val());
@@ -273,15 +274,15 @@
                 
                 form.submit();
 
-                editorMain.datatable.draw();
+                $this.editorMain.datatable.draw();
             });
 
-            editorMain.editor.on('preOpen', function (e, mode, action) {
+            this.editorMain.editor.on('preOpen', function (e, mode, action) {
 
                 var editable = true;
 
                 if (action !== "remove") {
-                    var columnIndex = editorMain.editor.modifier().column;
+                    var columnIndex = $this.editorMain.editor.modifier().column;
 
                     if ($.inArray(columnIndex, $this.editableColumns) < 0) {
                         editable = false;
@@ -292,7 +293,7 @@
 
             });
 
-            editorMain.datatable.on('preAutoFill', function (e, datatable, cells) {
+            this.editorMain.datatable.on('preAutoFill', function (e, datatable, cells) {
                 datatable.cell.blur();
 
                 // If any of these cells can't be edited, set their values back to original
@@ -306,7 +307,7 @@
 
             });
 
-            editorMain.editor.on('postCreate', function (e, json, data) {
+            this.editorMain.editor.on('postCreate', function (e, json, data) {
 
                 var $createRow = $("tfoot tr");
 
@@ -318,7 +319,7 @@
 
                 setTimeout(function () {
                     if ($(".dt-autofill-select").length) {
-                        editorMain.datatable.cell.blur();
+                        $this.editorMain.datatable.cell.blur();
                     }
                 }, 100);
             });
@@ -327,7 +328,7 @@
 
                 var $row = $(this).closest('tr');
                 var $createRow = $(".table.my-datatable tfoot tr");
-                var rowData = editorMain.datatable.row($row).data();
+                var rowData = $this.editorMain.datatable.row($row).data();
 
                 $createRow.find("input[name='ProjectNumber']").val(rowData.ProjectNumber);
 
@@ -356,7 +357,7 @@
 
         this.initEditor = function () {
 
-            editorMain.initEditor({
+            this.editorMain.initEditor({
                 ajax: {
                     url: ROOT_URL + "api/TruckingScheduleApi/Editor",
                     dataSrc: ""
@@ -432,7 +433,7 @@
         this.initDatatable = function () {
             var $this = this;
 
-            editorMain.initDatatable({
+            this.editorMain.initDatatable({
                 ajax: {
                     url: ROOT_URL + "api/TruckingScheduleApi/Table",
                     dataSrc: ""
@@ -453,7 +454,7 @@
 
                         var shipToResults = $this.getShipToList(project);
 
-                        editorMain.editor.field("ShipTo").update(shipToResults);
+                        $this.editorMain.editor.field("ShipTo").update(shipToResults);
                     }
                 },
                 columnDefs: [

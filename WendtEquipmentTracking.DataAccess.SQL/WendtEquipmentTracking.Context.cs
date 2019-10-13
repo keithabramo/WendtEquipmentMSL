@@ -28,9 +28,11 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         }
     
         public virtual DbSet<BillOfLading> BillOfLadings { get; set; }
+        public virtual DbSet<BillOfLadingAttachment> BillOfLadingAttachments { get; set; }
         public virtual DbSet<BillOfLadingEquipment> BillOfLadingEquipments { get; set; }
         public virtual DbSet<Broker> Brokers { get; set; }
         public virtual DbSet<Equipment> Equipments { get; set; }
+        public virtual DbSet<EquipmentAttachment> EquipmentAttachments { get; set; }
         public virtual DbSet<HardwareCommercialCode> HardwareCommercialCodes { get; set; }
         public virtual DbSet<HardwareKit> HardwareKits { get; set; }
         public virtual DbSet<HardwareKitEquipment> HardwareKitEquipments { get; set; }

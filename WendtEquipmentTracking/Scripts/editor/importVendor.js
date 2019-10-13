@@ -23,7 +23,7 @@ $(function () {
                         $("#FilePath").val(response.FilePath);
 
                         if ($this.vendorTable) {
-                            editorMain.datatable.ajax.reload();
+                            $this.vendorTable.editorMain.datatable.ajax.reload();
                         } else {
 
                             $this.vendorTable = new ImportVendorTable();

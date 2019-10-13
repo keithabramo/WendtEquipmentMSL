@@ -69,7 +69,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\IFileEngine.cs" />
     <Compile Include="Api\IImportEngine.cs" />
+    <Compile Include="Domain\EquipmentRevisionImport.cs" />
     <Compile Include="Domain\RawEquipmentRow.cs" />
     <Compile Include="Domain\HardwareCommercialCodeRow.cs" />
     <Compile Include="Domain\PriorityRow.cs" />
@@ -78,6 +80,7 @@
     <Compile Include="Domain\WorkOrderPriceRow.cs" />
     <Compile Include="Domain\EquipmentRow.cs" />
     <Compile Include="Domain\EquipmentImport.cs" />
+    <Compile Include="Engine\AttachmentEngine.cs" />
     <Compile Include="Engine\ImportEngine.cs" />
     <Compile Include="Helper\ImportHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

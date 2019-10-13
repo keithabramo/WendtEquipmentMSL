@@ -23,7 +23,7 @@ $(function () {
                         $("#FilePath").val(response.FilePath);
 
                         if ($this.priorityTable) {
-                            editorMain.datatable.ajax.reload();
+                            $this.priorityTable.editorMain.datatable.ajax.reload();
                         } else {
 
                             $this.priorityTable = new ImportPriorityTable();

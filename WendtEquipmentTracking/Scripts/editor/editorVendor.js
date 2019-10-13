@@ -2,6 +2,8 @@
 
     var EditorVendor = function () {
 
+        this.editorMain = new Editor();
+
         this.initStyles = function () {
             var $this = this;
 
@@ -15,7 +17,7 @@
         this.initEvents = function () {
             var $this = this;
 
-            editorMain.editor.on('preSubmit', function (e, data, action) {
+            this.editorMain.editor.on('preSubmit', function (e, data, action) {
                 if (action !== 'remove') {
                     var name = this.field('Name');
 
@@ -35,9 +37,9 @@
                 }
             });
 
-            editorMain.editor.on('postEdit', function (e, json, data) {
+            this.editorMain.editor.on('postEdit', function (e, json, data) {
 
-                var row = editorMain.datatable.row("#" + data.VendorId);
+                var row = $this.editorMain.datatable.row("#" + data.VendorId);
 
                 if (data.IsDuplicate) {
                     $(row.node()).attr("class", 'warning');
@@ -51,7 +53,7 @@
 
                 var $row = $(".table tfoot tr");
 
-                var form = editorMain.editor.create(false);
+                var form = $this.editorMain.editor.create(false);
                 form.set('Name', $row.find("input[name='Name']").val());
                 form.set('Address', $row.find("input[name='Address']").val());
                 form.set('Contact1', $row.find("input[name='Contact1']").val());
@@ -60,10 +62,10 @@
                 
                 form.submit();
 
-                editorMain.datatable.draw();
+                $this.editorMain.datatable.draw();
             });
 
-            editorMain.editor.on('postCreate', function (e, json, data) {
+            this.editorMain.editor.on('postCreate', function (e, json, data) {
 
                 var $createRow = $("tfoot tr");
 
@@ -73,7 +75,7 @@
 
         this.initEditor = function () {
 
-            editorMain.initEditor({
+            this.editorMain.initEditor({
                 ajax: {
                     url: ROOT_URL + "api/VendorApi/Editor",
                     dataSrc: ""
@@ -100,7 +102,7 @@
         this.initDatatable = function () {
             var $this = this;
 
-            editorMain.initDatatable({
+            this.editorMain.initDatatable({
                 ajax: {
                     url: ROOT_URL + "api/VendorApi/Table",
                     dataSrc: ""

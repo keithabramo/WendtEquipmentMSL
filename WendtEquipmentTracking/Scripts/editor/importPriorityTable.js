@@ -3,6 +3,7 @@
     ImportPriorityTable = function () {
 
         this.canSubmit = false;
+        this.editorMain = new Editor();
 
         this.initStyles = function () {
             var $this = this;
@@ -15,13 +16,13 @@
             var $this = this;
 
 
-            editorMain.editor.on('preSubmit', function (e, data, action) {
+            this.editorMain.editor.on('preSubmit', function (e, data, action) {
                 data.doSubmit = $this.canSubmit;
             });
 
-            editorMain.editor.on('postEdit', function (e, json, data) {
+            this.editorMain.editor.on('postEdit', function (e, json, data) {
 
-                var row = editorMain.datatable.row("#" + data.PriorityId);
+                var row = $this.editorMain.datatable.row("#" + data.PriorityId);
 
                 if (data.IsDuplicate) {
                     $(row.node()).attr("class", 'warning');
@@ -31,22 +32,22 @@
 
             });
 
-            editorMain.datatable.on('autoFill', function (e, datatable, cells) {
+            this.editorMain.datatable.on('autoFill', function (e, datatable, cells) {
                 $this.validationErrors();
             });
 
-            editorMain.editor.on('submitComplete', function () {
+            this.editorMain.editor.on('submitComplete', function () {
                 $this.validationErrors();
             });
 
             $("#import").on("click", function () {
-                var selectedRows = editorMain.datatable.rows({ selected: true }).indexes();
+                var selectedRows = $this.editorMain.datatable.rows({ selected: true }).indexes();
                 if (selectedRows.length) {
                     if (!$this.validationErrors()) {
                         $this.canSubmit = true;
 
-                        editorMain.editor.edit(
-                            editorMain.datatable.rows({ selected: true }).indexes(), false
+                        $this.editorMain.editor.edit(
+                            $this.editorMain.datatable.rows({ selected: true }).indexes(), false
                         ).submit(function () {
                             $this.canSubmit = false;
                             location.href = ROOT_URL + "Priority/?ajaxSuccess=true";
@@ -68,13 +69,13 @@
                 }
             });
 
-            editorMain.datatable.on('select', function (e, dt, type, indexes) {
+            this.editorMain.datatable.on('select', function (e, dt, type, indexes) {
                 if (type === 'row') {
                     $this.validationErrors();
                 }
             });
 
-            editorMain.datatable.on('deselect', function (e, dt, type, indexes) {
+            this.editorMain.datatable.on('deselect', function (e, dt, type, indexes) {
                 if (type === 'row') {
                     $this.clearValidation();
                 }
@@ -83,7 +84,7 @@
 
         this.initEditor = function () {
 
-            editorMain.initEditor({
+            this.editorMain.initEditor({
                 formOptions: {},
                 ajax: {
                     url: ROOT_URL + "api/ImportApi/PriorityEditor",
@@ -129,7 +130,7 @@
         this.initDatatable = function () {
             var $this = this;
 
-            editorMain.initDatatable({
+            this.editorMain.initDatatable({
                 ajax: {
                     url: ROOT_URL + "api/ImportApi/GetPrioritiesFromImport",
                     dataSrc: "",
@@ -181,7 +182,7 @@
 
             var errors = false;
 
-            editorMain.datatable.rows({ selected: true }).every(function (rowIdx, tableLoop, rowLoop) {
+            this.editorMain.datatable.rows({ selected: true }).every(function (rowIdx, tableLoop, rowLoop) {
                 var error = false;
                 var data = this.data();
 
@@ -249,7 +250,7 @@
         this.clearValidation = function () {
             var $this = this;
 
-            editorMain.datatable.rows({ selected: false }).every(function (rowIdx, tableLoop, rowLoop) {
+            this.editorMain.datatable.rows({ selected: false }).every(function (rowIdx, tableLoop, rowLoop) {
 
                 $this.removeError(rowIdx, 1);
                 $(this.node()).removeClass("danger");
@@ -257,11 +258,11 @@
         };
 
         this.addError = function (row, column) {
-            $(editorMain.datatable.cell(row, column).node()).addClass("Red");
+            $(this.editorMain.datatable.cell(row, column).node()).addClass("Red");
         };
 
         this.removeError = function (row, column) {
-            $(editorMain.datatable.cell(row, column).node()).removeClass("Red");
+            $(this.editorMain.datatable.cell(row, column).node()).removeClass("Red");
         };
 
 

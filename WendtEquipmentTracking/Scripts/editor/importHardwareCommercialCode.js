@@ -23,7 +23,7 @@ $(function () {
                         $("#FilePath").val(response.FilePath);
 
                         if ($this.hardwareCommercialCodeTable) {
-                            editorMain.datatable.ajax.reload();
+                            $this.hardwareCommercialCodeTable.editorMain.datatable.ajax.reload();
                         } else {
 
                             $this.hardwareCommercialCodeTable = new ImportHardwareCommercialCodeTable();

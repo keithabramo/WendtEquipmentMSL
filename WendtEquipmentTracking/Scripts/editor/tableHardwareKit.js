@@ -2,6 +2,8 @@
 
     var TableHardwareKit = function () {
 
+        this.tableMain = new Table();
+
         this.initStyles = function () {
             var $this = this;
 
@@ -15,7 +17,7 @@
 
         this.initEditor = function () {
 
-            tableMain.initEditor({
+            this.tableMain.initEditor({
                 ajax: {
                     url: ROOT_URL + "api/HardwareKitApi/Delete",
                     dataSrc: ""
@@ -27,7 +29,7 @@
         this.initDatatable = function () {
             var $this = this;
 
-            tableMain.initDatatable({
+            this.tableMain.initDatatable({
                 ajax: {
                     url: ROOT_URL + "api/HardwareKitApi/Table",
                     dataSrc: ""

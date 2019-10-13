@@ -3,7 +3,7 @@ using System.Web;
 
 namespace WendtEquipmentTracking.App.Models
 {
-    public class ImportModel : BaseModel
+    public class FileModel : BaseModel
     {
 
         [DisplayName("File")]

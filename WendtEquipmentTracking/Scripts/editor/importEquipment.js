@@ -37,7 +37,7 @@ $(function () {
             };
 
             this.dropzone = new Dropzone("#myDropzone");
-        }
+        };
 
         this.initEvents = function () {
             var $this = this;
@@ -47,7 +47,7 @@ $(function () {
             this.dropzone.on("removedfile", function (file) {
                 $("#equipmentConfiguration").find("input[data-fileid='" + file.name + "']").remove();
                 if ($this.equipmentTable) {
-                    editorMain.datatable.ajax.reload();
+                    $this.equipmentTable.editorMain.datatable.ajax.reload();
                 }
             });
 
@@ -57,8 +57,8 @@ $(function () {
                 if ($(this).valid()) {
 
                     if ($this.equipmentTable) {
-                        editorMain.datatable.ajax.reload(function () {
-                            editorMain.datatable.rows().select();
+                        $this.equipmentTable.editorMain.datatable.ajax.reload(function () {
+                            $this.equipmentTable.editorMain.datatable.rows().select();
                             $(".table thead th.select-checkbox").closest("tr").addClass("selected");
                         });
                     } else {

@@ -311,54 +311,54 @@ namespace WendtEquipmentTracking.App.Controllers
             return PartialView();
         }
 
-    public ActionResult ProjectCopyPartial()
-    {
-        try
+        public ActionResult ProjectCopyPartial()
         {
-            var projects = new List<SelectListItem>();
-            var user = userService.GetCurrentUser();
-
-            if (user != null)
+            try
             {
-                try
+                var projects = new List<SelectListItem>();
+                var user = userService.GetCurrentUser();
+
+                if (user != null)
                 {
-                    var projectBOs = projectService.GetAllForCopy().OrderBy(p => p.ProjectNumber);
-                    projects = projectBOs.Select(x => new SelectListItem
+                    try
                     {
-                        Value = x.ProjectId.ToString(),
-                        Text = x.ProjectNumber + (!string.IsNullOrWhiteSpace(x.ShipToCompany) ? ": " + x.ShipToCompany : "")
-                    }).ToList();
+                        var projectBOs = projectService.GetAllForCopy().OrderBy(p => p.ProjectNumber);
+                        projects = projectBOs.Select(x => new SelectListItem
+                        {
+                            Value = x.ProjectId.ToString(),
+                            Text = x.ProjectNumber + (!string.IsNullOrWhiteSpace(x.ShipToCompany) ? ": " + x.ShipToCompany : "")
+                        }).ToList();
 
-                }
-                catch (Exception e)
-                {
-                    HandleError("There was an error attempting to load this list of projects due to projects numbers containing text", e);
-                    var projectBOs = projectService.GetAllForNavigation().OrderBy(p => p.ProjectNumber);
-                    projects = projectBOs.Select(x => new SelectListItem
+                    }
+                    catch (Exception e)
                     {
-                        Value = x.ProjectId.ToString(),
-                        Text = x.ProjectNumber + (!string.IsNullOrWhiteSpace(x.ShipToCompany) ? ": " + x.ShipToCompany : "")
-                    }).ToList();
+                        HandleError("There was an error attempting to load this list of projects due to projects numbers containing text", e);
+                        var projectBOs = projectService.GetAllForNavigation().OrderBy(p => p.ProjectNumber);
+                        projects = projectBOs.Select(x => new SelectListItem
+                        {
+                            Value = x.ProjectId.ToString(),
+                            Text = x.ProjectNumber + (!string.IsNullOrWhiteSpace(x.ShipToCompany) ? ": " + x.ShipToCompany : "")
+                        }).ToList();
+                    }
+
+                    var model = new ProjectCopyModel
+                    {
+                        Projects = projects
+                    };
+
+                    return PartialView(model);
                 }
 
-                var model = new ProjectCopyModel
-                {
-                    Projects = projects
-                };
-
-                return PartialView(model);
+            }
+            catch (Exception e)
+            {
+                HandleError("There was an error attempting to load this list of projects", e);
             }
 
-        }
-        catch (Exception e)
-        {
-            HandleError("There was an error attempting to load this list of projects", e);
+            return PartialView();
         }
 
-        return PartialView();
-    }
-
-    [HttpPost]
+        [HttpPost]
         public ActionResult ChangeProject(int ProjectId)
         {
             var user = userService.GetCurrentUser();

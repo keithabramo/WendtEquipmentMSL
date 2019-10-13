@@ -42,7 +42,7 @@ namespace WendtEquipmentTracking.App
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/dropzone").Include(
-                     "~/Scripts/dropzone/dropzone.js"));
+                     "~/Scripts/dropzone.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/html2canvas").Include(
                      "~/Scripts/html2canvas.min.js"));
@@ -57,7 +57,8 @@ namespace WendtEquipmentTracking.App
 
             bundles.Add(new ScriptBundle("~/bundles/masterShipList").Include(
                         "~/Scripts/editor/timer.js",
-                        "~/Scripts/editor/editorMSL.js"
+                        "~/Scripts/editor/editorMSL.js",
+                        "~/Scripts/editor/tableEquipmentAttachment.js"
             ));
             bundles.Add(new ScriptBundle("~/bundles/billOfLadingCreate").Include(
                        "~/Scripts/editor/editorBOLCreate.js"));
@@ -159,8 +160,7 @@ namespace WendtEquipmentTracking.App
                 ));
 
             bundles.Add(new StyleBundle("~/Content/dropzone").Include(
-                     "~/Scripts/dropzone/basic.css",
-                     "~/Scripts/dropzone/dropzone.css"));
+                     "~/Content/dropzone.css"));
         }
     }
 }

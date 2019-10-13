@@ -9,12 +9,9 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement
 {
     public class ImportEngine : IImportEngine
     {
-        public string SaveFile(byte[] file)
+        public void SaveFile(string filePath, byte[] file)
         {
-            var tempFile = Path.GetTempFileName();
-            File.WriteAllBytes(tempFile, file);
-
-            return tempFile;
+            File.WriteAllBytes(filePath, file);
         }
 
         public IEnumerable<EquipmentRow> GetEquipment(EquipmentImport import)

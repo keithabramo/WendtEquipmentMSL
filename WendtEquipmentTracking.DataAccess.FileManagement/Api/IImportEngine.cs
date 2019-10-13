@@ -3,9 +3,8 @@ using WendtEquipmentTracking.DataAccess.FileManagement.Domain;
 
 namespace WendtEquipmentTracking.DataAccess.FileManagement.Api
 {
-    public interface IImportEngine
+    public interface IImportEngine : IFileEngine
     {
-        string SaveFile(byte[] equipmentFile);
 
         IEnumerable<EquipmentRow> GetEquipment(EquipmentImport import);
 

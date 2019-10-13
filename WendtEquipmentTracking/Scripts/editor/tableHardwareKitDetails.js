@@ -2,6 +2,8 @@
 
     var TableHardwareKitDetails = function () {
 
+        this.tableMain = new Table();
+
         this.initStyles = function () {
             var $this = this;
 
@@ -16,7 +18,7 @@
             $('.table.my-datatable').on('click', ".expand", function () {
 
                 var $row = $(this).closest('tr');
-                var datatableRow = tableMain.datatable.row($row);
+                var datatableRow = $this.tableMain.datatable.row($row);
 
                 if (datatableRow.child.isShown()) {
                     // This row is already open - close it
@@ -42,23 +44,23 @@
                     $icon.removeClass("glyphicon-minus").addClass("glyphicon-plus");
                 }
             });
-        }
+        };
 
         this.initEditor = function () {
 
-            tableMain.initEditor({
+            this.tableMain.initEditor({
                 ajax: {
                     url: ROOT_URL + "api/HardwareKitApi/Delete",
                     dataSrc: ""
                 },
                 idSrc: 'HardwareKitId'
             });
-        }
+        };
 
         this.initDatatable = function () {
             var $this = this;
-           
-            tableMain.initDatatable({
+
+            this.tableMain.initDatatable({
                 ajax: {
                     url: ROOT_URL + "api/HardwareKitApi/DetailsTable",
                     dataSrc: "",
@@ -90,11 +92,11 @@
                     }
                 ]
             });
-        }
+        };
 
         this.initStyles();
         this.initEvents();
-    }
+    };
 
     tableHardwareKitDetails = new TableHardwareKitDetails();
 
