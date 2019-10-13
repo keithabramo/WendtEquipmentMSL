@@ -1,4 +1,4 @@
-﻿namespace WendtBillOfLadingTracking.BusinessLogic.BO
+﻿namespace WendtEquipmentTracking.BusinessLogic.BO
 {
     public class BillOfLadingAttachmentBO
     {

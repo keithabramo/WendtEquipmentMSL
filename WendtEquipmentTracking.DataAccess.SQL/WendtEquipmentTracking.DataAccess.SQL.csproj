@@ -62,6 +62,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\IBillOfLadingAttachmentEngine.cs" />
     <Compile Include="Api\IEquipmentAttachmentEngine.cs" />
     <Compile Include="Api\ITruckingScheduleEngine.cs" />
     <Compile Include="Api\IPriorityEngine.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="Broker.cs">
       <DependentUpon>WendtEquipmentTracking.tt</DependentUpon>
     </Compile>
+    <Compile Include="Engine\BillOfLadingAttachmentEngine.cs" />
     <Compile Include="Engine\EquipmentAttachmentEngine.cs" />
     <Compile Include="Engine\TruckingScheduleEngine.cs" />
     <Compile Include="Engine\HardwareKitEngine.cs" />
@@ -126,10 +128,15 @@
     <Compile Include="Specification.cs" />
     <Compile Include="Specifications\BillOfLading\ProjectIdSpecification.cs" />
     <Compile Include="Specifications\BillOfLading\IsDeleted.cs" />
+    <Compile Include="Specifications\BillOfLadingAttachments\BillOfLadingIdSpecification.cs" />
+    <Compile Include="Specifications\BillOfLadingAttachments\IdSpecification.cs" />
+    <Compile Include="Specifications\BillOfLadingAttachments\IsDeleted.cs" />
+    <Compile Include="Specifications\BillOfLadingAttachmentSpecs.cs" />
     <Compile Include="Specifications\EquipmentAttachments\IdSpecification.cs" />
     <Compile Include="Specifications\EquipmentAttachments\IsDeleted.cs" />
     <Compile Include="Specifications\EquipmentAttachments\EquipmentIdSpecification.cs" />
     <Compile Include="Specifications\EquipmentAttachmentSpecs.cs" />
+    <Compile Include="Specifications\Projects\ModifiedDateGreaterThanDaysAgoSpecification.cs" />
     <Compile Include="Specifications\Projects\ProjectNumberSpecification.cs" />
     <Compile Include="Specifications\TruckingScheduleSpecs.cs" />
     <Compile Include="Specifications\TruckingSchedules\IdSpecification.cs" />

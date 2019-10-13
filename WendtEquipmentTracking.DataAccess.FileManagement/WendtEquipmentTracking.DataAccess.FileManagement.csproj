@@ -80,6 +80,7 @@
     <Compile Include="Domain\WorkOrderPriceRow.cs" />
     <Compile Include="Domain\EquipmentRow.cs" />
     <Compile Include="Domain\EquipmentImport.cs" />
+    <Compile Include="Engine\FileEngine.cs" />
     <Compile Include="Engine\AttachmentEngine.cs" />
     <Compile Include="Engine\ImportEngine.cs" />
     <Compile Include="Helper\ImportHelper.cs" />

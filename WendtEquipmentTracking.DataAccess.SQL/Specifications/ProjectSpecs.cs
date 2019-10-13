@@ -20,6 +20,11 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Specifications
             return new IsCompletedSpecification();
         }
 
+        public static Specification<Project> ModifiedDateGreaterThanDaysAgoSpecification(int days)
+        {
+            return new ModifiedDateGreaterThanDaysAgoSpecification(days);
+        }
+
         public static Specification<Project> ProjectNumber(double projectNumber)
         {
             return new ProjectNumberSpecification(projectNumber);

@@ -10,5 +10,8 @@ namespace WendtEquipmentTracking.BusinessLogic.Api
         void Delete(int id);
 
         IEnumerable<EquipmentAttachmentBO> GetByEquipmentId(int equipmentId);
+
+        void PurgeOldAttachments(string attachmentDirectoryLocation, int days);
+
     }
 }

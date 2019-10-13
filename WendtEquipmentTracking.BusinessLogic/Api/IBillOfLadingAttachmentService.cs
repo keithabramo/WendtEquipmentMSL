@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using WendtBillOfLadingTracking.BusinessLogic.BO;
+using WendtEquipmentTracking.BusinessLogic.BO;
 
-namespace WendtBillOfLadingTracking.BusinessLogic.Api
+namespace WendtEquipmentTracking.BusinessLogic.Api
 {
     public interface IBillOfLadingAttachmentService
     {
@@ -10,5 +10,7 @@ namespace WendtBillOfLadingTracking.BusinessLogic.Api
         void Delete(int id);
 
         IEnumerable<BillOfLadingAttachmentBO> GetByBillOfLadingId(int billOfLadingId);
+
+        void PurgeOldAttachments(string attachmentDirectoryLocation, int days);
     }
 }

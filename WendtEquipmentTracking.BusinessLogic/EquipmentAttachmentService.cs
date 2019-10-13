@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using WendtEquipmentTracking.BusinessLogic.Api;
 using WendtEquipmentTracking.BusinessLogic.BO;
@@ -15,12 +16,14 @@ namespace WendtEquipmentTracking.BusinessLogic
     {
         private WendtEquipmentTrackingEntities dbContext;
         private IEquipmentAttachmentEngine equipmentAttachmentEngine;
+        private IProjectEngine projectEngine;
         private IFileEngine attachmentEngine;
 
         public EquipmentAttachmentService()
         {
             dbContext = new WendtEquipmentTrackingEntities();
             equipmentAttachmentEngine = new EquipmentAttachmentEngine(dbContext);
+            projectEngine = new ProjectEngine(dbContext);
             attachmentEngine = new AttachmentEngine();
         }
 
@@ -67,6 +70,25 @@ namespace WendtEquipmentTracking.BusinessLogic
             }
 
             dbContext.SaveChanges();
+        }
+
+        public void PurgeOldAttachments(string attachmentDirectoryLocation, int days)
+        {
+
+            var projects = projectEngine.ListRaw(ProjectSpecs.IsCompleted() && ProjectSpecs.ModifiedDateGreaterThanDaysAgoSpecification(days));
+
+            if (projects != null)
+            {
+                var expiredFileNames = projects.SelectMany(x => x.Equipments.SelectMany(y => y.EquipmentAttachments.Select(z => z.FileName))).ToList();
+                
+                foreach(var fileName in expiredFileNames)
+                {
+                    var filePath = Path.Combine(attachmentDirectoryLocation, fileName);
+
+                    attachmentEngine.RemoveFile(filePath);
+                }
+                
+            }
         }
     }
 }
