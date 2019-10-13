@@ -8,18 +8,14 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement
     public class ImportEngine : FileEngine, IImportEngine
     {
 
-        public IEnumerable<EquipmentRow> GetEquipment(EquipmentImport import)
+        public IEnumerable<EquipmentRow> GetEquipment(IDictionary<string, string> filePaths)
         {
-            var equipmentData = ImportHelper.GetEquipment(import);
-
-            return equipmentData;
+            return ImportHelper.GetEquipment(filePaths);
         }
 
         public IEnumerable<WorkOrderPriceRow> GetWorkOrderPrices(string filePath)
         {
-            var workOrderPriceRecords = ImportHelper.GetWorkOrderPrices(filePath);
-
-            return workOrderPriceRecords;
+            return ImportHelper.GetWorkOrderPrices(filePath);
         }
 
         public IEnumerable<RawEquipmentRow> GetRawEquipment(string filePath)

@@ -143,7 +143,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
 
 
-        // GET: GetWorkOrderPricesFromImport/
+        // GET: GetRawEquipmentFromImport/
         [HttpGet]
         [HttpPost]
         public IEnumerable<EquipmentModel> GetRawEquipmentFromImport(string filePath)
@@ -410,10 +410,9 @@ namespace WendtEquipmentTracking.App.Controllers
                     var random = new Random();
                     equipmentModels = equipmentBOs.Select(x => new EquipmentModel
                     {
-
+                        EquipmentId = random.Next(),
                         Description = x.Description.Trim(),
                         DrawingNumber = x.DrawingNumber,
-                        EquipmentId = random.Next(),
                         EquipmentName = x.EquipmentName,
                         PriorityNumber = x.PriorityId != null ? (int?)priorities.FirstOrDefault(p => p.PriorityId == x.PriorityId).PriorityNumber : null,
                         ProjectId = x.ProjectId,

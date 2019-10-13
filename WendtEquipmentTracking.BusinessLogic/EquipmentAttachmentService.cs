@@ -80,14 +80,14 @@ namespace WendtEquipmentTracking.BusinessLogic
             if (projects != null)
             {
                 var expiredFileNames = projects.SelectMany(x => x.Equipments.SelectMany(y => y.EquipmentAttachments.Select(z => z.FileName))).ToList();
-                
-                foreach(var fileName in expiredFileNames)
+
+                foreach (var fileName in expiredFileNames)
                 {
                     var filePath = Path.Combine(attachmentDirectoryLocation, fileName);
 
                     attachmentEngine.RemoveFile(filePath);
                 }
-                
+
             }
         }
     }

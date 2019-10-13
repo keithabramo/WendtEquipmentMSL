@@ -6,7 +6,7 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Api
     public interface IImportEngine : IFileEngine
     {
 
-        IEnumerable<EquipmentRow> GetEquipment(EquipmentImport import);
+        IEnumerable<EquipmentRow> GetEquipment(IDictionary<string, string> filePaths);
 
         IEnumerable<WorkOrderPriceRow> GetWorkOrderPrices(string filePath);
 

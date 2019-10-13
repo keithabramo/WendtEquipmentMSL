@@ -3,18 +3,17 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
-using System.Linq;
 using WendtEquipmentTracking.DataAccess.FileManagement.Domain;
 
 namespace WendtEquipmentTracking.DataAccess.FileManagement.Helper
 {
     public static class ImportHelper
     {
-        public static IEnumerable<EquipmentRow> GetEquipment(EquipmentImport import)
+        public static IEnumerable<EquipmentRow> GetEquipment(IDictionary<string, string> filePaths)
         {
             IList<EquipmentRow> records = new List<EquipmentRow>();
 
-            foreach (var keyValuePair in import.FilePaths)
+            foreach (var keyValuePair in filePaths)
             {
                 //splitting these. They were joined in the ImportEquipment.js file
                 var drawingNumber = keyValuePair.Key;
@@ -27,15 +26,16 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Helper
                     //5. Data Reader methods
                     foreach (DataRow row in table.Rows)
                     {
-                        //var item = row["ITEM"];
                         var quantity = row["QTY"];
                         var description = row["DESCRIPTION"];
-                        var partNumber = row["PART NUMBER"]; //This is ship tag #
+                        var partNumber = row["PART NUMBER"]; //This is ship tag # and lookup for equipment
+                        var unitWeight = row["UNIT WT. (LBS)"];
+
+                        //var item = row["ITEM"];
                         //var length = row["LENGTH"];
                         //var width = row["WIDTH"];
                         //var specification = row["SPECIFICATION"];
                         //var um = row["UM"];
-                        var unitWeight = row["UNIT WT. (LBS)"];
                         //var totalWeight = row["TOTAL WT. (LBS)"];
 
                         if ((quantity == null || string.IsNullOrWhiteSpace(quantity.ToString())) && (description == null || string.IsNullOrWhiteSpace(description.ToString())) && (partNumber == null || string.IsNullOrWhiteSpace(partNumber.ToString())))
@@ -43,16 +43,6 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Helper
                             continue;
                         }
 
-                        var hardwareCommercialCode = import.hardwareCommercialCodes.SingleOrDefault(h => h.PartNumber == partNumber.ToString());
-                        string equipmentName = string.Empty;
-                        if (hardwareCommercialCode != null)
-                        {
-                            equipmentName = hardwareCommercialCode.CommodityCode;
-                        }
-                        else
-                        {
-                            equipmentName = import.Equipment;
-                        }
 
                         int quantityNumber = 0;
                         if (!Int32.TryParse(quantity.ToString(), out quantityNumber))
@@ -65,26 +55,12 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Helper
                         {
                             unitWeightNumber = 0;
                         }
-                        if (!string.IsNullOrEmpty(equipmentName) && equipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase))
-                        {
-                            unitWeightNumber = .01;
-                        }
-
-                        //round up to .01 for 0 unit weights
-                        if (unitWeightNumber == 0)
-                        {
-                            unitWeightNumber = .01;
-                        }
 
                         var equipmentRecord = new EquipmentRow
                         {
-                            EquipmentName = equipmentName,
-                            PriorityId = import.PriorityId,
-                            ReleaseDate = DateTime.Now,
+                            PartNumber = partNumber.ToString(),
                             DrawingNumber = drawingNumber,
-                            WorkOrderNumber = import.WorkOrderNumber,
-                            Quantity = import.QuantityMultiplier * quantityNumber,
-                            ShippingTagNumber = partNumber.ToString(),
+                            Quantity = quantityNumber,
                             Description = description.ToString(),
                             UnitWeight = unitWeightNumber
                         };

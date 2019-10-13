@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,7 +7,6 @@ using WendtEquipmentTracking.BusinessLogic.Api;
 using WendtEquipmentTracking.BusinessLogic.BO;
 using WendtEquipmentTracking.DataAccess.FileManagement;
 using WendtEquipmentTracking.DataAccess.FileManagement.Api;
-using WendtEquipmentTracking.DataAccess.FileManagement.Domain;
 using WendtEquipmentTracking.DataAccess.SQL;
 using WendtEquipmentTracking.DataAccess.SQL.Api;
 using WendtEquipmentTracking.DataAccess.SQL.Engine;
@@ -42,40 +42,63 @@ namespace WendtEquipmentTracking.BusinessLogic
 
         public IEnumerable<EquipmentBO> GetEquipmentImport(EquipmentImportBO importBO)
         {
-            var hardwareCommercialCodes = hardwareCommercialCodeEngine.ListAll();
+            var equipmentBOs = new List<EquipmentBO>();
 
-            var import = new EquipmentImport
+            var hardwareCommercialCodeBOs = hardwareCommercialCodeEngine.ListAll().Select(x => new HardwareCommercialCodeBO
             {
-                //DrawingNumber = importBO.DrawingNumber,
-                Equipment = importBO.Equipment,
-                FilePaths = importBO.FilePaths,
-                hardwareCommercialCodes = hardwareCommercialCodes.Select(x => new HardwareCommercialCodeRow
-                {
-                    CommodityCode = x.CommodityCode,
-                    Description = x.Description,
-                    PartNumber = x.PartNumber
-                }).ToList(),
-                PriorityId = importBO.PriorityId,
-
-                QuantityMultiplier = importBO.QuantityMultiplier,
-                WorkOrderNumber = importBO.WorkOrderNumber,
-            };
-
-            var equipmentRows = importEngine.GetEquipment(import);
-
-
-            var equipmentBOs = equipmentRows.Select(x => new EquipmentBO
-            {
+                CommodityCode = x.CommodityCode,
                 Description = x.Description,
-                DrawingNumber = x.DrawingNumber,
-                EquipmentName = x.EquipmentName,
-                PriorityId = x.PriorityId,
-                Quantity = x.Quantity,
-                ReleaseDate = x.ReleaseDate,
-                ShippingTagNumber = x.ShippingTagNumber,
-                UnitWeight = x.UnitWeight,
-                WorkOrderNumber = x.WorkOrderNumber
-            });
+                PartNumber = x.PartNumber
+            }).ToList();
+
+            var equipmentRows = importEngine.GetEquipment(importBO.FilePaths);
+
+
+            foreach (var equipmentRow in equipmentRows)
+            {
+                var hardwareCommercialCode = hardwareCommercialCodeBOs.SingleOrDefault(h => h.PartNumber == equipmentRow.PartNumber.ToString());
+
+                string equipmentName = string.Empty;
+                if (hardwareCommercialCode != null)
+                {
+                    equipmentName = hardwareCommercialCode.CommodityCode;
+                }
+                else
+                {
+                    equipmentName = importBO.Equipment;
+                }
+
+                var unitWeight = equipmentRow.UnitWeight;
+                if (!string.IsNullOrEmpty(equipmentName) && equipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    unitWeight = .01;
+                }
+
+                //round up to .01 for 0 unit weights
+                if (unitWeight == 0)
+                {
+                    unitWeight = .01;
+                }
+
+                var quantity = importBO.QuantityMultiplier * equipmentRow.Quantity;
+
+                var releaseDate = DateTime.Now;
+
+                var equipmentBO = new EquipmentBO
+                {
+                    Description = equipmentRow.Description,
+                    DrawingNumber = equipmentRow.DrawingNumber,
+                    EquipmentName = equipmentName,
+                    PriorityId = importBO.PriorityId,
+                    Quantity = quantity,
+                    ReleaseDate = releaseDate,
+                    ShippingTagNumber = equipmentRow.PartNumber,
+                    UnitWeight = unitWeight,
+                    WorkOrderNumber = importBO.WorkOrderNumber
+                };
+
+                equipmentBOs.Add(equipmentBO);
+            }
 
             return equipmentBOs.ToList();
         }
