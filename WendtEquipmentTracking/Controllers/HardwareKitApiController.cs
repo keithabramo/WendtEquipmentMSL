@@ -253,7 +253,7 @@ namespace WendtEquipmentTracking.App.Controllers
                         var extraGroupPercentage = ((hardwareGroup.QuantityToShip - hardwareGroup.Quantity) / hardwareGroup.Quantity) * 100;
 
                         IEnumerable<EquipmentBO> hardwareInWorkOrderBOs = new List<EquipmentBO>();
-                        if(hardwareKitId > 0)
+                        if (hardwareKitId > 0)
                         {
                             hardwareInWorkOrderBOs = equipmentService.GetHardwareByShippingTagNumberAndDescription(user.ProjectId, hardwareGroup.ShippingTagNumber, hardwareGroup.Description, hardwareKitId);
                         }

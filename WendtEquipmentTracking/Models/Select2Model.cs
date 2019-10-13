@@ -1,8 +1,4 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
-
-namespace WendtEquipmentTracking.App.Models
+﻿namespace WendtEquipmentTracking.App.Models
 {
     public class Select2Model
     {

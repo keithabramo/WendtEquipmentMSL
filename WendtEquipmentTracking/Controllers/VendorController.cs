@@ -1,9 +1,6 @@
-﻿using System;
-using System.Web.Mvc;
-using WendtEquipmentTracking.App.Models;
+﻿using System.Web.Mvc;
 using WendtEquipmentTracking.BusinessLogic;
 using WendtEquipmentTracking.BusinessLogic.Api;
-using WendtEquipmentTracking.BusinessLogic.BO;
 
 namespace WendtEquipmentTracking.App.Controllers
 {

@@ -321,8 +321,8 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Helper
                         Name = name,
                         PhoneFax = phoneFax,
                         Email = email,
-                        Contact1 = contact1, 
-                        Address = address 
+                        Contact1 = contact1,
+                        Address = address
                     };
 
                     records.Add(record);

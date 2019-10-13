@@ -4,11 +4,13 @@ using System.Linq.Expressions;
 namespace WendtEquipmentTracking.DataAccess.SQL.Specifications.Projects
 {
 
-    internal class ProjectNumberSpecification : Specification<Project> {
+    internal class ProjectNumberSpecification : Specification<Project>
+    {
 
         private readonly double projectNumber;
 
-        public ProjectNumberSpecification(double projectNumber) {
+        public ProjectNumberSpecification(double projectNumber)
+        {
             this.projectNumber = projectNumber;
         }
 

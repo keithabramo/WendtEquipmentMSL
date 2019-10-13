@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
-using WendtEquipmentTracking.App.Common;
-using WendtEquipmentTracking.App.Models;
 using WendtEquipmentTracking.BusinessLogic;
 using WendtEquipmentTracking.BusinessLogic.Api;
-using WendtEquipmentTracking.BusinessLogic.BO;
 
 namespace WendtEquipmentTracking.App.Controllers
 {

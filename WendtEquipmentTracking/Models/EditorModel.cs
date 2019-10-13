@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace WendtEquipmentTracking.App.Models
+﻿namespace WendtEquipmentTracking.App.Models
 {
     public class EditorModel
     {

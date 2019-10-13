@@ -1,6 +1,5 @@
 ﻿
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web.Mvc;
@@ -50,7 +49,7 @@ namespace WendtEquipmentTracking.App.Controllers
                     };
 
                     var filePath = Path.Combine(Server.MapPath("~/"), "Attachments", equipmentAttachmentBO.FileName);
-                    
+
                     equipmentAttachmentService.Save(equipmentAttachmentBO, filePath, file);
 
                     return Json(true);

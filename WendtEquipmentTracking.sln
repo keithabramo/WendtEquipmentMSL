@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29403.142
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WendtEquipmentTracking.App", "WendtEquipmentTracking\WendtEquipmentTracking.App.csproj", "{EC9C4AE3-F507-4611-97E5-3F22B845B79C}"
 EndProject
@@ -12,6 +12,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WendtEquipmentTracking.Common", "WendtEquipmentTracking.Common\WendtEquipmentTracking.Common.csproj", "{CB9FB3F6-EC4C-45CD-AC4C-4E79DFC6F058}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WendtEquipmentTracking.DataAccess.FileManagement", "WendtEquipmentTracking.DataAccess.FileManagement\WendtEquipmentTracking.DataAccess.FileManagement.csproj", "{9CB5AEA5-6786-497A-B67C-4F38CCA59456}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ScheduledTasks", "ScheduledTasks", "{B24906DE-7E9D-41DD-B465-263AFD66E37D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WendtEquipmentTracking.AttachmentCleanup", "WendtEquipmentTracking.AttachmentCleanup\WendtEquipmentTracking.AttachmentCleanup.csproj", "{03B53861-99DE-4598-8FF9-8408BDF3B3BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,8 +54,20 @@ Global
 		{9CB5AEA5-6786-497A-B67C-4F38CCA59456}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9CB5AEA5-6786-497A-B67C-4F38CCA59456}.Staging|Any CPU.ActiveCfg = Staging|Any CPU
 		{9CB5AEA5-6786-497A-B67C-4F38CCA59456}.Staging|Any CPU.Build.0 = Staging|Any CPU
+		{03B53861-99DE-4598-8FF9-8408BDF3B3BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03B53861-99DE-4598-8FF9-8408BDF3B3BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03B53861-99DE-4598-8FF9-8408BDF3B3BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03B53861-99DE-4598-8FF9-8408BDF3B3BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03B53861-99DE-4598-8FF9-8408BDF3B3BC}.Staging|Any CPU.ActiveCfg = Release|Any CPU
+		{03B53861-99DE-4598-8FF9-8408BDF3B3BC}.Staging|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{03B53861-99DE-4598-8FF9-8408BDF3B3BC} = {B24906DE-7E9D-41DD-B465-263AFD66E37D}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7D69EB40-621B-48DA-A147-4DA67B7034BF}
 	EndGlobalSection
 EndGlobal

@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using WendtEquipmentTracking.DataAccess.FileManagement.Domain;
-
-namespace WendtEquipmentTracking.DataAccess.FileManagement.Api
+﻿namespace WendtEquipmentTracking.DataAccess.FileManagement.Api
 {
     public interface IFileEngine
     {

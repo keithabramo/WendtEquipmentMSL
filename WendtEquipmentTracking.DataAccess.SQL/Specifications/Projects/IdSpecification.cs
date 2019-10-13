@@ -4,11 +4,13 @@ using System.Linq.Expressions;
 namespace WendtEquipmentTracking.DataAccess.SQL.Specifications.Projects
 {
 
-    internal class IdSpecification : Specification<Project> {
+    internal class IdSpecification : Specification<Project>
+    {
 
         private readonly int id;
 
-        public IdSpecification(int id) {
+        public IdSpecification(int id)
+        {
             this.id = id;
         }
 

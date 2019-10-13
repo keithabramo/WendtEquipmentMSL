@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using WendtEquipmentTracking.DataAccess.SQL.Specifications.EquipmentAttachments;
+﻿using WendtEquipmentTracking.DataAccess.SQL.Specifications.EquipmentAttachments;
 
 namespace WendtEquipmentTracking.DataAccess.SQL.Specifications
 {

@@ -1,5 +1,4 @@
-﻿using ExcelDataReader;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using WendtEquipmentTracking.DataAccess.FileManagement.Api;
 using WendtEquipmentTracking.DataAccess.FileManagement.Domain;
@@ -24,7 +23,7 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement
         public IEnumerable<WorkOrderPriceRow> GetWorkOrderPrices(string filePath)
         {
             var workOrderPriceRecords = ImportHelper.GetWorkOrderPrices(filePath);
-            
+
             return workOrderPriceRecords;
         }
 

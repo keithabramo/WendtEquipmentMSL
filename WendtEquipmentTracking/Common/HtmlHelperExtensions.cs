@@ -22,7 +22,7 @@ namespace WendtEquipmentTracking.App.Common
             string username = ActiveDirectoryHelper.CurrentUserUsername();
 
             var user = ActiveDirectoryHelper.GetUser(username);
-            
+
             return role == user.Role;
         }
     }

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace WendtEquipmentTracking.Common
+﻿namespace WendtEquipmentTracking.Common
 {
     public enum TruckingScheduleStatuses
     {

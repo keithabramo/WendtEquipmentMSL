@@ -1,5 +1,4 @@
-﻿using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using WendtEquipmentTracking.Common;
 
 namespace WendtEquipmentTracking.App.Common
@@ -20,10 +19,10 @@ namespace WendtEquipmentTracking.App.Common
                 var url = urlHelper.Action("Unauthorized", "Home", null);
                 httpContext.Response.Redirect(url, true);
             }
-            
+
 
             base.OnActionExecuting(context);
         }
-        
+
     }
 }

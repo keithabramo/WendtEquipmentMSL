@@ -6,7 +6,6 @@ using WendtEquipmentTracking.App.Common;
 using WendtEquipmentTracking.App.Models;
 using WendtEquipmentTracking.BusinessLogic;
 using WendtEquipmentTracking.BusinessLogic.Api;
-using WendtEquipmentTracking.BusinessLogic.BO;
 
 namespace WendtEquipmentTracking.App.Controllers
 {

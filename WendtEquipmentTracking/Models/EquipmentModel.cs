@@ -142,7 +142,7 @@ namespace WendtEquipmentTracking.App.Models
         [DisplayName("COO")]
         public string CountryOfOrigin { get; set; }
 
-        
+
 
 
         [DisplayName("Fully Shipped")]
