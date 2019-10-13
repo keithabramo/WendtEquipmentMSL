@@ -26,19 +26,26 @@
             <th>@Html.DisplayNameFor(model => model.ShippedTo)</th>
             <th>@Html.DisplayNameFor(model => model.FreightTerms)</th>
             <th></th>
+            <th></th>
             <th>@Html.DisplayNameFor(model => model.ToStorage)</th>
         </tr>
     </thead>
     <tbody>
-            
     </tbody>
 </table>
 
 
+@Html.Action("Index", "BillOfLadingAttachment")
+
 @section Scripts {
+
+    @Styles.Render("~/Content/dropzone")
+
     <script type="text/javascript">
         var canReadWrite = "@(Html.UserIsInRole(UserRoles.ReadWrite) ? "true" : "false")";
     </script>
+
+    @Scripts.Render("~/bundles/dropzone")
     @Scripts.Render("~/bundles/form")
     @Scripts.Render("~/bundles/table")
     @Scripts.Render("~/bundles/billOfLadings")

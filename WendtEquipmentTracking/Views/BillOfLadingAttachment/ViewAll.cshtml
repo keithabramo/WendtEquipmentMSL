@@ -1,0 +1,21 @@
+﻿@model IEnumerable<string>
+
+@{
+    ViewBag.Title = "";
+}
+
+@Html.Partial("ActionNavPartial", ActionNav.Nothing)
+<hr />
+
+<div class="row img-gallery">
+
+    @foreach (var fileName in Model)
+    {
+        var filePath = Path.Combine(Url.Content("~/"), "Attachments", fileName);
+
+        <div class="col-xs-6 img">
+            <img class="img-thumbnail" src="@filePath" />
+        </div>
+    }
+
+</div>

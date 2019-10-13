@@ -166,7 +166,9 @@
     <Compile Include="Common\WendtAuthorizeAttribute.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\BillOfLadingAttachmentApiController.cs" />
     <Compile Include="Controllers\EquipmentAttachmentApiController.cs" />
+    <Compile Include="Controllers\BillOfLadingAttachmentController.cs" />
     <Compile Include="Controllers\EquipmentAttachmentController.cs" />
     <Compile Include="Controllers\TruckingScheduleApiController.cs" />
     <Compile Include="Controllers\TruckingScheduleController.cs" />
@@ -198,6 +200,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BillOfLadingAttachmentFileModel.cs" />
+    <Compile Include="Models\BillOfLadingAttachmentModel.cs" />
     <Compile Include="Models\EquipmentAttachmentModel.cs" />
     <Compile Include="Models\EquipmentAttachmentFileModel.cs" />
     <Compile Include="Models\HardwareCommercialCodeImportModel.cs" />
@@ -338,6 +342,7 @@
     <Content Include="Scripts\editor\importWorkOrderPriceTable.js" />
     <Content Include="Scripts\editor\tableAdmin.js" />
     <Content Include="Scripts\editor\createProject.js" />
+    <Content Include="Scripts\editor\tableBOLAttachment.js" />
     <Content Include="Scripts\editor\tableEquipmentAttachment.js" />
     <Content Include="Scripts\editor\timer.js" />
     <Content Include="Scripts\editor\tableHardwareKitDetails.js" />
@@ -638,6 +643,14 @@
       <LastGenOutput>Create.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\EquipmentAttachment\ViewAll.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Create.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\BillOfLadingAttachment\Index.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Create.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\BillOfLadingAttachment\ViewAll.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Create.generated.cs</LastGenOutput>
     </Content>

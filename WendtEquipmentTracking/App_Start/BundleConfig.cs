@@ -64,7 +64,6 @@ namespace WendtEquipmentTracking.App
                        "~/Scripts/editor/editorBOLCreate.js"));
             bundles.Add(new ScriptBundle("~/bundles/billOfLadingEdit").Include(
                        "~/Scripts/editor/editorBOLEdit.js"));
-
             bundles.Add(new ScriptBundle("~/bundles/hardwareKitCreate").Include(
                        "~/Scripts/editor/editorHardwareKitCreate.js"));
             bundles.Add(new ScriptBundle("~/bundles/hardwareKitEdit").Include(
@@ -80,7 +79,9 @@ namespace WendtEquipmentTracking.App
 
 
             bundles.Add(new ScriptBundle("~/bundles/billOfLadings").Include(
-                       "~/Scripts/editor/tableBOL.js"));
+                       "~/Scripts/editor/tableBOL.js",
+                        "~/Scripts/editor/tableBOLAttachment.js"
+            ));
             bundles.Add(new ScriptBundle("~/bundles/billOfLadingDetails").Include(
                        "~/Scripts/editor/tableBOLDetails.js"));
             bundles.Add(new ScriptBundle("~/bundles/hardwareKits").Include(
