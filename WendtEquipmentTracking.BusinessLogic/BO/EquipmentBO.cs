@@ -29,6 +29,7 @@ namespace WendtEquipmentTracking.BusinessLogic.BO
         public string ShippedFrom { get; set; }
         public string HTSCode { get; set; }
         public string CountryOfOrigin { get; set; }
+        public int Revision { get; set; }
 
         //calculated properties
         public bool HasBillOfLading { get; set; }

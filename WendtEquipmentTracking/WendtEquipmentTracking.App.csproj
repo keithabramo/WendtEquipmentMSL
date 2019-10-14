@@ -159,6 +159,7 @@
     <Compile Include="Common\DtRequest.cs" />
     <Compile Include="Common\DtResponse.cs" />
     <Compile Include="Common\EditorActions.cs" />
+    <Compile Include="Common\IndicatorColors.cs" />
     <Compile Include="Common\StatusMessage.cs" />
     <Compile Include="Common\HtmlHelperExtensions.cs" />
     <Compile Include="Common\ActionNav.cs" />
@@ -207,6 +208,7 @@
     <Compile Include="Models\EquipmentRevisionModel.cs" />
     <Compile Include="Models\HardwareCommercialCodeImportModel.cs" />
     <Compile Include="Models\EditorModel.cs" />
+    <Compile Include="Models\RevisionIndicatorsModel.cs" />
     <Compile Include="Models\ProjectCopyModel.cs" />
     <Compile Include="Models\Import\RawEquipmentImportModel.cs" />
     <Compile Include="Models\Import\PriorityImportModel.cs" />
@@ -222,7 +224,7 @@
     <Compile Include="Models\BillOfLadingEquipmentModel.cs" />
     <Compile Include="Models\BillOfLadingModel.cs" />
     <Compile Include="Models\Import\EquipmentImportModel.cs" />
-    <Compile Include="Models\IndicatorsModel.cs" />
+    <Compile Include="Models\EquipmentIndicatorsModel.cs" />
     <Compile Include="Models\EquipmentModel.cs" />
     <Compile Include="Models\HardwareKitModel.cs" />
     <Compile Include="Models\BaseModel.cs" />
@@ -330,6 +332,7 @@
     <Content Include="Scripts\editor\editorBroker.js" />
     <Content Include="Scripts\editor\editorTruckingSchedule.js" />
     <Content Include="Scripts\editor\importEquipmentRevision.js" />
+    <Content Include="Scripts\editor\importEquipmentRevisionTable.js" />
     <Content Include="Scripts\editor\importHardwareCommercialCode.js" />
     <Content Include="Scripts\editor\importHardwareCommercialCodeTable.js" />
     <Content Include="Scripts\editor\importRawEquipment.js" />
@@ -662,6 +665,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Attachments\" />
+    <Folder Include="Scripts\app\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

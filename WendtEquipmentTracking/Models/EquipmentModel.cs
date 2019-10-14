@@ -11,7 +11,7 @@ namespace WendtEquipmentTracking.App.Models
     {
         public EquipmentModel()
         {
-            Indicators = new IndicatorsModel();
+            Indicators = new EquipmentIndicatorsModel();
         }
 
         public int EquipmentId { get; set; }
@@ -96,6 +96,25 @@ namespace WendtEquipmentTracking.App.Models
         [DataType(DataType.Currency)]
         public double? SalePrice { get; set; }
 
+        [DataType(DataType.MultilineText)]
+        [DisplayName("Notes")]
+        public string Notes { get; set; }
+
+
+        [DisplayName("Shipped From")]
+        public string ShippedFrom { get; set; }
+
+        [DisplayName("HTS")]
+        public string HTSCode { get; set; }
+
+        [DisplayName("COO")]
+        public string CountryOfOrigin { get; set; }
+
+        [DisplayName("Revision")]
+        public string Revision { get; set; }
+
+
+
 
         [DisplayName("Sales+Soft Costs")]
         [DataType(DataType.Currency)]
@@ -127,23 +146,6 @@ namespace WendtEquipmentTracking.App.Models
                 return UnitWeight.HasValue ? UnitWeight.Value.ToString() : string.Empty;
             }
         }
-
-        [DataType(DataType.MultilineText)]
-        [DisplayName("Notes")]
-        public string Notes { get; set; }
-
-
-        [DisplayName("Shipped From")]
-        public string ShippedFrom { get; set; }
-
-        [DisplayName("HTS")]
-        public string HTSCode { get; set; }
-
-        [DisplayName("COO")]
-        public string CountryOfOrigin { get; set; }
-
-
-
 
         [DisplayName("Fully Shipped")]
         public string FullyShippedText
@@ -205,27 +207,26 @@ namespace WendtEquipmentTracking.App.Models
         public bool HasErrors { get; set; }
 
 
-
         public IEnumerable<int> Priorities { get; set; }
 
-        public IndicatorsModel Indicators { get; set; }
+        public EquipmentIndicatorsModel Indicators { get; set; }
 
         public void SetIndicators(double projectNumber, bool isCustomsProject)
         {
-            Indicators = new IndicatorsModel();
+            Indicators = new EquipmentIndicatorsModel();
 
             //equipment
             if (EquipmentName.Equals("DO NOT USE", StringComparison.InvariantCultureIgnoreCase))
             {
                 HasErrors = true;
-                Indicators.EquipmentNameColor = IndicatorsModel.Colors.Red.ToString();
+                Indicators.EquipmentNameColor = IndicatorColors.Red.ToString();
             }
 
             //unit weight
             if ((UnitWeight == null || UnitWeight <= 0) && !EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase))
             {
                 HasErrors = true;
-                Indicators.UnitWeightColor = IndicatorsModel.Colors.Red.ToString();
+                Indicators.UnitWeightColor = IndicatorColors.Red.ToString();
             }
 
             //ready to ship does not have a clean way to check for red
@@ -233,20 +234,20 @@ namespace WendtEquipmentTracking.App.Models
             {
                 if (HasBillOfLadingInStorage)
                 {
-                    Indicators.ReadyToShipColor = IndicatorsModel.Colors.Green.ToString();
+                    Indicators.ReadyToShipColor = IndicatorColors.Green.ToString();
                 }
                 else if (ReadyToShip == Convert.ToInt32(LeftToShip))
                 {
-                    Indicators.ReadyToShipColor = IndicatorsModel.Colors.Yellow.ToString();
+                    Indicators.ReadyToShipColor = IndicatorColors.Yellow.ToString();
                 }
                 else if (ReadyToShip > Convert.ToInt32(LeftToShip))
                 {
                     HasErrors = true;
-                    Indicators.ReadyToShipColor = IndicatorsModel.Colors.Pink.ToString();
+                    Indicators.ReadyToShipColor = IndicatorColors.Pink.ToString();
                 }
                 else
                 {
-                    Indicators.ReadyToShipColor = IndicatorsModel.Colors.LightBlue.ToString();
+                    Indicators.ReadyToShipColor = IndicatorColors.LightBlue.ToString();
                 }
             }
 
@@ -254,69 +255,69 @@ namespace WendtEquipmentTracking.App.Models
             if (ShippedQuantity.ToNullable<double>() > Quantity)
             {
                 HasErrors = true;
-                Indicators.ShippedQtyColor = IndicatorsModel.Colors.Red.ToString();
+                Indicators.ShippedQtyColor = IndicatorColors.Red.ToString();
             }
 
             //left to ship
             if (ShippedQuantity.ToNullable<double>() > Quantity)
             {
                 HasErrors = true;
-                Indicators.LeftToShipColor = IndicatorsModel.Colors.Red.ToString();
+                Indicators.LeftToShipColor = IndicatorColors.Red.ToString();
             }
 
             //fully shipped
             if (ShippedQuantity.ToNullable<double>() > Quantity)
             {
                 HasErrors = true;
-                Indicators.FullyShippedColor = IndicatorsModel.Colors.Fuchsia.ToString();
+                Indicators.FullyShippedColor = IndicatorColors.Fuchsia.ToString();
             }
             else if (!FullyShipped)
             {
-                Indicators.FullyShippedColor = IndicatorsModel.Colors.Pink.ToString();
+                Indicators.FullyShippedColor = IndicatorColors.Pink.ToString();
             }
             else if (FullyShipped)
             {
-                Indicators.FullyShippedColor = IndicatorsModel.Colors.Purple.ToString();
+                Indicators.FullyShippedColor = IndicatorColors.Purple.ToString();
             }
 
             //customs value
             if (isCustomsProject && !FullyShipped && !EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase) && (!CustomsValue.HasValue || CustomsValue.Value <= 0))
             {
                 HasErrors = true;
-                Indicators.CustomsValueColor = IndicatorsModel.Colors.Red.ToString();
+                Indicators.CustomsValueColor = IndicatorColors.Red.ToString();
             }
 
             //sales price
             if (isCustomsProject && !FullyShipped && !EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase) && (!SalePrice.HasValue || SalePrice.Value <= 0))
             {
                 HasErrors = true;
-                Indicators.SalePriceColor = IndicatorsModel.Colors.Red.ToString();
+                Indicators.SalePriceColor = IndicatorColors.Red.ToString();
             }
 
             //sales order
             if (string.IsNullOrEmpty(WorkOrderNumber) || !WorkOrderNumber.StartsWith(projectNumber.ToString()))
             {
                 HasErrors = true;
-                Indicators.WorkOrderNumberColor = IndicatorsModel.Colors.Yellow.ToString();
+                Indicators.WorkOrderNumberColor = IndicatorColors.Yellow.ToString();
             }
 
             //Priority
             if (!PriorityNumber.HasValue)
             {
                 HasErrors = true;
-                Indicators.PriorityColor = IndicatorsModel.Colors.Pink.ToString();
+                Indicators.PriorityColor = IndicatorColors.Pink.ToString();
             }
 
             if (DrawingNumber.Equals("UPDATE NEEDED", StringComparison.InvariantCultureIgnoreCase))
             {
                 HasErrors = true;
-                Indicators.DrawingNumberColor = IndicatorsModel.Colors.Pink.ToString();
+                Indicators.DrawingNumberColor = IndicatorColors.Pink.ToString();
             }
 
             if (ShippingTagNumber.Equals("UPDATE NEEDED", StringComparison.InvariantCultureIgnoreCase))
             {
                 HasErrors = true;
-                Indicators.ShippingTagNumberColor = IndicatorsModel.Colors.Pink.ToString();
+                Indicators.ShippingTagNumberColor = IndicatorColors.Pink.ToString();
             }
         }
     }

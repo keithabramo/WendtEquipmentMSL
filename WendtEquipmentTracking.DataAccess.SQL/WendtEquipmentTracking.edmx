@@ -105,6 +105,7 @@
           <Property Name="IsHardware" Type="bit" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="HardwareKitId" Type="int" />
+          <Property Name="Revision" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="EquipmentAttachment">
           <Key>
@@ -746,6 +747,7 @@
           <Property Name="IsHardware" Type="Boolean" Nullable="false" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <Property Name="HardwareKitId" Type="Int32" />
+          <Property Name="Revision" Type="Int32" Nullable="false" />
           <NavigationProperty Name="BillOfLadingEquipments" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_BillOfLadingEquipment_Equipment" FromRole="Equipment" ToRole="BillOfLadingEquipment" />
           <NavigationProperty Name="HardwareKit" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_Equipment_HardwareKit" FromRole="Equipment" ToRole="HardwareKit" />
           <NavigationProperty Name="Priority" Relationship="WendtEquipmentTracking.DataAccess.SQL.Model.FK_Equipment_Priority" FromRole="Equipment" ToRole="Priority" />
@@ -1215,6 +1217,7 @@
           <EntitySetMapping Name="Equipments">
             <EntityTypeMapping TypeName="WendtEquipmentTracking.DataAccess.SQL.Model.Equipment">
               <MappingFragment StoreEntitySet="Equipment">
+                <ScalarProperty Name="Revision" ColumnName="Revision" />
                 <ScalarProperty Name="HardwareKitId" ColumnName="HardwareKitId" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="IsHardware" ColumnName="IsHardware" />

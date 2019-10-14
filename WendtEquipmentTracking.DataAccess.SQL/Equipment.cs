@@ -52,6 +52,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         public bool IsHardware { get; set; }
         public bool IsDeleted { get; set; }
         public Nullable<int> HardwareKitId { get; set; }
+        public int Revision { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BillOfLadingEquipment> BillOfLadingEquipments { get; set; }

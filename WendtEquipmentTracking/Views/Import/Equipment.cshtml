@@ -2,13 +2,12 @@
     ViewBag.Title = "Index";
 }
 
-@Html.Partial("ActionNavPartial", ActionNav.ImportEquipment)
+@Html.Partial("ActionNavPartial", ActionNav.ImportBOM)
 
 <h3 class="text-center col-sm-6 center-block"><strong>@ViewBag.ProjectNumber</strong></h3>
 
 
-<h4>Import Data @Html.ActionLink("Import Equipment", "RawEquipment", "Import", null, new { @class = "btn btn-sm btn-primary pull-right" })
-<br /><small>Drag and drop the excel document you would like to import.</small></h4>
+<h4>Import BOM <br /><small>Drag and drop the excel document you would like to import.</small></h4>
 <hr/>
 
 

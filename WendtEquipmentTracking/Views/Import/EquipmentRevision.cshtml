@@ -2,12 +2,12 @@
     ViewBag.Title = "Index";
 }
 
-@Html.Partial("ActionNavPartial", ActionNav.ImportEquipment)
+@Html.Partial("ActionNavPartial", ActionNav.ImportBOMRevision)
 
 <h3 class="text-center col-sm-6 center-block"><strong>@ViewBag.ProjectNumber</strong></h3>
 
 
-<h4>Import Revision <br /><small>Drag and drop the excel document you would like to import.</small></h4>
+<h4>Import BOM Revision <br /><small>Drag and drop the excel document you would like to import.</small></h4>
 <hr/>
 
 
@@ -15,12 +15,12 @@
 {
 }
 
-<div id="equipmentConfiguration">
+<div id="equipmentRevisionConfiguration">
     @Html.Action("EquipmentRevisionConfigurationPartial")
 </div>
 
 
-<div id="equipmentRows" class="collapse">
+<div id="equipmentRevisionRows" class="collapse">
     @Html.Partial("EquipmentRevisionTablePartial")
 </div>
 
@@ -42,5 +42,5 @@
     @Scripts.Render("~/bundles/dropzone")
     @Scripts.Render("~/bundles/form")
     @Scripts.Render("~/bundles/editor")
-    @Scripts.Render("~/bundles/importRevisionEquipment")
+    @Scripts.Render("~/bundles/importEquipmentRevision")
 }

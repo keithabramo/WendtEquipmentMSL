@@ -16,6 +16,11 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Specifications
             return new IdsSpecification(ids);
         }
 
+        public static Specification<Equipment> DrawingNumbers(IEnumerable<string> drawingNumbers)
+        {
+            return new DrawingNumbersSpecification(drawingNumbers);
+        }
+
         public static Specification<Equipment> BillOfLadingId(int billOfLadingId)
         {
             return new BillOfLadingIdSpecification(billOfLadingId);

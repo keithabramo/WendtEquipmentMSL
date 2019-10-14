@@ -69,9 +69,10 @@ namespace WendtEquipmentTracking.App.Controllers
                 ShippedFrom = (x.ShippedFrom ?? string.Empty).ToUpperInvariant(),
                 ShippingTagNumber = (x.ShippingTagNumber ?? string.Empty).ToUpperInvariant(),
                 WorkOrderNumber = (x.WorkOrderNumber ?? string.Empty).ToUpperInvariant(),
+                Revision = x.Revision.ToString("D2"),
+                
                 BillOfLadingNumbers = string.Join(",", x?.BillOfLadingEquipments?.Select(y => y.BillOfLading.BillOfLadingNumber) ?? new List<string>()).ToUpperInvariant(),
                 LatestBOLDateShipped = (x.BillOfLadingEquipments?.Max(y => y.BillOfLading.DateShipped)),
-
                 HasBillOfLading = x.HasBillOfLading,
                 HasBillOfLadingInStorage = x.HasBillOfLadingInStorage,
                 IsHardwareKit = x.IsHardwareKit,

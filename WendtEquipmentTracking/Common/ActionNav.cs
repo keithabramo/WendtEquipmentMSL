@@ -4,6 +4,8 @@
     {
         Nothing,
         MSL,
+        ImportBOM,
+        ImportBOMRevision,
         ImportEquipment,
         CreateBOL,
         CreateHardwareKit,

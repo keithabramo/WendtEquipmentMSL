@@ -1,19 +1,7 @@
 ﻿namespace WendtEquipmentTracking.App.Models
 {
-    public class IndicatorsModel : BaseModel
+    public class EquipmentIndicatorsModel : BaseModel
     {
-        public enum Colors
-        {
-            White,
-            Red,
-            Yellow,
-            Green,
-            Purple,
-            Pink,
-            Fuchsia,
-            LightBlue
-        }
-
         public string EquipmentNameColor { get; set; }
         public string UnitWeightColor { get; set; }
         public string ReadyToShipColor { get; set; }

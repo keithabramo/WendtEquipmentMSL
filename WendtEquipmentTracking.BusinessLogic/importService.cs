@@ -94,7 +94,8 @@ namespace WendtEquipmentTracking.BusinessLogic
                     ReleaseDate = releaseDate,
                     ShippingTagNumber = equipmentRow.PartNumber,
                     UnitWeight = unitWeight,
-                    WorkOrderNumber = importBO.WorkOrderNumber
+                    WorkOrderNumber = importBO.WorkOrderNumber,
+                    ShippedFrom = "WENDT" //Default to this and allow them to change
                 };
 
                 equipmentBOs.Add(equipmentBO);

@@ -6,12 +6,14 @@
         @if (Html.UserIsInRole(UserRoles.ReadWrite))
         {
             <div class="btn-group">
-                <button type="button" class="btn @(Model == ActionNav.ImportEquipment || Model == ActionNav.ImportWorkOrderPrice || Model == ActionNav.ImportBroker || Model == ActionNav.ImportHardwareCommercialCode || Model == ActionNav.ImportPriority || Model == ActionNav.ImportVendor ? "btn-secondary" : "btn-primary") dropdown-toggle" data-toggle="dropdown">
+                <button type="button" class="btn @(Model == ActionNav.ImportBOMRevision || Model == ActionNav.ImportBOM || Model == ActionNav.ImportEquipment || Model == ActionNav.ImportWorkOrderPrice || Model == ActionNav.ImportBroker || Model == ActionNav.ImportHardwareCommercialCode || Model == ActionNav.ImportPriority || Model == ActionNav.ImportVendor ? "btn-secondary" : "btn-primary") dropdown-toggle" data-toggle="dropdown">
                     Import
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
-                    <li>@Html.ActionLink("Equipment", "Equipment", "Import", null, new { @class = (Model == ActionNav.ImportEquipment ? "dropdown-secondary" : "dropdown-primary") })</li>
+                    <li>@Html.ActionLink("BOM", "Equipment", "Import", null, new { @class = (Model == ActionNav.ImportBOM ? "dropdown-secondary" : "dropdown-primary") })</li>
+                    <li>@Html.ActionLink("BOM Revision", "EquipmentRevision", "Import", null, new { @class = (Model == ActionNav.ImportBOMRevision ? "dropdown-secondary" : "dropdown-primary") })</li>
+                    <li>@Html.ActionLink("Equipment", "RawEquipment", "Import", null, new { @class = (Model == ActionNav.ImportEquipment ? "dropdown-secondary" : "dropdown-primary") })</li>
                     <li>@Html.ActionLink("Work Order Prices", "WorkOrderPrice", "Import", null, new { @class = (Model == ActionNav.ImportWorkOrderPrice ? "dropdown-secondary" : "dropdown-primary") })</li>
                     <li>@Html.ActionLink("Priorities", "Priority", "Import", null, new { @class = (Model == ActionNav.ImportPriority ? "dropdown-secondary" : "dropdown-primary") })</li>
                     <li>@Html.ActionLink("Vendors", "Vendor", "Import", null, new { @class = (Model == ActionNav.ImportVendor ? "dropdown-secondary" : "dropdown-primary") })</li>

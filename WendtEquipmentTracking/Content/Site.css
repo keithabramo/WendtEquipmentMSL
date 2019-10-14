@@ -255,6 +255,9 @@ div.dataTables_wrapper .bottom-section {
     z-index: 9999 !important;
 }
 
+.datatable-border-left {
+    border-left: 3px solid black;
+}
 
 
 .checkbox-inline + .checkbox-inline + .checkbox-inline {

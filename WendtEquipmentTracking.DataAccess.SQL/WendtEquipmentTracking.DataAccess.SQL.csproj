@@ -136,6 +136,7 @@
     <Compile Include="Specifications\EquipmentAttachments\IsDeleted.cs" />
     <Compile Include="Specifications\EquipmentAttachments\EquipmentIdSpecification.cs" />
     <Compile Include="Specifications\EquipmentAttachmentSpecs.cs" />
+    <Compile Include="Specifications\Equipments\DrawingNumbersSpecification.cs" />
     <Compile Include="Specifications\Projects\ModifiedDateGreaterThanDaysAgoSpecification.cs" />
     <Compile Include="Specifications\Projects\ProjectNumberSpecification.cs" />
     <Compile Include="Specifications\TruckingScheduleSpecs.cs" />

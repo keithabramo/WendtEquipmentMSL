@@ -139,10 +139,6 @@ namespace WendtEquipmentTracking.App.Controllers
 
 
 
-
-
-
-
         // GET: GetRawEquipmentFromImport/
         [HttpGet]
         [HttpPost]
@@ -257,7 +253,7 @@ namespace WendtEquipmentTracking.App.Controllers
                 equipmentModels = equipments.Select(x => new EquipmentModel
                 {
                     EquipmentId = x.EquipmentId,
-                    PriorityNumber = x.PriorityId != null ? (int?)priorities.FirstOrDefault(e => e.PriorityId == x.PriorityId).PriorityNumber : null,
+                    PriorityNumber = x.PriorityId != null ? (int?)priorities.FirstOrDefault(e => e.PriorityId == x.PriorityId)?.PriorityNumber : null,
                     ProjectId = x.ProjectId,
                     Quantity = x.Quantity.HasValue ? x.Quantity.Value : 0,
                     ReleaseDate = x.ReleaseDate,
@@ -279,10 +275,6 @@ namespace WendtEquipmentTracking.App.Controllers
 
             return new DtResponse { data = equipmentModels };
         }
-
-
-
-
 
 
         // GET: GetPrioritiesFromImport/
@@ -395,7 +387,6 @@ namespace WendtEquipmentTracking.App.Controllers
 
                     var importBO = new EquipmentImportBO
                     {
-                        //DrawingNumber = model.DrawingNumber,
                         Equipment = model.Equipment,
                         FilePaths = model.FilePaths.ToDictionary(x => x.Split('+')[0], x => x.Split('+')[1]),
                         PriorityId = model.PriorityId,
@@ -406,7 +397,6 @@ namespace WendtEquipmentTracking.App.Controllers
                     var equipmentBOs = importService.GetEquipmentImport(importBO);
                     var priorities = priorityService.GetAll(user.ProjectId);
 
-
                     var random = new Random();
                     equipmentModels = equipmentBOs.Select(x => new EquipmentModel
                     {
@@ -414,15 +404,18 @@ namespace WendtEquipmentTracking.App.Controllers
                         Description = x.Description.Trim(),
                         DrawingNumber = x.DrawingNumber,
                         EquipmentName = x.EquipmentName,
-                        PriorityNumber = x.PriorityId != null ? (int?)priorities.FirstOrDefault(p => p.PriorityId == x.PriorityId).PriorityNumber : null,
-                        ProjectId = x.ProjectId,
+                        PriorityNumber = x.PriorityId != null ? (int?)priorities.FirstOrDefault(p => p.PriorityId == x.PriorityId)?.PriorityNumber : null,
+                        ProjectId = user.ProjectId,
                         Quantity = x.Quantity.HasValue ? x.Quantity.Value : 0,
                         ReleaseDate = x.ReleaseDate,
                         ShippingTagNumber = x.ShippingTagNumber,
                         UnitWeight = x.UnitWeight,
                         WorkOrderNumber = x.WorkOrderNumber,
-                        ShippedFrom = "WENDT" //Default to this and allow them to change
+                        ShippedFrom = x.ShippedFrom
                     }).ToList();
+
+                    //equipmentModels.ForEach(x => x.SetIndicators(project.ProjectNumber, project.IsCustomsProject));
+
                 }
                 return equipmentModels;
             }
@@ -493,7 +486,7 @@ namespace WendtEquipmentTracking.App.Controllers
                 equipmentModels = equipments.Select(x => new EquipmentModel
                 {
                     EquipmentId = x.EquipmentId,
-                    PriorityNumber = x.PriorityId != null ? (int?)priorities.FirstOrDefault(e => e.PriorityId == x.PriorityId).PriorityNumber : null,
+                    PriorityNumber = x.PriorityId != null ? (int?)priorities.FirstOrDefault(e => e.PriorityId == x.PriorityId)?.PriorityNumber : null,
                     ProjectId = x.ProjectId,
                     Quantity = x.Quantity.HasValue ? x.Quantity.Value : 0,
                     ReleaseDate = x.ReleaseDate,
@@ -531,18 +524,18 @@ namespace WendtEquipmentTracking.App.Controllers
 
         [HttpGet]
         [HttpPost]
-        public IEnumerable<EquipmentModel> GetEquipmentRevisionFromImport(EquipmentImportModel model)
+        public IEnumerable<EquipmentRevisionModel> GetEquipmentRevisionFromImport(EquipmentImportModel model)
         {
-            List<EquipmentModel> equipmentModels = new List<EquipmentModel>();
+            List<EquipmentRevisionModel> equipmentRevisionModels = new List<EquipmentRevisionModel>();
             try
             {
                 var user = userService.GetCurrentUser();
                 if (user != null)
                 {
+                    // GET THE REVISION INFO FROM THE FILES
 
                     var importBO = new EquipmentImportBO
                     {
-                        //DrawingNumber = model.DrawingNumber,
                         Equipment = model.Equipment,
                         FilePaths = model.FilePaths.ToDictionary(x => x.Split('+')[0], x => x.Split('+')[1]),
                         PriorityId = model.PriorityId,
@@ -550,34 +543,88 @@ namespace WendtEquipmentTracking.App.Controllers
                         WorkOrderNumber = model.WorkOrderNumber
                     };
 
-                    var equipmentBOs = importService.GetEquipmentImport(importBO);
+                    var equipmentRevisionBOs = importService.GetEquipmentImport(importBO);
                     var priorities = priorityService.GetAll(user.ProjectId);
 
-
                     var random = new Random();
-                    equipmentModels = equipmentBOs.Select(x => new EquipmentModel
+                    equipmentRevisionModels = equipmentRevisionBOs.Select(x => new EquipmentRevisionModel
                     {
+                        NewEquipmentId = random.Next(),
+                        NewDescription = x.Description.Trim(),
+                        NewDrawingNumber = x.DrawingNumber,
+                        NewEquipmentName = x.EquipmentName,
+                        NewPriorityNumber = x.PriorityId != null ? (int?)priorities.FirstOrDefault(p => p.PriorityId == x.PriorityId)?.PriorityNumber : null,
+                        NewQuantity = x.Quantity.HasValue ? x.Quantity.Value : 0,
+                        NewReleaseDate = x.ReleaseDate,
+                        NewShippingTagNumber = x.ShippingTagNumber,
+                        NewUnitWeight = x.UnitWeight,
+                        NewWorkOrderNumber = x.WorkOrderNumber,
+                        NewShippedFrom = x.ShippedFrom,
+                        HasNewEquipment = true
+                    }).ToList();
 
-                        Description = x.Description.Trim(),
+
+                    // GET THE MATCHED EXISTING RECORDS
+
+                    var existingEquipments = equipmentService.GetByDrawingNumbers(importBO.FilePaths.Keys).ToList();
+                    
+                    // All Mataching equipment add the existing equipment information
+
+                    foreach(var equipmentRevisionModel in equipmentRevisionModels)
+                    {
+                        var existingEquipment = existingEquipments.FirstOrDefault(x => x.DrawingNumber == equipmentRevisionModel.NewDrawingNumber && x.ShippingTagNumber == equipmentRevisionModel.NewShippingTagNumber);
+
+                        if(existingEquipment != null)
+                        {
+                            equipmentRevisionModel.EquipmentId = existingEquipment.EquipmentId;
+                            equipmentRevisionModel.Description = existingEquipment.Description;
+                            equipmentRevisionModel.DrawingNumber = existingEquipment.DrawingNumber;
+                            equipmentRevisionModel.EquipmentName = existingEquipment.EquipmentName;
+                            equipmentRevisionModel.PriorityNumber = existingEquipment.PriorityId != null ? (int?)priorities.FirstOrDefault(p => p.PriorityId == existingEquipment.PriorityId)?.PriorityNumber : null;
+                            equipmentRevisionModel.Quantity = existingEquipment.Quantity.HasValue ? existingEquipment.Quantity.Value : 0;
+                            equipmentRevisionModel.ReleaseDate = existingEquipment.ReleaseDate;
+                            equipmentRevisionModel.ShippingTagNumber = existingEquipment.ShippingTagNumber;
+                            equipmentRevisionModel.UnitWeight = existingEquipment.UnitWeight;
+                            equipmentRevisionModel.WorkOrderNumber = existingEquipment.WorkOrderNumber;
+                            equipmentRevisionModel.ShippedFrom = existingEquipment.ShippedFrom;
+                            equipmentRevisionModel.ShippedQuantity = existingEquipment.ShippedQuantity.HasValue ? existingEquipment.ShippedQuantity.Value.ToString() : string.Empty;
+                            equipmentRevisionModel.HasExistingEquipment = true;
+                        }
+                    }
+
+                    // Any equipment that was not found, create new records with just the existing equipment info filled out
+
+                    var remainingExistingEquipment = existingEquipments.Where(x => !equipmentRevisionModels.Any(y => y.EquipmentId == x.EquipmentId)).ToList();
+
+                    var remainingExistingEquipmentModels = remainingExistingEquipment.Select(x => new EquipmentRevisionModel
+                    {
+                        NewEquipmentId = random.Next(), // We need this still so we can have a row id in datatables
+                        EquipmentId = x.EquipmentId,
+                        Description = x.Description,
                         DrawingNumber = x.DrawingNumber,
-                        EquipmentId = random.Next(),
                         EquipmentName = x.EquipmentName,
-                        PriorityNumber = x.PriorityId != null ? (int?)priorities.FirstOrDefault(p => p.PriorityId == x.PriorityId).PriorityNumber : null,
-                        ProjectId = x.ProjectId,
+                        PriorityNumber = x.PriorityId != null ? (int?)priorities.FirstOrDefault(p => p.PriorityId == x.PriorityId)?.PriorityNumber : null,
                         Quantity = x.Quantity.HasValue ? x.Quantity.Value : 0,
                         ReleaseDate = x.ReleaseDate,
                         ShippingTagNumber = x.ShippingTagNumber,
                         UnitWeight = x.UnitWeight,
                         WorkOrderNumber = x.WorkOrderNumber,
-                        ShippedFrom = "WENDT" //Default to this and allow them to change
+                        ShippedFrom = x.ShippedFrom,
+                        ShippedQuantity = x.ShippedQuantity.HasValue ? x.ShippedQuantity.Value.ToString() : string.Empty,
+                        HasExistingEquipment = true
                     }).ToList();
+
+                    equipmentRevisionModels.AddRange(remainingExistingEquipmentModels);
                 }
-                return equipmentModels;
+
+                equipmentRevisionModels.ForEach(x => x.SetRevisionIndicators());
+
+                return equipmentRevisionModels;
             }
             catch (Exception e)
             {
                 HandleError(e);
-                return equipmentModels;
+                return equipmentRevisionModels;
             }
         }
 
@@ -588,7 +635,7 @@ namespace WendtEquipmentTracking.App.Controllers
         {
 
             var user = userService.GetCurrentUser();
-            var equipmentModels = new List<EquipmentModel>();
+            var equipmentRevisionModels = new List<EquipmentRevisionModel>();
 
             if (user != null)
             {
@@ -600,67 +647,125 @@ namespace WendtEquipmentTracking.App.Controllers
 
                 Dictionary<string, object> data = httpData["data"] as Dictionary<string, object>;
 
-                var equipments = new List<EquipmentBO>();
-                foreach (string equipmentId in data.Keys)
+                foreach (string newEquipmentId in data.Keys)
                 {
-                    var row = data[equipmentId];
+                    var row = data[newEquipmentId];
                     var equipmentProperties = row as Dictionary<string, object>;
 
-                    EquipmentBO equipment = new EquipmentBO();
+                    EquipmentRevisionModel equipmentRevisionModel = new EquipmentRevisionModel();
 
-                    equipment.EquipmentId = !string.IsNullOrWhiteSpace(equipmentProperties["EquipmentId"].ToString()) ? Convert.ToInt32(equipmentProperties["EquipmentId"]) : 0;
-                    equipment.ProjectId = user.ProjectId;
-                    equipment.Quantity = equipmentProperties["Quantity"].ToString().ToNullable<int>();
-                    equipment.ReleaseDate = !string.IsNullOrWhiteSpace(equipmentProperties["ReleaseDate"].ToString()) ? (DateTime?)Convert.ToDateTime(equipmentProperties["ReleaseDate"]) : null;
-                    equipment.UnitWeight = equipmentProperties["UnitWeightText"].ToString().ToNullable<double>();
-                    equipment.Description = equipmentProperties["Description"].ToString().Trim();
-                    equipment.DrawingNumber = equipmentProperties["DrawingNumber"].ToString();
-                    equipment.EquipmentName = equipmentProperties["EquipmentName"].ToString();
-                    equipment.ShippingTagNumber = equipmentProperties["ShippingTagNumber"].ToString();
-                    equipment.WorkOrderNumber = equipmentProperties["WorkOrderNumber"].ToString();
-                    equipment.IsHardware = equipment.EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase);
-                    equipment.ShippedFrom = equipmentProperties["ShippedFrom"].ToString();
-                    equipment.Order = !string.IsNullOrWhiteSpace(equipmentProperties["Order"].ToString()) ? Convert.ToInt32(equipmentProperties["Order"]) : 0;
+                    equipmentRevisionModel.EquipmentId = !string.IsNullOrWhiteSpace(equipmentProperties["EquipmentId"].ToString()) ? Convert.ToInt32(equipmentProperties["EquipmentId"]) : 0;
+                    equipmentRevisionModel.Quantity = equipmentProperties["Quantity"].ToString().ToNullable<double>().HasValue ? equipmentProperties["Quantity"].ToString().ToNullable<double>().Value : 0;
+                    equipmentRevisionModel.ReleaseDate = !string.IsNullOrWhiteSpace(equipmentProperties["ReleaseDate"].ToString()) ? (DateTime?)Convert.ToDateTime(equipmentProperties["ReleaseDate"]) : null;
+                    equipmentRevisionModel.UnitWeight = equipmentProperties["UnitWeightText"].ToString().ToNullable<double>();
+                    equipmentRevisionModel.PriorityNumber = equipmentProperties["PriorityNumber"].ToString().ToNullable<int>();
+                    equipmentRevisionModel.Description = equipmentProperties["Description"].ToString().Trim();
+                    equipmentRevisionModel.DrawingNumber = equipmentProperties["DrawingNumber"].ToString();
+                    equipmentRevisionModel.EquipmentName = equipmentProperties["EquipmentName"].ToString();
+                    equipmentRevisionModel.ShippingTagNumber = equipmentProperties["ShippingTagNumber"].ToString();
+                    equipmentRevisionModel.WorkOrderNumber = equipmentProperties["WorkOrderNumber"].ToString();
+                    equipmentRevisionModel.ShippedFrom = equipmentProperties["ShippedFrom"].ToString();
 
-                    var priorityNumber = equipmentProperties["PriorityNumber"].ToString().ToNullable<int>();
-                    var priority = priorities.FirstOrDefault(x => x.PriorityNumber == priorityNumber);
-                    if (priority != null)
-                    {
-                        equipment.PriorityId = priority.PriorityId;
-                    }
+                    equipmentRevisionModel.NewEquipmentId = !string.IsNullOrWhiteSpace(equipmentProperties["NewEquipmentId"].ToString()) ? Convert.ToInt32(equipmentProperties["NewEquipmentId"]) : 0;
+                    equipmentRevisionModel.NewQuantity = equipmentProperties["NewQuantity"].ToString().ToNullable<double>().HasValue ? equipmentProperties["NewQuantity"].ToString().ToNullable<double>().Value : 0;
+                    equipmentRevisionModel.NewReleaseDate = !string.IsNullOrWhiteSpace(equipmentProperties["NewReleaseDate"].ToString()) ? (DateTime?)Convert.ToDateTime(equipmentProperties["NewReleaseDate"]) : null;
+                    equipmentRevisionModel.NewUnitWeight = equipmentProperties["NewUnitWeightText"].ToString().ToNullable<double>();
+                    equipmentRevisionModel.NewPriorityNumber = equipmentProperties["NewPriorityNumber"].ToString().ToNullable<int>();
+                    equipmentRevisionModel.NewDescription = equipmentProperties["NewDescription"].ToString().Trim();
+                    equipmentRevisionModel.NewDrawingNumber = equipmentProperties["NewDrawingNumber"].ToString();
+                    equipmentRevisionModel.NewEquipmentName = equipmentProperties["NewEquipmentName"].ToString();
+                    equipmentRevisionModel.NewShippingTagNumber = equipmentProperties["NewShippingTagNumber"].ToString();
+                    equipmentRevisionModel.NewWorkOrderNumber = equipmentProperties["NewWorkOrderNumber"].ToString();
+                    equipmentRevisionModel.NewShippedFrom = equipmentProperties["NewShippedFrom"].ToString();
+                    equipmentRevisionModel.HasExistingEquipment = equipmentProperties["HasExistingEquipment"].ToString() == "true";
+                    equipmentRevisionModel.HasNewEquipment = equipmentProperties["HasNewEquipment"].ToString() == "true";
 
-                    equipments.Add(equipment);
+                    equipmentRevisionModel.ProjectId = user.ProjectId;
+                    equipmentRevisionModel.Order = !string.IsNullOrWhiteSpace(equipmentProperties["Order"].ToString()) ? Convert.ToInt32(equipmentProperties["Order"]) : 0;
+
+                    equipmentRevisionModels.Add(equipmentRevisionModel);
                 }
 
                 var doSubmit = httpData["doSubmit"];
                 if (doSubmit.ToString() == "true")
                 {
-                    equipmentService.SaveAll(equipments.OrderByDescending(x => x.Order));
+                    var equipmentRevisions = new List<EquipmentBO>();
+                    var equipmentsToAdd = new List<EquipmentBO>();
+                    var equipmentsToRemove = new List<int>();
+
+                    foreach (var equipmentRevisionModel in equipmentRevisionModels)
+                    {
+                        if (equipmentRevisionModel.HasChanged)
+                        {
+                            if (equipmentRevisionModel.HasExistingEquipment && equipmentRevisionModel.HasNewEquipment)
+                            {
+                                var equipmentRevisionBO = new EquipmentBO();
+
+                                // Create Revision
+                                equipmentRevisionBO.EquipmentId = equipmentRevisionModel.EquipmentId;
+                                equipmentRevisionBO.Quantity = equipmentRevisionModel.NewQuantity;
+                                equipmentRevisionBO.ReleaseDate = equipmentRevisionModel.NewReleaseDate;
+                                equipmentRevisionBO.UnitWeight = equipmentRevisionModel.NewUnitWeight;
+                                equipmentRevisionBO.Description = equipmentRevisionModel.NewDescription;
+                                equipmentRevisionBO.DrawingNumber = equipmentRevisionModel.NewDrawingNumber;
+                                equipmentRevisionBO.EquipmentName = equipmentRevisionModel.NewEquipmentName;
+                                equipmentRevisionBO.ShippingTagNumber = equipmentRevisionModel.NewShippingTagNumber;
+                                equipmentRevisionBO.WorkOrderNumber = equipmentRevisionModel.NewWorkOrderNumber;
+                                equipmentRevisionBO.ShippedFrom = equipmentRevisionModel.NewShippedFrom;
+                                equipmentRevisionBO.IsHardware = equipmentRevisionModel.EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase);
+
+
+                                var priority = priorities.FirstOrDefault(x => x.PriorityNumber == equipmentRevisionModel.NewPriorityNumber);
+                                if (priority != null)
+                                {
+                                    equipmentRevisionBO.PriorityId = priority.PriorityId;
+                                }
+
+                                equipmentRevisions.Add(equipmentRevisionBO);
+                            }
+                            else if (!equipmentRevisionModel.HasExistingEquipment)
+                            {
+                                var equipmentNewBO = new EquipmentBO();
+
+                                // Add new equipment
+                                equipmentNewBO.Quantity = equipmentRevisionModel.NewQuantity;
+                                equipmentNewBO.ReleaseDate = equipmentRevisionModel.NewReleaseDate;
+                                equipmentNewBO.UnitWeight = equipmentRevisionModel.NewUnitWeight;
+                                equipmentNewBO.Description = equipmentRevisionModel.NewDescription;
+                                equipmentNewBO.DrawingNumber = equipmentRevisionModel.NewDrawingNumber;
+                                equipmentNewBO.EquipmentName = equipmentRevisionModel.NewEquipmentName;
+                                equipmentNewBO.ShippingTagNumber = equipmentRevisionModel.NewShippingTagNumber;
+                                equipmentNewBO.WorkOrderNumber = equipmentRevisionModel.NewWorkOrderNumber;
+                                equipmentNewBO.ShippedFrom = equipmentRevisionModel.NewShippedFrom;
+                                equipmentNewBO.IsHardware = equipmentRevisionModel.EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase);
+                                equipmentNewBO.ProjectId = equipmentRevisionModel.ProjectId;
+                                equipmentNewBO.Order = equipmentRevisionModel.Order;
+
+                                var priority = priorities.FirstOrDefault(x => x.PriorityNumber == equipmentRevisionModel.NewPriorityNumber);
+                                if (priority != null)
+                                {
+                                    equipmentNewBO.PriorityId = priority.PriorityId;
+                                }
+
+                                equipmentsToAdd.Add(equipmentNewBO);
+                            }
+                            else if (!equipmentRevisionModel.HasNewEquipment)
+                            {
+                                // Remove existing equipment
+                                equipmentsToRemove.Add(equipmentRevisionModel.EquipmentId);
+                            }
+                        }
+                    }
+
+                    equipmentService.UpdateRevisions(equipmentRevisions);
+                    equipmentService.SaveAll(equipmentsToAdd.OrderByDescending(x => x.Order));
+                    equipmentService.DeleteAll(equipmentsToRemove);
                 }
 
-                equipmentModels = equipments.Select(x => new EquipmentModel
-                {
-                    EquipmentId = x.EquipmentId,
-                    PriorityNumber = x.PriorityId != null ? (int?)priorities.FirstOrDefault(e => e.PriorityId == x.PriorityId).PriorityNumber : null,
-                    ProjectId = x.ProjectId,
-                    Quantity = x.Quantity.HasValue ? x.Quantity.Value : 0,
-                    ReleaseDate = x.ReleaseDate,
-                    UnitWeight = x.UnitWeight,
-                    Description = x.Description,
-                    DrawingNumber = x.DrawingNumber,
-                    EquipmentName = x.EquipmentName,
-                    ShippingTagNumber = x.ShippingTagNumber,
-                    WorkOrderNumber = x.WorkOrderNumber,
-                    ShippedFrom = x.ShippedFrom
-                }).ToList();
-
-                equipmentModels.ForEach(x => x.SetIndicators(project.ProjectNumber, project.IsCustomsProject));
+                equipmentRevisionModels.ForEach(x => x.SetRevisionIndicators());
             }
 
-
-
-            return new DtResponse { data = equipmentModels };
-
+            return new DtResponse { data = equipmentRevisionModels };
         }
 
 

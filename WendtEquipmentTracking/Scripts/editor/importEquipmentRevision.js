@@ -57,9 +57,10 @@ $(function () {
                 if ($(this).valid()) {
 
                     if ($this.equipmentRevisionTable) {
-                        $this.equipmentRevisionTable..editorMain.datatable.ajax.reload(function () {
-                            $this.equipmentRevisionTable..editorMain.datatable.rows().select();
-                            $(".table thead th.select-checkbox").closest("tr").addClass("selected");
+                        $this.equipmentRevisionTable.editorMain.datatable.ajax.reload(function () {
+                            $this.equipmentRevisionTable.editorMain.datatable.rows(function (idx, data, node) {
+                                return data.HasChanged;
+                            }).select();
                         });
                     } else {
 

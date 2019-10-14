@@ -11,7 +11,7 @@ using System.Data.Entity.Infrastructure.MappingViews;
 
 [assembly: DbMappingViewCacheTypeAttribute(
     typeof(WendtEquipmentTracking.DataAccess.SQL.WendtEquipmentTrackingEntities),
-    typeof(Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets31a96fc05a98687d3bb36db0bf1b8d679b75d6a595b0dce33e53b736174bd6b0))]
+    typeof(Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets65db57d653acdcc81b3e993fe5f35a178b932ecda84de413fffae070abe062b8))]
 
 namespace Edm_EntityMappingGeneratedViews
 {
@@ -23,14 +23,14 @@ namespace Edm_EntityMappingGeneratedViews
     /// Implements a mapping view cache.
     /// </summary>
     [GeneratedCode("Entity Framework 6 Power Tools", "0.9.2.0")]
-    internal sealed class ViewsForBaseEntitySets31a96fc05a98687d3bb36db0bf1b8d679b75d6a595b0dce33e53b736174bd6b0 : DbMappingViewCache
+    internal sealed class ViewsForBaseEntitySets65db57d653acdcc81b3e993fe5f35a178b932ecda84de413fffae070abe062b8 : DbMappingViewCache
     {
         /// <summary>
         /// Gets a hash value computed over the mapping closure.
         /// </summary>
         public override string MappingHashValue
         {
-            get { return "31a96fc05a98687d3bb36db0bf1b8d679b75d6a595b0dce33e53b736174bd6b0"; }
+            get { return "65db57d653acdcc81b3e993fe5f35a178b932ecda84de413fffae070abe062b8"; }
         }
 
         /// <summary>
@@ -291,7 +291,7 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing Equipment
-        [WendtEquipmentTracking.DataAccess.SQL.Model.Store.Equipment](T1.Equipment_EquipmentId, T1.Equipment_ProjectId, T1.Equipment_EquipmentName, T1.Equipment_PriorityId, T1.Equipment_CreatedBy, T1.Equipment_CreatedDate, T1.Equipment_ModifiedBy, T1.Equipment_ModifiedDate, T1.Equipment_ReleaseDate, T1.Equipment_DrawingNumber, T1.Equipment_WorkOrderNumber, T1.Equipment_Quantity, T1.Equipment_ShippingTagNumber, T1.Equipment_Description, T1.Equipment_UnitWeight, T1.Equipment_TotalWeight, T1.Equipment_TotalWeightShipped, T1.Equipment_ReadyToShip, T1.Equipment_ShippedQuantity, T1.Equipment_LeftToShip, T1.Equipment_FullyShipped, T1.Equipment_CustomsValue, T1.Equipment_SalePrice, T1.Equipment_Notes, T1.Equipment_ShippedFrom, T1.Equipment_HTSCode, T1.Equipment_CountryOfOrigin, T1.Equipment_IsHardware, T1.Equipment_IsDeleted, T1.Equipment_HardwareKitId)
+        [WendtEquipmentTracking.DataAccess.SQL.Model.Store.Equipment](T1.Equipment_EquipmentId, T1.Equipment_ProjectId, T1.Equipment_EquipmentName, T1.Equipment_PriorityId, T1.Equipment_CreatedBy, T1.Equipment_CreatedDate, T1.Equipment_ModifiedBy, T1.Equipment_ModifiedDate, T1.Equipment_ReleaseDate, T1.Equipment_DrawingNumber, T1.Equipment_WorkOrderNumber, T1.Equipment_Quantity, T1.Equipment_ShippingTagNumber, T1.Equipment_Description, T1.Equipment_UnitWeight, T1.Equipment_TotalWeight, T1.Equipment_TotalWeightShipped, T1.Equipment_ReadyToShip, T1.Equipment_ShippedQuantity, T1.Equipment_LeftToShip, T1.Equipment_FullyShipped, T1.Equipment_CustomsValue, T1.Equipment_SalePrice, T1.Equipment_Notes, T1.Equipment_ShippedFrom, T1.Equipment_HTSCode, T1.Equipment_CountryOfOrigin, T1.Equipment_IsHardware, T1.Equipment_IsDeleted, T1.Equipment_HardwareKitId, T1.Equipment_Revision)
     FROM (
         SELECT 
             T.EquipmentId AS Equipment_EquipmentId, 
@@ -324,6 +324,7 @@ namespace Edm_EntityMappingGeneratedViews
             T.IsHardware AS Equipment_IsHardware, 
             T.IsDeleted AS Equipment_IsDeleted, 
             T.HardwareKitId AS Equipment_HardwareKitId, 
+            T.Revision AS Equipment_Revision, 
             True AS _from0
         FROM WendtEquipmentTrackingEntities.Equipments AS T
     ) AS T1");
@@ -656,7 +657,7 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing Equipments
-        [WendtEquipmentTracking.DataAccess.SQL.Model.Equipment](T1.Equipment_EquipmentId, T1.Equipment_ProjectId, T1.Equipment_EquipmentName, T1.Equipment_PriorityId, T1.Equipment_CreatedBy, T1.Equipment_CreatedDate, T1.Equipment_ModifiedBy, T1.Equipment_ModifiedDate, T1.Equipment_ReleaseDate, T1.Equipment_DrawingNumber, T1.Equipment_WorkOrderNumber, T1.Equipment_Quantity, T1.Equipment_ShippingTagNumber, T1.Equipment_Description, T1.Equipment_UnitWeight, T1.Equipment_TotalWeight, T1.Equipment_TotalWeightShipped, T1.Equipment_ReadyToShip, T1.Equipment_ShippedQuantity, T1.Equipment_LeftToShip, T1.Equipment_FullyShipped, T1.Equipment_CustomsValue, T1.Equipment_SalePrice, T1.Equipment_Notes, T1.Equipment_ShippedFrom, T1.Equipment_HTSCode, T1.Equipment_CountryOfOrigin, T1.Equipment_IsHardware, T1.Equipment_IsDeleted, T1.Equipment_HardwareKitId)
+        [WendtEquipmentTracking.DataAccess.SQL.Model.Equipment](T1.Equipment_EquipmentId, T1.Equipment_ProjectId, T1.Equipment_EquipmentName, T1.Equipment_PriorityId, T1.Equipment_CreatedBy, T1.Equipment_CreatedDate, T1.Equipment_ModifiedBy, T1.Equipment_ModifiedDate, T1.Equipment_ReleaseDate, T1.Equipment_DrawingNumber, T1.Equipment_WorkOrderNumber, T1.Equipment_Quantity, T1.Equipment_ShippingTagNumber, T1.Equipment_Description, T1.Equipment_UnitWeight, T1.Equipment_TotalWeight, T1.Equipment_TotalWeightShipped, T1.Equipment_ReadyToShip, T1.Equipment_ShippedQuantity, T1.Equipment_LeftToShip, T1.Equipment_FullyShipped, T1.Equipment_CustomsValue, T1.Equipment_SalePrice, T1.Equipment_Notes, T1.Equipment_ShippedFrom, T1.Equipment_HTSCode, T1.Equipment_CountryOfOrigin, T1.Equipment_IsHardware, T1.Equipment_IsDeleted, T1.Equipment_HardwareKitId, T1.Equipment_Revision)
     FROM (
         SELECT 
             T.EquipmentId AS Equipment_EquipmentId, 
@@ -689,6 +690,7 @@ namespace Edm_EntityMappingGeneratedViews
             T.IsHardware AS Equipment_IsHardware, 
             T.IsDeleted AS Equipment_IsDeleted, 
             T.HardwareKitId AS Equipment_HardwareKitId, 
+            T.Revision AS Equipment_Revision, 
             True AS _from0
         FROM WendtEquipmentTrackingDataAccessSQLModelStoreContainer.Equipment AS T
     ) AS T1");
