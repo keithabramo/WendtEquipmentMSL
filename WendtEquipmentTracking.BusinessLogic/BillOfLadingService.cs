@@ -14,6 +14,7 @@ namespace WendtEquipmentTracking.BusinessLogic
     {
         private WendtEquipmentTrackingEntities dbContext;
         private IBillOfLadingEngine billOfLadingEngine;
+        private IBillOfLadingAttachmentEngine billOfLadingAttachmentEngine;
         private IEquipmentEngine equipmentEngine;
 
 
@@ -21,6 +22,7 @@ namespace WendtEquipmentTracking.BusinessLogic
         {
             dbContext = new WendtEquipmentTrackingEntities();
             billOfLadingEngine = new BillOfLadingEngine(dbContext);
+            billOfLadingAttachmentEngine = new BillOfLadingAttachmentEngine(dbContext);
             equipmentEngine = new EquipmentEngine(dbContext);
         }
 
@@ -95,7 +97,7 @@ namespace WendtEquipmentTracking.BusinessLogic
 
             //update deleted and updated equipements
             var oldBillOfLading = billOfLadingEngine.Get(BillOfLadingSpecs.ProjectId(billOfLadingBO.ProjectId) && BillOfLadingSpecs.BillOfLadingNumber(billOfLadingBO.BillOfLadingNumber) && BillOfLadingSpecs.CurrentRevision());
-            foreach (var oldBOLE in oldBillOfLading.BillOfLadingEquipments)
+            foreach (var oldBOLE in oldBillOfLading.BillOfLadingEquipments.Where(x => !x.IsDeleted).ToList())
             {
                 var updatedBOLE = billOfLadingBO.BillOfLadingEquipments.FirstOrDefault(x => x.EquipmentId == oldBOLE.EquipmentId);
                 var equipment = equipmentEngine.Get(EquipmentSpecs.Id(oldBOLE.EquipmentId));
@@ -117,7 +119,7 @@ namespace WendtEquipmentTracking.BusinessLogic
 
             //update new equipment for this bol
             var newEquipment = billOfLadingBO.BillOfLadingEquipments.Where(x => !oldBillOfLading.BillOfLadingEquipments.Any(old => old.EquipmentId == x.EquipmentId));
-            foreach (var billOfLadingEquipment in newEquipment)
+            foreach (var billOfLadingEquipment in newEquipment.ToList())
             {
                 var equipment = equipmentEngine.Get(EquipmentSpecs.Id(billOfLadingEquipment.EquipmentId));
 
@@ -128,10 +130,16 @@ namespace WendtEquipmentTracking.BusinessLogic
                 equipmentEngine.UpdateEquipment(equipment);
             }
 
+            billOfLading.BillOfLadingAttachments = oldBillOfLading.BillOfLadingAttachments.Where(x => !x.IsDeleted).Select(x => new BillOfLadingAttachment
+            {
+                FileName = x.FileName,
+                FileTitle = x.FileName
+            }).ToList();
 
             billOfLadingEngine.UpdateBillOfLading(billOfLading);
 
             dbContext.SaveChanges();
+
         }
 
         public void Delete(int id)

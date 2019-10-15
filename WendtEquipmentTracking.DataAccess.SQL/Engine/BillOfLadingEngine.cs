@@ -65,6 +65,14 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             billOfLading.ModifiedDate = now;
             billOfLading.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
 
+            foreach(var billOfLadingAttachment in billOfLading.BillOfLadingAttachments)
+            {
+                billOfLadingAttachment.CreatedDate = now;
+                billOfLadingAttachment.CreatedBy = ActiveDirectoryHelper.CurrentUserUsername();
+                billOfLadingAttachment.ModifiedDate = now;
+                billOfLadingAttachment.ModifiedBy = ActiveDirectoryHelper.CurrentUserUsername();
+            }
+
             var currentBillOfLading = this.Get(BillOfLadingSpecs.ProjectId(billOfLading.ProjectId) && BillOfLadingSpecs.CurrentRevision() && BillOfLadingSpecs.BillOfLadingNumber(billOfLading.BillOfLadingNumber));
             currentBillOfLading.IsCurrentRevision = false;
 
