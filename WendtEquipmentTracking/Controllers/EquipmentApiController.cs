@@ -217,6 +217,7 @@ namespace WendtEquipmentTracking.App.Controllers
                     BillOfLadingNumbers = string.Join(",", x?.BillOfLadingEquipments?.Select(y => y.BillOfLading.BillOfLadingNumber) ?? new List<string>()).ToUpperInvariant(),
                     LatestBOLDateShipped = (x.BillOfLadingEquipments?.Max(y => y.BillOfLading.DateShipped)),
                     PriorityNumber = x.Priority != null ? (int?)x.Priority.PriorityNumber : null,
+                    Revision = x.Revision.ToString("D2"),
 
                     HasBillOfLading = x.HasBillOfLading,
                     HasBillOfLadingInStorage = x.HasBillOfLadingInStorage,

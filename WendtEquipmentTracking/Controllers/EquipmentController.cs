@@ -41,6 +41,8 @@ namespace WendtEquipmentTracking.App.Controllers
             var prioritiesBOs = priorityService.GetAll(user.ProjectId);
             var priorities = prioritiesBOs.Select(x => x.PriorityNumber).OrderBy(p => p).ToList();
             var project = projectService.GetById(user.ProjectId);
+            var htsCodes = visualService.GetAllHTSCodes();
+            ViewBag.HTSCodes = htsCodes;
 
             ViewBag.ProjectNumber = project.ProjectNumber + (!string.IsNullOrWhiteSpace(project.ShipToCompany) ? ": " + project.ShipToCompany : "");
             ViewBag.Priorities = priorities;

@@ -184,6 +184,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                 ShippedFrom = x.ShippedFrom,
                 ShippingTagNumber = x.ShippingTagNumber,
                 WorkOrderNumber = x.WorkOrderNumber,
+                Revision = x.Revision,
                 BillOfLadingEquipments = x.BillOfLadingEquipments
                     .Where(y => !y.IsDeleted && y.BillOfLading.IsCurrentRevision)
                     .Select(y => new BillOfLadingEquipmentBO
@@ -240,7 +241,8 @@ namespace WendtEquipmentTracking.BusinessLogic
                 Notes = x.Notes,
                 ShippedFrom = x.ShippedFrom,
                 ShippingTagNumber = x.ShippingTagNumber,
-                WorkOrderNumber = x.WorkOrderNumber
+                WorkOrderNumber = x.WorkOrderNumber,
+                Revision = x.Revision
             });
 
 
@@ -282,6 +284,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                 ShippedFrom = x.ShippedFrom,
                 ShippingTagNumber = x.ShippingTagNumber,
                 WorkOrderNumber = x.WorkOrderNumber,
+                Revision = x.Revision,
                 BillOfLadingEquipments = x.BillOfLadingEquipments
                     .Where(y => !y.IsDeleted && y.BillOfLading.IsCurrentRevision)
                     .Select(y => new BillOfLadingEquipmentBO
@@ -337,7 +340,8 @@ namespace WendtEquipmentTracking.BusinessLogic
                 Notes = x.Notes,
                 ShippedFrom = x.ShippedFrom,
                 ShippingTagNumber = x.ShippingTagNumber,
-                WorkOrderNumber = x.WorkOrderNumber                
+                WorkOrderNumber = x.WorkOrderNumber,
+                Revision = x.Revision
             });
 
             return equipmentBOs.ToList();
@@ -391,7 +395,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                 ShippedFrom = x.ShippedFrom,
                 ShippingTagNumber = x.ShippingTagNumber,
                 WorkOrderNumber = x.WorkOrderNumber,
-
+                Revision = x.Revision,
                 HasBillOfLading = x.BillOfLadingEquipments.Any(b => !b.BillOfLading.IsDeleted && b.BillOfLading.IsCurrentRevision),
                 HasBillOfLadingInStorage = x.BillOfLadingEquipments.Any(be => !be.BillOfLading.IsDeleted && be.BillOfLading.ToStorage && be.BillOfLading.IsCurrentRevision),
                 IsHardwareKit = x.HardwareKit != null,

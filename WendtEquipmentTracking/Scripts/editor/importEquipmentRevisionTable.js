@@ -11,21 +11,22 @@
             DrawingNumber: 4,
             WorkOrderNumber: 5,
             Quantity: 6,
-            ShippingTagNumber: 7,
-            Description: 8,
-            UnitWeightText: 9,
-            ShippedFrom: 10,
-            NewEquipmentName: 11,
-            NewPriorityNumber: 12,
-            NewReleaseDate: 13,
-            NewDrawingNumber: 14,
-            NewWorkOrderNumber: 15,
-            NewQuantity: 16,
-            NewShippingTagNumber: 17,
-            NewDescription: 18,
-            NewUnitWeightText: 19,
-            NewShippedFrom: 20,
-            EquipmentId: 21
+            ShippedQuantity: 7,
+            ShippingTagNumber: 8,
+            Description: 9,
+            UnitWeightText: 10,
+            ShippedFrom: 11,
+            NewEquipmentName: 12,
+            NewPriorityNumber: 13,
+            NewReleaseDate: 14,
+            NewDrawingNumber: 15,
+            NewWorkOrderNumber: 16,
+            NewQuantity: 17,
+            NewShippingTagNumber: 18,
+            NewDescription: 19,
+            NewUnitWeightText: 20,
+            NewShippedFrom: 21,
+            EquipmentId: 22
         };
         this.editableColumns = [
             this.columnIndexes.NewEquipmentName,
@@ -79,6 +80,7 @@
                 $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.DrawingNumber).node()).attr("class", "active " + data.RevisionIndicators.DrawingNumberColor);
                 $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.WorkOrderNumber).node()).attr("class", "active " + data.RevisionIndicators.WorkOrderNumberColor);
                 $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.Quantity).node()).attr("class", "text-right active " + data.RevisionIndicators.QuantityColor);
+                $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.ShippedQuantity).node()).attr("class", "text-right active " + data.RevisionIndicators.ShippedQuantityColor);
                 $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.ShippingTagNumber).node()).attr("class", "active " + data.RevisionIndicators.ShippingTagNumberColor);
                 $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.Description).node()).attr("class", "active " + data.RevisionIndicators.DescriptionColor);
                 $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.UnitWeightText).node()).attr("class", "text-right active " + data.RevisionIndicators.UnitWeightColor);
@@ -166,6 +168,7 @@
                     { name: "DrawingNumber", type: "readonly" },
                     { name: "WorkOrderNumber", type: "readonly" },
                     { name: "Quantity", type: "readonly" },
+                    { name: "ShippedQuantity", type: "readonly" },
                     { name: "ShippingTagNumber", type: "readonly" },
                     { name: "Description", type: "readonly" },
                     { name: "UnitWeightText", type: "readonly" },
@@ -284,6 +287,13 @@
                             $(cell).addClass(rowData.RevisionIndicators.QuantityColor);
                         },
                         className: "active text-right quantityWidth"
+                    },
+                    {
+                        data: "ShippedQuantity", "targets": this.columnIndexes.ShippedQuantity,
+                        createdCell: function (cell, data, rowData, rowIndex, colIndex) {
+                            $(cell).addClass(rowData.RevisionIndicators.ShippedQuantityColor);
+                        },
+                        className: "active text-right shippedQuantityWidth"
                     },
                     {
                         data: "ShippingTagNumber", "targets": this.columnIndexes.ShippingTagNumber,

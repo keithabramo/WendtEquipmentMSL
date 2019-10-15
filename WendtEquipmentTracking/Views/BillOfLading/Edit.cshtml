@@ -6,75 +6,75 @@
 
 @Html.Partial("ActionNavPartial", ActionNav.Nothing)
 
-    <form id="BOLForm">
-        <h4>BOL: <strong>@Html.DisplayFor(model => model.BillOfLadingNumber)</strong> <br /> <small>Edit</small></h4>
-        <hr />
-        @Html.HiddenFor(model => model.BillOfLadingId)
-        @Html.HiddenFor(model => model.BillOfLadingNumber)
-        <input type="hidden" id="projectNumber" value="@ViewBag.ProjectNumber" />
-
-        <div class="row">
-            <div class="col-sm-4">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.DateShipped)
-                    @Html.EditorFor(model => model.DateShipped, new { htmlAttributes = new { @class = "form-control datePicker" } })
-                    @Html.ValidationMessageFor(model => model.DateShipped, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Carrier)
-                    @Html.EditorFor(model => model.Carrier, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Carrier, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-4">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.TrailerNumber)
-                    @Html.EditorFor(model => model.TrailerNumber, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.TrailerNumber, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.ShippedFrom)
-                    @Html.EditorFor(model => model.ShippedFrom, new { htmlAttributes = new { @class = "form-control shippedfrom vendor-autocomplete" } })
-                    @Html.ValidationMessageFor(model => model.ShippedFrom, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.ShippedTo)
-                    @Html.EditorFor(model => model.ShippedTo, new { htmlAttributes = new { @class = "form-control shippedto vendor-autocomplete" } })
-                    @Html.ValidationMessageFor(model => model.ShippedTo, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-4">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.FreightTerms)
-                    @Html.EditorFor(model => model.FreightTerms, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.FreightTerms, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label>
-                            @Html.EditorFor(model => model.ToStorage)
-                            @Html.DisplayNameFor(model => model.ToStorage)
-
-                            @Html.ValidationMessageFor(model => model.ToStorage, "", new { @class = "text-danger" })
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
+<form id="BOLForm">
+    <h4>BOL: <strong>@Html.DisplayFor(model => model.BillOfLadingNumber)</strong> <br /> <small>Edit</small></h4>
     <hr />
+    @Html.HiddenFor(model => model.BillOfLadingId)
+    @Html.HiddenFor(model => model.BillOfLadingNumber)
+    <input type="hidden" id="projectNumber" value="@ViewBag.ProjectNumber" />
+
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="form-group">
+                @Html.LabelFor(model => model.DateShipped)
+                @Html.EditorFor(model => model.DateShipped, new { htmlAttributes = new { @class = "form-control datePicker" } })
+                @Html.ValidationMessageFor(model => model.DateShipped, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Carrier)
+                @Html.EditorFor(model => model.Carrier, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Carrier, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="form-group">
+                @Html.LabelFor(model => model.TrailerNumber)
+                @Html.EditorFor(model => model.TrailerNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TrailerNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                @Html.LabelFor(model => model.ShippedFrom)
+                @Html.EditorFor(model => model.ShippedFrom, new { htmlAttributes = new { @class = "form-control shippedfrom vendor-autocomplete" } })
+                @Html.ValidationMessageFor(model => model.ShippedFrom, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                @Html.LabelFor(model => model.ShippedTo)
+                @Html.EditorFor(model => model.ShippedTo, new { htmlAttributes = new { @class = "form-control shippedto vendor-autocomplete" } })
+                @Html.ValidationMessageFor(model => model.ShippedTo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="form-group">
+                @Html.LabelFor(model => model.FreightTerms)
+                @Html.EditorFor(model => model.FreightTerms, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.FreightTerms, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        @Html.EditorFor(model => model.ToStorage)
+                        @Html.DisplayNameFor(model => model.ToStorage)
+
+                        @Html.ValidationMessageFor(model => model.ToStorage, "", new { @class = "text-danger" })
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<hr />
 
 <div class="row">
     <div class="col-md-12">
@@ -92,6 +92,18 @@
 </div>
 
 @section Scripts {
+
+    <script type="text/javascript">
+
+        var htsCodes = [];
+
+        @foreach (var htsCode in ViewBag.HTSCodes)
+        {
+            @:htsCodes.push("@htsCode");
+        }
+
+    </script>
+
     @Scripts.Render("~/bundles/form")
     @Scripts.Render("~/bundles/editor")
     @Scripts.Render("~/bundles/billOfLadingEdit")

@@ -256,7 +256,7 @@ div.dataTables_wrapper .bottom-section {
 }
 
 .datatable-border-left {
-    border-left: 3px solid black;
+    border-left: 15px solid #ddd !important;
 }
 
 
@@ -522,6 +522,18 @@ table.dataTable tbody tr.selected td {
 
 .table.masterShipList tbody td {
     text-transform: uppercase;
+}
+
+.table.masterShipList input, .table.masterShipList textarea, .table.masterShipList select {
+    text-transform: uppercase;
+}
+
+.table.equipmentRevision tbody td {
+    text-transform: uppercase;
+}
+
+.table.equipmentRevision input, .table.equipmentRevision textarea, .table.equipmentRevision select {
+    text-transform: uppercase;
 } 
 
 .table.hardwareCommercialCodeTable tbody tr td:not(:last-child) {
@@ -529,10 +541,6 @@ table.dataTable tbody tr.selected td {
 } 
 
 .table.hardwareCommercialCodeTable input, .table.hardwareCommercialCodeTable textarea, .table.hardwareCommercialCodeTable select {
-    text-transform: uppercase;
-} 
-
-.table.masterShipList input, .table.masterShipList textarea, .table.masterShipList select {
     text-transform: uppercase;
 } 
 

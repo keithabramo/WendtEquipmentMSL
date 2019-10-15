@@ -197,7 +197,14 @@
                     { name: "Equipment.ShippedFrom" },
                     { name: "Equipment.CustomsValueText" },
                     { name: "Equipment.SalePriceText" },
-                    { name: "Equipment.HTSCode" },
+                    {
+                        name: "Equipment.HTSCode",
+                        type: "autoComplete",
+                        opts: {
+                            source: htsCodes,
+                            minLength: 0
+                        }
+                    },
                     { name: "Equipment.CountryOfOrigin" },
                     { name: "Equipment.Notes" },
                     { name: "Equipment.EquipmentId" }

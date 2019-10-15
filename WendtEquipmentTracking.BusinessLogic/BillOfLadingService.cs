@@ -245,6 +245,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                         ShippedFrom = e.Equipment.ShippedFrom,
                         ShippingTagNumber = e.Equipment.ShippingTagNumber,
                         WorkOrderNumber = e.Equipment.WorkOrderNumber,
+                        Revision = e.Equipment.Revision,
                         HasBillOfLading = e.Equipment.BillOfLadingEquipments.Any(b => !b.IsDeleted && b.BillOfLading.IsCurrentRevision),
                         HasBillOfLadingInStorage = e.Equipment.BillOfLadingEquipments.Any(be => !be.IsDeleted && be.BillOfLading.ToStorage && be.BillOfLading.IsCurrentRevision),
                         IsHardwareKit = e.Equipment.HardwareKit != null,

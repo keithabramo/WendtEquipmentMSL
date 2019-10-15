@@ -28,6 +28,7 @@
             <th class="exportable">Prty</th>
             <th class="exportable">Released</th>
             <th class="exportable">Dwg #</th>
+            <th class="exportable">Rev</th>
             <th class="exportable">Work
 Order #</th>
             <th class="exportable">Qty</th>
@@ -103,6 +104,13 @@ Shipped</th>
         @foreach (var priority in ViewBag.Priorities)
         {
             @:priorities.push(@priority);
+        }
+
+        var htsCodes = [];
+
+        @foreach (var htsCode in ViewBag.HTSCodes)
+        {
+            @:htsCodes.push("@htsCode");
         }
 
     </script>
