@@ -17,11 +17,6 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             this.repository = new Repository<Priority>(dbContext);
         }
 
-        public PriorityEngine(Repository<Priority> repository)
-        {
-            this.repository = repository;
-        }
-
         public IQueryable<Priority> ListAll()
         {
             return this.repository.Find(!PrioritySpecs.IsDeleted());

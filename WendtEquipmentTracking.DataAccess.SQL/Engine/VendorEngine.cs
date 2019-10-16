@@ -17,11 +17,6 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             this.repository = new Repository<Vendor>(dbContext);
         }
 
-        public VendorEngine(Repository<Vendor> repository)
-        {
-            this.repository = repository;
-        }
-
         public IQueryable<Vendor> ListAll()
         {
             return this.repository.Find(!VendorSpecs.IsDeleted());

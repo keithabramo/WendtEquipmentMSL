@@ -17,11 +17,6 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             this.repository = new Repository<HardwareKit>(dbContext);
         }
 
-        public HardwareKitEngine(Repository<HardwareKit> repository)
-        {
-            this.repository = repository;
-        }
-
         public IQueryable<HardwareKit> ListAll()
         {
             return this.repository.Find(!HardwareKitSpecs.IsDeleted())

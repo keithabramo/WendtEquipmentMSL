@@ -253,7 +253,6 @@
     <Content Include="Content\DataTables-1.10.18\images\sort_desc_disabled.png" />
     <Content Include="Content\datatablesAndEditor.css" />
     <Content Include="Content\dropzone.css" />
-    <Content Include="Content\select2.min.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -321,7 +320,6 @@
     <Content Include="Scripts\clipboard.min.js" />
     <Content Include="Scripts\dropzone.js" />
     <Content Include="Scripts\editor\editor.autocomplete.js" />
-    <Content Include="Scripts\editor\editor.select2.js" />
     <Content Include="Scripts\editor\editorVendor.js" />
     <Content Include="Scripts\editor\editProject.js" />
     <Content Include="Scripts\editor\datatablesAndEditor.js" />
@@ -382,8 +380,6 @@
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Scripts\form.js" />
-    <Content Include="Scripts\jquery-3.1.1.js" />
-    <Content Include="Scripts\jquery-3.1.1.slim.js" />
     <Content Include="Scripts\jquery.inputmask.js" />
     <Content Include="Scripts\jquery.inputmask.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
@@ -395,7 +391,6 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\select2.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Priority\Create.cshtml">
       <Generator>RazorGenerator</Generator>

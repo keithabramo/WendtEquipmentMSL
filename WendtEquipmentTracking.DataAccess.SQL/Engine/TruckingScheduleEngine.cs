@@ -18,11 +18,6 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             this.repository = new Repository<TruckingSchedule>(dbContext);
         }
 
-        public TruckingScheduleEngine(Repository<TruckingSchedule> repository)
-        {
-            this.repository = repository;
-        }
-
         public IQueryable<TruckingSchedule> ListAll()
         {
             return this.repository.Find(!TruckingScheduleSpecs.IsDeleted())

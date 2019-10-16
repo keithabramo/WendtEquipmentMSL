@@ -16,11 +16,6 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             this.repository = new Repository<EquipmentAttachment>(dbContext);
         }
 
-        public EquipmentAttachmentEngine(Repository<EquipmentAttachment> repository)
-        {
-            this.repository = repository;
-        }
-
         public IQueryable<EquipmentAttachment> List(Specification<EquipmentAttachment> specification)
         {
             return this.repository.Find(!EquipmentAttachmentSpecs.IsDeleted() && specification);

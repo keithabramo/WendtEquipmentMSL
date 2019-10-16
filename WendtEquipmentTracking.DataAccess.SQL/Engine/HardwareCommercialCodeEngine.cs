@@ -17,11 +17,6 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             this.repository = new Repository<HardwareCommercialCode>(dbContext);
         }
 
-        public HardwareCommercialCodeEngine(Repository<HardwareCommercialCode> repository)
-        {
-            this.repository = repository;
-        }
-
         public IQueryable<HardwareCommercialCode> ListAll()
         {
             return this.repository.Find(!HardwareCommercialCodeSpecs.IsDeleted());

@@ -13,11 +13,6 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             this.repository = new Repository<User>(dbContext);
         }
 
-        public UserEngine(Repository<User> repository)
-        {
-            this.repository = repository;
-        }
-
         public IQueryable<User> ListAll()
         {
             return this.repository.GetAll();

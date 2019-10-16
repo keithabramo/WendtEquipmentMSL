@@ -13,6 +13,7 @@ namespace WendtEquipmentTracking.App.Controllers
         private IProjectService projectService;
         private IUserService userService;
         private IPriorityService priorityService;
+        private IVisualService visualService;
 
         public EquipmentController()
         {
@@ -20,6 +21,7 @@ namespace WendtEquipmentTracking.App.Controllers
             projectService = new ProjectService();
             userService = new UserService();
             priorityService = new PriorityService();
+            visualService = new VisualService();
         }
 
         //
@@ -42,8 +44,8 @@ namespace WendtEquipmentTracking.App.Controllers
             var priorities = prioritiesBOs.Select(x => x.PriorityNumber).OrderBy(p => p).ToList();
             var project = projectService.GetById(user.ProjectId);
             var htsCodes = visualService.GetAllHTSCodes();
-            ViewBag.HTSCodes = htsCodes;
 
+            ViewBag.HTSCodes = htsCodes;
             ViewBag.ProjectNumber = project.ProjectNumber + (!string.IsNullOrWhiteSpace(project.ShipToCompany) ? ": " + project.ShipToCompany : "");
             ViewBag.Priorities = priorities;
             ViewBag.ProjectId = project.ProjectId;

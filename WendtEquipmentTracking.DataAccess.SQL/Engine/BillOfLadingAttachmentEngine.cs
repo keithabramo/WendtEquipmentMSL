@@ -16,11 +16,6 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             this.repository = new Repository<BillOfLadingAttachment>(dbContext);
         }
 
-        public BillOfLadingAttachmentEngine(Repository<BillOfLadingAttachment> repository)
-        {
-            this.repository = repository;
-        }
-
         public IQueryable<BillOfLadingAttachment> List(Specification<BillOfLadingAttachment> specification)
         {
             return this.repository.Find(!BillOfLadingAttachmentSpecs.IsDeleted() && specification);

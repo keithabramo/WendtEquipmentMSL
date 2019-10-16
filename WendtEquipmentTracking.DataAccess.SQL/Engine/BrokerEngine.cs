@@ -17,11 +17,6 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             this.repository = new Repository<Broker>(dbContext);
         }
 
-        public BrokerEngine(Repository<Broker> repository)
-        {
-            this.repository = repository;
-        }
-
         public IQueryable<Broker> ListAll()
         {
             return this.repository.Find(!BrokerSpecs.IsDeleted());

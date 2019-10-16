@@ -16,11 +16,6 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             this.repository = new Repository<Project>(dbContext);
         }
 
-        public ProjectEngine(Repository<Project> repository)
-        {
-            this.repository = repository;
-        }
-
         public IQueryable<Project> ListAll()
         {
             return this.repository.Find(!ProjectSpecs.IsDeleted() && !ProjectSpecs.IsCompleted());

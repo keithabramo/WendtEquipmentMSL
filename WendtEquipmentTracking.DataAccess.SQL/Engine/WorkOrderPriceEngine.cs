@@ -17,11 +17,6 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             this.repository = new Repository<WorkOrderPrice>(dbContext);
         }
 
-        public WorkOrderPriceEngine(Repository<WorkOrderPrice> repository)
-        {
-            this.repository = repository;
-        }
-
         public IQueryable<WorkOrderPrice> ListAll()
         {
             return this.repository.Find(!WorkOrderPriceSpecs.IsDeleted());

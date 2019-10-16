@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\IBillOfLadingAttachmentService.cs" />
+    <Compile Include="Api\IHTSCodeService.cs" />
     <Compile Include="Api\IEquipmentAttachmentService.cs" />
     <Compile Include="Api\ITruckingScheduleService.cs" />
     <Compile Include="Api\IHardwareKitService.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="BO\BrokerBO.cs" />
     <Compile Include="BO\WorkOrderPriceBO.cs" />
     <Compile Include="BillOfLadingAttachmentService.cs" />
+    <Compile Include="VisualService.cs" />
     <Compile Include="EquipmentAttachmentService.cs" />
     <Compile Include="TruckingScheduleService.cs" />
     <Compile Include="HardwareKitService.cs" />
@@ -126,6 +128,10 @@
     <ProjectReference Include="..\WendtEquipmentTracking.DataAccess.SQL\WendtEquipmentTracking.DataAccess.SQL.csproj">
       <Project>{fe54a48f-6b02-4462-b704-f3fc0e5249fc}</Project>
       <Name>WendtEquipmentTracking.DataAccess.SQL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WendtEquipmentTracking.DataAccess.Visual\WendtEquipmentTracking.DataAccess.Visual.csproj">
+      <Project>{ae227595-c944-418a-bdb0-5421e69bccec}</Project>
+      <Name>WendtEquipmentTracking.DataAccess.Visual</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

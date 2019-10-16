@@ -99,6 +99,6 @@ $(function () {
         this.initEvents();
     };
 
-    tableEquipmentAttachment = new TableEquipmentAttachment();
+    //tableEquipmentAttachment = new TableEquipmentAttachment();
 
 });

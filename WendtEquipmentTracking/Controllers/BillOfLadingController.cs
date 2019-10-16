@@ -12,6 +12,7 @@ namespace WendtEquipmentTracking.App.Controllers
         private IProjectService projectService;
         private IEquipmentService equipmentService;
         private IUserService userService;
+        private IVisualService visualService;
 
         public BillOfLadingController()
         {
@@ -19,6 +20,7 @@ namespace WendtEquipmentTracking.App.Controllers
             projectService = new ProjectService();
             equipmentService = new EquipmentService();
             userService = new UserService();
+            visualService = new VisualService();
         }
 
         //
@@ -86,7 +88,9 @@ namespace WendtEquipmentTracking.App.Controllers
             }
 
             var projectNumber = projectBO.ProjectNumber + (!string.IsNullOrWhiteSpace(projectBO.ShipToCompany) ? ": " + projectBO.ShipToCompany : "");
+            var htsCodes = visualService.GetAllHTSCodes();
 
+            ViewBag.HTSCodes = htsCodes;
             ViewBag.ProjectNumber = projectNumber;
 
             var model = new BillOfLadingModel
@@ -128,6 +132,9 @@ namespace WendtEquipmentTracking.App.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
+            var htsCodes = visualService.GetAllHTSCodes();
+
+            ViewBag.HTSCodes = htsCodes;
             ViewBag.ProjectNumber = projectBO.ProjectNumber + (!string.IsNullOrWhiteSpace(projectBO.ShipToCompany) ? ": " + projectBO.ShipToCompany : "");
 
 

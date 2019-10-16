@@ -18,11 +18,6 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
             this.repository = new Repository<BillOfLading>(dbContext);
         }
 
-        public BillOfLadingEngine(Repository<BillOfLading> repository)
-        {
-            this.repository = repository;
-        }
-
         public IQueryable<BillOfLading> ListAll()
         {
             return this.repository.Find(!BillOfLadingSpecs.IsDeleted())

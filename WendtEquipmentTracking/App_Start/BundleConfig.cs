@@ -34,7 +34,6 @@ namespace WendtEquipmentTracking.App
                         "~/Scripts/moment.min.js",
                         "~/Scripts/editor/datatablesAndEditor.js",
                         "~/Scripts/editor/editor.autocomplete.js",
-                        "~/Scripts/editor/editor.select2.js",
                         "~/Scripts/editor/editor.js"
                 ));
 
@@ -46,9 +45,6 @@ namespace WendtEquipmentTracking.App
 
             bundles.Add(new ScriptBundle("~/bundles/html2canvas").Include(
                      "~/Scripts/html2canvas.min.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/select2").Include(
-                     "~/Scripts/select2.min.js"));
 
 
 
@@ -154,8 +150,6 @@ namespace WendtEquipmentTracking.App
             bundles.Add(new StyleBundle("~/Content/themes/base/jqueryui")
                 .IncludeDirectory("~/Content/themes/base", "*.css"));
 
-            bundles.Add(new StyleBundle("~/Content/select2").Include(
-                    "~/Content/select2.min.css"));
 
             bundles.Add(new StyleBundle("~/Content/css")
                 .Include(
