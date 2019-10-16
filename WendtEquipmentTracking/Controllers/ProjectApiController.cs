@@ -90,30 +90,35 @@ namespace WendtEquipmentTracking.App.Controllers
         {
             var projectBO = projectService.GetByProjectNumber(project.ProjectNumber);
 
-            var model = new ProjectModel
+            var model = new ProjectModel();
+
+            if (projectBO != null)
             {
-                FreightTerms = projectBO.FreightTerms,
-                IncludeSoftCosts = projectBO.IncludeSoftCosts,
-                IsCustomsProject = projectBO.IsCustomsProject,
-                IsCompleted = projectBO.IsCompleted,
-                ProjectId = projectBO.ProjectId,
-                ProjectNumber = projectBO.ProjectNumber,
-                ShipToAddress = projectBO.ShipToAddress,
-                ShipToBroker = projectBO.ShipToBroker,
-                ShipToBrokerEmail = projectBO.ShipToBrokerEmail,
-                ShipToBrokerPhoneFax = projectBO.ShipToBrokerPhoneFax,
-                ShipToCompany = projectBO.ShipToCompany,
-                ShipToContact1 = projectBO.ShipToContact1,
-                ShipToContact1Email = projectBO.ShipToContact1Email,
-                ShipToContact1PhoneFax = projectBO.ShipToContact1PhoneFax,
-                ShipToContact2 = projectBO.ShipToContact2,
-                ShipToContact2Email = projectBO.ShipToContact2Email,
-                ShipToContact2PhoneFax = projectBO.ShipToContact2PhoneFax,
-                ShipToCSZ = projectBO.ShipToCSZ,
-                PM = projectBO.PM,
-                ReceivingHours = projectBO.ReceivingHours,
-                Notes = projectBO.Notes
-            };
+                model = new ProjectModel
+                {
+                    FreightTerms = projectBO.FreightTerms,
+                    IncludeSoftCosts = projectBO.IncludeSoftCosts,
+                    IsCustomsProject = projectBO.IsCustomsProject,
+                    IsCompleted = projectBO.IsCompleted,
+                    ProjectId = projectBO.ProjectId,
+                    ProjectNumber = projectBO.ProjectNumber,
+                    ShipToAddress = projectBO.ShipToAddress,
+                    ShipToBroker = projectBO.ShipToBroker,
+                    ShipToBrokerEmail = projectBO.ShipToBrokerEmail,
+                    ShipToBrokerPhoneFax = projectBO.ShipToBrokerPhoneFax,
+                    ShipToCompany = projectBO.ShipToCompany,
+                    ShipToContact1 = projectBO.ShipToContact1,
+                    ShipToContact1Email = projectBO.ShipToContact1Email,
+                    ShipToContact1PhoneFax = projectBO.ShipToContact1PhoneFax,
+                    ShipToContact2 = projectBO.ShipToContact2,
+                    ShipToContact2Email = projectBO.ShipToContact2Email,
+                    ShipToContact2PhoneFax = projectBO.ShipToContact2PhoneFax,
+                    ShipToCSZ = projectBO.ShipToCSZ,
+                    PM = projectBO.PM,
+                    ReceivingHours = projectBO.ReceivingHours,
+                    Notes = projectBO.Notes
+                };
+            }
 
             return model;
         }

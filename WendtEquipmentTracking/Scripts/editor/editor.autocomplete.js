@@ -84,7 +84,7 @@ _fieldTypes.autoComplete = {
 	},
 
 	owns: function ( conf, node ) {
-		if ( $(node).closest('ul.ui.autocomplete').length ) {
+		if ( $(node).closest('ul.ui-autocomplete').length ) {
 			return true;
 		}
 		return false;

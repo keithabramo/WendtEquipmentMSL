@@ -27,7 +27,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand vertical-bar-right" href="@Url.Action("Index", "Home")">
-                    <span><img src="~/Images/logo.jpg" alt="logo"/></span>
+                    <span><img src="~/Images/logo.jpg" alt="logo" /></span>
                     Equipment Listing
                     @*Equipment Listing - DEVELOPMENT*@
                 </a>
@@ -102,12 +102,15 @@
     <script type="text/javascript">
 
         ROOT_URL = "@Url.Content("~/")";
-
+        canReadWrite = "@(Html.UserIsInRole(UserRoles.ReadWrite) ? "true" : "false")";
 
     </script>
+
     @Scripts.Render("~/bundles/main")
+    @Scripts.Render("~/bundles/form")
+    @Scripts.Render("~/bundles/datatable")
     @RenderSection("scripts", required: false)
 
-    
+
 </body>
 </html>

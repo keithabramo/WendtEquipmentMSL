@@ -11,7 +11,6 @@
             $(".table .datePickerTable").datepicker({
                 dateFormat: 'm/d/y',
                 onSelect: function () {
-                    // The "this" keyword refers to the input (in this case: #someinput)
                     if ($(this).closest("td").length) {
                         $(this).change();
                         $(this).closest("td").next().find("input").focus();

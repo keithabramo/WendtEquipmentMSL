@@ -61,7 +61,7 @@
         this.initStyles = function () {
             var $this = this;
 
-            //timer.startTimer(60 * 15); //15 Mins
+            timer.startTimer(60 * 15); //15 Mins
 
             this.initEditor();
             this.initDatatable();

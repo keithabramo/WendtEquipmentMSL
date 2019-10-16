@@ -22,17 +22,20 @@ namespace WendtEquipmentTracking.App
                         "~/Scripts/jquery.inputmask.js",
                         "~/Scripts/form.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/table")
+            bundles.Add(new ScriptBundle("~/bundles/datatable")
                 .Include(
                         "~/Scripts/moment.min.js",
-                        "~/Scripts/editor/datatablesAndEditor.js",
+                        "~/Scripts/editor/datatablesAndEditor.js"
+                ));
+
+
+            bundles.Add(new ScriptBundle("~/bundles/table")
+                .Include(
                         "~/Scripts/editor/table.js"
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/editor")
                 .Include(
-                        "~/Scripts/moment.min.js",
-                        "~/Scripts/editor/datatablesAndEditor.js",
                         "~/Scripts/editor/editor.autocomplete.js",
                         "~/Scripts/editor/editor.js"
                 ));
