@@ -17,13 +17,13 @@ namespace WendtEquipmentTracking.App.Controllers
         protected void HandleError(Exception e)
         {
 
-            logger.Error("MSL Controller Error" + ActiveDirectoryHelper.CurrentUserUsername() + ": ", e);
+            logger.Error("MSL API Controller Error " + ActiveDirectoryHelper.CurrentUserUsername() + ": ", e);
         }
 
         protected void HandleError(ModelStateDictionary modelState)
         {
             var errors = string.Join(";", ModelState.Where(v => v.Value.Errors.Count() > 0).ToList().Select(v => v.Key + " : " + v.Value.Errors.First().ErrorMessage));
-            logger.Error("Custom ModelState Errors" + ActiveDirectoryHelper.CurrentUserUsername() + ": " + errors);
+            logger.Error("API Custom ModelState Errors " + ActiveDirectoryHelper.CurrentUserUsername() + ": " + errors);
         }
     }
 }

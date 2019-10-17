@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\IBillOfLadingAttachmentService.cs" />
+    <Compile Include="Api\IEmailService.cs" />
     <Compile Include="Api\IHTSCodeService.cs" />
     <Compile Include="Api\IEquipmentAttachmentService.cs" />
     <Compile Include="Api\ITruckingScheduleService.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="Api\IEquipmentService.cs" />
     <Compile Include="BO\BillOfLadingAttachmentBO.cs" />
     <Compile Include="BO\EquipmentAttachmentBO.cs" />
+    <Compile Include="BO\EquipmentRevisionBO.cs" />
     <Compile Include="BO\TruckingScheduleBO.cs" />
     <Compile Include="BO\HardwareCommercialCodeBO.cs" />
     <Compile Include="BO\HardwareKitEquipmentBO.cs" />
@@ -89,6 +91,7 @@
     <Compile Include="BO\BrokerBO.cs" />
     <Compile Include="BO\WorkOrderPriceBO.cs" />
     <Compile Include="BillOfLadingAttachmentService.cs" />
+    <Compile Include="EmailService.cs" />
     <Compile Include="VisualService.cs" />
     <Compile Include="EquipmentAttachmentService.cs" />
     <Compile Include="TruckingScheduleService.cs" />

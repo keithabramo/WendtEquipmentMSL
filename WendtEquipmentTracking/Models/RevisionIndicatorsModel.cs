@@ -2,7 +2,7 @@
 {
     public class RevisionIndicatorsModel : BaseModel
     {
-        public string ShippedQtyColor { get; set; }
+        public string ShippedQuantityColor { get; set; }
         public string EquipmentNameColor { get; set; }
         public string UnitWeightColor { get; set; }
         public string WorkOrderNumberColor { get; set; }

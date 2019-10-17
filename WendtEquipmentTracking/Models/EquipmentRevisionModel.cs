@@ -57,16 +57,10 @@ namespace WendtEquipmentTracking.App.Models
         [Required]
         public string Description { get; set; }
 
-
         [DisplayName("Unit Wt")]
         [DisplayFormat(DataFormatString = "{#.##}")]
         [Required]
         public double? UnitWeight { get; set; }
-
-
-        [DisplayName("Total Wt")]
-        public string TotalWeight { get; set; }
-
 
         [DisplayName("Ship Qty")]
         public string ShippedQuantity { get; set; }
@@ -257,7 +251,7 @@ namespace WendtEquipmentTracking.App.Models
                 {
                     if (!string.IsNullOrWhiteSpace(ShippedQuantity) && Int32.Parse(ShippedQuantity) > 0)
                     {
-                        RevisionIndicators.ShippedQtyColor = IndicatorColors.Green.ToString();
+                        RevisionIndicators.ShippedQuantityColor = IndicatorColors.Green.ToString();
                     }
 
                     RevisionIndicators.NewDescriptionColor = IndicatorColors.Red.ToString();
@@ -274,7 +268,7 @@ namespace WendtEquipmentTracking.App.Models
                 }
                 else if (HasNewEquipment && !HasExistingEquipment)
                 {
-                    RevisionIndicators.ShippedQtyColor = IndicatorColors.Red.ToString();
+                    RevisionIndicators.ShippedQuantityColor = IndicatorColors.Red.ToString();
                     RevisionIndicators.DescriptionColor = IndicatorColors.Red.ToString();
                     RevisionIndicators.EquipmentNameColor = IndicatorColors.Red.ToString();
                     RevisionIndicators.PriorityNumberColor = IndicatorColors.Red.ToString();
