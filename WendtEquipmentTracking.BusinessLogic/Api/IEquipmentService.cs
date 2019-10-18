@@ -13,7 +13,7 @@ namespace WendtEquipmentTracking.BusinessLogic.Api
         IEnumerable<EquipmentBO> GetAll(int projectId);
         IEnumerable<EquipmentBO> GetForDuplicateCheck(int projectId);
         IEnumerable<EquipmentBO> GetByIds(IEnumerable<int> ids);
-        IEnumerable<EquipmentBO> GetByDrawingNumbers(IEnumerable<string> drawingNumbers);
+        IEnumerable<EquipmentBO> GetByDrawingNumbers(int projectId, IEnumerable<string> drawingNumbers);
         IEnumerable<EquipmentBO> GetHardwareByShippingTagNumberAndDescription(int projectId, string shipTagNumber, string description);
         IEnumerable<EquipmentBO> GetHardwareByShippingTagNumberAndDescription(int projectId, string shipTagNumber, string description, int? hardwareKitId);
 

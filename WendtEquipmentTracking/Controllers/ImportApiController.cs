@@ -568,7 +568,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
                     // GET THE MATCHED EXISTING RECORDS
 
-                    var existingEquipments = equipmentService.GetByDrawingNumbers(importBO.FilePaths.Keys).ToList();
+                    var existingEquipments = equipmentService.GetByDrawingNumbers(user.ProjectId, importBO.FilePaths.Keys).ToList();
                     
                     // All Mataching equipment add the existing equipment information
 
@@ -717,7 +717,7 @@ namespace WendtEquipmentTracking.App.Controllers
                                     equipmentRevisionBO.ShippingTagNumber = equipmentRevisionModel.NewShippingTagNumber;
                                     equipmentRevisionBO.WorkOrderNumber = equipmentRevisionModel.NewWorkOrderNumber;
                                     equipmentRevisionBO.ShippedFrom = equipmentRevisionModel.NewShippedFrom;
-                                    equipmentRevisionBO.IsHardware = equipmentRevisionModel.EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase);
+                                    equipmentRevisionBO.IsHardware = equipmentRevisionModel.NewEquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase);
 
 
                                     var priority = priorities.FirstOrDefault(x => x.PriorityNumber == equipmentRevisionModel.NewPriorityNumber);
@@ -742,7 +742,7 @@ namespace WendtEquipmentTracking.App.Controllers
                                     equipmentNewBO.ShippingTagNumber = equipmentRevisionModel.NewShippingTagNumber;
                                     equipmentNewBO.WorkOrderNumber = equipmentRevisionModel.NewWorkOrderNumber;
                                     equipmentNewBO.ShippedFrom = equipmentRevisionModel.NewShippedFrom;
-                                    equipmentNewBO.IsHardware = equipmentRevisionModel.EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase);
+                                    equipmentNewBO.IsHardware = equipmentRevisionModel.NewEquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase);
                                     equipmentNewBO.ProjectId = equipmentRevisionModel.ProjectId;
                                     equipmentNewBO.Order = equipmentRevisionModel.Order;
 

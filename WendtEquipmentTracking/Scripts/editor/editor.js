@@ -135,7 +135,8 @@
 
             delete $.fn.dataTable.AutoFill.actions.fillHorizontal;
             delete $.fn.dataTable.AutoFill.actions.increment;
-            delete $.fn.dataTable.AutoFill.actions.fill;
+            //delete $.fn.dataTable.AutoFill.actions.fill;
+            //delete $.fn.dataTable.AutoFill.actions.cancel;
 
             this.initStyles();
             this.initEvents();

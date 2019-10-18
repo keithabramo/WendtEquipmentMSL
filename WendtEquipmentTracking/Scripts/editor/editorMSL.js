@@ -394,7 +394,7 @@
                         }
                         else if ($.inArray($this.editorMain.editor.modifier().column, $this.editableColumns) < 0) {
                             editable = false;
-                        } else if (rowData.IsHardwareKit && columnIndex == 2) {
+                        } else if (rowData.IsHardwareKit && columnIndex == $this.columnIndexes.EquipmentName) {
                             editable = false;
                         }
                     }
@@ -414,9 +414,13 @@
 
                     var rowData = $this.editorMain.datatable.row(rowIndex).data();
                     
-
+                    //skip this check if we are editing an always editable column
                     if ($.inArray(columnIndex, $this.alwaysEditableColumns) < 0) {
-                        if (rowData.IsAssociatedToHardwareKit || (rowData.FullyShippedText == "YES" && rowData.Quantity != 0)) {
+
+                        if (rowData.IsAssociatedToHardwareKit) {
+                            cell[0].set = cell[0].data;
+                        }
+                        else if (rowData.FullyShippedText == "YES" && rowData.Quantity != 0) {
                             cell[0].set = cell[0].data;
                         }
                         else if ($.inArray(columnIndex, $this.editableColumns) < 0) {
@@ -457,6 +461,13 @@
                     $(row.node()).addClass('active');
                 } else {
                     $(row.node()).removeClass('active');
+                }
+
+
+                var $equipmentNameCell = $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.EquipmentName).node());
+
+                if (data.IsAssociatedToHardwareKit) {
+                    $equipmentNameCell.append("<br><span class='text-info hardwarekitLabel'>Hardware Kit: " + data.AssociatedHardwareKitNumber + "</span>");
                 }
 
                 $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.EquipmentName).node()).attr("class", data.Indicators.EquipmentNameColor);
@@ -643,7 +654,7 @@
                     }
 
                     if (data.IsHardwareKit) {
-                        $($this.editorMain.datatable.cell(index, 2).node()).addClass("active");
+                        $($this.editorMain.datatable.cell(index, $this.columnIndexes.EquipmentName).node()).addClass("active");
                     }
                 },
                 select: {
@@ -744,9 +755,7 @@
                     {
                         data: "PriorityNumber", "targets": this.columnIndexes.PriorityNumber,
                         createdCell: function (cell, data, rowData, rowIndex, colIndex) {
-                            var $cell = $(cell);
-
-                            $cell.addClass(rowData.Indicators.PriorityColor);
+                            $(cell).addClass(rowData.Indicators.PriorityColor);
                         },
                         className: "priorityWidth"
                     },
@@ -827,7 +836,7 @@
                     },
                     {
                         data: "Notes", "targets": this.columnIndexes.Notes,
-                        className: "notesWidth"
+                        className: "notesWidth always-editable"
                     },
                     {
                         data: "CustomsValueText", "targets": this.columnIndexes.CustomsValueText, className: "active text-right customsValueWidth",
@@ -847,21 +856,21 @@
                     },
                     {
                         data: "HTSCode", "targets": this.columnIndexes.HTSCode,
-                        className: "htsCodeWidth",
+                        className: "htsCodeWidth always-editable",
                         visible: !hideColumns
                     },
                     {
                         data: "CountryOfOrigin", "targets": this.columnIndexes.CountryOfOrigin,
-                        className: "countryOfOriginWidth",
+                        className: "countryOfOriginWidth always-editable",
                         visible: !hideColumns
                     },
                     {
                         data: "BillOfLadingNumbers", "targets": this.columnIndexes.BillOfLadingNumbers,
-                        className: "billOfLadingNumbersWidth"
+                        className: "billOfLadingNumbersWidth active"
                     },
                     {
                         data: "LatestBOLDateShipped", "targets": this.columnIndexes.LatestBOLDateShipped, type: "date",
-                        className: "latestBOLDateShippedWidth"
+                        className: "latestBOLDateShippedWidth active"
                     },
                     {
                         "targets": this.columnIndexes.Attachments,

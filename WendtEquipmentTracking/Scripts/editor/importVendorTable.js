@@ -124,6 +124,10 @@
                 },
                 order: [[1, 'asc']],
                 rowId: 'VendorId',
+                initComplete: function (settings, json) {
+                    $this.editorMain.datatable.rows().select();
+                    $(".table thead th.select-checkbox").closest("tr").addClass("selected");
+                },
                 createdRow: function (row, data, index) {
                     if (data.IsDuplicate) {
                         $(row).addClass('warning');

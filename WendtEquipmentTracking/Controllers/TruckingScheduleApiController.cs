@@ -111,11 +111,16 @@ namespace WendtEquipmentTracking.App.Controllers
                         truckingSchedule.ShipToVendorId = shipToVendor.VendorId;
                     }
 
-                    var projectNumber = !string.IsNullOrWhiteSpace(truckingScheduleProperties["ProjectNumber"].ToString()) ? Convert.ToDouble(truckingScheduleProperties["ProjectNumber"]) : 0;
-                    var project = projects.FirstOrDefault(x => x.ProjectNumber == projectNumber);
-                    if (project != null)
+
+                    var projectNumberString = truckingScheduleProperties["ProjectNumber"].ToString();
+                    double projectNumber = 0;
+                    if (!string.IsNullOrWhiteSpace(projectNumberString) && Double.TryParse(projectNumberString, out projectNumber))
                     {
-                        truckingSchedule.ProjectId = project.ProjectId;
+                        var project = projects.FirstOrDefault(x => x.ProjectNumber == projectNumber);
+                        if (project != null)
+                        {
+                            truckingSchedule.ProjectId = project.ProjectId;
+                        }
                     }
 
                     truckingSchedules.Add(truckingSchedule);

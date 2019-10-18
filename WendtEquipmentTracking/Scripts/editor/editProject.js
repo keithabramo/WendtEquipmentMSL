@@ -3,6 +3,10 @@
     var EditProject = function () {
 
         this.initStyles = function () {
+
+            // Request to set focus on project # field one page load
+            $("input[name='ProjectNumber']").focus();
+
             $.ajax({
                 url: ROOT_URL + "api/AutocompleteApi/Broker/",
                 success: function (results) {

@@ -121,8 +121,8 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Helper
                         WorkOrderNumber = workOrderNumber,
                         CostPrice = costPrice,
                         SalePrice = salePrice,
-                        ReleasedPercent = releasedPercent, //percent columns come back as decimals between 0 - 1
-                        ShippedPercent = shippedPercent //percent columns come back as decimals between 0 - 1
+                        ReleasedPercent = Math.Round(releasedPercent, 2), //percent columns come back as decimals between 0 - 1
+                        ShippedPercent = Math.Round(shippedPercent, 2) //percent columns come back as decimals between 0 - 1
                     };
 
                     records.Add(record);

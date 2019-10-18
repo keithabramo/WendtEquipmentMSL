@@ -306,9 +306,9 @@ namespace WendtEquipmentTracking.BusinessLogic
             return equipmentBOs.ToList();
         }
 
-        public IEnumerable<EquipmentBO> GetByDrawingNumbers(IEnumerable<string> drawingNumbers)
+        public IEnumerable<EquipmentBO> GetByDrawingNumbers(int projectId, IEnumerable<string> drawingNumbers)
         {
-            var equipments = equipmentEngine.List(EquipmentSpecs.DrawingNumbers(drawingNumbers));
+            var equipments = equipmentEngine.List(EquipmentSpecs.ProjectId(projectId) && EquipmentSpecs.DrawingNumbers(drawingNumbers));
 
             var equipmentBOs = equipments.Select(x => new EquipmentBO
             {

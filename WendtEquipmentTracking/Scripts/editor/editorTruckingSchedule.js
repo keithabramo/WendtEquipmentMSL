@@ -65,11 +65,13 @@
                 source: projects,
                 minLength: 0,
                 change: function (event, ui) {
-                    var project = $this.getProject(ui.item.value);
+                    if (ui.item) {
+                        var project = $this.getProject(ui.item.value);
 
-                    var shipToResults = $this.getShipToList(project);
+                        var shipToResults = $this.getShipToList(project);
 
-                    $(".shipTo-autocomplete").autocomplete("option", "source", shipToResults);
+                        $(".shipTo-autocomplete").autocomplete("option", "source", shipToResults);
+                    }
                 }
             }).focus(function () {
                 $(this).data("uiAutocomplete").search($(this).val());
@@ -319,6 +321,8 @@
 
                 $createRow.find(":input").val("");
                 $createRow.find("select").prop('selectedIndex', 0);
+                $createRow.find(".datePickerTable").datepicker("setDate", new Date());
+
             });
 
             $(".table").on("mousedown", "td.focus", function (e) {
@@ -506,11 +510,13 @@
                     },
                     {
                         data: "ShipFrom",
-                        targets: 6
+                        targets: 6,
+                        className: "shippedFromWidth"
                     },
                     {
                         data: "ShipTo",
-                        targets: 7
+                        targets: 7,
+                        className: "shippedToWidth"
                     },
                     {
                         data: "Description",

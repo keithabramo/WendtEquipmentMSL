@@ -487,6 +487,10 @@ table.dataTable tbody tr.selected td {
         min-width: 70px;
     }
 
+    .table-styled .shippedToWidth {
+        min-width: 100px;
+    }
+
 
     .table-styled .hardwarekitLabel {
         text-transform: capitalize;
@@ -518,6 +522,10 @@ table.dataTable tbody tr.selected td {
 
     .table-styled tfoot td select.form-control{
         padding: 6px;
+    }
+
+    .table-styled .always-editable {
+        background-color: transparent !important;
     }
 
 .table.masterShipList tbody td {

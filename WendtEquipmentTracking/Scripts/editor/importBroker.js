@@ -13,6 +13,7 @@ $(function () {
             Dropzone.options.myDropzone = {
                 maxFiles: 1,
                 acceptedFiles: ".xls, .xlsx, .xlsm",
+                addRemoveLinks: true,
                 error: function (file) {
                     if (!file.accepted) {
                         this.removeFile(file);
@@ -32,7 +33,7 @@ $(function () {
                         }
 
                     }
-                    else 
+                    else {
                         this.removeFile(file);
                         main.error(response.Error);
                     }
