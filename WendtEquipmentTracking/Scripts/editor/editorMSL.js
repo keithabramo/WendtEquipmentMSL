@@ -578,7 +578,10 @@
                         type: "autoComplete",
                         opts: {
                             source: htsCodes,
-                            minLength: 0
+                            minLength: 0,
+                            focus: function (event, ui) {
+                                $(this).val(ui.item.value);
+                            }
                         }
                     },
                     { name: "CountryOfOrigin" },

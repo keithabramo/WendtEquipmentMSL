@@ -378,7 +378,10 @@
                         type: "autoComplete",
                         opts: {
                             source: projects,
-                            minLength: 0
+                            minLength: 0,
+                            focus: function (event, ui) {
+                                $(this).val(ui.item.value);
+                            }
                         }
                     }, {
                         name: "WorkOrder"
@@ -391,14 +394,20 @@
                         type: "autoComplete",
                         opts: {
                             source: shipFromVendors,
-                            minLength: 0
+                            minLength: 0,
+                            focus: function (event, ui) {
+                                $(this).val(ui.item.value);
+                            }
                         }
                     }, {
                         name: "ShipTo",
                         type: "autoComplete",
                         opts: {
                             source: shipToVendors,
-                            minLength: 0
+                            minLength: 0,
+                            focus: function (event, ui) {
+                                $(this).val(ui.item.value);
+                            }
                         }
                     }, {
                         name: "Description"
