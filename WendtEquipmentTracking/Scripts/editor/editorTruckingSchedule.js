@@ -50,12 +50,16 @@
             $(".shipFrom-autocomplete").autocomplete({
                 source: shipFromVendors,
                 minLength: 0
-            });
+            }).focus(function () {
+                $(this).data("uiAutocomplete").search($(this).val());
+            });;
 
             $(".shipTo-autocomplete").autocomplete({
                 source: shipToVendors,
                 minLength: 0
-            });
+            }).focus(function () {
+                $(this).data("uiAutocomplete").search($(this).val());
+            });;
 
             $(".project-autocomplete").autocomplete({
                 source: projects,
@@ -67,7 +71,9 @@
 
                     $(".shipTo-autocomplete").autocomplete("option", "source", shipToResults);
                 }
-            });
+            }).focus(function () {
+                $(this).data("uiAutocomplete").search($(this).val());
+            });;
 
         };
 
@@ -376,6 +382,7 @@
                     }, {
                         name: "ProjectNumber",
                         type: "autoComplete",
+                        openOnFocus: true,
                         opts: {
                             source: projects,
                             minLength: 0,
@@ -392,6 +399,7 @@
                     }, {
                         name: "ShipFrom",
                         type: "autoComplete",
+                        openOnFocus: true,
                         opts: {
                             source: shipFromVendors,
                             minLength: 0,
@@ -402,6 +410,7 @@
                     }, {
                         name: "ShipTo",
                         type: "autoComplete",
+                        openOnFocus: true,
                         opts: {
                             source: shipToVendors,
                             minLength: 0,

@@ -576,6 +576,7 @@
                     {
                         name: "HTSCode",
                         type: "autoComplete",
+                        openOnFocus: true,
                         opts: {
                             source: htsCodes,
                             minLength: 0,

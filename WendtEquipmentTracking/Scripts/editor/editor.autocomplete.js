@@ -57,6 +57,23 @@ _fieldTypes.autoComplete = {
 		conf._input = $('<input type="text" id="'+conf.id+'">')
 			.autocomplete( conf.opts || {} );
 
+        //Jquery UI default minlength
+        var defaultOptsMinLength = 1;
+
+        // Decide if a min length was passed in. If not, use default.
+        var minLength = conf.opts && conf.opts.minLength;
+        if (minLength == null) {
+            minLength = defaultOptsMinLength;
+        }
+
+        // Search and display results as soon as focus is detected on input
+        conf._input.focus(function () {
+
+            if (conf.openOnFocus && $(this).val().length >= minLength) {
+                $(this).data("uiAutocomplete").search($(this).val());
+            }
+        });
+
 		return conf._input[0];
 	},
 
