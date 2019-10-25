@@ -48,7 +48,7 @@ namespace WendtEquipmentTracking.App.Controllers
                         FileName = Guid.NewGuid().ToString() + model.File.FileName
                     };
 
-                    var filePath = Path.Combine(Server.MapPath("~/"), "Attachments", equipmentAttachmentBO.FileName);
+                    var filePath = Path.Combine(Server.MapPath("/Attachments"), equipmentAttachmentBO.FileName);
 
                     equipmentAttachmentService.Save(equipmentAttachmentBO, filePath, file);
 

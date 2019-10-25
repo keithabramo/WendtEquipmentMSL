@@ -1,10 +1,10 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
 
 namespace WendtEquipmentTracking.DataAccess.Visual.Api
 {
     public interface IHTSCodeEngine
     {
-        IQueryable<string> ListAll();
+        IEnumerable<string> ListAll();
 
     }
 }

@@ -29,6 +29,28 @@ namespace WendtEquipmentTracking.BusinessLogic
             }
         }
 
+        public bool SendEquipmentSnippet(double projectNumber, string dataURL)
+        {
+            var success = true;
+
+            string username = ActiveDirectoryHelper.CurrentUserUsername();
+            var user = ActiveDirectoryHelper.GetUser(username);
+
+            if (user != null)
+            {
+                var body = "<br/><br/><br/><img src='" + dataURL + "' />";
+
+                success = Mail.Send(user.Email, projectNumber.ToString(), body);
+            }
+            else
+            {
+                success = false;
+                throw new Exception("User not found when sending equipment snippet email.");
+            }
+
+            return success;
+        }
+
         private string createRevisionCSV (IEnumerable<EquipmentRevisionBO> equipmentRevisionBOs)
         {
             var csvBuilder = new StringBuilder();

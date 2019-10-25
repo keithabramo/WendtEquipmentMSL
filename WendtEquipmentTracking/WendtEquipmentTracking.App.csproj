@@ -202,6 +202,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\BillOfLadingAttachmentFileModel.cs" />
+    <Compile Include="Models\EquipmentSnippetModel.cs" />
     <Compile Include="Models\BillOfLadingAttachmentModel.cs" />
     <Compile Include="Models\EquipmentAttachmentModel.cs" />
     <Compile Include="Models\EquipmentAttachmentFileModel.cs" />

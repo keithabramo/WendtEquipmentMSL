@@ -11,18 +11,20 @@ namespace WendtEquipmentTracking.Common
     {
         private static ILog logger = LogManager.GetLogger("File");
 
-        public static void Send(string to, string subject, string body)
+        public static bool Send(string to, string subject, string body)
         {
-            send(to, subject, body, null);
+            return send(to, subject, body, null);
         }
 
-        public static void Send(string to, string subject, string body, byte [] attachment)
+        public static bool Send(string to, string subject, string body, byte [] attachment)
         {
-            send(to, subject, body, attachment);
+            return send(to, subject, body, attachment);
         }
 
-        private static void send(string to, string subject, string body, byte[] attachment)
+        private static bool send(string to, string subject, string body, byte[] attachment)
         {
+            var success = true;
+
             MailMessage message = new MailMessage();
             message.IsBodyHtml = true;
             message.To.Add(new MailAddress(to));
@@ -49,8 +51,11 @@ namespace WendtEquipmentTracking.Common
 
             } catch (Exception ex)
             {
+                success = false;
                 logger.Error("Email Error " + ActiveDirectoryHelper.CurrentUserUsername() + ": ", ex);
             }
+
+            return success;
         }
 
     }

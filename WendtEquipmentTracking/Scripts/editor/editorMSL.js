@@ -671,12 +671,12 @@
                         customize: function (window) {
 
                             //open mail to link
-                            var link = document.createElement('a');
-                            link.href = "mailto:?subject=" + $("#projectNumber").val() + "&body=%0D%0A%0D%0A%0D%0A%0D%0A";
+                            //var link = document.createElement('a');
+                            //link.href = "mailto:?subject=" + $("#projectNumber").val() + "&body=%0D%0A%0D%0A%0D%0A%0D%0A";
 
-                            document.body.appendChild(link);
+                            //document.body.appendChild(link);
 
-                            link.click();
+                            //link.click();
 
                             setTimeout(function () {
 
@@ -695,8 +695,8 @@
 
                                 window.close();
 
-                                $("#copyModal .modal-body").html('Loading...');
-                                $("#copyModal").modal();
+                                //$("#copyModal .modal-body").html('Loading...');
+                                //$("#copyModal").modal();
 
                                 //html 2 canvas to turn into picture
                                 html2canvas(
@@ -708,7 +708,27 @@
 
                                     $div.remove();
 
-                                    $("#copyModal .modal-body").html("<img src='" + canvas.toDataURL() + "'/>");
+                                    var dataURL = canvas.toDataURL();
+
+                                    //$("#copyModal .modal-body").html("<img src='" + dataURL + "'/>");
+
+
+                                    $.ajax({
+                                        url: ROOT_URL + "api/EquipmentApi/SendSnippet",
+                                        method: "POST",
+                                        data: {
+                                            DataURL: dataURL
+                                        },
+                                        success: function (result) {
+                                            if (result) {
+                                                main.success("You should recieve an email with the selected equipment records shortly.");
+                                            } else {
+                                                main.error("There was an issue creating this equipment snippet email.");
+
+
+                                            }
+                                        }
+                                    });
 
                                 }, function (reason) {
                                     reason.message === 'Error.';

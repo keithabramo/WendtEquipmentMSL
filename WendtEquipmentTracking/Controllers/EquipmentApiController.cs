@@ -16,6 +16,7 @@ namespace WendtEquipmentTracking.App.Controllers
         private IProjectService projectService;
         private IUserService userService;
         private IPriorityService priorityService;
+        private IEmailService emailService;
 
         public EquipmentApiController()
         {
@@ -23,6 +24,7 @@ namespace WendtEquipmentTracking.App.Controllers
             projectService = new ProjectService();
             userService = new UserService();
             priorityService = new PriorityService();
+            emailService = new EmailService();
         }
 
         //
@@ -243,6 +245,29 @@ namespace WendtEquipmentTracking.App.Controllers
             }
 
             return new DtResponse { data = equipmentModels };
+        }
+
+        [HttpPost]
+        public bool SendSnippet([FromBody]EquipmentSnippetModel model)
+        {
+            var success = true;
+
+            try
+            {
+                var content = Request.Content.ReadAsStringAsync().Result;
+
+                var user = userService.GetCurrentUser();
+                var projectBO = projectService.GetById(user.ProjectId);
+
+                success = emailService.SendEquipmentSnippet(projectBO.ProjectNumber, model.DataURL);
+
+            } catch (Exception e)
+            {
+                HandleError(e);
+                success = false;
+            }
+
+            return success;
         }
 
     }

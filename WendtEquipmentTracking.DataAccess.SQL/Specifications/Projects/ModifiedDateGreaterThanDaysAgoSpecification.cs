@@ -10,7 +10,7 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Specifications.Projects
 
         public ModifiedDateGreaterThanDaysAgoSpecification(int days)
         {
-            this.expiredDate = DateTime.Now.Date.AddDays(-1 * days);
+            this.expiredDate = DateTime.Now.Date.AddDays(1 * days);
         }
 
         public override Expression<Func<Project, bool>> IsSatisfiedBy()
