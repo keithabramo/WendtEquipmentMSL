@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using System.Net.Mail;
 using System.Net.Mime;
+using System.Net.Security;
 
 namespace WendtEquipmentTracking.Common
 {
@@ -12,17 +13,17 @@ namespace WendtEquipmentTracking.Common
     {
         private static ILog logger = LogManager.GetLogger("File");
 
-        public static bool Send(string to, string subject, string body)
+        //public static bool Send(string to, string subject, string body)
+        //{
+        //    return send(to, subject, body, null, string.Empty);
+        //}
+
+        public static bool Send(string to, string subject, string body, byte [] attachment, string attachmentName, string contentType)
         {
-            return send(to, subject, body, null);
+            return send(to, subject, body, attachment, attachmentName, contentType);
         }
 
-        public static bool Send(string to, string subject, string body, byte [] attachment)
-        {
-            return send(to, subject, body, attachment);
-        }
-
-        private static bool send(string to, string subject, string body, byte[] attachment)
+        private static bool send(string to, string subject, string body, byte[] attachment, string attachmentName, string contentType)
         {
             var success = true;
 
@@ -33,24 +34,28 @@ namespace WendtEquipmentTracking.Common
             message.Subject = subject;
             message.Body = string.Format(body);
 
-            if (attachment != null)
-            {
-                using (MemoryStream stream = new MemoryStream(attachment))
-                {
-                    Attachment emailAttachment = new Attachment(stream, new ContentType("text/csv"));
-                    emailAttachment.Name = "test.csv";
-
-                    message.Attachments.Add(emailAttachment);
-                }
-            }
-            
             try
             {
-                ServicePointManager.ServerCertificateValidationCallback = new System.Net.Security.RemoteCertificateValidationCallback(RemoteServerCertificateValidationCallback);
+                ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(RemoteServerCertificateValidationCallback);
                 SmtpClient smtp = new SmtpClient();
 
-                smtp.Send(message);
 
+                if (attachment != null)
+                {
+                    using (MemoryStream stream = new MemoryStream(attachment))
+                    {
+                        Attachment emailAttachment = new Attachment(stream, new ContentType(contentType));
+                        emailAttachment.Name = attachmentName;
+                        emailAttachment.ContentId = attachmentName;
+
+                        message.Attachments.Add(emailAttachment);
+
+                        smtp.Send(message);
+                    }
+                } else
+                {
+                    smtp.Send(message);
+                }
             } catch (Exception ex)
             {
                 success = false;

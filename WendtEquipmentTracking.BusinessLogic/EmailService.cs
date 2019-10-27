@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using WendtEquipmentTracking.BusinessLogic.Api;
 using WendtEquipmentTracking.BusinessLogic.BO;
 using WendtEquipmentTracking.Common;
@@ -21,8 +22,7 @@ namespace WendtEquipmentTracking.BusinessLogic
             {
                 var drawingNumber = equipmentRevisionBOs.FirstOrDefault().DrawingNumber;
 
-
-                Mail.Send(user.Email, "Equipment Revision Summary", "Attached is the equipment revision summary for drawing #: " + drawingNumber, Encoding.ASCII.GetBytes(csv));
+                Mail.Send(user.Email, "Equipment Revision Summary", "Attached is the equipment revision summary for drawing #: " + drawingNumber, Encoding.ASCII.GetBytes(csv), "Revision Summary.csv", "text/csv");
             } else
             {
                 throw new Exception("User not found when sending equipment revision email");
@@ -31,20 +31,24 @@ namespace WendtEquipmentTracking.BusinessLogic
 
         public bool SendEquipmentSnippet(double projectNumber, string dataURL)
         {
-            var success = true;
+            bool success;
 
             string username = ActiveDirectoryHelper.CurrentUserUsername();
             var user = ActiveDirectoryHelper.GetUser(username);
 
             if (user != null)
             {
-                var body = "<br/><br/><br/><img src='" + dataURL + "' />";
+                var regexMatches = Regex.Match(dataURL, @"data:image/(?<type>.+?),(?<data>.+)");
+                var base64Data = regexMatches.Groups["data"].Value;
+                var attachment = Convert.FromBase64String(base64Data);
+                var attachmentName = "EquipmentSnippet.png";
+                var contentType = "image/png";
+                var body = "<br/><br/><br/><img src=\"cid:" + attachmentName + "\" />";
 
-                success = Mail.Send(user.Email, projectNumber.ToString(), body);
+                success = Mail.Send(user.Email, projectNumber.ToString(), body, attachment, attachmentName, contentType);
             }
             else
             {
-                success = false;
                 throw new Exception("User not found when sending equipment snippet email.");
             }
 
