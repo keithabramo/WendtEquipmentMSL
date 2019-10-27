@@ -149,6 +149,7 @@
             $customActions.append('<span>Bulk Actions:</span>');
             $customActions.append('<button id="deleteRecords" class="btn btn-primary btn-xs btn-disabled" disabled="disabled" type="button">Delete Checked Lines</button>');
             $customActions.append('<button id="snipTable" class="btn btn-primary btn-xs btn-disabled" disabled="disabled" type="button">Snip Checked Rows For Email</button>');
+            //$customActions.append('<button id="snipTable2" class="btn btn-primary btn-xs btn-disabled" disabled="disabled" type="button">Snip Checked Rows For Email (copy image to email)</button>');
 
             $("div.custom").append($customActions);
 
@@ -525,10 +526,28 @@
                 $this.editorMain.datatable.buttons('.buttons-print' ).trigger();
             });
 
+            //$("#snipTable2").on("click", function () {
+            //    //open mail to link
+            //    var link = document.createElement('a');
+            //    link.href = "mailto:?subject=" + $("#projectNumber").val() + "&body=%0D%0A%0D%0A%0D%0A%0D%0A";
+
+            //    document.body.appendChild(link);
+
+            //    link.click();
+
+            //    $(link).remove();
+
+            //    $this.editorMain.datatable.buttons('.buttons-print').trigger();
+            //});
+
             $('#equipmentAttachmentModal').on('show.bs.modal', function (e) {
                 var equipmentId = $(e.relatedTarget).attr("data-equipmentid");
 
                 tableEquipmentAttachment.init(equipmentId);
+            });
+
+            $('#copyModal').on('shown.bs.modal', function (e) {
+                $(".modal-backdrop").css("cssText", "opacity: .9 !important;");
             });
 
             this.editorMain.datatable.on('select', function (e, dt, type, indexes) {
@@ -669,35 +688,24 @@
                             columns: '.exportable'
                         },
                         customize: function (window) {
+                            $("#copyModal").modal();
 
-                            //open mail to link
-                            //var link = document.createElement('a');
-                            //link.href = "mailto:?subject=" + $("#projectNumber").val() + "&body=%0D%0A%0D%0A%0D%0A%0D%0A";
 
-                            //document.body.appendChild(link);
+                            //get the table html and put it on the main document
+                            var tableHTML = $(window.document.body).find("table")[0].outerHTML;
+                            $("#copyContainer").html(tableHTML);
 
-                            //link.click();
+                            window.close();
+
+                            var $table = $("#copyContainer table");
+
+                            //clean the table a bit
+                            $table.find(".drawingNumberWidth").css("min-width", "200px");
+                            $table.find("th").each(function () {
+                                $(this).text($(this).text().replace(/\s\s+/g, ' '));
+                            });
 
                             setTimeout(function () {
-
-                                //get the table html and put it on the main document
-                                var tableHTML = $(window.document.body).find("table")[0].outerHTML;
-                                var $div = $("<span id='copyContainer'>").html(tableHTML);
-                                $(document.body).append($div);
-                                var $table = $("#copyContainer table");
-
-                                //clean the table a bit
-                                $table.find(".drawingNumberWidth").css("min-width", "200px");
-
-                                $table.find("th").each(function () {
-                                    $(this).text($(this).text().replace(/\s\s+/g, ' '));
-                                });
-
-                                window.close();
-
-                                //$("#copyModal .modal-body").html('Loading...');
-                                //$("#copyModal").modal();
-
                                 //html 2 canvas to turn into picture
                                 html2canvas(
                                     $table[0],
@@ -706,12 +714,14 @@
                                     }
                                 ).then(function (canvas) {
 
-                                    $div.remove();
+                                    $("#copyContainer").html('');
 
                                     var dataURL = canvas.toDataURL();
 
+                                    //Open modal where image will be displayed
                                     //$("#copyModal .modal-body").html("<img src='" + dataURL + "'/>");
-
+                                    //$("#copyModal .modal-body").html('Loading...');
+                                    //$("#copyModal").modal();
 
                                     $.ajax({
                                         url: ROOT_URL + "api/EquipmentApi/SendSnippet",
@@ -721,19 +731,21 @@
                                         },
                                         success: function (result) {
                                             if (result) {
-                                                main.success("You should recieve an email with the selected equipment records shortly.");
+                                                main.success("You should receive an email with the selected equipment records shortly.");
                                             } else {
                                                 main.error("There was an issue creating this equipment snippet email.");
-
-
                                             }
                                         }
                                     });
 
+                                    $("#copyModal").modal('hide');
+
                                 }, function (reason) {
                                     reason.message === 'Error.';
+
+                                    $("#copyModal").modal('hide');
                                 });
-                            }, 500);
+                            }, 0);
                             
                         },
                         autoPrint: false

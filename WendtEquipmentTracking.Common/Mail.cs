@@ -1,6 +1,7 @@
 ﻿using log4net;
 using System;
 using System.IO;
+using System.Net;
 using System.Net.Mail;
 using System.Net.Mime;
 
@@ -45,6 +46,7 @@ namespace WendtEquipmentTracking.Common
             
             try
             {
+                ServicePointManager.ServerCertificateValidationCallback = new System.Net.Security.RemoteCertificateValidationCallback(RemoteServerCertificateValidationCallback);
                 SmtpClient smtp = new SmtpClient();
 
                 smtp.Send(message);
@@ -56,6 +58,11 @@ namespace WendtEquipmentTracking.Common
             }
 
             return success;
+        }
+
+        private static bool RemoteServerCertificateValidationCallback(object sender, System.Security.Cryptography.X509Certificates.X509Certificate certificate, System.Security.Cryptography.X509Certificates.X509Chain chain, System.Net.Security.SslPolicyErrors sslPolicyErrors)
+        {
+            return true;
         }
 
     }

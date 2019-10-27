@@ -4,6 +4,9 @@
     ViewBag.Title = "";
 }
 
+
+
+
 @Html.Partial("ActionNavPartial", ActionNav.MSL)
 <hr />
 
@@ -74,7 +77,7 @@ Shipped</th>
     }
 </table>
 
-<div id="copyModal" class="modal fade">
+@*<div id="copyModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -87,9 +90,19 @@ Shipped</th>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+        </div>
+    </div>
+</div>*@
+
+<div id="copyModal" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <span>Loading...</span>
+            </div>
+        </div>
+    </div>
+</div>
 
 @Html.Action("Index", "EquipmentAttachment")
 
