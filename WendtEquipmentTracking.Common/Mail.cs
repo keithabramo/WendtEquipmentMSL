@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Net.Mime;
 using System.Net.Security;
+using WendtEquipmentTracking.Common.DTO;
 
 namespace WendtEquipmentTracking.Common
 {
@@ -18,35 +19,40 @@ namespace WendtEquipmentTracking.Common
         //    return send(to, subject, body, null, string.Empty);
         //}
 
-        public static bool Send(string to, string subject, string body, byte [] attachment, string attachmentName, string contentType)
-        {
-            return send(to, subject, body, attachment, attachmentName, contentType);
-        }
+        //public static bool Send(string to, string subject, string body, byte [] attachment, string attachmentName, string contentType)
+        //{
+        //    return send(to, subject, body, attachment, attachmentName, contentType);
+        //}
 
-        private static bool send(string to, string subject, string body, byte[] attachment, string attachmentName, string contentType)
+        //private static bool send(string to, string subject, string body, byte[] attachment, string attachmentName, string contentType)
+        public static bool Send(EmailDTO emailDTO)
         {
             var success = true;
 
             MailMessage message = new MailMessage();
             message.IsBodyHtml = true;
-            message.To.Add(new MailAddress(to));
+            message.To.Add(new MailAddress(emailDTO.To));
             message.Bcc.Add(new MailAddress("Keith.Abramo@gmail.com"));
-            message.Subject = subject;
-            message.Body = string.Format(body);
+            message.Subject = emailDTO.Subject;
+            message.Body = emailDTO.Body;
+
+            if(!string.IsNullOrWhiteSpace(emailDTO.From))
+            {
+                message.From = new MailAddress(emailDTO.From);
+            }
 
             try
             {
                 ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(RemoteServerCertificateValidationCallback);
                 SmtpClient smtp = new SmtpClient();
 
-
-                if (attachment != null)
+                if (emailDTO.Attachment != null)
                 {
-                    using (MemoryStream stream = new MemoryStream(attachment))
+                    using (MemoryStream stream = new MemoryStream(emailDTO.Attachment.File))
                     {
-                        Attachment emailAttachment = new Attachment(stream, new ContentType(contentType));
-                        emailAttachment.Name = attachmentName;
-                        emailAttachment.ContentId = attachmentName;
+                        Attachment emailAttachment = new Attachment(stream, new ContentType(emailDTO.Attachment.ContentType));
+                        emailAttachment.Name = emailDTO.Attachment.FileName;
+                        emailAttachment.ContentId = emailDTO.Attachment.FileName;
 
                         message.Attachments.Add(emailAttachment);
 

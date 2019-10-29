@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using WendtEquipmentTracking.BusinessLogic.Api;
 using WendtEquipmentTracking.BusinessLogic.BO;
 using WendtEquipmentTracking.Common;
+using WendtEquipmentTracking.Common.DTO;
 
 namespace WendtEquipmentTracking.BusinessLogic
 {
@@ -22,7 +23,27 @@ namespace WendtEquipmentTracking.BusinessLogic
             {
                 var drawingNumber = equipmentRevisionBOs.FirstOrDefault().DrawingNumber;
 
-                Mail.Send(user.Email, "Equipment Revision Summary", "Attached is the equipment revision summary for drawing #: " + drawingNumber, Encoding.ASCII.GetBytes(csv), "Revision Summary.csv", "text/csv");
+                if(string.IsNullOrEmpty(drawingNumber))
+                {
+                    drawingNumber = equipmentRevisionBOs.FirstOrDefault().NewDrawingNumber;
+                }
+
+                var emailDTO = new EmailDTO
+                {
+                    To = user.Email,
+                    Subject = "Equipment Revision Summary",
+                    Body = "Attached is the equipment revision summary for drawing #: " + drawingNumber,
+                    Attachment = new AttachmentDTO
+                    {
+                        File = Encoding.ASCII.GetBytes(csv),
+                        FileName = "Revision Summary.csv",
+                        ContentType = "text/csv"
+                    }
+                };
+
+
+                Mail.Send(emailDTO);
+                //Mail.Send(user.Email, "Equipment Revision Summary", "Attached is the equipment revision summary for drawing #: " + drawingNumber, Encoding.ASCII.GetBytes(csv), "Revision Summary.csv", "text/csv");
             } else
             {
                 throw new Exception("User not found when sending equipment revision email");
@@ -40,12 +61,29 @@ namespace WendtEquipmentTracking.BusinessLogic
             {
                 var regexMatches = Regex.Match(dataURL, @"data:image/(?<type>.+?),(?<data>.+)");
                 var base64Data = regexMatches.Groups["data"].Value;
+                
                 var attachment = Convert.FromBase64String(base64Data);
                 var attachmentName = "EquipmentSnippet.png";
                 var contentType = "image/png";
                 var body = "<br/><br/><br/><img src=\"cid:" + attachmentName + "\" />";
 
-                success = Mail.Send(user.Email, projectNumber.ToString(), body, attachment, attachmentName, contentType);
+                var emailDTO = new EmailDTO
+                {
+                    From = user.Email,
+                    To = user.Email,
+                    Subject = projectNumber.ToString(),
+                    Body = body,
+                    Attachment = new AttachmentDTO
+                    {
+                        File = attachment,
+                        FileName = attachmentName,
+                        ContentType = contentType
+                    }
+                };
+
+                success = Mail.Send(emailDTO);
+
+                //success = Mail.Send(user.Email, projectNumber.ToString(), body, attachment, attachmentName, contentType);
             }
             else
             {
