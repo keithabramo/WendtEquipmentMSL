@@ -99,7 +99,10 @@
 
         @foreach (var htsCode in ViewBag.HTSCodes)
         {
-            @:htsCodes.push("@htsCode");
+            @:htsCodes.push({
+                @:value: "@htsCode.HTSCode",
+                @:label: "@(htsCode.HTSCode + " - " + htsCode.Description)"
+            @:});
         }
 
     </script>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using WendtEquipmentTracking.BusinessLogic.Api;
+using WendtEquipmentTracking.BusinessLogic.BO;
 using WendtEquipmentTracking.DataAccess.Visual;
 using WendtEquipmentTracking.DataAccess.Visual.Api;
 
@@ -19,11 +20,17 @@ namespace WendtEquipmentTracking.BusinessLogic
             htsCodeEngine = new HTSCodeEngine();
         }
 
-        public IEnumerable<string> GetAllHTSCodes()
+        public IEnumerable<HTSCodeBO> GetAllHTSCodes()
         {
-            var visuals = htsCodeEngine.ListAll();
+            var htsCodes = htsCodeEngine.ListAll();
 
-            return visuals.ToList();
+            var htsCodeBOs = htsCodes.Select(x => new HTSCodeBO
+            {
+                HTSCode = x.HTSCode,
+                Description = x.Description
+            });
+
+            return htsCodeBOs.ToList();
         }
     }
 }
