@@ -540,6 +540,33 @@
             //    $this.editorMain.datatable.buttons('.buttons-print').trigger();
             //});
 
+            $("#sendEmailModal").on("click", ".send-email", function () {
+
+                var $form = $("#sendEmailForm");
+
+                var data = {
+                    DataURL: $form.find("[name='DataURL']").val(),
+                    To: $form.find("[name='To']").val(),
+                    Subject: $form.find("[name='Subject']").val(),
+                    Body: $form.find("[name='Body']").val()
+                };
+
+                $.ajax({
+                    url: ROOT_URL + "api/EquipmentApi/SendSnippet",
+                    method: "POST",
+                    data: data,
+                    success: function (result) {
+                        if (result) {
+                            main.success("You should receive an email with the selected equipment records shortly.");
+                        } else {
+                            main.error("There was an issue creating this equipment snippet email.");
+                        }
+                    }
+                });
+
+                $("sendEmailModel").modal('hide');
+            });
+
             $('#equipmentAttachmentModal').on('show.bs.modal', function (e) {
                 var equipmentId = $(e.relatedTarget).attr("data-equipmentid");
 
@@ -688,8 +715,7 @@
                             columns: '.exportable'
                         },
                         customize: function (window) {
-                            $("#copyModal").modal();
-
+                            var $modal = $("#sendEmailModal").modal();
 
                             //get the table html and put it on the main document
                             var tableHTML = $(window.document.body).find("table")[0].outerHTML;
@@ -717,33 +743,16 @@
                                     $("#copyContainer").html('');
 
                                     var dataURL = canvas.toDataURL();
+                                    var subject = $("#projectNumber").val();
 
-                                    //Open modal where image will be displayed
-                                    //$("#copyModal .modal-body").html("<img src='" + dataURL + "'/>");
-                                    //$("#copyModal .modal-body").html('Loading...');
-                                    //$("#copyModal").modal();
-
-                                    $.ajax({
-                                        url: ROOT_URL + "api/EquipmentApi/SendSnippet",
-                                        method: "POST",
-                                        data: {
-                                            DataURL: dataURL
-                                        },
-                                        success: function (result) {
-                                            if (result) {
-                                                main.success("You should receive an email with the selected equipment records shortly.");
-                                            } else {
-                                                main.error("There was an issue creating this equipment snippet email.");
-                                            }
-                                        }
-                                    });
-
-                                    $("#copyModal").modal('hide');
-
+                                    $modal.find(".snippet-container").html("<img src='" + dataURL + "'/>");
+                                    $modal.find("#sendEmailForm [name='Subject']").val(subject);
+                                    $modal.find("#sendEmailForm [name='DataURL']").val(dataURL);
+                                    
                                 }, function (reason) {
-                                    reason.message === 'Error.';
+                                    main.error("There was an issue creating this equipment snippet.");
 
-                                    $("#copyModal").modal('hide');
+                                    $modal.modal('hide');
                                 });
                             }, 0);
                             

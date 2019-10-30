@@ -259,7 +259,7 @@ namespace WendtEquipmentTracking.App.Controllers
                 var user = userService.GetCurrentUser();
                 var projectBO = projectService.GetById(user.ProjectId);
 
-                success = emailService.SendEquipmentSnippet(projectBO.ProjectNumber, model.DataURL);
+                success = emailService.SendEquipmentSnippet(model.To, model.Subject, model.Body, model.DataURL);
 
             } catch (Exception e)
             {

@@ -14,17 +14,6 @@ namespace WendtEquipmentTracking.Common
     {
         private static ILog logger = LogManager.GetLogger("File");
 
-        //public static bool Send(string to, string subject, string body)
-        //{
-        //    return send(to, subject, body, null, string.Empty);
-        //}
-
-        //public static bool Send(string to, string subject, string body, byte [] attachment, string attachmentName, string contentType)
-        //{
-        //    return send(to, subject, body, attachment, attachmentName, contentType);
-        //}
-
-        //private static bool send(string to, string subject, string body, byte[] attachment, string attachmentName, string contentType)
         public static bool Send(EmailDTO emailDTO)
         {
             var success = true;

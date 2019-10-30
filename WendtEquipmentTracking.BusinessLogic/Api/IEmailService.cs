@@ -7,6 +7,6 @@ namespace WendtEquipmentTracking.BusinessLogic.Api
     {
         void SendRevisionSummary(IEnumerable<EquipmentRevisionBO> equipmentRevisionBOs);
 
-        bool SendEquipmentSnippet(double projectNumber, string dataURL);
+        bool SendEquipmentSnippet(string to, string subject, string body, string dataURL);
     }
 }

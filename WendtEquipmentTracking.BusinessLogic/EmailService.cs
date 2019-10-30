@@ -43,14 +43,13 @@ namespace WendtEquipmentTracking.BusinessLogic
 
 
                 Mail.Send(emailDTO);
-                //Mail.Send(user.Email, "Equipment Revision Summary", "Attached is the equipment revision summary for drawing #: " + drawingNumber, Encoding.ASCII.GetBytes(csv), "Revision Summary.csv", "text/csv");
             } else
             {
                 throw new Exception("User not found when sending equipment revision email");
             }
         }
 
-        public bool SendEquipmentSnippet(double projectNumber, string dataURL)
+        public bool SendEquipmentSnippet(string to, string subject, string body, string dataURL)
         {
             bool success;
 
@@ -65,13 +64,13 @@ namespace WendtEquipmentTracking.BusinessLogic
                 var attachment = Convert.FromBase64String(base64Data);
                 var attachmentName = "EquipmentSnippet.png";
                 var contentType = "image/png";
-                var body = "<br/><br/><br/><img src=\"cid:" + attachmentName + "\" />";
+                body += "<br/><br/><br/><img src=\"cid:" + attachmentName + "\" />";
 
                 var emailDTO = new EmailDTO
                 {
                     From = user.Email,
-                    To = user.Email,
-                    Subject = projectNumber.ToString(),
+                    To = to,
+                    Subject = subject,
                     Body = body,
                     Attachment = new AttachmentDTO
                     {
@@ -83,7 +82,6 @@ namespace WendtEquipmentTracking.BusinessLogic
 
                 success = Mail.Send(emailDTO);
 
-                //success = Mail.Send(user.Email, projectNumber.ToString(), body, attachment, attachmentName, contentType);
             }
             else
             {
