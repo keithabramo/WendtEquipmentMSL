@@ -11,15 +11,15 @@ namespace WendtEquipmentTracking.DataAccess.SQL
 {
     using System;
     using System.Data.Entity;
-    using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
-    using System.Linq;
-    
+    using System.Data.Entity.Infrastructure;
+
     public partial class WendtEquipmentTrackingEntities : DbContext
     {
         public WendtEquipmentTrackingEntities()
             : base("name=WendtEquipmentTrackingEntities")
         {
+            this.Database.CommandTimeout = 180;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

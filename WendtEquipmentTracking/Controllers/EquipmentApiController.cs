@@ -43,61 +43,67 @@ namespace WendtEquipmentTracking.App.Controllers
 
             var projectBO = projectService.GetById(user.ProjectId);
 
-            //Get Data
-            var equipmentBOs = equipmentService.GetAll(user.ProjectId);
-
-            equipmentModels = equipmentBOs.Select(x => new EquipmentModel
+            try
             {
-                EquipmentId = x.EquipmentId,
-                CustomsValue = x.CustomsValue,
-                FullyShipped = x.FullyShipped,
-                LeftToShip = x.LeftToShip.ToString(),
-                PriorityNumber = x.Priority != null ? (int?)x.Priority.PriorityNumber : null,
-                ProjectId = x.ProjectId,
-                Quantity = x.Quantity.HasValue ? x.Quantity.Value : 0,
-                ReadyToShip = x.ReadyToShip,
-                ReleaseDate = x.ReleaseDate,
-                SalePrice = x.SalePrice,
-                ShippedQuantity = x.ShippedQuantity.ToString(),
-                TotalWeight = x.TotalWeight.ToString(),
-                TotalWeightShipped = x.TotalWeightShipped.ToString(),
-                UnitWeight = x.UnitWeight,
-                CountryOfOrigin = (x.CountryOfOrigin ?? string.Empty).ToUpperInvariant(),
-                Description = (x.Description ?? string.Empty).ToUpperInvariant(),
-                DrawingNumber = (x.DrawingNumber ?? string.Empty).ToUpperInvariant(),
-                EquipmentName = (x.EquipmentName ?? string.Empty).ToUpperInvariant(),
-                HTSCode = (x.HTSCode ?? string.Empty).ToUpperInvariant(),
-                Notes = (x.Notes ?? string.Empty).ToUpperInvariant(),
-                ShippedFrom = (x.ShippedFrom ?? string.Empty).ToUpperInvariant(),
-                ShippingTagNumber = (x.ShippingTagNumber ?? string.Empty).ToUpperInvariant(),
-                WorkOrderNumber = (x.WorkOrderNumber ?? string.Empty).ToUpperInvariant(),
-                Revision = x.Revision.ToString("D2"),
-                
-                BillOfLadingNumbers = string.Join(",", x?.BillOfLadingEquipments?.Select(y => y.BillOfLading.BillOfLadingNumber) ?? new List<string>()).ToUpperInvariant(),
-                LatestBOLDateShipped = (x.BillOfLadingEquipments?.Max(y => y.BillOfLading.DateShipped)),
-                HasBillOfLading = x.HasBillOfLading,
-                HasBillOfLadingInStorage = x.HasBillOfLadingInStorage,
-                IsHardwareKit = x.IsHardwareKit,
-                IsAssociatedToHardwareKit = x.IsAssociatedToHardwareKit,
-                AssociatedHardwareKitNumber = x.AssociatedHardwareKitNumber
-            }).ToList();
+                //Get Data
+                var equipmentBOs = equipmentService.GetAll(user.ProjectId);
 
-            equipmentModels.ForEach(e =>
-            {
-                e.SetIndicators(projectBO.ProjectNumber, projectBO.IsCustomsProject);
-            });
-
-            equipmentModels
-                .GroupBy(x => new
+                equipmentModels = equipmentBOs.Select(x => new EquipmentModel
                 {
-                    DrawingNumber = x.DrawingNumber != null ? x.DrawingNumber.ToUpperInvariant() : string.Empty,
-                    WorkOrderNumber = x.WorkOrderNumber != null ? x.WorkOrderNumber.ToUpperInvariant() : string.Empty,
-                    ShippingTagNumber = x.ShippingTagNumber != null ? x.ShippingTagNumber.ToUpperInvariant() : string.Empty,
-                })
-                .Where(g => g.Count() > 1)
-                .SelectMany(y => y)
-                .ToList().ForEach(e => e.IsDuplicate = true);
+                    EquipmentId = x.EquipmentId,
+                    CustomsValue = x.CustomsValue,
+                    FullyShipped = x.FullyShipped,
+                    LeftToShip = x.LeftToShip.ToString(),
+                    PriorityNumber = x.Priority != null ? (int?)x.Priority.PriorityNumber : null,
+                    ProjectId = x.ProjectId,
+                    Quantity = x.Quantity.HasValue ? x.Quantity.Value : 0,
+                    ReadyToShip = x.ReadyToShip,
+                    ReleaseDate = x.ReleaseDate,
+                    SalePrice = x.SalePrice,
+                    ShippedQuantity = x.ShippedQuantity.ToString(),
+                    TotalWeight = x.TotalWeight.ToString(),
+                    TotalWeightShipped = x.TotalWeightShipped.ToString(),
+                    UnitWeight = x.UnitWeight,
+                    CountryOfOrigin = (x.CountryOfOrigin ?? string.Empty).ToUpperInvariant(),
+                    Description = (x.Description ?? string.Empty).ToUpperInvariant(),
+                    DrawingNumber = (x.DrawingNumber ?? string.Empty).ToUpperInvariant(),
+                    EquipmentName = (x.EquipmentName ?? string.Empty).ToUpperInvariant(),
+                    HTSCode = (x.HTSCode ?? string.Empty).ToUpperInvariant(),
+                    Notes = (x.Notes ?? string.Empty).ToUpperInvariant(),
+                    ShippedFrom = (x.ShippedFrom ?? string.Empty).ToUpperInvariant(),
+                    ShippingTagNumber = (x.ShippingTagNumber ?? string.Empty).ToUpperInvariant(),
+                    WorkOrderNumber = (x.WorkOrderNumber ?? string.Empty).ToUpperInvariant(),
+                    Revision = x.Revision.ToString("D2"),
 
+                    BillOfLadingNumbers = string.Join(",", x?.BillOfLadingEquipments?.Select(y => y.BillOfLading.BillOfLadingNumber) ?? new List<string>()).ToUpperInvariant(),
+                    LatestBOLDateShipped = (x.BillOfLadingEquipments?.Max(y => y.BillOfLading.DateShipped)),
+                    HasBillOfLading = x.HasBillOfLading,
+                    HasBillOfLadingInStorage = x.HasBillOfLadingInStorage,
+                    IsHardwareKit = x.IsHardwareKit,
+                    IsAssociatedToHardwareKit = x.IsAssociatedToHardwareKit,
+                    AssociatedHardwareKitNumber = x.AssociatedHardwareKitNumber
+                }).ToList();
+
+                equipmentModels.ForEach(e =>
+                {
+                    e.SetIndicators(projectBO.ProjectNumber, projectBO.IsCustomsProject);
+                });
+
+                equipmentModels
+                    .GroupBy(x => new
+                    {
+                        DrawingNumber = x.DrawingNumber != null ? x.DrawingNumber.ToUpperInvariant() : string.Empty,
+                        WorkOrderNumber = x.WorkOrderNumber != null ? x.WorkOrderNumber.ToUpperInvariant() : string.Empty,
+                        ShippingTagNumber = x.ShippingTagNumber != null ? x.ShippingTagNumber.ToUpperInvariant() : string.Empty,
+                    })
+                    .Where(g => g.Count() > 1)
+                    .SelectMany(y => y)
+                    .ToList().ForEach(e => e.IsDuplicate = true);
+
+            } catch (Exception e)
+            {
+                HandleError(e);
+            }
 
             return equipmentModels;
         }
