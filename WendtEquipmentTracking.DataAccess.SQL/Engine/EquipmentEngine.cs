@@ -25,7 +25,8 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
                 .Include(x => x.BillOfLadingEquipments)
                 .Include(x => x.BillOfLadingEquipments.Select(ble => ble.BillOfLading))
                 .Include(x => x.HardwareKitEquipments)
-                .Include(x => x.HardwareKitEquipments.Select(ble => ble.HardwareKit));
+                .Include(x => x.HardwareKitEquipments.Select(ble => ble.HardwareKit))
+                .Include(x => x.EquipmentAttachments);
         }
 
         public Equipment Get(Specification<Equipment> specification)
@@ -40,7 +41,8 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
                 .Include(x => x.BillOfLadingEquipments)
                 .Include(x => x.BillOfLadingEquipments.Select(ble => ble.BillOfLading))
                 .Include(x => x.HardwareKitEquipments)
-                .Include(x => x.HardwareKitEquipments.Select(ble => ble.HardwareKit));
+                .Include(x => x.HardwareKitEquipments.Select(ble => ble.HardwareKit))
+                .Include(x => x.EquipmentAttachments);
         }
 
         public void AddNewEquipment(Equipment equipment)

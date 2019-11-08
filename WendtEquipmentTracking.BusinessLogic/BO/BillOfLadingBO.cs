@@ -20,6 +20,7 @@ namespace WendtEquipmentTracking.BusinessLogic.BO
         public bool IsLocked { get; set; }
         public DateTime? LockedDate { get; set; }
         public string LockedBy { get; set; }
+        public int AttachmentCount { get; set; }
 
         public IEnumerable<BillOfLadingEquipmentBO> BillOfLadingEquipments { get; set; }
     }

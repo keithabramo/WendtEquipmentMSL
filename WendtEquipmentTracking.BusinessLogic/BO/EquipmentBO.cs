@@ -37,6 +37,7 @@ namespace WendtEquipmentTracking.BusinessLogic.BO
         public bool IsHardwareKit { get; set; }
         public bool IsAssociatedToHardwareKit { get; set; }
         public string AssociatedHardwareKitNumber { get; set; }
+        public int AttachmentCount { get; set; }
 
         //used to order items correctly during import
         public int Order { get; set; }

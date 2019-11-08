@@ -81,7 +81,8 @@ namespace WendtEquipmentTracking.App.Controllers
                     HasBillOfLadingInStorage = x.HasBillOfLadingInStorage,
                     IsHardwareKit = x.IsHardwareKit,
                     IsAssociatedToHardwareKit = x.IsAssociatedToHardwareKit,
-                    AssociatedHardwareKitNumber = x.AssociatedHardwareKitNumber
+                    AssociatedHardwareKitNumber = x.AssociatedHardwareKitNumber,
+                    AttachmentCount = x.AttachmentCount
                 }).ToList();
 
                 equipmentModels.ForEach(e =>
@@ -236,6 +237,7 @@ namespace WendtEquipmentTracking.App.Controllers
                         IsHardwareKit = x.IsHardwareKit,
                         IsAssociatedToHardwareKit = x.IsAssociatedToHardwareKit,
                         AssociatedHardwareKitNumber = x.AssociatedHardwareKitNumber,
+                        AttachmentCount = x.AttachmentCount,
                         IsDuplicate = equipmentBOs.Any(e =>
                            e.EquipmentId != x.EquipmentId &&
                            (e.DrawingNumber ?? string.Empty).Equals((x.DrawingNumber ?? string.Empty), StringComparison.InvariantCultureIgnoreCase) &&

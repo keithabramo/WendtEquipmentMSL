@@ -79,8 +79,15 @@
                         "targets": 8,
                         searchable: false,
                         orderable: false,
+                        className: "text-nowrap attachments",
                         render: function (datadata, type, row, meta) {
-                            return '<a data-billofladingid="' + row.BillOfLadingId + '" href="javascript:void(0);" class="attachments" data-toggle="modal" data-toggle="modal" data-target="#billOfLadingAttachmentModal">Attachments</a>';
+                            var text = '<a data-billofladingid="' + row.BillOfLadingId + '" href="javascript:void(0);" data-toggle="modal" data-toggle="modal" data-target="#billOfLadingAttachmentModal">Attachments</a>';
+
+                            if (row.AttachmentCount) {
+                                text = "<span class='badge'>" + row.AttachmentCount + "</span>" + text;
+                            }
+
+                            return text;
                         }
                     },
                     {

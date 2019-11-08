@@ -33,7 +33,8 @@
             HasErrorsText: 27,
             IsAssociatedToHardwareKitText: 28,
             EquipmentId: 29,
-            IsDuplicateText: 30
+            IsDuplicateText: 30,
+            AttachmentCount: 31
         };
         this.editableColumns = [
             this.columnIndexes.EquipmentName,
@@ -471,6 +472,16 @@
                     $equipmentNameCell.append("<br><span class='text-info hardwarekitLabel'>Hardware Kit: " + data.AssociatedHardwareKitNumber + "</span>");
                 }
 
+                var $attachmentCell = $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.Attachments).node());
+                var attachmentText = '<a data-equipmentid="' + data.EquipmentId + '" href="javascript:void(0);" class="attachments" data-toggle="modal" data-toggle="modal" data-target="#equipmentAttachmentModal">Attachments</a>';
+
+                if (data.AttachmentCount) {
+                    attachmentText = "<span class='badge'>" + data.AttachmentCount + "</span>" + attachmentText;
+                }
+
+                $($attachmentCell).html(attachmentText);
+
+
                 $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.EquipmentName).node()).attr("class", data.Indicators.EquipmentNameColor);
                 $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.PriorityNumber).node()).attr("class", data.Indicators.PriorityColor);
                 $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.DrawingNumber).node()).attr("class", data.Indicators.DrawingNumberColor);
@@ -483,17 +494,11 @@
                 $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.FullyShippedText).node()).attr("class", "active " + data.Indicators.FullyShippedColor);
                 $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.CustomsValueText).node()).attr("class", "text-right active " + data.Indicators.CustomsValueColor);
                 $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.SalePriceText).node()).attr("class", "text-right active " + data.Indicators.SalePriceColor);
+
             });
 
-            $(".table").on("mousedown", "td.focus", function (e) {
-
-                setTimeout(function () {
-                    if ($(".dt-autofill-select").length) {
-                        $this.editorMain.datatable.cell.blur();
-                    }
-                }, 100);
-
-
+            $(document).on("mousedown", ".dt-autofill-handle", function (e) {
+                $this.editorMain.datatable.cell.blur();
             });
 
             $("#deleteRecords").on("click", function () {
@@ -525,20 +530,6 @@
             $("#snipTable").on("click", function () {
                 $this.editorMain.datatable.buttons('.buttons-print' ).trigger();
             });
-
-            //$("#snipTable2").on("click", function () {
-            //    //open mail to link
-            //    var link = document.createElement('a');
-            //    link.href = "mailto:?subject=" + $("#projectNumber").val() + "&body=%0D%0A%0D%0A%0D%0A%0D%0A";
-
-            //    document.body.appendChild(link);
-
-            //    link.click();
-
-            //    $(link).remove();
-
-            //    $this.editorMain.datatable.buttons('.buttons-print').trigger();
-            //});
 
             $("#sendEmailModal").on("click", ".send-email", function () {
 
@@ -917,8 +908,15 @@
                         "targets": this.columnIndexes.Attachments,
                         searchable: false,
                         orderable: false,
+                        className: "text-nowrap attachments",
                         render: function (datadata, type, row, meta) {
-                            return '<a data-equipmentid="' + row.EquipmentId + '" href="javascript:void(0);" class="attachments" data-toggle="modal" data-toggle="modal" data-target="#equipmentAttachmentModal">Attachments</a>';
+                            var text = '<a data-equipmentid="' + row.EquipmentId + '" href="javascript:void(0);" data-toggle="modal" data-toggle="modal" data-target="#equipmentAttachmentModal">Attachments</a>';
+
+                            if (row.AttachmentCount) {
+                                text = "<span class='badge'>" + row.AttachmentCount + "</span>" + text;
+                            }
+
+                            return text;
                         }
                     },
                     {
@@ -942,6 +940,12 @@
                     {
                         data: "IsDuplicateText",
                         "targets": this.columnIndexes.IsDuplicateText,
+                        sortable: false,
+                        visible: false
+                    },
+                    {
+                        data: "AttachmentCount",
+                        "targets": this.columnIndexes.AttachmentCount,
                         sortable: false,
                         visible: false
                     }

@@ -21,7 +21,8 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
         public IQueryable<BillOfLading> ListAll()
         {
             return this.repository.Find(!BillOfLadingSpecs.IsDeleted())
-                .Include(x => x.BillOfLadingEquipments);
+                .Include(x => x.BillOfLadingEquipments)
+                .Include(x => x.BillOfLadingAttachments);
         }
 
         public BillOfLading Get(Specification<BillOfLading> specification)
@@ -32,7 +33,8 @@ namespace WendtEquipmentTracking.DataAccess.SQL.Engine
         public IQueryable<BillOfLading> List(Specification<BillOfLading> specification)
         {
             return this.repository.Find(!BillOfLadingSpecs.IsDeleted() && specification)
-                .Include(x => x.BillOfLadingEquipments);
+                .Include(x => x.BillOfLadingEquipments)
+                .Include(x => x.BillOfLadingAttachments);
         }
 
         public void AddNewBillOfLading(BillOfLading billOfLading)

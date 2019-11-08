@@ -203,6 +203,7 @@ namespace WendtEquipmentTracking.App.Models
         public bool IsHardwareKit { get; set; }
         public bool IsAssociatedToHardwareKit { get; set; }
         public string AssociatedHardwareKitNumber { get; set; }
+        public int AttachmentCount { get; set; }
         public bool IsDuplicate { get; set; }
         public bool HasErrors { get; set; }
 

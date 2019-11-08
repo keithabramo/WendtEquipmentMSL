@@ -45,6 +45,9 @@ namespace WendtEquipmentTracking.App.Models
         [DisplayName("To Storage")]
         public bool ToStorage { get; set; }
 
+        //Calculated
+        public int AttachmentCount { get; set; }
+
         public IList<BillOfLadingEquipmentModel> BillOfLadingEquipments { get; set; }
 
     }

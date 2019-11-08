@@ -308,6 +308,10 @@ table.dataTable tbody tr.selected td {
     background-color: #B0BED9 !important;
 }
 
+table.dataTable tbody .attachments .badge {
+    margin-right: 5px;
+}
+
 
 
 

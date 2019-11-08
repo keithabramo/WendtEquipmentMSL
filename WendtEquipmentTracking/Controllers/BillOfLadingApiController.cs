@@ -55,7 +55,8 @@ namespace WendtEquipmentTracking.App.Controllers
                 ToStorage = x.ToStorage,
                 TrailerNumber = x.TrailerNumber,
                 ShippedFrom = x.ShippedFrom,
-                ShippedTo = x.ShippedTo
+                ShippedTo = x.ShippedTo,
+                AttachmentCount = x.AttachmentCount
             });
 
             return billOfLadingModels;

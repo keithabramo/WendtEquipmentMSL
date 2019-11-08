@@ -24,6 +24,9 @@
             @Html.ActionLink("Create BOL", "Create", "BillOfLading", null, new { @class = "btn " + (Model == ActionNav.CreateBOL ? "btn-secondary" : "btn-primary") })
             @Html.ActionLink("Create Hardware Kit", "Create", "HardwareKit", null, new { @class = "btn " + (Model == ActionNav.CreateHardwareKit ? "btn-secondary" : "btn-primary") })
             @Html.ActionLink("Priorities", "Index", "Priority", null, new { @class = "btn " + (Model == ActionNav.Priorities ? "btn-secondary" : "btn-primary") })
+            @Html.ActionLink("BOLs", "Index", "BillOfLading", null, new { @class = "btn " + (Model == ActionNav.BillOfLandings ? "btn-secondary" : "btn-primary") })
+            @Html.ActionLink("Hardware Kits", "Index", "HardwareKit", null, new { @class = "btn " + (Model == ActionNav.HardwareKits ? "btn-secondary" : "btn-primary") })
+            @Html.ActionLink("Work Order Prices", "Index", "WorkOrderPrice", null, new { @class = "btn " + (Model == ActionNav.WorkOrderPrices ? "btn-secondary" : "btn-primary") })
         }
     </div>
 <br/><br/>

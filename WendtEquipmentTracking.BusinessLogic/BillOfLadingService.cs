@@ -307,6 +307,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                 TrailerNumber = x.TrailerNumber,
                 ShippedFrom = x.ShippedFrom,
                 ShippedTo = x.ShippedTo,
+                AttachmentCount = x.BillOfLadingAttachments.Count(h => !h.IsDeleted),
                 BillOfLadingEquipments = x.BillOfLadingEquipments.Where(e => !e.Equipment.IsDeleted).Select(e => new BillOfLadingEquipmentBO
                 {
                     BillOfLadingEquipmentId = e.BillOfLadingEquipmentId,

@@ -14,6 +14,9 @@
         ImportPriority,
         ImportVendor,
         ImportBroker,
-        ImportHardwareCommercialCode
+        ImportHardwareCommercialCode,
+        BillOfLandings,
+        HardwareKits,
+        WorkOrderPrices
     }
 }

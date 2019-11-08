@@ -200,7 +200,8 @@ namespace WendtEquipmentTracking.BusinessLogic
                 HasBillOfLadingInStorage = x.BillOfLadingEquipments.Any(be => !be.IsDeleted && be.BillOfLading.ToStorage && be.BillOfLading.IsCurrentRevision),
                 IsHardwareKit = x.HardwareKit != null,
                 IsAssociatedToHardwareKit = x.HardwareKitEquipments.Any(h => !h.IsDeleted && h.HardwareKit.IsCurrentRevision),
-                AssociatedHardwareKitNumber = x.HardwareKitEquipments.Any(h => !h.IsDeleted && h.HardwareKit.IsCurrentRevision) ? x.HardwareKitEquipments.Where(h => !h.IsDeleted && h.HardwareKit.IsCurrentRevision).FirstOrDefault().HardwareKit.HardwareKitNumber : string.Empty
+                AssociatedHardwareKitNumber = x.HardwareKitEquipments.Any(h => !h.IsDeleted && h.HardwareKit.IsCurrentRevision) ? x.HardwareKitEquipments.Where(h => !h.IsDeleted && h.HardwareKit.IsCurrentRevision).FirstOrDefault().HardwareKit.HardwareKitNumber : string.Empty,
+                AttachmentCount = x.EquipmentAttachments.Count(h => !h.IsDeleted)
             }).ToList();
 
 
@@ -300,7 +301,8 @@ namespace WendtEquipmentTracking.BusinessLogic
                 HasBillOfLadingInStorage = x.BillOfLadingEquipments.Any(be => !be.IsDeleted && be.BillOfLading.ToStorage && be.BillOfLading.IsCurrentRevision),
                 IsHardwareKit = x.HardwareKit != null,
                 IsAssociatedToHardwareKit = x.HardwareKitEquipments.Any(h => !h.IsDeleted && h.HardwareKit.IsCurrentRevision),
-                AssociatedHardwareKitNumber = x.HardwareKitEquipments.Any(h => !h.IsDeleted && h.HardwareKit.IsCurrentRevision) ? x.HardwareKitEquipments.Where(h => !h.IsDeleted && h.HardwareKit.IsCurrentRevision).FirstOrDefault().HardwareKit.HardwareKitNumber : string.Empty
+                AssociatedHardwareKitNumber = x.HardwareKitEquipments.Any(h => !h.IsDeleted && h.HardwareKit.IsCurrentRevision) ? x.HardwareKitEquipments.Where(h => !h.IsDeleted && h.HardwareKit.IsCurrentRevision).FirstOrDefault().HardwareKit.HardwareKitNumber : string.Empty,
+                AttachmentCount = x.EquipmentAttachments.Count(h => !h.IsDeleted)
             });
 
             return equipmentBOs.ToList();
