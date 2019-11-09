@@ -322,7 +322,7 @@ namespace WendtEquipmentTracking.App.Controllers
                 {
                     try
                     {
-                        var projectBOs = projectService.GetAllForCopy().OrderBy(p => p.ProjectNumber);
+                        var projectBOs = projectService.GetAllForCopy().OrderBy(p => p.ShipToCompany);
                         projects = projectBOs.Select(x => new SelectListItem
                         {
                             Value = x.ProjectId.ToString(),

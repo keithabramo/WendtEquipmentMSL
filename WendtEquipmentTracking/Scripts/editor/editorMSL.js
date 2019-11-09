@@ -497,10 +497,6 @@
 
             });
 
-            $(document).on("mousedown", ".dt-autofill-handle", function (e) {
-                $this.editorMain.datatable.cell.blur();
-            });
-
             $("#deleteRecords").on("click", function () {
                 var selectedRows = $this.editorMain.datatable.rows({ selected: true });
                 if (selectedRows.length) {
@@ -562,10 +558,6 @@
                 var equipmentId = $(e.relatedTarget).attr("data-equipmentid");
 
                 tableEquipmentAttachment.init(equipmentId);
-            });
-
-            $('#copyModal').on('shown.bs.modal', function (e) {
-                $(".modal-backdrop").css("cssText", "opacity: .9 !important;");
             });
 
             this.editorMain.datatable.on('select', function (e, dt, type, indexes) {
