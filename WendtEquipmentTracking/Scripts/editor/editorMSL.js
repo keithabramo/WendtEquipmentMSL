@@ -199,6 +199,7 @@
                 form.set('HTSCode', $row.find("input[name='HTSCode']").val());
                 form.set('CountryOfOrigin', $row.find("input[name='CountryOfOrigin']").val());
                 form.set('Notes', $row.find("textarea[name='Notes']").val());
+                form.set('Revision', $row.find("input[name='Revision']").val());
                 form.submit();
 
                 $this.editorMain.datatable.draw();
@@ -224,6 +225,7 @@
                 $createRow.find("input[name='HTSCode']").val(rowData.HTSCode);
                 $createRow.find("input[name='CountryOfOrigin']").val(rowData.CountryOfOrigin);
                 $createRow.find("textarea[name='Notes']").val(rowData.Notes);
+                $createRow.find("input[name='Revision']").val(rowData.Revision);
 
                 window.scrollTo(0, document.body.scrollHeight);
             });
@@ -240,6 +242,7 @@
                     var unitWeight = this.field('UnitWeightText');
                     var quantity = this.field('Quantity');
                     var readyToShip = this.field('ReadyToShip');
+                    var revision = this.field('Revision');
 
                     var error = false;
                     if (action === "edit") {
@@ -323,30 +326,35 @@
                         } else {
                             $("#releaseDate").siblings("span").html('').hide();
                         }
+
                         if (!drawingNumber.val()) {
                             $("#DrawingNumber").siblings("span").html('The drawing # field is required').show();
                             error = true;
                         } else {
                             $("#DrawingNumber").siblings("span").html('').hide();
                         }
+
                         if (!workOrderNumber.val()) {
                             $("#WorkOrderNumber").siblings("span").html('The work order # field is required').show();
                             error = true;
                         } else {
                             $("#WorkOrderNumber").siblings("span").html('').hide();
                         }
+
                         if (!shippingTagNumber.val()) {
                             $("#ShippingTagNumber").siblings("span").html('The ship tag # field is required').show();
                             error = true;
                         } else {
                             $("#ShippingTagNumber").siblings("span").html('').hide();
                         }
+
                         if (!description.val()) {
                             $("#Description").siblings("span").html('The description field is required').show();
                             error = true;
                         } else {
                             $("#Description").siblings("span").html('').hide();
                         }
+
                         if (!unitWeight.val()) {
                             $("#UnitWeight").siblings("span").html('The unit weight date field is required').show();
                             error = true;
@@ -356,6 +364,7 @@
                         } else {
                             $("#UnitWeight").siblings("span").html('').hide();
                         }
+
                         if (!quantity.val()) {
                             $("#Quantity").siblings("span").html('The quantity field is required').show();
                             error = true;
@@ -365,11 +374,22 @@
                         } else {
                             $("#Quantity").siblings("span").html('').hide();
                         }
+
                         if (isNaN(readyToShip.val())) {
                             $("#ReadyToShip").siblings("span").html('The ready to ship field is not a valid number').show();
                             error = true;
                         } else {
                             $("#ReadyToShip").siblings("span").html('').hide();
+                        }
+
+                        if (!revision.val()) {
+                            $("#Revision").siblings("span").html('The revision field is required').show();
+                            error = true;
+                        } else if (isNaN(revision.val())) {
+                            $("#Revision").siblings("span").html('The revision is not a valid number').show();
+                            error = true;
+                        } else {
+                            $("#Revision").siblings("span").html('').hide();
                         }
                     }
 
@@ -405,6 +425,8 @@
                 return editable;
 
             });
+
+            
 
             this.editorMain.datatable.on('preAutoFill', function (e, datatable, cells) {
                 datatable.cell.blur();
@@ -443,6 +465,7 @@
                 $createRow.find(":input").val("");
                 $createRow.find("select").prop('selectedIndex', 0);
                 $createRow.find("#ReadyToShip").val("0");
+                $createRow.find("#Revision").val("00");
                 $createRow.find("#ShippedFrom").val("WENDT");
                 $createRow.find(".datePickerTable").datepicker("setDate", new Date());
             });
@@ -598,6 +621,7 @@
                         }
                     },
                     { name: "DrawingNumber", type: "textarea" },
+                    { name: "Revision" },
                     { name: "WorkOrderNumber" },
                     { name: "Quantity" },
                     { name: "ShippingTagNumber", type: "textarea" },

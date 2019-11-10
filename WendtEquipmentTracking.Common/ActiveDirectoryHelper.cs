@@ -66,8 +66,8 @@ namespace WendtEquipmentTracking.Common
             }
 
             //Comment this in and out depending on testing locally or deploying
-            //user.Role = UserRoles.ReadWrite;
-            //user.Email = "keith.abramo@gmail.com";
+            user.Role = UserRoles.ReadWrite;
+            user.Email = "keith.abramo@gmail.com";
 
             return user;
         }

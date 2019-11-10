@@ -303,7 +303,9 @@ namespace WendtEquipmentTracking.App.Controllers
                     PriorityNumber = x.PriorityNumber,
                     PriorityId = random.Next(),
                     IsDuplicate = allPriorities.Any(w => w.PriorityNumber == x.PriorityNumber)
-                }).ToList();
+                })
+                .Where(x => !x.IsDuplicate) //Requirement for rev 4 is to "ignore duplicates"
+                .ToList();
 
                 return model;
             }

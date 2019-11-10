@@ -164,6 +164,7 @@ namespace WendtEquipmentTracking.App.Controllers
                         equipment.IsHardware = equipment.EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase);
                         equipment.IsHardwareKit = equipmentProperties["IsHardwareKitText"].ToString() == "True" ? true : false;
                         equipment.IsAssociatedToHardwareKit = equipmentProperties["IsAssociatedToHardwareKitText"].ToString() == "True" ? true : false;
+                        equipment.Revision = !string.IsNullOrWhiteSpace(equipmentProperties["Revision"].ToString()) ? Convert.ToInt32(equipmentProperties["Revision"]) : 0;
 
                         var priorityNumber = equipmentProperties["PriorityNumber"].ToString().ToNullable<int>();
                         var priority = priorities.FirstOrDefault(x => x.PriorityNumber == priorityNumber);

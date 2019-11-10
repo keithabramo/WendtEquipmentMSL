@@ -19,7 +19,10 @@
             @Html.EditorFor(modelItem => modelItem.DrawingNumber, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(modelItem => modelItem.DrawingNumber, "", new { @class = "text-danger" })
         </td>
-        <td></td>
+        <td>
+            @Html.EditorFor(modelItem => modelItem.Revision, new { htmlAttributes = new { @class = "form-control text-right" } })
+            @Html.ValidationMessageFor(modelItem => modelItem.Revision, "", new { @class = "text-danger" })
+        </td>
         <td>
             @Html.EditorFor(modelItem => modelItem.WorkOrderNumber, new { htmlAttributes = new { @class = "form-control workorderprice-autocomplete" } })
             @Html.ValidationMessageFor(modelItem => modelItem.WorkOrderNumber, "", new { @class = "text-danger" })

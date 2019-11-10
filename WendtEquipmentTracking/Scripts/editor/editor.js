@@ -64,6 +64,13 @@
                 $this.datatable.columns.adjust();
             });
 
+            this.editor.on('open', function (e, mode, action) {
+                $($this.datatable.cell(".focus").node()).addClass("editing");
+            });
+
+            this.editor.on('preClose', function (e, mode, action) {
+                $($this.datatable.cell(".editing").node()).removeClass("editing");
+            });
         };
 
         this.initEditor = function (settings) {

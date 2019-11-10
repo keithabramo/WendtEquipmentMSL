@@ -48,7 +48,8 @@ namespace WendtEquipmentTracking.BusinessLogic
                 Notes = (x.Notes ?? string.Empty).ToUpperInvariant(),
                 ShippedFrom = (x.ShippedFrom ?? string.Empty).ToUpperInvariant(),
                 ShippingTagNumber = (x.ShippingTagNumber ?? string.Empty).ToUpperInvariant(),
-                WorkOrderNumber = (x.WorkOrderNumber ?? string.Empty).ToUpperInvariant()
+                WorkOrderNumber = (x.WorkOrderNumber ?? string.Empty).ToUpperInvariant(),
+                Revision = x.Revision
             }).ToList();
 
 

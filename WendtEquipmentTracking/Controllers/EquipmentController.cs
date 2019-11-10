@@ -74,7 +74,8 @@ namespace WendtEquipmentTracking.App.Controllers
             {
                 Priorities = priorities,
                 ShippedFrom = "WENDT",
-                ReadyToShip = 0
+                ReadyToShip = 0,
+                Revision = "00"
             });
         }
     }
