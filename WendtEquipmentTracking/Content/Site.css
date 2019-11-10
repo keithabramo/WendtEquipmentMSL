@@ -505,6 +505,31 @@ table.dataTable tbody .attachments .badge {
         min-width: 100px;
     }
 
+    /* PROJECT WIDTHS */
+
+    .table-styled .shipToCompanyWidth {
+        min-width: 125px;
+    }
+    .table-styled .shipToContact1Width {
+        min-width: 125px;
+    }
+    .table-styled .shipToContact2Width {
+        min-width: 125px;
+    }
+    .table-styled .shipToBrokerWidth {
+        min-width: 125px;
+    }
+    .table-styled .pmWidth {
+        min-width: 50px;
+    }
+    .table-styled .receivingHoursWidth {
+        min-width: 100px;
+    }
+
+
+
+
+
 
     .table-styled .hardwarekitLabel {
         text-transform: capitalize;
