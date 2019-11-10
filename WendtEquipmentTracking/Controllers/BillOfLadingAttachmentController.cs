@@ -48,7 +48,7 @@ namespace WendtEquipmentTracking.App.Controllers
                         FileName = Guid.NewGuid().ToString() + model.File.FileName
                     };
 
-                    var filePath = Path.Combine(Server.MapPath("~/"), "Attachments", billOfLadingAttachmentBO.FileName);
+                    var filePath = Path.Combine(Server.MapPath("/Attachments"), billOfLadingAttachmentBO.FileName);
 
                     billOfLadingAttachmentService.Save(billOfLadingAttachmentBO, filePath, file);
 
