@@ -2,6 +2,8 @@
 
     var EditorMSL = function () {
 
+        this.snipping = false;
+
         this.columnIndexes = {
             Select: 0,
             Copy: 1,
@@ -140,6 +142,17 @@
                 }
             );
 
+            $.fn.dataTable.ext.search.push(
+                function (settings, data, dataIndex, rowData) {
+
+                    if (!$this.snipping) {
+                        return true;
+                    } else {
+                        return $this.editorMain.datatable.rows(dataIndex, { selected: true }).any();
+                    }
+                }
+            );
+
             $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="readyToShipFilter" /> Ready To Ship</label>');
             $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="workInProgressFilter" /> Work In Progress</label>');
             $("div.custom").append('<br/>');
@@ -159,6 +172,58 @@
             $(".workorderprice-autocomplete").autocomplete({
                 source: "/api/AutocompleteApi/WorkOrderPrice"
             });
+
+            var clipboard = new ClipboardJS('#snipTable', {
+                target: function (trigger) {
+
+                    $this.snipping = true;
+                    $this.editorMain.datatable.draw();
+
+                    $($this.editorMain.selector).find("thead tr").first().hide();
+                    $($this.editorMain.selector).find("tfoot").hide();
+
+                    $this.editorMain.datatable.columns([$this.columnIndexes.Select, $this.columnIndexes.Copy, $this.columnIndexes.Attachments]).visible(false);
+
+                    return $($this.editorMain.selector).closest("div")[0];
+                }
+            });
+
+            clipboard.on('success', function (e) {
+                $this.snipping = false;
+
+                $this.editorMain.datatable.columns([$this.columnIndexes.Select, $this.columnIndexes.Copy, $this.columnIndexes.Attachments]).visible(true);
+                $($this.editorMain.selector).find("thead tr").first().show();
+                $($this.editorMain.selector).find("tfoot").show();
+                $this.editorMain.datatable.draw();
+
+                e.clearSelection();
+
+                $this.openEmail();
+
+                var isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
+                if (isIE11) {
+                    main.warning("Your snippet has been copied to clipboard. However, if results do not appear formatted correctly please using another browser other than internet explorer.")
+                } else {
+                    main.success("Your snippet has been copied to clipboard. You can now paste it into the new email which should have opened for you.");
+                }
+
+                setTimeout(function () {
+                    $(".global-message div").fadeOut().remove();
+                }, 5000);
+            });
+
+            clipboard.on('error', function (e) {
+                $this.snipping = false;
+
+                $this.editorMain.datatable.columns([$this.columnIndexes.Select, $this.columnIndexes.Copy, $this.columnIndexes.Attachments]).visible(trueS);
+                $($this.editorMain.selector).find("thead tr").first().show();
+                $($this.editorMain.selector).find("tfoot").show();
+                $this.editorMain.datatable.draw();
+
+                main.error("There was an error trying to snip the selected rows.");
+
+            });
+
         };
 
         this.initEvents = function () {
@@ -546,10 +611,6 @@
                 }
             });
 
-            $("#snipTable").on("click", function () {
-                $this.editorMain.datatable.buttons('.buttons-print' ).trigger();
-            });
-
             $("#sendEmailModal").on("click", ".send-email", function () {
 
                 var $form = $("#sendEmailForm");
@@ -714,59 +775,6 @@
                     style: 'multi',
                     selector: 'td:first-child'
                 },
-                buttons: [
-                    {
-                        extend: 'print',
-                        title: '',
-                        exportOptions: {
-                            columns: '.exportable'
-                        },
-                        customize: function (window) {
-                            var $modal = $("#sendEmailModal").modal();
-
-                            //get the table html and put it on the main document
-                            var tableHTML = $(window.document.body).find("table")[0].outerHTML;
-                            $("#copyContainer").html(tableHTML);
-
-                            window.close();
-
-                            var $table = $("#copyContainer table");
-
-                            //clean the table a bit
-                            $table.find(".drawingNumberWidth").css("min-width", "200px");
-                            $table.find("th").each(function () {
-                                $(this).text($(this).text().replace(/\s\s+/g, ' '));
-                            });
-
-                            setTimeout(function () {
-                                //html 2 canvas to turn into picture
-                                html2canvas(
-                                    $table[0],
-                                    {
-                                        scale: 1
-                                    }
-                                ).then(function (canvas) {
-
-                                    $("#copyContainer").html('');
-
-                                    var dataURL = canvas.toDataURL();
-                                    var subject = $("#projectNumber").val();
-
-                                    $modal.find(".snippet-container").html("<img src='" + dataURL + "'/>");
-                                    $modal.find("#sendEmailForm [name='Subject']").val(subject);
-                                    $modal.find("#sendEmailForm [name='DataURL']").val(dataURL);
-                                    
-                                }, function (reason) {
-                                    main.error("There was an issue creating this equipment snippet.");
-
-                                    $modal.modal('hide');
-                                });
-                            }, 0);
-                            
-                        },
-                        autoPrint: false
-                    }
-                ],
                 order: [[this.columnIndexes.ReleaseDate, 'desc'], [this.columnIndexes.EquipmentId, 'desc']],
                 columnDefs: [
                     {
@@ -977,6 +985,17 @@
             } else {
                 $(".custom-actions button, .custom-actions a").attr("disabled", "disabled");
             }
+        };
+
+        this.openEmail = function () {
+            var link = document.createElement('a');
+            link.href = "mailto:?subject=" + $("#projectNumber").val() + "&body=%0D%0A%0D%0A%0D%0A%0D%0A";
+
+            document.body.appendChild(link);
+
+            link.click();
+
+            $(link).remove();
         };
 
         this.initStyles();
