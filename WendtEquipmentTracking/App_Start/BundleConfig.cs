@@ -22,7 +22,7 @@ namespace WendtEquipmentTracking.App
                         "~/Scripts/jquery.inputmask.js",
                         "~/Scripts/form.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/datatable")
+            bundles.Add(new Bundle("~/bundles/datatable")
                 .Include(
                         "~/Scripts/moment.min.js",
                         "~/Scripts/editor/datatablesAndEditor.js"

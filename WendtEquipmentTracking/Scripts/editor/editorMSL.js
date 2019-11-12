@@ -209,7 +209,7 @@
 
                 setTimeout(function () {
                     $(".global-message div").fadeOut().remove();
-                }, 5000);
+                }, 15000);
             });
 
             clipboard.on('error', function (e) {
@@ -228,6 +228,22 @@
 
         this.initEvents = function () {
             var $this = this;
+
+            $($this.editorMain.selector).on("keydown", "tbody .focus", function (e) {
+                switch (e.which) {
+                    
+                    case 38: // up
+                        $this.editorMain.datatable.keys.move("up");
+                        break;
+
+                    case 40: // down
+                        $this.editorMain.datatable.keys.move("down");
+
+                        break;
+
+                    default: return; // exit this handler for other keys
+                }
+            });
 
             $('#readyToShipFilter').on("change", function () {
                 $this.editorMain.datatable.draw();
