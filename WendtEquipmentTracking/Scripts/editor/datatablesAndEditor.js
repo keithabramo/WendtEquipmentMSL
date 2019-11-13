@@ -92892,7 +92892,9 @@ $.extend( KeyTable.prototype, {
 			return;
 		}
 
-		orig.stopPropagation();
+		if(orig) {
+            orig.stopPropagation();
+        }
 
 		// Return key should do nothing - for textareas it would empty the
 		// contents

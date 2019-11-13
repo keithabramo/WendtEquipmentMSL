@@ -71,6 +71,23 @@
             this.editor.on('preClose', function (e, mode, action) {
                 $($this.datatable.cell(".editing").node()).removeClass("editing");
             });
+
+            $(this.selector).on("keydown", "tbody .focus .DTE_Field_InputControl", function (e) {
+                switch (e.which) {
+
+                    case 38: // up
+                        $this.editorMain.datatable.keys.move("up");
+                        break;
+
+                    case 40: // down
+                        $this.editorMain.datatable.keys.move("down");
+
+                        break;
+                    default: return;
+                }
+
+                e.preventDefault();
+            });
         };
 
         this.initEditor = function (settings) {
