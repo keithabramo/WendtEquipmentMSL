@@ -76,11 +76,11 @@
                 switch (e.which) {
 
                     case 38: // up
-                        $this.editorMain.datatable.keys.move("up");
+                        $this.datatable.keys.move("up");
                         break;
 
                     case 40: // down
-                        $this.editorMain.datatable.keys.move("down");
+                        $this.datatable.keys.move("down");
 
                         break;
                     default: return;
