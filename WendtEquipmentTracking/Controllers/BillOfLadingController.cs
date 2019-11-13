@@ -96,6 +96,7 @@ namespace WendtEquipmentTracking.App.Controllers
             var model = new BillOfLadingModel
             {
                 FreightTerms = projectBO.FreightTerms,
+                ShippedFrom = "WENDT",
                 ShippedTo = projectNumber
             };
 

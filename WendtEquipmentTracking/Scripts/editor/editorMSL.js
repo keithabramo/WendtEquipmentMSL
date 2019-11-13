@@ -163,7 +163,6 @@
             $customActions.append('<span>Bulk Actions:</span>');
             $customActions.append('<button id="deleteRecords" class="btn btn-primary btn-xs btn-disabled" disabled="disabled" type="button">Delete Checked Lines</button>');
             $customActions.append('<button id="snipTable" class="btn btn-primary btn-xs btn-disabled" disabled="disabled" type="button">Snip Checked Rows For Email</button>');
-            //$customActions.append('<button id="snipTable2" class="btn btn-primary btn-xs btn-disabled" disabled="disabled" type="button">Snip Checked Rows For Email (copy image to email)</button>');
 
             $("div.custom").append($customActions);
 
@@ -601,7 +600,7 @@
                     $this.editorMain.editor
                         .title('Delete records')
                         .buttons('Confirm delete')
-                        .message('Are you sure you want to delete these ' + updatedIndexes.length + ' records?')
+                        .message('Are you sure you want to delete these ' + updatedIndexes.length + ' out of ' + rawIndexes.length + ' selected records? Note equipment records associated to BOLs, Hardware Kits, or are Hardware Kits cannot be deleted.')
                         .remove(updatedIndexes);
 
                 } else {
@@ -611,32 +610,32 @@
                 }
             });
 
-            $("#sendEmailModal").on("click", ".send-email", function () {
+            //$("#sendEmailModal").on("click", ".send-email", function () {
 
-                var $form = $("#sendEmailForm");
+            //    var $form = $("#sendEmailForm");
 
-                var data = {
-                    DataURL: $form.find("[name='DataURL']").val(),
-                    To: $form.find("[name='To']").val(),
-                    Subject: $form.find("[name='Subject']").val(),
-                    Body: $form.find("[name='Body']").val()
-                };
+            //    var data = {
+            //        DataURL: $form.find("[name='DataURL']").val(),
+            //        To: $form.find("[name='To']").val(),
+            //        Subject: $form.find("[name='Subject']").val(),
+            //        Body: $form.find("[name='Body']").val()
+            //    };
 
-                $.ajax({
-                    url: ROOT_URL + "api/EquipmentApi/SendSnippet",
-                    method: "POST",
-                    data: data,
-                    success: function (result) {
-                        if (result) {
-                            main.success("You should receive an email with the selected equipment records shortly.");
-                        } else {
-                            main.error("There was an issue creating this equipment snippet email.");
-                        }
-                    }
-                });
+            //    $.ajax({
+            //        url: ROOT_URL + "api/EquipmentApi/SendSnippet",
+            //        method: "POST",
+            //        data: data,
+            //        success: function (result) {
+            //            if (result) {
+            //                main.success("You should receive an email with the selected equipment records shortly.");
+            //            } else {
+            //                main.error("There was an issue creating this equipment snippet email.");
+            //            }
+            //        }
+            //    });
 
-                $("sendEmailModel").modal('hide');
-            });
+            //    $("sendEmailModel").modal('hide');
+            //});
 
             $('#equipmentAttachmentModal').on('show.bs.modal', function (e) {
                 var equipmentId = $(e.relatedTarget).attr("data-equipmentid");
