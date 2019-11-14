@@ -344,7 +344,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
                     priority.PriorityId = !string.IsNullOrWhiteSpace(priorityProperties["PriorityId"].ToString()) ? Convert.ToInt32(priorityProperties["PriorityId"]) : 0;
                     priority.DueDate = !string.IsNullOrWhiteSpace(priorityProperties["DueDate"].ToString()) ? Convert.ToDateTime(priorityProperties["DueDate"]) : DateTime.Now;
-                    priority.EndDate = !string.IsNullOrWhiteSpace(priorityProperties["EndDate"].ToString()) ? (DateTime?)Convert.ToDateTime(priorityProperties["DueDate"]) : null;
+                    priority.EndDate = !string.IsNullOrWhiteSpace(priorityProperties["EndDate"].ToString()) ? (DateTime?)Convert.ToDateTime(priorityProperties["EndDate"]) : null;
                     priority.ContractualShipDate = !string.IsNullOrWhiteSpace(priorityProperties["ContractualShipDate"].ToString()) ? (DateTime?)Convert.ToDateTime(priorityProperties["ContractualShipDate"]) : null;
                     priority.EquipmentName = priorityProperties["EquipmentName"].ToString();
                     priority.PriorityNumber = !string.IsNullOrWhiteSpace(priorityProperties["PriorityNumber"].ToString()) ? Convert.ToInt32(priorityProperties["PriorityNumber"]) : 0;

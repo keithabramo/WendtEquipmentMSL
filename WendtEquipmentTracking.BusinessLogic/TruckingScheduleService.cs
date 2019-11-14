@@ -38,7 +38,6 @@ namespace WendtEquipmentTracking.BusinessLogic
                 Status = x.Status,
                 TruckingScheduleId = x.TruckingScheduleId,
                 Weight = x.Weight,
-                WorkOrder = x.WorkOrder,
                 RequestDate = x.RequestDate,
                 RequestedBy = x.RequestedBy
             }).ToList();
@@ -69,7 +68,6 @@ namespace WendtEquipmentTracking.BusinessLogic
                 Status = x.Status,
                 TruckingScheduleId = x.TruckingScheduleId,
                 Weight = x.Weight,
-                WorkOrder = x.WorkOrder,
                 RequestDate = x.RequestDate,
                 RequestedBy = x.RequestedBy,
                 Project = x.Project != null ? new ProjectBO
@@ -122,7 +120,6 @@ namespace WendtEquipmentTracking.BusinessLogic
                 Status = x.Status,
                 TruckingScheduleId = x.TruckingScheduleId,
                 Weight = x.Weight,
-                WorkOrder = x.WorkOrder,
                 RequestDate = x.RequestDate,
                 RequestedBy = x.RequestedBy,
                 Project = x.Project != null ? new ProjectBO
@@ -172,7 +169,6 @@ namespace WendtEquipmentTracking.BusinessLogic
             oldTruckingSchedule.Status = truckingScheduleBO.Status;
             oldTruckingSchedule.TruckingScheduleId = truckingScheduleBO.TruckingScheduleId;
             oldTruckingSchedule.Weight = truckingScheduleBO.Weight;
-            oldTruckingSchedule.WorkOrder = truckingScheduleBO.WorkOrder;
             oldTruckingSchedule.RequestDate = truckingScheduleBO.RequestDate;
             oldTruckingSchedule.RequestedBy = truckingScheduleBO.RequestedBy;
 
@@ -205,7 +201,6 @@ namespace WendtEquipmentTracking.BusinessLogic
                     oldTruckingSchedule.Status = truckingScheduleBO.Status;
                     oldTruckingSchedule.TruckingScheduleId = truckingScheduleBO.TruckingScheduleId;
                     oldTruckingSchedule.Weight = truckingScheduleBO.Weight;
-                    oldTruckingSchedule.WorkOrder = truckingScheduleBO.WorkOrder;
                     oldTruckingSchedule.RequestDate = truckingScheduleBO.RequestDate;
                     oldTruckingSchedule.RequestedBy = truckingScheduleBO.RequestedBy;
                 }

@@ -2,7 +2,7 @@
 
     var EditorTruckingSchedule = function () {
 
-        this.editableColumns = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+        this.editableColumns = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
         this.editorMain = new Editor();
 
         this.initStyles = function () {
@@ -21,7 +21,7 @@
                     if (!rfpStatus && !plannedStatus && !confirmedStatus && !hideClosedStatus) {
                         return true;
                     } else {
-                        var status = data[15];
+                        var status = data[14];
 
                         var availableStatuses = [];
 
@@ -273,7 +273,6 @@
                 form.set('ShipTo', $row.find("input[name='ShipTo']").val());
                 form.set('Status', $row.find("select[name='Status']").val());
                 form.set('RequestedBy', $row.find("input[name='RequestedBy']").val());
-                form.set('WorkOrder', $row.find("input[name='WorkOrder']").val());
                 form.set('WeightText', $row.find("input[name='Weight']").val());
                 form.set('NumPiecesText', $row.find("input[name='NumPieces']").val());
                 form.set('PickUpDate', $row.find("input[name='PickUpDate']").val());
@@ -355,7 +354,6 @@
                 $createRow.find("input[name='ShipTo']").val(rowData.ShipTo)
                 $createRow.find("select[name='Status']").val(rowData.Status);
                 $createRow.find("input[name='RequestedBy']").val(rowData.RequestedBy);
-                $createRow.find("input[name='WorkOrder']").val(rowData.WorkOrder);
                 $createRow.find("input[name='Weight']").val(rowData.WeightText);
                 $createRow.find("input[name='NumPieces']").val(rowData.NumPiecesText);
                 $createRow.find("input[name='PickUpDate']").val(rowData.PickUpDate);
@@ -394,8 +392,6 @@
                                 $(this).val(ui.item.value);
                             }
                         }
-                    }, {
-                        name: "WorkOrder"
                     }, {
                         name: "PurchaseOrder"
                     }, {
@@ -479,6 +475,7 @@
                         $this.editorMain.editor.field("ShipTo").update(shipToResults);
                     }
                 },
+                autoWidth: false,
                 columnDefs: [
                     {
                         "targets": 0,
@@ -490,68 +487,69 @@
                     },
                     {
                         data: "RequestDate",
-                        targets: 1
+                        targets: 1,
+                        className: "dateWidth"
                     },
                     {
                         data: "ProjectNumber",
                         targets: 2
                     },
                     {
-                        data: "WorkOrder",
+                        data: "PurchaseOrder",
                         targets: 3
                     },
                     {
-                        data: "PurchaseOrder",
+                        data: "RequestedBy",
                         targets: 4
                     },
                     {
-                        data: "RequestedBy",
-                        targets: 5
-                    },
-                    {
                         data: "ShipFrom",
-                        targets: 6,
+                        targets: 5,
                         className: "shippedFromWidth"
                     },
                     {
                         data: "ShipTo",
-                        targets: 7,
+                        targets: 6,
                         className: "shippedToWidth"
                     },
                     {
                         data: "Description",
-                        targets: 8
+                        targets: 7,
+                        className: "truckingScheduleDescriptionWidth"
                     },
                     {
                         data: "NumPiecesText",
-                        targets: 9
+                        targets: 8
                     },
                     {
                         data: "Dimensions",
-                        targets: 10
+                        targets: 9,
+                        className: "dimensionsWidth"
                     },
                     {
                         data: "WeightText",
-                        targets: 11
+                        targets: 10
                     },
                     {
                         data: "Carrier",
-                        targets: 12
+                        targets: 11
                     },
                     {
                         data: "PickUpDate",
-                        targets: 13
+                        targets: 12,
+                        className: "dateWidth"
                     },
                     {
                         data: "Comments",
-                        targets: 14
+                        targets: 13,
+                        className: "commentsWidth"
                     },
                     {
                         data: "Status",
-                        targets: 15
+                        targets: 14
                     },
                     {
-                        "targets": 16,
+                        "targets": 15,
                         searchable: false,
                         sortable: false,
                         render: function (data, type, row, meta) {

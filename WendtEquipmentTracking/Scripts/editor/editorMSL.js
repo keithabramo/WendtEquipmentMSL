@@ -289,7 +289,6 @@
                 $createRow.find("input[name='HTSCode']").val(rowData.HTSCode);
                 $createRow.find("input[name='CountryOfOrigin']").val(rowData.CountryOfOrigin);
                 $createRow.find("textarea[name='Notes']").val(rowData.Notes);
-                $createRow.find("input[name='Revision']").val(rowData.Revision);
 
                 window.scrollTo(0, document.body.scrollHeight);
             });
@@ -600,7 +599,7 @@
                     $this.editorMain.editor
                         .title('Delete records')
                         .buttons('Confirm delete')
-                        .message('Are you sure you want to delete these ' + updatedIndexes.length + ' out of ' + rawIndexes.length + ' selected records? Note equipment records associated to BOLs, Hardware Kits, or are Hardware Kits cannot be deleted.')
+                        .message('Are you sure you want to delete these ' + updatedIndexes.length + ' out of ' + rawIndexes.length + ' selected records? Note – Field Hardware Kits or records associated with BOLs or Hardware Kits cannot be deleted.')
                         .remove(updatedIndexes);
 
                 } else {

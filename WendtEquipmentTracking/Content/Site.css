@@ -353,15 +353,6 @@ table.dataTable tbody .attachments .badge {
         background-color: #FfeEdD !important;
     }
 
-    /*.table-styled tr td.focus input, .table-styled tr td.focus select {
-        border: 1px solid #ccc !important;
-        min-height: 32px;
-        width: 100%;
-    }*/
-
-    /*.table-styled tr td div.DTE_Field_Type_select div.DTE_Field_Input {
-        padding: 0;
-    }*/
 
     div.DTE_Inline input, div.DTE_Inline select, div.DTE_Inline textarea {
         border: none;
@@ -417,8 +408,8 @@ table.dataTable tbody .attachments .badge {
     }
 
     .table-styled  .dateWidth  {
-        min-width: 70px;
-        width: 70px !important;
+        min-width: 50px;
+        width: 50px !important;
     }
 
     .table-styled  .drawingNumberWidth  {
@@ -526,6 +517,24 @@ table.dataTable tbody .attachments .badge {
         min-width: 100px;
     }
 
+    /* TRUCKING SCHEDULE WIDTHS */
+
+    .table-styled .shipFromWidth {
+        min-width: 125px;
+    }
+    .table-styled .shipToWidth {
+        min-width: 125px;
+    }
+    .table-styled .dimensionsWidth {
+        min-width: 200px;
+    }
+    .table-styled .truckingScheduleDescriptionWidth {
+        min-width: 200px;
+    }
+    .table-styled .commentsWidth {
+        min-width: 200px;
+    }
+
 
 
 
@@ -561,6 +570,10 @@ table.dataTable tbody .attachments .badge {
 
     .table-styled tfoot td select.form-control{
         padding: 6px;
+    }
+
+    .table-styled tfoot td [readonly] {
+        background-color: #d9edf7;
     }
 
     .table-styled .always-editable {

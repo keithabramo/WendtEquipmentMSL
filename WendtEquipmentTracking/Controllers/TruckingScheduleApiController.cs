@@ -47,7 +47,6 @@ namespace WendtEquipmentTracking.App.Controllers
                 Status = x.Status,
                 TruckingScheduleId = x.TruckingScheduleId,
                 Weight = x.Weight,
-                WorkOrder = x.WorkOrder,
                 RequestDate = x.RequestDate,
                 RequestedBy = x.RequestedBy
             }).ToList();
@@ -91,7 +90,6 @@ namespace WendtEquipmentTracking.App.Controllers
                     truckingSchedule.PurchaseOrder = truckingScheduleProperties["PurchaseOrder"].ToString();
                     truckingSchedule.Status = truckingScheduleProperties["Status"].ToString();
                     truckingSchedule.RequestedBy = truckingScheduleProperties["RequestedBy"].ToString();
-                    truckingSchedule.WorkOrder = truckingScheduleProperties["WorkOrder"].ToString();
                     truckingSchedule.Weight = truckingScheduleProperties["WeightText"].ToString().ToNullable<double>();
                     truckingSchedule.NumPieces = truckingScheduleProperties["NumPiecesText"].ToString().ToNullable<double>();
                     truckingSchedule.PickUpDate = !string.IsNullOrWhiteSpace(truckingScheduleProperties["PickUpDate"].ToString()) ? (DateTime?)Convert.ToDateTime(truckingScheduleProperties["PickUpDate"]) : null;
@@ -161,7 +159,6 @@ namespace WendtEquipmentTracking.App.Controllers
                     Status = x.Status,
                     TruckingScheduleId = x.TruckingScheduleId,
                     Weight = x.Weight,
-                    WorkOrder = x.WorkOrder,
                     RequestDate = x.RequestDate,
                     RequestedBy = x.RequestedBy,
                     ProjectNumber = x.Project != null ? (double?)x.Project.ProjectNumber : null

@@ -11,10 +11,6 @@
             @Html.ValidationMessageFor(modelItem => modelItem.ProjectNumber, "", new { @class = "text-danger" })
         </td>
         <td>
-            @Html.EditorFor(modelItem => modelItem.WorkOrder, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(modelItem => modelItem.WorkOrder, "", new { @class = "text-danger" })
-        </td>
-        <td>
             @Html.EditorFor(modelItem => modelItem.PurchaseOrder, new { htmlAttributes = new { @class = "form-control workorderprice-autocomplete" } })
             @Html.ValidationMessageFor(modelItem => modelItem.PurchaseOrder, "", new { @class = "text-danger" })
         </td>

@@ -7,7 +7,6 @@ namespace WendtEquipmentTracking.BusinessLogic.BO
         public int TruckingScheduleId { get; set; }
         public DateTime? RequestDate { get; set; }
         public int? ProjectId { get; set; }
-        public string WorkOrder { get; set; }
         public string PurchaseOrder { get; set; }
         public string RequestedBy { get; set; }
         public int? ShipFromVendorId { get; set; }

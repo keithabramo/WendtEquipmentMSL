@@ -20,9 +20,6 @@ namespace WendtEquipmentTracking.App.Models
         [Required]
         public double? ProjectNumber { get; set; }
 
-        [DisplayName("Work Order")]
-        public string WorkOrder { get; set; }
-
         [DisplayName("Purchase Order")]
         public string PurchaseOrder { get; set; }
 

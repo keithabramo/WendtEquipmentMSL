@@ -17,7 +17,6 @@ namespace WendtEquipmentTracking.DataAccess.SQL
         public int TruckingScheduleId { get; set; }
         public Nullable<System.DateTime> RequestDate { get; set; }
         public Nullable<int> ProjectId { get; set; }
-        public string WorkOrder { get; set; }
         public string PurchaseOrder { get; set; }
         public string RequestedBy { get; set; }
         public Nullable<int> ShipFromVendorId { get; set; }

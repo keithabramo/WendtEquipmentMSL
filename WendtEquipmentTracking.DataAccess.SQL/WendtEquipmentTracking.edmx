@@ -216,7 +216,6 @@
           <Property Name="TruckingScheduleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RequestDate" Type="datetime" />
           <Property Name="ProjectId" Type="int" />
-          <Property Name="WorkOrder" Type="nvarchar" MaxLength="255" />
           <Property Name="PurchaseOrder" Type="nvarchar" MaxLength="255" />
           <Property Name="RequestedBy" Type="nvarchar" MaxLength="255" />
           <Property Name="ShipFromVendorId" Type="int" />
@@ -878,7 +877,6 @@
           <Property Name="TruckingScheduleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RequestDate" Type="DateTime" Precision="3" />
           <Property Name="ProjectId" Type="Int32" />
-          <Property Name="WorkOrder" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="PurchaseOrder" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="RequestedBy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="ShipFromVendorId" Type="Int32" />
@@ -1379,7 +1377,6 @@
                 <ScalarProperty Name="ShipFromVendorId" ColumnName="ShipFromVendorId" />
                 <ScalarProperty Name="RequestedBy" ColumnName="RequestedBy" />
                 <ScalarProperty Name="PurchaseOrder" ColumnName="PurchaseOrder" />
-                <ScalarProperty Name="WorkOrder" ColumnName="WorkOrder" />
                 <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
                 <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
                 <ScalarProperty Name="TruckingScheduleId" ColumnName="TruckingScheduleId" />

@@ -88,6 +88,10 @@
 
                 e.preventDefault();
             });
+
+            $(this.selector).on('key-focus', function (e, datatable, cell, originalEvent) {
+                $(cell.node()).find(":input").select();
+            });
         };
 
         this.initEditor = function (settings) {

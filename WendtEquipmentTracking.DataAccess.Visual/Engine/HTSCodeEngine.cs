@@ -30,7 +30,7 @@ namespace WendtEquipmentTracking.DataAccess.Visual
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    using (SqlCommand command = new SqlCommand("SELECT HTS_Code, Description FROM HARMONIZED_TARIFF", connection))
+                    using (SqlCommand command = new SqlCommand("SELECT HTS_Code, Description FROM HARMONIZED_TARIFF where Description not like 'OBS%'", connection))
                     {
                         using (SqlDataReader reader = command.ExecuteReader())
                         {

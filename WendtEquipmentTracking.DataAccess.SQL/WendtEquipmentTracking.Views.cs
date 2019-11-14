@@ -11,7 +11,7 @@ using System.Data.Entity.Infrastructure.MappingViews;
 
 [assembly: DbMappingViewCacheTypeAttribute(
     typeof(WendtEquipmentTracking.DataAccess.SQL.WendtEquipmentTrackingEntities),
-    typeof(Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets65db57d653acdcc81b3e993fe5f35a178b932ecda84de413fffae070abe062b8))]
+    typeof(Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySetsa5d893d13f68e060f415371b157db1569ac8adc9f7d03f0f5169008916a66ac7))]
 
 namespace Edm_EntityMappingGeneratedViews
 {
@@ -23,14 +23,14 @@ namespace Edm_EntityMappingGeneratedViews
     /// Implements a mapping view cache.
     /// </summary>
     [GeneratedCode("Entity Framework 6 Power Tools", "0.9.2.0")]
-    internal sealed class ViewsForBaseEntitySets65db57d653acdcc81b3e993fe5f35a178b932ecda84de413fffae070abe062b8 : DbMappingViewCache
+    internal sealed class ViewsForBaseEntitySetsa5d893d13f68e060f415371b157db1569ac8adc9f7d03f0f5169008916a66ac7 : DbMappingViewCache
     {
         /// <summary>
         /// Gets a hash value computed over the mapping closure.
         /// </summary>
         public override string MappingHashValue
         {
-            get { return "65db57d653acdcc81b3e993fe5f35a178b932ecda84de413fffae070abe062b8"; }
+            get { return "a5d893d13f68e060f415371b157db1569ac8adc9f7d03f0f5169008916a66ac7"; }
         }
 
         /// <summary>
@@ -481,13 +481,12 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing TruckingSchedule
-        [WendtEquipmentTracking.DataAccess.SQL.Model.Store.TruckingSchedule](T1.TruckingSchedule_TruckingScheduleId, T1.TruckingSchedule_RequestDate, T1.TruckingSchedule_ProjectId, T1.TruckingSchedule_WorkOrder, T1.TruckingSchedule_PurchaseOrder, T1.TruckingSchedule_RequestedBy, T1.TruckingSchedule_ShipFromVendorId, T1.TruckingSchedule_ShipToVendorId, T1.TruckingSchedule_Description, T1.TruckingSchedule_NumPieces, T1.TruckingSchedule_Dimensions, T1.TruckingSchedule_Weight, T1.TruckingSchedule_Carrier, T1.TruckingSchedule_PickUpDate, T1.TruckingSchedule_Comments, T1.TruckingSchedule_Status, T1.TruckingSchedule_CreatedBy, T1.TruckingSchedule_CreatedDate, T1.TruckingSchedule_ModifiedBy, T1.TruckingSchedule_ModifiedDate, T1.TruckingSchedule_IsDeleted)
+        [WendtEquipmentTracking.DataAccess.SQL.Model.Store.TruckingSchedule](T1.TruckingSchedule_TruckingScheduleId, T1.TruckingSchedule_RequestDate, T1.TruckingSchedule_ProjectId, T1.TruckingSchedule_PurchaseOrder, T1.TruckingSchedule_RequestedBy, T1.TruckingSchedule_ShipFromVendorId, T1.TruckingSchedule_ShipToVendorId, T1.TruckingSchedule_Description, T1.TruckingSchedule_NumPieces, T1.TruckingSchedule_Dimensions, T1.TruckingSchedule_Weight, T1.TruckingSchedule_Carrier, T1.TruckingSchedule_PickUpDate, T1.TruckingSchedule_Comments, T1.TruckingSchedule_Status, T1.TruckingSchedule_CreatedBy, T1.TruckingSchedule_CreatedDate, T1.TruckingSchedule_ModifiedBy, T1.TruckingSchedule_ModifiedDate, T1.TruckingSchedule_IsDeleted)
     FROM (
         SELECT 
             T.TruckingScheduleId AS TruckingSchedule_TruckingScheduleId, 
             T.RequestDate AS TruckingSchedule_RequestDate, 
             T.ProjectId AS TruckingSchedule_ProjectId, 
-            T.WorkOrder AS TruckingSchedule_WorkOrder, 
             T.PurchaseOrder AS TruckingSchedule_PurchaseOrder, 
             T.RequestedBy AS TruckingSchedule_RequestedBy, 
             T.ShipFromVendorId AS TruckingSchedule_ShipFromVendorId, 
@@ -847,13 +846,12 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing TruckingSchedules
-        [WendtEquipmentTracking.DataAccess.SQL.Model.TruckingSchedule](T1.TruckingSchedule_TruckingScheduleId, T1.TruckingSchedule_RequestDate, T1.TruckingSchedule_ProjectId, T1.TruckingSchedule_WorkOrder, T1.TruckingSchedule_PurchaseOrder, T1.TruckingSchedule_RequestedBy, T1.TruckingSchedule_ShipFromVendorId, T1.TruckingSchedule_ShipToVendorId, T1.TruckingSchedule_Description, T1.TruckingSchedule_NumPieces, T1.TruckingSchedule_Dimensions, T1.TruckingSchedule_Weight, T1.TruckingSchedule_Carrier, T1.TruckingSchedule_PickUpDate, T1.TruckingSchedule_Comments, T1.TruckingSchedule_Status, T1.TruckingSchedule_CreatedBy, T1.TruckingSchedule_CreatedDate, T1.TruckingSchedule_ModifiedBy, T1.TruckingSchedule_ModifiedDate, T1.TruckingSchedule_IsDeleted)
+        [WendtEquipmentTracking.DataAccess.SQL.Model.TruckingSchedule](T1.TruckingSchedule_TruckingScheduleId, T1.TruckingSchedule_RequestDate, T1.TruckingSchedule_ProjectId, T1.TruckingSchedule_PurchaseOrder, T1.TruckingSchedule_RequestedBy, T1.TruckingSchedule_ShipFromVendorId, T1.TruckingSchedule_ShipToVendorId, T1.TruckingSchedule_Description, T1.TruckingSchedule_NumPieces, T1.TruckingSchedule_Dimensions, T1.TruckingSchedule_Weight, T1.TruckingSchedule_Carrier, T1.TruckingSchedule_PickUpDate, T1.TruckingSchedule_Comments, T1.TruckingSchedule_Status, T1.TruckingSchedule_CreatedBy, T1.TruckingSchedule_CreatedDate, T1.TruckingSchedule_ModifiedBy, T1.TruckingSchedule_ModifiedDate, T1.TruckingSchedule_IsDeleted)
     FROM (
         SELECT 
             T.TruckingScheduleId AS TruckingSchedule_TruckingScheduleId, 
             T.RequestDate AS TruckingSchedule_RequestDate, 
             T.ProjectId AS TruckingSchedule_ProjectId, 
-            T.WorkOrder AS TruckingSchedule_WorkOrder, 
             T.PurchaseOrder AS TruckingSchedule_PurchaseOrder, 
             T.RequestedBy AS TruckingSchedule_RequestedBy, 
             T.ShipFromVendorId AS TruckingSchedule_ShipFromVendorId, 

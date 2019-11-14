@@ -20,7 +20,7 @@
             @Html.ValidationMessageFor(modelItem => modelItem.DrawingNumber, "", new { @class = "text-danger" })
         </td>
         <td>
-            @Html.EditorFor(modelItem => modelItem.Revision, new { htmlAttributes = new { @class = "form-control text-right" } })
+            @Html.EditorFor(modelItem => modelItem.Revision, new { htmlAttributes = new { @readonly = "readonly", @class = "form-control text-right" } })
             @Html.ValidationMessageFor(modelItem => modelItem.Revision, "", new { @class = "text-danger" })
         </td>
         <td>

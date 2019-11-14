@@ -6,21 +6,21 @@
     <edmx:Diagrams>
       <Diagram DiagramId="d60abf0216ef4d75a323eff5eef89bf0" Name="Diagram1" ZoomLevel="59">
         <AssociationConnector Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_BillOfLading_Project" />
-        <EntityTypeShape EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.BillOfLading" Width="1.5" PointX="3" PointY="39.25" />
-        <EntityTypeShape EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.BillOfLadingAttachment" Width="1.5" PointX="5.25" PointY="43.875" />
-        <EntityTypeShape EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.BillOfLadingEquipment" Width="1.5" PointX="7.5" PointY="31.375" />
+        <EntityTypeShape EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.BillOfLading" Width="1.5" PointX="3" PointY="39" />
+        <EntityTypeShape EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.BillOfLadingAttachment" Width="1.5" PointX="5.25" PointY="43.5" />
+        <EntityTypeShape EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.BillOfLadingEquipment" Width="1.5" PointX="7.5" PointY="30" />
         <EntityTypeShape EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.Broker" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.Equipment" Width="1.5" PointX="5.25" PointY="20.5" />
-        <EntityTypeShape EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.EquipmentAttachment" Width="1.5" PointX="7.5" PointY="26.25" />
+        <EntityTypeShape EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.Equipment" Width="1.5" PointX="5.25" PointY="18" />
+        <EntityTypeShape EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.EquipmentAttachment" Width="1.5" PointX="7.5" PointY="20.625" />
         <EntityTypeShape EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.HardwareCommercialCode" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.HardwareKit" Width="1.5" PointX="3" PointY="10.625" />
-        <EntityTypeShape EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.HardwareKitEquipment" Width="1.5" PointX="7.5" PointY="18.375" />
-        <EntityTypeShape EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.Priority" Width="1.5" PointX="3" PointY="34.75" />
+        <EntityTypeShape EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.HardwareKit" Width="1.5" PointX="3" PointY="30" />
+        <EntityTypeShape EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.HardwareKitEquipment" Width="1.5" PointX="7.5" PointY="24.75" />
+        <EntityTypeShape EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.Priority" Width="1.5" PointX="3" PointY="10.5" />
         <EntityTypeShape EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.Project" Width="1.5" PointX="0.75" PointY="16.375" />
-        <EntityTypeShape EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.TruckingSchedule" Width="1.5" PointX="3" PointY="20.25" />
+        <EntityTypeShape EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.TruckingSchedule" Width="1.5" PointX="3" PointY="17.25" />
         <EntityTypeShape EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.User" Width="1.5" PointX="4.75" PointY="0.75" />
-        <EntityTypeShape EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.Vendor" Width="1.5" PointX="0.75" PointY="25.25" />
-        <EntityTypeShape EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.WorkOrderPrice" Width="1.5" PointX="3" PointY="15.125" />
+        <EntityTypeShape EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.Vendor" Width="1.5" PointX="0.75" PointY="11.125" />
+        <EntityTypeShape EntityType="WendtEquipmentTracking.DataAccess.SQL.Model.WorkOrderPrice" Width="1.5" PointX="3" PointY="34.5" />
         <AssociationConnector Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_BillOfLadingAttachment_BillOfLading" />
         <AssociationConnector Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_BillOfLadingEquipment_BillOfLading" />
         <AssociationConnector Association="WendtEquipmentTracking.DataAccess.SQL.Model.FK_BillOfLanding_Project" />
