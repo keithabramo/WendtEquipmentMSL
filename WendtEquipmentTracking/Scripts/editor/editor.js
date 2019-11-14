@@ -65,7 +65,9 @@
             });
 
             this.editor.on('open', function (e, mode, action) {
-                $($this.datatable.cell(".focus").node()).addClass("editing");
+                $($this.datatable.cell(".focus").node())
+                    .addClass("editing")
+                    .find(":input").select();
             });
 
             this.editor.on('preClose', function (e, mode, action) {
@@ -89,9 +91,9 @@
                 e.preventDefault();
             });
 
-            $(this.selector).on('key-focus', function (e, datatable, cell, originalEvent) {
-                $(cell.node()).find(":input").select();
-            });
+            //$(this.selector).on('key-focus', function (e, datatable, cell, originalEvent) {
+            //    $(cell.node()).find(":input").select();
+            //});
         };
 
         this.initEditor = function (settings) {

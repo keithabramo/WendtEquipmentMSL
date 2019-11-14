@@ -59,7 +59,7 @@
                 minLength: 0
             }).focus(function () {
                 $(this).data("uiAutocomplete").search($(this).val());
-            });;
+            });
 
             $(".project-autocomplete").autocomplete({
                 source: projects,
@@ -75,7 +75,7 @@
                 }
             }).focus(function () {
                 $(this).data("uiAutocomplete").search($(this).val());
-            });;
+            });
 
         };
 
@@ -250,15 +250,6 @@
                 }
             });
 
-            this.editorMain.editor.on('postEdit', function (e, json, data) {
-                var project = $this.getProject(data.ProjectNumber);
-
-                var shipToResults = $this.getShipToList(project);
-
-                this.field("ShipTo").update(shipToResults);
-
-            });
-
             $(".createSubmit").on("click", function () {
 
                 var $row = $(".table tfoot tr");
@@ -290,6 +281,15 @@
 
                 if (action !== "remove") {
                     var columnIndex = $this.editorMain.editor.modifier().column;
+                    var rowData = $this.editorMain.datatable.row($this.editorMain.editor.modifier().row).data();
+
+                    if (columnIndex === 6) { // ShipTo
+                        var project = $this.getProject(rowData.ProjectNumber);
+
+                        var shipToResults = $this.getShipToList(project);
+
+                        this.field("ShipTo").update(shipToResults);
+                    }
 
                     if ($.inArray(columnIndex, $this.editableColumns) < 0) {
                         editable = false;
@@ -321,7 +321,6 @@
                 $createRow.find(":input").val("");
                 $createRow.find("select").prop('selectedIndex', 0);
                 $createRow.find(".datePickerTable").datepicker("setDate", new Date());
-
             });
 
             $(".table").on("mousedown", "td.focus", function (e) {
@@ -464,17 +463,6 @@
                 autoFill: {
                     columns: this.editableColumns
                 },
-                createdRow: function (row, data, index) {
-
-                    if (data.ProjectNumber) {
-
-                        var project = $this.getProject(data.ProjectNumber);
-
-                        var shipToResults = $this.getShipToList(project);
-
-                        $this.editorMain.editor.field("ShipTo").update(shipToResults);
-                    }
-                },
                 autoWidth: false,
                 columnDefs: [
                     {
@@ -583,7 +571,7 @@
 
         this.getShipToList = function (project) {
 
-            projectLabel = (project.ShipToCompany || "") + (project.ShipToAddress ? " " + project.ShipToAddress : "") + (project.ShipToCSZ ? " " + project.ShipToCSZ : "");
+            projectLabel = (project.ShipToCompany || "") + (project.ShipToAddress ? " " + project.ShipToAddress : "") + (project.ShipToCSZ ? " " + project.ShipToCSZ : "") + (project.ReceivingHours ? " : " + project.ReceivingHours : "");
 
             var projectOption = {
                 value: projectLabel,

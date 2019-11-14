@@ -144,7 +144,6 @@ namespace WendtEquipmentTracking.App.Controllers
 
                 truckingSchedules = truckingScheduleService.GetByIds(truckingScheduleIds).ToList();
 
-                var allTruckingSchedules = truckingScheduleService.GetAll();
                 truckingScheduleModels = truckingSchedules.Select(x => new TruckingScheduleModel
                 {
                     Carrier = x.Carrier,
@@ -203,6 +202,10 @@ namespace WendtEquipmentTracking.App.Controllers
                 if (!string.IsNullOrEmpty(truckingScheduleBO.Project.ShipToCSZ))
                 {
                     result += " " + truckingScheduleBO.Project.ShipToCSZ;
+                }
+                if (!string.IsNullOrEmpty(truckingScheduleBO.Project.ReceivingHours))
+                {
+                    result += " : " + truckingScheduleBO.Project.ReceivingHours;
                 }
             }
 
