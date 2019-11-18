@@ -3,6 +3,7 @@
     var EditorMSL = function () {
 
         this.snipping = false;
+        this.hideColumns = false;
 
         this.columnIndexes = {
             Select: 0,
@@ -161,8 +162,8 @@
 
             var $customActions = $("<div class='custom-actions'></div>");
             $customActions.append('<span>Bulk Actions:</span>');
-            $customActions.append('<button id="deleteRecords" class="btn btn-primary btn-xs btn-disabled" disabled="disabled" type="button">Delete Checked Lines</button>');
             $customActions.append('<button id="snipTable" class="btn btn-primary btn-xs btn-disabled" disabled="disabled" type="button">Snip Checked Rows For Email</button>');
+            $customActions.append('<button id="deleteRecords" class="btn btn-danger btn-xs btn-disabled" disabled="disabled" type="button">Delete Checked Lines</button>');
 
             $("div.custom").append($customActions);
 
@@ -183,6 +184,10 @@
 
                     $this.editorMain.datatable.columns([$this.columnIndexes.Select, $this.columnIndexes.Copy, $this.columnIndexes.Attachments]).visible(false);
 
+                    if (!$this.hideColumns) {
+                        $this.editorMain.datatable.columns([$this.columnIndexes.CustomsValueText, $this.columnIndexes.SalePriceText]).visible(false);
+                    }
+
                     return $($this.editorMain.selector).closest("div")[0];
                 }
             });
@@ -191,6 +196,11 @@
                 $this.snipping = false;
 
                 $this.editorMain.datatable.columns([$this.columnIndexes.Select, $this.columnIndexes.Copy, $this.columnIndexes.Attachments]).visible(true);
+
+                if (!$this.hideColumns) {
+                    $this.editorMain.datatable.columns([$this.columnIndexes.CustomsValueText, $this.columnIndexes.SalePriceText]).visible(false);
+                }
+
                 $($this.editorMain.selector).find("thead tr").first().show();
                 $($this.editorMain.selector).find("tfoot").show();
                 $this.editorMain.datatable.draw();
@@ -214,7 +224,11 @@
             clipboard.on('error', function (e) {
                 $this.snipping = false;
 
-                $this.editorMain.datatable.columns([$this.columnIndexes.Select, $this.columnIndexes.Copy, $this.columnIndexes.Attachments]).visible(trueS);
+                $this.editorMain.datatable.columns([$this.columnIndexes.Select, $this.columnIndexes.Copy, $this.columnIndexes.Attachments]).visible(true);
+                if (!$this.hideColumns) {
+                    $this.editorMain.datatable.columns([$this.columnIndexes.CustomsValueText, $this.columnIndexes.SalePriceText]).visible(false);
+                }
+
                 $($this.editorMain.selector).find("thead tr").first().show();
                 $($this.editorMain.selector).find("tfoot").show();
                 $this.editorMain.datatable.draw();
@@ -729,15 +743,13 @@
         this.initDatatable = function () {
             var $this = this;
 
-            var hideColumns = false;
-
             $.ajax({
                 url: ROOT_URL + "api/ProjectApi/Get/" + $("#projectId").val(),
                 async: false,
                 success: function (result) {
                     if (result) {
                         if (!result.IsCustomsProject && !result.IncludeSoftCosts) {
-                            hideColumns = true;
+                            $this.hideColumns = true;
                         }
                     }
                 }
@@ -898,7 +910,7 @@
                             $(cell).addClass(rowData.Indicators.CustomsValueColor);
                         },
                         render: $.fn.dataTable.render.number(',', '.', 2, '$'),
-                        visible: !hideColumns
+                        visible: !$this.hideColumns
                     },
                     {
                         data: "SalePriceText", "targets": this.columnIndexes.SalePriceText, className: "active text-right salePriceWidth",
@@ -906,17 +918,17 @@
                             $(cell).addClass(rowData.Indicators.SalePriceColor);
                         },
                         render: $.fn.dataTable.render.number(',', '.', 2, '$'),
-                        visible: !hideColumns
+                        visible: !$this.hideColumns
                     },
                     {
                         data: "HTSCode", "targets": this.columnIndexes.HTSCode,
                         className: "htsCodeWidth always-editable",
-                        visible: !hideColumns
+                        visible: !$this.hideColumns
                     },
                     {
                         data: "CountryOfOrigin", "targets": this.columnIndexes.CountryOfOrigin,
                         className: "countryOfOriginWidth always-editable",
-                        visible: !hideColumns
+                        visible: !$this.hideColumns
                     },
                     {
                         data: "BillOfLadingNumbers", "targets": this.columnIndexes.BillOfLadingNumbers,
