@@ -85,10 +85,19 @@ Shipped</th>
                 <h4 class="modal-title">Click Copy to copy your snippet to your clipboard.</h4>
             </div>
             <div class="modal-body">
-                <button class="btn btn-primary copy-snippet"><i class="glyphicon glyphicon-copy"></i> Copy</button>
-                <span class="snip-alert text-success" style="display: none;">Success! <span></span></span>
-                <span class="snip-alert text-warning" style="display: none;">Warning! <span></span></span>
-                <span class="snip-alert text-danger" style="display: none;">Error! <span></span></span>
+                <div class="alert alert-success alert-dismissible snip-alert" role="alert" style="display: none;">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Success! </strong> Your snippet has been copied to clipboard. You can now paste it into the new email which should have opened for you.
+                </div>
+                <div class="alert alert-warning alert-dismissible snip-alert" role="alert" style="display: none;">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Warning! </strong> Your snippet has been copied to clipboard. However, if results do not appear formatted correctly please using another browser other than internet explorer.
+                </div>
+                <div class="alert alert-danger alert-dismissible snip-alert" role="alert" style="display: none;">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Error! </strong> There was an error trying to automatically copy the selected rows below. Please click the 'Copy Again' button to copy your snippet to your clipboard.
+                </div>
+                <button class="btn btn-primary copy-snippet"><i class="glyphicon glyphicon-copy"></i> Copy Again</button>
                 <br />
                 <br />
 

@@ -180,29 +180,30 @@
             });
 
             clipboard.on('success', function (e) {
-                
+
+                $(".snip-alert").hide();
+
                 e.clearSelection();
 
                 $this.openEmail();
 
                 var isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
                 if (isIE11) {
-                    $(".snip-alert.text-warning").show().find("span").text("Your snippet has been copied to clipboard. However, if results do not appear formatted correctly please using another browser other than internet explorer.")
+                    $(".snip-alert.alert-warning").show();
                 } else {
-                    $(".snip-alert.text-success").show().find("span").text("Your snippet has been copied to clipboard. You can now paste it into the new email which should have opened for you.");
+                    $(".snip-alert.alert-success").show();
                 }
-
-                setTimeout(function () {
-                    $(".snip-alert").fadeOut();
-                }, 15000);
             });
 
             clipboard.on('error', function (e) {
-                $(".snip-alert.text-error").show().find("span").text("There was an error trying to snip the selected rows.");
 
-                setTimeout(function () {
-                    $(".snip-alert").fadeOut();
-                }, 15000);
+                $(".snip-alert").hide();
+
+                e.clearSelection();
+
+                $this.openEmail();
+
+                $(".snip-alert.alert-danger").show();
             });
 
         };
@@ -245,7 +246,10 @@
 
                     $(".snippet-container").html("<img id='snip-image' src='" + dataURL + "'/>");
 
+                    $this.simulateClick($(".copy-snippet")[0]);
+
                     $this.revertTableFromSnip.apply($this);
+
                 }, function (reason) {
                     $this.revertTableFromSnip.apply($this);
 
@@ -629,7 +633,7 @@
 
             $('#copyModal').on('hide.bs.modal', function (e) {
                 $(".snippet-container").html('Loading...');
-                $(".snip-alert").hide().find("span").html('');
+                $(".snip-alert").hide();
             });
 
             this.editorMain.datatable.on('select', function (e, dt, type, indexes) {
@@ -1025,6 +1029,17 @@
 
         };
 
+        this.simulateClick = function (elem) {
+            // Create our event (with options)
+            var evt = new MouseEvent('click', {
+                bubbles: true,
+                cancelable: true,
+                view: window
+            });
+            // If cancelled, don't dispatch our event
+            var canceled = !elem.dispatchEvent(evt);
+        };
+        
         this.initStyles();
         this.initEvents();
 
