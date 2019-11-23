@@ -173,68 +173,36 @@
                 source: "/api/AutocompleteApi/WorkOrderPrice"
             });
 
-            var clipboard = new ClipboardJS('#snipTable', {
+            var clipboard = new ClipboardJS('.copy-snippet', {
                 target: function (trigger) {
-
-                    $this.snipping = true;
-                    $this.editorMain.datatable.draw();
-
-                    $($this.editorMain.selector).find("thead tr").first().hide();
-                    $($this.editorMain.selector).find("tfoot").hide();
-
-                    $this.editorMain.datatable.columns([$this.columnIndexes.Select, $this.columnIndexes.Copy, $this.columnIndexes.Attachments]).visible(false);
-
-                    if (!$this.hideColumns) {
-                        $this.editorMain.datatable.columns([$this.columnIndexes.CustomsValueText, $this.columnIndexes.SalePriceText]).visible(false);
-                    }
-
-                    return $($this.editorMain.selector).closest("div")[0];
+                    return $(".snippet-container")[0];
                 }
             });
 
             clipboard.on('success', function (e) {
-                $this.snipping = false;
-
-                $this.editorMain.datatable.columns([$this.columnIndexes.Select, $this.columnIndexes.Copy, $this.columnIndexes.Attachments]).visible(true);
-
-                if (!$this.hideColumns) {
-                    $this.editorMain.datatable.columns([$this.columnIndexes.CustomsValueText, $this.columnIndexes.SalePriceText]).visible(false);
-                }
-
-                $($this.editorMain.selector).find("thead tr").first().show();
-                $($this.editorMain.selector).find("tfoot").show();
-                $this.editorMain.datatable.draw();
-
+                
                 e.clearSelection();
 
                 $this.openEmail();
 
                 var isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
                 if (isIE11) {
-                    main.warning("Your snippet has been copied to clipboard. However, if results do not appear formatted correctly please using another browser other than internet explorer.")
+                    $(".snip-alert.text-warning").show().find("span").text("Your snippet has been copied to clipboard. However, if results do not appear formatted correctly please using another browser other than internet explorer.")
                 } else {
-                    main.success("Your snippet has been copied to clipboard. You can now paste it into the new email which should have opened for you.");
+                    $(".snip-alert.text-success").show().find("span").text("Your snippet has been copied to clipboard. You can now paste it into the new email which should have opened for you.");
                 }
 
                 setTimeout(function () {
-                    $(".global-message div").fadeOut().remove();
+                    $(".snip-alert").fadeOut();
                 }, 15000);
             });
 
             clipboard.on('error', function (e) {
-                $this.snipping = false;
+                $(".snip-alert.text-error").show().find("span").text("There was an error trying to snip the selected rows.");
 
-                $this.editorMain.datatable.columns([$this.columnIndexes.Select, $this.columnIndexes.Copy, $this.columnIndexes.Attachments]).visible(true);
-                if (!$this.hideColumns) {
-                    $this.editorMain.datatable.columns([$this.columnIndexes.CustomsValueText, $this.columnIndexes.SalePriceText]).visible(false);
-                }
-
-                $($this.editorMain.selector).find("thead tr").first().show();
-                $($this.editorMain.selector).find("tfoot").show();
-                $this.editorMain.datatable.draw();
-
-                main.error("There was an error trying to snip the selected rows.");
-
+                setTimeout(function () {
+                    $(".snip-alert").fadeOut();
+                }, 15000);
             });
 
         };
@@ -257,6 +225,36 @@
             $('#errorFilter').on("change", function () {
                 $this.editorMain.datatable.draw();
             });
+
+
+            $("#snipTable").on("click", function () {
+                $("#copyModal").modal();
+
+                $this.prepareTableForSnip.apply($this);
+
+                // Turn table into image
+
+                html2canvas(
+                    $($this.editorMain.selector)[0],
+                    {
+                        scale: 1
+                    }
+                ).then(function (canvas) {
+
+                    var dataURL = canvas.toDataURL();
+
+                    $(".snippet-container").html("<img id='snip-image' src='" + dataURL + "'/>");
+
+                    $this.revertTableFromSnip.apply($this);
+                }, function (reason) {
+                    $this.revertTableFromSnip.apply($this);
+
+                    $("#copyModal").modal('hide');
+
+                    main.error("There was an issue creating this equipment snippet.");
+                });
+            });
+
 
             $(".createSubmit").on("click", function () {
 
@@ -623,37 +621,15 @@
                 }
             });
 
-            //$("#sendEmailModal").on("click", ".send-email", function () {
-
-            //    var $form = $("#sendEmailForm");
-
-            //    var data = {
-            //        DataURL: $form.find("[name='DataURL']").val(),
-            //        To: $form.find("[name='To']").val(),
-            //        Subject: $form.find("[name='Subject']").val(),
-            //        Body: $form.find("[name='Body']").val()
-            //    };
-
-            //    $.ajax({
-            //        url: ROOT_URL + "api/EquipmentApi/SendSnippet",
-            //        method: "POST",
-            //        data: data,
-            //        success: function (result) {
-            //            if (result) {
-            //                main.success("You should receive an email with the selected equipment records shortly.");
-            //            } else {
-            //                main.error("There was an issue creating this equipment snippet email.");
-            //            }
-            //        }
-            //    });
-
-            //    $("sendEmailModel").modal('hide');
-            //});
-
             $('#equipmentAttachmentModal').on('show.bs.modal', function (e) {
                 var equipmentId = $(e.relatedTarget).attr("data-equipmentid");
 
                 tableEquipmentAttachment.init(equipmentId);
+            });
+
+            $('#copyModal').on('hide.bs.modal', function (e) {
+                $(".snippet-container").html('Loading...');
+                $(".snip-alert").hide().find("span").html('');
             });
 
             this.editorMain.datatable.on('select', function (e, dt, type, indexes) {
@@ -1006,6 +982,47 @@
             link.click();
 
             $(link).remove();
+        };
+
+        this.prepareTableForSnip = function () {
+            // Filter datatable
+            this.snipping = true;
+            this.editorMain.datatable.draw();
+
+            // Modify table to only show snipping stuff
+            $(this.editorMain.selector).find("thead tr").first().hide();
+            $(this.editorMain.selector).find("tfoot").hide();
+
+            this.editorMain.datatable.columns([
+                this.columnIndexes.Select,
+                this.columnIndexes.Copy,
+                this.columnIndexes.Attachments]).visible(false);
+
+            if (!this.hideColumns) {
+                this.editorMain.datatable.columns([
+                    this.columnIndexes.CustomsValueText,
+                    this.columnIndexes.SalePriceText]).visible(false);
+            }
+        };
+
+        this.revertTableFromSnip = function () {
+            this.snipping = false;
+
+            this.editorMain.datatable.columns([
+                this.columnIndexes.Select,
+                this.columnIndexes.Copy,
+                this.columnIndexes.Attachments]).visible(true);
+
+            if (!this.hideColumns) {
+                this.editorMain.datatable.columns([
+                    this.columnIndexes.CustomsValueText,
+                    this.columnIndexes.SalePriceText]).visible(false);
+            }
+
+            $(this.editorMain.selector).find("thead tr").first().show();
+            $(this.editorMain.selector).find("tfoot").show();
+            this.editorMain.datatable.draw();
+
         };
 
         this.initStyles();

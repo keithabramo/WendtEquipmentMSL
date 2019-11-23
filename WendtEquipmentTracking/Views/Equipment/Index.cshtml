@@ -77,44 +77,31 @@ Shipped</th>
     }
 </table>
 
-@*<div id="sendEmailModal" class="modal fade">
+<div id="copyModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Send Email Snippet</h4>
+                <h4 class="modal-title">Click Copy to copy your snippet to your clipboard.</h4>
             </div>
             <div class="modal-body">
-                <form id="sendEmailForm">
-                    <div class="row">
-                        <div class="form-group col-xs-6">
-                            <label>To</label>
-                            <input type="email" class="form-control" placeholder="To" name="To" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-xs-6">
-                            <label>Subject</label>
-                            <input type="text" class="form-control" placeholder="Subject" name="Subject" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Body</label>
-                        <textarea class="form-control" placeholder="Body" name="Body" rows="4" ></textarea>
-                    </div>
-                    <input type="hidden" name="DataURL" />
-                </form>
-                <div class="snippet-container">
+                <button class="btn btn-primary copy-snippet"><i class="glyphicon glyphicon-copy"></i> Copy</button>
+                <span class="snip-alert text-success" style="display: none;">Success! <span></span></span>
+                <span class="snip-alert text-warning" style="display: none;">Warning! <span></span></span>
+                <span class="snip-alert text-danger" style="display: none;">Error! <span></span></span>
+                <br />
+                <br />
 
+                <div class="snippet-container">
+                    Loading...
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-default send-email" data-dismiss="modal">Send Email</button>
             </div>
         </div>
     </div>
-</div>*@
+</div>
 
 @Html.Action("Index", "EquipmentAttachment")
 
