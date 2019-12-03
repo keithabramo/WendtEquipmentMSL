@@ -996,6 +996,7 @@
             // Modify table to only show snipping stuff
             $(this.editorMain.selector).find("thead tr").first().hide();
             $(this.editorMain.selector).find("tfoot").hide();
+            $(this.editorMain.selector).find("tbody tr.selected").removeClass("selected");
 
             this.editorMain.datatable.columns([
                 this.columnIndexes.Select,
@@ -1025,6 +1026,8 @@
 
             $(this.editorMain.selector).find("thead tr").first().show();
             $(this.editorMain.selector).find("tfoot").show();
+            $(this.editorMain.selector).find("tbody tr").addClass("selected");
+
             this.editorMain.datatable.draw();
 
         };
