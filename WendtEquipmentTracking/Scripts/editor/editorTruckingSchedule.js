@@ -57,7 +57,7 @@
                     if (!rfpStatus && !plannedStatus && !confirmedStatus && !hideClosedStatus) {
                         return true;
                     } else {
-                        var status = data[this.columnIndexes.Status];
+                        var status = data[$this.columnIndexes.Status];
 
                         var availableStatuses = [];
 
@@ -88,7 +88,7 @@
             $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="PlannedStatusFilter" /> Planned</label>');
             $("div.custom").append('<br/>');
             $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="ConfirmedStatusFilter" /> Confirmed</label>');
-            $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="HideClosedStatusFilter" /> Hide Closed</label>');
+            $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="HideClosedStatusFilter" checked="checked" /> Hide Closed</label>');
 
             var $customActions = $("<div class='custom-actions'></div>");
             $customActions.append('<span>Bulk Actions:</span>');
@@ -367,7 +367,7 @@
                     var columnIndex = $this.editorMain.editor.modifier().column;
                     var rowData = $this.editorMain.datatable.row($this.editorMain.editor.modifier().row).data();
 
-                    if (columnIndex === this.columnIndexes.ShipTo) {
+                    if (columnIndex === $this.columnIndexes.ShipTo) {
                         var project = $this.getProject(rowData.ProjectNumber);
 
                         var shipToResults = $this.getShipToList(project);
