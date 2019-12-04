@@ -46,17 +46,13 @@ namespace WendtEquipmentTracking.App
             bundles.Add(new ScriptBundle("~/bundles/dropzone").Include(
                      "~/Scripts/dropzone.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/html2canvas").Include(
-                     "~/Scripts/html2canvas.min.js"));
-
-
-
-
-
+            bundles.Add(new ScriptBundle("~/bundles/snip").Include(
+                     "~/Scripts/html2canvas.min.js",
+                    "~/Scripts/clipboard.min.js"
+            ));
 
             bundles.Add(new ScriptBundle("~/bundles/masterShipList").Include(
                         "~/Scripts/editor/timer.js",
-                        "~/Scripts/clipboard.min.js",
                         "~/Scripts/editor/editorMSL.js",
                         "~/Scripts/editor/tableEquipmentAttachment.js"
             ));

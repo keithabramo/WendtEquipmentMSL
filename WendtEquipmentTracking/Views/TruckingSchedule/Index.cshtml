@@ -12,6 +12,7 @@
     <thead>
         <tr class="active">
             <th></th>
+            <th></th>
             <th>Req
 Date</th>
             <th>Proj</th>
@@ -43,6 +44,8 @@ Date</th>
         </tfoot>
     }
 </table>
+
+@Html.Partial("SnippingModalPartial")
 
 @section Scripts {
 
@@ -79,5 +82,6 @@ Date</th>
     </script>
 
     @Scripts.Render("~/bundles/editor")
+    @Scripts.Render("~/bundles/snip")
     @Scripts.Render("~/bundles/truckingSchedules")
 }

@@ -227,7 +227,6 @@
                 $this.editorMain.datatable.draw();
             });
 
-
             $("#snipTable").on("click", function () {
                 $("#copyModal").modal();
 
@@ -258,7 +257,6 @@
                     main.error("There was an issue creating this equipment snippet.");
                 });
             });
-
 
             $(".createSubmit").on("click", function () {
 
@@ -308,7 +306,6 @@
 
                 window.scrollTo(0, document.body.scrollHeight);
             });
-
 
             this.editorMain.editor.on('preSubmit', function (e, data, action) {
                 if (action !== 'remove') {
@@ -504,8 +501,6 @@
                 return editable;
 
             });
-
-            
 
             this.editorMain.datatable.on('preAutoFill', function (e, datatable, cells) {
                 datatable.cell.blur();
@@ -1021,7 +1016,7 @@
             if (!this.hideColumns) {
                 this.editorMain.datatable.columns([
                     this.columnIndexes.CustomsValueText,
-                    this.columnIndexes.SalePriceText]).visible(false);
+                    this.columnIndexes.SalePriceText]).visible(true);
             }
 
             $(this.editorMain.selector).find("thead tr").first().show();

@@ -2,7 +2,43 @@
 
     var EditorTruckingSchedule = function () {
 
-        this.editableColumns = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+        this.snipping = false;
+
+        this.columnIndexes = {
+            Select: 0,
+            Copy: 1,
+            RequestDate: 2,
+            ProjectNumber: 3,
+            PurchaseOrder: 4,
+            RequestedBy: 5,
+            ShipFrom: 6,
+            ShipTo: 7,
+            Description: 8,
+            NumPiecesText: 9,
+            Dimensions: 10,
+            WeightText: 11,
+            Carrier: 12,
+            PickUpDate: 13,
+            Comments: 14,
+            Status: 15,
+            Delete: 16
+        };
+        this.editableColumns = [
+            this.columnIndexes.RequestDate,
+            this.columnIndexes.ProjectNumber,
+            this.columnIndexes.PurchaseOrder,
+            this.columnIndexes.RequestedBy,
+            this.columnIndexes.ShipFrom,
+            this.columnIndexes.ShipTo,
+            this.columnIndexes.Description,
+            this.columnIndexes.NumPiecesText,
+            this.columnIndexes.Dimensions,
+            this.columnIndexes.WeightText,
+            this.columnIndexes.Carrier,
+            this.columnIndexes.PickUpDate,
+            this.columnIndexes.Comments,
+            this.columnIndexes.Status
+        ];
         this.editorMain = new Editor();
 
         this.initStyles = function () {
@@ -21,7 +57,7 @@
                     if (!rfpStatus && !plannedStatus && !confirmedStatus && !hideClosedStatus) {
                         return true;
                     } else {
-                        var status = data[14];
+                        var status = data[this.columnIndexes.Status];
 
                         var availableStatuses = [];
 
@@ -37,13 +73,28 @@
                 }
             );
 
+            $.fn.dataTable.ext.search.push(
+                function (settings, data, dataIndex, rowData) {
+
+                    if (!$this.snipping) {
+                        return true;
+                    } else {
+                        return $this.editorMain.datatable.rows(dataIndex, { selected: true }).any();
+                    }
+                }
+            );
+
             $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="RFPStatusFilter" /> RFP</label>');
             $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="PlannedStatusFilter" /> Planned</label>');
             $("div.custom").append('<br/>');
             $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="ConfirmedStatusFilter" /> Confirmed</label>');
             $("div.custom").append('<label class="checkbox-inline"><input type="checkbox" id="HideClosedStatusFilter" /> Hide Closed</label>');
 
+            var $customActions = $("<div class='custom-actions'></div>");
+            $customActions.append('<span>Bulk Actions:</span>');
+            $customActions.append('<button id="snipTable" class="btn btn-primary btn-xs btn-disabled" disabled="disabled" type="button">Snip Checked Rows For Email</button>');
 
+            $("div.custom").append($customActions);
 
             $("div.createButtonContainer").append('<input type="button" value="Create" class="btn btn-sm btn-primary createSubmit" />');
 
@@ -75,6 +126,39 @@
                 }
             }).focus(function () {
                 $(this).data("uiAutocomplete").search($(this).val());
+            });
+
+            var clipboard = new ClipboardJS('.copy-snippet', {
+                target: function (trigger) {
+                    return $(".snippet-container")[0];
+                }
+            });
+
+            clipboard.on('success', function (e) {
+
+                $(".snip-alert").hide();
+
+                e.clearSelection();
+
+                $this.openEmail();
+
+                var isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
+                if (isIE11) {
+                    $(".snip-alert.alert-warning").show();
+                } else {
+                    $(".snip-alert.alert-success").show();
+                }
+            });
+
+            clipboard.on('error', function (e) {
+
+                $(".snip-alert").hide();
+
+                e.clearSelection();
+
+                $this.openEmail();
+
+                $(".snip-alert.alert-danger").show();
             });
 
         };
@@ -283,7 +367,7 @@
                     var columnIndex = $this.editorMain.editor.modifier().column;
                     var rowData = $this.editorMain.datatable.row($this.editorMain.editor.modifier().row).data();
 
-                    if (columnIndex === 6) { // ShipTo
+                    if (columnIndex === this.columnIndexes.ShipTo) {
                         var project = $this.getProject(rowData.ProjectNumber);
 
                         var shipToResults = $this.getShipToList(project);
@@ -359,6 +443,54 @@
                 $createRow.find("input[name='RequestDate']").val(rowData.RequestDate);
 
                 window.scrollTo(0, document.body.scrollHeight);
+            });
+
+            $("#snipTable").on("click", function () {
+                $("#copyModal").modal();
+
+                $this.prepareTableForSnip.apply($this);
+
+                // Turn table into image
+
+                html2canvas(
+                    $($this.editorMain.selector)[0],
+                    {
+                        scale: 1
+                    }
+                ).then(function (canvas) {
+
+                    var dataURL = canvas.toDataURL();
+
+                    $(".snippet-container").html("<img id='snip-image' src='" + dataURL + "'/>");
+
+                    $this.simulateClick($(".copy-snippet")[0]);
+
+                    $this.revertTableFromSnip.apply($this);
+
+                }, function (reason) {
+                    $this.revertTableFromSnip.apply($this);
+
+                    $("#copyModal").modal('hide');
+
+                    main.error("There was an issue creating this snippet.");
+                });
+            });
+
+            $('#copyModal').on('hide.bs.modal', function (e) {
+                $(".snippet-container").html('Loading...');
+                $(".snip-alert").hide();
+            });
+
+            this.editorMain.datatable.on('select', function (e, dt, type, indexes) {
+                if (type === 'row') {
+                    $this.updateCustomActions();
+                }
+            });
+
+            this.editorMain.datatable.on('deselect', function (e, dt, type, indexes) {
+                if (type === 'row') {
+                    $this.updateCustomActions();
+                }
             });
         };
 
@@ -455,7 +587,7 @@
                     url: ROOT_URL + "api/TruckingScheduleApi/Table",
                     dataSrc: ""
                 },
-                order: [[1, 'asc']],
+                order: [[this.columnIndexes.RequestDate, 'asc']],
                 rowId: 'TruckingScheduleId',
                 keys: {
                     columns: this.editableColumns
@@ -464,9 +596,23 @@
                     columns: this.editableColumns
                 },
                 autoWidth: false,
+                select: {
+                    style: 'multi',
+                    selector: 'td:first-child'
+                },
                 columnDefs: [
                     {
-                        "targets": 0,
+                        orderable: false,
+                        searchable: false,
+                        sortable: false,
+                        className: 'select-checkbox',
+                        targets: this.columnIndexes.Select,
+                        render: function () {
+                            return "<span></span>";
+                        }
+                    },
+                    {
+                        "targets": this.columnIndexes.Copy,
                         searchable: false,
                         orderable: false,
                         render: function (datadata, type, row, meta) {
@@ -475,69 +621,69 @@
                     },
                     {
                         data: "RequestDate",
-                        targets: 1,
+                        targets: this.columnIndexes.RequestDate,
                         className: "dateWidth"
                     },
                     {
                         data: "ProjectNumber",
-                        targets: 2
+                        targets: this.columnIndexes.ProjectNumber
                     },
                     {
                         data: "PurchaseOrder",
-                        targets: 3
+                        targets: this.columnIndexes.PurchaseOrder
                     },
                     {
                         data: "RequestedBy",
-                        targets: 4
+                        targets: this.columnIndexes.RequestedBy
                     },
                     {
                         data: "ShipFrom",
-                        targets: 5,
+                        targets: this.columnIndexes.ShipFrom,
                         className: "shippedFromWidth"
                     },
                     {
                         data: "ShipTo",
-                        targets: 6,
+                        targets: this.columnIndexes.ShipTo,
                         className: "shippedToWidth"
                     },
                     {
                         data: "Description",
-                        targets: 7,
+                        targets: this.columnIndexes.Description,
                         className: "truckingScheduleDescriptionWidth"
                     },
                     {
                         data: "NumPiecesText",
-                        targets: 8
+                        targets: this.columnIndexes.NumPiecesText
                     },
                     {
                         data: "Dimensions",
-                        targets: 9,
+                        targets: this.columnIndexes.Dimensions,
                         className: "dimensionsWidth"
                     },
                     {
                         data: "WeightText",
-                        targets: 10
+                        targets: this.columnIndexes.WeightText
                     },
                     {
                         data: "Carrier",
-                        targets: 11
+                        targets: this.columnIndexes.Carrier
                     },
                     {
                         data: "PickUpDate",
-                        targets: 12,
+                        targets: this.columnIndexes.PickUpDate,
                         className: "dateWidth"
                     },
                     {
                         data: "Comments",
-                        targets: 13,
+                        targets: this.columnIndexes.Comments,
                         className: "commentsWidth"
                     },
                     {
                         data: "Status",
-                        targets: 14
+                        targets: this.columnIndexes.Status
                     },
                     {
-                        "targets": 15,
+                        "targets": this.columnIndexes.Delete,
                         searchable: false,
                         sortable: false,
                         render: function (data, type, row, meta) {
@@ -581,6 +727,74 @@
             var shipToResults = [projectOption].concat(shipToVendors);
 
             return shipToResults;
+        };
+
+        this.updateCustomActions = function () {
+            var selectedRowsCount = this.editorMain.datatable.rows({ selected: true }).indexes().length;
+
+            if (selectedRowsCount) {
+                $(".custom-actions button, .custom-actions a").removeAttr("disabled");
+            } else {
+                $(".custom-actions button, .custom-actions a").attr("disabled", "disabled");
+            }
+        };
+
+        this.openEmail = function () {
+            var link = document.createElement('a');
+            link.href = "mailto:?body=%0D%0A%0D%0A%0D%0A%0D%0A";
+
+            document.body.appendChild(link);
+
+            link.click();
+
+            $(link).remove();
+        };
+
+        this.prepareTableForSnip = function () {
+            // Filter datatable
+            this.snipping = true;
+            this.editorMain.datatable.draw();
+
+            // Modify table to only show snipping stuff
+            $(this.editorMain.selector).find("thead tr").first().hide();
+            $(this.editorMain.selector).find("tfoot").hide();
+            $(this.editorMain.selector).find("tbody tr.selected").removeClass("selected");
+
+            this.editorMain.datatable.columns([
+                this.columnIndexes.Select,
+                this.columnIndexes.Copy,
+                this.columnIndexes.Delete
+            ]).visible(false);
+
+            
+        };
+
+        this.revertTableFromSnip = function () {
+            this.snipping = false;
+
+            this.editorMain.datatable.columns([
+                this.columnIndexes.Select,
+                this.columnIndexes.Copy,
+                this.columnIndexes.Delete
+            ]).visible(true);
+
+            $(this.editorMain.selector).find("thead tr").first().show();
+            $(this.editorMain.selector).find("tfoot").show();
+            $(this.editorMain.selector).find("tbody tr").addClass("selected");
+
+            this.editorMain.datatable.draw();
+
+        };
+
+        this.simulateClick = function (elem) {
+            // Create our event (with options)
+            var evt = new MouseEvent('click', {
+                bubbles: true,
+                cancelable: true,
+                view: window
+            });
+            // If cancelled, don't dispatch our event
+            var canceled = !elem.dispatchEvent(evt);
         };
 
         this.initStyles();

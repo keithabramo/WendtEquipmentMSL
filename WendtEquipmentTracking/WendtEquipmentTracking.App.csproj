@@ -655,6 +655,10 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Create.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\Shared\SnippingModalPartial.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ActionNavPartial.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Web.Staging.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

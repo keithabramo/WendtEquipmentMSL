@@ -1,0 +1,34 @@
+﻿<div id="copyModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Click Copy to copy your snippet to your clipboard.</h4>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-success alert-dismissible snip-alert" role="alert" style="display: none;">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Success! </strong> Your snippet has been copied to clipboard. You can now paste it into the new email which should have opened for you.
+                </div>
+                <div class="alert alert-warning alert-dismissible snip-alert" role="alert" style="display: none;">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Warning! </strong> Your snippet has been copied to clipboard. However, if results do not appear formatted correctly please using another browser other than internet explorer.
+                </div>
+                <div class="alert alert-danger alert-dismissible snip-alert" role="alert" style="display: none;">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Error! </strong> There was an error trying to automatically copy the selected rows below. Please click the 'Copy Again' button to copy your snippet to your clipboard.
+                </div>
+                <button class="btn btn-primary copy-snippet"><i class="glyphicon glyphicon-copy"></i> Copy Again</button>
+                <br />
+                <br />
+
+                <div class="snippet-container">
+                    Loading...
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
