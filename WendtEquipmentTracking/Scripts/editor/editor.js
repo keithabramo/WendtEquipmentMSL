@@ -41,18 +41,20 @@
 
                 var $input = $($this.selector).find("thead tr").eq(0).find("th").eq(this.index()).find("input");
 
+                var timeout = null;
                 $input.on('keyup change input search', function () {
+
                     var searchInput = this;
 
-                    if ($(this).closest("thead").length > 0) {
-                        $this.index = $($this.selector).find("thead input[type='text']").index($(this));
-                    } else {
-                        $this.index = -1;
-                    }
+                    clearTimeout(timeout);
 
-                    if (column.search() !== searchInput.value) {
-                        column.search(searchInput.value).draw();
-                    }
+                    timeout = setTimeout(function () {
+
+                        if (column.search() !== searchInput.value) {
+                            column.search(searchInput.value).draw();
+                        }
+                    }, 400);
+                    
                 });
             });
 
