@@ -528,9 +528,9 @@ namespace WendtEquipmentTracking.App.Controllers
 
         [HttpGet]
         [HttpPost]
-        public IEnumerable<EquipmentRevisionModel> GetEquipmentRevisionFromImport(EquipmentImportModel model)
+        public IEnumerable<EquipmentRevisionModel> GetEquipmentRevisionFromImport(EquipmentRevisionImportModel model)
         {
-            List<EquipmentRevisionModel> equipmentRevisionModels = new List<EquipmentRevisionModel>();
+            var equipmentRevisionModels = new List<EquipmentRevisionModel>();
             try
             {
                 var user = userService.GetCurrentUser();
@@ -538,16 +538,18 @@ namespace WendtEquipmentTracking.App.Controllers
                 {
                     // GET THE REVISION INFO FROM THE FILES
 
-                    var importBO = new EquipmentImportBO
+                    var importBO = new EquipmentRevisionImportBO
                     {
                         Equipment = model.Equipment,
-                        FilePaths = model.FilePaths.ToDictionary(x => x.Split('+')[0], x => x.Split('+')[1]),
+                        FilePath = model.FilePath,
                         PriorityId = model.PriorityId,
                         QuantityMultiplier = model.QuantityMultiplier,
-                        WorkOrderNumber = model.WorkOrderNumber
+                        WorkOrderNumber = model.WorkOrderNumber,
+                        DrawingNumber = model.DrawingNumber,
+                        Revision = model.Revision
                     };
 
-                    var equipmentRevisionBOs = importService.GetEquipmentImport(importBO);
+                    var equipmentRevisionBOs = importService.GetEquipmentRevisionImport(importBO);
                     var priorities = priorityService.GetAll(user.ProjectId);
 
                     var random = new Random();
@@ -564,13 +566,14 @@ namespace WendtEquipmentTracking.App.Controllers
                         NewUnitWeight = x.UnitWeight,
                         NewWorkOrderNumber = (x.WorkOrderNumber ?? string.Empty).Trim().ToUpperInvariant(),
                         NewShippedFrom = (x.ShippedFrom ?? string.Empty).Trim().ToUpperInvariant(),
-                        HasNewEquipment = true
+                        HasNewEquipment = true,
+                        Revision = importBO.Revision
                     }).ToList();
 
 
                     // GET THE MATCHED EXISTING RECORDS
 
-                    var existingEquipments = equipmentService.GetByDrawingNumbers(user.ProjectId, importBO.FilePaths.Keys).ToList();
+                    var existingEquipments = equipmentService.GetByDrawingNumbers(user.ProjectId, new List<string> { importBO.DrawingNumber }).ToList();
                     
                     // All Mataching equipment add the existing equipment information
 
@@ -593,6 +596,7 @@ namespace WendtEquipmentTracking.App.Controllers
                             equipmentRevisionModel.ShippedFrom = (existingEquipment.ShippedFrom ?? string.Empty).Trim().ToUpperInvariant();
                             equipmentRevisionModel.ShippedQuantity = existingEquipment.ShippedQuantity.HasValue ? existingEquipment.ShippedQuantity.Value.ToString() : string.Empty;
                             equipmentRevisionModel.HasExistingEquipment = true;
+                            equipmentRevisionModel.Revision = existingEquipment.Revision + 1;
                         }
                     }
 
@@ -615,7 +619,8 @@ namespace WendtEquipmentTracking.App.Controllers
                         WorkOrderNumber = (x.WorkOrderNumber ?? string.Empty).Trim().ToUpperInvariant(),
                         ShippedFrom = (x.ShippedFrom ?? string.Empty).Trim().ToUpperInvariant(),
                         ShippedQuantity = x.ShippedQuantity.HasValue ? x.ShippedQuantity.Value.ToString() : string.Empty,
-                        HasExistingEquipment = true
+                        HasExistingEquipment = true,
+                        Revision = x.Revision
                     }).ToList();
 
                     equipmentRevisionModels.AddRange(remainingExistingEquipmentModels);
@@ -686,6 +691,7 @@ namespace WendtEquipmentTracking.App.Controllers
                         equipmentRevisionModel.NewShippedFrom = equipmentProperties["NewShippedFrom"].ToString();
                         equipmentRevisionModel.HasExistingEquipment = equipmentProperties["HasExistingEquipment"].ToString() == "true";
                         equipmentRevisionModel.HasNewEquipment = equipmentProperties["HasNewEquipment"].ToString() == "true";
+                        equipmentRevisionModel.Revision = !string.IsNullOrWhiteSpace(equipmentProperties["Revision"].ToString()) ? Convert.ToInt32(equipmentProperties["Revision"]) : 0;
 
                         equipmentRevisionModel.ProjectId = user.ProjectId;
                         equipmentRevisionModel.Order = !string.IsNullOrWhiteSpace(equipmentProperties["Order"].ToString()) ? Convert.ToInt32(equipmentProperties["Order"]) : 0;
@@ -720,6 +726,7 @@ namespace WendtEquipmentTracking.App.Controllers
                                     equipmentRevisionBO.WorkOrderNumber = equipmentRevisionModel.NewWorkOrderNumber;
                                     equipmentRevisionBO.ShippedFrom = equipmentRevisionModel.NewShippedFrom;
                                     equipmentRevisionBO.IsHardware = equipmentRevisionModel.NewEquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase);
+                                    equipmentRevisionBO.Revision = equipmentRevisionModel.Revision;
 
 
                                     var priority = priorities.FirstOrDefault(x => x.PriorityNumber == equipmentRevisionModel.NewPriorityNumber);
@@ -747,6 +754,8 @@ namespace WendtEquipmentTracking.App.Controllers
                                     equipmentNewBO.IsHardware = equipmentRevisionModel.NewEquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase);
                                     equipmentNewBO.ProjectId = equipmentRevisionModel.ProjectId;
                                     equipmentNewBO.Order = equipmentRevisionModel.Order;
+                                    equipmentNewBO.Revision = equipmentRevisionModel.Revision;
+
 
                                     var priority = priorities.FirstOrDefault(x => x.PriorityNumber == equipmentRevisionModel.NewPriorityNumber);
                                     if (priority != null)

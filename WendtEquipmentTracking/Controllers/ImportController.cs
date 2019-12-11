@@ -188,7 +188,6 @@ namespace WendtEquipmentTracking.App.Controllers
                     {
                         var importBO = new EquipmentImportBO
                         {
-                            //DrawingNumber = string.Empty,
                             Equipment = string.Empty,
                             FilePaths = new Dictionary<string, string>() { { "", filePath } },
                             PriorityId = priority != null ? (int?)priority.PriorityId : null,
@@ -203,7 +202,6 @@ namespace WendtEquipmentTracking.App.Controllers
                         return Json(new { Error = "The file does not conform to the expected format. Please make sure all column headers are spelled correctly and in the first row of the spreadsheet. Details: " + e.Message });
                     }
 
-                    equipmentImportModel.DrawingNumber = Path.GetFileNameWithoutExtension(model.File.FileName);
                     equipmentImportModel.FilePath = filePath;
 
                     return Json(equipmentImportModel);
@@ -239,10 +237,11 @@ namespace WendtEquipmentTracking.App.Controllers
                 }).OrderBy(p => p.PriorityNumber).ToList();
             }
 
-            var equipmentImportModel = new EquipmentImportModel();
+            var equipmentImportModel = new EquipmentRevisionImportModel();
             equipmentImportModel.Priorities = priorities;
             equipmentImportModel.QuantityMultiplier = 1;
             equipmentImportModel.WorkOrderNumber = projectNumber == 0 ? string.Empty : projectNumber.ToString();
+            equipmentImportModel.Revision = 01;
 
             return PartialView(equipmentImportModel);
         }

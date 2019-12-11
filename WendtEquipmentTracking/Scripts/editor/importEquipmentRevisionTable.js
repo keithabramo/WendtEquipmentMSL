@@ -26,7 +26,8 @@
             NewDescription: 19,
             NewUnitWeightText: 20,
             NewShippedFrom: 21,
-            EquipmentId: 22
+            EquipmentId: 22,
+            Revsion: 23
         };
         this.editableColumns = [
             this.columnIndexes.NewEquipmentName,
@@ -200,7 +201,8 @@
                     { name: "NewShippedFrom" },
                     { name: "HasExistingEquipment" },
                     { name: "HasNewEquipment" },
-                    { name: "Order" }
+                    { name: "Order" },
+                    { name: "Revision" }
                 ]
             });
         };
@@ -215,16 +217,14 @@
                     dataSrc: "",
                     data: function () {
 
-                        var filePaths = $("input[name='FilePath']").map(function () {
-                            return $(this).val();
-                        }).get();
-
                         return {
                             Equipment: $("#Equipment").val(),
-                            FilePaths: filePaths,
+                            FilePath: $("input[name='FilePath']").val(),
                             PriorityId: $("#PriorityId").val(),
                             QuantityMultiplier: $("#QuantityMultiplier").val(),
-                            WorkOrderNumber: $("#WorkOrderNumber").val()
+                            WorkOrderNumber: $("#WorkOrderNumber").val(),
+                            DrawingNumber: $("#DrawingNumber").val(),
+                            Revision: $("#Revision").val()
                         };
                     }
                 },
@@ -401,6 +401,11 @@
                         data: "EquipmentId",
                         visible: false,
                         targets: this.columnIndexes.EquipmentId
+                    },
+                    {
+                        data: "Revision",
+                        visible: false,
+                        targets: this.columnIndexes.Revision
                     }
                 ],
                 select: {

@@ -11,12 +11,12 @@ $(function () {
             var $this = this;
 
             Dropzone.options.myDropzone = {
+                maxFiles: 1,
                 acceptedFiles: ".xls, .xlsx, .xlsm",
                 addRemoveLinks: true,
                 error: function (file) {
                     if (!file.accepted) {
                         this.removeFile(file);
-                        main.error("File type not supported. Accepted file types includ; .xls, .xlsx, .xlsm");
                     }
                 },
                 success: function (file, response) {
@@ -26,18 +26,22 @@ $(function () {
                                 .attr("data-fileid", file.name)
                                 .attr("name", "FilePath")
                                 .attr("type", "hidden")
-                                .val(response.DrawingNumber + "+" + response.FilePath));
+                                .val(response.FilePath));
 
                     }
                     else {
                         this.removeFile(file);
                         main.error(response.Error);
                     }
+                },
+                maxfilesexceeded: function (file) {
+                    this.removeAllFiles();
+                    this.addFile(file);
                 }
             };
 
             this.dropzone = new Dropzone("#myDropzone");
-        }
+        };
 
         this.initEvents = function () {
             var $this = this;

@@ -209,6 +209,7 @@
     <Compile Include="Models\EquipmentRevisionModel.cs" />
     <Compile Include="Models\HardwareCommercialCodeImportModel.cs" />
     <Compile Include="Models\EditorModel.cs" />
+    <Compile Include="Models\Import\EquipmentRevisionImportModel.cs" />
     <Compile Include="Models\RevisionIndicatorsModel.cs" />
     <Compile Include="Models\ProjectCopyModel.cs" />
     <Compile Include="Models\Import\RawEquipmentImportModel.cs" />

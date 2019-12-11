@@ -9,68 +9,62 @@ namespace WendtEquipmentTracking.DataAccess.FileManagement.Helper
 {
     public static class ImportHelper
     {
-        public static IEnumerable<EquipmentRow> GetEquipment(IDictionary<string, string> filePaths)
+        public static IEnumerable<EquipmentRow> GetEquipment(string filePath)
         {
             IList<EquipmentRow> records = new List<EquipmentRow>();
 
-            foreach (var keyValuePair in filePaths)
+            using (FileStream stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
             {
-                //splitting these. They were joined in the ImportEquipment.js file
-                var drawingNumber = keyValuePair.Key;
-                var filePath = keyValuePair.Value;
+                var table = getTableFromFile(stream);
 
-                using (FileStream stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
+                //5. Data Reader methods
+                foreach (DataRow row in table.Rows)
                 {
-                    var table = getTableFromFile(stream);
+                    var quantity = row["QTY"];
+                    var description = row["DESCRIPTION"];
+                    var partNumber = row["PART NUMBER"]; //This is ship tag # and lookup for equipment
+                    var unitWeight = row["UNIT WT. (LBS)"];
 
-                    //5. Data Reader methods
-                    foreach (DataRow row in table.Rows)
+                    //var item = row["ITEM"];
+                    //var length = row["LENGTH"];
+                    //var width = row["WIDTH"];
+                    //var specification = row["SPECIFICATION"];
+                    //var um = row["UM"];
+                    //var totalWeight = row["TOTAL WT. (LBS)"];
+
+                    if ((quantity == null || string.IsNullOrWhiteSpace(quantity.ToString())) && (description == null || string.IsNullOrWhiteSpace(description.ToString())) && (partNumber == null || string.IsNullOrWhiteSpace(partNumber.ToString())))
                     {
-                        var quantity = row["QTY"];
-                        var description = row["DESCRIPTION"];
-                        var partNumber = row["PART NUMBER"]; //This is ship tag # and lookup for equipment
-                        var unitWeight = row["UNIT WT. (LBS)"];
-
-                        //var item = row["ITEM"];
-                        //var length = row["LENGTH"];
-                        //var width = row["WIDTH"];
-                        //var specification = row["SPECIFICATION"];
-                        //var um = row["UM"];
-                        //var totalWeight = row["TOTAL WT. (LBS)"];
-
-                        if ((quantity == null || string.IsNullOrWhiteSpace(quantity.ToString())) && (description == null || string.IsNullOrWhiteSpace(description.ToString())) && (partNumber == null || string.IsNullOrWhiteSpace(partNumber.ToString())))
-                        {
-                            continue;
-                        }
-
-
-                        int quantityNumber = 0;
-                        if (!Int32.TryParse(quantity.ToString(), out quantityNumber))
-                        {
-                            quantityNumber = 0;
-                        }
-
-                        double unitWeightNumber = 0;
-                        if (!Double.TryParse(unitWeight.ToString(), out unitWeightNumber))
-                        {
-                            unitWeightNumber = 0;
-                        }
-
-                        var equipmentRecord = new EquipmentRow
-                        {
-                            PartNumber = partNumber.ToString(),
-                            DrawingNumber = drawingNumber,
-                            Quantity = quantityNumber,
-                            Description = description.ToString(),
-                            UnitWeight = unitWeightNumber
-                        };
-
-                        records.Add(equipmentRecord);
+                        continue;
                     }
+
+
+                    int quantityNumber = 0;
+                    if (!Int32.TryParse(quantity.ToString(), out quantityNumber))
+                    {
+                        quantityNumber = 0;
+                    }
+
+                    double unitWeightNumber = 0;
+                    if (!Double.TryParse(unitWeight.ToString(), out unitWeightNumber))
+                    {
+                        unitWeightNumber = 0;
+                    }
+
+                    var equipmentRecord = new EquipmentRow
+                    {
+                        PartNumber = partNumber.ToString(),
+                        Quantity = quantityNumber,
+                        Description = description.ToString(),
+                        UnitWeight = unitWeightNumber
+                    };
+
+                    records.Add(equipmentRecord);
                 }
             }
+            
             return records;
         }
+
 
         public static IEnumerable<WorkOrderPriceRow> GetWorkOrderPrices(string filePath)
         {

@@ -68,6 +68,9 @@ namespace WendtEquipmentTracking.App.Models
         [DisplayName("Shipped From")]
         public string ShippedFrom { get; set; }
 
+        [DisplayName("Rev")]
+        public int Revision { get; set; }
+
         // NEW REVISION FIELDS
 
         public int NewEquipmentId { get; set; }

@@ -7,6 +7,7 @@ using WendtEquipmentTracking.BusinessLogic.Api;
 using WendtEquipmentTracking.BusinessLogic.BO;
 using WendtEquipmentTracking.DataAccess.FileManagement;
 using WendtEquipmentTracking.DataAccess.FileManagement.Api;
+using WendtEquipmentTracking.DataAccess.FileManagement.Domain;
 using WendtEquipmentTracking.DataAccess.SQL;
 using WendtEquipmentTracking.DataAccess.SQL.Api;
 using WendtEquipmentTracking.DataAccess.SQL.Engine;
@@ -51,8 +52,82 @@ namespace WendtEquipmentTracking.BusinessLogic
                 PartNumber = x.PartNumber
             }).ToList();
 
-            var equipmentRows = importEngine.GetEquipment(importBO.FilePaths);
+            var equipmentRows = new List<EquipmentRow>();
+            foreach (var keyValuePair in importBO.FilePaths)
+            {
+                //splitting these. They were joined in the ImportEquipment.js file
+                var drawingNumber = keyValuePair.Key;
+                var filePath = keyValuePair.Value;
 
+                var drawingEquipmentRows = importEngine.GetEquipment(filePath).ToList();
+                drawingEquipmentRows.ForEach(x => x.DrawingNumber = drawingNumber);
+
+                equipmentRows.AddRange(drawingEquipmentRows);
+            }
+
+            foreach (var equipmentRow in equipmentRows)
+            {
+                var hardwareCommercialCode = hardwareCommercialCodeBOs.SingleOrDefault(h => h.PartNumber == equipmentRow.PartNumber.ToString());
+
+                string equipmentName = string.Empty;
+                if (hardwareCommercialCode != null)
+                {
+                    equipmentName = hardwareCommercialCode.CommodityCode;
+                }
+                else
+                {
+                    equipmentName = importBO.Equipment;
+                }
+
+                var unitWeight = equipmentRow.UnitWeight;
+                if (!string.IsNullOrEmpty(equipmentName) && equipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    unitWeight = .01;
+                }
+
+                //round up to .01 for 0 unit weights
+                if (unitWeight == 0)
+                {
+                    unitWeight = .01;
+                }
+
+                var quantity = importBO.QuantityMultiplier * equipmentRow.Quantity;
+
+                var releaseDate = DateTime.Now;
+
+                var equipmentBO = new EquipmentBO
+                {
+                    Description = equipmentRow.Description,
+                    DrawingNumber = equipmentRow.DrawingNumber,
+                    EquipmentName = equipmentName,
+                    PriorityId = importBO.PriorityId,
+                    Quantity = quantity,
+                    ReleaseDate = releaseDate,
+                    ShippingTagNumber = equipmentRow.PartNumber,
+                    UnitWeight = unitWeight,
+                    WorkOrderNumber = importBO.WorkOrderNumber,
+                    ShippedFrom = "WENDT" //Default to this and allow them to change
+                };
+
+                equipmentBOs.Add(equipmentBO);
+            }
+
+            return equipmentBOs.ToList();
+        }
+
+        public IEnumerable<EquipmentBO> GetEquipmentRevisionImport(EquipmentRevisionImportBO importBO)
+        {
+            var equipmentBOs = new List<EquipmentBO>();
+
+            var hardwareCommercialCodeBOs = hardwareCommercialCodeEngine.ListAll().Select(x => new HardwareCommercialCodeBO
+            {
+                CommodityCode = x.CommodityCode,
+                Description = x.Description,
+                PartNumber = x.PartNumber
+            }).ToList();
+
+            var equipmentRows = importEngine.GetEquipment(importBO.FilePath).ToList();
+            equipmentRows.ForEach(x => x.DrawingNumber = importBO.DrawingNumber);
 
             foreach (var equipmentRow in equipmentRows)
             {
