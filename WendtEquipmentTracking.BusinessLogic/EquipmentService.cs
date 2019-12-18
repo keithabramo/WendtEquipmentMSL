@@ -97,6 +97,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                     oldEquipment.ShippedFrom = (equipmentBO.ShippedFrom ?? string.Empty).ToUpperInvariant();
                     oldEquipment.ShippingTagNumber = (equipmentBO.ShippingTagNumber ?? string.Empty).ToUpperInvariant();
                     oldEquipment.WorkOrderNumber = (equipmentBO.WorkOrderNumber ?? string.Empty).ToUpperInvariant();
+                    oldEquipment.Revision = equipmentBO.Revision;
                 }
             }
 

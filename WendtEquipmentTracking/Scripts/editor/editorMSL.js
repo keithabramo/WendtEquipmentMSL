@@ -44,6 +44,7 @@
             this.columnIndexes.PriorityNumber,
             this.columnIndexes.ReleaseDate,
             this.columnIndexes.DrawingNumber,
+            this.columnIndexes.Revision,
             this.columnIndexes.WorkOrderNumber,
             this.columnIndexes.Quantity,
             this.columnIndexes.ShippingTagNumber,
@@ -303,6 +304,7 @@
                 $createRow.find("input[name='HTSCode']").val(rowData.HTSCode);
                 $createRow.find("input[name='CountryOfOrigin']").val(rowData.CountryOfOrigin);
                 $createRow.find("textarea[name='Notes']").val(rowData.Notes);
+                $createRow.find("input[name='Revision']").val(rowData.Revision);
 
                 window.scrollTo(0, document.body.scrollHeight);
             });
@@ -380,6 +382,14 @@
                         if (!readyToShip.isMultiValue()) {
                             if (isNaN(readyToShip.val())) {
                                 readyToShip.error('The ready to ship field is not a valid number');
+                            }
+                        }
+
+                        if (!revision.isMultiValue()) {
+                            if (!revision.val()) {
+                                revision.error('The revision field is required');
+                            } else if (isNaN(revision.val())) {
+                                revision.error('The revision is not a valid number');
                             }
                         }
 
@@ -812,7 +822,7 @@
                         }
                     },
                     {
-                        data: "Revision", "targets": this.columnIndexes.Revision, className: "active text-right"
+                        data: "Revision", "targets": this.columnIndexes.Revision, className: "text-right"
                     },
                     {
                         data: "WorkOrderNumber", "targets": this.columnIndexes.WorkOrderNumber,
