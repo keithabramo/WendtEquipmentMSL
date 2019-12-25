@@ -45,7 +45,7 @@ namespace WendtEquipmentTracking.App.Controllers
                     {
                         BillOfLadingId = model.BillOfLadingId,
                         FileTitle = model.File.FileName,
-                        FileName = model.File.FileName + "_" + Guid.NewGuid().ToString() 
+                        FileName = Path.GetFileNameWithoutExtension(model.File.FileName) + "_" + Guid.NewGuid().ToString() + Path.GetExtension(model.File.FileName)
                     };
 
                     var filePath = Path.Combine(Server.MapPath("/Attachments"), billOfLadingAttachmentBO.FileName);

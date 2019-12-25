@@ -238,7 +238,7 @@
                 html2canvas(
                     $($this.editorMain.selector)[0],
                     {
-                        scale: 1
+                        scale: 2
                     }
                 ).then(function (canvas) {
 
