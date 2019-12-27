@@ -103,7 +103,7 @@
                 minLength: 0
             }).focus(function () {
                 $(this).data("uiAutocomplete").search($(this).val());
-            });;
+            });
 
             $(".shipTo-autocomplete").autocomplete({
                 source: shipToVendors,

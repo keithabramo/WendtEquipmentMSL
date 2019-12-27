@@ -61,15 +61,15 @@ Date</th>
 
         @foreach (var vendor in ViewBag.Vendors)
         {
-            @:shipFromVendors.push({ value: "@vendor.value", label: "@vendor.label" });
-            @:shipToVendors.push({ value: "@vendor.value", label: "@vendor.label" });
+            @:shipFromVendors.push({ value: "@Html.Raw(vendor.value)", label: "@Html.Raw(vendor.label)" });
+            @:shipToVendors.push({ value: "@Html.Raw(@vendor.value)", label: "@Html.Raw(vendor.label)" });
         }
 
         var projects = [];
 
         @foreach (var project in ViewBag.Projects)
         {
-            @:projects.push({ value: "@project.value", label: "@project.label" });
+            @:projects.push({ value: "@Html.Raw(@project.value)", label: "@Html.Raw(project.label)" });
         }
 
         var statuses = [];

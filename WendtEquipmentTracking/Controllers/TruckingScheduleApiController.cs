@@ -96,14 +96,14 @@ namespace WendtEquipmentTracking.App.Controllers
                     truckingSchedule.RequestDate = !string.IsNullOrWhiteSpace(truckingScheduleProperties["RequestDate"].ToString()) ? (DateTime?)Convert.ToDateTime(truckingScheduleProperties["RequestDate"]) : null;
 
                     var shipFromText = truckingScheduleProperties["ShipFrom"].ToString();
-                    var shipFromVendor = vendors.FirstOrDefault(x => shipFromText.Contains(x.Name));
+                    var shipFromVendor = vendors.FirstOrDefault(x => shipFromText.Contains(x.Name + " " + x.Address));
                     if (shipFromVendor != null)
                     {
                         truckingSchedule.ShipFromVendorId = shipFromVendor.VendorId;
                     }
 
                     var shipToText = truckingScheduleProperties["ShipTo"].ToString();
-                    var shipToVendor = vendors.FirstOrDefault(x => shipToText.Contains(x.Name));
+                    var shipToVendor = vendors.FirstOrDefault(x => shipToText.Contains(x.Name + " " + x.Address));
                     if (shipToVendor != null)
                     {
                         truckingSchedule.ShipToVendorId = shipToVendor.VendorId;
