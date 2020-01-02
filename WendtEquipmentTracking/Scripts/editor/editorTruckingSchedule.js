@@ -622,6 +622,7 @@
                     {
                         data: "RequestDate",
                         targets: this.columnIndexes.RequestDate,
+                        type: "date",
                         className: "dateWidth"
                     },
                     {
@@ -671,6 +672,7 @@
                     {
                         data: "PickUpDate",
                         targets: this.columnIndexes.PickUpDate,
+                        type: "date",
                         className: "dateWidth"
                     },
                     {
