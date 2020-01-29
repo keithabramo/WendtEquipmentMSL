@@ -22,10 +22,6 @@ namespace WendtEquipmentTracking.App.Models
         [Required]
         public string EquipmentName { get; set; }
 
-        [DisplayName("Prty")]
-        [Required]
-        public int? PriorityNumber { get; set; }
-
         [JsonConverter(typeof(CustomDateTimeConverter))]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:M/d/yy}")]
         [DisplayName("Released")]
@@ -65,9 +61,6 @@ namespace WendtEquipmentTracking.App.Models
         [DisplayName("Ship Qty")]
         public string ShippedQuantity { get; set; }
 
-        [DisplayName("Shipped From")]
-        public string ShippedFrom { get; set; }
-
         [DisplayName("Rev")]
         public int Revision { get; set; }
 
@@ -78,10 +71,6 @@ namespace WendtEquipmentTracking.App.Models
         [DisplayName("New Equipment")]
         [Required]
         public string NewEquipmentName { get; set; }
-
-        [DisplayName("New Prty")]
-        [Required]
-        public int? NewPriorityNumber { get; set; }
 
         [JsonConverter(typeof(CustomDateTimeConverter))]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:M/d/yy}")]
@@ -130,9 +119,6 @@ namespace WendtEquipmentTracking.App.Models
             }
         }
 
-        [DisplayName("Shipped From")]
-        public string NewShippedFrom { get; set; }
-
         public int Order { get; set; }
 
 
@@ -166,14 +152,6 @@ namespace WendtEquipmentTracking.App.Models
             }
         }
 
-        public bool PriorityNumberChanged
-        {
-            get
-            {
-                return !PriorityNumber.Equals(NewPriorityNumber);
-            }
-        }
-
         public bool WorkOrderNumberChanged
         {
             get
@@ -202,7 +180,7 @@ namespace WendtEquipmentTracking.App.Models
         {
             get
             {
-                var dataChanged = EquipmentNameChanged || DescriptionChanged || PriorityNumberChanged || WorkOrderNumberChanged || QuantityChanged || UnitWeightChanged;
+                var dataChanged = EquipmentNameChanged || DescriptionChanged || WorkOrderNumberChanged || QuantityChanged || UnitWeightChanged;
 
                 return !HasNewEquipment || !HasExistingEquipment || dataChanged;
             }
@@ -227,11 +205,6 @@ namespace WendtEquipmentTracking.App.Models
                     if (DescriptionChanged)
                     {
                         RevisionIndicators.NewDescriptionColor = IndicatorColors.Green.ToString();
-                    }
-
-                    if (PriorityNumberChanged)
-                    {
-                        RevisionIndicators.NewPriorityNumberColor = IndicatorColors.Green.ToString();
                     }
 
                     if (WorkOrderNumberChanged)
@@ -259,12 +232,10 @@ namespace WendtEquipmentTracking.App.Models
 
                     RevisionIndicators.NewDescriptionColor = IndicatorColors.Red.ToString();
                     RevisionIndicators.NewEquipmentNameColor = IndicatorColors.Red.ToString();
-                    RevisionIndicators.NewPriorityNumberColor = IndicatorColors.Red.ToString();
                     RevisionIndicators.NewQuantityColor = IndicatorColors.Red.ToString();
                     RevisionIndicators.NewUnitWeightColor = IndicatorColors.Red.ToString();
                     RevisionIndicators.NewWorkOrderNumberColor = IndicatorColors.Red.ToString();
                     RevisionIndicators.NewReleaseDateColor = IndicatorColors.Red.ToString();
-                    RevisionIndicators.NewShippedFromColor = IndicatorColors.Red.ToString();
                     RevisionIndicators.NewShippingTagNumberColor = IndicatorColors.Red.ToString();
                     RevisionIndicators.NewDrawingNumberColor = IndicatorColors.Red.ToString();
 
@@ -274,12 +245,10 @@ namespace WendtEquipmentTracking.App.Models
                     RevisionIndicators.ShippedQuantityColor = IndicatorColors.Red.ToString();
                     RevisionIndicators.DescriptionColor = IndicatorColors.Red.ToString();
                     RevisionIndicators.EquipmentNameColor = IndicatorColors.Red.ToString();
-                    RevisionIndicators.PriorityNumberColor = IndicatorColors.Red.ToString();
                     RevisionIndicators.QuantityColor = IndicatorColors.Red.ToString();
                     RevisionIndicators.UnitWeightColor = IndicatorColors.Red.ToString();
                     RevisionIndicators.WorkOrderNumberColor = IndicatorColors.Red.ToString();
                     RevisionIndicators.ReleaseDateColor = IndicatorColors.Red.ToString();
-                    RevisionIndicators.ShippedFromColor = IndicatorColors.Red.ToString();
                     RevisionIndicators.ShippingTagNumberColor = IndicatorColors.Red.ToString();
                     RevisionIndicators.DrawingNumberColor = IndicatorColors.Red.ToString();
 

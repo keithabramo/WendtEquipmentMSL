@@ -138,10 +138,6 @@ namespace WendtEquipmentTracking.BusinessLogic
                 {
                     equipmentName = hardwareCommercialCode.CommodityCode;
                 }
-                else
-                {
-                    equipmentName = importBO.Equipment;
-                }
 
                 var unitWeight = equipmentRow.UnitWeight;
                 if (!string.IsNullOrEmpty(equipmentName) && equipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase))
@@ -155,7 +151,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                     unitWeight = .01;
                 }
 
-                var quantity = importBO.QuantityMultiplier * equipmentRow.Quantity;
+                var quantity = equipmentRow.Quantity;
 
                 var releaseDate = DateTime.Now;
 
@@ -164,13 +160,10 @@ namespace WendtEquipmentTracking.BusinessLogic
                     Description = equipmentRow.Description,
                     DrawingNumber = equipmentRow.DrawingNumber,
                     EquipmentName = equipmentName,
-                    PriorityId = importBO.PriorityId,
                     Quantity = quantity,
                     ReleaseDate = releaseDate,
                     ShippingTagNumber = equipmentRow.PartNumber,
-                    UnitWeight = unitWeight,
-                    WorkOrderNumber = importBO.WorkOrderNumber,
-                    ShippedFrom = "WENDT" //Default to this and allow them to change
+                    UnitWeight = unitWeight
                 };
 
                 equipmentBOs.Add(equipmentBO);

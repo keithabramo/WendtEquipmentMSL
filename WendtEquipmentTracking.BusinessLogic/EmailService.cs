@@ -103,8 +103,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                 var columns = new List<string>
                 {
                     equipmentRevision.EquipmentName,
-                    equipmentRevision.PriorityNumber?.ToString(),
-                    equipmentRevision.ReleaseDate?.ToString("M/D/yy"),
+                    equipmentRevision.ReleaseDate?.ToString("M/d/yy"),
                     equipmentRevision.DrawingNumber,
                     equipmentRevision.WorkOrderNumber,
                     equipmentRevision.Quantity.ToString(),
@@ -112,17 +111,14 @@ namespace WendtEquipmentTracking.BusinessLogic
                     equipmentRevision.ShippingTagNumber,
                     equipmentRevision.Description,
                     equipmentRevision.UnitWeight?.ToString(),
-                    equipmentRevision.ShippedFrom,
                     equipmentRevision.NewEquipmentName,
-                    equipmentRevision.NewPriorityNumber?.ToString(),
-                    equipmentRevision.NewReleaseDate?.ToString("M/D/yy"),
+                    equipmentRevision.NewReleaseDate?.ToString("M/d/yy"),
                     equipmentRevision.NewDrawingNumber,
                     equipmentRevision.NewWorkOrderNumber,
                     equipmentRevision.NewQuantity.ToString(),
                     equipmentRevision.NewShippingTagNumber,
                     equipmentRevision.NewDescription,
-                    equipmentRevision.NewUnitWeight?.ToString(),
-                    equipmentRevision.NewShippedFrom,
+                    equipmentRevision.NewUnitWeight?.ToString()
                 };
 
                 var line = string.Join(",", columns);
@@ -137,7 +133,6 @@ namespace WendtEquipmentTracking.BusinessLogic
             var columns = new List<string>
             {
                 "Equipment",
-                "Prty",
                 "Released",
                 "Dwg #",
                 "Work Order #",
@@ -146,9 +141,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                 "Ship Tag #",
                 "Description",
                 "Unit Wt",
-                "Shipped From",
                 "New Equipment",
-                "New Prty",
                 "New Released",
                 "New Dwg #",
                 "New Work Order #",
@@ -156,7 +149,6 @@ namespace WendtEquipmentTracking.BusinessLogic
                 "New Ship Tag #",
                 "New Description",
                 "New Unit Wt",
-                "New Shipped From"
             };
 
             return string.Join(",", columns);

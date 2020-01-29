@@ -25,16 +25,6 @@
 </div>
 
 @section Scripts {
-    <script type="text/javascript">
-
-        var priorities = [];
-
-        @foreach (var priority in ViewBag.Priorities)
-        {
-            @:priorities.push(@priority);
-        }
-
-    </script>
 
 
     @Styles.Render("~/Content/dropzone")

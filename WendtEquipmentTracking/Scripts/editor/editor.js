@@ -39,7 +39,7 @@
             this.datatable.columns().every(function () {
                 var column = this;
 
-                var $input = $($this.selector).find("thead tr").eq(0).find("th").eq(this.index()).find("input");
+                var $input = $($this.selector).find("thead tr.column-filters").find("th").eq(this.index()).find("input");
 
                 var timeout = null;
                 $input.on('keyup change input search', function () {
@@ -175,8 +175,8 @@
         };
 
         this.createColumnFilters = function () {
-            if ($(this.selector).find("thead tr").length === 1) {
-                var $searchHeader = $(this.selector).find("thead tr").clone();
+            if ($(this.selector).find(".column-filters").length === 0) {
+                var $searchHeader = $(this.selector).find("thead tr").last().clone();
 
                 $searchHeader.find("th").each(function () {
                     var title = $.trim($(this).text());
@@ -189,9 +189,11 @@
                     }
                 });
 
-                $searchHeader.find("th").attr("tabindex", "-1").removeClass("sorting sorting_desc sorting_asc select-checkbox dateWidth");
+                $searchHeader
+                    .addClass("column-filters")
+                    .find("th").attr("tabindex", "-1").removeClass("sorting sorting_desc sorting_asc select-checkbox dateWidth");
 
-                $(this.selector).find("thead").prepend($searchHeader);
+                $(this.selector).find("thead tr").last().before($searchHeader);
             }
         };
     };

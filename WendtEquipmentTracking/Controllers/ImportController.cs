@@ -151,12 +151,9 @@ namespace WendtEquipmentTracking.App.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            var prioritiesBOs = priorityService.GetAll(user.ProjectId);
-            var priorities = prioritiesBOs.Select(x => x.PriorityNumber).OrderBy(p => p).ToList();
             var project = projectService.GetById(user.ProjectId);
 
             ViewBag.ProjectNumber = project.ProjectNumber + (!string.IsNullOrWhiteSpace(project.ShipToCompany) ? ": " + project.ShipToCompany : "");
-            ViewBag.Priorities = priorities;
 
             return View();
         }
@@ -165,7 +162,7 @@ namespace WendtEquipmentTracking.App.Controllers
         [HttpPost]
         public JsonResult SelectEquipmentRevisionFile(FileModel model)
         {
-            var equipmentImportModel = new EquipmentImportModel();
+            var equipmentImportModel = new EquipmentRevisionImportModel();
 
             try
             {
@@ -186,22 +183,30 @@ namespace WendtEquipmentTracking.App.Controllers
                     //check to see if the file is in correct format
                     try
                     {
-                        var importBO = new EquipmentImportBO
+                        var importBO = new EquipmentRevisionImportBO
                         {
-                            Equipment = string.Empty,
-                            FilePaths = new Dictionary<string, string>() { { "", filePath } },
-                            PriorityId = priority != null ? (int?)priority.PriorityId : null,
-                            QuantityMultiplier = 1,
-                            WorkOrderNumber = string.Empty
+                            FilePath = filePath
                         };
 
-                        importService.GetEquipmentImport(importBO);
+                        importService.GetEquipmentRevisionImport(importBO);
                     }
                     catch (Exception e)
                     {
                         return Json(new { Error = "The file does not conform to the expected format. Please make sure all column headers are spelled correctly and in the first row of the spreadsheet. Details: " + e.Message });
                     }
 
+                    // split the filename by the last - to get the drawing number and revision
+                    // if revision is not there just set the drawing number as the filename
+                    var fileName = Path.GetFileNameWithoutExtension(model.File.FileName);
+                    if (fileName.Count(x => x == '-') == 4)
+                    {
+                        var lastUnderscore = fileName.LastIndexOf('-');
+                        equipmentImportModel.DrawingNumber = fileName.Substring(0, lastUnderscore);
+                        equipmentImportModel.Revision = Convert.ToInt32(fileName.Substring(lastUnderscore + 1));
+                    } else 
+                    {
+                        equipmentImportModel.DrawingNumber = fileName;
+                    }
                     equipmentImportModel.FilePath = filePath;
 
                     return Json(equipmentImportModel);
@@ -220,30 +225,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
         public ActionResult EquipmentRevisionConfigurationPartial()
         {
-            var user = userService.GetCurrentUser();
-
-            double projectNumber = 0;
-            IEnumerable<PriorityModel> priorities = new List<PriorityModel>();
-            if (user != null)
-            {
-                var projectBO = projectService.GetById(user.ProjectId);
-                var priorityBOs = priorityService.GetAll(user.ProjectId);
-
-                projectNumber = projectBO.ProjectNumber;
-                priorities = priorityBOs.Select(x => new PriorityModel
-                {
-                    PriorityId = x.PriorityId,
-                    PriorityNumber = x.PriorityNumber
-                }).OrderBy(p => p.PriorityNumber).ToList();
-            }
-
-            var equipmentImportModel = new EquipmentRevisionImportModel();
-            equipmentImportModel.Priorities = priorities;
-            equipmentImportModel.QuantityMultiplier = 1;
-            equipmentImportModel.WorkOrderNumber = projectNumber == 0 ? string.Empty : projectNumber.ToString();
-            equipmentImportModel.Revision = 01;
-
-            return PartialView(equipmentImportModel);
+            return PartialView();
         }
 
 

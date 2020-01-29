@@ -255,10 +255,6 @@ div.dataTables_wrapper .bottom-section {
     z-index: 9999 !important;
 }
 
-.datatable-border-left {
-    border-left: 15px solid #ddd !important;
-}
-
 
 .checkbox-inline + .checkbox-inline + .checkbox-inline {
     margin-left: 0; 
@@ -535,7 +531,19 @@ table.dataTable tbody .attachments .badge {
         min-width: 200px;
     }
 
+    /* EQUIPMENT REVISION WIDTHS */
 
+    .table-styled .equipmentNameRevisionWidth {
+        min-width: 100px;
+    }
+
+    .table-styled .workOrderNumberRevisionWidth {
+        min-width: 50px;
+    }
+
+    .table-styled .descriptionRevisionWidth {
+        min-width: 150px;
+    }
 
 
 
@@ -558,7 +566,7 @@ table.dataTable tbody .attachments .badge {
         padding: 0 !important;
     }
 
-    .table-styled > thead > tr:first-child > th {
+    .table-styled > thead > tr.column-filters > th {
         padding: 0 !important;
     }
 

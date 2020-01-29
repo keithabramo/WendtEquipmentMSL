@@ -345,7 +345,9 @@ namespace WendtEquipmentTracking.BusinessLogic
                 ShippedFrom = x.ShippedFrom,
                 ShippingTagNumber = x.ShippingTagNumber,
                 WorkOrderNumber = x.WorkOrderNumber,
-                Revision = x.Revision
+                Revision = x.Revision,
+                IsHardwareKit = x.HardwareKit != null,
+                IsAssociatedToHardwareKit = x.HardwareKitEquipments.Any(h => h.HardwareKit.IsCurrentRevision),
             });
 
             return equipmentBOs.ToList();

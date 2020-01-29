@@ -27,6 +27,8 @@ $(function () {
                                 .attr("name", "FilePath")
                                 .attr("type", "hidden")
                                 .val(response.FilePath));
+                        $("#equipmentRevisionConfigurationForm input[name='DrawingNumber']").val(response.DrawingNumber);
+                        $("#equipmentRevisionConfigurationForm input[name='Revision']").val(main.pad(response.Revision, 2));
 
                     }
                     else {

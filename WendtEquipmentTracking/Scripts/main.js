@@ -43,6 +43,11 @@
             window.scrollTo(0, 0);
         };
 
+        this.pad = function (str, max) {
+            str = str.toString();
+            return str.length < max ? this.pad("0" + str, max) : str;
+        };
+
         this.initStyle();
         this.initEvents();
     };
