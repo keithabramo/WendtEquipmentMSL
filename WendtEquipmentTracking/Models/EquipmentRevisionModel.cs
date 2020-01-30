@@ -58,8 +58,27 @@ namespace WendtEquipmentTracking.App.Models
         [Required]
         public double? UnitWeight { get; set; }
 
+        [DisplayName("Unit Wt")]
+        [DataType(DataType.Currency)]
+        public string UnitWeightText
+        {
+            get
+            {
+                return UnitWeight.HasValue ? UnitWeight.Value.ToString() : string.Empty;
+            }
+        }
+
         [DisplayName("Ship Qty")]
-        public string ShippedQuantity { get; set; }
+        public double? ShippedQuantity { get; set; }
+
+        [DisplayName("Ship Qty")]
+        public string ShippedQuantityText
+        {
+            get
+            {
+                return ShippedQuantity.HasValue ? ShippedQuantity.Value.ToString() : string.Empty;
+            }
+        }
 
         [DisplayName("Rev")]
         public int Revision { get; set; }
@@ -123,18 +142,13 @@ namespace WendtEquipmentTracking.App.Models
 
 
         // Calculated Fields
+
+        public bool IsAssociatedToHardwareKit { get; set; }
+        public bool IsHardwareKit { get; set; }
         public bool HasNewEquipment { get; set; }
         public bool HasExistingEquipment { get; set; }
 
-        [DisplayName("Unit Wt")]
-        [DataType(DataType.Currency)]
-        public string UnitWeightText
-        {
-            get
-            {
-                return UnitWeight.HasValue ? UnitWeight.Value.ToString() : string.Empty;
-            }
-        }
+        
 
         public bool EquipmentNameChanged
         {
@@ -186,6 +200,42 @@ namespace WendtEquipmentTracking.App.Models
             }
         }
 
+        public bool WillBeUpdated
+        {
+            get
+            {
+                return HasChanged && HasNewEquipment && HasExistingEquipment;
+            }
+        }
+
+        public bool WillBeAdded
+        {
+            get
+            {
+                return HasChanged && HasNewEquipment && !HasExistingEquipment;
+            }
+        }
+
+        public bool WillBeDeleted
+        {
+            get
+            {
+                return HasChanged && !HasNewEquipment && HasExistingEquipment;
+            }
+        }
+
+        public bool CannotBeDeleted
+        {
+            get
+            {
+                return HasChanged && (
+                    ShippedQuantity > 0
+                    || IsAssociatedToHardwareKit
+                    || IsHardwareKit
+                );
+            }
+        }
+
         public RevisionIndicatorsModel RevisionIndicators { get; set; }
 
         public void SetRevisionIndicators()
@@ -225,7 +275,7 @@ namespace WendtEquipmentTracking.App.Models
                 }
                 else if (HasExistingEquipment && !HasNewEquipment)
                 {
-                    if (!string.IsNullOrWhiteSpace(ShippedQuantity) && Int32.Parse(ShippedQuantity) > 0)
+                    if (ShippedQuantity.HasValue && ShippedQuantity > 0)
                     {
                         RevisionIndicators.ShippedQuantityColor = IndicatorColors.Green.ToString();
                     }

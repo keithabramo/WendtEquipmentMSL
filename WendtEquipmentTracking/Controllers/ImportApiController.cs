@@ -581,12 +581,10 @@ namespace WendtEquipmentTracking.App.Controllers
                             //    If resulting new quantity is not > 0 then just remove it from the list entirely
                             if(existingEquipment.IsAssociatedToHardwareKit)
                             {
-                                if(equipmentRevisionModel.NewQuantity > existingEquipment.Quantity)
+                                equipmentRevisionModel.NewQuantity -= existingEquipment.Quantity;
+                                if(equipmentRevisionModel.NewQuantity < 0)
                                 {
-                                    equipmentRevisionModel.NewQuantity -= existingEquipment.Quantity;
-                                } else
-                                {
-                                    equipmentRevisionModels.Remove(equipmentRevisionModel);
+                                    equipmentRevisionModel.NewQuantity = 0;
                                 }
                             }
                             else
@@ -600,10 +598,14 @@ namespace WendtEquipmentTracking.App.Controllers
                                 equipmentRevisionModel.ShippingTagNumber = (existingEquipment.ShippingTagNumber ?? string.Empty).Trim().ToUpperInvariant();
                                 equipmentRevisionModel.UnitWeight = existingEquipment.UnitWeight;
                                 equipmentRevisionModel.WorkOrderNumber = (existingEquipment.WorkOrderNumber ?? string.Empty).Trim().ToUpperInvariant();
-                                equipmentRevisionModel.ShippedQuantity = existingEquipment.ShippedQuantity.HasValue ? existingEquipment.ShippedQuantity.Value.ToString() : string.Empty;
+                                equipmentRevisionModel.ShippedQuantity = existingEquipment.ShippedQuantity;
+                                equipmentRevisionModel.IsAssociatedToHardwareKit = existingEquipment.IsAssociatedToHardwareKit;
+                                equipmentRevisionModel.IsHardwareKit = existingEquipment.IsHardwareKit;
                                 equipmentRevisionModel.HasExistingEquipment = true;
                                 equipmentRevisionModel.Revision = existingEquipment.Revision + 1;
-                                equipmentRevisionModel.NewEquipmentName = existingEquipment.EquipmentName; // If there is a match they want to have old equipment name copied to new equipment name always
+
+                                // If there is a match they want to have old equipment name copied to new equipment name always
+                                equipmentRevisionModel.NewEquipmentName = existingEquipment.EquipmentName; 
                             } 
                         }
                     }
@@ -613,9 +615,8 @@ namespace WendtEquipmentTracking.App.Controllers
                     var remainingExistingEquipment = existingEquipments
                         .Where(x => 
                             !equipmentRevisionModels.Any(y => y.EquipmentId == x.EquipmentId)
-                            && x.ShippedQuantity <= 0
-                            && !x.IsAssociatedToHardwareKit
-                            && !x.IsHardwareKit
+                            && !x.IsAssociatedToHardwareKit  // If we find a match above for hwk related equipment we add a new record, so lets remove it from the existing list here
+                            && !x.IsHardwareKit 
                         ).ToList();
 
                     var remainingExistingEquipmentModels = remainingExistingEquipment.Select(x => new EquipmentRevisionModel
@@ -630,7 +631,9 @@ namespace WendtEquipmentTracking.App.Controllers
                         ShippingTagNumber = (x.ShippingTagNumber ?? string.Empty).Trim().ToUpperInvariant(),
                         UnitWeight = x.UnitWeight,
                         WorkOrderNumber = (x.WorkOrderNumber ?? string.Empty).Trim().ToUpperInvariant(),
-                        ShippedQuantity = x.ShippedQuantity.HasValue ? x.ShippedQuantity.Value.ToString() : string.Empty,
+                        ShippedQuantity = x.ShippedQuantity,
+                        IsAssociatedToHardwareKit = x.IsAssociatedToHardwareKit,
+                        IsHardwareKit = x.IsHardwareKit,
                         HasExistingEquipment = true,
                         Revision = x.Revision
                     }).ToList();
@@ -678,7 +681,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
                         equipmentRevisionModel.EquipmentId = !string.IsNullOrWhiteSpace(equipmentProperties["EquipmentId"].ToString()) ? Convert.ToInt32(equipmentProperties["EquipmentId"]) : 0;
                         equipmentRevisionModel.Quantity = equipmentProperties["Quantity"].ToString().ToNullable<double>().HasValue ? equipmentProperties["Quantity"].ToString().ToNullable<double>().Value : 0;
-                        equipmentRevisionModel.ShippedQuantity = equipmentProperties["ShippedQuantity"].ToString();
+                        equipmentRevisionModel.ShippedQuantity = equipmentProperties["ShippedQuantityText"].ToString().ToNullable<double>();
                         equipmentRevisionModel.ReleaseDate = !string.IsNullOrWhiteSpace(equipmentProperties["ReleaseDate"].ToString()) ? (DateTime?)Convert.ToDateTime(equipmentProperties["ReleaseDate"]) : null;
                         equipmentRevisionModel.UnitWeight = equipmentProperties["UnitWeightText"].ToString().ToNullable<double>();
                         equipmentRevisionModel.Description = equipmentProperties["Description"].ToString().Trim();
@@ -698,6 +701,8 @@ namespace WendtEquipmentTracking.App.Controllers
                         equipmentRevisionModel.NewWorkOrderNumber = equipmentProperties["NewWorkOrderNumber"].ToString();
                         equipmentRevisionModel.HasExistingEquipment = equipmentProperties["HasExistingEquipment"].ToString() == "true";
                         equipmentRevisionModel.HasNewEquipment = equipmentProperties["HasNewEquipment"].ToString() == "true";
+                        equipmentRevisionModel.IsAssociatedToHardwareKit = equipmentProperties["IsAssociatedToHardwareKit"].ToString() == "true";
+                        equipmentRevisionModel.IsHardwareKit = equipmentProperties["IsHardwareKit"].ToString() == "true";
                         equipmentRevisionModel.Revision = !string.IsNullOrWhiteSpace(equipmentProperties["Revision"].ToString()) ? Convert.ToInt32(equipmentProperties["Revision"]) : 0;
 
                         equipmentRevisionModel.ProjectId = user.ProjectId;
@@ -709,6 +714,7 @@ namespace WendtEquipmentTracking.App.Controllers
                     var doSubmit = httpData["doSubmit"];
                     if (doSubmit.ToString() == "true")
                     {
+                        var equipmentSummaryModels = new List<EquipmentRevisionModel>();
                         var equipmentRevisions = new List<EquipmentBO>();
                         var equipmentsToAdd = new List<EquipmentBO>();
                         var equipmentsToRemove = new List<int>();
@@ -717,7 +723,7 @@ namespace WendtEquipmentTracking.App.Controllers
                         {
                             if (equipmentRevisionModel.HasChanged)
                             {
-                                if (equipmentRevisionModel.HasExistingEquipment && equipmentRevisionModel.HasNewEquipment)
+                                if (equipmentRevisionModel.WillBeUpdated)
                                 {
                                     var equipmentRevisionBO = new EquipmentBO();
 
@@ -735,8 +741,9 @@ namespace WendtEquipmentTracking.App.Controllers
                                     equipmentRevisionBO.Revision = equipmentRevisionModel.Revision;
 
                                     equipmentRevisions.Add(equipmentRevisionBO);
+                                    equipmentSummaryModels.Add(equipmentRevisionModel);
                                 }
-                                else if (!equipmentRevisionModel.HasExistingEquipment)
+                                else if (equipmentRevisionModel.WillBeAdded)
                                 {
                                     var equipmentNewBO = new EquipmentBO();
 
@@ -755,11 +762,13 @@ namespace WendtEquipmentTracking.App.Controllers
                                     equipmentNewBO.Revision = equipmentRevisionModel.Revision;
 
                                     equipmentsToAdd.Add(equipmentNewBO);
+                                    equipmentSummaryModels.Add(equipmentRevisionModel);
                                 }
-                                else if (!equipmentRevisionModel.HasNewEquipment)
+                                else if (equipmentRevisionModel.WillBeDeleted && !equipmentRevisionModel.CannotBeDeleted)
                                 {
                                     // Remove existing equipment
                                     equipmentsToRemove.Add(equipmentRevisionModel.EquipmentId);
+                                    equipmentSummaryModels.Add(equipmentRevisionModel);
                                 }
                             }
                         }
@@ -769,8 +778,7 @@ namespace WendtEquipmentTracking.App.Controllers
                         equipmentService.DeleteAll(equipmentsToRemove);
 
 
-
-                        var equipmentRevisionBOs = equipmentRevisionModels.Select(x => new EquipmentRevisionBO
+                        var equipmentRevisionBOs = equipmentSummaryModels.Select(x => new EquipmentRevisionBO
                         {
                             Description = x.Description,
                             DrawingNumber = x.DrawingNumber,

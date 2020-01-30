@@ -9,7 +9,7 @@
             DrawingNumber: 2,
             WorkOrderNumber: 3,
             Quantity: 4,
-            ShippedQuantity: 5,
+            ShippedQuantityText: 5,
             ShippingTagNumber: 6,
             Description: 7,
             UnitWeightText: 8,
@@ -73,7 +73,7 @@
                 $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.DrawingNumber).node()).attr("class", "active " + data.RevisionIndicators.DrawingNumberColor);
                 $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.WorkOrderNumber).node()).attr("class", "active " + data.RevisionIndicators.WorkOrderNumberColor);
                 $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.Quantity).node()).attr("class", "text-right active " + data.RevisionIndicators.QuantityColor);
-                $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.ShippedQuantity).node()).attr("class", "text-right active " + data.RevisionIndicators.ShippedQuantityColor);
+                $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.ShippedQuantityText).node()).attr("class", "text-right active " + data.RevisionIndicators.ShippedQuantityColor);
                 $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.ShippingTagNumber).node()).attr("class", "active " + data.RevisionIndicators.ShippingTagNumberColor);
                 $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.Description).node()).attr("class", "active " + data.RevisionIndicators.DescriptionColor);
                 $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.UnitWeightText).node()).attr("class", "text-right active " + data.RevisionIndicators.UnitWeightColor);
@@ -157,7 +157,7 @@
                     { name: "DrawingNumber", type: "readonly" },
                     { name: "WorkOrderNumber", type: "readonly" },
                     { name: "Quantity", type: "readonly" },
-                    { name: "ShippedQuantity", type: "readonly" },
+                    { name: "ShippedQuantityText", type: "readonly" },
                     { name: "ShippingTagNumber", type: "readonly" },
                     { name: "Description", type: "readonly" },
                     { name: "UnitWeightText", type: "readonly" },
@@ -180,6 +180,8 @@
                     { name: "NewUnitWeightText" },
                     { name: "HasExistingEquipment" },
                     { name: "HasNewEquipment" },
+                    { name: "IsAssociatedToHardwareKit" },
+                    { name: "IsHardwareKit" },
                     { name: "Order" },
                     { name: "Revision" }
                 ]
@@ -206,8 +208,50 @@
                 order: [[this.columnIndexes.NewEquipmentName, 'desc']],
                 rowId: 'NewEquipmentId',
                 initComplete: function (settings, json) {
+
+                    var allRowsCount = $this.editorMain.datatable.rows().count();
+                    var alteredRowsCount = $this.editorMain.datatable.rows(function (idx, data, node) {
+                        return data.HasChanged && !data.CannotBeDeleted;
+                    }).count();
+                    var unalteredRowsCount = $this.editorMain.datatable.rows(function (idx, data, node) {
+                        return !data.HasChanged;
+                    }).count();
+                    var updatedRowsCount = $this.editorMain.datatable.rows(function (idx, data, node) {
+                        return data.WillBeUpdated;
+                    }).count();
+                    var addedRowsCount = $this.editorMain.datatable.rows(function (idx, data, node) {
+                        return data.WillBeAdded;
+                    }).count();
+                    var deletedRowsCount = $this.editorMain.datatable.rows(function (idx, data, node) {
+                        return data.WillBeDeleted && !data.CannotBeDeleted;
+                    }).count();
+                    var cannotBeDeletedRowsCount = $this.editorMain.datatable.rows(function (idx, data, node) {
+                        return data.CannotBeDeleted;
+                    }).count();
+
+                    $(".count-display").html(
+                        "<ul>" +
+                        "<li><span class='altered-count'></span> of <span class='total-count'></span> rows will be modified" +
+                            "<ul>" +
+                                "<li><span class='updated-count'></span> rows to be revised</li>" +
+                                "<li><span class='added-count'></span> rows to be added</li>" +
+                                "<li><span class='deleted-count'></span> rows to be deleted</li>" +
+                                "<li><span class='cannot-delete-count'></span> rows cannot be deleted (shipped qty or tied to a FHK)</li>" +
+                                "<li><span class='unaltered-count'></span> rows with no changes found</li>" +
+                            "</ul>" +
+                        "</li>" +
+                        "</ul>");
+
+                    $(".count-display .altered-count").text(alteredRowsCount);
+                    $(".count-display .total-count").text(allRowsCount);
+                    $(".count-display .updated-count").text(updatedRowsCount);
+                    $(".count-display .added-count").text(addedRowsCount);
+                    $(".count-display .deleted-count").text(deletedRowsCount);
+                    $(".count-display .cannot-delete-count").text(cannotBeDeletedRowsCount);
+                    $(".count-display .unaltered-count").text(unalteredRowsCount);
+
                     $this.editorMain.datatable.rows(function (idx, data, node) {
-                        return data.HasChanged;
+                        return data.HasChanged && !data.CannotBeDeleted;
                     }).select();
                 },
                 autoWidth: false,
@@ -249,7 +293,7 @@
                         className: "active text-right quantityWidth"
                     },
                     {
-                        data: "ShippedQuantity", "targets": this.columnIndexes.ShippedQuantity,
+                        data: "ShippedQuantityText", "targets": this.columnIndexes.ShippedQuantityText,
                         createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                             $(cell).addClass(rowData.RevisionIndicators.ShippedQuantityColor);
                         },
@@ -365,7 +409,11 @@
                 autoFill: {
                     editor: null,
                     columns: this.editableColumns
-                }
+                },
+                dom: "<'row'<'col-sm-6 text-left custom'f><'col-sm-4'i><'col-sm-2 text-right'l>>" +
+                    "<'row'<'col-sm-offset-6 col-sm-6 count-display'>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row bottom-section'<'col-sm-2 text-left createButtonContainer'><'col-sm-5 text-right'i><'col-sm-5 text-right'p>>"
             });
         };
 
@@ -374,95 +422,105 @@
 
             var errors = false;
 
-            //this.editorMain.datatable.rows({ selected: true }).every(function (rowIdx, tableLoop, rowLoop) {
-            //    var error = false;
-            //    var data = this.data();
+            this.editorMain.datatable.rows({ selected: true }).every(function (rowIdx, tableLoop, rowLoop) {
+                var error = false;
+                var data = this.data();
 
-            //    if (data.HasNewEquipment) {
-            //        var newEquipmentName = data.NewEquipmentName;
-            //        var newReleaseDate = data.NewReleaseDate;
-            //        var newDrawingNumber = data.NewDrawingNumber;
-            //        var newWorkOrderNumber = data.NewWorkOrderNumber;
-            //        var newShippingTagNumber = data.NewShippingTagNumber;
-            //        var newDescription = data.NewDescription;
-            //        var newUnitWeight = data.NewUnitWeightText;
-            //        var newQuantity = data.NewQuantity;
+                if (data.HasNewEquipment) {
+                    var shippedQuantity = data.ShippedQuantity;
+                    var newEquipmentName = data.NewEquipmentName;
+                    var newReleaseDate = data.NewReleaseDate;
+                    var newDrawingNumber = data.NewDrawingNumber;
+                    var newWorkOrderNumber = data.NewWorkOrderNumber;
+                    var newShippingTagNumber = data.NewShippingTagNumber;
+                    var newDescription = data.NewDescription;
+                    var newUnitWeight = data.NewUnitWeightText;
+                    var newQuantity = data.NewQuantity;
 
-            //        if (!newEquipmentName) {
-            //            error = true;
-            //            $this.addError(rowIdx, $this.columnIndexes.NewEquipmentName);
-            //        } else {
-            //            $this.removeError(rowIdx, $this.columnIndexes.NewEquipmentName);
-            //        }
+                    if (shippedQuantity != null && shippedQuantity >= newQuantity) {
+                        error = true;
+                        $this.addError(rowIdx, $this.columnIndexes.NewQuantity);
+                    } else {
+                        $this.removeError(rowIdx, $this.columnIndexes.NewQuantity);
+                    }
 
-            //        if (!newReleaseDate) {
-            //            error = true;
-            //            $this.addError(rowIdx, $this.columnIndexes.NewReleaseDate);
-            //        } else if (!moment(newReleaseDate, 'M/D/YY', true).isValid()) {
-            //            error = true;
-            //            $this.addError(rowIdx, $this.columnIndexes.NewReleaseDate);
-            //        } else {
-            //            $this.removeError(rowIdx, $this.columnIndexes.NewReleaseDate);
-            //        }
+                    if (!newEquipmentName) {
+                        error = true;
+                        $this.addError(rowIdx, $this.columnIndexes.NewEquipmentName);
+                    } else {
+                        $this.removeError(rowIdx, $this.columnIndexes.NewEquipmentName);
+                    }
 
-            //        if (!newDrawingNumber) {
-            //            error = true;
-            //            $this.addError(rowIdx, $this.columnIndexes.NewDrawingNumber);
-            //        } else {
-            //            $this.removeError(rowIdx, $this.columnIndexes.NewDrawingNumber);
-            //        }
+                    if (!newReleaseDate) {
+                        error = true;
+                        $this.addError(rowIdx, $this.columnIndexes.NewReleaseDate);
+                    } else if (!moment(newReleaseDate, 'M/D/YY', true).isValid()) {
+                        error = true;
+                        $this.addError(rowIdx, $this.columnIndexes.NewReleaseDate);
+                    } else {
+                        $this.removeError(rowIdx, $this.columnIndexes.NewReleaseDate);
+                    }
 
-            //        if (!newWorkOrderNumber) {
-            //            error = true;
-            //            $this.addError(rowIdx, $this.columnIndexes.NewWorkOrderNumber);
-            //        } else {
-            //            $this.removeError(rowIdx, $this.columnIndexes.NewWorkOrderNumber);
-            //        }
+                    if (!newDrawingNumber) {
+                        error = true;
+                        $this.addError(rowIdx, $this.columnIndexes.NewDrawingNumber);
+                    } else {
+                        $this.removeError(rowIdx, $this.columnIndexes.NewDrawingNumber);
+                    }
 
-            //        if (!newShippingTagNumber) {
-            //            error = true;
-            //            $this.addError(rowIdx, $this.columnIndexes.NewShippingTagNumber);
-            //        } else {
-            //            $this.removeError(rowIdx, $this.columnIndexes.NewShippingTagNumber);
-            //        }
+                    if (!newWorkOrderNumber) {
+                        error = true;
+                        $this.addError(rowIdx, $this.columnIndexes.NewWorkOrderNumber);
+                    } else {
+                        $this.removeError(rowIdx, $this.columnIndexes.NewWorkOrderNumber);
+                    }
 
-            //        if (!newDescription) {
-            //            error = true;
-            //            $this.addError(rowIdx, $this.columnIndexes.NewDescription);
-            //        } else {
-            //            $this.removeError(rowIdx, $this.columnIndexes.NewDescription);
-            //        }
+                    if (!newShippingTagNumber) {
+                        error = true;
+                        $this.addError(rowIdx, $this.columnIndexes.NewShippingTagNumber);
+                    } else {
+                        $this.removeError(rowIdx, $this.columnIndexes.NewShippingTagNumber);
+                    }
 
-            //        if (!newUnitWeight) {
-            //            error = true;
-            //            $this.addError(rowIdx, $this.columnIndexes.NewUnitWeightText);
-            //        } else if (isNaN(newUnitWeight)) {
-            //            error = true;
-            //            $this.addError(rowIdx, $this.columnIndexes.NewUnitWeightText);
-            //        } else {
-            //            $this.removeError(rowIdx, $this.columnIndexes.NewUnitWeightText);
-            //        }
+                    if (!newDescription) {
+                        error = true;
+                        $this.addError(rowIdx, $this.columnIndexes.NewDescription);
+                    } else {
+                        $this.removeError(rowIdx, $this.columnIndexes.NewDescription);
+                    }
 
-            //        if (!newQuantity) {
-            //            error = true;
-            //            $this.addError(rowIdx, $this.columnIndexes.NewQuantity);
-            //        } else if (isNaN(newQuantity)) {
-            //            error = true;
-            //            $this.addError(rowIdx, $this.columnIndexes.NewQuantity);
-            //        } else {
-            //            $this.removeError(rowIdx, $this.columnIndexes.NewQuantity);
-            //        }
+                    if (!newUnitWeight) {
+                        error = true;
+                        $this.addError(rowIdx, $this.columnIndexes.NewUnitWeightText);
+                    } else if (isNaN(newUnitWeight)) {
+                        error = true;
+                        $this.addError(rowIdx, $this.columnIndexes.NewUnitWeightText);
+                    } else {
+                        $this.removeError(rowIdx, $this.columnIndexes.NewUnitWeightText);
+                    }
 
-            //        if (error) {
-            //            errors = true;
-            //        }
+                    if (!newQuantity) {
+                        error = true;
+                        $this.addError(rowIdx, $this.columnIndexes.NewQuantity);
+                    } else if (isNaN(newQuantity)) {
+                        error = true;
+                        $this.addError(rowIdx, $this.columnIndexes.NewQuantity);
+                    } else if (shippedQuantity && shippedQuantity >= newQuantity) {
+                        error = true;
+                        $this.addError(rowIdx, $this.columnIndexes.NewQuantity);
+                    } else {
+                        $this.removeError(rowIdx, $this.columnIndexes.NewQuantity);
+                    }
 
-            //    }
-            //});
+                    if (error) {
+                        errors = true;
+                    }
+
+                }
+            });
 
             return errors;
         };
-
 
         this.clearValidation = function () {
             var $this = this;

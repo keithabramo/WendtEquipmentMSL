@@ -64,8 +64,38 @@ $(function () {
 
                     if ($this.equipmentRevisionTable) {
                         $this.equipmentRevisionTable.editorMain.datatable.ajax.reload(function () {
+                            var allRowsCount = $this.equipmentRevisionTable.editorMain.datatable.rows().count();
+                            var alteredRowsCount = $this.equipmentRevisionTable.editorMain.datatable.rows(function (idx, data, node) {
+                                return data.HasChanged && !data.CannotBeDeleted;
+                            }).count();
+                            var unalteredRowsCount = $this.equipmentRevisionTable.editorMain.datatable.rows(function (idx, data, node) {
+                                return !data.HasChanged;
+                            }).count();
+                            var updatedRowsCount = $this.equipmentRevisionTable.editorMain.datatable.rows(function (idx, data, node) {
+                                return data.WillBeUpdated;
+                            }).count();
+                            var addedRowsCount = $this.equipmentRevisionTable.editorMain.datatable.rows(function (idx, data, node) {
+                                return data.WillBeAdded;
+                            }).count();
+                            var deletedRowsCount = $this.equipmentRevisionTable.editorMain.datatable.rows(function (idx, data, node) {
+                                return data.WillBeDeleted && !data.CannotBeDeleted;
+                            }).count();
+                            var cannotBeDeletedRowsCount = $this.equipmentRevisionTable.editorMain.datatable.rows(function (idx, data, node) {
+                                return data.CannotBeDeleted;
+                            }).count();
+
+                            $(".count-display .altered-count").text(alteredRowsCount);
+                            $(".count-display .total-count").text(allRowsCount);
+
+                            $(".count-display .updated-count").text(updatedRowsCount);
+                            $(".count-display .added-count").text(addedRowsCount);
+                            $(".count-display .deleted-count").text(deletedRowsCount);
+                            $(".count-display .cannot-delete-count").text(cannotBeDeletedRowsCount);
+
+                            $(".count-display .unaltered-count").text(unalteredRowsCount);
+
                             $this.equipmentRevisionTable.editorMain.datatable.rows(function (idx, data, node) {
-                                return data.HasChanged;
+                                return data.HasChanged && !data.CannotBeDeleted;
                             }).select();
                         });
                     } else {

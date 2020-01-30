@@ -15,7 +15,7 @@ namespace WendtEquipmentTracking.BusinessLogic.BO
         public string ShippingTagNumber { get; set; }
         public string Description { get; set; }
         public double? UnitWeight { get; set; }
-        public string ShippedQuantity { get; set; }
+        public double? ShippedQuantity { get; set; }
 
         // NEW REVISION FIELDS
 

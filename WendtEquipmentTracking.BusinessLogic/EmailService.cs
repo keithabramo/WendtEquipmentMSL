@@ -107,7 +107,7 @@ namespace WendtEquipmentTracking.BusinessLogic
                     equipmentRevision.DrawingNumber,
                     equipmentRevision.WorkOrderNumber,
                     equipmentRevision.Quantity.ToString(),
-                    equipmentRevision.ShippedQuantity,
+                    equipmentRevision.ShippedQuantity?.ToString(),
                     equipmentRevision.ShippingTagNumber,
                     equipmentRevision.Description,
                     equipmentRevision.UnitWeight?.ToString(),
