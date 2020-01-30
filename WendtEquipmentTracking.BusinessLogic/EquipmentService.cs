@@ -120,17 +120,14 @@ namespace WendtEquipmentTracking.BusinessLogic
                     //NOTE: we don't update the quantity or equipment name of a hardware kit record so we have code to check for that
 
                     oldEquipment.IsHardware = equipmentBO.IsHardware;
-                    oldEquipment.PriorityId = equipmentBO.PriorityId;
                     oldEquipment.Quantity = equipmentBO.IsHardwareKit ? oldEquipment.Quantity : equipmentBO.Quantity;
                     oldEquipment.ReleaseDate = equipmentBO.ReleaseDate;
                     oldEquipment.UnitWeight = equipmentBO.IsHardware ? .01 : equipmentBO.UnitWeight.HasValue ? (double?)Math.Round(equipmentBO.UnitWeight.Value, 2, MidpointRounding.AwayFromZero) : null;
                     oldEquipment.Description = (equipmentBO.Description ?? string.Empty).ToUpperInvariant();
                     oldEquipment.DrawingNumber = (equipmentBO.DrawingNumber ?? string.Empty).ToUpperInvariant();
                     oldEquipment.EquipmentName = equipmentBO.IsHardwareKit ? oldEquipment.EquipmentName : (equipmentBO.EquipmentName ?? string.Empty).ToUpperInvariant();
-                    oldEquipment.ShippedFrom = (equipmentBO.ShippedFrom ?? string.Empty).ToUpperInvariant();
                     oldEquipment.ShippingTagNumber = (equipmentBO.ShippingTagNumber ?? string.Empty).ToUpperInvariant();
-                    oldEquipment.WorkOrderNumber = (equipmentBO.WorkOrderNumber ?? string.Empty).ToUpperInvariant();
-                    oldEquipment.Revision = ++oldEquipment.Revision;
+                    oldEquipment.Revision = equipmentBO.Revision;
                 }
             }
 

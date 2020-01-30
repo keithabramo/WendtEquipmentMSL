@@ -59,6 +59,13 @@ namespace WendtEquipmentTracking.BusinessLogic
                 var drawingNumber = keyValuePair.Key;
                 var filePath = keyValuePair.Value;
 
+                // If original file has "-00" at end of file neme. That is a revision number and we need to remove it 
+                var defaultRevisionNumberToRemove = "-00";
+                if (drawingNumber.EndsWith(defaultRevisionNumberToRemove))
+                {
+                    drawingNumber = drawingNumber.Substring(0, drawingNumber.LastIndexOf(defaultRevisionNumberToRemove));
+                }
+
                 var drawingEquipmentRows = importEngine.GetEquipment(filePath).ToList();
                 drawingEquipmentRows.ForEach(x => x.DrawingNumber = drawingNumber);
 

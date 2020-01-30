@@ -544,6 +544,11 @@ namespace WendtEquipmentTracking.App.Controllers
                     };
 
                     var equipmentRevisionBOs = importService.GetEquipmentRevisionImport(importBO);
+                    var existingEquipments = equipmentService.GetByDrawingNumbers(user.ProjectId, new List<string> { model.DrawingNumber }).ToList();
+
+                    // All priorities and work order numbers should be the same for every equipment in the same drawing number
+                    var priorityId = existingEquipments.FirstOrDefault(x => x.PriorityId.HasValue)?.PriorityId;
+                    var workOrderNumber = existingEquipments.FirstOrDefault(x => !string.IsNullOrEmpty(x.WorkOrderNumber))?.WorkOrderNumber;
 
                     var random = new Random();
                     equipmentRevisionModels = equipmentRevisionBOs.Select(x => new EquipmentRevisionModel
@@ -556,19 +561,18 @@ namespace WendtEquipmentTracking.App.Controllers
                         NewReleaseDate = x.ReleaseDate,
                         NewShippingTagNumber = (x.ShippingTagNumber ?? string.Empty).Trim().ToUpperInvariant(),
                         NewUnitWeight = x.UnitWeight,
-                        NewWorkOrderNumber = (x.WorkOrderNumber ?? string.Empty).Trim().ToUpperInvariant(),
                         HasNewEquipment = true,
-                        Revision = model.Revision
+                        Revision = model.Revision,
+                        PriorityId = priorityId,
+                        WorkOrderNumber = workOrderNumber
                     }).ToList();
 
 
                     // GET THE MATCHED EXISTING RECORDS
 
-                    var existingEquipments = equipmentService.GetByDrawingNumbers(user.ProjectId, new List<string> { model.DrawingNumber }).ToList();
-
                     // All Mataching equipment add the existing equipment information
 
-                    foreach(var equipmentRevisionModel in equipmentRevisionModels)
+                    foreach (var equipmentRevisionModel in equipmentRevisionModels)
                     {
                         var existingEquipment = existingEquipments.FirstOrDefault(x => x.DrawingNumber == equipmentRevisionModel.NewDrawingNumber && x.ShippingTagNumber == equipmentRevisionModel.NewShippingTagNumber);
 
@@ -595,7 +599,6 @@ namespace WendtEquipmentTracking.App.Controllers
                                 equipmentRevisionModel.ReleaseDate = existingEquipment.ReleaseDate;
                                 equipmentRevisionModel.ShippingTagNumber = (existingEquipment.ShippingTagNumber ?? string.Empty).Trim().ToUpperInvariant();
                                 equipmentRevisionModel.UnitWeight = existingEquipment.UnitWeight;
-                                equipmentRevisionModel.WorkOrderNumber = (existingEquipment.WorkOrderNumber ?? string.Empty).Trim().ToUpperInvariant();
                                 equipmentRevisionModel.ShippedQuantity = existingEquipment.ShippedQuantity;
                                 equipmentRevisionModel.IsAssociatedToHardwareKit = existingEquipment.IsAssociatedToHardwareKit;
                                 equipmentRevisionModel.IsHardwareKit = existingEquipment.IsHardwareKit;
@@ -628,12 +631,13 @@ namespace WendtEquipmentTracking.App.Controllers
                         ReleaseDate = x.ReleaseDate,
                         ShippingTagNumber = (x.ShippingTagNumber ?? string.Empty).Trim().ToUpperInvariant(),
                         UnitWeight = x.UnitWeight,
-                        WorkOrderNumber = (x.WorkOrderNumber ?? string.Empty).Trim().ToUpperInvariant(),
                         ShippedQuantity = x.ShippedQuantity,
                         IsAssociatedToHardwareKit = x.IsAssociatedToHardwareKit,
                         IsHardwareKit = x.IsHardwareKit,
                         HasExistingEquipment = true,
-                        Revision = model.Revision
+                        Revision = model.Revision,
+                        PriorityId = priorityId,
+                        WorkOrderNumber = workOrderNumber
                     }).ToList();
 
                     equipmentRevisionModels.AddRange(remainingExistingEquipmentModels);
@@ -686,6 +690,7 @@ namespace WendtEquipmentTracking.App.Controllers
                         equipmentRevisionModel.DrawingNumber = equipmentProperties["DrawingNumber"].ToString();
                         equipmentRevisionModel.EquipmentName = equipmentProperties["EquipmentName"].ToString();
                         equipmentRevisionModel.ShippingTagNumber = equipmentProperties["ShippingTagNumber"].ToString();
+                        equipmentRevisionModel.PriorityId = equipmentProperties["PriorityId"].ToString().ToNullable<int>();
                         equipmentRevisionModel.WorkOrderNumber = equipmentProperties["WorkOrderNumber"].ToString();
 
                         equipmentRevisionModel.NewEquipmentId = !string.IsNullOrWhiteSpace(equipmentProperties["NewEquipmentId"].ToString()) ? Convert.ToInt32(equipmentProperties["NewEquipmentId"]) : 0;
@@ -696,7 +701,7 @@ namespace WendtEquipmentTracking.App.Controllers
                         equipmentRevisionModel.NewDrawingNumber = equipmentProperties["NewDrawingNumber"].ToString();
                         equipmentRevisionModel.NewEquipmentName = equipmentProperties["NewEquipmentName"].ToString();
                         equipmentRevisionModel.NewShippingTagNumber = equipmentProperties["NewShippingTagNumber"].ToString();
-                        equipmentRevisionModel.NewWorkOrderNumber = equipmentProperties["NewWorkOrderNumber"].ToString();
+                        
                         equipmentRevisionModel.HasExistingEquipment = equipmentProperties["HasExistingEquipment"].ToString() == "true";
                         equipmentRevisionModel.HasNewEquipment = equipmentProperties["HasNewEquipment"].ToString() == "true";
                         equipmentRevisionModel.IsAssociatedToHardwareKit = equipmentProperties["IsAssociatedToHardwareKit"].ToString() == "true";
@@ -734,7 +739,6 @@ namespace WendtEquipmentTracking.App.Controllers
                                     equipmentRevisionBO.DrawingNumber = equipmentRevisionModel.NewDrawingNumber;
                                     equipmentRevisionBO.EquipmentName = equipmentRevisionModel.NewEquipmentName;
                                     equipmentRevisionBO.ShippingTagNumber = equipmentRevisionModel.NewShippingTagNumber;
-                                    equipmentRevisionBO.WorkOrderNumber = equipmentRevisionModel.NewWorkOrderNumber;
                                     equipmentRevisionBO.IsHardware = equipmentRevisionModel.NewEquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase);
                                     equipmentRevisionBO.Revision = equipmentRevisionModel.Revision;
 
@@ -753,11 +757,12 @@ namespace WendtEquipmentTracking.App.Controllers
                                     equipmentNewBO.DrawingNumber = equipmentRevisionModel.NewDrawingNumber;
                                     equipmentNewBO.EquipmentName = equipmentRevisionModel.NewEquipmentName;
                                     equipmentNewBO.ShippingTagNumber = equipmentRevisionModel.NewShippingTagNumber;
-                                    equipmentNewBO.WorkOrderNumber = equipmentRevisionModel.NewWorkOrderNumber;
                                     equipmentNewBO.IsHardware = equipmentRevisionModel.NewEquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase);
                                     equipmentNewBO.ProjectId = equipmentRevisionModel.ProjectId;
                                     equipmentNewBO.Order = equipmentRevisionModel.Order;
                                     equipmentNewBO.Revision = equipmentRevisionModel.Revision;
+                                    equipmentNewBO.PriorityId = equipmentRevisionModel.PriorityId;
+                                    equipmentNewBO.WorkOrderNumber = equipmentRevisionModel.WorkOrderNumber;
 
                                     equipmentsToAdd.Add(equipmentNewBO);
                                     equipmentSummaryModels.Add(equipmentRevisionModel);
@@ -776,27 +781,29 @@ namespace WendtEquipmentTracking.App.Controllers
                         equipmentService.DeleteAll(equipmentsToRemove);
 
 
-                        var equipmentRevisionBOs = equipmentSummaryModels.Select(x => new EquipmentRevisionBO
-                        {
-                            Description = x.Description,
-                            DrawingNumber = x.DrawingNumber,
-                            EquipmentName = x.EquipmentName,
-                            NewDescription = x.NewDescription,
-                            NewDrawingNumber = x.NewDrawingNumber,
-                            NewEquipmentName = x.NewEquipmentName,
-                            NewQuantity = x.NewQuantity,
-                            NewReleaseDate = x.NewReleaseDate,
-                            NewShippingTagNumber = x.NewShippingTagNumber,
-                            NewUnitWeight = x.NewUnitWeight,
-                            NewWorkOrderNumber = x.NewWorkOrderNumber,
-                            Order = x.Order,
-                            Quantity = x.Quantity,
-                            ReleaseDate = x.ReleaseDate,
-                            ShippedQuantity = x.ShippedQuantity,
-                            ShippingTagNumber = x.ShippingTagNumber,
-                            UnitWeight = x.UnitWeight,
-                            WorkOrderNumber = x.WorkOrderNumber
-                        });
+                        var equipmentRevisionBOs = equipmentSummaryModels
+                            .OrderBy(x => x.WillBeUpdated)
+                            .ThenBy(x => x.WillBeAdded)
+                            .ThenBy(x => x.WillBeDeleted)
+                            .Select(x => new EquipmentRevisionBO
+                            {
+                                Description = x.Description,
+                                DrawingNumber = x.DrawingNumber,
+                                EquipmentName = x.EquipmentName,
+                                NewDescription = x.NewDescription,
+                                NewDrawingNumber = x.NewDrawingNumber,
+                                NewEquipmentName = x.NewEquipmentName,
+                                NewQuantity = x.NewQuantity,
+                                NewReleaseDate = x.NewReleaseDate,
+                                NewShippingTagNumber = x.NewShippingTagNumber,
+                                NewUnitWeight = x.NewUnitWeight,
+                                Order = x.Order,
+                                Quantity = x.Quantity,
+                                ReleaseDate = x.ReleaseDate,
+                                ShippedQuantity = x.ShippedQuantity,
+                                ShippingTagNumber = x.ShippingTagNumber,
+                                UnitWeight = x.UnitWeight
+                            });
 
                         emailService.SendRevisionSummary(equipmentRevisionBOs);
                     }

@@ -271,10 +271,6 @@ table.dataTable thead th.select-checkbox {
     position: relative;
 }
 
-table.dataTable thead th.checkbox-style {
-    padding: 5px 18px 5px 10px !important;
-}
-
 table.dataTable thead th.select-checkbox:before, table.dataTable thead th.select-checkbox:after {
     display: block;
     position: absolute;
@@ -537,12 +533,22 @@ table.dataTable tbody .attachments .badge {
 
     /* EQUIPMENT REVISION WIDTHS */
 
-    .table-styled .equipmentNameRevisionWidth {
-        min-width: 100px;
+    .table-styled .originalRevisionHeaderWidth {
+        min-width: 580px !important;
+        padding: 0 !important;
     }
 
-    .table-styled .workOrderNumberRevisionWidth {
-        min-width: 50px;
+    .table-styled .newRevisionHeaderWidth {
+        min-width: 560px !important;
+        padding: 0 !important;
+    }
+
+    .table-styled .checkbox-style {
+        padding: 5px 18px 5px 10px !important;
+    }
+
+    .table-styled .equipmentNameRevisionWidth {
+        min-width: 100px;
     }
 
     .table-styled .descriptionRevisionWidth {
@@ -607,7 +613,11 @@ table.dataTable tbody .attachments .badge {
 
 .table.hardwareCommercialCodeTable tbody tr td:not(:last-child) {
     text-transform: uppercase;
-} 
+}
+
+.table.equipmentRevision {
+    table-layout: auto !important;
+}
 
 .custom-actions button {
     margin: 5px 2px;

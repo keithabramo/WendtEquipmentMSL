@@ -7,29 +7,28 @@
             EquipmentName: 0,
             ReleaseDate: 1,
             DrawingNumber: 2,
-            WorkOrderNumber: 3,
-            Quantity: 4,
-            ShippedQuantityText: 5,
-            ShippingTagNumber: 6,
-            Description: 7,
-            UnitWeightText: 8,
-            NewEquipmentId: 9,
-            NewEquipmentName: 10,
-            NewReleaseDate: 11,
-            NewDrawingNumber: 12,
-            NewWorkOrderNumber: 13,
-            NewQuantity: 14,
-            NewShippingTagNumber: 15,
-            NewDescription: 16,
-            NewUnitWeightText: 17,
-            EquipmentId: 18,
-            Revsion: 19
+            Quantity: 3,
+            ShippedQuantityText: 4,
+            ShippingTagNumber: 5,
+            Description: 6,
+            UnitWeightText: 7,
+            NewEquipmentId: 8,
+            NewEquipmentName: 9,
+            NewReleaseDate: 10,
+            NewDrawingNumber: 11,
+            NewQuantity: 12,
+            NewShippingTagNumber: 13,
+            NewDescription: 14,
+            NewUnitWeightText: 15,
+            EquipmentId: 16,
+            Revision: 17,
+            PriorityId: 18,
+            WorkOrderNumber: 19
         };
         this.editableColumns = [
             this.columnIndexes.NewEquipmentName,
             this.columnIndexes.NewReleaseDate,
             this.columnIndexes.NewDrawingNumber,
-            this.columnIndexes.NewWorkOrderNumber,
             this.columnIndexes.NewQuantity,
             this.columnIndexes.NewShippingTagNumber,
             this.columnIndexes.NewDescription,
@@ -69,7 +68,6 @@
                 $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.EquipmentName).node()).attr("class", "active " + data.RevisionIndicators.EquipmentNameColor);
                 $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.ReleaseDate).node()).attr("class", "active " + data.RevisionIndicators.ReleaseDateColor);
                 $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.DrawingNumber).node()).attr("class", "active " + data.RevisionIndicators.DrawingNumberColor);
-                $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.WorkOrderNumber).node()).attr("class", "active " + data.RevisionIndicators.WorkOrderNumberColor);
                 $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.Quantity).node()).attr("class", "text-right active " + data.RevisionIndicators.QuantityColor);
                 $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.ShippedQuantityText).node()).attr("class", "text-right active " + data.RevisionIndicators.ShippedQuantityColor);
                 $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.ShippingTagNumber).node()).attr("class", "active " + data.RevisionIndicators.ShippingTagNumberColor);
@@ -79,7 +77,6 @@
                 $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.NewEquipmentName).node()).attr("class", data.RevisionIndicators.NewEquipmentNameColor);
                 $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.NewReleaseDate).node()).attr("class", data.RevisionIndicators.NewReleaseDateColor);
                 $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.NewDrawingNumber).node()).attr("class", data.RevisionIndicators.NewDrawingNumberColor);
-                $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.NewWorkOrderNumber).node()).attr("class", data.RevisionIndicators.NewWorkOrderNumberColor);
                 $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.NewQuantity).node()).attr("class", "text-right " + data.RevisionIndicators.NewQuantityColor);
                 $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.NewShippingTagNumber).node()).attr("class", data.RevisionIndicators.NewShippingTagNumberColor);
                 $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.NewDescription).node()).attr("class", data.RevisionIndicators.NewDescriptionColor);
@@ -155,7 +152,6 @@
                     { name: "EquipmentName", type: "readonly" },
                     { name: "ReleaseDate", type: "readonly" },
                     { name: "DrawingNumber", type: "readonly" },
-                    { name: "WorkOrderNumber", type: "readonly" },
                     { name: "Quantity", type: "readonly" },
                     { name: "ShippedQuantityText", type: "readonly" },
                     { name: "ShippingTagNumber", type: "readonly" },
@@ -173,7 +169,6 @@
                         }
                     },
                     { name: "NewDrawingNumber", type: "textarea" },
-                    { name: "NewWorkOrderNumber" },
                     { name: "NewQuantity" },
                     { name: "NewShippingTagNumber", type: "textarea" },
                     { name: "NewDescription", type: "textarea" },
@@ -183,7 +178,9 @@
                     { name: "IsAssociatedToHardwareKit" },
                     { name: "IsHardwareKit" },
                     { name: "Order" },
-                    { name: "Revision" }
+                    { name: "Revision" },
+                    { name: "PriorityId" },
+                    { name: "WorkOrderNumber" }
                 ]
             });
         };
@@ -247,13 +244,6 @@
                         createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                             $(cell).addClass(rowData.RevisionIndicators.DrawingNumberColor);
                         }
-                    },
-                    {
-                        data: "WorkOrderNumber", "targets": this.columnIndexes.WorkOrderNumber,
-                        createdCell: function (cell, data, rowData, rowIndex, colIndex) {
-                            $(cell).addClass(rowData.RevisionIndicators.WorkOrderNumberColor);
-                        },
-                        className: "active workOrderNumberRevisionWidth"
                     },
                     {
                         data: "Quantity", "targets": this.columnIndexes.Quantity,
@@ -324,13 +314,6 @@
                         }
                     },
                     {
-                        data: "NewWorkOrderNumber", "targets": this.columnIndexes.NewWorkOrderNumber,
-                        createdCell: function (cell, data, rowData, rowIndex, colIndex) {
-                            $(cell).addClass(rowData.RevisionIndicators.NewWorkOrderNumberColor);
-                        },
-                        className: "workOrderNumberRevisionWidth"
-                    },
-                    {
                         data: "NewQuantity", "targets": this.columnIndexes.NewQuantity,
                         createdCell: function (cell, data, rowData, rowIndex, colIndex) {
                             $(cell).addClass(rowData.RevisionIndicators.NewQuantityColor);
@@ -367,6 +350,16 @@
                         data: "Revision",
                         visible: false,
                         targets: this.columnIndexes.Revision
+                    },
+                    {
+                        data: "PriorityId",
+                        visible: false,
+                        targets: this.columnIndexes.PriorityId
+                    },
+                    {
+                        data: "WorkOrderNumber",
+                        visible: false,
+                        targets: this.columnIndexes.WorkOrderNumber
                     }
                 ],
                 select: {
@@ -380,10 +373,12 @@
                     editor: null,
                     columns: this.editableColumns
                 },
-                dom: "<'row'<'col-sm-6 text-left custom'f><'col-sm-4'i><'col-sm-2 text-right'l>>" +
-                    "<'row'<'col-sm-offset-6 col-sm-6 count-display'>>" +
+                dom: "<'row'<'col-sm-4 text-left custom'f><'col-sm-4'i><'col-sm-4 text-right'l>>" +
+                    "<'row'<'col-sm-offset-4 col-sm-8 count-display'>>" +
                     "<'row'<'col-sm-12'tr>>" +
-                    "<'row bottom-section'<'col-sm-2 text-left createButtonContainer'><'col-sm-5 text-right'i><'col-sm-5 text-right'p>>"
+                    "<'row bottom-section'<'col-sm-2 text-left createButtonContainer'><'col-sm-5 text-right'i><'col-sm-5 text-right'p>>" +
+                    "<'row'<'col-sm-12 count-display'>>"
+
             });
         };
 
@@ -401,7 +396,6 @@
                     var newEquipmentName = data.NewEquipmentName;
                     var newReleaseDate = data.NewReleaseDate;
                     var newDrawingNumber = data.NewDrawingNumber;
-                    var newWorkOrderNumber = data.NewWorkOrderNumber;
                     var newShippingTagNumber = data.NewShippingTagNumber;
                     var newDescription = data.NewDescription;
                     var newUnitWeight = data.NewUnitWeightText;
@@ -436,13 +430,6 @@
                         $this.addError(rowIdx, $this.columnIndexes.NewDrawingNumber);
                     } else {
                         $this.removeError(rowIdx, $this.columnIndexes.NewDrawingNumber);
-                    }
-
-                    if (!newWorkOrderNumber) {
-                        error = true;
-                        $this.addError(rowIdx, $this.columnIndexes.NewWorkOrderNumber);
-                    } else {
-                        $this.removeError(rowIdx, $this.columnIndexes.NewWorkOrderNumber);
                     }
 
                     if (!newShippingTagNumber) {
@@ -500,7 +487,6 @@
                 $this.removeError(rowIdx, $this.columnIndexes.NewEquipmentName);
                 $this.removeError(rowIdx, $this.columnIndexes.NewReleaseDate);
                 $this.removeError(rowIdx, $this.columnIndexes.NewDrawingNumber);
-                $this.removeError(rowIdx, $this.columnIndexes.NewWorkOrderNumber);
                 $this.removeError(rowIdx, $this.columnIndexes.NewShippingTagNumber);
                 $this.removeError(rowIdx, $this.columnIndexes.NewDescription);
                 $this.removeError(rowIdx, $this.columnIndexes.NewUnitWeightText);
