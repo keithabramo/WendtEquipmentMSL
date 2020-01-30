@@ -256,28 +256,5 @@ namespace WendtEquipmentTracking.App.Controllers
             return new DtResponse { data = equipmentModels };
         }
 
-        [HttpPost]
-        public bool SendSnippet([FromBody]EquipmentSnippetModel model)
-        {
-            var success = true;
-
-            try
-            {
-                var content = Request.Content.ReadAsStringAsync().Result;
-
-                var user = userService.GetCurrentUser();
-                var projectBO = projectService.GetById(user.ProjectId);
-
-                success = emailService.SendEquipmentSnippet(model.To, model.Subject, model.Body, model.DataURL);
-
-            } catch (Exception e)
-            {
-                HandleError(e);
-                success = false;
-            }
-
-            return success;
-        }
-
     }
 }

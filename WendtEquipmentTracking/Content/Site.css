@@ -271,6 +271,10 @@ table.dataTable thead th.select-checkbox {
     position: relative;
 }
 
+table.dataTable thead th.checkbox-style {
+    padding: 5px 18px 5px 10px !important;
+}
+
 table.dataTable thead th.select-checkbox:before, table.dataTable thead th.select-checkbox:after {
     display: block;
     position: absolute;

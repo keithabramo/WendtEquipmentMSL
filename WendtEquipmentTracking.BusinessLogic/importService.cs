@@ -127,7 +127,6 @@ namespace WendtEquipmentTracking.BusinessLogic
             }).ToList();
 
             var equipmentRows = importEngine.GetEquipment(importBO.FilePath).ToList();
-            equipmentRows.ForEach(x => x.DrawingNumber = importBO.DrawingNumber);
 
             foreach (var equipmentRow in equipmentRows)
             {
@@ -158,7 +157,6 @@ namespace WendtEquipmentTracking.BusinessLogic
                 var equipmentBO = new EquipmentBO
                 {
                     Description = equipmentRow.Description,
-                    DrawingNumber = equipmentRow.DrawingNumber,
                     EquipmentName = equipmentName,
                     Quantity = quantity,
                     ReleaseDate = releaseDate,

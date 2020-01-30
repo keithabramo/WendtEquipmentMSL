@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using WendtEquipmentTracking.BusinessLogic.Api;
 using WendtEquipmentTracking.BusinessLogic.BO;
 using WendtEquipmentTracking.Common;
@@ -49,48 +48,6 @@ namespace WendtEquipmentTracking.BusinessLogic
             }
         }
 
-        public bool SendEquipmentSnippet(string to, string subject, string body, string dataURL)
-        {
-            bool success;
-
-            string username = ActiveDirectoryHelper.CurrentUserUsername();
-            var user = ActiveDirectoryHelper.GetUser(username);
-
-            if (user != null)
-            {
-                var regexMatches = Regex.Match(dataURL, @"data:image/(?<type>.+?),(?<data>.+)");
-                var base64Data = regexMatches.Groups["data"].Value;
-                
-                var attachment = Convert.FromBase64String(base64Data);
-                var attachmentName = "EquipmentSnippet.png";
-                var contentType = "image/png";
-                body += "<br/><br/><br/><img src=\"cid:" + attachmentName + "\" />";
-
-                var emailDTO = new EmailDTO
-                {
-                    From = user.Email,
-                    To = to,
-                    Subject = subject,
-                    Body = body,
-                    Attachment = new AttachmentDTO
-                    {
-                        File = attachment,
-                        FileName = attachmentName,
-                        ContentType = contentType
-                    }
-                };
-
-                success = Mail.Send(emailDTO);
-
-            }
-            else
-            {
-                throw new Exception("User not found when sending equipment snippet email.");
-            }
-
-            return success;
-        }
-
         private string createRevisionCSV (IEnumerable<EquipmentRevisionBO> equipmentRevisionBOs)
         {
             var csvBuilder = new StringBuilder();
@@ -102,22 +59,22 @@ namespace WendtEquipmentTracking.BusinessLogic
             {
                 var columns = new List<string>
                 {
-                    equipmentRevision.EquipmentName,
+                    (equipmentRevision.EquipmentName ?? string.Empty).Trim().ToUpperInvariant(),
                     equipmentRevision.ReleaseDate?.ToString("M/d/yy"),
-                    equipmentRevision.DrawingNumber,
-                    equipmentRevision.WorkOrderNumber,
+                    (equipmentRevision.DrawingNumber ?? string.Empty).Trim().ToUpperInvariant(),
+                    (equipmentRevision.WorkOrderNumber ?? string.Empty).Trim().ToUpperInvariant(),
                     equipmentRevision.Quantity.ToString(),
                     equipmentRevision.ShippedQuantity?.ToString(),
-                    equipmentRevision.ShippingTagNumber,
-                    equipmentRevision.Description,
+                    (equipmentRevision.ShippingTagNumber ?? string.Empty).Trim().ToUpperInvariant(),
+                    (equipmentRevision.Description ?? string.Empty).Trim().ToUpperInvariant(),
                     equipmentRevision.UnitWeight?.ToString(),
-                    equipmentRevision.NewEquipmentName,
+                    (equipmentRevision.NewEquipmentName ?? string.Empty).Trim().ToUpperInvariant(),
                     equipmentRevision.NewReleaseDate?.ToString("M/d/yy"),
-                    equipmentRevision.NewDrawingNumber,
-                    equipmentRevision.NewWorkOrderNumber,
+                    (equipmentRevision.NewDrawingNumber ?? string.Empty).Trim().ToUpperInvariant(),
+                    (equipmentRevision.NewWorkOrderNumber ?? string.Empty).Trim().ToUpperInvariant(),
                     equipmentRevision.NewQuantity.ToString(),
-                    equipmentRevision.NewShippingTagNumber,
-                    equipmentRevision.NewDescription,
+                    (equipmentRevision.NewShippingTagNumber ?? string.Empty).Trim().ToUpperInvariant(),
+                    (equipmentRevision.NewDescription ?? string.Empty).Trim().ToUpperInvariant(),
                     equipmentRevision.NewUnitWeight?.ToString()
                 };
 

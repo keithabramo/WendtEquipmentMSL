@@ -66,8 +66,6 @@
 
                 var row = $this.editorMain.datatable.row("#" + data.NewEquipmentId);
 
-
-
                 $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.EquipmentName).node()).attr("class", "active " + data.RevisionIndicators.EquipmentNameColor);
                 $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.ReleaseDate).node()).attr("class", "active " + data.RevisionIndicators.ReleaseDateColor);
                 $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.DrawingNumber).node()).attr("class", "active " + data.RevisionIndicators.DrawingNumberColor);
@@ -86,6 +84,8 @@
                 $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.NewShippingTagNumber).node()).attr("class", data.RevisionIndicators.NewShippingTagNumberColor);
                 $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.NewDescription).node()).attr("class", data.RevisionIndicators.NewDescriptionColor);
                 $($this.editorMain.datatable.cell(row.index(), $this.columnIndexes.NewUnitWeightText).node()).attr("class", "text-right " + data.RevisionIndicators.NewUnitWeightColor);
+
+                $this.updateRows.apply($this);
 
             });
 
@@ -209,26 +209,6 @@
                 rowId: 'NewEquipmentId',
                 initComplete: function (settings, json) {
 
-                    var allRowsCount = $this.editorMain.datatable.rows().count();
-                    var alteredRowsCount = $this.editorMain.datatable.rows(function (idx, data, node) {
-                        return data.HasChanged && !data.CannotBeDeleted;
-                    }).count();
-                    var unalteredRowsCount = $this.editorMain.datatable.rows(function (idx, data, node) {
-                        return !data.HasChanged;
-                    }).count();
-                    var updatedRowsCount = $this.editorMain.datatable.rows(function (idx, data, node) {
-                        return data.WillBeUpdated;
-                    }).count();
-                    var addedRowsCount = $this.editorMain.datatable.rows(function (idx, data, node) {
-                        return data.WillBeAdded;
-                    }).count();
-                    var deletedRowsCount = $this.editorMain.datatable.rows(function (idx, data, node) {
-                        return data.WillBeDeleted && !data.CannotBeDeleted;
-                    }).count();
-                    var cannotBeDeletedRowsCount = $this.editorMain.datatable.rows(function (idx, data, node) {
-                        return data.CannotBeDeleted;
-                    }).count();
-
                     $(".count-display").html(
                         "<ul>" +
                         "<li><span class='altered-count'></span> of <span class='total-count'></span> rows will be modified" +
@@ -242,17 +222,7 @@
                         "</li>" +
                         "</ul>");
 
-                    $(".count-display .altered-count").text(alteredRowsCount);
-                    $(".count-display .total-count").text(allRowsCount);
-                    $(".count-display .updated-count").text(updatedRowsCount);
-                    $(".count-display .added-count").text(addedRowsCount);
-                    $(".count-display .deleted-count").text(deletedRowsCount);
-                    $(".count-display .cannot-delete-count").text(cannotBeDeletedRowsCount);
-                    $(".count-display .unaltered-count").text(unalteredRowsCount);
-
-                    $this.editorMain.datatable.rows(function (idx, data, node) {
-                        return data.HasChanged && !data.CannotBeDeleted;
-                    }).select();
+                    $this.updateRows.apply($this);
                 },
                 autoWidth: false,
                 columnDefs: [
@@ -544,6 +514,45 @@
 
         this.removeError = function (row, column) {
             $(this.editorMain.datatable.cell(row, column).node()).removeClass("Error");
+        };
+
+        this.updateRows = function () {
+
+            var allRowsCount = this.editorMain.datatable.rows().count();
+            var alteredRowsCount = this.editorMain.datatable.rows(function (idx, data, node) {
+                return data.HasChanged && !(data.WillBeDeleted && data.CannotBeDeleted);
+            }).count();
+            var unalteredRowsCount = this.editorMain.datatable.rows(function (idx, data, node) {
+                return !data.HasChanged;
+            }).count();
+            var updatedRowsCount = this.editorMain.datatable.rows(function (idx, data, node) {
+                return data.WillBeUpdated;
+            }).count();
+            var addedRowsCount = this.editorMain.datatable.rows(function (idx, data, node) {
+                return data.WillBeAdded;
+            }).count();
+            var deletedRowsCount = this.editorMain.datatable.rows(function (idx, data, node) {
+                return data.WillBeDeleted && !data.CannotBeDeleted;
+            }).count();
+            var cannotBeDeletedRowsCount = this.editorMain.datatable.rows(function (idx, data, node) {
+                return data.CannotBeDeleted;
+            }).count();
+
+            $(".count-display .altered-count").text(alteredRowsCount);
+            $(".count-display .total-count").text(allRowsCount);
+            $(".count-display .updated-count").text(updatedRowsCount);
+            $(".count-display .added-count").text(addedRowsCount);
+            $(".count-display .deleted-count").text(deletedRowsCount);
+            $(".count-display .cannot-delete-count").text(cannotBeDeletedRowsCount);
+            $(".count-display .unaltered-count").text(unalteredRowsCount);
+
+            this.editorMain.datatable.rows(function (idx, data, node) {
+                return data.HasChanged && !(data.WillBeDeleted && data.CannotBeDeleted);
+            }).select();
+
+            this.editorMain.datatable.rows(function (idx, data, node) {
+                return !(data.HasChanged && !(data.WillBeDeleted && data.CannotBeDeleted));
+            }).deselect();
         };
 
         this.initStyles();

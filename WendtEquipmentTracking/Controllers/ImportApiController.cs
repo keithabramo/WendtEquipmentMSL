@@ -540,9 +540,7 @@ namespace WendtEquipmentTracking.App.Controllers
 
                     var importBO = new EquipmentRevisionImportBO
                     {
-                        FilePath = model.FilePath,
-                        DrawingNumber = model.DrawingNumber,
-                        Revision = model.Revision
+                        FilePath = model.FilePath
                     };
 
                     var equipmentRevisionBOs = importService.GetEquipmentRevisionImport(importBO);
@@ -552,7 +550,7 @@ namespace WendtEquipmentTracking.App.Controllers
                     {
                         NewEquipmentId = random.Next(),
                         NewDescription = (x.Description ?? string.Empty).Trim().ToUpperInvariant(),
-                        NewDrawingNumber = (x.DrawingNumber ?? string.Empty).Trim().ToUpperInvariant(),
+                        NewDrawingNumber = (model.DrawingNumber ?? string.Empty).Trim().ToUpperInvariant(),
                         NewEquipmentName = (x.EquipmentName ?? string.Empty).Trim().ToUpperInvariant(),
                         NewQuantity = x.Quantity.HasValue ? x.Quantity.Value : 0,
                         NewReleaseDate = x.ReleaseDate,
@@ -560,13 +558,13 @@ namespace WendtEquipmentTracking.App.Controllers
                         NewUnitWeight = x.UnitWeight,
                         NewWorkOrderNumber = (x.WorkOrderNumber ?? string.Empty).Trim().ToUpperInvariant(),
                         HasNewEquipment = true,
-                        Revision = importBO.Revision
+                        Revision = model.Revision
                     }).ToList();
 
 
                     // GET THE MATCHED EXISTING RECORDS
 
-                    var existingEquipments = equipmentService.GetByDrawingNumbers(user.ProjectId, new List<string> { importBO.DrawingNumber }).ToList();
+                    var existingEquipments = equipmentService.GetByDrawingNumbers(user.ProjectId, new List<string> { model.DrawingNumber }).ToList();
 
                     // All Mataching equipment add the existing equipment information
 
@@ -602,7 +600,7 @@ namespace WendtEquipmentTracking.App.Controllers
                                 equipmentRevisionModel.IsAssociatedToHardwareKit = existingEquipment.IsAssociatedToHardwareKit;
                                 equipmentRevisionModel.IsHardwareKit = existingEquipment.IsHardwareKit;
                                 equipmentRevisionModel.HasExistingEquipment = true;
-                                equipmentRevisionModel.Revision = existingEquipment.Revision + 1;
+                                equipmentRevisionModel.Revision = model.Revision;
 
                                 // If there is a match they want to have old equipment name copied to new equipment name always
                                 equipmentRevisionModel.NewEquipmentName = existingEquipment.EquipmentName; 
@@ -635,7 +633,7 @@ namespace WendtEquipmentTracking.App.Controllers
                         IsAssociatedToHardwareKit = x.IsAssociatedToHardwareKit,
                         IsHardwareKit = x.IsHardwareKit,
                         HasExistingEquipment = true,
-                        Revision = x.Revision
+                        Revision = model.Revision
                     }).ToList();
 
                     equipmentRevisionModels.AddRange(remainingExistingEquipmentModels);
