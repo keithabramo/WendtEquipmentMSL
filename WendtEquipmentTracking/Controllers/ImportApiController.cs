@@ -549,6 +549,7 @@ namespace WendtEquipmentTracking.App.Controllers
                     // All priorities and work order numbers should be the same for every equipment in the same drawing number
                     var priorityId = existingEquipments.FirstOrDefault(x => x.PriorityId.HasValue)?.PriorityId;
                     var workOrderNumber = existingEquipments.FirstOrDefault(x => !string.IsNullOrEmpty(x.WorkOrderNumber))?.WorkOrderNumber;
+                    var equipmentName = existingEquipments.FirstOrDefault(x => !string.IsNullOrEmpty(x.EquipmentName) && !x.EquipmentName.Equals("hardware", StringComparison.InvariantCultureIgnoreCase))?.EquipmentName;
 
                     var random = new Random();
                     equipmentRevisionModels = equipmentRevisionBOs.Select(x => new EquipmentRevisionModel
@@ -556,7 +557,7 @@ namespace WendtEquipmentTracking.App.Controllers
                         NewEquipmentId = random.Next(),
                         NewDescription = (x.Description ?? string.Empty).Trim().ToUpperInvariant(),
                         NewDrawingNumber = (model.DrawingNumber ?? string.Empty).Trim().ToUpperInvariant(),
-                        NewEquipmentName = (x.EquipmentName ?? string.Empty).Trim().ToUpperInvariant(),
+                        NewEquipmentName = (x.EquipmentName ?? equipmentName ?? string.Empty).Trim().ToUpperInvariant(),
                         NewQuantity = x.Quantity.HasValue ? x.Quantity.Value : 0,
                         NewReleaseDate = x.ReleaseDate,
                         NewShippingTagNumber = (x.ShippingTagNumber ?? string.Empty).Trim().ToUpperInvariant(),

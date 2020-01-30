@@ -139,7 +139,7 @@ namespace WendtEquipmentTracking.BusinessLogic
             {
                 var hardwareCommercialCode = hardwareCommercialCodeBOs.SingleOrDefault(h => h.PartNumber == equipmentRow.PartNumber.ToString());
 
-                string equipmentName = string.Empty;
+                string equipmentName = null;
                 if (hardwareCommercialCode != null)
                 {
                     equipmentName = hardwareCommercialCode.CommodityCode;
