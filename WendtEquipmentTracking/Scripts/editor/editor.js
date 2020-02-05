@@ -39,7 +39,8 @@
             this.datatable.columns().every(function () {
                 var column = this;
 
-                var $input = $($this.selector).find("thead tr.column-filters").find("th").eq(this.index()).find("input");
+                var index = $(column.header()).index();
+                var $input = $($this.selector).find("thead tr.column-filters").find("th").eq(index).find("input");
 
                 var timeout = null;
                 $input.on('keyup change input search', function () {
